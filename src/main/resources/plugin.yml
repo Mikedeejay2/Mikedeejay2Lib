@@ -1,0 +1,5 @@
+name: Mikedeejay2Lib
+version: ${project.version}
+main: com.mikedeejay2.mikedeejay2lib.Mikedeejay2Lib
+api-version: 1.16
+authors: [ Mikedeejay2 ]
