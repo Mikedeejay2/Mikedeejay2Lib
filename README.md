@@ -1,4 +1,4 @@
-![Icon](https://user-images.githubusercontent.com/58639173/92551041-10f18280-f22b-11ea-8b3a-89766afdfeaf.png)
+![Icon](https://user-images.githubusercontent.com/58639173/92552424-a0e4fb80-f22e-11ea-9f77-ba335242ddaa.png)
 
 # Mikedeejay2Lib
 Library classes for my plugins.
