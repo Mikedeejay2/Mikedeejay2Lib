@@ -5,6 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.json.JsonFile;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.lang.reflect.Field;
 import java.util.HashMap;
 
 public class LangManager
@@ -12,6 +13,7 @@ public class LangManager
     private static final PluginBase plugin = PluginBase.getInstance();
 
     // The default language locale
+    private static String englishLang;
     private static String defaultLang;
 
     // Hash map of lang locales to lang files
@@ -19,8 +21,18 @@ public class LangManager
 
     public LangManager()
     {
-        defaultLang = plugin.config().LANG_LOCALE;
-        loadLangFile("en_us");
+        englishLang = "en_us";
+        Field field = null;
+        try
+        {
+            field = plugin.config().getClass().getField("LANG_LOCALE");
+            defaultLang = (String) field.get(plugin.config());
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+        }
+        loadLangFile(englishLang);
         loadLangFileDefaultLang(defaultLang);
     }
 
@@ -54,7 +66,7 @@ public class LangManager
         boolean loaded = loadLangFile(locale);
         if(!loaded)
         {
-            defaultLang = "en_us";
+            defaultLang = englishLang;
             plugin.getLogger().warning("The default language specified in config.yml is not currently supported by this plugin. English will be used instead.");
         }
         return loaded;
@@ -82,6 +94,10 @@ public class LangManager
         {
             file = langFiles.get(defaultLang);
         }
+        if(file == null)
+        {
+            file = langFiles.get(englishLang);
+        }
         return file;
     }
 
@@ -93,7 +109,12 @@ public class LangManager
      */
     public JsonFile getLang()
     {
-        return langFiles.get(defaultLang);
+        JsonFile file = langFiles.get(defaultLang);
+        if(file == null)
+        {
+            file = langFiles.get(englishLang);
+        }
+        return file;
     }
 
     /**
@@ -149,6 +170,10 @@ public class LangManager
     public String getText(String path)
     {
         String text = getText(defaultLang, path);
+        if(text == null)
+        {
+            text = getText(englishLang, path);
+        }
         return text;
     }
 
@@ -217,7 +242,12 @@ public class LangManager
      */
     public String getText(String path, String[] toReplace, String[] replacements)
     {
-        return getText(defaultLang, path, toReplace, replacements);
+        String text = getText(defaultLang, path, toReplace, replacements);
+        if(text == null)
+        {
+            text = getText(englishLang, path, toReplace, replacements);
+        }
+        return text;
     }
 
     /**
