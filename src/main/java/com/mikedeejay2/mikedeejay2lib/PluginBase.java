@@ -18,14 +18,15 @@ public class PluginBase extends JavaPlugin
     {
         this.config = config;
         this.commandManager = commandManager;
-        this.MCVersion = MinecraftVersion.getMCVersion();
-        this.lang = new LangManager();
     }
 
     @Override
     public void onEnable()
     {
         setInstance(this);
+
+        this.MCVersion = MinecraftVersion.getMCVersion();
+        this.lang = new LangManager();
     }
 
     @Override

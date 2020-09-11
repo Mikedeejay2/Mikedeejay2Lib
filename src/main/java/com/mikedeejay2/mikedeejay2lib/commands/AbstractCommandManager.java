@@ -13,8 +13,8 @@ import java.util.Iterator;
 
 public abstract class AbstractCommandManager implements CommandExecutor
 {
-    private ArrayList<AbstractSubCommand> commands = new ArrayList<AbstractSubCommand>();
-    private static final PluginBase plugin = PluginBase.getInstance();
+    protected ArrayList<AbstractSubCommand> commands = new ArrayList<AbstractSubCommand>();
+    protected static final PluginBase plugin = PluginBase.getInstance();
     private CustomTabCompleter completer;
 
     public String main;
