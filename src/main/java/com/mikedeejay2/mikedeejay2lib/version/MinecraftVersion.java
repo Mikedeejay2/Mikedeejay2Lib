@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.version;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.chat.Chat;
 
 public final class MinecraftVersion
 {
@@ -17,11 +18,13 @@ public final class MinecraftVersion
         if(splitStr.length == 2)
         {
             builder.append(splitStr[1].substring(0, splitStr[1].length() - 1));
+            builder.append("00");
         }
         else
         {
             builder.append(splitStr[1]);
-            builder.append(splitStr[2].substring(splitStr[2].length() - 1));
+            builder.append(splitStr[2].substring(0, splitStr[2].length() - 1));
+            builder.append(splitStr[2].length() == 1 ? "0" : "");
         }
 
         return Double.parseDouble(builder.toString());

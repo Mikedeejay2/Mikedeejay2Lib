@@ -14,19 +14,19 @@ public class PluginBase extends JavaPlugin
     protected LangManager lang;
     protected AbstractCommandManager commandManager;
 
-    @Override
-    public void onEnable()
+    public PluginBase()
     {
         setInstance(this);
-        this.MCVersion = MinecraftVersion.getMCVersion();
     }
 
-    public void onEnable(YamlBase config, AbstractCommandManager commandManager)
+    public void onEnable(YamlBase config, AbstractCommandManager commandManager, String baseCommand)
     {
-        this.onEnable();
+        this.MCVersion = MinecraftVersion.getMCVersion();
         this.config = config;
         this.lang = new LangManager();
         this.commandManager = commandManager;
+        this.commandManager.setCommandName(baseCommand);
+        commandManager.setup();
     }
 
     @Override

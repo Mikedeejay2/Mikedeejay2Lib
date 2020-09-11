@@ -28,12 +28,9 @@ public class LangManager
             field = plugin.config().getClass().getField("LANG_LOCALE");
             defaultLang = (String) field.get(plugin.config());
         }
-        catch(Exception e)
-        {
-            e.printStackTrace();
-        }
-        loadLangFile(englishLang);
+        catch(Exception e) {}
         loadLangFileDefaultLang(defaultLang);
+        loadLangFile(englishLang);
     }
 
     /**
@@ -44,7 +41,8 @@ public class LangManager
      */
     public boolean loadLangFile(String locale)
     {
-        JsonFile file = new JsonFile(locale);
+        if(locale == null) return false;
+        JsonFile file = new JsonFile(locale + ".json");
 
         if(file.load())
         {

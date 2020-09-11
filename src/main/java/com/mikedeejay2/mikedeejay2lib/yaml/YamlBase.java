@@ -21,9 +21,10 @@ public class YamlBase
     public YamlBase(String fileName)
     {
         this.fileName = fileName;
-        if(fileName == null) fileName = "config.yml";
+        if(fileName == null) this.fileName = "config.yml";
         this.configSection = new CustomYamlSection();
         this.config = configSection.getCurrentFile();
+        onEnable();
     }
 
     /**
