@@ -87,7 +87,6 @@
                 <artifactId>maven-jar-plugin</artifactId>
                 <version>3.2.0</version>
                 <configuration>
-                    <outputDirectory>C:\Users\mdeej\IdeaProjects\SimpleStackPlugin\libs\com\mikedeejay2\mikedeejay2lib\${project.version}</outputDirectory>
                 </configuration>
             </plugin>
         </plugins>
