@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.language;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.json.JsonFile;
+import com.mikedeejay2.mikedeejay2lib.yaml.YamlBase;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -22,13 +23,16 @@ public class LangManager
     public LangManager()
     {
         englishLang = "en_us";
-        Field field = null;
-        try
+        YamlBase config = plugin.config();
+        if(config instanceof DefaultLangProvider)
         {
-            field = plugin.config().getClass().getField("LANG_LOCALE");
-            defaultLang = (String) field.get(plugin.config());
+            DefaultLangProvider langProvider = (DefaultLangProvider) config;
+            defaultLang = langProvider.getDefaultLang();
         }
-        catch(Exception e) {}
+        else
+        {
+            defaultLang = englishLang;
+        }
         loadLangFileDefaultLang(defaultLang);
         loadLangFile(englishLang);
     }
