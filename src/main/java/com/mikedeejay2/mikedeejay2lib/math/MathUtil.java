@@ -3,7 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.math;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-public class MathUtil
+public final class MathUtil
 {
     public static Location getLocationAroundCircle(Location center, double radius, double angleInRadian)
     {

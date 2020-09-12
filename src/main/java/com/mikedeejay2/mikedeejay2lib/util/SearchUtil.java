@@ -2,7 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.util;
 
 import org.bukkit.inventory.meta.ItemMeta;
 
-public class SearchUtil
+public final class SearchUtil
 {
     public static boolean metaContainsString(ItemMeta meta, String name)
     {

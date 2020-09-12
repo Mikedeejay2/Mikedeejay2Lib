@@ -8,7 +8,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
-public class ParticleUtil
+public final class ParticleUtil
 {
     private static PluginBase plugin = PluginBase.getInstance();
 

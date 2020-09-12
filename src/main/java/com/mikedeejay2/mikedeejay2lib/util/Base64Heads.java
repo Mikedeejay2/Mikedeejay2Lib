@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util;
 
-public class Base64Heads
+public final class Base64Heads
 {
     // Navigation heads
     public static final String HEAD_ARROW_RIGHT_LIGHT_GRAY = "eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDA2MjYyYWYxZDVmNDE0YzU5NzA1NWMyMmUzOWNjZTE0OGU1ZWRiZWM0NTU1OWEyZDZiODhjOGQ2N2I5MmVhNiJ9fX0=";

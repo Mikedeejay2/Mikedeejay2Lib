@@ -12,7 +12,7 @@ import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
 
-public class MakeBats
+public final class MakeBats
 {
     private static final PluginBase plugin = PluginBase.getInstance();
 
