@@ -2,20 +2,19 @@ package com.mikedeejay2.mikedeejay2lib.file.yaml;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.util.file.FileIO;
-import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
 import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.*;
-import java.util.logging.Level;
 
 public class YamlBase
 {
     protected static final PluginBase plugin = PluginBase.getInstance();
 
     protected CustomYamlSection configSection;
-    protected FileConfiguration file;
+    protected FileConfiguration fileConfig;
     protected String fileName;
+    protected File file;
 
     public YamlBase()
     {
@@ -32,11 +31,11 @@ public class YamlBase
 
     private void loadFile()
     {
-        this.file = new YamlConfiguration();
-        File theFile = FileIO.loadFile(fileName);
+        this.fileConfig = new YamlConfiguration();
+        file = FileIO.loadFile(fileName);
         try
         {
-            file.load(new InputStreamReader(new FileInputStream(theFile)));
+            fileConfig.load(new InputStreamReader(new FileInputStream(file)));
         }
         catch(Exception e) {}
         this.configSection = new CustomYamlSection(this);
@@ -47,7 +46,7 @@ public class YamlBase
      */
     public void onEnable()
     {
-        file.options().copyDefaults();
+        fileConfig.options().copyDefaults();
         saveFile();
     }
 
@@ -67,7 +66,7 @@ public class YamlBase
      */
     public void saveFile()
     {
-        FileIO.saveFile(fileName, false);
+        FileIO.saveFile(file, false);
     }
 
     /**

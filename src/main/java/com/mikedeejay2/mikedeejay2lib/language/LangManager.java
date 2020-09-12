@@ -47,7 +47,7 @@ public class LangManager
         if(locale == null) return false;
         JsonFile file = new JsonFile(locale + ".json");
 
-        if(file.load())
+        if(file.loadFromInternal())
         {
             langFiles.put(locale, file);
             return true;

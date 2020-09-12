@@ -18,6 +18,7 @@ public class JsonFile
     private JsonObject json;
     // The json parser that the json was created with
     private JsonParser parser = new JsonParser();
+    private File file;
 
     /**
      * Construct a lang file
@@ -27,7 +28,7 @@ public class JsonFile
     public JsonFile(String fileName)
     {
         this.fileName = fileName;
-        load();
+        loadFromInternal();
     }
 
     /**
@@ -35,13 +36,32 @@ public class JsonFile
      *
      * @return If load was successful and file was loaded or not.
      */
-    public boolean load()
+    public boolean loadFromInternal()
     {
         InputStream input = plugin.getResource(fileName);
+        file = new File(plugin.getDataFolder(), fileName);
         if(input == null) return false;
         try
         {
             json = (JsonObject)parser.parse(new InputStreamReader(input, StandardCharsets.UTF_8));
+            return true;
+        }
+        catch(Exception e)
+        {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean loadFromExternal()
+    {
+        try
+        {
+            File fileToLoad = new File(plugin.getDataFolder(), fileName);
+            if(!fileToLoad.exists()) fileToLoad.createNewFile();
+            InputStream input = new FileInputStream(fileToLoad);
+            json = (JsonObject) parser.parse(new InputStreamReader(input, StandardCharsets.UTF_8));
+            file = fileToLoad;
             return true;
         }
         catch(Exception e)

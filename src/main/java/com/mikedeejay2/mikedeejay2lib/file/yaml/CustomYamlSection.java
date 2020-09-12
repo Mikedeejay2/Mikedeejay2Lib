@@ -4,7 +4,6 @@ import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.FileConfiguration;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -21,7 +20,7 @@ public class CustomYamlSection
 
     public CustomYamlSection(YamlBase base)
     {
-        file = base.file;
+        file = base.fileConfig;
         ConfigurationSection currentSection = file.getDefaultSection();
         this.pathTo = "";
         this.section = currentSection;

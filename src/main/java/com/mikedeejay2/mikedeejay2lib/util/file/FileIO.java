@@ -21,17 +21,14 @@ public class FileIO
         return file;
     }
 
-    public static void saveFile(String resourcePath, boolean replace) {
-        InputStream in = plugin.getResource(resourcePath);
-        File outFile = new File(plugin.getDataFolder(), resourcePath);
-        int lastIndex = resourcePath.lastIndexOf('/');
-        File outDir = new File(plugin.getDataFolder(), resourcePath.substring(0, Math.max(lastIndex, 0)));
+    public static void saveFile(File file, boolean replace) {
 
-        if (!outDir.exists()) outDir.mkdirs();
+        if (!file.exists()) file.mkdirs();
 
         try {
-            if (!outFile.exists() || replace) {
-                OutputStream out = new FileOutputStream(outFile);
+            if (!file.exists() || replace) {
+                FileInputStream in = new FileInputStream(file);
+                OutputStream out = new FileOutputStream(file);
                 byte[] buf = new byte[1024];
                 int len;
                 while ((len = in.read(buf)) > 0) {
@@ -42,7 +39,7 @@ public class FileIO
             }
         } catch (IOException ex)
         {
-            plugin.getLogger().log(Level.SEVERE, "Could not save " + outFile.getName() + " to " + outFile, ex);
+            plugin.getLogger().log(Level.SEVERE, "Could not save " + file.getName() + " to " + file.getPath(), ex);
         }
     }
 }
