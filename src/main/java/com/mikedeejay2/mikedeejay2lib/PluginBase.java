@@ -9,7 +9,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class PluginBase extends JavaPlugin
 {
     protected static PluginBase instance;
-    protected double MCVersion;
+    protected int[] MCVersion;
     protected YamlBase config;
     protected LangManager lang;
     protected AbstractCommandManager commandManager;
@@ -45,7 +45,7 @@ public class PluginBase extends JavaPlugin
         PluginBase.instance = instance;
     }
 
-    public double getMCVersion()
+    public int[] getMCVersion()
     {
         return MCVersion;
     }

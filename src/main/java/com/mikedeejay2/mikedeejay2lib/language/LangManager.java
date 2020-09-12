@@ -156,6 +156,11 @@ public class LangManager
             file = getLang();
         }
         String string = file.getString(path);
+        if(string == null)
+        {
+            file = getLang();
+            string = file.getString(path);
+        }
         return string;
     }
 
