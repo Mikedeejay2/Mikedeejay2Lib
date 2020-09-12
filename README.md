@@ -3,7 +3,4 @@
 # Mikedeejay2Lib
 Library classes for my plugins.
 
-:warning: While this plugin has Javadocs associated with it, there isn't much documentation about this plugin. 
-This is because this plugin is specifically created to be used with my plugins. If you want to attempt to use
-it for your plugin you are allowed to. If you are having issues using this library, feel free to contact me or
-create an issue on this repository.
+:warning: You do not need to install this! My plugins already come with the required classes from this library.
