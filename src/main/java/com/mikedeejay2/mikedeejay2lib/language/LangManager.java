@@ -1,12 +1,11 @@
 package com.mikedeejay2.mikedeejay2lib.language;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.json.JsonFile;
-import com.mikedeejay2.mikedeejay2lib.yaml.YamlBase;
+import com.mikedeejay2.mikedeejay2lib.file.json.JsonFile;
+import com.mikedeejay2.mikedeejay2lib.file.yaml.YamlBase;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.lang.reflect.Field;
 import java.util.HashMap;
 
 public class LangManager
@@ -27,11 +26,11 @@ public class LangManager
         if(config instanceof DefaultLangProvider)
         {
             DefaultLangProvider langProvider = (DefaultLangProvider) config;
-            defaultLang = langProvider.getDefaultLang();
+            setDefaultLang(langProvider.getDefaultLang());
         }
         else
         {
-            defaultLang = englishLang;
+            setDefaultLang(englishLang);
         }
         loadLangFileDefaultLang(defaultLang);
         loadLangFile(englishLang);
@@ -291,5 +290,10 @@ public class LangManager
     public String getText(Player player, String path, String[] toReplace, String[] replacements)
     {
         return getText(player.getLocale().toLowerCase(), path, toReplace, replacements);
+    }
+
+    public static void setDefaultLang(String defaultLang)
+    {
+        LangManager.defaultLang = defaultLang;
     }
 }

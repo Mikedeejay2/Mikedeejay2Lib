@@ -1,7 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.util;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.particle.ParticleUtil;
+import com.mikedeejay2.mikedeejay2lib.util.particle.ParticleUtil;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Arrow;

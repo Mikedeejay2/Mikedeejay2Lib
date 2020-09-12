@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.math;
+package com.mikedeejay2.mikedeejay2lib.util.math;
 
 import org.bukkit.Location;
 import org.bukkit.util.Vector;

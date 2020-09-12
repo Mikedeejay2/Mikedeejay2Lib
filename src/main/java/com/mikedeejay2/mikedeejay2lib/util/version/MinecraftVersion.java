@@ -1,7 +1,7 @@
-package com.mikedeejay2.mikedeejay2lib.version;
+package com.mikedeejay2.mikedeejay2lib.util.version;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 
 public final class MinecraftVersion
 {

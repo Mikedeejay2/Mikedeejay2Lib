@@ -1,16 +1,20 @@
-package com.mikedeejay2.mikedeejay2lib.yaml;
+package com.mikedeejay2.mikedeejay2lib.file.yaml;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.util.file.FileIO;
+import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
+import java.io.*;
+import java.util.logging.Level;
 
 public class YamlBase
 {
     protected static final PluginBase plugin = PluginBase.getInstance();
 
     protected CustomYamlSection configSection;
-    protected FileConfiguration config;
+    protected FileConfiguration file;
     protected String fileName;
 
     public YamlBase()
@@ -22,9 +26,20 @@ public class YamlBase
     {
         this.fileName = fileName;
         if(fileName == null) this.fileName = "config.yml";
-        this.configSection = new CustomYamlSection();
-        this.config = configSection.getCurrentFile();
+        loadFile();
         onEnable();
+    }
+
+    private void loadFile()
+    {
+        this.file = new YamlConfiguration();
+        File theFile = FileIO.loadFile(fileName);
+        try
+        {
+            file.load(new InputStreamReader(new FileInputStream(theFile)));
+        }
+        catch(Exception e) {}
+        this.configSection = new CustomYamlSection(this);
     }
 
     /**
@@ -32,8 +47,8 @@ public class YamlBase
      */
     public void onEnable()
     {
-        config.options().copyDefaults();
-        plugin.saveDefaultConfig();
+        file.options().copyDefaults();
+        saveFile();
     }
 
     /**
@@ -52,7 +67,7 @@ public class YamlBase
      */
     public void saveFile()
     {
-        plugin.saveConfig();
+        FileIO.saveFile(fileName, false);
     }
 
     /**
@@ -60,9 +75,7 @@ public class YamlBase
      */
     public void reload()
     {
-        plugin.reloadConfig();
-        this.config = plugin.getConfig();
-        this.configSection = new CustomYamlSection();
+        loadFile();
         onEnable();
     }
 
@@ -71,7 +84,6 @@ public class YamlBase
      */
     public void reset()
     {
-        plugin.getResource(fileName);
         File configFile = new File(plugin.getDataFolder(), fileName);
         configFile.delete();
         reload();

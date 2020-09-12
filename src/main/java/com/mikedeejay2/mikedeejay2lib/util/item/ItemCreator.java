@@ -1,6 +1,6 @@
-package com.mikedeejay2.mikedeejay2lib.item;
+package com.mikedeejay2.mikedeejay2lib.util.item;
 
-import com.mikedeejay2.mikedeejay2lib.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.Material;

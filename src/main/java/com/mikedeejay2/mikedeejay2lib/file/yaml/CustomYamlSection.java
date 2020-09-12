@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.yaml;
+package com.mikedeejay2.mikedeejay2lib.file.yaml;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import org.bukkit.Location;
@@ -19,24 +19,12 @@ public class CustomYamlSection
     protected ConfigurationSection section;
     protected FileConfiguration file;
 
-    public CustomYamlSection()
+    public CustomYamlSection(YamlBase base)
     {
-        file = plugin.getConfig();
+        file = base.file;
         ConfigurationSection currentSection = file.getDefaultSection();
         this.pathTo = "";
         this.section = currentSection;
-    }
-
-    public CustomYamlSection(String path)
-    {
-        file = new YamlConfiguration();
-        ConfigurationSection currentSection = file.getDefaultSection();
-        if(!currentSection.contains(path))
-        {
-            currentSection.createSection(path);
-        }
-        this.pathTo = path;
-        this.section = currentSection.getConfigurationSection(path);
     }
 
     public CustomYamlSection(String path, CustomYamlSection currentSection)

@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.particle;
+package com.mikedeejay2.mikedeejay2lib.util.particle;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import org.bukkit.Location;

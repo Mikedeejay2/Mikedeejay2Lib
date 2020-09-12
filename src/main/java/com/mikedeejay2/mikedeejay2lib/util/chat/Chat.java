@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.chat;
+package com.mikedeejay2.mikedeejay2lib.util.chat;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import net.md_5.bungee.api.chat.BaseComponent;
