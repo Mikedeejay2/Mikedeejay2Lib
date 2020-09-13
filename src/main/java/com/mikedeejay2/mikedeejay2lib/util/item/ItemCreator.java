@@ -17,7 +17,15 @@ import java.util.UUID;
 // It should not be instantiated, therefore it's abstract.
 public class ItemCreator
 {
-    // Regular item stack
+    /**
+     * Create an item based off of several arguments.
+     *
+     * @param material Material of item
+     * @param amount Amount of item
+     * @param displayName The display name of the item
+     * @param loreString Any lore that the item might have
+     * @return The new ItemStack
+     */
     public static ItemStack createItem(Material material, int amount, String displayName, String... loreString)
     {
         ItemStack item;
@@ -40,8 +48,16 @@ public class ItemCreator
         return item;
     }
 
-    // Head Item stack
-    public static ItemStack createHeadItem(String headStr, int amount, String displayName, String... loreString)
+    /**
+     * Create a Base64 head based off of several arguments.
+     *
+     * @param base64Head The base 64 string of the head's texture
+     * @param amount Amount of item
+     * @param displayName The display name of the head
+     * @param loreString Any lore that the head might have
+     * @return The new head ItemStack
+     */
+    public static ItemStack createHeadItem(String base64Head, int amount, String displayName, String... loreString)
     {
         ItemStack item;
 
@@ -51,7 +67,7 @@ public class ItemCreator
         SkullMeta skullMeta = (SkullMeta)item.getItemMeta();
 
         GameProfile profile = new GameProfile(UUID.randomUUID(), "");
-        profile.getProperties().put("textures", new Property("textures", headStr));
+        profile.getProperties().put("textures", new Property("textures", base64Head));
 
         Field profileField = null;
         try

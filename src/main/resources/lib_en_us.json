@@ -1,0 +1,4 @@
+{
+  "command.errors.invalid_subcommand": "Error: Invalid subcommand",
+  "command.errors.general": "An error has occurred"
+}

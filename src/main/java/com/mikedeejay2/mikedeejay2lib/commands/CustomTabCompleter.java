@@ -9,12 +9,15 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Automatically tab completes any subcommand that has been added to the command manager
+ */
 public class CustomTabCompleter implements TabCompleter
 {
     private static final PluginBase plugin = PluginBase.getInstance();
 
     /**
-     * This class is meant to autocomplete the /simplestack command with options to make
+     * This class is meant to autocomplete the /commandname command with options to make
      * typing out commands easier.
      *
      * @param sender The CommandSender that sent the command

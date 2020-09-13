@@ -5,6 +5,14 @@ import org.bukkit.util.Vector;
 
 public final class MathUtil
 {
+    /**
+     * Get the location around a circle based on a center location and a radius
+     *
+     * @param center The center of the circle
+     * @param radius The radius of the circle
+     * @param angleInRadian The angle in radians around the circle
+     * @return The location of the angle around the circle
+     */
     public static Location getLocationAroundCircle(Location center, double radius, double angleInRadian)
     {
         angleInRadian = angleInRadian % Math.PI * 2;
@@ -46,5 +54,24 @@ public final class MathUtil
         }
 
         return new Location(center.getWorld(), x + offset.getX(), y + offset.getY(), z + offset.getZ(), yaw, pitch);
+    }
+
+    /**
+     * Rotate a point around an origin
+     *
+     * @param origin Origin Vector
+     * @param vector Vector that will be rotated
+     * @param degX The degrees in X to rotate the vector
+     * @param degY The degrees in Y to rotate the vector
+     * @param degZ The degrees in Z to rotate the vector
+     * @return The new rotated vector
+     */
+    public static Vector rotateAroundOrigin(Vector origin, Vector vector, float degX, float degY, float degZ)
+    {
+        Vector newVec = vector.subtract(origin);
+        newVec.rotateAroundX(Math.toRadians(degX));
+        newVec.rotateAroundY(Math.toRadians(degY));
+        newVec.rotateAroundZ(Math.toRadians(degZ));
+        return newVec.add(origin);
     }
 }

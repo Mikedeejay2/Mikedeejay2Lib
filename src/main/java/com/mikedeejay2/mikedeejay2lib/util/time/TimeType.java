@@ -1,6 +1,8 @@
 package com.mikedeejay2.mikedeejay2lib.util.time;
 
-// Holds different conversions and helper methods for converting ticks to different time formats
+/**
+ * Holds different conversions and helper methods for converting ticks to different time formats
+ */
 public enum TimeType
 {
     TICK,
@@ -9,7 +11,11 @@ public enum TimeType
     HOUR,
     DAY;
 
-    // Get ratio of ticks to 1 of a time type
+    /**
+     * Get ratio of ticks to 1 of a time type
+     *
+     * @return return this TimeType's tick length
+     */
     public long tickToType()
     {
         switch(this)
@@ -28,7 +34,11 @@ public enum TimeType
         return -1;
     }
 
-    // For cycling time types get the next type in the list
+    /**
+     * For cycling time types get the next type in the list
+     *
+     * @return The next shortest TimeType (TICK->SECOND->MINUTE...etc)
+     */
     public TimeType getNextType()
     {
         switch(this)
@@ -47,7 +57,11 @@ public enum TimeType
         return null;
     }
 
-    // A better toString method
+    /**
+     * A better toString method
+     *
+     * @return A formatted String that looks all nice and is capitalized.
+     */
     public String getFormattedString()
     {
         switch(this)

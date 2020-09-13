@@ -1,13 +1,18 @@
 package com.mikedeejay2.mikedeejay2lib.language;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.file.DataFile;
 import com.mikedeejay2.mikedeejay2lib.file.json.JsonFile;
-import com.mikedeejay2.mikedeejay2lib.file.yaml.YamlBase;
+import com.mikedeejay2.mikedeejay2lib.file.yaml.YamlFile;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
 
+/**
+ * Manages lang files(json).
+ * If lang files are used, this class is used.
+ */
 public class LangManager
 {
     private static final PluginBase plugin = PluginBase.getInstance();
@@ -19,10 +24,14 @@ public class LangManager
     // Hash map of lang locales to lang files
     HashMap<String, JsonFile> langFiles = new HashMap<>();
 
+    /**
+     * Create a LangManager and load the default language (if any) and
+     * the english language (en_us)
+     */
     public LangManager()
     {
         englishLang = "en_us";
-        YamlBase config = plugin.config();
+        DataFile config = plugin.fileManager().getDataFile("config.yml");
         if(config instanceof DefaultLangProvider)
         {
             DefaultLangProvider langProvider = (DefaultLangProvider) config;
@@ -37,6 +46,18 @@ public class LangManager
     }
 
     /**
+     * Set the default lang of the LangManager
+     * This only affects the console and depending on the configuration
+     * of the operating system the characters won't show up properly :(
+     *
+     * @param defaultLang The locale to set the defaultLang to
+     */
+    public static void setDefaultLang(String defaultLang)
+    {
+        LangManager.defaultLang = defaultLang;
+    }
+
+    /**
      * Attempt to load a lang file based off of a locale
      *
      * @param locale The language that will attempt to be loaded
@@ -47,7 +68,7 @@ public class LangManager
         if(locale == null) return false;
         JsonFile file = new JsonFile(locale + ".json");
 
-        if(file.loadFromInternal())
+        if(file.loadFromJar())
         {
             langFiles.put(locale, file);
             return true;
@@ -292,8 +313,75 @@ public class LangManager
         return getText(player.getLocale().toLowerCase(), path, toReplace, replacements);
     }
 
-    public static void setDefaultLang(String defaultLang)
+    /**
+     * <b>Only to be used internally in Mikedeejay2Lib</b><br>
+     * @see LangManager#getText(String path)
+     */
+    public String getTextLib(String path)
     {
-        LangManager.defaultLang = defaultLang;
+        String text = getText("lib_" + defaultLang, path);
+        if(text == null)
+        {
+            text = getText("lib_" + englishLang, path);
+        }
+        return text;
+    }
+
+    /**
+     * <b>Only to be used internally in Mikedeejay2Lib</b><br>
+     * @see LangManager#getText(Player player, String path)
+     */
+    public String getTextLib(Player player, String path)
+    {
+        return getText("lib_" + player.getLocale().toLowerCase(), path);
+    }
+
+    /**
+     * <b>Only to be used internally in Mikedeejay2Lib</b><br>
+     * @see LangManager#getText(CommandSender sender, String path)
+     */
+    public String getTextLib(CommandSender sender, String path)
+    {
+        if(sender instanceof Player)
+        {
+            return getText("lib_" + ((Player)sender).getLocale().toLowerCase(), path);
+        }
+        return getTextLib(path);
+    }
+
+    /**
+     * <b>Only to be used internally in Mikedeejay2Lib</b><br>
+     * @see LangManager#getText(String path, String[] toReplace, String[] replacements)
+     */
+    public String getTextLib(String path, String[] toReplace, String[] replacements)
+    {
+        String text = getText("lib_" + defaultLang, path, toReplace, replacements);
+        if(text == null)
+        {
+            text = getText("lib_" + englishLang, path, toReplace, replacements);
+        }
+        return text;
+    }
+
+    /**
+     * <b>Only to be used internally in Mikedeejay2Lib</b><br>
+     * @see LangManager#getText(CommandSender sender, String path, String[] toReplace, String[] replacements)
+     */
+    public String getTextLib(CommandSender sender, String path, String[] toReplace, String[] replacements)
+    {
+        if(sender instanceof Player)
+        {
+            return getText("lib_" + ((Player)sender).getLocale().toLowerCase(), path, toReplace, replacements);
+        }
+        return getTextLib(path, toReplace, replacements);
+    }
+
+    /**
+     * <b>Only to be used internally in Mikedeejay2Lib</b><br>
+     * @see LangManager#getText(Player player, String path, String[] toReplace, String[] replacements)
+     */
+    public String getTextLib(Player player, String path, String[] toReplace, String[] replacements)
+    {
+        return getText("lib_" + player.getLocale().toLowerCase(), path, toReplace, replacements);
     }
 }

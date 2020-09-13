@@ -1,15 +1,15 @@
 package com.mikedeejay2.mikedeejay2lib.util.chat;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
-import net.md_5.bungee.api.chat.TextComponent;
+import net.md_5.bungee.api.chat.*;
+import net.md_5.bungee.api.chat.hover.content.Entity;
+import net.md_5.bungee.api.chat.hover.content.Item;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -79,7 +79,7 @@ public final class Chat
      */
     public static String getTitleString()
     {
-        return "&b[&9" + plugin.lang().getText("simplestack.title") + "&b] &r";
+        return "&b[&9" + plugin.langManager().getText("title") + "&b] &r";
     }
 
     /**
@@ -91,7 +91,7 @@ public final class Chat
      */
     public static String getTitleString(CommandSender sender)
     {
-        return "&b[&9" + plugin.lang().getText(sender, "title") + "&b] &r";
+        return "&b[&9" + plugin.langManager().getText(sender, "title") + "&b] &r";
     }
 
     /**
@@ -103,7 +103,7 @@ public final class Chat
      */
     public static String getTitleString(Player player)
     {
-        return "&b[&9" + plugin.lang().getText(player, "title") + "&b] &r";
+        return "&b[&9" + plugin.langManager().getText(player, "title") + "&b] &r";
     }
 
     /**
@@ -139,11 +139,51 @@ public final class Chat
      *
      * @param action The HoverEvent Action to be used when cursor is hovered over applied text
      * @param text The string of text that will be used in the hover event
-     * @return
+     * @return The HoverEvent that was created
      */
     public static HoverEvent getHoverEvent(HoverEvent.Action action, String text)
     {
         return new HoverEvent(action, new Text(chat(text)));
+    }
+
+    /**
+     * Creates a Bungee API ClickEvent to do something with a command
+     *
+     * @param action The HoverEvent Action to be used when cursor is hovered over applied text
+     * @param item The item that will be displayed
+     * @return The HoverEvent that was created
+     */
+    public static HoverEvent getHoverEvent(HoverEvent.Action action, ItemStack item)
+    {
+        return new HoverEvent(action, getHoverItem(item));
+    }
+
+    /**
+     * Creates a Bungee API ClickEvent to do something with a command
+     *
+     * @param action The HoverEvent Action to be used when cursor is hovered over applied text
+     * @param entity The entity that will be displayed
+     * @return The HoverEvent that was created
+     */
+    public static HoverEvent getHoverEvent(HoverEvent.Action action, org.bukkit.entity.Entity entity)
+    {
+        return new HoverEvent(action, getHoverEntity(entity));
+    }
+
+    /**
+     * Creates a Hover Item from an ItemStack
+     *
+     * @param item Item to be converted
+     * @return HoverEvent Item
+     */
+    public static Item getHoverItem(ItemStack item)
+    {
+        return new Item(String.valueOf(item.getType().getId()), item.getAmount(), null);
+    }
+
+    public static Entity getHoverEntity(org.bukkit.entity.Entity entity)
+    {
+        return new Entity(entity.getType().toString(), String.valueOf(entity.getEntityId()), new TextComponent(entity.getCustomName()));
     }
 
     /**

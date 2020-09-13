@@ -3,29 +3,46 @@ package com.mikedeejay2.mikedeejay2lib.file.yaml;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.FileConfiguration;
+import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 import java.util.Set;
 
-// A configuration section with custom methods for saving and loading.
-// This mainly helps me with debugging because it's my class so I know how it works.
+/**
+ * A configuration section with custom methods for saving and loading.
+ * This mainly helps me with debugging because it's my class so I know how it works.
+ */
 public class CustomYamlSection
 {
     protected static final PluginBase plugin = PluginBase.getInstance();
+    // The path to the current Yaml section
     protected String pathTo;
+    // The section that this object is representing
     protected ConfigurationSection section;
-    protected FileConfiguration file;
+    // The FileConfiguration that this section is a part of
+    protected YamlConfiguration file;
 
-    public CustomYamlSection(YamlBase base)
+    /**
+     * Create a new CustomYamlSection from a YamlBase
+     *
+     * @param base YamlBase to use
+     */
+    public CustomYamlSection(YamlFile base)
     {
-        file = base.fileConfig;
+        file = base.getYamlConfig();
         ConfigurationSection currentSection = file.getDefaultSection();
         this.pathTo = "";
         this.section = currentSection;
     }
 
+    /**
+     * Create a new CustomYamlSection based on a new path that will be found
+     * in the currentSection
+     *
+     * @param path Path that new section should be from
+     * @param currentSection The current section (parent) of the new section
+     */
     public CustomYamlSection(String path, CustomYamlSection currentSection)
     {
         file = currentSection.getCurrentFile();
@@ -37,17 +54,31 @@ public class CustomYamlSection
         this.section = currentSection.getSection(path).getCurrentConfigSection();
     }
 
+    /**
+     * Get the name of this section
+     *
+     * @return The name of this section
+     */
     public String getName()
     {
         return section.getName();
     }
 
+    /**
+     * Remove a path in this section
+     *
+     * @param path Path to remove
+     */
     public void removeSection(String path)
     {
         section.set(path, null);
     }
 
-    // Create a section in the section
+    /**
+     * Create a new section in this section
+     *
+     * @param path Path to create
+     */
     public void createSection(String path)
     {
         if(!section.contains(path))
@@ -56,27 +87,67 @@ public class CustomYamlSection
         }
     }
 
-    // Get a section in the section
+    /**
+     * Get a section in this current section
+     *
+     * @param path Path to section
+     * @return The requested section
+     */
     public CustomYamlSection getSection(String path)
     {
         return new CustomYamlSection(path, this);
     }
 
-    // Get current path of the section
+    /**
+     * Get the current path of this section
+     *
+     * @return The path to this sectionp
+     */
     public String getCurrentPath()
     {
         return section.getCurrentPath();
     }
 
+    /**
+     * Returns whether a path exists in this section or not
+     *
+     * @param path Path to test for
+     * @return If the path exists or not
+     */
     public boolean contains(String path)
     {
         return section.contains(path);
     }
 
-    // Get all keys of a section. If deep is true then it will recursively get keys within each other
+    /**
+     * Get all keys of a section. If deep is true then it will recursively get keys within each other
+     *
+     * @param deep Should nested keys be returned?
+     * @return All keys of this section
+     */
     public Set<String> getKeys(boolean deep)
     {
         return section.getKeys(deep);
+    }
+
+    /**
+     * Get this section's ConfigurationSection
+     *
+     * @return This section's ConfigurationSection
+     */
+    public ConfigurationSection getCurrentConfigSection()
+    {
+        return section;
+    }
+
+    /**
+     * Get this section's FileConfiguration
+     *
+     * @return This section's FileConfiguration
+     */
+    public YamlConfiguration getCurrentFile()
+    {
+        return file;
     }
 
     public void saveBoolean(String path, boolean bool)
@@ -237,15 +308,5 @@ public class CustomYamlSection
     public List<Short> loadShortList(String path)
     {
         return section.getShortList(path);
-    }
-
-    public ConfigurationSection getCurrentConfigSection()
-    {
-        return section;
-    }
-
-    public FileConfiguration getCurrentFile()
-    {
-        return file;
     }
 }

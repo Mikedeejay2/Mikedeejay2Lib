@@ -6,9 +6,16 @@ import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 public final class MinecraftVersion
 {
     private static final PluginBase plugin = PluginBase.getInstance();
+    // Holds the version string, like "git.paper-RC_03 (MC:1.16.2)" or something like that
     private static final String versionString = plugin.getServer().getVersion();
+    // An array of a Minecraft version like [1, 16, 3], you probably only care about version[1]
     private static final int[] version = genMCVersion();
 
+    /**
+     * Generates an int array of this server's Minecraft version for easy access
+     *
+     * @return Int Array that represents this server's Minecraft version
+     */
     private static int[] genMCVersion()
     {
         boolean flag = false;
@@ -28,6 +35,11 @@ public final class MinecraftVersion
         return arr;
     }
 
+    /**
+     * Get the Minecraft version array
+     *
+     * @return The Minecraft version array
+     */
     public static int[] getMCVersion()
     {
         return version;

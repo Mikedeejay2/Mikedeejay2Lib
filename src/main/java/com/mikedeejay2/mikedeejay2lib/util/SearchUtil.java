@@ -2,11 +2,27 @@ package com.mikedeejay2.mikedeejay2lib.util;
 
 import org.bukkit.inventory.meta.ItemMeta;
 
+/**
+ * Class for searching through different things to see if a piece of data exists
+ * inside of it.
+ */
 public final class SearchUtil
 {
-    public static boolean metaContainsString(ItemMeta meta, String name)
+    /**
+     * Search for a String in a piece of ItemMeta.
+     * This method generalizes the search term by removing spaces and
+     * changing all the text to lower case on both the ItemMeta and the search term.
+     * AKA a "fuzzy" search.
+     *
+     * Uses .contains() to compare strings
+     *
+     * @param meta ItemMeta to search through
+     * @param searchTerm The search term to use
+     * @return If search term was found in the ItemMeta or not
+     */
+    public static boolean searchMetaFuzzy(ItemMeta meta, String searchTerm)
     {
-        String newName = name.toLowerCase().replaceAll(" ", "");
+        String newName = searchTerm.toLowerCase().replaceAll(" ", "");
         String newDisplayName = meta.getDisplayName().toLowerCase().replaceAll(" ", "");
         if(newDisplayName.contains(newName)) return true;
 
@@ -17,6 +33,68 @@ public final class SearchUtil
             {
                 String newLore = lore.toLowerCase().replaceAll(" ", "");
                 if(newLore.contains(newName))
+                {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+
+        return flag;
+    }
+
+    /**
+     * Search for a String in a piece of ItemMeta.
+     * This method searches the ItemMeta without generalizing the Strings.
+     * That means that capitalization, spacing, etc counts towards the search.
+     *
+     * Uses .contains() to compare strings
+     *
+     * @param meta ItemMeta to search through
+     * @param searchTerm The search term to use
+     * @return If search term was found in the ItemMeta or not
+     */
+    public static boolean searchMeta(ItemMeta meta, String searchTerm)
+    {
+        if(meta.getDisplayName().contains(searchTerm)) return true;
+
+        boolean flag = false;
+        if(meta.hasLore())
+        {
+            for(String lore : meta.getLore())
+            {
+                if(lore.contains(searchTerm))
+                {
+                    flag = true;
+                    break;
+                }
+            }
+        }
+
+        return flag;
+    }
+
+    /**
+     * Search for a String in a piece of ItemMeta.
+     * This method makes sure that the item's display name or a single lore string
+     * matches the search term exactly.
+     *
+     * Uses .equals() to compare strings
+     *
+     * @param meta ItemMeta to search through
+     * @param searchTerm The search term to use
+     * @return If search term was found in the ItemMeta or not
+     */
+    public static boolean searchMetaExact(ItemMeta meta, String searchTerm)
+    {
+        if(meta.getDisplayName().equals(searchTerm)) return true;
+
+        boolean flag = false;
+        if(meta.hasLore())
+        {
+            for(String lore : meta.getLore())
+            {
+                if(lore.equals(searchTerm))
                 {
                     flag = true;
                     break;

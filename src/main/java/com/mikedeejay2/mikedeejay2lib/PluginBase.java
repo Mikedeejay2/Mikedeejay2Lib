@@ -1,32 +1,29 @@
 package com.mikedeejay2.mikedeejay2lib;
 
 import com.mikedeejay2.mikedeejay2lib.commands.AbstractCommandManager;
+import com.mikedeejay2.mikedeejay2lib.file.FileManager;
 import com.mikedeejay2.mikedeejay2lib.language.LangManager;
 import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
-import com.mikedeejay2.mikedeejay2lib.file.yaml.YamlBase;
 import org.bukkit.plugin.java.JavaPlugin;
 
 public class PluginBase extends JavaPlugin
 {
     protected static PluginBase instance;
     protected int[] MCVersion;
-    protected YamlBase config;
-    protected LangManager lang;
+    protected FileManager fileManager;
+    protected LangManager langManager;
     protected AbstractCommandManager commandManager;
 
     public PluginBase()
+    {}
+
+    @Override
+    public void onEnable()
     {
         setInstance(this);
-        this.lang = new LangManager();
-    }
-
-    public void onEnable(YamlBase config, AbstractCommandManager commandManager, String baseCommand)
-    {
-        this.config = config;
-        this.commandManager = commandManager;
         this.MCVersion = MinecraftVersion.getMCVersion();
-        this.commandManager.setCommandName(baseCommand);
-        commandManager.setup();
+        this.langManager = new LangManager();
+        this.fileManager = new FileManager();
     }
 
     @Override
@@ -50,18 +47,24 @@ public class PluginBase extends JavaPlugin
         return MCVersion;
     }
 
-    public YamlBase config()
+    public FileManager fileManager()
     {
-        return config;
+        return fileManager;
     }
 
-    public LangManager lang()
+    public LangManager langManager()
     {
-        return lang;
+        return langManager;
     }
 
     public AbstractCommandManager commandManager()
     {
         return commandManager;
+    }
+
+    protected void setCommandManager(AbstractCommandManager commandManager, String commandName)
+    {
+        this.commandManager = commandManager;
+        commandManager.setCommandName(commandName);
     }
 }

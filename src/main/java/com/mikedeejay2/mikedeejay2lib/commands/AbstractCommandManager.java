@@ -6,15 +6,16 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.*;
 
+/**
+ * Manages a command with subcommands
+ */
 public abstract class AbstractCommandManager implements CommandExecutor
 {
-    protected ArrayList<AbstractSubCommand> commands = new ArrayList<AbstractSubCommand>();
     protected static final PluginBase plugin = PluginBase.getInstance();
+
+    protected HashMap<String, AbstractSubCommand> commands = new HashMap<>();
     private CustomTabCompleter completer;
 
     public String main;
@@ -62,7 +63,7 @@ public abstract class AbstractCommandManager implements CommandExecutor
 
             if(target == null)
             {
-                Chat.sendMessage(sender, "&c" + plugin.lang().getText(sender, "simplestack.errors.invalid_subcommand"));
+                Chat.sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "command.errors.invalid_subcommand"));
                 return true;
             }
 
@@ -78,7 +79,7 @@ public abstract class AbstractCommandManager implements CommandExecutor
             }
             catch(Exception e)
             {
-                Chat.sendMessage(sender, "&c" + plugin.lang().getText(sender, "simplestack.errors.general"));
+                Chat.sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "command.errors.general"));
                 e.printStackTrace();
             }
         }
@@ -94,31 +95,7 @@ public abstract class AbstractCommandManager implements CommandExecutor
      */
     public AbstractSubCommand get(String name)
     {
-        Iterator<AbstractSubCommand> subcommands = this.commands.iterator();
-
-        while(subcommands.hasNext())
-        {
-            AbstractSubCommand sc = (AbstractSubCommand)subcommands.next();
-
-            if(sc.name().equalsIgnoreCase(name))
-            {
-                return sc;
-            }
-
-            String[] aliases;
-            int length = (aliases = sc.aliases()).length;
-
-            for(int var5 = 0; var5 < length; ++var5)
-            {
-                String alias = aliases[var5];
-
-                if(name.equalsIgnoreCase(alias))
-                {
-                    return sc;
-                }
-            }
-        }
-        return null;
+        return commands.get(name);
     }
 
     /**
@@ -130,7 +107,7 @@ public abstract class AbstractCommandManager implements CommandExecutor
     public String[] getAllCommandStrings(boolean aliases)
     {
         ArrayList<String> strings = new ArrayList<>();
-        for(AbstractSubCommand command : commands)
+        for(AbstractSubCommand command : commands.values())
         {
             strings.add(command.name());
             if(aliases) Collections.addAll(strings, command.aliases());
