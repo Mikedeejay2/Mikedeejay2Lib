@@ -32,14 +32,14 @@ public class YamlFile extends DataFile
     @Override
     public boolean loadFromJar()
     {
-        isLoaded = YamlFileIO.loadYamlConfigFromJar(yamlFile, file.getPath());
+        isLoaded = YamlFileIO.loadYamlConfigFromJar(yamlFile, filePath);
         return isLoaded;
     }
 
     @Override
     public boolean saveToDisk()
     {
-        return FileIO.saveFile(file, true);
+        return YamlFileIO.saveYamlConfig(yamlFile, file);
     }
 
     @Override

@@ -147,6 +147,7 @@ public class FileIO
     {
         try
         {
+            if(!file.exists()) file.createNewFile();
             FileInputStream inputStream = new FileInputStream(file);
             return saveFile(file, inputStream, replace);
         }
@@ -186,6 +187,7 @@ public class FileIO
         {
             if (!file.exists() || replace)
             {
+                if(!file.exists()) file.createNewFile();
                 OutputStream output = new FileOutputStream(file);
                 byte[] buffer = new byte[1024];
                 int length;
