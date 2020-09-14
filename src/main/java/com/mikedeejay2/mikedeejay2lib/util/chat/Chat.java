@@ -17,7 +17,7 @@ import java.util.Arrays;
 public final class Chat
 {
     public static final PluginBase plugin = PluginBase.getInstance();
-    public static String pluginString = null;
+    public static String pluginString = plugin.getName();
 
     /**
      *
@@ -79,7 +79,7 @@ public final class Chat
      */
     public static String getTitleString()
     {
-        return "&b[&9" + plugin.langManager().getText("title") + "&b] &r";
+        return "&b[&9" + pluginString + "&b] &r";
     }
 
     /**
@@ -91,7 +91,7 @@ public final class Chat
      */
     public static String getTitleString(CommandSender sender)
     {
-        return "&b[&9" + plugin.langManager().getText(sender, "title") + "&b] &r";
+        return "&b[&9" + pluginString + "&b] &r";
     }
 
     /**

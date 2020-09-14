@@ -46,14 +46,14 @@ public class JsonFile extends DataFile
     public boolean loadFromDisk()
     {
         jsonObject = JsonFileIO.loadJsonObjectFromDisk(file);
-        return jsonObject != null;
+        return file.exists();
     }
 
     @Override
     public boolean loadFromJar()
     {
         jsonObject = JsonFileIO.loadJsonObjectFromJar(filePath);
-        return jsonObject != null;
+        return FileIO.getInputStreamFromJar(filePath) != null;
     }
 
     @Override

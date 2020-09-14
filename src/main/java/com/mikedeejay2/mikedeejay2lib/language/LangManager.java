@@ -31,17 +31,6 @@ public class LangManager
     public LangManager()
     {
         englishLang = "en_us";
-        DataFile config = plugin.fileManager().getDataFile("config.yml");
-        if(config instanceof DefaultLangProvider)
-        {
-            DefaultLangProvider langProvider = (DefaultLangProvider) config;
-            setDefaultLang(langProvider.getDefaultLang());
-        }
-        else
-        {
-            setDefaultLang(englishLang);
-        }
-        loadLangFileDefaultLang(defaultLang);
         loadLangFile(englishLang);
     }
 
@@ -52,9 +41,10 @@ public class LangManager
      *
      * @param defaultLang The locale to set the defaultLang to
      */
-    public static void setDefaultLang(String defaultLang)
+    public void setDefaultLang(String defaultLang)
     {
         LangManager.defaultLang = defaultLang;
+        loadLangFileDefaultLang(defaultLang);
     }
 
     /**

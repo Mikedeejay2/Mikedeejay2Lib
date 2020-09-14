@@ -41,7 +41,7 @@ public final class JsonFileIO
         }
         catch(Exception e)
         {
-            FileIO.logFileCouldNotBeLoaded(file.getPath(), e);
+            FileIO.logFileCouldNotBeLoaded(file.getPath(), e, false);
         }
         return json;
     }
@@ -62,7 +62,7 @@ public final class JsonFileIO
         }
         catch(Exception e)
         {
-            FileIO.logFileCouldNotBeLoaded(filePath, e);
+            FileIO.logFileCouldNotBeLoaded(filePath, e, true);
         }
         return json;
     }

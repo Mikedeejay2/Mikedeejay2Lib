@@ -26,7 +26,7 @@ public final class YamlFileIO
         }
         catch(Exception e)
         {
-            FileIO.logFileCouldNotBeLoaded(file.getPath(), e);
+            FileIO.logFileCouldNotBeLoaded(file.getPath(), e, false);
             return false;
         }
         return true;
@@ -48,7 +48,7 @@ public final class YamlFileIO
         }
         catch(Exception e)
         {
-            FileIO.logFileCouldNotBeLoaded(filePath, e);
+            FileIO.logFileCouldNotBeLoaded(filePath, e, true);
             return false;
         }
         return true;

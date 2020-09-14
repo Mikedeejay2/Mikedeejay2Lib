@@ -15,7 +15,7 @@ public abstract class AbstractCommandManager implements CommandExecutor
 {
     protected static final PluginBase plugin = PluginBase.getInstance();
 
-    protected HashMap<String, AbstractSubCommand> commands = new HashMap<>();
+    protected ArrayList<AbstractSubCommand> commands = new ArrayList<>();
     private CustomTabCompleter completer;
 
     public String main;
@@ -95,7 +95,31 @@ public abstract class AbstractCommandManager implements CommandExecutor
      */
     public AbstractSubCommand get(String name)
     {
-        return commands.get(name);
+        Iterator<AbstractSubCommand> subcommands = this.commands.iterator();
+
+        while(subcommands.hasNext())
+        {
+            AbstractSubCommand sc = (AbstractSubCommand)subcommands.next();
+
+            if(sc.name().equalsIgnoreCase(name))
+            {
+                return sc;
+            }
+
+            String[] aliases;
+            int length = (aliases = sc.aliases()).length;
+
+            for(int var5 = 0; var5 < length; ++var5)
+            {
+                String alias = aliases[var5];
+
+                if(name.equalsIgnoreCase(alias))
+                {
+                    return sc;
+                }
+            }
+        }
+        return null;
     }
 
     /**
@@ -107,7 +131,7 @@ public abstract class AbstractCommandManager implements CommandExecutor
     public String[] getAllCommandStrings(boolean aliases)
     {
         ArrayList<String> strings = new ArrayList<>();
-        for(AbstractSubCommand command : commands.values())
+        for(AbstractSubCommand command : commands)
         {
             strings.add(command.name());
             if(aliases) Collections.addAll(strings, command.aliases());

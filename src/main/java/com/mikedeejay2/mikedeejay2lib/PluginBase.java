@@ -66,5 +66,6 @@ public class PluginBase extends JavaPlugin
     {
         this.commandManager = commandManager;
         commandManager.setCommandName(commandName);
+        commandManager.setup();
     }
 }

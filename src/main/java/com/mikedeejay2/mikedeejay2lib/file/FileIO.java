@@ -64,7 +64,7 @@ public class FileIO
         }
         catch(Exception e)
         {
-            logFileCouldNotBeLoaded(filePath, e);
+            logFileCouldNotBeLoaded(filePath, e, true);
         }
         return reader;
     }
@@ -84,7 +84,7 @@ public class FileIO
         }
         catch(Exception e)
         {
-            logFileCouldNotBeLoaded(file.getPath(), e);
+            logFileCouldNotBeLoaded(file.getPath(), e, false);
         }
         return reader;
     }
@@ -105,7 +105,7 @@ public class FileIO
         }
         catch(Exception e)
         {
-            logFileCouldNotBeLoaded(file.getPath(), e);
+            logFileCouldNotBeLoaded(file.getPath(), e, false);
         }
         return inputStream;
     }
@@ -152,7 +152,7 @@ public class FileIO
         }
         catch(Exception e)
         {
-            logFileCouldNotBeLoaded(file.getPath(), e);
+            logFileCouldNotBeLoaded(file.getPath(), e, false);
         }
         return false;
     }
@@ -211,9 +211,16 @@ public class FileIO
      * @param filePath Path to print
      * @param exception The exception that was thrown
      */
-    public static void logFileCouldNotBeLoaded(String filePath, Exception exception)
+    public static void logFileCouldNotBeLoaded(String filePath, Exception exception, boolean silence)
     {
-        plugin.getLogger().log(Level.SEVERE, "The file \"" + filePath + "\" could not be loaded!", exception);
+        if(silence)
+        {
+            plugin.getLogger().log(Level.SEVERE, "The file \"" + filePath + "\" could not be loaded!");
+        }
+        else
+        {
+            plugin.getLogger().log(Level.SEVERE, "The file \"" + filePath + "\" could not be loaded!", exception);
+        }
     }
 
     /**
