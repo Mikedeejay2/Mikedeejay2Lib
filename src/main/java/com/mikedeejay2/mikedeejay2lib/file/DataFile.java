@@ -117,4 +117,5 @@ public abstract class DataFile
     public abstract boolean loadFromJar();
     public abstract boolean saveToDisk();
     public abstract boolean delete();
+    public abstract boolean updateFromJar();
 }

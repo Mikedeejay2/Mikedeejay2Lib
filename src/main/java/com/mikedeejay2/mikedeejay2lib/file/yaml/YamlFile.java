@@ -3,21 +3,21 @@ package com.mikedeejay2.mikedeejay2lib.file.yaml;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.file.DataFile;
 import com.mikedeejay2.mikedeejay2lib.file.FileIO;
-import org.bukkit.configuration.file.YamlConfiguration;
+import org.yaml.snakeyaml.Yaml;
 
 public class YamlFile extends DataFile
 {
     protected static final PluginBase plugin = PluginBase.getInstance();
 
-    protected YamlConfiguration yamlFile;
+    protected EnhancedYaml yamlFile;
 
     public YamlFile(String filePath)
     {
         super(filePath);
-        yamlFile = new YamlConfiguration();
+        yamlFile = new EnhancedYaml();
     }
 
-    public YamlConfiguration getYamlConfig()
+    public EnhancedYaml getYamlConfig()
     {
         return yamlFile;
     }
@@ -47,5 +47,11 @@ public class YamlFile extends DataFile
     {
         isLoaded = !FileIO.deleteFile(file);
         return !isLoaded;
+    }
+
+    @Override
+    public boolean updateFromJar()
+    {
+        return false;
     }
 }

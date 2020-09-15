@@ -2,11 +2,8 @@ package com.mikedeejay2.mikedeejay2lib.file.yaml;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.file.FileIO;
-import org.bukkit.configuration.file.YamlConfiguration;
 
-import java.io.File;
-import java.io.IOException;
-import java.io.Reader;
+import java.io.*;
 import java.util.logging.Level;
 
 /**
@@ -23,7 +20,7 @@ public final class YamlFileIO
      * @param file File that will be loaded
      * @return Whether load was successful or not
      */
-    public static boolean loadIntoYamlConfig(YamlConfiguration config, File file)
+    public static boolean loadIntoYamlConfig(EnhancedYaml config, File file)
     {
         try
         {
@@ -44,7 +41,7 @@ public final class YamlFileIO
      * @param filePath Path to the file. This should NOT include plugin.getDataFolder()
      * @return Whether load was successful or not
      */
-    public static boolean loadYamlConfigFromJar(YamlConfiguration config, String filePath)
+    public static boolean loadYamlConfigFromJar(EnhancedYaml config, String filePath)
     {
         Reader reader = FileIO.getReaderFromJar(filePath);
         try
@@ -59,13 +56,13 @@ public final class YamlFileIO
         return true;
     }
 
-    public static boolean saveYamlConfig(YamlConfiguration config, File file)
+    public static boolean saveYamlConfig(EnhancedYaml config, File file)
     {
         try
         {
             config.save(file);
         }
-        catch(IOException e)
+        catch(Exception e)
         {
             plugin.getLogger().log(Level.SEVERE, "Could not save " + file.getName() + " to " + file.getPath(), e);
             return false;

@@ -85,4 +85,10 @@ public class JsonFile extends DataFile
     {
         return false;
     }
+
+    @Override
+    public boolean updateFromJar()
+    {
+        return false;
+    }
 }

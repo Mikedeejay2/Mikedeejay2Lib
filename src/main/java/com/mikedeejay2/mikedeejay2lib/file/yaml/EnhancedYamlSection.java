@@ -13,7 +13,7 @@ import java.util.Set;
  * A configuration section with custom methods for saving and loading.
  * This mainly helps me with debugging because it's my class so I know how it works.
  */
-public class CustomYamlSection
+public class EnhancedYamlSection
 {
     protected static final PluginBase plugin = PluginBase.getInstance();
     // The path to the current Yaml section
@@ -21,16 +21,16 @@ public class CustomYamlSection
     // The section that this object is representing
     protected ConfigurationSection section;
     // The FileConfiguration that this section is a part of
-    protected YamlConfiguration file;
+    protected EnhancedYaml file;
 
     /**
      * Create a new CustomYamlSection from a YamlBase
      *
      * @param base YamlBase to use
      */
-    public CustomYamlSection(YamlFile base)
+    public EnhancedYamlSection(EnhancedYaml base)
     {
-        file = base.getYamlConfig();
+        file = base;
         ConfigurationSection currentSection = file.getDefaultSection();
         this.pathTo = "";
         this.section = currentSection;
@@ -43,7 +43,7 @@ public class CustomYamlSection
      * @param path Path that new section should be from
      * @param currentSection The current section (parent) of the new section
      */
-    public CustomYamlSection(String path, CustomYamlSection currentSection)
+    public EnhancedYamlSection(String path, EnhancedYamlSection currentSection)
     {
         file = currentSection.getCurrentFile();
         if(!currentSection.contains(path))
@@ -93,9 +93,9 @@ public class CustomYamlSection
      * @param path Path to section
      * @return The requested section
      */
-    public CustomYamlSection getSection(String path)
+    public EnhancedYamlSection getSection(String path)
     {
-        return new CustomYamlSection(path, this);
+        return new EnhancedYamlSection(path, this);
     }
 
     /**
@@ -145,7 +145,7 @@ public class CustomYamlSection
      *
      * @return This section's FileConfiguration
      */
-    public YamlConfiguration getCurrentFile()
+    public EnhancedYaml getCurrentFile()
     {
         return file;
     }
