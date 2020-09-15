@@ -7,6 +7,8 @@ import com.mikedeejay2.mikedeejay2lib.file.FileIO;
 
 /**
  * Wrapper class for a DataFile of type Json
+ *
+ * @author Mikedeejay2
  */
 public class JsonFile extends DataFile
 {
@@ -59,7 +61,7 @@ public class JsonFile extends DataFile
     @Override
     public boolean saveToDisk()
     {
-        return FileIO.saveFile(file, true);
+        return false;
     }
 
     @Override

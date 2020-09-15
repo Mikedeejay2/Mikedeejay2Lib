@@ -3,7 +3,6 @@ package com.mikedeejay2.mikedeejay2lib.file.yaml;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
@@ -12,6 +11,8 @@ import java.util.Set;
 /**
  * A configuration section with custom methods for saving and loading.
  * This mainly helps me with debugging because it's my class so I know how it works.
+ *
+ * @author Mikedeejay2
  */
 public class EnhancedYamlSection
 {

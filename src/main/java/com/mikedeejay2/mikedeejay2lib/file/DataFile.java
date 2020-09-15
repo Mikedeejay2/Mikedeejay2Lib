@@ -8,6 +8,8 @@ import java.io.File;
  * A data file is a file of any type that this plugin uses.
  * This class has multiple functions but it's main purpose it to
  * act as a base to structure all file types on.
+ *
+ * @author Mikedeejay2
  */
 public abstract class DataFile
 {
@@ -108,14 +110,60 @@ public abstract class DataFile
         return true;
     }
 
+    /**
+     * Reload this file.
+     * Unless this method is overloaded, this will only
+     * load from disk replacing the current information.
+     *
+     * @return If this operation was successful or not
+     */
     public boolean reload()
     {
         return loadFromDisk();
     }
 
+    /**
+     * Load this file from disk. The location that would be loaded is
+     * the plugin's data folder + the file path of this file
+     *
+     * @return If this operation was successful or not
+     */
     public abstract boolean loadFromDisk();
+
+    /**
+     * Load this file from this plugin's jar. The file MUST exist on
+     * the jar for this to work! This method does NOT save to disk, you
+     * must do that by calling saveToDisk();
+     *
+     * @return If this operation was successful or not
+     */
     public abstract boolean loadFromJar();
+
+    /**
+     * Save this file to disk. The file will be saved to this
+     * plugin's data folder + the file path.
+     *
+     * @return If this operation was successful or not
+     */
     public abstract boolean saveToDisk();
+
+    /**
+     * Delete this file from the disk. You should be checking that the
+     * file is on the disk before calling this method.
+     *
+     * @return If this operation was successful or not
+     */
     public abstract boolean delete();
+
+    /**
+     * Update this file from the jar, keeping existing values but adding any
+     * new values that the jar file's version has but the disk's version does
+     * not.
+     * <br>
+     * This is useful for configs, especially when a config is updated so that the
+     * user does not have to manually add new keys to the config.
+     *
+     * @return If this operation was successful or not
+     */
     public abstract boolean updateFromJar();
 }

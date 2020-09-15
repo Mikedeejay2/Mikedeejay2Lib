@@ -1,8 +1,13 @@
 package com.mikedeejay2.mikedeejay2lib.util.version;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 
+/**
+ * A util for getting this Minecraft server's version and turning it into an
+ * easily comparable array
+ *
+ * @author Mikedeejay2
+ */
 public final class MinecraftVersion
 {
     private static final PluginBase plugin = PluginBase.getInstance();

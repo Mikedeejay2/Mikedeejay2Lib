@@ -3,6 +3,11 @@ package com.mikedeejay2.mikedeejay2lib.util.math;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
+/**
+ * A util class for anything that manipulates vectors.
+ *
+ * @author Mikedeejay2 (I think, I looked at a lot of Spigot resource though)
+ */
 public final class MathUtil
 {
     /**

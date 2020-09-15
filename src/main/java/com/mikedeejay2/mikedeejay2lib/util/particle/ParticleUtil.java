@@ -8,6 +8,11 @@ import org.bukkit.entity.Entity;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
+/**
+ * A util for making particles do specific things
+ *
+ * @author Mikedeejay2 (I think, I looked at a lot of Spigot resources though)
+ */
 public final class ParticleUtil
 {
     private static PluginBase plugin = PluginBase.getInstance();

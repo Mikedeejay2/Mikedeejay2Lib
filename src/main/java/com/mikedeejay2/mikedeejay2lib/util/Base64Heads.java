@@ -3,6 +3,8 @@ package com.mikedeejay2.mikedeejay2lib.util;
 /**
  * A collection of Base64 head codes that I use a lot and need.
  * All of these were taken from https://minecraft-heads.com/
+ *
+ * @author Mikedeejay2
  */
 public final class Base64Heads
 {

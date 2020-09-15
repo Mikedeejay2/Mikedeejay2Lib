@@ -8,6 +8,8 @@ import java.util.logging.Level;
 
 /**
  * Util class for saving and loading YAML from and to disk.
+ *
+ * @author Mikedeejay2
  */
 public final class YamlFileIO
 {
@@ -56,6 +58,13 @@ public final class YamlFileIO
         return true;
     }
 
+    /**
+     * Save a yaml file to disk.
+     *
+     * @param config The EnhancedYaml file being saved
+     * @param file The file to save to
+     * @return Whether load was successful or not
+     */
     public static boolean saveYamlConfig(EnhancedYaml config, File file)
     {
         try

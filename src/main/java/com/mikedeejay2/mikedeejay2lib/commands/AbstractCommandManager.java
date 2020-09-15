@@ -10,6 +10,8 @@ import java.util.*;
 
 /**
  * Manages a command with subcommands
+ *
+ * @author Mikedeejay2 (Originally from a tutorial)
  */
 public abstract class AbstractCommandManager implements CommandExecutor
 {
@@ -27,6 +29,7 @@ public abstract class AbstractCommandManager implements CommandExecutor
 
     /**
      * Setup the command manager by initializing all subcommands
+     * This should only be called after AbstractCommandManager#setCommandName() has been called
      */
     public void setup()
     {
@@ -67,9 +70,7 @@ public abstract class AbstractCommandManager implements CommandExecutor
                 return true;
             }
 
-            ArrayList<String> arrayList = new ArrayList<String>();
-
-            arrayList.addAll(Arrays.asList(args));
+            ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(args));
 
             arrayList.remove(0);
 
@@ -95,12 +96,8 @@ public abstract class AbstractCommandManager implements CommandExecutor
      */
     public AbstractSubCommand get(String name)
     {
-        Iterator<AbstractSubCommand> subcommands = this.commands.iterator();
-
-        while(subcommands.hasNext())
+        for(AbstractSubCommand sc : this.commands)
         {
-            AbstractSubCommand sc = (AbstractSubCommand)subcommands.next();
-
             if(sc.name().equalsIgnoreCase(name))
             {
                 return sc;

@@ -4,6 +4,8 @@ import org.bukkit.command.CommandSender;
 
 /**
  * A base to all of the subcommands of all subcommands
+ *
+ * @author Mikedeejay2 (Originally from a tutorial)
  */
 public abstract class AbstractSubCommand
 {

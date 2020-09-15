@@ -2,6 +2,8 @@ package com.mikedeejay2.mikedeejay2lib.util.time;
 
 /**
  * Holds different conversions and helper methods for converting ticks to different time formats
+ *
+ * @author Mikedeejay2
  */
 public enum TimeType
 {

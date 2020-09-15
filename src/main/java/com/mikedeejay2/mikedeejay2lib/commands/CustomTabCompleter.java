@@ -11,6 +11,8 @@ import java.util.List;
 
 /**
  * Automatically tab completes any subcommand that has been added to the command manager
+ *
+ * @author Mikedeejay2
  */
 public class CustomTabCompleter implements TabCompleter
 {

@@ -1,18 +1,27 @@
 package com.mikedeejay2.mikedeejay2lib.file.yaml;
 
-import com.mikedeejay2.mikedeejay2lib.file.FileIO;
-import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
-import org.apache.commons.lang.CharUtils;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.yaml.snakeyaml.Yaml;
 
-import java.io.IOException;
 import java.util.*;
 
+/**
+ * This Enhanced Yaml class inherits YamlConfiguration and is meant to be
+ * a middle layer that adds extra processing and features to the YamlConfiguration
+ * class.
+ * <br>
+ * The main things that this class does is
+ * <ul>
+ *     <li>Adds the ability to add comments above keys in a yaml file</li>
+ *     <li>Adds the ability to update the yaml file on disk new keys found in the
+ *     yaml file in the plugin's jar.</li>
+ * </ul>
+ *
+ * @author Mikedeejay2
+ */
 public class EnhancedYaml extends YamlConfiguration
 {
-    // Path to Comment
+    // Map that stores paths to comments and the comments themselves, used when saving comments to disk
     private Map<String, String> comments;
 
     public EnhancedYaml()
@@ -20,6 +29,13 @@ public class EnhancedYaml extends YamlConfiguration
         comments = new HashMap<>();
     }
 
+    /**
+     * This is an override of the saveToString class to implement
+     * comments anywhere in the file. Where comments are located,
+     * the comment is added to the String that will be returned.
+     *
+     * @return The String with the added comments
+     */
     @Override
     public String saveToString()
     {
@@ -59,6 +75,15 @@ public class EnhancedYaml extends YamlConfiguration
         return newStr.toString();
     }
 
+    /**
+     * This method overrides the loadFromString method so that
+     * comment locations from the file will be read and stored in
+     * this class so that when the file is saved later the comments will
+     * stay in their correct place.
+     *
+     * @param contents Original contents of the yaml file without comments.
+     * @throws InvalidConfigurationException If there is an error in the yaml file, an InvalidConfigurationException will be thrown
+     */
     @Override
     public void loadFromString(String contents) throws InvalidConfigurationException
     {
@@ -86,6 +111,15 @@ public class EnhancedYaml extends YamlConfiguration
         }
     }
 
+    /**
+     * Update this yaml file based on a yaml file in this plugin's jar file.
+     * It is important that you know that the file in the plugin's jar exists
+     * before attempting to update, otherwise nothing will happen and you will
+     * have wasted a small amount of processing power on doing nothing.
+     *
+     * @param filePath The path to the file in the jar to update with.
+     * @return Whether the update and loading of the file from the jar was successful.
+     */
     public boolean updateFromJar(String filePath)
     {
         EnhancedYaml yaml = new EnhancedYaml();
@@ -119,9 +153,16 @@ public class EnhancedYaml extends YamlConfiguration
         return true;
     }
 
-    private String removeComments(String header)
+    /**
+     * Helper method to take contents of the yaml file and remove
+     * all of the contents (aka that annoying header that was duplicating the top comment)
+     *
+     * @param contents Yaml file contents to be processed
+     * @return The string of contents but without the comments
+     */
+    private String removeComments(String contents)
     {
-        String[] lines = header.split("\n");
+        String[] lines = contents.split("\n");
 
         StringBuilder newHeader = new StringBuilder();
         for(int i = 0; i < lines.length; i++)
@@ -134,6 +175,15 @@ public class EnhancedYaml extends YamlConfiguration
         return newHeader.toString();
     }
 
+    /**
+     * Get the path of a new key using several different params
+     *
+     * @param currentPath The current path to the key that will be modified to reach the new path
+     * @param key The key (name of the key) to get the current path for
+     * @param previousDeepness The previous deepness (layer) that the iterator was at
+     * @param deepness THe current deepness (layer) that the iterator is at
+     * @return The String of the path (ex. "my.new.path")
+     */
     private String getPath(String currentPath, String key, int previousDeepness, int deepness)
     {
         String newCurPath = currentPath;
@@ -146,6 +196,14 @@ public class EnhancedYaml extends YamlConfiguration
         return newCurPath;
     }
 
+    /**
+     * Compiles a comment for a specific key in the yaml file
+     *
+     * @param lines All of the lines of the yaml file
+     * @param index The index that this method will be getting the comments for
+     * @param startingCommentIndex The starting comment index, the first line that the comments start on
+     * @return The String of comments
+     */
     private String compileComments(List<String> lines, int index, int startingCommentIndex)
     {
         StringBuilder commentsBuilder = new StringBuilder();
@@ -157,6 +215,13 @@ public class EnhancedYaml extends YamlConfiguration
         return commentsBuilder.toString();
     }
 
+    /**
+     * Get the index that a comment starts on via backtracking
+     *
+     * @param lines All lines of the yaml file including comments
+     * @param index The index that this method will be getting the starting comment index for
+     * @return The starting comment index in int form
+     */
     private int getStartingCommentIndex(List<String> lines, int index)
     {
         int startingCommentIndex = -1;
@@ -169,6 +234,13 @@ public class EnhancedYaml extends YamlConfiguration
         return startingCommentIndex;
     }
 
+    /**
+     * Go back a certain amount of paths to get the right path
+     *
+     * @param currentPath The String for the current path
+     * @param amountToRegress The amount of directories to backtrack on
+     * @return The new path
+     */
     private String regressPath(String currentPath, int amountToRegress)
     {
         String[] splitStr = currentPath.split("\\.");
@@ -181,17 +253,29 @@ public class EnhancedYaml extends YamlConfiguration
         return newStr.toString();
     }
 
-    private String getKey(String str)
+    /**
+     * Simple helper method to get a key from a single line
+     *
+     * @param line Line to get key from, this line should be confirmed to have a key in it
+     * @return The key in String format
+     */
+    private String getKey(String line)
     {
-        return str.substring(0, str.indexOf(":"));
+        return line.substring(0, line.indexOf(":"));
     }
 
-    private int getDeepness(String str)
+    /**
+     * Get the deepness of a line by counting spaces
+     *
+     * @param line The line to get the deepness for
+     * @return The deepness in int form
+     */
+    private int getDeepness(String line)
     {
         float deepness = 0;
-        for(int i = 0; i < str.length(); i++)
+        for(int i = 0; i < line.length(); i++)
         {
-            if(str.charAt(i) != ' ') break;
+            if(line.charAt(i) != ' ') break;
             deepness += 0.5f;
         }
         return (int)deepness;

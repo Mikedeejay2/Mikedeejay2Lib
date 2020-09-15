@@ -1,9 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.language;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.file.DataFile;
 import com.mikedeejay2.mikedeejay2lib.file.json.JsonFile;
-import com.mikedeejay2.mikedeejay2lib.file.yaml.YamlFile;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -12,6 +10,8 @@ import java.util.HashMap;
 /**
  * Manages lang files(json).
  * If lang files are used, this class is used.
+ *
+ * @author Mikedeejay2
  */
 public class LangManager
 {

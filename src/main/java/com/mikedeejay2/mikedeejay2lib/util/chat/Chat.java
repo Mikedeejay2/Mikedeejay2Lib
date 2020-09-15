@@ -14,6 +14,11 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.Arrays;
 
+/**
+ * A util class for anything to do with text in Minecraft
+ *
+ * @author Mikedeejay2
+ */
 public final class Chat
 {
     public static final PluginBase plugin = PluginBase.getInstance();

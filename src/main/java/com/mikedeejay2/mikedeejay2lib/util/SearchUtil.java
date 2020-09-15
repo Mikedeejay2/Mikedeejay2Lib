@@ -5,6 +5,8 @@ import org.bukkit.inventory.meta.ItemMeta;
 /**
  * Class for searching through different things to see if a piece of data exists
  * inside of it.
+ *
+ * @author Mikedeejay2
  */
 public final class SearchUtil
 {

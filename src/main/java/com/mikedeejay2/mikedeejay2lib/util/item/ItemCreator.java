@@ -13,9 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
-// Item Creator creates items
-// It should not be instantiated, therefore it's abstract.
-public class ItemCreator
+/**
+ * A util class for creating items
+ *
+ * @author Mikedeejay2
+ */
+public final class ItemCreator
 {
     /**
      * Create an item based off of several arguments.

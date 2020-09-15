@@ -1,9 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.file;
 
-import com.google.gson.JsonObject;
-import com.google.gson.JsonParser;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import org.bukkit.configuration.file.YamlConfiguration;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -11,6 +8,8 @@ import java.util.logging.Level;
 
 /**
  * Simple util class for saving and loading a file
+ *
+ * @author Mikedeejay2
  */
 public class FileIO
 {
@@ -122,40 +121,6 @@ public class FileIO
         InputStream inputStream = getInputStreamFromJar(filePath);
         File file = new File(plugin.getDataFolder(), filePath);
         return saveFile(file, inputStream, replace);
-    }
-
-    /**
-     * Save the file to the requested file path
-     *
-     * @param filePath Path to the file. This should NOT include plugin.getDataFolder()
-     * @param replace Replace the existing file or not
-     * @return If save was successful or not
-     */
-    public static boolean saveFile(String filePath, boolean replace)
-    {
-        return saveFile(new File(plugin.getDataFolder(), filePath), replace);
-    }
-
-    /**
-     * Save the file to the requested file path
-     *
-     * @param file The file to save to
-     * @param replace Replace the existing file or not
-     * @return If save was successful or not
-     */
-    public static boolean saveFile(File file, boolean replace)
-    {
-        try
-        {
-            if(!file.exists()) file.createNewFile();
-            FileInputStream inputStream = new FileInputStream(file);
-            return saveFile(file, inputStream, replace);
-        }
-        catch(Exception e)
-        {
-            logFileCouldNotBeLoaded(file.getPath(), e, false);
-        }
-        return false;
     }
 
     /**

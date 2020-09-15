@@ -15,6 +15,8 @@ import org.bukkit.scheduler.BukkitRunnable;
 /**
  * This is a really weird helper method for turning entities into floating arrows.
  * Please, don't ask why because I don't know either.
+ *
+ * @author Mikedeejay2
  */
 public final class MakeConfusedArrows
 {
