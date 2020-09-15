@@ -143,7 +143,6 @@ public class EnhancedYaml extends YamlConfiguration
         }
         if(!newCurPath.isEmpty()) newCurPath += ".";
         newCurPath += key;
-        Chat.debug(newCurPath);
         return newCurPath;
     }
 
