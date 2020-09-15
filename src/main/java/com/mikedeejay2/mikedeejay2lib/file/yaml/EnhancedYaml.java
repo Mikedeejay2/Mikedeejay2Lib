@@ -58,7 +58,7 @@ public class EnhancedYaml extends YamlConfiguration
     @Override
     public void loadFromString(String contents) throws InvalidConfigurationException
     {
-        super.loadFromString(contents);
+        super.loadFromString(removeComments(contents));
         List<String> lines = new ArrayList<>(Arrays.asList(contents.split("\n")));
 
         String currentPath = "";
@@ -80,6 +80,21 @@ public class EnhancedYaml extends YamlConfiguration
             String comment = compileComments(lines, index, startingCommentIndex);
             comments.put(currentPath, comment);
         }
+    }
+
+    private String removeComments(String header)
+    {
+        String[] lines = header.split("\n");
+
+        StringBuilder newHeader = new StringBuilder();
+        for(int i = 0; i < lines.length; i++)
+        {
+            String line = lines[i];
+            String trimmed = line.trim();
+            if(trimmed.startsWith("#")) continue;
+            newHeader.append(line).append("\n");
+        }
+        return newHeader.toString();
     }
 
     private String getPath(String currentPath, String key, int previousDeepness, int deepness)
