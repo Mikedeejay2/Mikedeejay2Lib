@@ -1,9 +1,13 @@
 package com.mikedeejay2.mikedeejay2lib.file.yaml;
 
+import com.mikedeejay2.mikedeejay2lib.file.FileIO;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import org.apache.commons.lang.CharUtils;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
+import org.yaml.snakeyaml.Yaml;
 
+import java.io.IOException;
 import java.util.*;
 
 public class EnhancedYaml extends YamlConfiguration
@@ -82,6 +86,39 @@ public class EnhancedYaml extends YamlConfiguration
         }
     }
 
+    public boolean updateFromJar(String filePath)
+    {
+        EnhancedYaml yaml = new EnhancedYaml();
+        boolean loadSuccess = YamlFileIO.loadYamlConfigFromJar(yaml, filePath);
+        if(!loadSuccess) return false;
+        String contents = yaml.saveToString();
+        List<String> lines = new ArrayList<>(Arrays.asList(contents.split("\n")));
+
+        String currentPath = "";
+        int previousDeepness = 0;
+        int index = 0;
+        for(String line : lines)
+        {
+            ++index;
+            String trimmed = line.trim();
+            if(line.isEmpty() || trimmed.startsWith("#") || !trimmed.contains(":")) continue;
+
+            int deepness = getDeepness(line);
+            String key = getKey(trimmed);
+            currentPath = getPath(currentPath, key, previousDeepness, deepness);
+            previousDeepness = deepness;
+
+            if(this.contains(currentPath)) continue;
+            this.set(currentPath, yaml.get(currentPath));
+
+            int startingCommentIndex = getStartingCommentIndex(lines, index);
+            if(startingCommentIndex == -1) continue;
+            String comment = compileComments(lines, index, startingCommentIndex);
+            comments.put(currentPath, comment);
+        }
+        return true;
+    }
+
     private String removeComments(String header)
     {
         String[] lines = header.split("\n");
@@ -100,15 +137,13 @@ public class EnhancedYaml extends YamlConfiguration
     private String getPath(String currentPath, String key, int previousDeepness, int deepness)
     {
         String newCurPath = currentPath;
-        if(previousDeepness > deepness)
+        if(previousDeepness >= deepness)
         {
-            newCurPath = regressPath(newCurPath, previousDeepness - deepness);
+            newCurPath = regressPath(newCurPath, previousDeepness+1 - deepness);
         }
-        else
-        {
-            if(!newCurPath.isEmpty()) newCurPath += ".";
-            newCurPath += key;
-        }
+        if(!newCurPath.isEmpty()) newCurPath += ".";
+        newCurPath += key;
+        Chat.debug(newCurPath);
         return newCurPath;
     }
 

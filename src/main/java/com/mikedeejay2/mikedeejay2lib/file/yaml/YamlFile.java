@@ -52,6 +52,6 @@ public class YamlFile extends DataFile
     @Override
     public boolean updateFromJar()
     {
-        return false;
+        return yamlFile.updateFromJar(filePath);
     }
 }
