@@ -1,4 +1,5 @@
 {
   "command.errors.invalid_subcommand": "错误：子命令不合法",
-  "command.errors.general": "发生了一个错误"
+  "command.errors.general": "发生了一个错误",
+  "generic.success": "成功！"
 }

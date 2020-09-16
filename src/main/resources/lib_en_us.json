@@ -1,4 +1,6 @@
 {
   "command.errors.invalid_subcommand": "Error: Invalid subcommand",
-  "command.errors.general": "An error has occurred"
+  "command.errors.general": "An error has occurred",
+  "errors.permission.nopermission": "You don't have permission to run this command!",
+  "generic.success": "Success!"
 }

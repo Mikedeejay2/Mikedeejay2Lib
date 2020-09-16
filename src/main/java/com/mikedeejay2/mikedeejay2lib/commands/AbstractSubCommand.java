@@ -40,4 +40,11 @@ public abstract class AbstractSubCommand
      * @return All aliases of subcommand
      */
     public abstract String[] aliases();
+
+    /**
+     * Get the permission that is required to run this command
+     *
+     * @return The permission that is required to run this command, null if none
+     */
+    public abstract String permission();
 }

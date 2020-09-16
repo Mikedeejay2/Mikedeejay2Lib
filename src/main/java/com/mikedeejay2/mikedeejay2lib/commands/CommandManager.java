@@ -5,6 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.permissions.Permission;
 
 import java.util.*;
 
@@ -68,12 +69,18 @@ public class CommandManager implements CommandExecutor
             if(target == null)
             {
                 Chat.sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "command.errors.invalid_subcommand"));
-                return true;
+                return false;
             }
 
             ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(args));
 
             arrayList.remove(0);
+
+            if(target.permission() != null && !sender.hasPermission(target.permission()))
+            {
+                Chat.sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "errors.permission.nopermission"));
+                return false;
+            }
 
             try
             {

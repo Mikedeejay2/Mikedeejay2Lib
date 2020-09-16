@@ -21,8 +21,8 @@ import java.util.Arrays;
  */
 public final class Chat
 {
-    public static final PluginBase plugin = PluginBase.getInstance();
-    public static String pluginString = plugin.getName();
+    private  static final PluginBase plugin = PluginBase.getInstance();
+    private static String pluginString = plugin.getName();
 
     /**
      *
