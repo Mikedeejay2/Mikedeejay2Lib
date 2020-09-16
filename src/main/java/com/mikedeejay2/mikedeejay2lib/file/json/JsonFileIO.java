@@ -29,9 +29,9 @@ public final class JsonFileIO extends PluginInstancer<PluginBase>
      * @param filePath Path to the file. This should NOT include plugin.getDataFolder()
      * @return The requested JsonObject
      */
-    public JsonObject loadJsonObjectFromDisk(String filePath)
+    public JsonObject loadJsonObjectFromDisk(String filePath, boolean throwErrors)
     {
-        return loadJsonObjectFromDisk(new File(plugin.getDataFolder(), filePath));
+        return loadJsonObjectFromDisk(new File(plugin.getDataFolder(), filePath), throwErrors);
     }
 
     /**
@@ -40,17 +40,17 @@ public final class JsonFileIO extends PluginInstancer<PluginBase>
      * @param file The file to be loaded
      * @return The requested JsonObject
      */
-    public JsonObject loadJsonObjectFromDisk(File file)
+    public JsonObject loadJsonObjectFromDisk(File file, boolean throwErrors)
     {
         JsonObject json = null;
         JsonParser parser = new JsonParser();
         try
         {
-            json = (JsonObject)parser.parse(fileIO.getReaderFromDisk(file));
+            json = (JsonObject)parser.parse(fileIO.getReaderFromDisk(file, throwErrors));
         }
         catch(Exception e)
         {
-            fileIO.logFileCouldNotBeLoaded(file.getPath(), e, false);
+            if(throwErrors) fileIO.logFileCouldNotBeLoaded(file.getPath(), e);
         }
         return json;
     }
@@ -61,17 +61,17 @@ public final class JsonFileIO extends PluginInstancer<PluginBase>
      * @param filePath The path to the json file in the jar=
      * @return THe requested JsonObject
      */
-    public JsonObject loadJsonObjectFromJar(String filePath)
+    public JsonObject loadJsonObjectFromJar(String filePath, boolean throwErrors)
     {
         JsonObject json = null;
         JsonParser parser = new JsonParser();
         try
         {
-            json = (JsonObject)parser.parse(fileIO.getReaderFromJar(filePath));
+            json = (JsonObject)parser.parse(fileIO.getReaderFromJar(filePath, throwErrors));
         }
         catch(Exception e)
         {
-            fileIO.logFileCouldNotBeLoaded(filePath, e, true);
+            if(throwErrors) fileIO.logFileCouldNotBeLoaded(filePath, e);
         }
         return json;
     }

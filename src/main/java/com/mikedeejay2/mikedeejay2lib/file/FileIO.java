@@ -36,9 +36,9 @@ public class FileIO extends PluginInstancer<PluginBase>
      * @param filePath Path to get InputStream from
      * @return The requested InputStream
      */
-    public InputStream getInputStreamFromDisk(String filePath)
+    public InputStream getInputStreamFromDisk(String filePath, boolean throwErrors)
     {
-        return getInputStreamFromDisk(new File(plugin.getDataFolder(), filePath));
+        return getInputStreamFromDisk(new File(plugin.getDataFolder(), filePath), throwErrors);
     }
 
     /**
@@ -47,9 +47,9 @@ public class FileIO extends PluginInstancer<PluginBase>
      * @param filePath The path to get the reader from
      * @return The requested Reader
      */
-    public Reader getReaderFromDisk(String filePath)
+    public Reader getReaderFromDisk(String filePath, boolean throwErrors)
     {
-        return getReaderFromDisk(new File(plugin.getDataFolder(), filePath));
+        return getReaderFromDisk(new File(plugin.getDataFolder(), filePath), throwErrors);
     }
 
     /**
@@ -58,7 +58,7 @@ public class FileIO extends PluginInstancer<PluginBase>
      * @param filePath Path to get the Reader from
      * @return The requested Reader
      */
-    public Reader getReaderFromJar(String filePath)
+    public Reader getReaderFromJar(String filePath, boolean throwErrors)
     {
         InputStreamReader reader = null;
         try
@@ -67,7 +67,7 @@ public class FileIO extends PluginInstancer<PluginBase>
         }
         catch(Exception e)
         {
-            logFileCouldNotBeLoaded(filePath, e, true);
+            if(throwErrors) logFileCouldNotBeLoaded(filePath, e);
         }
         return reader;
     }
@@ -78,7 +78,7 @@ public class FileIO extends PluginInstancer<PluginBase>
      * @param file The file to get the reader from
      * @return The requested reader
      */
-    public Reader getReaderFromDisk(File file)
+    public Reader getReaderFromDisk(File file, boolean throwErrors)
     {
         InputStreamReader reader = null;
         try
@@ -87,7 +87,7 @@ public class FileIO extends PluginInstancer<PluginBase>
         }
         catch(Exception e)
         {
-            logFileCouldNotBeLoaded(file.getPath(), e, false);
+            if(throwErrors) logFileCouldNotBeLoaded(file.getPath(), e);
         }
         return reader;
     }
@@ -98,7 +98,7 @@ public class FileIO extends PluginInstancer<PluginBase>
      * @param file File to get the InputStream from
      * @return The requested InputStream
      */
-    public InputStream getInputStreamFromDisk(File file)
+    public InputStream getInputStreamFromDisk(File file, boolean throwErrors)
     {
         FileInputStream inputStream = null;
         try
@@ -108,7 +108,7 @@ public class FileIO extends PluginInstancer<PluginBase>
         }
         catch(Exception e)
         {
-            logFileCouldNotBeLoaded(file.getPath(), e, false);
+            if(throwErrors) logFileCouldNotBeLoaded(file.getPath(), e);
         }
         return inputStream;
     }
@@ -120,11 +120,11 @@ public class FileIO extends PluginInstancer<PluginBase>
      * @param replace Replace existing file or not
      * @return If save was successful or not
      */
-    public boolean saveFileFromJar(String filePath, boolean replace)
+    public boolean saveFileFromJar(String filePath, boolean replace, boolean throwErrors)
     {
         InputStream inputStream = getInputStreamFromJar(filePath);
         File file = new File(plugin.getDataFolder(), filePath);
-        return saveFile(file, inputStream, replace);
+        return saveFile(file, inputStream, replace, throwErrors);
     }
 
     /**
@@ -135,9 +135,9 @@ public class FileIO extends PluginInstancer<PluginBase>
      * @param replace Replace the existing file or not
      * @return If save was successful or not
      */
-    public boolean saveFile(String filePath, InputStream input, boolean replace)
+    public boolean saveFile(String filePath, InputStream input, boolean replace, boolean throwErrors)
     {
-        return saveFile(new File(plugin.getDataFolder(), filePath), input, replace);
+        return saveFile(new File(plugin.getDataFolder(), filePath), input, replace, throwErrors);
     }
 
     /**
@@ -148,7 +148,7 @@ public class FileIO extends PluginInstancer<PluginBase>
      * @param replace Replace the existing file or not
      * @return If the save was successful or not
      */
-    public boolean saveFile(File file, InputStream input, boolean replace)
+    public boolean saveFile(File file, InputStream input, boolean replace, boolean throwErrors)
     {
         if (!file.exists()) file.mkdirs();
 
@@ -170,7 +170,7 @@ public class FileIO extends PluginInstancer<PluginBase>
         }
         catch (IOException ex)
         {
-            plugin.getLogger().log(Level.SEVERE, "Could not save " + file.getName() + " to " + file.getPath(), ex);
+            if(throwErrors) logFileCouldNotBeSaved(file.getPath(), ex);
             return false;
         }
         return true;
@@ -182,16 +182,14 @@ public class FileIO extends PluginInstancer<PluginBase>
      * @param filePath Path to print
      * @param exception The exception that was thrown
      */
-    public void logFileCouldNotBeLoaded(String filePath, Exception exception, boolean silence)
+    public void logFileCouldNotBeLoaded(String filePath, Exception exception)
     {
-        if(silence)
-        {
-            plugin.getLogger().log(Level.SEVERE, "The file \"" + filePath + "\" could not be loaded!");
-        }
-        else
-        {
-            plugin.getLogger().log(Level.SEVERE, "The file \"" + filePath + "\" could not be loaded!", exception);
-        }
+        plugin.getLogger().log(Level.SEVERE, "The file \"" + filePath + "\" could not be loaded!", exception);
+    }
+
+    public void logFileCouldNotBeSaved(String filePath, Exception exception)
+    {
+        plugin.getLogger().log(Level.SEVERE, "The file \"" + filePath + "\" could not be saved!", exception);
     }
 
     /**

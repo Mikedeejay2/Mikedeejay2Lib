@@ -128,7 +128,7 @@ public class EnhancedYaml extends YamlConfiguration
     public boolean updateFromJar(String filePath)
     {
         EnhancedYaml yaml = new EnhancedYaml(yamlFileIO);
-        boolean loadSuccess = yamlFileIO.loadYamlConfigFromJar(yaml, filePath);
+        boolean loadSuccess = yamlFileIO.loadYamlConfigFromJar(yaml, filePath, false);
         if(!loadSuccess) return false;
         String contents = yaml.saveToString();
         List<String> lines = new ArrayList<>(Arrays.asList(contents.split("\n")));

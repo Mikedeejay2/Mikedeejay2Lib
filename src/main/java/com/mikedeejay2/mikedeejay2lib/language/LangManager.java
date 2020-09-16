@@ -6,6 +6,7 @@ import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -17,11 +18,12 @@ import java.util.HashMap;
 public class LangManager extends PluginInstancer<PluginBase>
 {
     // The default language locale
-    protected final String englishLang;
+    protected final String englishLang = "en_us";
     private String defaultLang;
 
     // Hash map of lang locales to lang files
-    HashMap<String, JsonFile> langFiles = new HashMap<>();
+    protected HashMap<String, JsonFile> langFiles = new HashMap<>();
+    protected ArrayList<String> doNotLoad = new ArrayList<>();
 
     /**
      * Create a LangManager and load the default language (if any) and
@@ -30,7 +32,7 @@ public class LangManager extends PluginInstancer<PluginBase>
     public LangManager(PluginBase plugin)
     {
         super(plugin);
-        englishLang = "en_us";
+        loadLangFile(englishLang);
     }
 
     /**
@@ -54,10 +56,11 @@ public class LangManager extends PluginInstancer<PluginBase>
      */
     public boolean loadLangFile(String locale)
     {
-        if(locale == null) return false;
+        if(locale == null || doNotLoad.contains(locale)) return false;
         JsonFile file = new JsonFile(plugin, locale + ".json");
 
-        if(file.loadFromJar())
+        doNotLoad.add(locale);
+        if(file.loadFromJar(false))
         {
             langFiles.put(locale, file);
             return true;
@@ -75,7 +78,7 @@ public class LangManager extends PluginInstancer<PluginBase>
     public boolean loadLangFileDefaultLang(String locale)
     {
         boolean loaded = loadLangFile(locale);
-        if(!loaded)
+        if(!loaded && !locale.equals("en_us"))
         {
             defaultLang = englishLang;
             plugin.getLogger().warning("The default language specified in config.yml is not currently supported by this plugin. English will be used instead.");
@@ -322,7 +325,12 @@ public class LangManager extends PluginInstancer<PluginBase>
      */
     public String getTextLib(Player player, String path)
     {
-        return getText("lib_" + player.getLocale().toLowerCase(), path);
+        String text = getText("lib_" + player.getLocale().toLowerCase(), path);
+        if(text == null)
+        {
+            text = getText("lib_" + englishLang, path);
+        }
+        return text;
     }
 
     /**
@@ -333,7 +341,12 @@ public class LangManager extends PluginInstancer<PluginBase>
     {
         if(sender instanceof Player)
         {
-            return getText("lib_" + ((Player)sender).getLocale().toLowerCase(), path);
+            String text = getText("lib_" + ((Player)sender).getLocale().toLowerCase(), path);
+            if(text == null)
+            {
+                text = getText("lib_" + englishLang, path);
+            }
+            return text;
         }
         return getTextLib(path);
     }
@@ -360,7 +373,12 @@ public class LangManager extends PluginInstancer<PluginBase>
     {
         if(sender instanceof Player)
         {
-            return getText("lib_" + ((Player)sender).getLocale().toLowerCase(), path, toReplace, replacements);
+            String text = getText("lib_" + ((Player)sender).getLocale().toLowerCase(), path, toReplace, replacements);
+            if(text == null)
+            {
+                text = getText("lib_" + englishLang, path);
+            }
+            return text;
         }
         return getTextLib(path, toReplace, replacements);
     }
@@ -371,6 +389,11 @@ public class LangManager extends PluginInstancer<PluginBase>
      */
     public String getTextLib(Player player, String path, String[] toReplace, String[] replacements)
     {
-        return getText("lib_" + player.getLocale().toLowerCase(), path, toReplace, replacements);
+        String text = getText("lib_" + player.getLocale().toLowerCase(), path, toReplace, replacements);
+        if(text == null)
+        {
+            text = getText("lib_" + englishLang, path);
+        }
+        return text;
     }
 }

@@ -48,51 +48,33 @@ public class JsonFile extends DataFile
     }
 
     @Override
-    public boolean loadFromDisk()
+    public boolean loadFromDisk(boolean throwErrors)
     {
-        jsonObject = jsonFileIO.loadJsonObjectFromDisk(file);
+        jsonObject = jsonFileIO.loadJsonObjectFromDisk(file, throwErrors);
         return file.exists();
     }
 
     @Override
-    public boolean loadFromJar()
+    public boolean loadFromJar(boolean throwErrors)
     {
-        jsonObject = jsonFileIO.loadJsonObjectFromJar(filePath);
+        jsonObject = jsonFileIO.loadJsonObjectFromJar(filePath, throwErrors);
         return fileIO.getInputStreamFromJar(filePath) != null;
     }
 
     @Override
-    public boolean saveToDisk()
+    public boolean saveToDisk(boolean throwErrors)
     {
         return false;
     }
 
     @Override
-    public boolean resetFromJar()
+    public boolean delete(boolean throwErrors)
     {
         return false;
     }
 
     @Override
-    public boolean resetFromNew()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean reload()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean delete()
-    {
-        return false;
-    }
-
-    @Override
-    public boolean updateFromJar()
+    public boolean updateFromJar(boolean throwErrors)
     {
         return false;
     }

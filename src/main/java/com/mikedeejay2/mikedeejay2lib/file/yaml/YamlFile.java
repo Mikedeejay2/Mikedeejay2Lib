@@ -59,34 +59,34 @@ public class YamlFile extends DataFile
     }
 
     @Override
-    public boolean loadFromDisk()
+    public boolean loadFromDisk(boolean throwErrors)
     {
-        isLoaded = yamlFileIO.loadIntoYamlConfig(yamlFile, file);
+        isLoaded = yamlFileIO.loadIntoYamlConfig(yamlFile, file, throwErrors);
         return isLoaded;
     }
 
     @Override
-    public boolean loadFromJar()
+    public boolean loadFromJar(boolean throwErrors)
     {
-        isLoaded = yamlFileIO.loadYamlConfigFromJar(yamlFile, filePath);
+        isLoaded = yamlFileIO.loadYamlConfigFromJar(yamlFile, filePath, throwErrors);
         return isLoaded;
     }
 
     @Override
-    public boolean saveToDisk()
+    public boolean saveToDisk(boolean throwErrors)
     {
-        return yamlFileIO.saveYamlConfig(yamlFile, file);
+        return yamlFileIO.saveYamlConfig(yamlFile, file, throwErrors);
     }
 
     @Override
-    public boolean delete()
+    public boolean delete(boolean throwErrors)
     {
         isLoaded = !fileIO.deleteFile(file);
         return !isLoaded;
     }
 
     @Override
-    public boolean updateFromJar()
+    public boolean updateFromJar(boolean throwErrors)
     {
         return yamlFile.updateFromJar(filePath);
     }

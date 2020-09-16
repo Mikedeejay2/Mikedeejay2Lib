@@ -29,7 +29,7 @@ public final class YamlFileIO extends PluginInstancer<PluginBase>
      * @param file File that will be loaded
      * @return Whether load was successful or not
      */
-    public boolean loadIntoYamlConfig(EnhancedYaml config, File file)
+    public boolean loadIntoYamlConfig(EnhancedYaml config, File file, boolean throwErrors)
     {
         try
         {
@@ -37,7 +37,7 @@ public final class YamlFileIO extends PluginInstancer<PluginBase>
         }
         catch(Exception e)
         {
-            fileIO.logFileCouldNotBeLoaded(file.getPath(), e, false);
+            if(throwErrors) fileIO.logFileCouldNotBeLoaded(file.getPath(), e);
             return false;
         }
         return true;
@@ -50,16 +50,16 @@ public final class YamlFileIO extends PluginInstancer<PluginBase>
      * @param filePath Path to the file. This should NOT include plugin.getDataFolder()
      * @return Whether load was successful or not
      */
-    public boolean loadYamlConfigFromJar(EnhancedYaml config, String filePath)
+    public boolean loadYamlConfigFromJar(EnhancedYaml config, String filePath, boolean throwErrors)
     {
-        Reader reader = fileIO.getReaderFromJar(filePath);
+        Reader reader = fileIO.getReaderFromJar(filePath, throwErrors);
         try
         {
             config.load(reader);
         }
         catch(Exception e)
         {
-            fileIO.logFileCouldNotBeLoaded(filePath, e, false);
+            if(throwErrors) fileIO.logFileCouldNotBeLoaded(filePath, e);
             return false;
         }
         return true;
@@ -72,7 +72,7 @@ public final class YamlFileIO extends PluginInstancer<PluginBase>
      * @param file The file to save to
      * @return Whether load was successful or not
      */
-    public boolean saveYamlConfig(EnhancedYaml config, File file)
+    public boolean saveYamlConfig(EnhancedYaml config, File file, boolean throwErrors)
     {
         try
         {
@@ -80,7 +80,7 @@ public final class YamlFileIO extends PluginInstancer<PluginBase>
         }
         catch(Exception e)
         {
-            plugin.getLogger().log(Level.SEVERE, "Could not save " + file.getName() + " to " + file.getPath(), e);
+            if(throwErrors) fileIO.logFileCouldNotBeSaved(file.getPath(), e);
             return false;
         }
         return true;

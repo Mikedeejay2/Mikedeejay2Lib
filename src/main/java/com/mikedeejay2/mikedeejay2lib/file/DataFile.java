@@ -83,13 +83,14 @@ public abstract class DataFile extends PluginInstancer<PluginBase>
      *      <li>Save the new file to disk</li>
      * </ol>
      *
+     * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
      */
-    public boolean resetFromJar()
+    public boolean resetFromJar(boolean throwErrors)
     {
-        if(!delete()) return false;
-        if(!loadFromJar()) return false;
-        if(!saveToDisk()) return false;
+        if(!delete(throwErrors)) return false;
+        if(!loadFromJar(throwErrors)) return false;
+        if(!saveToDisk(throwErrors)) return false;
         return true;
     }
 
@@ -103,13 +104,14 @@ public abstract class DataFile extends PluginInstancer<PluginBase>
      *      <li>Save the new file to disk</li>
      * </ol>
      *
+     * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
      */
-    public boolean resetFromNew()
+    public boolean resetFromNew(boolean throwErrors)
     {
-        if(!delete()) return false;
-        if(!loadFromDisk()) return false;
-        if(!saveToDisk()) return false;
+        if(!delete(throwErrors)) return false;
+        if(!loadFromDisk(throwErrors)) return false;
+        if(!saveToDisk(throwErrors)) return false;
         return true;
     }
 
@@ -118,45 +120,50 @@ public abstract class DataFile extends PluginInstancer<PluginBase>
      * Unless this method is overloaded, this will only
      * load from disk replacing the current information.
      *
+     * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
      */
-    public boolean reload()
+    public boolean reload(boolean throwErrors)
     {
-        return loadFromDisk();
+        return loadFromDisk(throwErrors);
     }
 
     /**
      * Load this file from disk. The location that would be loaded is
      * the plugin's data folder + the file path of this file
      *
+     * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
      */
-    public abstract boolean loadFromDisk();
+    public abstract boolean loadFromDisk(boolean throwErrors);
 
     /**
      * Load this file from this plugin's jar. The file MUST exist on
      * the jar for this to work! This method does NOT save to disk, you
      * must do that by calling saveToDisk();
      *
+     * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
      */
-    public abstract boolean loadFromJar();
+    public abstract boolean loadFromJar(boolean throwErrors);
 
     /**
      * Save this file to disk. The file will be saved to this
      * plugin's data folder + the file path.
      *
+     * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
      */
-    public abstract boolean saveToDisk();
+    public abstract boolean saveToDisk(boolean throwErrors);
 
     /**
      * Delete this file from the disk. You should be checking that the
      * file is on the disk before calling this method.
      *
+     * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
      */
-    public abstract boolean delete();
+    public abstract boolean delete(boolean throwErrors);
 
     /**
      * Update this file from the jar, keeping existing values but adding any
@@ -168,5 +175,5 @@ public abstract class DataFile extends PluginInstancer<PluginBase>
      *
      * @return If this operation was successful or not
      */
-    public abstract boolean updateFromJar();
+    public abstract boolean updateFromJar(boolean throwErrors);
 }
