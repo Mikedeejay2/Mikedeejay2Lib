@@ -31,7 +31,7 @@ public class CustomTabCompleter implements TabCompleter
     @Override
     public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args)
     {
-        AbstractCommandManager manager = plugin.commandManager();
+        CommandManager manager = plugin.commandManager();
         if(!command.getName().equalsIgnoreCase(manager.main)) return null;
         ArrayList<String> commands = new ArrayList<>();
         switch(args.length)

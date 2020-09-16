@@ -13,7 +13,7 @@ import java.util.*;
  *
  * @author Mikedeejay2 (Originally from a tutorial)
  */
-public abstract class AbstractCommandManager implements CommandExecutor
+public class CommandManager implements CommandExecutor
 {
     protected static final PluginBase plugin = PluginBase.getInstance();
 
@@ -22,7 +22,7 @@ public abstract class AbstractCommandManager implements CommandExecutor
 
     public String main;
 
-    public AbstractCommandManager() {}
+    public CommandManager() {}
 
     // Add new subcommands here:
     // example: public String help = "help";
@@ -31,8 +31,9 @@ public abstract class AbstractCommandManager implements CommandExecutor
      * Setup the command manager by initializing all subcommands
      * This should only be called after AbstractCommandManager#setCommandName() has been called
      */
-    public void setup()
+    public void setup(String commandName)
     {
+        main = commandName;
         plugin.getCommand(main).setExecutor(this);
 
         completer = new CustomTabCompleter();
@@ -62,7 +63,7 @@ public abstract class AbstractCommandManager implements CommandExecutor
                 args[0] = "help";
             }
 
-            AbstractSubCommand target = this.get(args[0]);
+            AbstractSubCommand target = this.getSubcommand(args[0]);
 
             if(target == null)
             {
@@ -94,7 +95,7 @@ public abstract class AbstractCommandManager implements CommandExecutor
      * @param name Name of subcommand to get
      * @return The subcommand that corresponds to the name
      */
-    public AbstractSubCommand get(String name)
+    public AbstractSubCommand getSubcommand(String name)
     {
         for(AbstractSubCommand sc : this.commands)
         {
@@ -136,8 +137,33 @@ public abstract class AbstractCommandManager implements CommandExecutor
         return strings.toArray(new String[0]);
     }
 
-    public void setCommandName(String name)
+    /**
+     * Add a subcommand to the command manager
+     *
+     * @param subCommand The subcommand to add
+     */
+    public void addSubcommand(AbstractSubCommand subCommand)
     {
-        main = name;
+        this.commands.add(subCommand);
+    }
+
+    /**
+     * Remove a subcommand from the command manager based off of the subcommand's name
+     *
+     * @param name Name of the subcommand
+     */
+    public void removeSubCommand(String name)
+    {
+        commands.remove(getSubcommand(name));
+    }
+
+    /**
+     * Remove a subcommand from the command manager based off of the subcommand object
+     *
+     * @param subCommand The subcommand to remove
+     */
+    public void removeSubCommand(AbstractSubCommand subCommand)
+    {
+        commands.remove(subCommand);
     }
 }
