@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.language;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.file.json.JsonFile;
+import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -13,13 +14,11 @@ import java.util.HashMap;
  *
  * @author Mikedeejay2
  */
-public class LangManager
+public class LangManager extends PluginInstancer<PluginBase>
 {
-    private static final PluginBase plugin = PluginBase.getInstance();
-
     // The default language locale
-    private static String englishLang;
-    private static String defaultLang;
+    protected final String englishLang;
+    private String defaultLang;
 
     // Hash map of lang locales to lang files
     HashMap<String, JsonFile> langFiles = new HashMap<>();
@@ -28,10 +27,10 @@ public class LangManager
      * Create a LangManager and load the default language (if any) and
      * the english language (en_us)
      */
-    public LangManager()
+    public LangManager(PluginBase plugin)
     {
+        super(plugin);
         englishLang = "en_us";
-        loadLangFile(englishLang);
     }
 
     /**
@@ -43,7 +42,7 @@ public class LangManager
      */
     public void setDefaultLang(String defaultLang)
     {
-        LangManager.defaultLang = defaultLang;
+        this.defaultLang = defaultLang;
         loadLangFileDefaultLang(defaultLang);
     }
 
@@ -56,7 +55,7 @@ public class LangManager
     public boolean loadLangFile(String locale)
     {
         if(locale == null) return false;
-        JsonFile file = new JsonFile(locale + ".json");
+        JsonFile file = new JsonFile(plugin, locale + ".json");
 
         if(file.loadFromJar())
         {

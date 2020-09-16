@@ -1,5 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.commands;
 
+import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.command.CommandSender;
 
 /**
@@ -7,9 +9,12 @@ import org.bukkit.command.CommandSender;
  *
  * @author Mikedeejay2 (Originally from a tutorial)
  */
-public abstract class AbstractSubCommand
+public abstract class AbstractSubCommand<P extends PluginBase> extends PluginInstancer<P>
 {
-    public AbstractSubCommand() {}
+    public AbstractSubCommand(P plugin)
+    {
+        super(plugin);
+    }
 
     /**
      * When this subcommand is run, onCommand is run

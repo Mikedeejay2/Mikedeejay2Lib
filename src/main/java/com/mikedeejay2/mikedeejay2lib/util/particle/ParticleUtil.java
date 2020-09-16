@@ -5,6 +5,7 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.Vector;
 
@@ -15,8 +16,6 @@ import org.bukkit.util.Vector;
  */
 public final class ParticleUtil
 {
-    private static PluginBase plugin = PluginBase.getInstance();
-
     /**
      * Create a line of particles based on two locations
      *
@@ -58,7 +57,7 @@ public final class ParticleUtil
      * @param width The width that the particles spawn at
      * @param force Force the particles to be rendered even when outside of view distance
      */
-    public static void addParticleToEntity(Entity entity, Particle particle, long timeToLive, int count, float speed, float width, boolean force)
+    public static void addParticleToEntity(Plugin plugin, Entity entity, Particle particle, long timeToLive, int count, float speed, float width, boolean force)
     {
         if(particle == null) return;
         new BukkitRunnable()

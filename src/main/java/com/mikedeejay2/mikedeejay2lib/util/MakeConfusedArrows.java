@@ -8,6 +8,7 @@ import org.bukkit.entity.Arrow;
 import org.bukkit.entity.Bat;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.EntityType;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.potion.PotionEffect;
 import org.bukkit.potion.PotionEffectType;
 import org.bukkit.scheduler.BukkitRunnable;
@@ -20,8 +21,6 @@ import org.bukkit.scheduler.BukkitRunnable;
  */
 public final class MakeConfusedArrows
 {
-    private static final PluginBase plugin = PluginBase.getInstance();
-
     /**
      * This method spawns an arrow riding a bat to make a floating arrow illusion
      *
@@ -29,9 +28,9 @@ public final class MakeConfusedArrows
      * @param velocity The velocity of entity
      * @param time The amount of time before the arrow stops floating and drops to the ground
      */
-    public static void makeConfusedArrow(Entity entity, int velocity, int time)
+    public static void makeConfusedArrow(Plugin plugin, Entity entity, int velocity, int time)
     {
-        makeConfusedArrow(entity, null, velocity, time);
+        makeConfusedArrow(plugin, entity, null, velocity, time);
     }
 
     /**
@@ -42,7 +41,7 @@ public final class MakeConfusedArrows
      * @param velocity The velocity of entity
      * @param time The amount of time before the arrow stops floating and drops to the ground
      */
-    public static void makeConfusedArrow(Entity entity, Particle particle, int velocity, int time)
+    public static void makeConfusedArrow(Plugin plugin, Entity entity, Particle particle, int velocity, int time)
     {
         World world = entity.getWorld();
         Bat bat = (Bat) world.spawnEntity(entity.getLocation(), EntityType.BAT);
@@ -51,7 +50,7 @@ public final class MakeConfusedArrows
         bat.addPotionEffect(new PotionEffect(PotionEffectType.INVISIBILITY, 1000000, 0, false, false));
         Arrow arrow = world.spawnArrow(bat.getLocation(), entity.getVelocity().multiply(3).multiply(velocity), 0, 0);
         if(particle != null)
-            ParticleUtil.addParticleToEntity(arrow, particle, 600, 5, 0.05f, 0.05f, false);
+            ParticleUtil.addParticleToEntity(plugin, arrow, particle, 600, 5, 0.05f, 0.05f, false);
         bat.addPassenger(arrow);
         arrow.setRotation(entity.getLocation().getYaw(), entity.getLocation().getPitch());
         entity.remove();

@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.util.version;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 
 /**
  * A util for getting this Minecraft server's version and turning it into an
@@ -8,20 +9,26 @@ import com.mikedeejay2.mikedeejay2lib.PluginBase;
  *
  * @author Mikedeejay2
  */
-public final class MinecraftVersion
+public final class MinecraftVersion extends PluginInstancer<PluginBase>
 {
-    private static final PluginBase plugin = PluginBase.getInstance();
     // Holds the version string, like "git.paper-RC_03 (MC:1.16.2)" or something like that
-    private static final String versionString = plugin.getServer().getVersion();
+    private final String versionString;
     // An array of a Minecraft version like [1, 16, 3], you probably only care about version[1]
-    private static final int[] version = genMCVersion();
+    private final int[] version;
+
+    public MinecraftVersion(PluginBase plugin)
+    {
+        super(plugin);
+        this.versionString = plugin.getServer().getVersion();
+        this.version = genMCVersion();
+    }
 
     /**
      * Generates an int array of this server's Minecraft version for easy access
      *
      * @return Int Array that represents this server's Minecraft version
      */
-    private static int[] genMCVersion()
+    private int[] genMCVersion()
     {
         boolean flag = false;
         String[] splitStr = versionString.split("\\.");
@@ -45,7 +52,7 @@ public final class MinecraftVersion
      *
      * @return The Minecraft version array
      */
-    public static int[] getMCVersion()
+    public int[] getMCVersion()
     {
         return version;
     }

@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.commands;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -14,9 +15,12 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class CustomTabCompleter implements TabCompleter
+public class CustomTabCompleter extends PluginInstancer<PluginBase> implements TabCompleter
 {
-    private static final PluginBase plugin = PluginBase.getInstance();
+    public CustomTabCompleter(PluginBase plugin)
+    {
+        super(plugin);
+    }
 
     /**
      * This class is meant to autocomplete the /commandname command with options to make

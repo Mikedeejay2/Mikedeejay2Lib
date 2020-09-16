@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.file;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -11,9 +12,12 @@ import java.util.logging.Level;
  *
  * @author Mikedeejay2
  */
-public class FileIO
+public class FileIO extends PluginInstancer<PluginBase>
 {
-    private static final PluginBase plugin = PluginBase.getInstance();
+    public FileIO(PluginBase plugin)
+    {
+        super(plugin);
+    }
 
     /**
      * Get an input stream to an internal file inside of the plugin's jar
@@ -21,7 +25,7 @@ public class FileIO
      * @param filePath Path to file
      * @return The requested InputStream
      */
-    public static InputStream getInputStreamFromJar(String filePath)
+    public InputStream getInputStreamFromJar(String filePath)
     {
         return plugin.getResource(filePath);
     }
@@ -32,7 +36,7 @@ public class FileIO
      * @param filePath Path to get InputStream from
      * @return The requested InputStream
      */
-    public static InputStream getInputStreamFromDisk(String filePath)
+    public InputStream getInputStreamFromDisk(String filePath)
     {
         return getInputStreamFromDisk(new File(plugin.getDataFolder(), filePath));
     }
@@ -43,7 +47,7 @@ public class FileIO
      * @param filePath The path to get the reader from
      * @return The requested Reader
      */
-    public static Reader getReaderFromDisk(String filePath)
+    public Reader getReaderFromDisk(String filePath)
     {
         return getReaderFromDisk(new File(plugin.getDataFolder(), filePath));
     }
@@ -54,7 +58,7 @@ public class FileIO
      * @param filePath Path to get the Reader from
      * @return The requested Reader
      */
-    public static Reader getReaderFromJar(String filePath)
+    public Reader getReaderFromJar(String filePath)
     {
         InputStreamReader reader = null;
         try
@@ -74,7 +78,7 @@ public class FileIO
      * @param file The file to get the reader from
      * @return The requested reader
      */
-    public static Reader getReaderFromDisk(File file)
+    public Reader getReaderFromDisk(File file)
     {
         InputStreamReader reader = null;
         try
@@ -94,7 +98,7 @@ public class FileIO
      * @param file File to get the InputStream from
      * @return The requested InputStream
      */
-    public static InputStream getInputStreamFromDisk(File file)
+    public InputStream getInputStreamFromDisk(File file)
     {
         FileInputStream inputStream = null;
         try
@@ -116,7 +120,7 @@ public class FileIO
      * @param replace Replace existing file or not
      * @return If save was successful or not
      */
-    public static boolean saveFileFromJar(String filePath, boolean replace)
+    public boolean saveFileFromJar(String filePath, boolean replace)
     {
         InputStream inputStream = getInputStreamFromJar(filePath);
         File file = new File(plugin.getDataFolder(), filePath);
@@ -131,7 +135,7 @@ public class FileIO
      * @param replace Replace the existing file or not
      * @return If save was successful or not
      */
-    public static boolean saveFile(String filePath, InputStream input, boolean replace)
+    public boolean saveFile(String filePath, InputStream input, boolean replace)
     {
         return saveFile(new File(plugin.getDataFolder(), filePath), input, replace);
     }
@@ -144,7 +148,7 @@ public class FileIO
      * @param replace Replace the existing file or not
      * @return If the save was successful or not
      */
-    public static boolean saveFile(File file, InputStream input, boolean replace)
+    public boolean saveFile(File file, InputStream input, boolean replace)
     {
         if (!file.exists()) file.mkdirs();
 
@@ -178,7 +182,7 @@ public class FileIO
      * @param filePath Path to print
      * @param exception The exception that was thrown
      */
-    public static void logFileCouldNotBeLoaded(String filePath, Exception exception, boolean silence)
+    public void logFileCouldNotBeLoaded(String filePath, Exception exception, boolean silence)
     {
         if(silence)
         {
@@ -196,7 +200,7 @@ public class FileIO
      * @param filePath Path to the file. This should NOT include plugin.getDataFolder()
      * @return Whether deletion was successful or not
      */
-    public static boolean deleteFile(String filePath)
+    public boolean deleteFile(String filePath)
     {
         return deleteFile(new File(plugin.getDataFolder(), filePath));
     }
@@ -207,7 +211,7 @@ public class FileIO
      * @param file File to delete
      * @return Whether deletion was successful or not
      */
-    public static boolean deleteFile(File file)
+    public boolean deleteFile(File file)
     {
         return file.delete();
     }

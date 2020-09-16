@@ -1,5 +1,8 @@
 package com.mikedeejay2.mikedeejay2lib.file;
 
+import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
+
 import java.util.HashMap;
 
 /**
@@ -7,13 +10,14 @@ import java.util.HashMap;
  *
  * @author Mikedeejay2
  */
-public class FileManager
+public class FileManager extends PluginInstancer<PluginBase>
 {
     // The hashmap of file paths to DataFiles
     private HashMap<String, DataFile> files;
 
-    public FileManager()
+    public FileManager(PluginBase plugin)
     {
+        super(plugin);
         this.files = new HashMap<>();
     }
 

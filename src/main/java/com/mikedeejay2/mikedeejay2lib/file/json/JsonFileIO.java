@@ -4,6 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.file.FileIO;
+import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 
 import java.io.File;
 
@@ -12,9 +13,15 @@ import java.io.File;
  *
  * @author Mikedeejay2
  */
-public final class JsonFileIO
+public final class JsonFileIO extends PluginInstancer<PluginBase>
 {
-    private static final PluginBase plugin = PluginBase.getInstance();
+    private final FileIO fileIO;
+
+    public JsonFileIO(PluginBase plugin)
+    {
+        super(plugin);
+        this.fileIO = new FileIO(plugin);
+    }
 
     /**
      * Load a JsonObject from the disk.
@@ -22,7 +29,7 @@ public final class JsonFileIO
      * @param filePath Path to the file. This should NOT include plugin.getDataFolder()
      * @return The requested JsonObject
      */
-    public static JsonObject loadJsonObjectFromDisk(String filePath)
+    public JsonObject loadJsonObjectFromDisk(String filePath)
     {
         return loadJsonObjectFromDisk(new File(plugin.getDataFolder(), filePath));
     }
@@ -33,17 +40,17 @@ public final class JsonFileIO
      * @param file The file to be loaded
      * @return The requested JsonObject
      */
-    public static JsonObject loadJsonObjectFromDisk(File file)
+    public JsonObject loadJsonObjectFromDisk(File file)
     {
         JsonObject json = null;
         JsonParser parser = new JsonParser();
         try
         {
-            json = (JsonObject)parser.parse(FileIO.getReaderFromDisk(file));
+            json = (JsonObject)parser.parse(fileIO.getReaderFromDisk(file));
         }
         catch(Exception e)
         {
-            FileIO.logFileCouldNotBeLoaded(file.getPath(), e, false);
+            fileIO.logFileCouldNotBeLoaded(file.getPath(), e, false);
         }
         return json;
     }
@@ -54,17 +61,17 @@ public final class JsonFileIO
      * @param filePath The path to the json file in the jar=
      * @return THe requested JsonObject
      */
-    public static JsonObject loadJsonObjectFromJar(String filePath)
+    public JsonObject loadJsonObjectFromJar(String filePath)
     {
         JsonObject json = null;
         JsonParser parser = new JsonParser();
         try
         {
-            json = (JsonObject)parser.parse(FileIO.getReaderFromJar(filePath));
+            json = (JsonObject)parser.parse(fileIO.getReaderFromJar(filePath));
         }
         catch(Exception e)
         {
-            FileIO.logFileCouldNotBeLoaded(filePath, e, true);
+            fileIO.logFileCouldNotBeLoaded(filePath, e, true);
         }
         return json;
     }

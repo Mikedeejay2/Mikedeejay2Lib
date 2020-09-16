@@ -1,5 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.util.item;
 
+import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -18,8 +20,13 @@ import java.util.UUID;
  *
  * @author Mikedeejay2
  */
-public final class ItemCreator
+public final class ItemCreator extends PluginInstancer<PluginBase>
 {
+    public ItemCreator(PluginBase plugin)
+    {
+        super(plugin);
+    }
+
     /**
      * Create an item based off of several arguments.
      *
@@ -29,7 +36,7 @@ public final class ItemCreator
      * @param loreString Any lore that the item might have
      * @return The new ItemStack
      */
-    public static ItemStack createItem(Material material, int amount, String displayName, String... loreString)
+    public ItemStack createItem(Material material, int amount, String displayName, String... loreString)
     {
         ItemStack item;
 
@@ -38,11 +45,11 @@ public final class ItemCreator
         item = new ItemStack(material, amount);
 
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(Chat.chat(displayName));
+        meta.setDisplayName(plugin.chat().chat(displayName));
 
         for(String s : loreString)
         {
-            lore.add(Chat.chat(s));
+            lore.add(plugin.chat().chat(s));
         }
 
         meta.setLore(lore);
@@ -60,7 +67,7 @@ public final class ItemCreator
      * @param loreString Any lore that the head might have
      * @return The new head ItemStack
      */
-    public static ItemStack createHeadItem(String base64Head, int amount, String displayName, String... loreString)
+    public ItemStack createHeadItem(String base64Head, int amount, String displayName, String... loreString)
     {
         ItemStack item;
 
@@ -86,14 +93,14 @@ public final class ItemCreator
 
         for(String s : loreString)
         {
-            lore.add(Chat.chat(s));
+            lore.add(plugin.chat().chat(s));
         }
 
         item.setItemMeta(skullMeta);
 
         ItemMeta meta = item.getItemMeta();
 
-        meta.setDisplayName(Chat.chat(displayName));
+        meta.setDisplayName(plugin.chat().chat(displayName));
 
         meta.setLore(lore);
         item.setItemMeta(meta);

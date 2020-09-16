@@ -12,18 +12,19 @@ import com.mikedeejay2.mikedeejay2lib.file.FileIO;
  */
 public class YamlFile extends DataFile
 {
-    protected static final PluginBase plugin = PluginBase.getInstance();
-
     // The EnhancedYaml object that the YamlFile is accessing
     protected EnhancedYaml yamlFile;
     // The root EnhancedYamlSection for the yamlFile
     protected EnhancedYamlSection rootSection;
+    private YamlFileIO yamlFileIO;
 
-    public YamlFile(String filePath)
+    public YamlFile(PluginBase plugin, String filePath)
     {
-        super(filePath);
-        yamlFile = new EnhancedYaml();
+        super(plugin, filePath);
+        this.yamlFileIO = new YamlFileIO(plugin);
+        yamlFile = new EnhancedYaml(yamlFileIO);
         rootSection = new EnhancedYamlSection(yamlFile);
+        yamlFileIO = new YamlFileIO(plugin);
     }
 
     /**
@@ -60,27 +61,27 @@ public class YamlFile extends DataFile
     @Override
     public boolean loadFromDisk()
     {
-        isLoaded = YamlFileIO.loadIntoYamlConfig(yamlFile, file);
+        isLoaded = yamlFileIO.loadIntoYamlConfig(yamlFile, file);
         return isLoaded;
     }
 
     @Override
     public boolean loadFromJar()
     {
-        isLoaded = YamlFileIO.loadYamlConfigFromJar(yamlFile, filePath);
+        isLoaded = yamlFileIO.loadYamlConfigFromJar(yamlFile, filePath);
         return isLoaded;
     }
 
     @Override
     public boolean saveToDisk()
     {
-        return YamlFileIO.saveYamlConfig(yamlFile, file);
+        return yamlFileIO.saveYamlConfig(yamlFile, file);
     }
 
     @Override
     public boolean delete()
     {
-        isLoaded = !FileIO.deleteFile(file);
+        isLoaded = !fileIO.deleteFile(file);
         return !isLoaded;
     }
 

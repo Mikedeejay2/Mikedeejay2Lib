@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.file.yaml;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.file.FileIO;
+import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 
 import java.io.*;
 import java.util.logging.Level;
@@ -11,9 +12,15 @@ import java.util.logging.Level;
  *
  * @author Mikedeejay2
  */
-public final class YamlFileIO
+public final class YamlFileIO extends PluginInstancer<PluginBase>
 {
-    private static final PluginBase plugin = PluginBase.getInstance();
+    private final FileIO fileIO;
+
+    public YamlFileIO(PluginBase plugin)
+    {
+        super(plugin);
+        this.fileIO = new FileIO(plugin);
+    }
 
     /**
      * Load a File into a YamlConfiguration
@@ -22,7 +29,7 @@ public final class YamlFileIO
      * @param file File that will be loaded
      * @return Whether load was successful or not
      */
-    public static boolean loadIntoYamlConfig(EnhancedYaml config, File file)
+    public boolean loadIntoYamlConfig(EnhancedYaml config, File file)
     {
         try
         {
@@ -30,7 +37,7 @@ public final class YamlFileIO
         }
         catch(Exception e)
         {
-            FileIO.logFileCouldNotBeLoaded(file.getPath(), e, false);
+            fileIO.logFileCouldNotBeLoaded(file.getPath(), e, false);
             return false;
         }
         return true;
@@ -43,16 +50,16 @@ public final class YamlFileIO
      * @param filePath Path to the file. This should NOT include plugin.getDataFolder()
      * @return Whether load was successful or not
      */
-    public static boolean loadYamlConfigFromJar(EnhancedYaml config, String filePath)
+    public boolean loadYamlConfigFromJar(EnhancedYaml config, String filePath)
     {
-        Reader reader = FileIO.getReaderFromJar(filePath);
+        Reader reader = fileIO.getReaderFromJar(filePath);
         try
         {
             config.load(reader);
         }
         catch(Exception e)
         {
-            FileIO.logFileCouldNotBeLoaded(filePath, e, true);
+            fileIO.logFileCouldNotBeLoaded(filePath, e, false);
             return false;
         }
         return true;
@@ -65,7 +72,7 @@ public final class YamlFileIO
      * @param file The file to save to
      * @return Whether load was successful or not
      */
-    public static boolean saveYamlConfig(EnhancedYaml config, File file)
+    public boolean saveYamlConfig(EnhancedYaml config, File file)
     {
         try
         {

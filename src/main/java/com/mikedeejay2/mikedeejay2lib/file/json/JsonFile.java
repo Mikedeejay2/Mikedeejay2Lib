@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.file.json;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.file.DataFile;
 import com.mikedeejay2.mikedeejay2lib.file.FileIO;
 
@@ -12,12 +13,14 @@ import com.mikedeejay2.mikedeejay2lib.file.FileIO;
  */
 public class JsonFile extends DataFile
 {
-    JsonObject jsonObject;
+    protected JsonObject jsonObject;
+    private JsonFileIO jsonFileIO;
 
-    public JsonFile(String filePath)
+    public JsonFile(PluginBase plugin, String filePath)
     {
-        super(filePath);
+        super(plugin, filePath);
         jsonObject = null;
+        this.jsonFileIO = new JsonFileIO(plugin);
     }
 
     /**
@@ -47,15 +50,15 @@ public class JsonFile extends DataFile
     @Override
     public boolean loadFromDisk()
     {
-        jsonObject = JsonFileIO.loadJsonObjectFromDisk(file);
+        jsonObject = jsonFileIO.loadJsonObjectFromDisk(file);
         return file.exists();
     }
 
     @Override
     public boolean loadFromJar()
     {
-        jsonObject = JsonFileIO.loadJsonObjectFromJar(filePath);
-        return FileIO.getInputStreamFromJar(filePath) != null;
+        jsonObject = jsonFileIO.loadJsonObjectFromJar(filePath);
+        return fileIO.getInputStreamFromJar(filePath) != null;
     }
 
     @Override

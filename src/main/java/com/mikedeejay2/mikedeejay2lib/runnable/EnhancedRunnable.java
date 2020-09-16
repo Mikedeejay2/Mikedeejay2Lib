@@ -13,15 +13,13 @@ import org.bukkit.scheduler.BukkitTask;
  * <ul>
  *     <li>A counter that increments by 1 every run, useful for seeing if this runnable is at a certain amount of runs</li>
  *     <li>Add a counted timer that stops the runnable once it reaches a certain count</li>
- *     <li>Add a bunch of methods that let you .runTask() without having to specify all parameters, especially your plugin.</li>
+ *     <li>Add a bunch of methods that let you .runTask() without having to specify all parameters.</li>
  *     <li>Add an optional methods for the first run and the last run of this runnable that can be overridden so functionality
  *     can be implemented specifically at the start and end of this runnable</li>
  * </ul>
  */
 public abstract class EnhancedRunnable extends BukkitRunnable
 {
-    // Plugin instance
-    private static final PluginBase plugin = PluginBase.getInstance();
     // Current count of the amount of times that this runnable has been run
     private long count;
     // The end count, the count that the runnable should stop at. If 0, don't stop.
@@ -94,16 +92,6 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     }
 
     /**
-     * Schedules this in the Bukkit scheduler to run on next tick.
-     *
-     * @return a BukkitTask that contains the id number
-     */
-    public synchronized BukkitTask runTask()
-    {
-        return this.runTask(plugin);
-    }
-
-    /**
      * Schedules this in the Bukkit scheduler to run asynchronously.
      *
      * @param plugin the reference to the plugin scheduling task
@@ -113,16 +101,6 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     public synchronized BukkitTask runTaskAsynchronously(Plugin plugin)
     {
         return super.runTaskAsynchronously(plugin);
-    }
-
-    /**
-     * Schedules this in the Bukkit scheduler to run asynchronously.
-     *
-     * @return a BukkitTask that contains the id number
-     */
-    public synchronized BukkitTask runTaskAsynchronously()
-    {
-        return this.runTaskAsynchronously(plugin);
     }
 
     /**
@@ -143,20 +121,9 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      *
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskLater()
+    public synchronized BukkitTask runTaskLater(Plugin plugin)
     {
         return this.runTaskLater(plugin, 0);
-    }
-
-    /**
-     * Schedules this to run after the specified number of server ticks.
-     *
-     * @param delay the ticks to wait before running the task
-     * @return a BukkitTask that contains the id number
-     */
-    public synchronized BukkitTask runTaskLater(long delay)
-    {
-        return this.runTaskLater(plugin, delay);
     }
 
     /**
@@ -177,20 +144,9 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      *
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskLaterAsynchronously()
+    public synchronized BukkitTask runTaskLaterAsynchronously(Plugin plugin)
     {
         return this.runTaskLaterAsynchronously(plugin, 0);
-    }
-
-    /**
-     * Schedules this to run asynchronously after the specified number of server ticks.
-     *
-     * @param delay the ticks to wait before running the task
-     * @return a BukkitTask that contains the id number
-     */
-    public synchronized BukkitTask runTaskLaterAsynchronously(long delay)
-    {
-        return this.runTaskLaterAsynchronously(plugin, delay);
     }
 
     /**
@@ -212,7 +168,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      *
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimer()
+    public synchronized BukkitTask runTaskTimer(Plugin plugin)
     {
         return this.runTaskTimer(plugin, 0, 0);
     }
@@ -223,21 +179,9 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param period the ticks to wait between runs
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimer(long period)
+    public synchronized BukkitTask runTaskTimer(Plugin plugin, long period)
     {
         return this.runTaskTimer(plugin, 0, period);
-    }
-
-    /**
-     * Schedules this to repeatedly run until cancelled, starting after the specified number of server ticks.
-     *
-     * @param delay the ticks to wait before running the task
-     * @param period the ticks to wait between runs
-     * @return a BukkitTask that contains the id number
-     */
-    public synchronized BukkitTask runTaskTimer(long delay, long period)
-    {
-        return this.runTaskTimer(plugin, delay, period);
     }
 
     /**
@@ -259,7 +203,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      *
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerAsynchronously()
+    public synchronized BukkitTask runTaskTimerAsynchronously(Plugin plugin)
     {
         return this.runTaskTimerAsynchronously(plugin, 0, 0);
     }
@@ -270,21 +214,9 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param period the ticks to wait between runs
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerAsynchronously(long period)
+    public synchronized BukkitTask runTaskTimerAsynchronously(Plugin plugin, long period)
     {
         return this.runTaskTimerAsynchronously(plugin, 0, period);
-    }
-
-    /**
-     * Schedules this to repeatedly run asynchronously until cancelled, starting after the specified number of server ticks.
-     *
-     * @param delay the ticks to wait before running the task
-     * @param period the ticks to wait between runs
-     * @return a BukkitTask that contains the id number
-     */
-    public synchronized BukkitTask runTaskTimerAsynchronously(long delay, long period)
-    {
-        return this.runTaskTimerAsynchronously(plugin, delay, period);
     }
 
     /**
@@ -309,7 +241,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      *
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerCounted()
+    public synchronized BukkitTask runTaskTimerCounted(Plugin plugin)
     {
         return this.runTaskTimerCounted(plugin, 0, 0, 0);
     }
@@ -321,7 +253,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param count the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerCounted(long count)
+    public synchronized BukkitTask runTaskTimerCounted(Plugin plugin, long count)
     {
         return this.runTaskTimerCounted(plugin, 0, 0, count);
     }
@@ -334,23 +266,9 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param count the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerCounted(long period, long count)
+    public synchronized BukkitTask runTaskTimerCounted(Plugin plugin, long period, long count)
     {
         return this.runTaskTimerCounted(plugin, 0, period, count);
-    }
-
-    /**
-     * Schedules this to repeatedly run until cancelled, starting after the specified number of server ticks.
-     * Stops when the runnable has been run for count times
-     *
-     * @param delay the ticks to wait before running the task
-     * @param period the ticks to wait between runs
-     * @param count the amount of times that this runnable should be run before it is stopped
-     * @return a BukkitTask that contains the id number
-     */
-    public synchronized BukkitTask runTaskTimerCounted(long delay, long period, long count)
-    {
-        return this.runTaskTimerCounted(plugin, delay, period, count);
     }
 
     /**
@@ -375,7 +293,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      *
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerCountedAsynchronously()
+    public synchronized BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin)
     {
         return this.runTaskTimerCountedAsynchronously(plugin, 0, 0, 0);
     }
@@ -387,7 +305,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param count the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerCountedAsynchronously(long count)
+    public synchronized BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin, long count)
     {
         return this.runTaskTimerCountedAsynchronously(plugin, 0, 0, count);
     }
@@ -400,23 +318,9 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param count the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerCountedAsynchronously(long period, long count)
+    public synchronized BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin, long period, long count)
     {
         return this.runTaskTimerCountedAsynchronously(plugin, 0, period, count);
-    }
-
-    /**
-     * Schedules this to repeatedly run asynchronously until cancelled, starting after the specified number of server ticks.
-     * Stops when the runnable has been run for count times
-     *
-     * @param delay the ticks to wait before running the task
-     * @param period the ticks to wait between runs
-     * @param count the amount of times that this runnable should be run before it is stopped
-     * @return a BukkitTask that contains the id number
-     */
-    public synchronized BukkitTask runTaskTimerCountedAsynchronously(long delay, long period, long count)
-    {
-        return this.runTaskTimerCountedAsynchronously(plugin, delay, period, count);
     }
 
     /**

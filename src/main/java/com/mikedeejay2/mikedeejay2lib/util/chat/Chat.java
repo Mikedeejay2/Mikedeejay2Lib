@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.util.chat;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import net.md_5.bungee.api.chat.*;
 import net.md_5.bungee.api.chat.hover.content.Entity;
 import net.md_5.bungee.api.chat.hover.content.Item;
@@ -19,17 +20,22 @@ import java.util.Arrays;
  *
  * @author Mikedeejay2
  */
-public final class Chat
+public final class Chat extends PluginInstancer<PluginBase>
 {
-    private  static final PluginBase plugin = PluginBase.getInstance();
-    private static String pluginString = plugin.getName();
+    private String pluginString;
+
+    public Chat(PluginBase plugin)
+    {
+        super(plugin);
+        this.pluginString = plugin.getName();
+    }
 
     /**
      *
      * @param s The input string to be formatted
      * @return The string formatted with Minecraft color codes
      */
-    public static String chat(String s)
+    public String chat(String s)
     {
         return ChatColor.translateAlternateColorCodes('&', s);
     }
@@ -39,7 +45,7 @@ public final class Chat
      *
      * @param s The input string
      */
-    public static void sendMessage(String s)
+    public void sendMessage(String s)
     {
         Bukkit.getConsoleSender().sendMessage(chat(getTitleString() + s));
     }
@@ -50,7 +56,7 @@ public final class Chat
      *
      * @param s The input string
      */
-    public static void debug(String s)
+    public void debug(String s)
     {
         Bukkit.getConsoleSender().sendMessage(chat(getTitleString() + "&c" + s));
     }
@@ -61,7 +67,7 @@ public final class Chat
      * @param p Input player that will receive the message
      * @param s The message to be printed (will be formatted with colors)
      */
-    public static void sendMessage(Player p, String s)
+    public void sendMessage(Player p, String s)
     {
         p.sendMessage(chat(getTitleString(p) + s));
     }
@@ -72,7 +78,7 @@ public final class Chat
      * @param p Input player that will receive the message
      * @param s The message to be printed (will be formatted with colors)
      */
-    public static void sendMessage(CommandSender p, String s)
+    public void sendMessage(CommandSender p, String s)
     {
         p.sendMessage(chat(getTitleString(p) + s));
     }
@@ -82,7 +88,7 @@ public final class Chat
      * what this text is coming from
      * @return The title string
      */
-    public static String getTitleString()
+    public String getTitleString()
     {
         return "&b[&9" + pluginString + "&b] &r";
     }
@@ -94,7 +100,7 @@ public final class Chat
      * @param sender Player / console to base the title's language off of
      * @return The title string
      */
-    public static String getTitleString(CommandSender sender)
+    public String getTitleString(CommandSender sender)
     {
         return "&b[&9" + pluginString + "&b] &r";
     }
@@ -106,7 +112,7 @@ public final class Chat
      * @param player Player to base the title's language off of
      * @return The title string
      */
-    public static String getTitleString(Player player)
+    public String getTitleString(Player player)
     {
         return "&b[&9" + plugin.langManager().getText(player, "title") + "&b] &r";
     }
@@ -117,7 +123,7 @@ public final class Chat
      * @param strings The strings that will be converted to base components
      * @return BaseComponent array of converted strings
      */
-    public static BaseComponent[] getBaseComponentArray(String... strings)
+    public BaseComponent[] getBaseComponentArray(String... strings)
     {
         ArrayList<BaseComponent> baseComponents = new ArrayList<BaseComponent>();
         for(String str : strings)
@@ -134,7 +140,7 @@ public final class Chat
      * @param command The command to be used on the ClickEvent
      * @return A new click event that can be used with BaseComponents
      */
-    public static ClickEvent getClickEvent(ClickEvent.Action action, String command)
+    public ClickEvent getClickEvent(ClickEvent.Action action, String command)
     {
         return new ClickEvent(action, command);
     }
@@ -146,7 +152,7 @@ public final class Chat
      * @param text The string of text that will be used in the hover event
      * @return The HoverEvent that was created
      */
-    public static HoverEvent getHoverEvent(HoverEvent.Action action, String text)
+    public HoverEvent getHoverEvent(HoverEvent.Action action, String text)
     {
         return new HoverEvent(action, new Text(chat(text)));
     }
@@ -158,7 +164,7 @@ public final class Chat
      * @param item The item that will be displayed
      * @return The HoverEvent that was created
      */
-    public static HoverEvent getHoverEvent(HoverEvent.Action action, ItemStack item)
+    public HoverEvent getHoverEvent(HoverEvent.Action action, ItemStack item)
     {
         return new HoverEvent(action, getHoverItem(item));
     }
@@ -170,7 +176,7 @@ public final class Chat
      * @param entity The entity that will be displayed
      * @return The HoverEvent that was created
      */
-    public static HoverEvent getHoverEvent(HoverEvent.Action action, org.bukkit.entity.Entity entity)
+    public HoverEvent getHoverEvent(HoverEvent.Action action, org.bukkit.entity.Entity entity)
     {
         return new HoverEvent(action, getHoverEntity(entity));
     }
@@ -181,12 +187,12 @@ public final class Chat
      * @param item Item to be converted
      * @return HoverEvent Item
      */
-    public static Item getHoverItem(ItemStack item)
+    public Item getHoverItem(ItemStack item)
     {
         return new Item(String.valueOf(item.getType().getId()), item.getAmount(), null);
     }
 
-    public static Entity getHoverEntity(org.bukkit.entity.Entity entity)
+    public Entity getHoverEntity(org.bukkit.entity.Entity entity)
     {
         return new Entity(entity.getType().toString(), String.valueOf(entity.getEntityId()), new TextComponent(entity.getCustomName()));
     }
@@ -198,7 +204,7 @@ public final class Chat
      * @param event The ClickEvent to be added to the components
      * @return The same BaseComponents array but with the click events applied
      */
-    public static BaseComponent[] setClickEvent(BaseComponent[] components, ClickEvent event)
+    public BaseComponent[] setClickEvent(BaseComponent[] components, ClickEvent event)
     {
         for(BaseComponent component : components)
         {
@@ -214,7 +220,7 @@ public final class Chat
      * @param event The HoverEvent to be added to the components
      * @return The same BaseComponents array but with the hover events applied
      */
-    public static BaseComponent[] setHoverEvent(BaseComponent[] components, HoverEvent event)
+    public BaseComponent[] setHoverEvent(BaseComponent[] components, HoverEvent event)
     {
         for(BaseComponent component : components)
         {
@@ -229,7 +235,7 @@ public final class Chat
      * @param components An array of BaseComponents arrays that will be combined into one base components array
      * @return A combined array of all BaseComponents
      */
-    public static BaseComponent[] combineComponents(BaseComponent[]... components)
+    public BaseComponent[] combineComponents(BaseComponent[]... components)
     {
         ArrayList<BaseComponent> componentsArrayList = new ArrayList<BaseComponent>();
         for(BaseComponent[] componentsArr : components)
@@ -245,7 +251,7 @@ public final class Chat
      * @param sender The CommandSender that will receive the message
      * @param components An Array of BaseComponents arrays that will be printed, Each BaseComponent array being 1 line
      */
-    public static void printComponents(CommandSender sender, BaseComponent[]... components)
+    public void printComponents(CommandSender sender, BaseComponent[]... components)
     {
         sender.spigot().sendMessage(combineComponents(components));
     }
@@ -256,7 +262,7 @@ public final class Chat
      * @param player The Player that will receive the message
      * @param components An Array of BaseComponents arrays that will be printed, Each BaseComponent array being 1 line
      */
-    public static void printComponents(Player player, BaseComponent[]... components)
+    public void printComponents(Player player, BaseComponent[]... components)
     {
         player.spigot().sendMessage(combineComponents(components));
     }

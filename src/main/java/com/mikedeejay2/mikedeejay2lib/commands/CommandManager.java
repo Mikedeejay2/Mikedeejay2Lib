@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.commands;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
@@ -14,16 +15,17 @@ import java.util.*;
  *
  * @author Mikedeejay2 (Originally from a tutorial)
  */
-public class CommandManager implements CommandExecutor
+public class CommandManager extends PluginInstancer<PluginBase> implements CommandExecutor
 {
-    protected static final PluginBase plugin = PluginBase.getInstance();
-
     protected ArrayList<AbstractSubCommand> commands = new ArrayList<>();
     private CustomTabCompleter completer;
 
     public String main;
 
-    public CommandManager() {}
+    public CommandManager(PluginBase plugin)
+    {
+        super(plugin);
+    }
 
     // Add new subcommands here:
     // example: public String help = "help";
@@ -37,7 +39,7 @@ public class CommandManager implements CommandExecutor
         main = commandName;
         plugin.getCommand(main).setExecutor(this);
 
-        completer = new CustomTabCompleter();
+        completer = new CustomTabCompleter(plugin);
         plugin.getCommand(main).setTabCompleter(completer);
 
         // Add new subcommands here:
@@ -68,7 +70,7 @@ public class CommandManager implements CommandExecutor
 
             if(target == null)
             {
-                Chat.sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "command.errors.invalid_subcommand"));
+                plugin.chat().sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "command.errors.invalid_subcommand"));
                 return false;
             }
 
@@ -78,7 +80,7 @@ public class CommandManager implements CommandExecutor
 
             if(target.permission() != null && !sender.hasPermission(target.permission()))
             {
-                Chat.sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "errors.permission.nopermission"));
+                plugin.chat().sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "errors.permission.nopermission"));
                 return false;
             }
 
@@ -88,7 +90,7 @@ public class CommandManager implements CommandExecutor
             }
             catch(Exception e)
             {
-                Chat.sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "command.errors.general"));
+                plugin.chat().sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "command.errors.general"));
                 e.printStackTrace();
             }
         }

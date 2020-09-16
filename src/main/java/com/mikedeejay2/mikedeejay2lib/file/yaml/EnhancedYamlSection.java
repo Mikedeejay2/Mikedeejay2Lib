@@ -1,6 +1,5 @@
 package com.mikedeejay2.mikedeejay2lib.file.yaml;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
@@ -16,7 +15,6 @@ import java.util.Set;
  */
 public class EnhancedYamlSection
 {
-    protected static final PluginBase plugin = PluginBase.getInstance();
     // The path to the current Yaml section
     protected String pathTo;
     // The section that this object is representing

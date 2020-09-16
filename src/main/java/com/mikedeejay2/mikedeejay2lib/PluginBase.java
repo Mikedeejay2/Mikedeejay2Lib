@@ -3,6 +3,8 @@ package com.mikedeejay2.mikedeejay2lib;
 import com.mikedeejay2.mikedeejay2lib.commands.CommandManager;
 import com.mikedeejay2.mikedeejay2lib.file.FileManager;
 import com.mikedeejay2.mikedeejay2lib.language.LangManager;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -13,8 +15,6 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class PluginBase extends JavaPlugin
 {
-    // Instance to this plugin
-    protected static PluginBase instance;
     // The Minecraft version array that this server is running on
     protected int[] MCVersion;
     // The file manager for this plugin
@@ -24,33 +24,27 @@ public class PluginBase extends JavaPlugin
     // The command manager for this plugin
     protected CommandManager commandManager;
 
+    protected Chat chat;
+    protected ItemCreator itemCreator;
+
     public PluginBase()
     {}
 
     @Override
     public void onEnable()
     {
-        setInstance(this);
-        this.MCVersion = MinecraftVersion.getMCVersion();
-        this.langManager = new LangManager();
-        this.commandManager = new CommandManager();
-        this.fileManager = new FileManager();
+        this.chat = new Chat(this);
+        this.itemCreator = new ItemCreator(this);
+        this.MCVersion = new MinecraftVersion(this).getMCVersion();
+        this.langManager = new LangManager(this);
+        this.commandManager = new CommandManager(this);
+        this.fileManager = new FileManager(this);
     }
 
     @Override
     public void onDisable()
     {
 
-    }
-
-    public static PluginBase getInstance()
-    {
-        return instance;
-    }
-
-    public static void setInstance(PluginBase instance)
-    {
-        PluginBase.instance = instance;
     }
 
     public int[] getMCVersion()
@@ -71,5 +65,15 @@ public class PluginBase extends JavaPlugin
     public CommandManager commandManager()
     {
         return commandManager;
+    }
+
+    public Chat chat()
+    {
+        return chat;
+    }
+
+    public ItemCreator itemCreator()
+    {
+        return itemCreator;
     }
 }
