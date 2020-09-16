@@ -1,5 +1,11 @@
 {
   "command.errors.invalid_subcommand": "错误：子命令不合法",
   "command.errors.general": "发生了一个错误",
-  "generic.success": "成功！"
+  "generic.success": "成功！",
+  "warnings.big_number": "警告：你输入的值超出了建议限制，可能产生不正常的表现。",
+  "errors.player_required": "错误：只有玩家能执行此命令。",
+  "errors.number_required": "错误：此子命令需要的是一个数字。",
+  "errors.number_less_than_zero": "错误：输入的数字小于零。请输入一个比零大的数字。",
+  "errors.not_a_number": "错误：输入数据不是数字。请输入一个数字。",
+  "errors.invalid_item_held": "所持的物品不合法。请持有一个合法的物品。"
 }

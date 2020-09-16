@@ -2,5 +2,11 @@
   "command.errors.invalid_subcommand": "Error: Invalid subcommand",
   "command.errors.general": "An error has occurred",
   "errors.permission.nopermission": "You don't have permission to run this command!",
-  "generic.success": "Success!"
+  "generic.success": "Success!",
+  "warnings.big_number": "Warning: The number you entered is above the recommended limit and might act oddly.",
+  "errors.player_required": "Error: You must be a player to run this command.",
+  "errors.number_required": "Error: A number is required to run this subcommand.",
+  "errors.number_less_than_zero": "Error: The number entered was less than 0. Please enter a number greater than 0.",
+  "errors.not_a_number": "Error: The data entered is not a number. Please enter a number.",
+  "errors.invalid_item_held": "The item that is being held is invalid. Please hold a valid item."
 }
