@@ -14,7 +14,7 @@ import org.bukkit.scheduler.BukkitTask;
  *     <li>A counter that increments by 1 every run, useful for seeing if this runnable is at a certain amount of runs</li>
  *     <li>Add a counted timer that stops the runnable once it reaches a certain count</li>
  *     <li>Add a bunch of methods that let you .runTask() without having to specify all parameters, especially your plugin.</li>
- *     <li>Add an optional method for the first run and the last run of this runnable that can be overridden so functionality
+ *     <li>Add an optional methods for the first run and the last run of this runnable that can be overridden so functionality
  *     can be implemented specifically at the start and end of this runnable</li>
  * </ul>
  */
