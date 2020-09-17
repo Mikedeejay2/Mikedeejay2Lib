@@ -42,11 +42,15 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     {
         if(endCount > 0)
         {
-            if(this.count >= endCount) this.cancel();
+            if(this.count >= endCount)
+            {
+                this.cancel();
+                return;
+            }
         }
         if(count == 0) onFirstRun();
-        ++count;
         onRun();
+        ++count;
     }
 
     /**
