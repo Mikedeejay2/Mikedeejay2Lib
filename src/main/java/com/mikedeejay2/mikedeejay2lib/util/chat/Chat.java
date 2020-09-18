@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.util.chat;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
+import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.*;
 import net.md_5.bungee.api.chat.hover.content.Entity;
 import net.md_5.bungee.api.chat.hover.content.Item;
@@ -11,6 +12,7 @@ import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -265,5 +267,36 @@ public final class Chat extends PluginInstancer<PluginBase>
     public void printComponents(Player player, BaseComponent[]... components)
     {
         player.spigot().sendMessage(combineComponents(components));
+    }
+
+    /**
+     * Print all BaseComponents to a CommandSender
+     *
+     * @param sender The CommandSender that will receive the message
+     * @param type The ChatMessageType to display the components at
+     * @param components An Array of BaseComponents arrays that will be printed, Each BaseComponent array being 1 line
+     */
+    public void printComponents(CommandSender sender, ChatMessageType type, BaseComponent[]... components)
+    {
+        if(sender instanceof Player)
+        {
+            ((Player)sender).spigot().sendMessage(type, combineComponents(components));
+        }
+        else
+        {
+            sender.spigot().sendMessage(combineComponents(components));
+        }
+    }
+
+    /**
+     * Print all BaseComponents to a Player
+     *
+     * @param player The Player that will receive the message
+     * @param type The ChatMessageType to display the components at
+     * @param components An Array of BaseComponents arrays that will be printed, Each BaseComponent array being 1 line
+     */
+    public void printComponents(Player player, ChatMessageType type, BaseComponent[]... components)
+    {
+        player.spigot().sendMessage(type, combineComponents(components));
     }
 }
