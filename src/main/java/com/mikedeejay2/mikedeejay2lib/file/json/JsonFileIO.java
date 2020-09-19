@@ -69,7 +69,7 @@ public final class JsonFileIO extends PluginInstancer<PluginBase>
      *
      * @param filePath The path to the json file in the jar
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
-     * @return THe requested JsonObject
+     * @return The requested JsonObject
      */
     public JsonObject loadJsonObjectFromJar(String filePath, boolean throwErrors)
     {
@@ -111,6 +111,14 @@ public final class JsonFileIO extends PluginInstancer<PluginBase>
         return writer;
     }
 
+    /**
+     * Save a json file to disk
+     *
+     * @param file The file to save to
+     * @param json The json file that will be saved to the file
+     * @param throwErrors Whether this method should throw errors if something goes wrong or not
+     * @return Whether the save was successful or not
+     */
     public boolean saveJsonFile(File file, JsonObject json, boolean throwErrors)
     {
         GsonBuilder builder = new GsonBuilder();
@@ -121,6 +129,14 @@ public final class JsonFileIO extends PluginInstancer<PluginBase>
         return fileIO.saveFile(file, inputStream, true, throwErrors);
     }
 
+    /**
+     * Update a json file on the disk with new values from a jar file of the corresponding name
+     *
+     * @param filePath The path of the file that should be updated, WITHOUT plugin.getDataFolder()
+     * @param original The JsonObject that is currently loaded
+     * @param throwErrors Whether this method should throw errors if something goes wrong or not
+     * @return Whether the update was successful or not
+     */
     public boolean updateFromJar(String filePath, JsonObject original, boolean throwErrors)
     {
         JsonFile jarFile = new JsonFile(plugin, filePath);
@@ -131,6 +147,14 @@ public final class JsonFileIO extends PluginInstancer<PluginBase>
         return updateFromJarIterate(original, set, throwErrors);
     }
 
+    /**
+     * Update the json object in a recursive iterative format
+     *
+     * @param original The original JsonObject from the currently loaded file
+     * @param set The root set of the json file
+     * @param throwErrors Whether this method should throw errors if something goes wrong or not
+     * @return Whether the update was successful or not
+     */
     private boolean updateFromJarIterate(JsonObject original, Set<Map.Entry<String, JsonElement>> set, boolean throwErrors)
     {
         for(Iterator<Map.Entry<String, JsonElement>> i = set.iterator(); i.hasNext(); )
