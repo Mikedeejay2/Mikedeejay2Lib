@@ -163,7 +163,11 @@ public abstract class DataFile extends PluginInstancer<PluginBase>
      * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
      */
-    public abstract boolean delete(boolean throwErrors);
+    public boolean delete(boolean throwErrors)
+    {
+        isLoaded = !fileIO.deleteFile(file);
+        return !isLoaded;
+    }
 
     /**
      * Update this file from the jar, keeping existing values but adding any

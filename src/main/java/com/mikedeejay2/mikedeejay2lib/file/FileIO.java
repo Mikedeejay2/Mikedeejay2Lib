@@ -34,6 +34,7 @@ public class FileIO extends PluginInstancer<PluginBase>
      * Get an input stream from a file path on the disk
      *
      * @param filePath Path to get InputStream from
+     * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested InputStream
      */
     public InputStream getInputStreamFromDisk(String filePath, boolean throwErrors)
@@ -45,6 +46,7 @@ public class FileIO extends PluginInstancer<PluginBase>
      * Get a Reader from a file path on the disk
      *
      * @param filePath The path to get the reader from
+     * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested Reader
      */
     public Reader getReaderFromDisk(String filePath, boolean throwErrors)
@@ -56,6 +58,7 @@ public class FileIO extends PluginInstancer<PluginBase>
      * Get a Reader from this plugin's jar from a path
      *
      * @param filePath Path to get the Reader from
+     * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested Reader
      */
     public Reader getReaderFromJar(String filePath, boolean throwErrors)
@@ -76,6 +79,7 @@ public class FileIO extends PluginInstancer<PluginBase>
      * Get a Reader from a file path on the disk
      *
      * @param file The file to get the reader from
+     * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested reader
      */
     public Reader getReaderFromDisk(File file, boolean throwErrors)
@@ -96,6 +100,7 @@ public class FileIO extends PluginInstancer<PluginBase>
      * Get an InputStream from a File on the disk
      *
      * @param file File to get the InputStream from
+     * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested InputStream
      */
     public InputStream getInputStreamFromDisk(File file, boolean throwErrors)
@@ -118,6 +123,7 @@ public class FileIO extends PluginInstancer<PluginBase>
      *
      * @param filePath Path to save the file to
      * @param replace Replace existing file or not
+     * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return If save was successful or not
      */
     public boolean saveFileFromJar(String filePath, boolean replace, boolean throwErrors)
@@ -133,6 +139,7 @@ public class FileIO extends PluginInstancer<PluginBase>
      * @param filePath Path to the file. This should NOT include plugin.getDataFolder()
      * @param input The InputStream to use when saving the file
      * @param replace Replace the existing file or not
+     * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return If save was successful or not
      */
     public boolean saveFile(String filePath, InputStream input, boolean replace, boolean throwErrors)
@@ -146,6 +153,7 @@ public class FileIO extends PluginInstancer<PluginBase>
      * @param file The File to save the contents to
      * @param input The InputStream to use when saving the file
      * @param replace Replace the existing file or not
+     * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return If the save was successful or not
      */
     public boolean saveFile(File file, InputStream input, boolean replace, boolean throwErrors)
@@ -181,6 +189,7 @@ public class FileIO extends PluginInstancer<PluginBase>
      *
      * @param filePath Path to print
      * @param exception The exception that was thrown
+     * @param throwErrors Whether this method should throw errors if something goes wrong or not
      */
     public void logFileCouldNotBeLoaded(String filePath, Exception exception)
     {

@@ -27,6 +27,7 @@ public final class YamlFileIO extends PluginInstancer<PluginBase>
      *
      * @param config YamlConfiguration that will be loaded into
      * @param file File that will be loaded
+     * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return Whether load was successful or not
      */
     public boolean loadIntoYamlConfig(EnhancedYaml config, File file, boolean throwErrors)
@@ -48,6 +49,7 @@ public final class YamlFileIO extends PluginInstancer<PluginBase>
      *
      * @param config YamlConfiguration that will be loaded into
      * @param filePath Path to the file. This should NOT include plugin.getDataFolder()
+     * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return Whether load was successful or not
      */
     public boolean loadYamlConfigFromJar(EnhancedYaml config, String filePath, boolean throwErrors)
@@ -70,6 +72,7 @@ public final class YamlFileIO extends PluginInstancer<PluginBase>
      *
      * @param config The EnhancedYaml file being saved
      * @param file The file to save to
+     * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return Whether load was successful or not
      */
     public boolean saveYamlConfig(EnhancedYaml config, File file, boolean throwErrors)

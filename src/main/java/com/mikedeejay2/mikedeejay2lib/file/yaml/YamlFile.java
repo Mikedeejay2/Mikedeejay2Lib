@@ -79,13 +79,6 @@ public class YamlFile extends DataFile
     }
 
     @Override
-    public boolean delete(boolean throwErrors)
-    {
-        isLoaded = !fileIO.deleteFile(file);
-        return !isLoaded;
-    }
-
-    @Override
     public boolean updateFromJar(boolean throwErrors)
     {
         return yamlFile.updateFromJar(filePath);

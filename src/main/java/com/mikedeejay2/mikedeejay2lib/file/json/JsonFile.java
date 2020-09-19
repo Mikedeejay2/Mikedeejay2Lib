@@ -1,10 +1,12 @@
 package com.mikedeejay2.mikedeejay2lib.file.json;
 
-import com.google.gson.JsonElement;
-import com.google.gson.JsonObject;
+import com.google.gson.*;
+import com.google.gson.stream.JsonWriter;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.file.DataFile;
 import com.mikedeejay2.mikedeejay2lib.file.FileIO;
+
+import java.io.FileWriter;
 
 /**
  * Wrapper class for a DataFile of type Json
@@ -64,18 +66,18 @@ public class JsonFile extends DataFile
     @Override
     public boolean saveToDisk(boolean throwErrors)
     {
-        return false;
-    }
-
-    @Override
-    public boolean delete(boolean throwErrors)
-    {
-        return false;
+        return jsonFileIO.saveJsonFile(file, jsonObject, throwErrors);
     }
 
     @Override
     public boolean updateFromJar(boolean throwErrors)
     {
-        return false;
+        jsonFileIO.updateFromJar(filePath, jsonObject, throwErrors);
+        return true;
+    }
+
+    public JsonObject getJsonObject()
+    {
+        return jsonObject;
     }
 }
