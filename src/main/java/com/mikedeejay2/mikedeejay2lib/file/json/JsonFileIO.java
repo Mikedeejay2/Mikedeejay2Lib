@@ -110,6 +110,18 @@ public final class JsonFileIO extends PluginInstancer<PluginBase>
         JsonWriter writer = getJsonWriter(file, throwErrors);
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
+        if(!file.exists())
+        {
+            try
+            {
+                file.createNewFile();
+            }
+            catch(IOException e)
+            {
+                if(throwErrors) fileIO.logFileCouldNotBeSaved(file.getPath(), e);
+                return false;
+            }
+        }
         gson.toJson(json, writer);
         return true;
     }
