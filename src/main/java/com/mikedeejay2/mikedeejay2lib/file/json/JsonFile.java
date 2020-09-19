@@ -25,30 +25,6 @@ public class JsonFile extends DataFile
         this.jsonFileIO = new JsonFileIO(plugin);
     }
 
-    /**
-     * Get a JsonElement from the json file
-     *
-     * @param element Element to get
-     * @return The JsonElement. If non-existent, will return null.
-     */
-    public JsonElement getElement(String element)
-    {
-        return jsonObject.get(element);
-    }
-
-    /**
-     * Gets a string from the json file based off of the path.
-     *
-     * @param path Path that contains wanted String
-     * @return The wanted string. If non-existent, will return null.
-     */
-    public String getString(String path)
-    {
-        JsonElement element = getElement(path);
-        if(element == null) return null;
-        return element.getAsString();
-    }
-
     @Override
     public boolean loadFromDisk(boolean throwErrors)
     {
@@ -79,5 +55,29 @@ public class JsonFile extends DataFile
     public JsonObject getJsonObject()
     {
         return jsonObject;
+    }
+
+    /**
+     * Get a JsonElement from the json file
+     *
+     * @param element Element to get
+     * @return The JsonElement. If non-existent, will return null.
+     */
+    public JsonElement getElement(String element)
+    {
+        return jsonObject.get(element);
+    }
+
+    /**
+     * Gets a string from the json file based off of the path.
+     *
+     * @param memberName Path that contains wanted String
+     * @return The wanted string. If non-existent, will return null.
+     */
+    public String getString(String memberName)
+    {
+        JsonElement element = getElement(memberName);
+        if(element == null) return null;
+        return element.getAsString();
     }
 }
