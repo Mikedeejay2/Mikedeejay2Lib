@@ -158,7 +158,7 @@ public class FileIO extends PluginInstancer<PluginBase>
      */
     public boolean saveFile(File file, InputStream input, boolean replace, boolean throwErrors)
     {
-        if (!file.exists()) file.mkdirs();
+        if (!file.exists()) file.getParentFile().mkdirs();
 
         try
         {

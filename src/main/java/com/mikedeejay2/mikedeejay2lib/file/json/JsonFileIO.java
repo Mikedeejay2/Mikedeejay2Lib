@@ -6,9 +6,7 @@ import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.file.FileIO;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 
-import java.io.File;
-import java.io.FileWriter;
-import java.io.IOException;
+import java.io.*;
 import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
@@ -50,10 +48,14 @@ public final class JsonFileIO extends PluginInstancer<PluginBase>
     public JsonObject loadJsonObjectFromDisk(File file, boolean throwErrors)
     {
         JsonObject json = null;
-        JsonParser parser = new JsonParser();
+        GsonBuilder builder = new GsonBuilder();
+        builder.setPrettyPrinting();
+        Gson gson = builder.create();
+        Reader reader = fileIO.getReaderFromDisk(file, throwErrors);
         try
         {
-            json = (JsonObject)parser.parse(fileIO.getReaderFromDisk(file, throwErrors));
+            json = gson.fromJson(reader, JsonObject.class);
+            reader.close();
         }
         catch(Exception e)
         {
@@ -72,10 +74,14 @@ public final class JsonFileIO extends PluginInstancer<PluginBase>
     public JsonObject loadJsonObjectFromJar(String filePath, boolean throwErrors)
     {
         JsonObject json = null;
-        JsonParser parser = new JsonParser();
+        GsonBuilder builder = new GsonBuilder();
+        builder.setPrettyPrinting();
+        Gson gson = builder.create();
+        Reader reader = fileIO.getReaderFromJar(filePath, throwErrors);
         try
         {
-            json = (JsonObject)parser.parse(fileIO.getReaderFromJar(filePath, throwErrors));
+            json = gson.fromJson(reader, JsonObject.class);
+            reader.close();
         }
         catch(Exception e)
         {
@@ -107,29 +113,19 @@ public final class JsonFileIO extends PluginInstancer<PluginBase>
 
     public boolean saveJsonFile(File file, JsonObject json, boolean throwErrors)
     {
-        JsonWriter writer = getJsonWriter(file, throwErrors);
         GsonBuilder builder = new GsonBuilder();
+        builder.setPrettyPrinting();
         Gson gson = builder.create();
-        if(!file.exists())
-        {
-            try
-            {
-                file.createNewFile();
-            }
-            catch(IOException e)
-            {
-                if(throwErrors) fileIO.logFileCouldNotBeSaved(file.getPath(), e);
-                return false;
-            }
-        }
-        gson.toJson(json, writer);
-        return true;
+        String str = gson.toJson(json);
+        InputStream inputStream = new ByteArrayInputStream(str.getBytes());
+        return fileIO.saveFile(file, inputStream, true, throwErrors);
     }
 
     public boolean updateFromJar(String filePath, JsonObject original, boolean throwErrors)
     {
         JsonFile jarFile = new JsonFile(plugin, filePath);
-        jarFile.loadFromJar(true);
+        boolean success = jarFile.loadFromJar(true);
+        if(!success) return false;
         JsonObject jarJsonObject = jarFile.getJsonObject();
         Set<Map.Entry<String, JsonElement>> set = jarJsonObject.entrySet();
         return updateFromJarIterate(original, set, throwErrors);
@@ -149,7 +145,7 @@ public final class JsonFileIO extends PluginInstancer<PluginBase>
             else if(jsonElement.isJsonObject())
             {
                 Set<Map.Entry<String, JsonElement>> newSet = jsonElement.getAsJsonObject().entrySet();
-                return updateFromJarIterate(original, newSet, throwErrors);
+                updateFromJarIterate(original.getAsJsonObject(memberName), newSet, throwErrors);
             }
         }
         return true;
