@@ -191,12 +191,17 @@ public final class Chat extends PluginInstancer<PluginBase>
      */
     public Item getHoverItem(ItemStack item)
     {
-        return new Item(String.valueOf(item.getType().getId()), item.getAmount(), null);
+        int itemAmount = item.getAmount();
+        String itemId = item.getType().toString().toLowerCase();
+        return new Item(itemId, itemAmount, null);
     }
 
     public Entity getHoverEntity(org.bukkit.entity.Entity entity)
     {
-        return new Entity(entity.getType().toString(), String.valueOf(entity.getEntityId()), new TextComponent(entity.getCustomName()));
+        String entityType = entity.getType().toString().toLowerCase();
+        String entityId = entity.getUniqueId().toString();
+        String entityName = entity.getName();
+        return new Entity(entityType, entityId, new TextComponent(entityName));
     }
 
     /**
