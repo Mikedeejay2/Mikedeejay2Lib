@@ -2,7 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.file.json;
 
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
-import com.mikedeejay2.mikedeejay2lib.file.SectionAccessor;
+import com.mikedeejay2.mikedeejay2lib.file.section.SectionAccessor;
 import org.bukkit.Location;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;

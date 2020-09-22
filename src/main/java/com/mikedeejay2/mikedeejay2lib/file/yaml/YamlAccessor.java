@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.file.yaml;
 
-import com.mikedeejay2.mikedeejay2lib.file.SectionAccessor;
+import com.mikedeejay2.mikedeejay2lib.file.section.SectionAccessor;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;

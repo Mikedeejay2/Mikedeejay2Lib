@@ -1,6 +1,6 @@
-package com.mikedeejay2.mikedeejay2lib.file;
+package com.mikedeejay2.mikedeejay2lib.file.section;
 
-import com.google.gson.JsonElement;
+import com.mikedeejay2.mikedeejay2lib.file.DataFile;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
