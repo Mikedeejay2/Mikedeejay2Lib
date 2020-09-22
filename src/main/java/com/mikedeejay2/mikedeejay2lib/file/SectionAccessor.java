@@ -1,10 +1,12 @@
 package com.mikedeejay2.mikedeejay2lib.file;
 
+import com.google.gson.JsonElement;
 import org.bukkit.Location;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public abstract class SectionAccessor<D extends DataFile, T>
@@ -24,6 +26,8 @@ public abstract class SectionAccessor<D extends DataFile, T>
     public abstract void delete(String name);
     public abstract SectionAccessor<D, T> getSection(String name);
     public abstract Set<String> getKeys(boolean deep);
+    public abstract Set<T> getValues(boolean deep);
+    public abstract Map<String, T> getKeyValuePairs(boolean deep);
 
     public abstract boolean getBoolean(String name);
     public abstract int getInt(String name);

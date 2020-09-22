@@ -7,7 +7,6 @@ import com.mikedeejay2.mikedeejay2lib.file.FileIO;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 
 import java.io.*;
-import java.util.Iterator;
 import java.util.Map;
 import java.util.Set;
 

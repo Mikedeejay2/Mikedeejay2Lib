@@ -67,12 +67,61 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         HashSet<String> set = new HashSet<>();
         Set<Map.Entry<String, JsonElement>> entrySet = json.entrySet();
+        getKeysRecursive(set, entrySet, deep);
+        return set;
+    }
+
+    private void getKeysRecursive(HashSet<String> set, Set<Map.Entry<String, JsonElement>> entrySet, boolean deep)
+    {
         for(Map.Entry<String, JsonElement> element : entrySet)
         {
             String key = element.getKey();
+            JsonElement jsonElement = element.getValue();
             set.add(key);
+            if(!(jsonElement.isJsonObject() && deep)) continue;
+            getKeysRecursive(set, jsonElement.getAsJsonObject().entrySet(), deep);
         }
+    }
+
+    @Override
+    public Set<JsonElement> getValues(boolean deep)
+    {
+        HashSet<JsonElement> set = new HashSet<>();
+        Set<Map.Entry<String, JsonElement>> entrySet = json.entrySet();
+        getValuesRecursive(set, entrySet, deep);
         return set;
+    }
+
+    private void getValuesRecursive(Set<JsonElement> set, Set<Map.Entry<String, JsonElement>> entrySet, boolean deep)
+    {
+        for(Map.Entry<String, JsonElement> element : entrySet)
+        {
+            JsonElement jsonElement = element.getValue();
+            set.add(jsonElement);
+            if(!(jsonElement.isJsonObject() && deep)) continue;
+            getValuesRecursive(set, jsonElement.getAsJsonObject().entrySet(), deep);
+        }
+    }
+
+    @Override
+    public Map<String, JsonElement> getKeyValuePairs(boolean deep)
+    {
+        Map<String, JsonElement> set = new HashMap<>();
+        Set<Map.Entry<String, JsonElement>> entrySet = json.entrySet();
+        getKeyValuePairsRecursive(set, entrySet, deep);
+        return set;
+    }
+
+    private void getKeyValuePairsRecursive(Map<String, JsonElement> set, Set<Map.Entry<String, JsonElement>> entrySet, boolean deep)
+    {
+        for(Map.Entry<String, JsonElement> element : entrySet)
+        {
+            String key = element.getKey();
+            JsonElement jsonElement = element.getValue();
+            set.put(key, jsonElement);
+            if(!(jsonElement.isJsonObject() && deep)) continue;
+            getKeyValuePairsRecursive(set, jsonElement.getAsJsonObject().entrySet(), deep);
+        }
     }
 
     @Override

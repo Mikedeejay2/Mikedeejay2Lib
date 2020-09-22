@@ -2,7 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.file.yaml;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.file.DataFile;
-import com.mikedeejay2.mikedeejay2lib.file.FileIO;
+import com.mikedeejay2.mikedeejay2lib.file.SectionInstancer;
 
 /**
  * A YamlFile is inherited from DataFile and it actually makes working with Yaml files slightly
@@ -10,12 +10,12 @@ import com.mikedeejay2.mikedeejay2lib.file.FileIO;
  *
  * @author Mikedeejay2
  */
-public class YamlFile extends DataFile
+public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor>
 {
     // The EnhancedYaml object that the YamlFile is accessing
     protected EnhancedYaml yamlFile;
     // The root EnhancedYamlSection for the yamlFile
-    protected EnhancedYamlSection rootSection;
+    protected YamlAccessor rootAccessor;
     private YamlFileIO yamlFileIO;
 
     public YamlFile(PluginBase plugin, String filePath)
@@ -23,7 +23,7 @@ public class YamlFile extends DataFile
         super(plugin, filePath);
         this.yamlFileIO = new YamlFileIO(plugin);
         yamlFile = new EnhancedYaml(yamlFileIO);
-        rootSection = new EnhancedYamlSection(yamlFile);
+        rootAccessor = new YamlAccessor(this, yamlFile);
         yamlFileIO = new YamlFileIO(plugin);
     }
 
@@ -35,27 +35,6 @@ public class YamlFile extends DataFile
     public EnhancedYaml getYamlConfig()
     {
         return yamlFile;
-    }
-
-    /**
-     * Get a section from the EnhancedYaml file based off of a path
-     *
-     * @param path Path to the section being requested
-     * @return The requested section
-     */
-    public EnhancedYamlSection getSection(String path)
-    {
-        return new EnhancedYamlSection(path, rootSection);
-    }
-
-    /**
-     * Get the root EnhancedYamlSection
-     *
-     * @return The root EnhancedYamlSection
-     */
-    public EnhancedYamlSection getRootSection()
-    {
-        return rootSection;
     }
 
     @Override
@@ -82,5 +61,17 @@ public class YamlFile extends DataFile
     public boolean updateFromJar(boolean throwErrors)
     {
         return yamlFile.updateFromJar(filePath);
+    }
+
+    @Override
+    public YamlAccessor getAccessor(String name)
+    {
+        return (YamlAccessor)rootAccessor.getSection(name);
+    }
+
+    @Override
+    public YamlAccessor getRootAccessor()
+    {
+        return rootAccessor;
     }
 }

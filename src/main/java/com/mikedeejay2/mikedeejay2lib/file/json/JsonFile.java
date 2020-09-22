@@ -1,28 +1,27 @@
 package com.mikedeejay2.mikedeejay2lib.file.json;
 
 import com.google.gson.*;
-import com.google.gson.stream.JsonWriter;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.file.DataFile;
-import com.mikedeejay2.mikedeejay2lib.file.FileIO;
-
-import java.io.FileWriter;
+import com.mikedeejay2.mikedeejay2lib.file.SectionInstancer;
 
 /**
  * Wrapper class for a DataFile of type Json
  *
  * @author Mikedeejay2
  */
-public class JsonFile extends DataFile
+public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
 {
     protected JsonObject jsonObject;
     private JsonFileIO jsonFileIO;
+    private JsonAccessor rootAccessor;
 
     public JsonFile(PluginBase plugin, String filePath)
     {
         super(plugin, filePath);
         jsonObject = null;
         this.jsonFileIO = new JsonFileIO(plugin);
+        this.rootAccessor = new JsonAccessor(this, jsonObject);
     }
 
     @Override
@@ -79,5 +78,17 @@ public class JsonFile extends DataFile
         JsonElement element = getElement(memberName);
         if(element == null) return null;
         return element.getAsString();
+    }
+
+    @Override
+    public JsonAccessor getAccessor(String name)
+    {
+        return (JsonAccessor)rootAccessor.getSection(name);
+    }
+
+    @Override
+    public JsonAccessor getRootAccessor()
+    {
+        return rootAccessor;
     }
 }
