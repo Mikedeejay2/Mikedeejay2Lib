@@ -157,9 +157,8 @@ public final class JsonFileIO extends PluginInstancer<PluginBase>
      */
     private boolean updateFromJarIterate(JsonObject original, Set<Map.Entry<String, JsonElement>> set, boolean throwErrors)
     {
-        for(Iterator<Map.Entry<String, JsonElement>> i = set.iterator(); i.hasNext(); )
+        for(Map.Entry<String, JsonElement> element : set)
         {
-            Map.Entry<String, JsonElement> element = i.next();
             String memberName = element.getKey();
             JsonElement jsonElement = element.getValue();
             if(!original.has(memberName))

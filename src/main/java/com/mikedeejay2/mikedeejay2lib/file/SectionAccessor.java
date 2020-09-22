@@ -5,11 +5,12 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.util.Vector;
 
 import java.util.List;
+import java.util.Set;
 
-public abstract class SectionAccessor<D extends DataFile>
+public abstract class SectionAccessor<D extends DataFile, T>
 {
-    private final D dataFile;
-    private final String filePath;
+    protected final D dataFile;
+    protected final String filePath;
 
     public SectionAccessor(D dataFile)
     {
@@ -17,13 +18,12 @@ public abstract class SectionAccessor<D extends DataFile>
         this.filePath = dataFile.getFilePath();
     }
 
-    public abstract Object get(String name);
-    public abstract void set(String name, Object object);
+    public abstract T get(String name);
+    public abstract void set(String name, T object);
     public abstract void contains(String name);
     public abstract void delete(String name);
-    public abstract SectionAccessor<D> getSection(String name);
-    public abstract SectionAccessor<D> getSectionNested(String fullPath);
-    public abstract void getKeys(boolean deep);
+    public abstract SectionAccessor<D, T> getSection(String name);
+    public abstract Set<String> getKeys(boolean deep);
 
     public abstract boolean getBoolean(String name);
     public abstract int getInt(String name);
@@ -45,15 +45,15 @@ public abstract class SectionAccessor<D extends DataFile>
     public abstract List<Location> getLocationList(String name);
     public abstract List<Vector> getVectorList(String name);
 
-    public abstract boolean setBoolean(String name);
-    public abstract int setInt(String name);
-    public abstract float setFloat(String name);
-    public abstract double setDouble(String name);
-    public abstract long setLong(String name);
-    public abstract String setString(String name);
-    public abstract ItemStack setItemStack(String name);
-    public abstract Location setLocation(String name);
-    public abstract Vector setVector(String name);
+    public abstract void setBoolean(String name, boolean data);
+    public abstract void setInt(String name, int data);
+    public abstract void setFloat(String name, float data);
+    public abstract void setDouble(String name, double data);
+    public abstract void setLong(String name, long data);
+    public abstract void setString(String name, String data);
+    public abstract void setItemStack(String name, ItemStack data);
+    public abstract void setLocation(String name, Location data);
+    public abstract void setVector(String name, Vector data);
 
     public abstract void setBooleanList(String name, List<Boolean> data);
     public abstract void setIntList(String name, List<Integer> data);
