@@ -52,4 +52,15 @@ public abstract class AbstractSubCommand<P extends PluginBase> extends PluginIns
      * @return The permission that is required to run this command, null if none
      */
     public abstract String permission();
+
+    private String getArgsAsString(String[] args, int startingIndex)
+    {
+        StringBuilder stringBuilder = new StringBuilder();
+        for(int i = startingIndex; i < args.length; i++)
+        {
+            if(stringBuilder.toString().isEmpty()) stringBuilder.append(args[i]);
+            else stringBuilder.append(" ").append(args[i]);
+        }
+        return stringBuilder.toString();
+    }
 }
