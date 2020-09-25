@@ -1,6 +1,5 @@
 package com.mikedeejay2.mikedeejay2lib.util.particle;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;

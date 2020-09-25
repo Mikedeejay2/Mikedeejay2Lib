@@ -11,8 +11,14 @@ import org.bukkit.util.Vector;
 import java.lang.reflect.Type;
 import java.util.*;
 
+/**
+ * A Json accessor that overrides <tt>SectionAccessor</tt> for accessing Json files easily
+ *
+ * @author Mikedeejay2
+ */
 public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
 {
+    // The JsonObject that this JsonAccessor is accessing
     private JsonObject json;
 
     public JsonAccessor(JsonFile dataFile, JsonObject json)

@@ -1,9 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.runnable;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitScheduler;
 import org.bukkit.scheduler.BukkitTask;
 
 /**
@@ -17,6 +15,8 @@ import org.bukkit.scheduler.BukkitTask;
  *     <li>Add an optional methods for the first run and the last run of this runnable that can be overridden so functionality
  *     can be implemented specifically at the start and end of this runnable</li>
  * </ul>
+ *
+ * @author Mikedeejay2
  */
 public abstract class EnhancedRunnable extends BukkitRunnable
 {

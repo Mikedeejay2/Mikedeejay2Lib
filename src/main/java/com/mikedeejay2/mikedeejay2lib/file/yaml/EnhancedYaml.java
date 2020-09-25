@@ -1,10 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.file.yaml;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.yaml.snakeyaml.Yaml;
 
 import java.util.*;
 
@@ -87,7 +84,7 @@ public class EnhancedYaml extends YamlConfiguration
      * stay in their correct place.
      *
      * @param contents Original contents of the yaml file without comments.
-     * @throws InvalidConfigurationException If there is an error in the yaml file, an InvalidConfigurationException will be thrown
+     * @throws InvalidConfigurationException If there is an error in the yaml file, an <tt>InvalidConfigurationException</tt> will be thrown
      */
     @Override
     public void loadFromString(String contents) throws InvalidConfigurationException

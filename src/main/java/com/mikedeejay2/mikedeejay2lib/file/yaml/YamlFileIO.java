@@ -5,7 +5,6 @@ import com.mikedeejay2.mikedeejay2lib.file.FileIO;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 
 import java.io.*;
-import java.util.logging.Level;
 
 /**
  * Util class for saving and loading YAML from and to disk.

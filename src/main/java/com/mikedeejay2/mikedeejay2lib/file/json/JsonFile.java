@@ -12,8 +12,11 @@ import com.mikedeejay2.mikedeejay2lib.file.section.SectionInstancer;
  */
 public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
 {
+    // The root JsonObject that this DataFile holds
     protected JsonObject jsonObject;
+    // The JsonFileIO that this DataFile uses
     private JsonFileIO jsonFileIO;
+    // The root JsonAccessor that this JsonFile uses
     private JsonAccessor rootAccessor;
 
     public JsonFile(PluginBase plugin, String filePath)

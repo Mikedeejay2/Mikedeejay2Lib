@@ -11,8 +11,14 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+/**
+ * A Yaml accessor that overrides <tt>SectionAccessor</tt> for accessing YAML files easily
+ *
+ * @author Mikedeejay2
+ */
 public class YamlAccessor extends SectionAccessor<YamlFile, Object>
 {
+    // The ConfigurationSection that this SectionAccessor is accessing
     private ConfigurationSection yaml;
 
     public YamlAccessor(YamlFile dataFile, ConfigurationSection section)
