@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
  *
  * @author Mikedeejay2
  */
-public final class LookUtil
+public final class RayTracer
 {
     /**
      * Ray trace from an entity's point of view to what they are looking and get that position
