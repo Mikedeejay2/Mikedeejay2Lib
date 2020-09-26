@@ -305,10 +305,6 @@ public class LangManager extends PluginInstancer<PluginBase>
         return getText(player.getLocale().toLowerCase(), path, toReplace, replacements);
     }
 
-    /**
-     * <b>Only to be used internally in Mikedeejay2Lib</b><br>
-     * @see LangManager#getText(String path)
-     */
     public String getTextLib(String path)
     {
         String text = getText("lib_" + defaultLang, path);
@@ -320,8 +316,11 @@ public class LangManager extends PluginInstancer<PluginBase>
     }
 
     /**
-     * <b>Only to be used internally in Mikedeejay2Lib</b><br>
-     * @see LangManager#getText(Player player, String path)
+     * Gets the text based only off of a path, uses the default lang locale
+     * Gets the text from Mikedeejay2Lib
+     *
+     * @param path The path to be used to find the text
+     * @return The wanted text, null if text doesn't exist.
      */
     public String getTextLib(Player player, String path)
     {
@@ -334,8 +333,12 @@ public class LangManager extends PluginInstancer<PluginBase>
     }
 
     /**
-     * <b>Only to be used internally in Mikedeejay2Lib</b><br>
-     * @see LangManager#getText(CommandSender sender, String path)
+     * Gets text based off of a CommandSender and a path
+     * Gets the text from Mikedeejay2Lib
+     *
+     * @param sender CommandSender that will be used to get language locale
+     * @param path The path to be used to find the text
+     * @return The wanted text, null if text doesn't exist.
      */
     public String getTextLib(CommandSender sender, String path)
     {
@@ -352,8 +355,16 @@ public class LangManager extends PluginInstancer<PluginBase>
     }
 
     /**
-     * <b>Only to be used internally in Mikedeejay2Lib</b><br>
-     * @see LangManager#getText(String path, String[] toReplace, String[] replacements)
+     * Gets text based off of a path and processes the string replacing the
+     * strings in toReplace with the strings in replacements. Uses the default
+     * language locale.
+     * It's important that toReplace must be the same length as replacements
+     * Gets the text from Mikedeejay2Lib
+     *
+     * @param path The path to find the text from
+     * @param toReplace The array of Strings that should be replaced
+     * @param replacements The array of Strings that will replace the Strings in toReplace
+     * @return The wanted text, processed, null if text doesn't exist
      */
     public String getTextLib(String path, String[] toReplace, String[] replacements)
     {
@@ -366,8 +377,16 @@ public class LangManager extends PluginInstancer<PluginBase>
     }
 
     /**
-     * <b>Only to be used internally in Mikedeejay2Lib</b><br>
-     * @see LangManager#getText(CommandSender sender, String path, String[] toReplace, String[] replacements)
+     * Gets text based off of the CommandSender and a path and processes the string replacing the
+     * strings in toReplace with the strings in replacements.
+     * It's important that toReplace must be the same length as replacements
+     * Gets the text from Mikedeejay2Lib
+     *
+     * @param sender The CommandSender to base the language Locale off of
+     * @param path The path to find the text from
+     * @param toReplace The array of Strings that should be replaced
+     * @param replacements The array of Strings that will replace the Strings in toReplace
+     * @return The wanted text, processed, null if text doesn't exist
      */
     public String getTextLib(CommandSender sender, String path, String[] toReplace, String[] replacements)
     {
@@ -384,8 +403,16 @@ public class LangManager extends PluginInstancer<PluginBase>
     }
 
     /**
-     * <b>Only to be used internally in Mikedeejay2Lib</b><br>
-     * @see LangManager#getText(Player player, String path, String[] toReplace, String[] replacements)
+     * Gets text based off of a player and a path and processes the string replacing the
+     * strings in toReplace with the strings in replacements.
+     * It's important that toReplace must be the same length as replacements
+     * Gets the text from Mikedeejay2Lib
+     *
+     * @param player The player to base the language Locale off of
+     * @param path The path to find the text from
+     * @param toReplace The array of Strings that should be replaced
+     * @param replacements The array of Strings that will replace the Strings in toReplace
+     * @return The wanted text, processed, null if text doesn't exist
      */
     public String getTextLib(Player player, String path, String[] toReplace, String[] replacements)
     {
