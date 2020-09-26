@@ -83,4 +83,68 @@ public final class ArrayModifier
         }
         return newList.toArray(null);
     }
+
+    /**
+     * Convert a String array to an int array
+     *
+     * @param arr The array to convert
+     * @return The int array
+     */
+    public static int[] toIntArray(String[] arr)
+    {
+        int[] newArr = new int[arr.length];
+        for(int i = 0; i < arr.length; i++)
+        {
+            newArr[i] = Integer.parseInt(arr[i]);
+        }
+        return newArr;
+    }
+
+    /**
+     * Convert a String array to a double array
+     *
+     * @param arr The array to convert
+     * @return The double array
+     */
+    public static double[] toDoubleArray(String[] arr)
+    {
+        double[] newArr = new double[arr.length];
+        for(int i = 0; i < arr.length; i++)
+        {
+            newArr[i] = Double.parseDouble(arr[i]);
+        }
+        return newArr;
+    }
+
+    /**
+     * Convert a String array to a float array
+     *
+     * @param arr The array to convert
+     * @return The float array
+     */
+    public static float[] toFloatArray(String[] arr)
+    {
+        float[] newArr = new float[arr.length];
+        for(int i = 0; i < arr.length; i++)
+        {
+            newArr[i] = Float.parseFloat(arr[i]);
+        }
+        return newArr;
+    }
+
+    /**
+     * Convert a String array to a long array
+     *
+     * @param arr The array to convert
+     * @return The long array
+     */
+    public static long[] toLongArray(String[] arr)
+    {
+        long[] newArr = new long[arr.length];
+        for(int i = 0; i < arr.length; i++)
+        {
+            newArr[i] = Long.parseLong(arr[i]);
+        }
+        return newArr;
+    }
 }
