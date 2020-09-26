@@ -3,9 +3,13 @@ package com.mikedeejay2.mikedeejay2lib.util;
 import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
+
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
 /**
  * A class for dealing with getting locations that an entity is looking at.
@@ -93,7 +97,8 @@ public final class LookUtil
         World world = entity.getWorld();
         Location startLoc = entity.getEyeLocation();
         Vector lookVec = startLoc.getDirection();
-        RayTraceResult result = world.rayTrace(startLoc, lookVec, maxDistance, fluidCollisionMode, ignorePassableBlocks, 0, null);
+        Predicate<Entity> entities = entity1 -> (entity1 != entity);
+        RayTraceResult result = world.rayTrace(startLoc, lookVec, maxDistance, fluidCollisionMode, ignorePassableBlocks, 0, entities);
         if(result == null) return null;
         return result.getHitPosition();
     }
@@ -175,10 +180,12 @@ public final class LookUtil
     public static Location rayTraceLocation(LivingEntity entity, int maxDistance, FluidCollisionMode fluidCollisionMode, boolean ignorePassableBlocks)
     {
         World world = entity.getWorld();
-        Location startLoc = entity.getEyeLocation();
-        Vector lookVec = startLoc.getDirection();
-        RayTraceResult result = world.rayTrace(startLoc, lookVec, maxDistance, fluidCollisionMode, ignorePassableBlocks, 0, null);
-        if(result == null) return null;
-        return result.getHitPosition().toLocation(world);
+        Location entityLoc = entity.getEyeLocation();
+        Vector lookVec = entityLoc.getDirection();
+        Vector resultVec = rayTraceVector(entity, maxDistance, fluidCollisionMode, ignorePassableBlocks);
+        if(resultVec == null) return null;
+        Location location = resultVec.toLocation(world);
+        location.setDirection(lookVec);
+        return location;
     }
 }
