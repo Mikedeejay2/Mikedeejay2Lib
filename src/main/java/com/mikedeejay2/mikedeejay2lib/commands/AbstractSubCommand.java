@@ -52,4 +52,11 @@ public abstract class AbstractSubCommand<P extends PluginBase> extends PluginIns
      * @return The permission that is required to run this command, null if none
      */
     public abstract String permission();
+
+    /**
+     * Returns whether this subcommand requires a player or not.
+     *
+     * @return Whether a player is required to run this command
+     */
+    public abstract boolean playerRequired();
 }

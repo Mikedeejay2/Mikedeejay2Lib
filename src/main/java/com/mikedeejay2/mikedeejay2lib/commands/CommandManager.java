@@ -5,6 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
 
 import java.util.*;
 
@@ -79,6 +80,11 @@ public class CommandManager extends PluginInstancer<PluginBase> implements Comma
             if(target.permission() != null && !sender.hasPermission(target.permission()))
             {
                 plugin.chat().sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "errors.permission.nopermission"));
+                return false;
+            }
+            if(sender instanceof Player != target.playerRequired())
+            {
+                plugin.chat().sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "errors.player_required"));
                 return false;
             }
 
