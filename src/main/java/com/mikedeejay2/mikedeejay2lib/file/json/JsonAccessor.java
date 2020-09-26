@@ -43,12 +43,20 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
 
     public JsonArray getArray(String name)
     {
+        if(!contains(name))
+        {
+            json.add(name, new JsonArray());
+        }
         return json.get(name).getAsJsonArray();
     }
 
     public JsonObject getObject(String name)
     {
-        if(name.isEmpty() || name == null) return json;
+        if(name == null || name.isEmpty()) return json;
+        if(!contains(name))
+        {
+            json.add(name, new JsonObject());
+        }
         return json.get(name).getAsJsonObject();
     }
 
@@ -305,7 +313,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<ItemStack> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getItemStack(name)));
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getItemStack(null)));
         return list;
     }
 
@@ -314,7 +322,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<Location> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getLocation(name)));
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getLocation(null)));
         return list;
     }
 
@@ -323,7 +331,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<Vector> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getVector(name)));
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getVector(null)));
         return list;
     }
 
@@ -332,7 +340,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<OfflinePlayer> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getPlayer(name)));
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getPlayer(null)));
         return list;
     }
 
@@ -341,7 +349,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<AttributeModifier> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getAttributeModifier(name)));
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getAttributeModifier(null)));
         return list;
     }
 
@@ -350,7 +358,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<BlockVector> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getBlockVector(name)));
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getBlockVector(null)));
         return list;
     }
 
@@ -359,7 +367,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<BoundingBox> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getBoundingBox(name)));
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getBoundingBox(null)));
         return list;
     }
 
@@ -368,7 +376,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<Color> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getColor(name)));
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getColor(null)));
         return list;
     }
 
@@ -377,7 +385,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<FireworkEffect> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getFireworkEffect(name)));
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getFireworkEffect(null)));
         return list;
     }
 
@@ -386,7 +394,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<Pattern> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getPattern(name)));
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getPattern(null)));
         return list;
     }
 
@@ -395,7 +403,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<PotionEffect> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getPotionEffect(name)));
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getPotionEffect(null)));
         return list;
     }
 
@@ -504,7 +512,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public void setBooleanList(String name, List<Boolean> data)
     {
-        JsonArray array = get(name).getAsJsonArray();
+        JsonArray array = getArray(name);
         data.forEach(array::add);
         json.add(name, array);
     }
@@ -512,7 +520,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public void setIntList(String name, List<Integer> data)
     {
-        JsonArray array = get(name).getAsJsonArray();
+        JsonArray array = getArray(name);
         data.forEach(array::add);
         json.add(name, array);
     }
@@ -520,7 +528,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public void setFloatList(String name, List<Float> data)
     {
-        JsonArray array = get(name).getAsJsonArray();
+        JsonArray array = getArray(name);
         data.forEach(array::add);
         json.add(name, array);
     }
@@ -528,7 +536,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public void setDoubleList(String name, List<Double> data)
     {
-        JsonArray array = get(name).getAsJsonArray();
+        JsonArray array = getArray(name);
         data.forEach(array::add);
         json.add(name, array);
     }
@@ -536,7 +544,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public void setLongList(String name, List<Long> data)
     {
-        JsonArray array = get(name).getAsJsonArray();
+        JsonArray array = getArray(name);
         data.forEach(array::add);
         json.add(name, array);
     }
@@ -544,7 +552,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public void setStringList(String name, List<String> data)
     {
-        JsonArray array = get(name).getAsJsonArray();
+        JsonArray array = getArray(name);
         data.forEach(array::add);
         json.add(name, array);
     }
@@ -652,6 +660,6 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
             setSerializable(object, vector);
             array.add(object);
         });
-        json.add(name, new JsonArray());
+        json.add(name, array);
     }
 }
