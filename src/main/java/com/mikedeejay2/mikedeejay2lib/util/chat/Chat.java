@@ -33,55 +33,122 @@ public final class Chat extends PluginInstancer<PluginBase>
 
     /**
      *
-     * @param s The input string to be formatted
+     * @param message The input string to be formatted
      * @return The string formatted with Minecraft color codes
      */
-    public String chat(String s)
+    public String chat(String message)
     {
-        return ChatColor.translateAlternateColorCodes('&', s);
+        return ChatColor.translateAlternateColorCodes('&', message);
     }
 
     /**
      * Send a message in console with formatted chat colors
      *
-     * @param s The input string
+     * @param message The input string
      */
-    public void sendMessage(String s)
+    public void sendMessage(String message)
     {
-        Bukkit.getConsoleSender().sendMessage(chat(getTitleString() + s));
+        Bukkit.getConsoleSender().sendMessage(chat(getTitleString() + message));
+    }
+
+    /**
+     * Send a message based off of a lang path
+     *
+     * @param path The lang path
+     */
+    public void sendMessageLang(String path)
+    {
+        sendMessage(plugin.langManager().getText(path));
+    }
+
+    /**
+     * Send a message based off of a lang path
+     *
+     * @param prefix A prefix string that will be appended before the lang String
+     * @param path The lang path
+     */
+    public void sendMessageLang(String prefix, String path)
+    {
+        sendMessage(prefix + plugin.langManager().getText(path));
     }
 
     /**
      * Send a message in console with formatted chat colors
      * Default color is red so it's more visible
      *
-     * @param s The input string
+     * @param message The input string
      */
-    public void debug(String s)
+    public void debug(String message)
     {
-        Bukkit.getConsoleSender().sendMessage(chat(getTitleString() + "&c" + s));
+        Bukkit.getConsoleSender().sendMessage(chat(getTitleString() + "&c" + message));
     }
 
     /**
      * Sends the player a formatted message
      *
-     * @param p Input player that will receive the message
-     * @param s The message to be printed (will be formatted with colors)
+     * @param player Input player that will receive the message
+     * @param message The message to be printed (will be formatted with colors)
      */
-    public void sendMessage(Player p, String s)
+    public void sendMessage(Player player, String message)
     {
-        p.sendMessage(chat(getTitleString(p) + s));
+        player.sendMessage(chat(getTitleString(player) + message));
+    }
+
+    /**
+     * Sends the player a formatted message based off of a lang path
+     *
+     * @param player Input player that will receive the message
+     * @param path The lang path
+     */
+    public void sendMessageLang(Player player, String path)
+    {
+        sendMessage(player, plugin.langManager().getText(path));
+    }
+
+    /**
+     * Sends the player a formatted message based off of a lang path
+     *
+     * @param player Input player that will receive the message
+     * @param prefix A prefix string that will be appended before the lang String
+     * @param path The lang path
+     */
+    public void sendMessageLang(Player player, String prefix, String path)
+    {
+        sendMessage(player, prefix + plugin.langManager().getText(path));
     }
 
     /**
      * Sends the command sender (player or console) a formatted message
      *
-     * @param p Input player that will receive the message
-     * @param s The message to be printed (will be formatted with colors)
+     * @param sender Input CommandSender that will receive the message
+     * @param message The message to be printed (will be formatted with colors)
      */
-    public void sendMessage(CommandSender p, String s)
+    public void sendMessage(CommandSender sender, String message)
     {
-        p.sendMessage(chat(getTitleString(p) + s));
+        sender.sendMessage(chat(getTitleString(sender) + message));
+    }
+
+    /**
+     * Sends the player a formatted message based off of a lang path
+     *
+     * @param sender Input CommandSender that will receive the message
+     * @param path The lang path
+     */
+    public void sendMessageLang(CommandSender sender, String path)
+    {
+        sendMessage(sender, plugin.langManager().getText(path));
+    }
+
+    /**
+     * Sends the player a formatted message based off of a lang path
+     *
+     * @param sender Input CommandSender that will receive the message
+     * @param prefix A prefix string that will be appended before the lang String
+     * @param path The lang path
+     */
+    public void sendMessageLang(CommandSender sender, String prefix, String path)
+    {
+        sendMessage(sender, prefix + plugin.langManager().getText(path));
     }
 
     /**
