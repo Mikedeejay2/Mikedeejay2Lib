@@ -40,9 +40,9 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
     }
 
     @Override
-    public void contains(String name)
+    public boolean contains(String name)
     {
-        yaml.contains(name);
+        return yaml.contains(name);
     }
 
     @Override

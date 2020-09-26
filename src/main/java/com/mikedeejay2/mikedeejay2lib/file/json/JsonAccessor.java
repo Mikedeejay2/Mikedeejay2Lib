@@ -51,9 +51,9 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     }
 
     @Override
-    public void contains(String name)
+    public boolean contains(String name)
     {
-        json.has(name);
+        return json.has(name);
     }
 
     @Override

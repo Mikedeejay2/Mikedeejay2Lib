@@ -52,8 +52,9 @@ public abstract class SectionAccessor<D extends DataFile, T>
      * See if this section contains a piece of data under name
      *
      * @param name String to search for in this section
+     * @return Whether this section contains the name or not
      */
-    public abstract void contains(String name);
+    public abstract boolean contains(String name);
 
     /**
      * Delete an object from this section
