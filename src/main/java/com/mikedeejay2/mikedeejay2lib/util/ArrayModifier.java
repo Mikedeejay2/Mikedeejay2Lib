@@ -147,4 +147,20 @@ public final class ArrayModifier
         }
         return newArr;
     }
+
+    /**
+     * Convert a String array to a boolean array
+     *
+     * @param arr The array to convert
+     * @return The boolean array
+     */
+    public static boolean[] toBooleanArray(String[] arr)
+    {
+        boolean[] newArr = new boolean[arr.length];
+        for(int i = 0; i < arr.length; i++)
+        {
+            newArr[i] = Boolean.parseBoolean(arr[i]);
+        }
+        return newArr;
+    }
 }
