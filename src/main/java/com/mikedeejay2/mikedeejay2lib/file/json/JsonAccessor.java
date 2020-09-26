@@ -11,6 +11,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BlockVector;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
@@ -503,49 +504,49 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public void setBooleanList(String name, List<Boolean> data)
     {
-        JsonArray array = new JsonArray();
+        JsonArray array = get(name).getAsJsonArray();
         data.forEach(array::add);
-        json.add(name, new JsonArray());
+        json.add(name, array);
     }
 
     @Override
     public void setIntList(String name, List<Integer> data)
     {
-        JsonArray array = new JsonArray();
+        JsonArray array = get(name).getAsJsonArray();
         data.forEach(array::add);
-        json.add(name, new JsonArray());
+        json.add(name, array);
     }
 
     @Override
     public void setFloatList(String name, List<Float> data)
     {
-        JsonArray array = new JsonArray();
+        JsonArray array = get(name).getAsJsonArray();
         data.forEach(array::add);
-        json.add(name, new JsonArray());
+        json.add(name, array);
     }
 
     @Override
     public void setDoubleList(String name, List<Double> data)
     {
-        JsonArray array = new JsonArray();
+        JsonArray array = get(name).getAsJsonArray();
         data.forEach(array::add);
-        json.add(name, new JsonArray());
+        json.add(name, array);
     }
 
     @Override
     public void setLongList(String name, List<Long> data)
     {
-        JsonArray array = new JsonArray();
+        JsonArray array = get(name).getAsJsonArray();
         data.forEach(array::add);
-        json.add(name, new JsonArray());
+        json.add(name, array);
     }
 
     @Override
     public void setStringList(String name, List<String> data)
     {
-        JsonArray array = new JsonArray();
+        JsonArray array = get(name).getAsJsonArray();
         data.forEach(array::add);
-        json.add(name, new JsonArray());
+        json.add(name, array);
     }
 
     @Override

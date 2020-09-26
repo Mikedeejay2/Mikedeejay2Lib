@@ -2,6 +2,8 @@ package com.mikedeejay2.mikedeejay2lib.util;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 /**
  * A simple util class for modifying arrays.
@@ -163,5 +165,17 @@ public final class ArrayModifier
             newArr[i] = Boolean.parseBoolean(arr[i]);
         }
         return newArr;
+    }
+
+    /**
+     * Extremely simple method for converting an array to a list.
+     *
+     * @param arr The array to convert
+     * @param <T> The type to be used
+     * @return The list of the array
+     */
+    public static <T> List<T> toList(T[] arr)
+    {
+        return new ArrayList<>(Arrays.asList(arr));
     }
 }
