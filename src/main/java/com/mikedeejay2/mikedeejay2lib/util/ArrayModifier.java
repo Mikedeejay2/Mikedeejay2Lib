@@ -1,5 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util;
 
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 
 /**
@@ -59,9 +60,9 @@ public final class ArrayModifier
      * @param <T> The type of the array
      * @return The trimmed array
      */
-    public static <T> T[] trimArray(T[] arr, int startIndex)
+    public static <T> T[] trimArray(T[] arr, Class<T> clazz, int startIndex)
     {
-        return trimArray(arr, startIndex, arr.length);
+        return trimArray(arr, clazz, startIndex, arr.length);
     }
 
     /**
@@ -73,7 +74,7 @@ public final class ArrayModifier
      * @param <T> The type of the array
      * @return The trimmed array
      */
-    public static <T> T[] trimArray(T[] arr, int startIndex, int endIndex)
+    public static <T> T[] trimArray(T[] arr, Class<T> clazz, int startIndex, int endIndex)
     {
         ArrayList<T> newList = new ArrayList<>();
         for(int i = startIndex; i < endIndex; i++)
@@ -81,7 +82,7 @@ public final class ArrayModifier
             T cur = arr[i];
             newList.add(cur);
         }
-        return newList.toArray(null);
+        return newList.toArray((T[])Array.newInstance(clazz, newList.size()));
     }
 
     /**

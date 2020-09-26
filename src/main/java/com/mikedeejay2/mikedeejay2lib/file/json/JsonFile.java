@@ -22,7 +22,7 @@ public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
     public JsonFile(PluginBase plugin, String filePath)
     {
         super(plugin, filePath);
-        jsonObject = null;
+        jsonObject = new JsonObject();
         this.jsonFileIO = new JsonFileIO(plugin);
         this.rootAccessor = new JsonAccessor(this, jsonObject);
     }
