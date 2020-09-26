@@ -3,9 +3,19 @@ package com.mikedeejay2.mikedeejay2lib.file.json;
 import com.google.gson.*;
 import com.google.gson.reflect.TypeToken;
 import com.mikedeejay2.mikedeejay2lib.file.section.SectionAccessor;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.block.banner.Pattern;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
+import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.util.BlockVector;
+import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 import java.lang.reflect.Type;
@@ -169,22 +179,73 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public ItemStack getItemStack(String name)
     {
-        Map<String, Object> map = getSerialized(getObject(name));
-        return ItemStack.deserialize(map);
+        return getSerialized(getObject(name), ItemStack.class);
     }
 
     @Override
     public Location getLocation(String name)
     {
-        Map<String, Object> map = getSerialized(getObject(name));
-        return Location.deserialize(map);
+        return getSerialized(getObject(name), Location.class);
     }
 
     @Override
     public Vector getVector(String name)
     {
-        Map<String, Object> map = getSerialized(getObject(name));
-        return Vector.deserialize(map);
+        return getSerialized(getObject(name), Vector.class);
+    }
+
+    @Override
+    public ItemMeta getItemMeta(String name)
+    {
+        return getSerialized(getObject(name), ItemMeta.class);
+    }
+
+    @Override
+    public OfflinePlayer getPlayer(String name)
+    {
+        return getSerialized(getObject(name), OfflinePlayer.class);
+    }
+
+    @Override
+    public AttributeModifier getAttributeModifier(String name)
+    {
+        return getSerialized(getObject(name), AttributeModifier.class);
+    }
+
+    @Override
+    public BlockVector getBlockVector(String name)
+    {
+        return getSerialized(getObject(name), BlockVector.class);
+    }
+
+    @Override
+    public BoundingBox getBoundingBox(String name)
+    {
+        return getSerialized(getObject(name), BoundingBox.class);
+    }
+
+    @Override
+    public Color getColor(String name)
+    {
+        return getSerialized(getObject(name), Color.class);
+    }
+
+    @Override
+    public FireworkEffect getFireworkEffect(String name)
+    {
+        return getSerialized(getObject(name), FireworkEffect.class);
+    }
+
+    @Override
+    public Pattern getPattern(String name)
+    {
+        return getSerialized(getObject(name), Pattern.class);
+    }
+
+    @Override
+    public PotionEffect getPotionEffect(String name)
+    {
+        return getSerialized(getObject(name), PotionEffect.class);
     }
 
     @Override
@@ -192,10 +253,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<Boolean> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        int size = array.size();
-        array.forEach(element -> {
-            list.add(element.getAsBoolean());
-        });
+        array.forEach(element -> list.add(element.getAsBoolean()));
         return list;
     }
 
@@ -204,10 +262,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<Integer> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        int size = array.size();
-        array.forEach(element -> {
-            list.add(element.getAsInt());
-        });
+        array.forEach(element -> list.add(element.getAsInt()));
         return list;
     }
 
@@ -216,10 +271,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<Float> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        int size = array.size();
-        array.forEach(element -> {
-            list.add(element.getAsFloat());
-        });
+        array.forEach(element -> list.add(element.getAsFloat()));
         return list;
     }
 
@@ -228,10 +280,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<Double> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        int size = array.size();
-        array.forEach(element -> {
-            list.add(element.getAsDouble());
-        });
+        array.forEach(element -> list.add(element.getAsDouble()));
         return list;
     }
 
@@ -240,10 +289,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<Long> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        int size = array.size();
-        array.forEach(element -> {
-            list.add(element.getAsLong());
-        });
+        array.forEach(element -> list.add(element.getAsLong()));
         return list;
     }
 
@@ -252,10 +298,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<String> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        int size = array.size();
-        array.forEach(element -> {
-            list.add(element.getAsString());
-        });
+        array.forEach(element -> list.add(element.getAsString()));
         return list;
     }
 
@@ -264,10 +307,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<ItemStack> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        int size = array.size();
-        array.forEach(element -> {
-            list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getItemStack(name));
-        });
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getItemStack(name)));
         return list;
     }
 
@@ -276,10 +316,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<Location> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        int size = array.size();
-        array.forEach(element -> {
-            list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getLocation(name));
-        });
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getLocation(name)));
         return list;
     }
 
@@ -288,10 +325,79 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         List<Vector> list = new ArrayList<>();
         JsonArray array = getArray(name);
-        int size = array.size();
-        array.forEach(element -> {
-            list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getVector(name));
-        });
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getVector(name)));
+        return list;
+    }
+
+    @Override
+    public List<OfflinePlayer> getPlayerList(String name)
+    {
+        List<OfflinePlayer> list = new ArrayList<>();
+        JsonArray array = getArray(name);
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getPlayer(name)));
+        return list;
+    }
+
+    @Override
+    public List<AttributeModifier> getAttributeModifierList(String name)
+    {
+        List<AttributeModifier> list = new ArrayList<>();
+        JsonArray array = getArray(name);
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getAttributeModifier(name)));
+        return list;
+    }
+
+    @Override
+    public List<BlockVector> getBlockVectorList(String name)
+    {
+        List<BlockVector> list = new ArrayList<>();
+        JsonArray array = getArray(name);
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getBlockVector(name)));
+        return list;
+    }
+
+    @Override
+    public List<BoundingBox> getBoundingBoxList(String name)
+    {
+        List<BoundingBox> list = new ArrayList<>();
+        JsonArray array = getArray(name);
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getBoundingBox(name)));
+        return list;
+    }
+
+    @Override
+    public List<Color> getColorList(String name)
+    {
+        List<Color> list = new ArrayList<>();
+        JsonArray array = getArray(name);
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getColor(name)));
+        return list;
+    }
+
+    @Override
+    public List<FireworkEffect> getFireworkEffectList(String name)
+    {
+        List<FireworkEffect> list = new ArrayList<>();
+        JsonArray array = getArray(name);
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getFireworkEffect(name)));
+        return list;
+    }
+
+    @Override
+    public List<Pattern> getPatternList(String name)
+    {
+        List<Pattern> list = new ArrayList<>();
+        JsonArray array = getArray(name);
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getPattern(name)));
+        return list;
+    }
+
+    @Override
+    public List<PotionEffect> getPotionEffectList(String name)
+    {
+        List<PotionEffect> list = new ArrayList<>();
+        JsonArray array = getArray(name);
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getPotionEffect(name)));
         return list;
     }
 
@@ -350,6 +456,54 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     }
 
     @Override
+    public void setPlayer(String name, OfflinePlayer data)
+    {
+        setSerializable(getObject(name), data);
+    }
+
+    @Override
+    public void setAttributeModifier(String name, AttributeModifier data)
+    {
+        setSerializable(getObject(name), data);
+    }
+
+    @Override
+    public void setBlockVector(String name, BlockVector data)
+    {
+        setSerializable(getObject(name), data);
+    }
+
+    @Override
+    public void setBoundingBox(String name, BoundingBox data)
+    {
+        setSerializable(getObject(name), data);
+    }
+
+    @Override
+    public void setColor(String name, Color data)
+    {
+        setSerializable(getObject(name), data);
+    }
+
+    @Override
+    public void setFireworkEffect(String name, FireworkEffect data)
+    {
+        setSerializable(getObject(name), data);
+    }
+
+    @Override
+    public void setPattern(String name, Pattern data)
+    {
+        setSerializable(getObject(name), data);
+    }
+
+    @Override
+    public void setPotionEffect(String name, PotionEffect data)
+    {
+        setSerializable(getObject(name), data);
+    }
+
+    @Override
     public void setBooleanList(String name, List<Boolean> data)
     {
         JsonArray array = new JsonArray();
@@ -400,37 +554,67 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public void setItemStackList(String name, List<ItemStack> data)
     {
-        JsonArray array = new JsonArray();
-        data.forEach(item -> {
-            JsonObject object = new JsonObject();
-            setSerializable(object, item);
-            array.add(object);
-        });
-        json.add(name, new JsonArray());
+        setSerializableList(name, data);
     }
 
     @Override
     public void setLocationList(String name, List<Location> data)
     {
-        JsonArray array = new JsonArray();
-        data.forEach(location -> {
-            JsonObject object = new JsonObject();
-            setSerializable(object, location);
-            array.add(object);
-        });
-        json.add(name, new JsonArray());
+        setSerializableList(name, data);
     }
 
     @Override
     public void setVectorList(String name, List<Vector> data)
     {
-        JsonArray array = new JsonArray();
-        data.forEach(vector -> {
-            JsonObject object = new JsonObject();
-            setSerializable(object, vector);
-            array.add(object);
-        });
-        json.add(name, new JsonArray());
+        setSerializableList(name, data);
+    }
+
+    @Override
+    public void setPlayerList(String name, List<OfflinePlayer> data)
+    {
+        setSerializableList(name, data);
+    }
+
+    @Override
+    public void setAttributeModifierList(String name, List<AttributeModifier> data)
+    {
+        setSerializableList(name, data);
+    }
+
+    @Override
+    public void setBlockVectorList(String name, List<BlockVector> data)
+    {
+        setSerializableList(name, data);
+    }
+
+    @Override
+    public void setBoundingBoxList(String name, List<BoundingBox> data)
+    {
+        setSerializableList(name, data);
+    }
+
+    @Override
+    public void setColorList(String name, List<Color> data)
+    {
+        setSerializableList(name, data);
+    }
+
+    @Override
+    public void setFireworkEffectList(String name, List<FireworkEffect> data)
+    {
+        setSerializableList(name, data);
+    }
+
+    @Override
+    public void setPatternList(String name, List<Pattern> data)
+    {
+        setSerializableList(name, data);
+    }
+
+    @Override
+    public void setPotionEffectList(String name, List<PotionEffect> data)
+    {
+        setSerializableList(name, data);
     }
 
     private void setSerializable(JsonObject jsonObject, ConfigurationSerializable data)
@@ -447,7 +631,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
         }
     }
 
-    private Map<String, Object> getSerialized(JsonObject jsonObject)
+    private <T extends ConfigurationSerializable> T getSerialized(JsonObject jsonObject, Class<T> clazz)
     {
         Set<Map.Entry<String, JsonElement>> set = jsonObject.entrySet();
         Map<String, Object> map = new HashMap<>();
@@ -459,6 +643,17 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
             Object object = gson.fromJson(entry.getValue(), type);
             map.put(member, object);
         }
-        return map;
+        return (T)ConfigurationSerialization.deserializeObject(map, clazz);
+    }
+
+    private void setSerializableList(String name, List<? extends ConfigurationSerializable> data)
+    {
+        JsonArray array = new JsonArray();
+        data.forEach(vector -> {
+            JsonObject object = new JsonObject();
+            setSerializable(object, vector);
+            array.add(object);
+        });
+        json.add(name, new JsonArray());
     }
 }

@@ -1,9 +1,18 @@
 package com.mikedeejay2.mikedeejay2lib.file.yaml;
 
 import com.mikedeejay2.mikedeejay2lib.file.section.SectionAccessor;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.block.banner.Pattern;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.util.BlockVector;
+import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 import java.util.HashSet;
@@ -130,6 +139,60 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
     }
 
     @Override
+    public ItemMeta getItemMeta(String name)
+    {
+        return (ItemMeta) yaml.get(name);
+    }
+
+    @Override
+    public OfflinePlayer getPlayer(String name)
+    {
+        return yaml.getOfflinePlayer(name);
+    }
+
+    @Override
+    public AttributeModifier getAttributeModifier(String name)
+    {
+        return (AttributeModifier) yaml.get(name);
+    }
+
+    @Override
+    public BlockVector getBlockVector(String name)
+    {
+        return (BlockVector) yaml.get(name);
+    }
+
+    @Override
+    public BoundingBox getBoundingBox(String name)
+    {
+        return (BoundingBox) yaml.get(name);
+    }
+
+    @Override
+    public Color getColor(String name)
+    {
+        return (Color) yaml.get(name);
+    }
+
+    @Override
+    public FireworkEffect getFireworkEffect(String name)
+    {
+        return (FireworkEffect) yaml.get(name);
+    }
+
+    @Override
+    public Pattern getPattern(String name)
+    {
+        return (Pattern) yaml.get(name);
+    }
+
+    @Override
+    public PotionEffect getPotionEffect(String name)
+    {
+        return (PotionEffect) yaml.get(name);
+    }
+
+    @Override
     public List<Boolean> getBooleanList(String name)
     {
         return yaml.getBooleanList(name);
@@ -168,19 +231,67 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
     @Override
     public List<ItemStack> getItemStackList(String name)
     {
-        return (List<ItemStack>)yaml.getList(name);
+        return (List<ItemStack>) yaml.getList(name);
     }
 
     @Override
     public List<Location> getLocationList(String name)
     {
-        return (List<Location>)yaml.getList(name);
+        return (List<Location>) yaml.getList(name);
     }
 
     @Override
     public List<Vector> getVectorList(String name)
     {
-        return (List<Vector>)yaml.getList(name);
+        return (List<Vector>) yaml.getList(name);
+    }
+
+    @Override
+    public List<OfflinePlayer> getPlayerList(String name)
+    {
+        return (List<OfflinePlayer>) yaml.getList(name);
+    }
+
+    @Override
+    public List<AttributeModifier> getAttributeModifierList(String name)
+    {
+        return (List<AttributeModifier>) yaml.getList(name);
+    }
+
+    @Override
+    public List<BlockVector> getBlockVectorList(String name)
+    {
+        return (List<BlockVector>) yaml.getList(name);
+    }
+
+    @Override
+    public List<BoundingBox> getBoundingBoxList(String name)
+    {
+        return (List<BoundingBox>) yaml.getList(name);
+    }
+
+    @Override
+    public List<Color> getColorList(String name)
+    {
+        return (List<Color>) yaml.getList(name);
+    }
+
+    @Override
+    public List<FireworkEffect> getFireworkEffectList(String name)
+    {
+        return (List<FireworkEffect>) yaml.getList(name);
+    }
+
+    @Override
+    public List<Pattern> getPatternList(String name)
+    {
+        return (List<Pattern>) yaml.getList(name);
+    }
+
+    @Override
+    public List<PotionEffect> getPotionEffectList(String name)
+    {
+        return (List<PotionEffect>) yaml.getList(name);
     }
 
     @Override
@@ -238,6 +349,54 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
     }
 
     @Override
+    public void setPlayer(String name, OfflinePlayer data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setAttributeModifier(String name, AttributeModifier data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setBlockVector(String name, BlockVector data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setBoundingBox(String name, BoundingBox data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setColor(String name, Color data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setFireworkEffect(String name, FireworkEffect data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setPattern(String name, Pattern data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setPotionEffect(String name, PotionEffect data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
     public void setBooleanList(String name, List<Boolean> data)
     {
         yaml.set(name, data);
@@ -287,6 +446,54 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
 
     @Override
     public void setVectorList(String name, List<Vector> data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setPlayerList(String name, List<OfflinePlayer> data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setAttributeModifierList(String name, List<AttributeModifier> data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setBlockVectorList(String name, List<BlockVector> data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setBoundingBoxList(String name, List<BoundingBox> data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setColorList(String name, List<Color> data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setFireworkEffectList(String name, List<FireworkEffect> data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setPatternList(String name, List<Pattern> data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setPotionEffectList(String name, List<PotionEffect> data)
     {
         yaml.set(name, data);
     }

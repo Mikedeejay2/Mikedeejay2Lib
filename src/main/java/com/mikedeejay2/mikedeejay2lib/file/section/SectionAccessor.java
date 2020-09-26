@@ -1,8 +1,17 @@
 package com.mikedeejay2.mikedeejay2lib.file.section;
 
 import com.mikedeejay2.mikedeejay2lib.file.DataFile;
+import org.bukkit.Color;
+import org.bukkit.FireworkEffect;
 import org.bukkit.Location;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.block.banner.Pattern;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.potion.PotionEffect;
+import org.bukkit.util.BlockVector;
+import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 import java.util.List;
@@ -112,6 +121,15 @@ public abstract class SectionAccessor<D extends DataFile, T>
     public abstract ItemStack getItemStack(String name);
     public abstract Location getLocation(String name);
     public abstract Vector getVector(String name);
+    public abstract ItemMeta getItemMeta(String name);
+    public abstract OfflinePlayer getPlayer(String name);
+    public abstract AttributeModifier getAttributeModifier(String name);
+    public abstract BlockVector getBlockVector(String name);
+    public abstract BoundingBox getBoundingBox(String name);
+    public abstract Color getColor(String name);
+    public abstract FireworkEffect getFireworkEffect(String name);
+    public abstract Pattern getPattern(String name);
+    public abstract PotionEffect getPotionEffect(String name);
 
     public abstract List<Boolean> getBooleanList(String name);
     public abstract List<Integer> getIntList(String name);
@@ -122,6 +140,14 @@ public abstract class SectionAccessor<D extends DataFile, T>
     public abstract List<ItemStack> getItemStackList(String name);
     public abstract List<Location> getLocationList(String name);
     public abstract List<Vector> getVectorList(String name);
+    public abstract List<OfflinePlayer> getPlayerList(String name);
+    public abstract List<AttributeModifier> getAttributeModifierList(String name);
+    public abstract List<BlockVector> getBlockVectorList(String name);
+    public abstract List<BoundingBox> getBoundingBoxList(String name);
+    public abstract List<Color> getColorList(String name);
+    public abstract List<FireworkEffect> getFireworkEffectList(String name);
+    public abstract List<Pattern> getPatternList(String name);
+    public abstract List<PotionEffect> getPotionEffectList(String name);
 
     public abstract void setBoolean(String name, boolean data);
     public abstract void setInt(String name, int data);
@@ -132,6 +158,14 @@ public abstract class SectionAccessor<D extends DataFile, T>
     public abstract void setItemStack(String name, ItemStack data);
     public abstract void setLocation(String name, Location data);
     public abstract void setVector(String name, Vector data);
+    public abstract void setPlayer(String name, OfflinePlayer data);
+    public abstract void setAttributeModifier(String name, AttributeModifier data);
+    public abstract void setBlockVector(String name, BlockVector data);
+    public abstract void setBoundingBox(String name, BoundingBox data);
+    public abstract void setColor(String name, Color data);
+    public abstract void setFireworkEffect(String name, FireworkEffect data);
+    public abstract void setPattern(String name, Pattern data);
+    public abstract void setPotionEffect(String name, PotionEffect data);
 
     public abstract void setBooleanList(String name, List<Boolean> data);
     public abstract void setIntList(String name, List<Integer> data);
@@ -142,6 +176,14 @@ public abstract class SectionAccessor<D extends DataFile, T>
     public abstract void setItemStackList(String name, List<ItemStack> data);
     public abstract void setLocationList(String name, List<Location> data);
     public abstract void setVectorList(String name, List<Vector> data);
+    public abstract void setPlayerList(String name, List<OfflinePlayer> data);
+    public abstract void setAttributeModifierList(String name, List<AttributeModifier> data);
+    public abstract void setBlockVectorList(String name, List<BlockVector> data);
+    public abstract void setBoundingBoxList(String name, List<BoundingBox> data);
+    public abstract void setColorList(String name, List<Color> data);
+    public abstract void setFireworkEffectList(String name, List<FireworkEffect> data);
+    public abstract void setPatternList(String name, List<Pattern> data);
+    public abstract void setPotionEffectList(String name, List<PotionEffect> data);
 
     public D getDataFile()
     {
