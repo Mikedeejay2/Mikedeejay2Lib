@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib;
 import com.mikedeejay2.mikedeejay2lib.commands.CommandManager;
 import com.mikedeejay2.mikedeejay2lib.event.ListenerManager;
 import com.mikedeejay2.mikedeejay2lib.file.FileManager;
+import com.mikedeejay2.mikedeejay2lib.gui.manager.GUIManager;
 import com.mikedeejay2.mikedeejay2lib.language.LangManager;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
@@ -27,7 +28,8 @@ public class PluginBase extends JavaPlugin
 
     protected Chat chat;
     protected ItemCreator itemCreator;
-    protected ListenerManager listeners;
+    protected ListenerManager listenerManager;
+    protected GUIManager guiManager;
 
     public PluginBase()
     {}
@@ -41,7 +43,8 @@ public class PluginBase extends JavaPlugin
         this.langManager = new LangManager(this);
         this.commandManager = new CommandManager(this);
         this.fileManager = new FileManager(this);
-        this.listeners = new ListenerManager(this);
+        this.listenerManager = new ListenerManager(this);
+        this.guiManager = new GUIManager(this);
     }
 
     @Override
@@ -82,6 +85,11 @@ public class PluginBase extends JavaPlugin
 
     public ListenerManager listenerManager()
     {
-        return listeners;
+        return listenerManager;
+    }
+
+    public GUIManager guiManager()
+    {
+        return guiManager;
     }
 }
