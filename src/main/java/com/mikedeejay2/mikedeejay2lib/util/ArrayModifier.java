@@ -3,11 +3,11 @@ package com.mikedeejay2.mikedeejay2lib.util;
 import java.util.ArrayList;
 
 /**
- * A simple util class for trimming and modifying arrays.
+ * A simple util class for modifying arrays.
  *
  * @author Mikedeejay2
  */
-public final class ArrayTrimmer
+public final class ArrayModifier
 {
     /**
      * Get an array as a String, each index separated by a space.
