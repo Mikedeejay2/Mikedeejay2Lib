@@ -176,6 +176,86 @@ public final class ArrayModifier
      */
     public static <T> List<T> toList(T[] arr)
     {
-        return new ArrayList<>(Arrays.asList(arr));
+        return Arrays.asList(arr);
+    }
+
+    /**
+     * Converts a String array to an Integer List
+     *
+     * @param arr Array to convert
+     * @return A new Integer list containing data from array
+     */
+    public static List<Integer> toIntList(String[] arr)
+    {
+        List<Integer> list = new ArrayList<>();
+        for(String str : arr)
+        {
+            list.add(Integer.parseInt(str));
+        }
+        return list;
+    }
+
+    /**
+     * Converts a String array to a Double List
+     *
+     * @param arr Array to convert
+     * @return A new Double list containing data from array
+     */
+    public static List<Double> toDoubleList(String[] arr)
+    {
+        List<Double> list = new ArrayList<>();
+        for(String str : arr)
+        {
+            list.add(Double.parseDouble(str));
+        }
+        return list;
+    }
+
+    /**
+     * Converts a String array to a Float List
+     *
+     * @param arr Array to convert
+     * @return A new Float list containing data from array
+     */
+    public static List<Float> toFloatList(String[] arr)
+    {
+        List<Float> list = new ArrayList<>();
+        for(String str : arr)
+        {
+            list.add(Float.parseFloat(str));
+        }
+        return list;
+    }
+
+    /**
+     * Converts a String array to a Long List
+     *
+     * @param arr Array to convert
+     * @return A new Long list containing data from array
+     */
+    public static List<Long> toLongList(String[] arr)
+    {
+        List<Long> list = new ArrayList<>();
+        for(String str : arr)
+        {
+            list.add(Long.parseLong(str));
+        }
+        return list;
+    }
+
+    /**
+     * Converts a String array to a Boolean List
+     *
+     * @param arr Array to convert
+     * @return A new Boolean list containing data from array
+     */
+    public static List<Boolean> toBooleanList(String[] arr)
+    {
+        List<Boolean> list = new ArrayList<>();
+        for(String str : arr)
+        {
+            list.add(Boolean.parseBoolean(str));
+        }
+        return list;
     }
 }
