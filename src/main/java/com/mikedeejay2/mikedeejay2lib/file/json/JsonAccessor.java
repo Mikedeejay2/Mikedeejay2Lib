@@ -623,6 +623,12 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
         setSerializableList(name, data);
     }
 
+    /**
+     * Add a <tt>ConfigurationSerializable</tt> object to a <tt>JsonObject</tt>
+     *
+     * @param jsonObject The <tt>JsonObject</tt> to add the data to
+     * @param data The data to add to the jsonObject
+     */
     private void setSerializable(JsonObject jsonObject, ConfigurationSerializable data)
     {
         Map<String, Object> map = data.serialize();
@@ -637,6 +643,14 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
         }
     }
 
+    /**
+     * Get a <tt>ConfigurationSerializable</tt> object from a <tt>JsonObject</tt>
+     *
+     * @param jsonObject Object to get the <tt>ConfigurationSerializable</tt> from
+     * @param clazz The class that the object should be serialized to
+     * @param <T> The type of <tt>ConfigurationSerializable</tt>, same as class type
+     * @return The requested <tt>ConfigurationSerializable</tt>
+     */
     private <T extends ConfigurationSerializable> T getSerialized(JsonObject jsonObject, Class<T> clazz)
     {
         Set<Map.Entry<String, JsonElement>> set = jsonObject.entrySet();
@@ -652,6 +666,12 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
         return (T)ConfigurationSerialization.deserializeObject(map, clazz);
     }
 
+    /**
+     * Set a serializable list to the current json.
+     *
+     * @param name The memberName that the list will be added under
+     * @param data The list of data to add
+     */
     private void setSerializableList(String name, List<? extends ConfigurationSerializable> data)
     {
         JsonArray array = new JsonArray();
