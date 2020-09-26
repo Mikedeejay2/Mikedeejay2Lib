@@ -25,7 +25,7 @@ public final class LookUtil
      * @param entity Entity's view that will be raytraced
      * @return The Vector of the raytrace hit, null if the raytrace never hit anything
      */
-    public Vector rayTraceVector(LivingEntity entity)
+    public static Vector rayTraceVector(LivingEntity entity)
     {
         return rayTraceVector(entity, 256, FluidCollisionMode.NEVER, false);
     }
@@ -41,7 +41,7 @@ public final class LookUtil
      * @param maxDistance The maximum distance that should be raytraced before it stops trying
      * @return The Vector of the raytrace hit, null if the raytrace never hit anything
      */
-    public Vector rayTraceVector(LivingEntity entity, int maxDistance)
+    public static Vector rayTraceVector(LivingEntity entity, int maxDistance)
     {
         return rayTraceVector(entity, maxDistance, FluidCollisionMode.NEVER, false);
     }
@@ -57,7 +57,7 @@ public final class LookUtil
      * @param ignorePassableBlocks If the raytrace should ignore blocks that are passable (grass, flowers, etc)
      * @return The Vector of the raytrace hit, null if the raytrace never hit anything
      */
-    public Vector rayTraceVector(LivingEntity entity, int maxDistance, boolean ignorePassableBlocks)
+    public static Vector rayTraceVector(LivingEntity entity, int maxDistance, boolean ignorePassableBlocks)
     {
         return rayTraceVector(entity, maxDistance, FluidCollisionMode.NEVER, ignorePassableBlocks);
     }
@@ -73,7 +73,7 @@ public final class LookUtil
      * @param fluidCollisionMode The fluid collision mode to use
      * @return The Vector of the raytrace hit, null if the raytrace never hit anything
      */
-    public Vector rayTraceVector(LivingEntity entity, int maxDistance, FluidCollisionMode fluidCollisionMode)
+    public static Vector rayTraceVector(LivingEntity entity, int maxDistance, FluidCollisionMode fluidCollisionMode)
     {
         return rayTraceVector(entity, maxDistance, fluidCollisionMode, false);
     }
@@ -88,7 +88,7 @@ public final class LookUtil
      * @param ignorePassableBlocks If the raytrace should ignore blocks that are passable (grass, flowers, etc)
      * @return The Vector of the raytrace hit, null if the raytrace never hit anything
      */
-    public Vector rayTraceVector(LivingEntity entity, int maxDistance, FluidCollisionMode fluidCollisionMode, boolean ignorePassableBlocks)
+    public static Vector rayTraceVector(LivingEntity entity, int maxDistance, FluidCollisionMode fluidCollisionMode, boolean ignorePassableBlocks)
     {
         World world = entity.getWorld();
         Location startLoc = entity.getEyeLocation();
@@ -109,7 +109,7 @@ public final class LookUtil
      * @param entity Entity's view that will be raytraced
      * @return The Location of the raytrace hit, null if the raytrace never hit anything
      */
-    public Location rayTraceLocation(LivingEntity entity)
+    public static Location rayTraceLocation(LivingEntity entity)
     {
         return rayTraceLocation(entity, 256, FluidCollisionMode.NEVER, false);
     }
@@ -125,7 +125,7 @@ public final class LookUtil
      * @param maxDistance The maximum distance that should be raytraced before it stops trying
      * @return The Location of the raytrace hit, null if the raytrace never hit anything
      */
-    public Location rayTraceLocation(LivingEntity entity, int maxDistance)
+    public static Location rayTraceLocation(LivingEntity entity, int maxDistance)
     {
         return rayTraceLocation(entity, maxDistance, FluidCollisionMode.NEVER, false);
     }
@@ -141,7 +141,7 @@ public final class LookUtil
      * @param ignorePassableBlocks If the raytrace should ignore blocks that are passable (grass, flowers, etc)
      * @return The Location of the raytrace hit, null if the raytrace never hit anything
      */
-    public Location rayTraceLocation(LivingEntity entity, int maxDistance, boolean ignorePassableBlocks)
+    public static Location rayTraceLocation(LivingEntity entity, int maxDistance, boolean ignorePassableBlocks)
     {
         return rayTraceLocation(entity, maxDistance, FluidCollisionMode.NEVER, ignorePassableBlocks);
     }
@@ -157,7 +157,7 @@ public final class LookUtil
      * @param fluidCollisionMode The fluid collision mode to use
      * @return The Location of the raytrace hit, null if the raytrace never hit anything
      */
-    public Location rayTraceLocation(LivingEntity entity, int maxDistance, FluidCollisionMode fluidCollisionMode)
+    public static Location rayTraceLocation(LivingEntity entity, int maxDistance, FluidCollisionMode fluidCollisionMode)
     {
         return rayTraceLocation(entity, maxDistance, fluidCollisionMode, false);
     }
@@ -172,7 +172,7 @@ public final class LookUtil
      * @param ignorePassableBlocks If the raytrace should ignore blocks that are passable (grass, flowers, etc)
      * @return The Location of the raytrace hit, null if the raytrace never hit anything
      */
-    public Location rayTraceLocation(LivingEntity entity, int maxDistance, FluidCollisionMode fluidCollisionMode, boolean ignorePassableBlocks)
+    public static Location rayTraceLocation(LivingEntity entity, int maxDistance, FluidCollisionMode fluidCollisionMode, boolean ignorePassableBlocks)
     {
         World world = entity.getWorld();
         Location startLoc = entity.getEyeLocation();
