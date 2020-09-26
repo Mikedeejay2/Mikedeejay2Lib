@@ -15,7 +15,7 @@ public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor>
     // The EnhancedYaml object that the YamlFile is accessing
     protected EnhancedYaml yamlFile;
     // The root EnhancedYamlSection for the yamlFile
-    protected YamlAccessor rootAccessor;
+    protected YamlAccessor accessor;
     private YamlFileIO yamlFileIO;
 
     public YamlFile(PluginBase plugin, String filePath)
@@ -23,7 +23,7 @@ public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor>
         super(plugin, filePath);
         this.yamlFileIO = new YamlFileIO(plugin);
         yamlFile = new EnhancedYaml(yamlFileIO);
-        rootAccessor = new YamlAccessor(this, yamlFile);
+        accessor = new YamlAccessor(this, yamlFile);
         yamlFileIO = new YamlFileIO(plugin);
     }
 
@@ -66,12 +66,12 @@ public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor>
     @Override
     public YamlAccessor getAccessor(String name)
     {
-        return (YamlAccessor)rootAccessor.getSection(name);
+        return (YamlAccessor) accessor.getSection(name);
     }
 
     @Override
-    public YamlAccessor getRootAccessor()
+    public YamlAccessor getAccessor()
     {
-        return rootAccessor;
+        return accessor;
     }
 }

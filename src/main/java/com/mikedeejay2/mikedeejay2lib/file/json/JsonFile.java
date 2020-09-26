@@ -17,14 +17,14 @@ public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
     // The JsonFileIO that this DataFile uses
     private JsonFileIO jsonFileIO;
     // The root JsonAccessor that this JsonFile uses
-    private JsonAccessor rootAccessor;
+    private JsonAccessor accessor;
 
     public JsonFile(PluginBase plugin, String filePath)
     {
         super(plugin, filePath);
         jsonObject = new JsonObject();
         this.jsonFileIO = new JsonFileIO(plugin);
-        this.rootAccessor = new JsonAccessor(this, jsonObject);
+        this.accessor = new JsonAccessor(this, jsonObject);
     }
 
     @Override
@@ -86,12 +86,12 @@ public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
     @Override
     public JsonAccessor getAccessor(String name)
     {
-        return (JsonAccessor)rootAccessor.getSection(name);
+        return (JsonAccessor) accessor.getSection(name);
     }
 
     @Override
-    public JsonAccessor getRootAccessor()
+    public JsonAccessor getAccessor()
     {
-        return rootAccessor;
+        return accessor;
     }
 }
