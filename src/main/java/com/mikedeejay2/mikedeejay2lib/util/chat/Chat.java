@@ -91,7 +91,7 @@ public final class Chat extends PluginInstancer<PluginBase>
      */
     public void sendMessage(Player player, String message)
     {
-        player.sendMessage(chat(getTitleString(player) + message));
+        player.sendMessage(chat(getTitleString() + message));
     }
 
     /**
@@ -125,7 +125,7 @@ public final class Chat extends PluginInstancer<PluginBase>
      */
     public void sendMessage(CommandSender sender, String message)
     {
-        sender.sendMessage(chat(getTitleString(sender) + message));
+        sender.sendMessage(chat(getTitleString() + message));
     }
 
     /**
@@ -159,30 +159,6 @@ public final class Chat extends PluginInstancer<PluginBase>
     public String getTitleString()
     {
         return "&b[&9" + pluginString + "&b] &r";
-    }
-
-    /**
-     * Gets a title tag that can be added to the beginning of text to define
-     * what this text is coming from based on the language from the CommandSender
-     *
-     * @param sender Player / console to base the title's language off of
-     * @return The title string
-     */
-    public String getTitleString(CommandSender sender)
-    {
-        return "&b[&9" + pluginString + "&b] &r";
-    }
-
-    /**
-     * Gets a title tag that can be added to the beginning of text to define
-     * what this text is coming from based on the language from the player
-     *
-     * @param player Player to base the title's language off of
-     * @return The title string
-     */
-    public String getTitleString(Player player)
-    {
-        return "&b[&9" + plugin.langManager().getText(player, "title") + "&b] &r";
     }
 
     /**

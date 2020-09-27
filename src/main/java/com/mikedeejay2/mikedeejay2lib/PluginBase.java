@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib;
 import com.mikedeejay2.mikedeejay2lib.commands.CommandManager;
 import com.mikedeejay2.mikedeejay2lib.event.ListenerManager;
 import com.mikedeejay2.mikedeejay2lib.file.FileManager;
+import com.mikedeejay2.mikedeejay2lib.gui.listeners.GUIListener;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.GUIManager;
 import com.mikedeejay2.mikedeejay2lib.language.LangManager;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
@@ -45,6 +46,10 @@ public class PluginBase extends JavaPlugin
         this.fileManager = new FileManager(this);
         this.listenerManager = new ListenerManager(this);
         this.guiManager = new GUIManager(this);
+
+
+
+        this.getServer().getPluginManager().registerEvents(new GUIListener(this), this);
     }
 
     @Override

@@ -2,7 +2,11 @@ package com.mikedeejay2.mikedeejay2lib.gui.item;
 
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUISlotEvent;
+import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
+
+import java.util.List;
 
 public class GUIItem
 {
@@ -93,5 +97,30 @@ public class GUIItem
     public void resetEvents()
     {
         this.events = new GUISlotEvent();
+    }
+
+    public String getName()
+    {
+        return viewItem.getItemMeta().getDisplayName();
+    }
+
+    public ItemMeta getItemMeta()
+    {
+        return viewItem.getItemMeta();
+    }
+
+    public int getAmount()
+    {
+        return viewItem.getAmount();
+    }
+
+    public Material getType()
+    {
+        return viewItem.getType();
+    }
+
+    public List<String> getLore()
+    {
+        return viewItem.getItemMeta().getLore();
     }
 }

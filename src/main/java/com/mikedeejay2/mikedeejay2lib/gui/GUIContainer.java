@@ -5,6 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUISlotEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
+import com.mikedeejay2.mikedeejay2lib.gui.util.GUIMath;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Bukkit;
@@ -18,7 +19,7 @@ import java.util.List;
 
 public class GUIContainer extends PluginInstancer<PluginBase>
 {
-    protected static final int COLUMN_SIZE = 9;
+    public static final int COLUMN_SIZE = 9;
     protected final ItemStack EMPTY_STACK;
     protected Inventory inventory;
     protected String inventoryName;
@@ -56,7 +57,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         {
             for(int col = 0; col < items[row].length; col++)
             {
-                int invSlot = getSlotFromRowCol(row, col);
+                int invSlot = GUIMath.getSlotFromRowCol(row, col);
                 GUIItem guiItem = items[row][col];
                 ItemStack itemStack = guiItem.getItem();
                 boolean movable = guiItem.isMovable();
@@ -73,7 +74,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         }
     }
 
-    public void clicked(Player player, int row, int col, ItemStack clicked)
+    public void clicked(Player player, int row, int col, GUIItem clicked)
     {
         modules.forEach(module -> module.onClicked(player, row, col, clicked));
         GUISlotEvent manager = getSlotEvents(row, col);
@@ -83,21 +84,21 @@ public class GUIContainer extends PluginInstancer<PluginBase>
 
     public void setItem(int row, int col, Material material, int amount, String displayName, String... loreString)
     {
-        setItemFromStack(row, col, itemCreator.createItem(material, amount, displayName, loreString));
+        setItem(row, col, itemCreator.createItem(material, amount, displayName, loreString));
     }
 
     public void removeItem(int row, int col)
     {
-        setItemFromStack(row, col, null);
+        setItem(row, col, null);
         setMoveState(row, col, false);
     }
 
-    public void setItemHead(int row, int col, String headStr, int amount, String displayName, String... loreString)
+    public void setItem(int row, int col, String headStr, int amount, String displayName, String... loreString)
     {
-        setItemFromStack(row, col, itemCreator.createHeadItem(headStr, amount, displayName, loreString));
+        setItem(row, col, itemCreator.createHeadItem(headStr, amount, displayName, loreString));
     }
 
-    public void setItemFromStack(int row, int col, ItemStack stack)
+    public void setItem(int row, int col, ItemStack stack)
     {
         items[--row][--col] = new GUIItem(stack);
     }
@@ -117,7 +118,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         items[--row][--col].setEvents(manager);
     }
 
-    public void setSlotEvents(int row, int col, GUIEvent event)
+    public void setSlotEvent(int row, int col, GUIEvent event)
     {
         items[row-1][col-1].addEvent(event);
     }
@@ -141,21 +142,6 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     {
         --row; --col;
         return items[row][col].isMovable();
-    }
-
-    public int getSlotFromRowCol(int row, int col)
-    {
-        return (row * COLUMN_SIZE) + col;
-    }
-
-    public int getRowFromSlot(int slot)
-    {
-        return (slot / COLUMN_SIZE) + 1;
-    }
-
-    public int getColFromSlot(int slot)
-    {
-        return (slot % COLUMN_SIZE) + 1;
     }
 
     public void swapItems(int row, int col, int newRow, int newCol)
@@ -230,8 +216,26 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         return false;
     }
 
+    public <T extends GUIModule> T getModule(Class<T> moduleClass)
+    {
+        String className = moduleClass.getName();
+        for(GUIModule module : modules)
+        {
+            Class<? extends GUIModule> curClass = module.getClass();
+            String curClassName = curClass.getName();
+            if(!className.equals(curClassName)) continue;
+            return (T) module;
+        }
+        return null;
+    }
+
     public Inventory getInventory()
     {
         return inventory;
+    }
+
+    public GUIItem getItem(int row, int col)
+    {
+        return items[--row][--col];
     }
 }

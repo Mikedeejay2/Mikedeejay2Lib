@@ -179,4 +179,9 @@ public class CommandManager extends PluginInstancer<PluginBase> implements Comma
     {
         commands.remove(subCommand);
     }
+
+    public String getBaseCommand()
+    {
+        return main;
+    }
 }

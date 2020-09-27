@@ -19,9 +19,15 @@ public class PlayerGUI
         return gui;
     }
 
-    public void setGui(GUIContainer gui)
+    public void setGUI(GUIContainer gui)
     {
         this.gui = gui;
+        openGUI();
+    }
+
+    public void openGUI()
+    {
+        gui.open(player);
     }
 
     public Player getPlayer()
