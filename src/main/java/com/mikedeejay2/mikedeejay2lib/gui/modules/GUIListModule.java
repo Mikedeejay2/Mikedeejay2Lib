@@ -152,13 +152,16 @@ public class GUIListModule extends GUIModule
             }
         }
 
-        gui.setItem(gui.getRows(), 1, searchItem);
-        gui.setSlotEvent(gui.getRows(), 1, new GUIListSearchEvent(plugin));
-
-        if(searchMode)
+        if(searchEnabled)
         {
-            gui.setItem(gui.getRows(), 9, searchOffItem);
-            gui.setSlotEvent(gui.getRows(), 9, new GUIListSearchOffEvent(plugin));
+            gui.setItem(gui.getRows(), 1, searchItem);
+            gui.setSlotEvent(gui.getRows(), 1, new GUIListSearchEvent(plugin));
+
+            if(searchMode)
+            {
+                gui.setItem(gui.getRows(), 9, searchOffItem);
+                gui.setSlotEvent(gui.getRows(), 9, new GUIListSearchOffEvent(plugin));
+            }
         }
     }
 
