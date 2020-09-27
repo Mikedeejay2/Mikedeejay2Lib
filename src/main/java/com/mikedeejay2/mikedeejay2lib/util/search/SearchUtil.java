@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.util;
+package com.mikedeejay2.mikedeejay2lib.util.search;
 
 import org.bukkit.inventory.meta.ItemMeta;
 

@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.util;
+package com.mikedeejay2.mikedeejay2lib.util.array;
 
 import java.lang.reflect.Array;
 import java.util.ArrayList;
