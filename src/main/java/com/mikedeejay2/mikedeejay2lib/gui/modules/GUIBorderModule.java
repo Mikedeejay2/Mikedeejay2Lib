@@ -4,6 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.util.Base64Heads;
+import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -11,10 +12,10 @@ public class GUIBorderModule extends GUIModule
 {
     private GUIItem borderItem;
 
-    public GUIBorderModule(PluginBase plugin, GUIContainer gui)
+    public GUIBorderModule(PluginBase plugin)
     {
-        super(plugin, gui);
-        this.borderItem = new GUIItem(plugin.itemCreator().createHeadItem(Base64Heads.HEAD_WHITE, 1, " "));
+        super(plugin);
+        this.borderItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.HEAD_WHITE, 1, GUIContainer.EMPTY_NAME));
     }
 
     public GUIItem getBorderItem()
@@ -33,9 +34,9 @@ public class GUIBorderModule extends GUIModule
     }
 
     @Override
-    public void onUpdate(Player player)
+    public void onUpdate(Player player, GUIContainer gui)
     {
-        for(int i = 0; i < GUIContainer.COLUMN_SIZE; i++)
+        for(int i = 1; i <= GUIContainer.COLUMN_SIZE; i++)
         {
             gui.setItem(1, i, borderItem);
             gui.setItem(gui.getRows(), i, borderItem);
@@ -43,13 +44,13 @@ public class GUIBorderModule extends GUIModule
     }
 
     @Override
-    public void onOpen(Player player)
+    public void onOpen(Player player, GUIContainer gui)
     {
 
     }
 
     @Override
-    public void onClicked(Player player, int row, int col, GUIItem clicked)
+    public void onClicked(Player player, int row, int col, GUIItem clicked, GUIContainer gui)
     {
 
     }

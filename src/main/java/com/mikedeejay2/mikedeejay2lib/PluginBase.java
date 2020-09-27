@@ -28,7 +28,6 @@ public class PluginBase extends JavaPlugin
     protected CommandManager commandManager;
 
     protected Chat chat;
-    protected ItemCreator itemCreator;
     protected ListenerManager listenerManager;
     protected GUIManager guiManager;
 
@@ -39,7 +38,6 @@ public class PluginBase extends JavaPlugin
     public void onEnable()
     {
         this.chat = new Chat(this);
-        this.itemCreator = new ItemCreator(this);
         this.MCVersion = new MinecraftVersion(this).getMCVersion();
         this.langManager = new LangManager(this);
         this.commandManager = new CommandManager(this);
@@ -81,11 +79,6 @@ public class PluginBase extends JavaPlugin
     public Chat chat()
     {
         return chat;
-    }
-
-    public ItemCreator itemCreator()
-    {
-        return itemCreator;
     }
 
     public ListenerManager listenerManager()

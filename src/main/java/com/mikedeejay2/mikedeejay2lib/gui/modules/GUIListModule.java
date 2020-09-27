@@ -9,9 +9,12 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.util.GUIMath;
 import com.mikedeejay2.mikedeejay2lib.util.Base64Heads;
 import com.mikedeejay2.mikedeejay2lib.util.SearchUtil;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -30,38 +33,38 @@ public class GUIListModule extends GUIModule
     private ItemStack backItem;
     private ItemStack forwardItem;
 
-    public GUIListModule(PluginBase plugin, GUIContainer gui)
+    public GUIListModule(PluginBase plugin)
     {
-        super(plugin, gui);
+        super(plugin);
 
-        this.list = new ArrayList<GUIItem>();
-        this.searchList = new ArrayList<GUIItem>();
+        this.list = new ArrayList<>();
+        this.searchList = new ArrayList<>();
 
-        this.curPage = curPage;
+        curPage = 1;
         endItems = new ArrayList<>();
-        this.backItem = plugin.itemCreator().createHeadItem(Base64Heads.HEAD_BACKWARDS_WHITE, 1, " ");
-        this.forwardItem = plugin.itemCreator().createHeadItem(Base64Heads.HEAD_FORWARD_WHITE, 1, " ");
+        this.backItem = ItemCreator.createHeadItem(Base64Heads.HEAD_BACKWARDS_WHITE, 1, GUIContainer.EMPTY_NAME);
+        this.forwardItem = ItemCreator.createHeadItem(Base64Heads.HEAD_FORWARD_WHITE, 1, GUIContainer.EMPTY_NAME);
     }
 
     @Override
-    public void onUpdate(Player player)
+    public void onUpdate(Player player, GUIContainer gui)
     {
         if(searchMode)
         {
             searchThroughList();
         }
-        updateListControls(searchMode);
-        updatePage(searchMode);
+        updateListControls(searchMode, gui);
+        updatePage(searchMode, gui);
     }
 
     @Override
-    public void onClicked(Player player, int row, int col, GUIItem clicked)
+    public void onClicked(Player player, int row, int col, GUIItem clicked, GUIContainer gui)
     {
 
     }
 
     @Override
-    public void onOpen(Player player)
+    public void onOpen(Player player, GUIContainer gui)
     {
 
     }
@@ -81,7 +84,7 @@ public class GUIListModule extends GUIModule
         endItems = new ArrayList<>();
     }
 
-    public void updatePage(boolean search)
+    public void updatePage(boolean search, GUIContainer gui)
     {
         ArrayList<GUIItem> pageList = (ArrayList<GUIItem>) (search ? searchList : list);
         int pageSize = ((gui.getRows() - 2) * COLUMN_SIZE);
@@ -89,12 +92,11 @@ public class GUIListModule extends GUIModule
         {
             int pageOffset = ((curPage-1) * pageSize);
             int row = GUIMath.getRowFromSlot(i + COLUMN_SIZE), col = GUIMath.getColFromSlot(i);
-            gui.fullResetSlot(row, col);
+            gui.removeItem(row, col);
 
             if(pageList.size() >= (i+1) + pageOffset)
             {
                 GUIItem item = pageList.get(i + pageOffset);
-                gui.setSlotEvents(row, col, item.getEvents());
                 gui.setItem(GUIMath.getRowFromSlot(i + COLUMN_SIZE), GUIMath.getColFromSlot(i), item.getItem());
             }
             else if((i + 1) + pageOffset > pageList.size() && !search)
@@ -105,19 +107,14 @@ public class GUIListModule extends GUIModule
                 {
                     GUIItem item = endItems.get(index);
                     gui.setItem(row, col, item.getItem());
-                    gui.setSlotEvents(row, col, item.getEvents());
                 }
             }
         }
     }
 
-    public void updateListControls(boolean search)
+    public void updateListControls(boolean search, GUIContainer gui)
     {
         ArrayList<GUIItem> pageList = (ArrayList<GUIItem>) (search ? searchList : list);
-        for(int col = 1; col <= COLUMN_SIZE; col++)
-        {
-            gui.fullResetSlot(gui.getRows(), col);
-        }
 
         int amountOfPages = (int)Math.ceil((pageList.size() + endItems.size()) / ((gui.getRows() - 2.0f) * COLUMN_SIZE));
 
@@ -127,20 +124,22 @@ public class GUIListModule extends GUIModule
             if(i < curPage && i + 3 >= curPage)
             {
                 int col = (i - curPage) + 5;
-                gui.fullResetSlot(gui.getRows(), col);
                 ItemStack back = backItem.clone();
                 back.setAmount(i <= 64 ? i : 1);
-                back.getItemMeta().setDisplayName("Page " + i);
+                ItemMeta backMeta = back.getItemMeta();
+                backMeta.setDisplayName(Chat.chat("&fPage " + i));
+                back.setItemMeta(backMeta);
                 gui.setItem(gui.getRows(), col, back);
                 gui.setSlotEvent(gui.getRows(), col, new GUISwitchListPageEvent(plugin));
             }
             else if(i > curPage && i - 3 <= curPage)
             {
                 int col = (i - curPage) + 5;
-                gui.fullResetSlot(gui.getRows(), col);
                 ItemStack forward = forwardItem.clone();
                 forward.setAmount(i <= 64 ? i : 1);
-                forward.getItemMeta().setDisplayName("Page " + i);
+                ItemMeta forwardMeta = forward.getItemMeta();
+                forwardMeta.setDisplayName(Chat.chat("&fPage " + i));
+                forward.setItemMeta(forwardMeta);
                 gui.setItem(gui.getRows(), col, forward);
                 gui.setSlotEvent(gui.getRows(), col, new GUISwitchListPageEvent(plugin));
             }
@@ -156,12 +155,12 @@ public class GUIListModule extends GUIModule
         }
     }
 
-    public void addGUIItem(GUIItem item)
+    public void addListItem(GUIItem item)
     {
         list.add(item);
     }
 
-    public void changeGUIItem(GUIItem item, int row, int col)
+    public void changeGUIItem(GUIItem item, int row, int col, GUIContainer gui)
     {
         int pageSize = ((gui.getRows() - 2) * 9);
         int pageOffset = ((curPage-1) * pageSize);
@@ -184,15 +183,14 @@ public class GUIListModule extends GUIModule
         list.remove(item);
     }
 
-    public int getListSlotFromRowCol(int row, int col)
+    public int getListSlotFromRowCol(int row, int col, GUIContainer gui)
     {
         int pageSize = ((gui.getRows() - 2) * 9);
         int pageOffset = ((curPage-1) * pageSize);
-        int index = GUIMath.getSlotFromRowCol(row-2, col-1) + pageOffset;
-        return index;
+        return GUIMath.getSlotFromRowCol(row-2, col-1) + pageOffset;
     }
 
-    public void toListPage(int index, Player player)
+    public void toListPage(int index, Player player, GUIContainer gui)
     {
         curPage = index;
         gui.update(player);
@@ -216,7 +214,7 @@ public class GUIListModule extends GUIModule
         searchList.clear();
         for(GUIItem item : list)
         {
-            if(!SearchUtil.searchMetaFuzzy(item.getItemMeta(), searchTerm)) continue;
+            if(!SearchUtil.searchMetaFuzzy(item.getMetaView(), searchTerm)) continue;
             searchList.add(item);
         }
     }

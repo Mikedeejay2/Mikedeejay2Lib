@@ -17,10 +17,10 @@ public class GUISwitchListPageEvent extends GUIEvent
     @Override
     public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui)
     {
-        String displayName = clicked.getName();
+        String displayName = clicked.getNameView();
         String[] split = displayName.split(" ");
         int index = Integer.parseInt(split[split.length-1]);
 
-        gui.getModule(GUIListModule.class).toListPage(index, player);
+        gui.getModule(GUIListModule.class).toListPage(index, player, gui);
     }
 }
