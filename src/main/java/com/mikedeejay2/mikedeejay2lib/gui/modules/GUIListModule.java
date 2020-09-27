@@ -32,6 +32,9 @@ public class GUIListModule extends GUIModule
 
     private ItemStack backItem;
     private ItemStack forwardItem;
+    private ItemStack searchItem;
+    private ItemStack searchOffItem;
+    private boolean searchEnabled;
 
     public GUIListModule(PluginBase plugin)
     {
@@ -44,6 +47,10 @@ public class GUIListModule extends GUIModule
         endItems = new ArrayList<>();
         this.backItem = ItemCreator.createHeadItem(Base64Heads.HEAD_BACKWARDS_WHITE, 1, GUIContainer.EMPTY_NAME);
         this.forwardItem = ItemCreator.createHeadItem(Base64Heads.HEAD_FORWARD_WHITE, 1, GUIContainer.EMPTY_NAME);
+        this.searchItem = ItemCreator.createItem(Material.COMPASS, 1, "&f&oSearch list...");
+        this.searchOffItem = ItemCreator.createItem(Material.BOOK, 1, "&f&oTurn off search mode");
+
+        this.searchEnabled = false;
     }
 
     @Override
@@ -145,12 +152,12 @@ public class GUIListModule extends GUIModule
             }
         }
 
-        gui.setItem(gui.getRows(), 1, Material.COMPASS, 1, "&f&oSearch list...");
+        gui.setItem(gui.getRows(), 1, searchItem);
         gui.setSlotEvent(gui.getRows(), 1, new GUIListSearchEvent(plugin));
 
         if(searchMode)
         {
-            gui.setItem(gui.getRows(), 9, Material.BOOK, 1, "&f&oTurn off search mode");
+            gui.setItem(gui.getRows(), 9, searchOffItem);
             gui.setSlotEvent(gui.getRows(), 9, new GUIListSearchOffEvent(plugin));
         }
     }
@@ -237,5 +244,60 @@ public class GUIListModule extends GUIModule
     public void setForwardItem(ItemStack forwardItem)
     {
         this.forwardItem = forwardItem;
+    }
+
+    public boolean isSearchEnabled()
+    {
+        return searchEnabled;
+    }
+
+    public String getSearchTerm()
+    {
+        return searchTerm;
+    }
+
+    public void setSearchTerm(String searchTerm)
+    {
+        this.searchTerm = searchTerm;
+    }
+
+    public ItemStack getSearchItem()
+    {
+        return searchItem;
+    }
+
+    public void setSearchItem(ItemStack searchItem)
+    {
+        this.searchItem = searchItem;
+    }
+
+    public ItemStack getSearchOffItem()
+    {
+        return searchOffItem;
+    }
+
+    public void setSearchOffItem(ItemStack searchOffItem)
+    {
+        this.searchOffItem = searchOffItem;
+    }
+
+    public List<GUIItem> getList()
+    {
+        return list;
+    }
+
+    public List<GUIItem> getSearchList()
+    {
+        return searchList;
+    }
+
+    public int getCurPage()
+    {
+        return curPage;
+    }
+
+    public List<GUIItem> getEndItems()
+    {
+        return endItems;
     }
 }
