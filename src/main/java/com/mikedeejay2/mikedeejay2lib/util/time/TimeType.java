@@ -10,8 +10,7 @@ public enum TimeType
     TICK,
     SECOND,
     MINUTE,
-    HOUR,
-    DAY;
+    HOUR;
 
     /**
      * Get ratio of ticks to 1 of a time type
@@ -30,8 +29,6 @@ public enum TimeType
                 return 1200;
             case HOUR:
                 return 72000;
-            case DAY:
-                return 1728000;
         }
         return -1;
     }
@@ -52,8 +49,6 @@ public enum TimeType
             case MINUTE:
                 return HOUR;
             case HOUR:
-                return DAY;
-            case DAY:
                 return TICK;
         }
         return null;
@@ -76,8 +71,6 @@ public enum TimeType
                 return "Minute";
             case HOUR:
                 return "Hour";
-            case DAY:
-                return "Day";
         }
         return null;
     }
