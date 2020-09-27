@@ -89,7 +89,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
 
     public void removeItem(int row, int col)
     {
-        setItem(row, col, null);
+        setItem(row, col, (GUIItem)null);
         setMoveState(row, col, false);
     }
 
@@ -100,7 +100,12 @@ public class GUIContainer extends PluginInstancer<PluginBase>
 
     public void setItem(int row, int col, ItemStack stack)
     {
-        items[--row][--col] = new GUIItem(stack);
+        setItem(row, col, new GUIItem(stack));
+    }
+
+    public void setItem(int row, int col, GUIItem item)
+    {
+        items[--row][--col] = item;
     }
 
     public void setMoveState(int row, int col, boolean movable)

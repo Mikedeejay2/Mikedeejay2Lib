@@ -44,12 +44,6 @@ public class GUIListModule extends GUIModule
     }
 
     @Override
-    public void onOpen(Player player)
-    {
-
-    }
-
-    @Override
     public void onUpdate(Player player)
     {
         if(searchMode)
@@ -62,6 +56,12 @@ public class GUIListModule extends GUIModule
 
     @Override
     public void onClicked(Player player, int row, int col, GUIItem clicked)
+    {
+
+    }
+
+    @Override
+    public void onOpen(Player player)
     {
 
     }
@@ -219,5 +219,25 @@ public class GUIListModule extends GUIModule
             if(!SearchUtil.searchMetaFuzzy(item.getItemMeta(), searchTerm)) continue;
             searchList.add(item);
         }
+    }
+
+    public ItemStack getBackItem()
+    {
+        return backItem;
+    }
+
+    public void setBackItem(ItemStack backItem)
+    {
+        this.backItem = backItem;
+    }
+
+    public ItemStack getForwardItem()
+    {
+        return forwardItem;
+    }
+
+    public void setForwardItem(ItemStack forwardItem)
+    {
+        this.forwardItem = forwardItem;
     }
 }
