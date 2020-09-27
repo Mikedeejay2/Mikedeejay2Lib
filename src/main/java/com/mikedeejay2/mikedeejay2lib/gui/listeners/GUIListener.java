@@ -10,6 +10,8 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.scheduler.BukkitRunnable;
 
 public class GUIListener extends PluginInstancer<PluginBase> implements Listener
 {
@@ -40,5 +42,13 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
 
             curGUI.clicked(player, row, col, curGUI.getItem(row, col));
         }
+    }
+
+    @EventHandler
+    public void onClose(InventoryCloseEvent event)
+    {
+        Player player = (Player) event.getPlayer();
+        PlayerGUI gui = plugin.guiManager().getPlayer(player);
+        if(gui.isGuiOpened()) gui.setGUIState(false);
     }
 }

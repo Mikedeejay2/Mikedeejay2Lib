@@ -15,5 +15,6 @@ public abstract class GUIModule extends PluginInstancer<PluginBase>
 
     public abstract void onUpdate(Player player, GUIContainer gui);
     public abstract void onOpen(Player player, GUIContainer gui);
+    public abstract void onClose(Player player, GUIContainer gui);
     public abstract void onClicked(Player player, int row, int col, GUIItem clicked, GUIContainer gui);
 }

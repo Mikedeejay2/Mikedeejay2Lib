@@ -52,6 +52,12 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         player.openInventory(inventory);
     }
 
+    public void close(Player player)
+    {
+        modules.forEach(module -> module.onClose(player, this));
+        player.closeInventory();
+    }
+
     public void update(Player player)
     {
         modules.forEach(module -> module.onUpdate(player, this));

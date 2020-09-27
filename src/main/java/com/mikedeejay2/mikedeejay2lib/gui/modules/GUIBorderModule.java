@@ -50,6 +50,12 @@ public class GUIBorderModule extends GUIModule
     }
 
     @Override
+    public void onClose(Player player, GUIContainer gui)
+    {
+
+    }
+
+    @Override
     public void onClicked(Player player, int row, int col, GUIItem clicked, GUIContainer gui)
     {
 

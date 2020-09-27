@@ -76,6 +76,12 @@ public class GUIListModule extends GUIModule
 
     }
 
+    @Override
+    public void onClose(Player player, GUIContainer gui)
+    {
+
+    }
+
     public void addEndItem(GUIItem endItem)
     {
         endItems.add(endItem);

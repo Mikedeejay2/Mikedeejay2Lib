@@ -17,7 +17,7 @@ public class GUIListSearchEvent extends GUIEvent
     @Override
     public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui)
     {
-        player.closeInventory();
+        plugin.guiManager().getPlayer(player).closeGUI();
         // TODO: Open a book and quill here for the player to type in their search
         // After that,
         GUIListModule list = gui.getModule(GUIListModule.class);
