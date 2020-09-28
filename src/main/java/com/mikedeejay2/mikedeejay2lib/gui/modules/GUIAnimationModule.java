@@ -52,7 +52,7 @@ public class GUIAnimationModule extends GUIModule
     }
 
     @Override
-    public void onCloseHead(Player player, GUIContainer gui)
+    public void onClose(Player player, GUIContainer gui)
     {
         runtime.cancel();
     }

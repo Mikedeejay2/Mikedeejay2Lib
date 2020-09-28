@@ -49,6 +49,6 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
     {
         Player player = (Player) event.getPlayer();
         PlayerGUI gui = plugin.guiManager().getPlayer(player);
-        if(gui.isGuiOpened()) gui.setGUIState(false);
+        if(gui.isGuiOpened()) gui.closeGUI();
     }
 }

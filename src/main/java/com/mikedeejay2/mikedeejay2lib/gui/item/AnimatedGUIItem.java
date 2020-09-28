@@ -16,11 +16,18 @@ public class AnimatedGUIItem extends GUIItem
     protected long wait;
     protected boolean loop;
     protected boolean firstRun;
+    protected long delay;
 
     public AnimatedGUIItem(ItemStack item, boolean loop)
     {
+        this(item, loop, 0);
+    }
+
+    public AnimatedGUIItem(ItemStack item, boolean loop, long delay)
+    {
         super(item);
 
+        this.delay = delay;
         this.loop = loop;
         this.index = 0;
         this.wait = 0;
@@ -31,30 +38,35 @@ public class AnimatedGUIItem extends GUIItem
 
     public boolean tick(long tickTime)
     {
+        wait += tickTime;
         if(firstRun)
         {
-            firstRun = false;
-            processFrame();
+            if(wait > delay)
+            {
+                firstRun = false;
+                processFrame(1);
+                wait = 0;
+            }
             return true;
         }
         if(index >= items.size())
         {
-            if(loop) index = 0;
+            if(loop) index = index - items.size();
             else return false;
         }
-        wait += tickTime;
         long curWait = times.get(index);
         if(wait < curWait) return false;
+        int framePass = (int)(wait / curWait);
         wait = 0;
-        processFrame();
+        processFrame(framePass);
         return true;
     }
 
-    private void processFrame()
+    private void processFrame(int framePass)
     {
         ItemStack item = items.get(index);
         setViewItem(item);
-        ++index;
+        index += framePass;
     }
 
     public void addFrame(ItemStack item, long period)
