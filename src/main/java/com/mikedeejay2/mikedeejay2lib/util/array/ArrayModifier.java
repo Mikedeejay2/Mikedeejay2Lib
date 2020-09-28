@@ -258,4 +258,21 @@ public final class ArrayModifier
         }
         return list;
     }
+
+    /**
+     * Convert a 2D array to a List
+     *
+     * @param arr The array to convert
+     * @param <T> The type of the array
+     * @return The 2D array as a list
+     */
+    public static <T> List<T> toList(T[][] arr)
+    {
+        List<T> list = new ArrayList<>();
+        for(T[] ts : arr)
+        {
+            list.addAll(toList(ts));
+        }
+        return list;
+    }
 }

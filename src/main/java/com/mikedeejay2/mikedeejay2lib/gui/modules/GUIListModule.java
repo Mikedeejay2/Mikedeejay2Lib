@@ -54,7 +54,7 @@ public class GUIListModule extends GUIModule
     }
 
     @Override
-    public void onUpdate(Player player, GUIContainer gui)
+    public void onUpdateHead(Player player, GUIContainer gui)
     {
         if(searchMode)
         {
@@ -62,24 +62,6 @@ public class GUIListModule extends GUIModule
         }
         updateListControls(searchMode, gui);
         updatePage(searchMode, gui);
-    }
-
-    @Override
-    public void onClicked(Player player, int row, int col, GUIItem clicked, GUIContainer gui)
-    {
-
-    }
-
-    @Override
-    public void onOpen(Player player, GUIContainer gui)
-    {
-
-    }
-
-    @Override
-    public void onClose(Player player, GUIContainer gui)
-    {
-
     }
 
     public void addEndItem(GUIItem endItem)

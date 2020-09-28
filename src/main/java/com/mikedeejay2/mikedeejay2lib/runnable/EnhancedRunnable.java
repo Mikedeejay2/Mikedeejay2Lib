@@ -21,14 +21,20 @@ import org.bukkit.scheduler.BukkitTask;
 public abstract class EnhancedRunnable extends BukkitRunnable
 {
     // Current count of the amount of times that this runnable has been run
-    private long count;
+    protected long count;
     // The end count, the count that the runnable should stop at. If 0, don't stop.
-    private long endCount;
+    protected long endCount;
+    // A reference to the period of this runnable
+    protected long period;
+    // A reference to the delay of this runnable
+    protected long delay;
 
     public EnhancedRunnable()
     {
         this.count = 0;
         this.endCount = 0;
+        this.period = 0;
+        this.delay = 0;
     }
 
     /**
@@ -117,6 +123,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     @Override
     public synchronized BukkitTask runTaskLater(Plugin plugin, long delay)
     {
+        this.delay = delay;
         return super.runTaskLater(plugin, delay);
     }
 
@@ -140,6 +147,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     @Override
     public synchronized BukkitTask runTaskLaterAsynchronously(Plugin plugin, long delay)
     {
+        this.delay = delay;
         return super.runTaskLaterAsynchronously(plugin, delay);
     }
 
@@ -164,6 +172,8 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     @Override
     public synchronized BukkitTask runTaskTimer(Plugin plugin, long delay, long period)
     {
+        this.delay = delay;
+        this.period = period;
         return super.runTaskTimer(plugin, delay, period);
     }
 
@@ -199,6 +209,8 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     @Override
     public synchronized BukkitTask runTaskTimerAsynchronously(Plugin plugin, long delay, long period)
     {
+        this.delay = delay;
+        this.period = period;
         return super.runTaskTimerAsynchronously(plugin, delay, period);
     }
 
@@ -235,6 +247,8 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     public synchronized BukkitTask runTaskTimerCounted(Plugin plugin, long delay, long period, long count)
     {
+        this.delay = delay;
+        this.period = period;
         this.endCount = count;
         return super.runTaskTimer(plugin, delay, period);
     }
@@ -287,6 +301,8 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     public synchronized BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin, long delay, long period, long count)
     {
+        this.delay = delay;
+        this.period = period;
         this.endCount = count;
         return super.runTaskTimerAsynchronously(plugin, delay, period);
     }
@@ -355,5 +371,15 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     public void setEndCount(long endCount)
     {
         this.endCount = endCount;
+    }
+
+    public long getPeriod()
+    {
+        return period;
+    }
+
+    public long getDelay()
+    {
+        return delay;
     }
 }

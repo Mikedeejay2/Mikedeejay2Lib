@@ -7,6 +7,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.gui.util.GUIMath;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
+import com.mikedeejay2.mikedeejay2lib.util.array.ArrayModifier;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Bukkit;
@@ -47,20 +48,22 @@ public class GUIContainer extends PluginInstancer<PluginBase>
 
     public void open(Player player)
     {
-        modules.forEach(module -> module.onOpen(player, this));
+        modules.forEach(module -> module.onOpenHead(player, this));
         update(player);
         player.openInventory(inventory);
+        modules.forEach(module -> module.onOpenTail(player, this));
     }
 
     public void close(Player player)
     {
-        modules.forEach(module -> module.onClose(player, this));
+        modules.forEach(module -> module.onCloseHead(player, this));
         player.closeInventory();
+        modules.forEach(module -> module.onCloseTail(player, this));
     }
 
     public void update(Player player)
     {
-        modules.forEach(module -> module.onUpdate(player, this));
+        modules.forEach(module -> module.onUpdateHead(player, this));
         for(int row = 0; row < items.length; row++)
         {
             for(int col = 0; col < items[row].length; col++)
@@ -85,14 +88,16 @@ public class GUIContainer extends PluginInstancer<PluginBase>
                 }
             }
         }
+        modules.forEach(module -> module.onUpdateTail(player, this));
     }
 
     public void clicked(Player player, int row, int col, GUIItem clicked)
     {
-        modules.forEach(module -> module.onClicked(player, row, col, clicked, this));
+        modules.forEach(module -> module.onClickedHead(player, row, col, clicked, this));
         GUISlotEvent manager = getSlotEvents(row, col);
         if(manager == null) return;
         manager.execute(player, row, col, clicked, this);
+        modules.forEach(module -> module.onClickedTail(player, row, col, clicked, this));
     }
 
     public void setItem(int row, int col, Material material, int amount, String displayName, String... loreString)
@@ -269,5 +274,15 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     public void setDefaultMoveState(boolean defaultMoveState)
     {
         this.defaultMoveState = defaultMoveState;
+    }
+
+    public List<GUIItem> getItemsAsList()
+    {
+        return ArrayModifier.toList(items);
+    }
+
+    public GUIItem[][] getItemsAsArray()
+    {
+        return items;
     }
 }

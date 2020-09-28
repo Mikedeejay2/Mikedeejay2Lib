@@ -34,30 +34,12 @@ public class GUIBorderModule extends GUIModule
     }
 
     @Override
-    public void onUpdate(Player player, GUIContainer gui)
+    public void onUpdateHead(Player player, GUIContainer gui)
     {
         for(int i = 1; i <= GUIContainer.COLUMN_SIZE; i++)
         {
             gui.setItem(1, i, borderItem);
             gui.setItem(gui.getRows(), i, borderItem);
         }
-    }
-
-    @Override
-    public void onOpen(Player player, GUIContainer gui)
-    {
-
-    }
-
-    @Override
-    public void onClose(Player player, GUIContainer gui)
-    {
-
-    }
-
-    @Override
-    public void onClicked(Player player, int row, int col, GUIItem clicked, GUIContainer gui)
-    {
-
     }
 }
