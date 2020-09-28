@@ -71,7 +71,7 @@ public class AnimatedGUIItem extends GUIItem
 
     public void addFrame(ItemStack item, long period)
     {
-        times.add(period);
+        times.add(period == 0 ? 1 : period);
         items.add(item);
     }
 }
