@@ -17,6 +17,8 @@ public class GUIItem
     protected ItemStack viewItem;
     protected boolean movable;
     protected GUISlotEvent events;
+    protected int row;
+    protected int col;
 
     public GUIItem(ItemStack item)
     {
@@ -24,6 +26,26 @@ public class GUIItem
         this.viewItem = item;
         this.movable = false;
         this.events = new GUISlotEvent();
+    }
+
+    public void setRow(int row)
+    {
+        this.row = row;
+    }
+
+    public void setCol(int col)
+    {
+        this.col = col;
+    }
+
+    public int getRow()
+    {
+        return row;
+    }
+
+    public int getCol()
+    {
+        return col;
     }
 
     public ItemStack getItemBase()

@@ -1,17 +1,17 @@
 package com.mikedeejay2.mikedeejay2lib.gui.item;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
-import org.bukkit.entity.Player;
+import com.mikedeejay2.mikedeejay2lib.gui.animation.AnimationFrame;
+import com.mikedeejay2.mikedeejay2lib.gui.animation.FrameType;
+import com.mikedeejay2.mikedeejay2lib.gui.animation.MovementType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 public class AnimatedGUIItem extends GUIItem
 {
-    protected List<Long> times;
-    protected List<ItemStack> items;
+    protected List<AnimationFrame> frames;
     protected int index;
     protected long wait;
     protected boolean loop;
@@ -32,11 +32,10 @@ public class AnimatedGUIItem extends GUIItem
         this.index = 0;
         this.wait = 0;
         this.firstRun = true;
-        this.times = new ArrayList<>();
-        this.items = new ArrayList<>();
+        this.frames = new ArrayList<>();
     }
 
-    public boolean tick(long tickTime)
+    public boolean tick(long tickTime, GUIContainer gui)
     {
         wait += tickTime;
         if(firstRun)
@@ -44,34 +43,137 @@ public class AnimatedGUIItem extends GUIItem
             if(wait > delay)
             {
                 firstRun = false;
-                processFrame(1);
+                processFrame(1, gui);
                 wait = 0;
             }
             return true;
         }
-        if(index >= items.size())
+        if(index >= frames.size())
         {
-            if(loop) index = index - items.size();
+            if(loop) index = index - frames.size();
             else return false;
         }
-        long curWait = times.get(index);
+        long curWait = frames.get(index).getPeriod();
         if(wait < curWait) return false;
         int framePass = (int)(wait / curWait);
         wait = 0;
-        processFrame(framePass);
+        processFrame(framePass, gui);
         return true;
     }
 
-    private void processFrame(int framePass)
+    private void processFrame(int framePass, GUIContainer gui)
     {
-        ItemStack item = items.get(index);
-        setViewItem(item);
+        AnimationFrame frame = frames.get(index);
+        FrameType type = frame.getType();
+        switch(type)
+        {
+            case ITEM:
+            {
+                processItem(frame);
+                break;
+            }
+            case MOVEMENT:
+            {
+                processMovement(frame, gui);
+                break;
+            }
+            case BOTH:
+            {
+                processItem(frame);
+                processMovement(frame, gui);
+                break;
+            }
+        }
         index += framePass;
+    }
+
+    private void processItem(AnimationFrame frame)
+    {
+        setViewItem(frame.getItem());
+    }
+
+    private void processMovement(AnimationFrame frame, GUIContainer gui)
+    {
+        boolean moveRelatively = frame.moveRelative();
+        int frameRow = frame.getRow();
+        int frameCol = frame.getCol();
+        int currentRow = this.getRow();
+        int currentCol = this.getCol();
+        int newRow = moveRelatively ? currentRow + frameRow : frameRow;
+        int newCol = moveRelatively ? currentCol + frameCol : currentCol;
+        GUIItem previousItem = gui.getItem(newRow, newCol);
+
+        MovementType movementType = frame.getMovementType();
+        switch(movementType)
+        {
+            case SWAP_ITEM:
+            {
+                gui.setItem(newRow, newCol, this);
+                gui.setItem(currentRow, currentCol, previousItem);
+                break;
+            }
+            case OVERRIDE_ITEM:
+            {
+                gui.setItem(newRow, newCol, this);
+                break;
+            }
+            case PUSH_ITEM_UP:
+            {
+                int pushRow = newRow-1;
+                int pushCol = newCol;
+                if(!validCheck(pushRow, pushCol, gui)) break;
+                gui.setItem(pushRow, pushCol, previousItem);
+                break;
+            }
+            case PUSH_ITEM_DOWN:
+            {
+                int pushRow = newRow+1;
+                int pushCol = newCol;
+                if(!validCheck(pushRow, pushCol, gui)) break;
+                gui.setItem(pushRow, pushCol, previousItem);
+                break;
+            }
+            case PUSH_ITEM_LEFT:
+            {
+                int pushRow = newRow;
+                int pushCol = newCol-1;
+                if(!validCheck(pushRow, pushCol, gui)) break;
+                gui.setItem(pushRow, pushCol, previousItem);
+                break;
+            }
+            case PUSH_ITEM_RIGHT:
+            {
+                int pushRow = newRow;
+                int pushCol = newCol+1;
+                if(!validCheck(pushRow, pushCol, gui)) break;
+                gui.setItem(pushRow, pushCol, previousItem);
+                break;
+            }
+        }
+    }
+
+    private void moveItem(ItemStack item, int row, int col, boolean relativeMovement, GUIContainer gui)
+    {
+
+    }
+
+    private boolean validCheck(int row, int col, GUIContainer gui)
+    {
+        return !(row < 1 || col < 1 || row > gui.getRows() || col > GUIContainer.COLUMN_SIZE);
     }
 
     public void addFrame(ItemStack item, long period)
     {
-        times.add(period == 0 ? 1 : period);
-        items.add(item);
+        frames.add(new AnimationFrame(item, period));
+    }
+
+    public void addFrame(int row, int col, MovementType movementType, boolean relativeMovement, long period)
+    {
+        frames.add(new AnimationFrame(row, col, movementType, relativeMovement, period));
+    }
+
+    public void addFrame(ItemStack item, int row, int col, MovementType movementType, boolean relativeMovement, long period)
+    {
+        frames.add(new AnimationFrame(item, row, col, movementType, relativeMovement, period));
     }
 }

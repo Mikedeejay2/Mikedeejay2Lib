@@ -79,4 +79,19 @@ public final class MathUtil
         newVec.rotateAroundZ(Math.toRadians(degZ));
         return newVec.add(origin);
     }
+
+    /**
+     * Get a velocity vector that points towards a location
+     *
+     * @param toLook The location that should be pointed towards
+     * @param currentLoc The current location
+     * @param multiplier The speed multiplier
+     * @return The new velocity vector
+     */
+    public static Vector getFacingVelocityVector(Location toLook, Location currentLoc, float multiplier)
+    {
+        Vector newVec = currentLoc.toVector().subtract(toLook.toVector());
+        newVec.normalize().multiply(multiplier);
+        return newVec;
+    }
 }

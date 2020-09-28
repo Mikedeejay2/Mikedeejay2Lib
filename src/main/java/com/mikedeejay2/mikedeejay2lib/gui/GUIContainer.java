@@ -120,6 +120,8 @@ public class GUIContainer extends PluginInstancer<PluginBase>
 
     public void setItem(int row, int col, GUIItem item)
     {
+        item.setRow(row);
+        item.setCol(col);
         items[--row][--col] = item;
     }
 

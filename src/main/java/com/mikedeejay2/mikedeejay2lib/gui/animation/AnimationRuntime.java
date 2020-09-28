@@ -34,21 +34,9 @@ public class AnimationRuntime extends EnhancedRunnable
         boolean shouldUpdate = false;
         for(AnimatedGUIItem item : items)
         {
-            if(item.tick(period)) shouldUpdate = true;
+            if(item.tick(period, gui)) shouldUpdate = true;
         }
         if(shouldUpdate) gui.update(player);
-    }
-
-    @Override
-    public void onFirstRun()
-    {
-
-    }
-
-    @Override
-    public void onLastRun()
-    {
-
     }
 
     public List<AnimatedGUIItem> getItems()
