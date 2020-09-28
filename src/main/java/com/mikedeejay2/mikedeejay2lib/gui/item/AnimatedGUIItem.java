@@ -114,6 +114,7 @@ public class AnimatedGUIItem extends GUIItem
             }
             case OVERRIDE_ITEM:
             {
+                gui.removeItem(newRow, newCol);
                 gui.setItem(newRow, newCol, this);
                 break;
             }
@@ -122,6 +123,7 @@ public class AnimatedGUIItem extends GUIItem
                 int pushRow = newRow-1;
                 int pushCol = newCol;
                 if(!validCheck(pushRow, pushCol, gui)) break;
+                gui.removeItem(newRow, newCol);
                 gui.setItem(pushRow, pushCol, previousItem);
                 break;
             }
@@ -130,6 +132,7 @@ public class AnimatedGUIItem extends GUIItem
                 int pushRow = newRow+1;
                 int pushCol = newCol;
                 if(!validCheck(pushRow, pushCol, gui)) break;
+                gui.removeItem(newRow, newCol);
                 gui.setItem(pushRow, pushCol, previousItem);
                 break;
             }
@@ -138,6 +141,7 @@ public class AnimatedGUIItem extends GUIItem
                 int pushRow = newRow;
                 int pushCol = newCol-1;
                 if(!validCheck(pushRow, pushCol, gui)) break;
+                gui.removeItem(newRow, newCol);
                 gui.setItem(pushRow, pushCol, previousItem);
                 break;
             }
@@ -146,15 +150,11 @@ public class AnimatedGUIItem extends GUIItem
                 int pushRow = newRow;
                 int pushCol = newCol+1;
                 if(!validCheck(pushRow, pushCol, gui)) break;
+                gui.removeItem(newRow, newCol);
                 gui.setItem(pushRow, pushCol, previousItem);
                 break;
             }
         }
-    }
-
-    private void moveItem(ItemStack item, int row, int col, boolean relativeMovement, GUIContainer gui)
-    {
-
     }
 
     private boolean validCheck(int row, int col, GUIContainer gui)
