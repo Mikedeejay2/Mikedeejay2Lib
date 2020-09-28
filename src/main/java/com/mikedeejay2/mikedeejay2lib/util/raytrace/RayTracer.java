@@ -356,4 +356,182 @@ public final class RayTracer
         newLoc.setDirection(lookVec);
         return newLoc;
     }
+
+    /**
+     * Ray trace from a location to see if the direction of the location hits something
+     * as a Location
+     * <br>
+     * Uses default max distance: 256
+     * Uses default <tt>FluidCollisionMode</tt>: Never
+     * Uses default ignore passable blocks: false
+     *
+     * @param location The location that will be raytraced
+     * @param filter The entity filter that should be used when raytracing
+     * @return The Location of the raytrace hit, null if the raytrace never hit anything
+     */
+    public static Vector rayTraceVector(Location location, Predicate<Entity> filter)
+    {
+        return rayTraceVector(location, 256, FluidCollisionMode.NEVER, false, filter);
+    }
+
+    /**
+     * Ray trace from a location to see if the direction of the location hits something
+     * as a Location
+     * <br>
+     * Uses default <tt>FluidCollisionMode</tt>: Never
+     * Uses default ignore passable blocks: false
+     *
+     * @param location The location that will be raytraced
+     * @param maxDistance The maximum distance that should be raytraced before it stops trying
+     * @param filter The entity filter that should be used when raytracing
+     * @return The Location of the raytrace hit, null if the raytrace never hit anything
+     */
+    public static Vector rayTraceVector(Location location, int maxDistance, Predicate<Entity> filter)
+    {
+        return rayTraceVector(location, maxDistance, FluidCollisionMode.NEVER, false, filter);
+    }
+
+    /**
+     * Ray trace from a location to see if the direction of the location hits something
+     * as a Location
+     * <br>
+     * Uses default ignore passable blocks: false
+     *
+     * @param location The location that will be raytraced
+     * @param maxDistance The maximum distance that should be raytraced before it stops trying
+     * @param fluidCollisionMode The fluid collision mode to use
+     * @param filter The entity filter that should be used when raytracing
+     * @return The Location of the raytrace hit, null if the raytrace never hit anything
+     */
+    public static Vector rayTraceVector(Location location, int maxDistance, FluidCollisionMode fluidCollisionMode, Predicate<Entity> filter)
+    {
+        return rayTraceVector(location, maxDistance, fluidCollisionMode, false, filter);
+    }
+
+    /**
+     * Ray trace from a location to see if the direction of the location hits something
+     * as a Location
+     * <br>
+     * Uses default <tt>FluidCollisionMode</tt>: Never
+     *
+     * @param location The location that will be raytraced
+     * @param maxDistance The maximum distance that should be raytraced before it stops trying
+     * @param ignorePassableBlocks If the raytrace should ignore blocks that are passable (grass, flowers, etc)
+     * @param filter The entity filter that should be used when raytracing
+     * @return The Location of the raytrace hit, null if the raytrace never hit anything
+     */
+    public static Vector rayTraceVector(Location location, int maxDistance, boolean ignorePassableBlocks, Predicate<Entity> filter)
+    {
+        return rayTraceVector(location, maxDistance, FluidCollisionMode.NEVER, ignorePassableBlocks, filter);
+    }
+
+    /**
+     * Ray trace from a location to see if the direction of the location hits something
+     * as a Location
+     *
+     * @param location The location that will be raytraced
+     * @param maxDistance The maximum distance that should be raytraced before it stops trying
+     * @param fluidCollisionMode The fluid collision mode to use
+     * @param ignorePassableBlocks If the raytrace should ignore blocks that are passable (grass, flowers, etc)
+     * @param filter The entity filter that should be used when raytracing
+     * @return The Location of the raytrace hit, null if the raytrace never hit anything
+     */
+    public static Vector rayTraceVector(Location location, int maxDistance, FluidCollisionMode fluidCollisionMode, boolean ignorePassableBlocks, Predicate<Entity> filter)
+    {
+        World world = location.getWorld();
+        Vector lookVec = location.getDirection();
+        RayTraceResult result = world.rayTrace(location, lookVec, maxDistance, fluidCollisionMode, ignorePassableBlocks, 0, filter);
+        if(result == null) return null;
+        return result.getHitPosition();
+    }
+
+    /**
+     * Ray trace from a location to see if the direction of the location hits something
+     * as a Location
+     * <br>
+     * Uses default max distance: 256
+     * Uses default <tt>FluidCollisionMode</tt>: Never
+     * Uses default ignore passable blocks: false
+     *
+     * @param location The location that will be raytraced
+     * @param filter The entity filter that should be used when raytracing
+     * @return The Location of the raytrace hit, null if the raytrace never hit anything
+     */
+    public static Location rayTraceLocation(Location location, Predicate<Entity> filter)
+    {
+        return rayTraceLocation(location, 256, FluidCollisionMode.NEVER, false, filter);
+    }
+
+    /**
+     * Ray trace from a location to see if the direction of the location hits something
+     * as a Location
+     * <br>
+     * Uses default <tt>FluidCollisionMode</tt>: Never
+     * Uses default ignore passable blocks: false
+     *
+     * @param location The location that will be raytraced
+     * @param maxDistance The maximum distance that should be raytraced before it stops trying
+     * @param filter The entity filter that should be used when raytracing
+     * @return The Location of the raytrace hit, null if the raytrace never hit anything
+     */
+    public static Location rayTraceLocation(Location location, int maxDistance, Predicate<Entity> filter)
+    {
+        return rayTraceLocation(location, maxDistance, FluidCollisionMode.NEVER, false, filter);
+    }
+
+    /**
+     * Ray trace from a location to see if the direction of the location hits something
+     * as a Location
+     * <br>
+     * Uses default ignore passable blocks: false
+     *
+     * @param location The location that will be raytraced
+     * @param maxDistance The maximum distance that should be raytraced before it stops trying
+     * @param fluidCollisionMode The fluid collision mode to use
+     * @param filter The entity filter that should be used when raytracing
+     * @return The Location of the raytrace hit, null if the raytrace never hit anything
+     */
+    public static Location rayTraceLocation(Location location, int maxDistance, FluidCollisionMode fluidCollisionMode, Predicate<Entity> filter)
+    {
+        return rayTraceLocation(location, maxDistance, fluidCollisionMode, false, filter);
+    }
+
+    /**
+     * Ray trace from a location to see if the direction of the location hits something
+     * as a Location
+     * <br>
+     * Uses default <tt>FluidCollisionMode</tt>: Never
+     *
+     * @param location The location that will be raytraced
+     * @param maxDistance The maximum distance that should be raytraced before it stops trying
+     * @param ignorePassableBlocks If the raytrace should ignore blocks that are passable (grass, flowers, etc)
+     * @param filter The entity filter that should be used when raytracing
+     * @return The Location of the raytrace hit, null if the raytrace never hit anything
+     */
+    public static Location rayTraceLocation(Location location, int maxDistance, boolean ignorePassableBlocks, Predicate<Entity> filter)
+    {
+        return rayTraceLocation(location, maxDistance, FluidCollisionMode.NEVER, ignorePassableBlocks, filter);
+    }
+
+    /**
+     * Ray trace from a location to see if the direction of the location hits something
+     * as a Location
+     *
+     * @param location The location that will be raytraced
+     * @param maxDistance The maximum distance that should be raytraced before it stops trying
+     * @param fluidCollisionMode The fluid collision mode to use
+     * @param ignorePassableBlocks If the raytrace should ignore blocks that are passable (grass, flowers, etc)
+     * @param filter The entity filter that should be used when raytracing
+     * @return The Location of the raytrace hit, null if the raytrace never hit anything
+     */
+    public static Location rayTraceLocation(Location location, int maxDistance, FluidCollisionMode fluidCollisionMode, boolean ignorePassableBlocks, Predicate<Entity> filter)
+    {
+        World world = location.getWorld();
+        Vector lookVec = location.getDirection();
+        Vector resultVec = rayTraceVector(location, maxDistance, fluidCollisionMode, ignorePassableBlocks, filter);
+        if(resultVec == null) return null;
+        Location newLoc = resultVec.toLocation(world);
+        newLoc.setDirection(lookVec);
+        return newLoc;
+    }
 }
