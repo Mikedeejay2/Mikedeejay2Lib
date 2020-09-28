@@ -88,10 +88,10 @@ public final class MathUtil
      * @param multiplier The speed multiplier
      * @return The new velocity vector
      */
-    public static Vector getFacingVelocityVector(Location toLook, Location currentLoc, float multiplier)
+    public static Vector getFacingVector(Location toLook, Location currentLoc, float multiplier)
     {
         Vector newVec = currentLoc.toVector().subtract(toLook.toVector());
-        newVec.normalize().multiply(multiplier);
+        newVec.normalize().multiply(-multiplier);
         return newVec;
     }
 }
