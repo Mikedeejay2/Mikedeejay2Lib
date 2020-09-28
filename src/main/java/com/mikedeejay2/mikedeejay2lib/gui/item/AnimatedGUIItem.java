@@ -101,6 +101,11 @@ public class AnimatedGUIItem extends GUIItem
         int currentCol = this.getCol();
         int newRow = moveRelatively ? currentRow + frameRow : frameRow;
         int newCol = moveRelatively ? currentCol + frameCol : currentCol;
+        if(!validCheck(newRow, newCol, gui))
+        {
+            gui.removeItem(currentRow, currentCol);
+            return;
+        }
         GUIItem previousItem = gui.getItem(newRow, newCol);
 
         MovementType movementType = frame.getMovementType();
@@ -114,7 +119,7 @@ public class AnimatedGUIItem extends GUIItem
             }
             case OVERRIDE_ITEM:
             {
-                gui.removeItem(newRow, newCol);
+                gui.removeItem(currentRow, currentCol);
                 gui.setItem(newRow, newCol, this);
                 break;
             }
@@ -123,7 +128,7 @@ public class AnimatedGUIItem extends GUIItem
                 int pushRow = newRow-1;
                 int pushCol = newCol;
                 if(!validCheck(pushRow, pushCol, gui)) break;
-                gui.removeItem(newRow, newCol);
+                gui.removeItem(currentRow, currentCol);
                 gui.setItem(pushRow, pushCol, previousItem);
                 break;
             }
@@ -132,7 +137,7 @@ public class AnimatedGUIItem extends GUIItem
                 int pushRow = newRow+1;
                 int pushCol = newCol;
                 if(!validCheck(pushRow, pushCol, gui)) break;
-                gui.removeItem(newRow, newCol);
+                gui.removeItem(currentRow, currentCol);
                 gui.setItem(pushRow, pushCol, previousItem);
                 break;
             }
@@ -141,7 +146,7 @@ public class AnimatedGUIItem extends GUIItem
                 int pushRow = newRow;
                 int pushCol = newCol-1;
                 if(!validCheck(pushRow, pushCol, gui)) break;
-                gui.removeItem(newRow, newCol);
+                gui.removeItem(currentRow, currentCol);
                 gui.setItem(pushRow, pushCol, previousItem);
                 break;
             }
@@ -150,7 +155,7 @@ public class AnimatedGUIItem extends GUIItem
                 int pushRow = newRow;
                 int pushCol = newCol+1;
                 if(!validCheck(pushRow, pushCol, gui)) break;
-                gui.removeItem(newRow, newCol);
+                gui.removeItem(currentRow, currentCol);
                 gui.setItem(pushRow, pushCol, previousItem);
                 break;
             }
