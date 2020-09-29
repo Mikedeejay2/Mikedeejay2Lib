@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.util.fallingblock;
+package com.mikedeejay2.mikedeejay2lib.util.block;
 
 import org.bukkit.Location;
 import org.bukkit.Material;
