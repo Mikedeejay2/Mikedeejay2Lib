@@ -306,4 +306,60 @@ public final class ArrayUtil
         list.forEach(location -> newList.add(location.toVector()));
         return newList;
     }
+
+    /**
+     * Offset a <tt>List</tt> of vectors by another <tt>Vector</tt>
+     *
+     * @param vectors The list of vectors that will be offset
+     * @param offset The vector to use that will offset the list of vectors
+     * @return The new list of offset vectors
+     */
+    public static List<Vector> offsetVectors(List<Vector> vectors, Vector offset)
+    {
+        List<Vector> newVecs = new ArrayList<>();
+        vectors.forEach(vector -> newVecs.add(vector.add(offset)));
+        return newVecs;
+    }
+
+    /**
+     * Offset a <tt>List</tt> of locations by another <tt>Location</tt>
+     *
+     * @param locations The list of locations that will be offset
+     * @param offset The location to use that will offset the list of locations
+     * @return The new list of offset locations
+     */
+    public static List<Location> offsetLocations(List<Location> locations, Location offset)
+    {
+        List<Location> newLocs = new ArrayList<>();
+        locations.forEach(location -> newLocs.add(location.add(offset)));
+        return newLocs;
+    }
+
+    /**
+     * Offset a <tt>List</tt> of vectors by another <tt>Vector</tt>
+     *
+     * @param vectors The list of vectors that will be offset
+     * @param offset The location to use that will offset the list of vectors
+     * @return The new list of offset vectors
+     */
+    public static List<Vector> offsetVectors(List<Vector> vectors, Location offset)
+    {
+        List<Vector> newVecs = new ArrayList<>();
+        vectors.forEach(vector -> newVecs.add(vector.add(offset.toVector())));
+        return newVecs;
+    }
+
+    /**
+     * Offset a <tt>List</tt> of locations by another <tt>Location</tt>
+     *
+     * @param locations The list of locations that will be offset
+     * @param offset The vector to use that will offset the list of locations
+     * @return The new list of offset locations
+     */
+    public static List<Location> offsetLocations(List<Location> locations, Vector offset)
+    {
+        List<Location> newLocs = new ArrayList<>();
+        locations.forEach(location -> newLocs.add(location.add(offset)));
+        return newLocs;
+    }
 }
