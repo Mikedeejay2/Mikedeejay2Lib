@@ -5,7 +5,6 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUISlotEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
-import com.mikedeejay2.mikedeejay2lib.gui.util.GUIMath;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import com.mikedeejay2.mikedeejay2lib.util.array.ArrayUtil;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
@@ -21,7 +20,7 @@ import java.util.List;
 
 public class GUIContainer extends PluginInstancer<PluginBase>
 {
-    public static final int COLUMN_SIZE = 9;
+    protected static final int INVENTORY_COLS = 9;
     public static final String EMPTY_NAME = "§7";
     protected final ItemStack EMPTY_STACK;
     protected Inventory inventory;
@@ -37,9 +36,9 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         super(plugin);
         this.EMPTY_STACK = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1 , EMPTY_NAME);
         this.inventoryName = Chat.chat(inventoryName);
-        this.inventorySlots = inventoryRows * COLUMN_SIZE;
+        this.inventorySlots = inventoryRows * INVENTORY_COLS;
         this.inventoryRows = inventoryRows;
-        this.items = new GUIItem[inventoryRows][COLUMN_SIZE];
+        this.items = new GUIItem[inventoryRows][INVENTORY_COLS];
         this.modules = new ArrayList<>();
         this.defaultMoveState = false;
 
@@ -62,11 +61,11 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     public void update(Player player)
     {
         modules.forEach(module -> module.onUpdateHead(player, this));
-        for(int row = 0; row < items.length; row++)
+        for(int row = 0; row < inventoryRows; row++)
         {
-            for(int col = 0; col < items[row].length; col++)
+            for(int col = 0; col < INVENTORY_COLS; col++)
             {
-                int invSlot = GUIMath.getSlotFromRowCol(row, col);
+                int invSlot = getSlotFromRowCol(row, col);
                 GUIItem guiItem = items[row][col];
                 if(guiItem == null)
                 {
@@ -205,6 +204,11 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         return inventoryRows;
     }
 
+    public int getCols()
+    {
+        return INVENTORY_COLS;
+    }
+
     public void addModule(GUIModule module)
     {
         modules.add(module);
@@ -287,5 +291,20 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     public GUIItem[][] getItemsAsArray()
     {
         return items;
+    }
+
+    public int getSlotFromRowCol(int row, int col)
+    {
+        return (row * INVENTORY_COLS) + col;
+    }
+
+    public int getRowFromSlot(int slot)
+    {
+        return (slot / INVENTORY_COLS) + 1;
+    }
+
+    public int getColFromSlot(int slot)
+    {
+        return (slot % INVENTORY_COLS) + 1;
     }
 }

@@ -164,7 +164,7 @@ public class AnimatedGUIItem extends GUIItem
 
     private boolean validCheck(int row, int col, GUIContainer gui)
     {
-        return !(row < 1 || col < 1 || row > gui.getRows() || col > GUIContainer.COLUMN_SIZE);
+        return !(row < 1 || col < 1 || row > gui.getRows() || col > gui.getCols());
     }
 
     public void addFrame(ItemStack item, long period)

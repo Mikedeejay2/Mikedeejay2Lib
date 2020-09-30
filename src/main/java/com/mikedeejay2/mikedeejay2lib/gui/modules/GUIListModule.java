@@ -6,7 +6,6 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchOffEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUISwitchListPageEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
-import com.mikedeejay2.mikedeejay2lib.gui.util.GUIMath;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Heads;
 import com.mikedeejay2.mikedeejay2lib.util.search.SearchUtil;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
@@ -18,8 +17,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static com.mikedeejay2.mikedeejay2lib.gui.GUIContainer.COLUMN_SIZE;
 
 public class GUIListModule extends GUIModule
 {
@@ -82,17 +79,17 @@ public class GUIListModule extends GUIModule
     public void updatePage(boolean search, GUIContainer gui)
     {
         ArrayList<GUIItem> pageList = (ArrayList<GUIItem>) (search ? searchList : list);
-        int pageSize = ((gui.getRows() - 2) * COLUMN_SIZE);
+        int pageSize = ((gui.getRows() - 2) * gui.getCols());
         for(int i = 0; i < pageSize; i++)
         {
             int pageOffset = ((curPage-1) * pageSize);
-            int row = GUIMath.getRowFromSlot(i + COLUMN_SIZE), col = GUIMath.getColFromSlot(i);
+            int row = gui.getRowFromSlot(i + gui.getCols()), col = gui.getColFromSlot(i);
             gui.removeItem(row, col);
 
             if(pageList.size() >= (i+1) + pageOffset)
             {
                 GUIItem item = pageList.get(i + pageOffset);
-                gui.setItem(GUIMath.getRowFromSlot(i + COLUMN_SIZE), GUIMath.getColFromSlot(i), item.getItem());
+                gui.setItem(gui.getRowFromSlot(i + gui.getCols()), gui.getColFromSlot(i), item.getItem());
             }
             else if((i + 1) + pageOffset > pageList.size() && !search)
             {
@@ -111,7 +108,7 @@ public class GUIListModule extends GUIModule
     {
         ArrayList<GUIItem> pageList = (ArrayList<GUIItem>) (search ? searchList : list);
 
-        int amountOfPages = (int)Math.ceil((pageList.size() + endItems.size()) / ((gui.getRows() - 2.0f) * COLUMN_SIZE));
+        int amountOfPages = (int)Math.ceil((pageList.size() + endItems.size()) / ((gui.getRows() - 2.0f) * gui.getCols()));
 
         for(int i = 1; i <= amountOfPages; i++)
         {
@@ -162,7 +159,7 @@ public class GUIListModule extends GUIModule
     {
         int pageSize = ((gui.getRows() - 2) * 9);
         int pageOffset = ((curPage-1) * pageSize);
-        int index = GUIMath.getSlotFromRowCol(row-2, col-1) + pageOffset;
+        int index = gui.getSlotFromRowCol(row-2, col-1) + pageOffset;
         list.set(index, item);
     }
 
@@ -185,7 +182,7 @@ public class GUIListModule extends GUIModule
     {
         int pageSize = ((gui.getRows() - 2) * 9);
         int pageOffset = ((curPage-1) * pageSize);
-        return GUIMath.getSlotFromRowCol(row-2, col-1) + pageOffset;
+        return gui.getSlotFromRowCol(row-2, col-1) + pageOffset;
     }
 
     public void toListPage(int index, Player player, GUIContainer gui)

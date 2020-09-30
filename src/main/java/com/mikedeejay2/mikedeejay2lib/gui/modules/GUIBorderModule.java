@@ -36,7 +36,7 @@ public class GUIBorderModule extends GUIModule
     @Override
     public void onUpdateHead(Player player, GUIContainer gui)
     {
-        for(int i = 1; i <= GUIContainer.COLUMN_SIZE; i++)
+        for(int i = 1; i <= gui.getCols(); i++)
         {
             gui.setItem(1, i, borderItem);
             gui.setItem(gui.getRows(), i, borderItem);

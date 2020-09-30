@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.runnable;
 
-import org.bukkit.plugin.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
