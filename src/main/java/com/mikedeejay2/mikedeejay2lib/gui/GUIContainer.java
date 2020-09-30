@@ -7,7 +7,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.gui.util.GUIMath;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
-import com.mikedeejay2.mikedeejay2lib.util.array.ArrayModifier;
+import com.mikedeejay2.mikedeejay2lib.util.array.ArrayUtil;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Bukkit;
@@ -281,7 +281,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
 
     public List<GUIItem> getItemsAsList()
     {
-        return ArrayModifier.toList(items);
+        return ArrayUtil.toList(items);
     }
 
     public GUIItem[][] getItemsAsArray()

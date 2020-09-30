@@ -3,7 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.util.block;
 import org.bukkit.Location;
 import org.bukkit.World;
 
-public class BlockIterateUtil
+public class BlockIterator
 {
     /**
      * Iterate through all blocks around a location in a square.
@@ -34,5 +34,10 @@ public class BlockIterateUtil
                 }
             }
         }
+    }
+
+    public static void iterateBlocksCircular(Location loc, double xWidth, double yWidth, double zWidth, double density, BlockRunnable runnable)
+    {
+
     }
 }

@@ -1,5 +1,9 @@
 package com.mikedeejay2.mikedeejay2lib.util.array;
 
+import org.bukkit.Location;
+import org.bukkit.World;
+import org.bukkit.util.Vector;
+
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -10,7 +14,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public final class ArrayModifier
+public final class ArrayUtil
 {
     /**
      * Get an array as a String, each index separated by a space.
@@ -274,5 +278,32 @@ public final class ArrayModifier
             list.addAll(toList(ts));
         }
         return list;
+    }
+
+    /**
+     * Converts a list of vectors to a list of locations
+     *
+     * @param list List of vectors that will be converted
+     * @param world The world to use when converting from vectors to locations
+     * @return A new list of locations based off of the list of vectors
+     */
+    public static List<Location> toLocationList(List<Vector> list, World world)
+    {
+        List<Location> newList = new ArrayList<>();
+        list.forEach(vector -> newList.add(vector.toLocation(world)));
+        return newList;
+    }
+
+    /**
+     * Converts a list of locations to a list of vectors
+     *
+     * @param list List of locations that will be converted
+     * @return A new list of vectors based off of the list of locations
+     */
+    public static List<Vector> toVectorList(List<Location> list)
+    {
+        List<Vector> newList = new ArrayList<>();
+        list.forEach(location -> newList.add(location.toVector()));
+        return newList;
     }
 }

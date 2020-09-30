@@ -32,7 +32,7 @@ public final class FallingBlockUtil
                     Block block = world.getBlockAt(x, y, z);
                     BlockData blockData = block.getBlockData().clone();
                     block.setType(Material.AIR);
-                    FallingBlock fallingBlock = world.spawnFallingBlock(location, blockData);
+                    FallingBlock fallingBlock = makeBlockFall(new Location(world, x, y, z));
                     Vector randomVec = new Vector(random.nextFloat()-0.5f, random.nextFloat()-0.5f, random.nextFloat()-0.5f);
                     randomVec.multiply(explosiveness);
                     fallingBlock.setRotation((random.nextFloat()*360)-180, (random.nextFloat()*180)-90);
@@ -40,5 +40,21 @@ public final class FallingBlockUtil
                 }
             }
         }
+    }
+
+    /**
+     * Make a block fall based off of a location
+     *
+     * @param location Location to make block fall
+     * @return The falling block entity
+     */
+    public static FallingBlock makeBlockFall(Location location)
+    {
+        World world = location.getWorld();
+        Block block = location.getBlock();
+        BlockData blockData = block.getBlockData();
+        Location newLocation = new Location(world, location.getBlockX() + 0.5f, location.getBlockY() + 0.5f, location.getBlockZ() + 0.5f);
+        block.setType(Material.AIR);
+        return world.spawnFallingBlock(newLocation, blockData);
     }
 }

@@ -1,12 +1,17 @@
 package com.mikedeejay2.mikedeejay2lib.util.math;
 
+import com.mikedeejay2.mikedeejay2lib.util.array.ArrayUtil;
 import org.bukkit.Location;
+import org.bukkit.World;
 import org.bukkit.util.Vector;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A util class for anything that manipulates vectors.
  *
- * @author Mikedeejay2 (I think, I looked at a lot of Spigot resource though)
+ * @author Mikedeejay2 (With some help from Spigot resources)
  */
 public final class MathUtil
 {
@@ -93,5 +98,54 @@ public final class MathUtil
         Vector newVec = currentLoc.toVector().subtract(toLook.toVector());
         newVec.normalize().multiply(-multiplier);
         return newVec;
+    }
+
+    /**
+     * Get a list of vectors that create an outline of a sphere.
+     *
+     * @param loc The origin location
+     * @param xWidth The width of the sphere in X
+     * @param yWidth The width of the sphere in Y
+     * @param zWidth The width of the sphere in Z
+     * @param density The density of the points of the sphere
+     * @return A new list of vectors that create a sphere outline shape
+     */
+    public static List<Vector> getSphereOutlineVectors(Location loc, double xWidth, double yWidth, double zWidth, double density)
+    {
+        List<Vector> list = new ArrayList<>();
+
+        for(double yLoop = 0; yLoop <= Math.PI; yLoop += Math.PI / density)
+        {
+            double radiusX = Math.sin(yLoop * xWidth);
+            double radiusY = Math.sin(yLoop * yWidth);
+            double radiusZ = Math.sin(yLoop * zWidth);
+            double y = Math.cos(yLoop) * radiusY;
+
+            for(double xLoop = 0; xLoop < Math.PI * 2.0D; xLoop += Math.PI / density)
+            {
+                double x = Math.cos(xLoop) * radiusX;
+                double z = Math.sin(xLoop) * radiusZ;
+
+                list.add(new Vector(x, y, z));
+            }
+        }
+        return list;
+    }
+
+    /**
+     * Get a list of locations that create an outline of a sphere.
+     *
+     * @param loc The origin location
+     * @param xWidth The width of the sphere in X
+     * @param yWidth The width of the sphere in Y
+     * @param zWidth The width of the sphere in Z
+     * @param density The density of the points of the sphere
+     * @return A new list of locations that create a sphere outline shape
+     */
+    public static List<Location> getSphereOutlineLocations(Location loc, double xWidth, double yWidth, double zWidth, double density)
+    {
+        World world = loc.getWorld();
+        List<Vector> vectorList = getSphereOutlineVectors(loc, xWidth, yWidth, zWidth, density);
+        return ArrayUtil.toLocationList(vectorList, world);
     }
 }
