@@ -15,7 +15,7 @@ import java.util.*;
 public final class MathUtil
 {
     private static Map<Double, Vector> circleRefs = new HashMap<>();
-    private static Map<Double, List<Vector>> sphereOutlineRefs = new HashMap<>();
+    private static Map<Double, List<Vector>> sphereHollowRefs = new HashMap<>();
     private static Map<Double, List<Vector>> sphereFilledRefs = new HashMap<>();
 
     /**
@@ -114,11 +114,11 @@ public final class MathUtil
      * @param density The density of the points of the sphere
      * @return A new list of vectors that create a sphere outline shape
      */
-    public static List<Vector> getSphereOutlineVectors(Location loc, double radius, double density)
+    public static List<Vector> getSphereHollowVectors(Location loc, double radius, double density)
     {
-        if(sphereOutlineRefs.containsKey(density))
+        if(sphereHollowRefs.containsKey(density))
         {
-            List<Vector> list = sphereOutlineRefs.get(density);
+            List<Vector> list = sphereHollowRefs.get(density);
             List<Vector> translatedList = new ArrayList<>();
             list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
             return ArrayUtil.offsetVectors(translatedList, loc);
@@ -140,7 +140,7 @@ public final class MathUtil
             }
         }
 
-        sphereOutlineRefs.put(density, list);
+        sphereHollowRefs.put(density, list);
         List<Vector> translatedList = new ArrayList<>();
         list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
         return ArrayUtil.offsetVectors(translatedList, loc);
@@ -154,10 +154,10 @@ public final class MathUtil
      * @param density The density of the points of the sphere
      * @return A new list of locations that create a sphere outline shape
      */
-    public static List<Location> getSphereOutlineLocations(Location loc, double radius, double density)
+    public static List<Location> getSphereHollowLocations(Location loc, double radius, double density)
     {
         World world = loc.getWorld();
-        List<Vector> vectorList = getSphereOutlineVectors(loc, radius, density);
+        List<Vector> vectorList = getSphereHollowVectors(loc, radius, density);
         return ArrayUtil.toLocationList(vectorList, world);
     }
 
