@@ -33,6 +33,24 @@ public final class MathUtil
      */
     private static List<Vector> xyzLoop(List<Vector> list, double xStart, double yStart, double zStart, double xEnd, double yEnd, double zEnd, double density)
     {
+        if(xStart > xEnd)
+        {
+            double temp = xStart;
+            xStart = xEnd;
+            xEnd = temp;
+        }
+        if(yStart > yEnd)
+        {
+            double temp = yStart;
+            yStart = yEnd;
+            yEnd = temp;
+        }
+        if(zStart > zEnd)
+        {
+            double temp = zStart;
+            zStart = zEnd;
+            zEnd = temp;
+        }
         for(double x = xStart; x <= xEnd; x += 1.0 / density)
         {
             for(double y = yStart; y <= yEnd; y += 1.0 / density)
@@ -171,6 +189,7 @@ public final class MathUtil
      */
     public static List<Vector> getSphereFilledVectors(Location loc, double radius, double density)
     {
+        density = density * radius;
         if(sphereFilledRefs.containsKey(density))
         {
             List<Vector> list = sphereFilledRefs.get(density);
@@ -179,13 +198,13 @@ public final class MathUtil
             return ArrayUtil.offsetVectors(translatedList, loc);
         }
         List<Vector> list = new ArrayList<>();
-        for(double x = -radius; x <= radius; x += 1.0 / density)
+        for(double x = -1; x <= 1; x += 1.0 / density)
         {
-            for(double y = -radius; y <= radius; y += 1.0 / density)
+            for(double y = -1; y <= 1; y += 1.0 / density)
             {
-                for(double z = -radius; z <= radius; z += 1.0 / density)
+                for(double z = -1; z <= 1; z += 1.0 / density)
                 {
-                    if(!(Math.sqrt((x * x) + (y * y) + (z * z)) <= radius)) continue;
+                    if(!(Math.sqrt((x * x) + (y * y) + (z * z)) <= 1)) continue;
                     list.add(new Vector(x, y, z));
                 }
             }

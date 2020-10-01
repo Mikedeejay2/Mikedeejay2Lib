@@ -100,7 +100,7 @@ public class BlockIterator
      */
     public static void iterateBlocksSphere(Location loc, int radius, BlockRunnable runnable)
     {
-        List<Location> locs = MathUtil.getSphereFilledLocations(loc, radius, 1);
+        List<Location> locs = MathUtil.getSphereFilledLocations(loc, radius + 0.5, 1);
         locs.forEach(location -> runnable.run(location, location.getBlock()));
     }
 
@@ -113,7 +113,7 @@ public class BlockIterator
      */
     public static void iterateBlocksSphereHollow(Location loc, int radius, BlockRunnable runnable)
     {
-        List<Location> locs = MathUtil.getSphereHollowLocations(loc, radius, 1);
+        List<Location> locs = MathUtil.getSphereHollowLocations(loc, radius + 0.5, 1);
         locs.forEach(location -> runnable.run(location, location.getBlock()));
     }
 }
