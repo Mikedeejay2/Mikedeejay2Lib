@@ -134,6 +134,7 @@ public final class MathUtil
      */
     public static List<Vector> getSphereHollowVectors(Location loc, double radius, double density)
     {
+        density = (density * Math.PI) * radius;
         if(sphereHollowRefs.containsKey(density))
         {
             List<Vector> list = sphereHollowRefs.get(density);
@@ -147,7 +148,7 @@ public final class MathUtil
         for(double yLoop = 0; yLoop <= Math.PI; yLoop += Math.PI / density)
         {
             double tempRadius = Math.sin(yLoop);
-            double y = Math.cos(yLoop) * tempRadius;
+            double y = Math.cos(yLoop);
 
             for(double xLoop = 0; xLoop < Math.PI * 2.0D; xLoop += Math.PI / density)
             {

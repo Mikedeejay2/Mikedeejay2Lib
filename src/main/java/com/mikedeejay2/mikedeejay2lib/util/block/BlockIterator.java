@@ -1,5 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.util.block;
 
+import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
 import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -17,10 +19,19 @@ public class BlockIterator
      * @param zWidth The width of the iteration in the Z direction
      * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
      */
-    public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockRunnable runnable)
+    public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockRunnable runnable, PluginBase plugin, boolean async)
     {
-        List<Location> locs = MathUtil.getCubeFilledLocations(loc, xWidth, yWidth, zWidth, 1);
-        locs.forEach(location -> runnable.run(location, location.getBlock()));
+        EnhancedRunnable iteration = new EnhancedRunnable()
+        {
+            @Override
+            public void onRun()
+            {
+                List<Location> locs = MathUtil.getCubeFilledLocations(loc, xWidth, yWidth, zWidth, 1);
+                locs.forEach(location -> runnable.run(location, location.getBlock()));
+            }
+        };
+        if(async) iteration.runTaskAsynchronously(plugin);
+        else iteration.runTask(plugin);
     }
     /**
      * Iterate through all blocks around a location in a hollow square.
@@ -29,10 +40,19 @@ public class BlockIterator
      * @param loc2 The second location of the cube
      * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
      */
-    public static void iterateBlocksHollow(Location loc1, Location loc2, BlockRunnable runnable)
+    public static void iterateBlocksHollow(Location loc1, Location loc2, BlockRunnable runnable, PluginBase plugin, boolean async)
     {
-        List<Location> locs = MathUtil.getCubeHollowLocations(loc1, loc2, 1);
-        locs.forEach(location -> runnable.run(location, location.getBlock()));
+        EnhancedRunnable iteration = new EnhancedRunnable()
+        {
+            @Override
+            public void onRun()
+            {
+                List<Location> locs = MathUtil.getCubeHollowLocations(loc1, loc2, 1);
+                locs.forEach(location -> runnable.run(location, location.getBlock()));
+            }
+        };
+        if(async) iteration.runTaskAsynchronously(plugin);
+        else iteration.runTask(plugin);
     }
 
     /**
@@ -42,10 +62,19 @@ public class BlockIterator
      * @param loc2 The second location of the cube
      * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
      */
-    public static void iterateBlocks(Location loc1, Location loc2, BlockRunnable runnable)
+    public static void iterateBlocks(Location loc1, Location loc2, BlockRunnable runnable, PluginBase plugin, boolean async)
     {
-        List<Location> locs = MathUtil.getCubeFilledLocations(loc1, loc2, 1);
-        locs.forEach(location -> runnable.run(location, location.getBlock()));
+        EnhancedRunnable iteration = new EnhancedRunnable()
+        {
+            @Override
+            public void onRun()
+            {
+                List<Location> locs = MathUtil.getCubeFilledLocations(loc1, loc2, 1);
+                locs.forEach(location -> runnable.run(location, location.getBlock()));
+            }
+        };
+        if(async) iteration.runTaskAsynchronously(plugin);
+        else iteration.runTask(plugin);
     }
     /**
      * Iterate through all blocks around a location in a hollow square.
@@ -56,10 +85,19 @@ public class BlockIterator
      * @param zWidth The width of the iteration in the Z direction
      * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
      */
-    public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockRunnable runnable)
+    public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockRunnable runnable, PluginBase plugin, boolean async)
     {
-        List<Location> locs = MathUtil.getCubeHollowLocations(loc, xWidth, yWidth, zWidth, 1);
-        locs.forEach(location -> runnable.run(location, location.getBlock()));
+        EnhancedRunnable iteration = new EnhancedRunnable()
+        {
+            @Override
+            public void onRun()
+            {
+                List<Location> locs = MathUtil.getCubeHollowLocations(loc, xWidth, yWidth, zWidth, 1);
+                locs.forEach(location -> runnable.run(location, location.getBlock()));
+            }
+        };
+        if(async) iteration.runTaskAsynchronously(plugin);
+        else iteration.runTask(plugin);
     }
 
     /**
@@ -71,10 +109,19 @@ public class BlockIterator
      * @param zWidth The width of the iteration in the Z direction
      * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
      */
-    public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockRunnable runnable)
+    public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockRunnable runnable, PluginBase plugin, boolean async)
     {
-        List<Location> locs = MathUtil.getCubeOutlineLocations(loc, xWidth, yWidth, zWidth, 1);
-        locs.forEach(location -> runnable.run(location, location.getBlock()));
+        EnhancedRunnable iteration = new EnhancedRunnable()
+        {
+            @Override
+            public void onRun()
+            {
+                List<Location> locs = MathUtil.getCubeOutlineLocations(loc, xWidth, yWidth, zWidth, 1);
+                locs.forEach(location -> runnable.run(location, location.getBlock()));
+            }
+        };
+        if(async) iteration.runTaskAsynchronously(plugin);
+        else iteration.runTask(plugin);
     }
 
 
@@ -85,10 +132,19 @@ public class BlockIterator
      * @param loc2 The second location of the cube
      * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
      */
-    public static void iterateBlocksOutline(Location loc1, Location loc2, BlockRunnable runnable)
+    public static void iterateBlocksOutline(Location loc1, Location loc2, BlockRunnable runnable, PluginBase plugin, boolean async)
     {
-        List<Location> locs = MathUtil.getCubeOutlineLocations(loc1, loc2, 1);
-        locs.forEach(location -> runnable.run(location, location.getBlock()));
+        EnhancedRunnable iteration = new EnhancedRunnable()
+        {
+            @Override
+            public void onRun()
+            {
+                List<Location> locs = MathUtil.getCubeOutlineLocations(loc1, loc2, 1);
+                locs.forEach(location -> runnable.run(location, location.getBlock()));
+            }
+        };
+        if(async) iteration.runTaskAsynchronously(plugin);
+        else iteration.runTask(plugin);
     }
 
     /**
@@ -98,10 +154,19 @@ public class BlockIterator
      * @param radius The radius of the sphere to iterate through
      * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
      */
-    public static void iterateBlocksSphere(Location loc, int radius, BlockRunnable runnable)
+    public static void iterateBlocksSphere(Location loc, double radius, BlockRunnable runnable, PluginBase plugin, boolean async)
     {
-        List<Location> locs = MathUtil.getSphereFilledLocations(loc, radius + 0.5, 1);
-        locs.forEach(location -> runnable.run(location, location.getBlock()));
+        EnhancedRunnable iteration = new EnhancedRunnable()
+        {
+            @Override
+            public void onRun()
+            {
+                List<Location> locs = MathUtil.getSphereFilledLocations(loc, radius, 1);
+                locs.forEach(location -> runnable.run(location, location.getBlock()));
+            }
+        };
+        if(async) iteration.runTaskAsynchronously(plugin);
+        else iteration.runTask(plugin);
     }
 
     /**
@@ -111,9 +176,18 @@ public class BlockIterator
      * @param radius The radius of the sphere to iterate through
      * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
      */
-    public static void iterateBlocksSphereHollow(Location loc, int radius, BlockRunnable runnable)
+    public static void iterateBlocksSphereHollow(Location loc, double radius, BlockRunnable runnable, PluginBase plugin, boolean async)
     {
-        List<Location> locs = MathUtil.getSphereHollowLocations(loc, radius + 0.5, 1);
-        locs.forEach(location -> runnable.run(location, location.getBlock()));
+        EnhancedRunnable iteration = new EnhancedRunnable()
+        {
+            @Override
+            public void onRun()
+            {
+                List<Location> locs = MathUtil.getSphereHollowLocations(loc, radius, 1);
+                locs.forEach(location -> runnable.run(location, location.getBlock()));
+            }
+        };
+        if(async) iteration.runTaskAsynchronously(plugin);
+        else iteration.runTask(plugin);
     }
 }
