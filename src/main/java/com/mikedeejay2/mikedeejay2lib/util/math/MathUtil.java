@@ -61,7 +61,7 @@ public final class MathUtil
 
         if(circleRefs.containsKey(angleInRadian))
         {
-            return circleRefs.get(angleInRadian).multiply(radius).add(center.toVector());
+            return circleRefs.get(angleInRadian).clone().multiply(radius).add(center.toVector());
         }
 
         double cos = Math.cos(angleInRadian);
@@ -69,7 +69,7 @@ public final class MathUtil
 
         Vector vector = new Vector(cos, 0, sin);
         circleRefs.put(angleInRadian, vector);
-        return vector.multiply(radius).add(center.toVector());
+        return vector.clone().multiply(radius).add(center.toVector());
     }
 
     /**
@@ -120,7 +120,7 @@ public final class MathUtil
         {
             List<Vector> list = sphereOutlineRefs.get(density);
             List<Vector> translatedList = new ArrayList<>();
-            list.forEach(vector -> translatedList.add(vector.multiply(radius)));
+            list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
             return ArrayUtil.offsetVectors(translatedList, loc);
         }
 
@@ -142,7 +142,7 @@ public final class MathUtil
 
         sphereOutlineRefs.put(density, list);
         List<Vector> translatedList = new ArrayList<>();
-        list.forEach(vector -> translatedList.add(vector.multiply(radius)));
+        list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
         return ArrayUtil.offsetVectors(translatedList, loc);
     }
 
@@ -175,7 +175,7 @@ public final class MathUtil
         {
             List<Vector> list = sphereFilledRefs.get(density);
             List<Vector> translatedList = new ArrayList<>();
-            list.forEach(vector -> translatedList.add(vector.multiply(radius)));
+            list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
             return ArrayUtil.offsetVectors(translatedList, loc);
         }
         List<Vector> list = new ArrayList<>();
@@ -193,7 +193,7 @@ public final class MathUtil
 
         sphereFilledRefs.put(density, list);
         List<Vector> translatedList = new ArrayList<>();
-        list.forEach(vector -> translatedList.add(vector.multiply(radius)));
+        list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
         return ArrayUtil.offsetVectors(translatedList, loc);
     }
 
