@@ -379,4 +379,140 @@ public final class MathUtil
         List<Vector> vectorList = getCubeOutlineVectors(loc, xWidth, yWidth, zWidth, density);
         return ArrayUtil.toLocationList(vectorList, world);
     }
+
+    /**
+     * Get a list of vectors that create a filled cube
+     *
+     * @param loc1 The first location of the cube
+     * @param loc2 The second location of the cube
+     * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
+     * @return A new <tt>List</tt> of vectors that create a filled cube
+     */
+    public static List<Vector> getCubeFilledVectors(Location loc1, Location loc2, double density)
+    {
+        List<Vector> list = new ArrayList<>();
+        double startX = loc1.getX();
+        double startY = loc1.getY();
+        double startZ = loc1.getZ();
+        double endX = loc2.getX();
+        double endY = loc2.getY();
+        double endZ = loc2.getZ();
+
+        return xyzLoop(list, startX, startY, startZ, endX, endY, endZ, density);
+    }
+
+    /**
+     * Get a list of locations that create a filled cube
+     *
+     * @param loc1 The first location of the cube
+     * @param loc2 The second location of the cube
+     * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
+     * @return A new <tt>List</tt> of locations that create a filled cube
+     */
+    public static List<Location> getCubeFilledLocations(Location loc1, Location loc2, double density)
+    {
+        World world = loc1.getWorld();
+        List<Vector> vectorList = getCubeOutlineVectors(loc1, loc2, density);
+        return ArrayUtil.toLocationList(vectorList, world);
+    }
+
+    /**
+     * Get a list of vectors that create a hollow cube
+     *
+     * @param loc1 The first location of the cube
+     * @param loc2 The second location of the cube
+     * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
+     * @return A new <tt>List</tt> of vectors that create a hollow cube
+     */
+    public static List<Vector> getCubeHollowVectors(Location loc1, Location loc2, double density)
+    {
+        List<Vector> list = new ArrayList<>();
+
+        double loc1X = loc1.getX();
+        double loc1Y = loc1.getY();
+        double loc1Z = loc1.getZ();
+        double loc2X = loc2.getX();
+        double loc2Y = loc2.getY();
+        double loc2Z = loc2.getZ();
+
+        xyzLoop(list, loc1X, loc2Y, loc2Z, loc1X, loc1Y, loc1Z, density); // +X Side
+        xyzLoop(list, loc2X, loc2Y, loc2Z, loc2X, loc1Y, loc1Z, density); // -X Side
+        xyzLoop(list, loc2X, loc2Y, loc1Z, loc1X, loc1Y, loc1Z, density); // +Z Side
+        xyzLoop(list, loc2X, loc2Y, loc2Z, loc1X, loc1Y, loc2Z, density); // -Z Side
+        xyzLoop(list, loc2X, loc1Y, loc2Z, loc1X, loc1Y, loc1Z, density); // +Y Side
+        xyzLoop(list, loc2X, loc2Y, loc2Z, loc1X, loc2Y, loc1Z, density); // -Z Side
+
+        return list;
+    }
+
+    /**
+     * Get a list of locations that create a hollow cube
+     *
+     * @param loc1 The first location of the cube
+     * @param loc2 The second location of the cube
+     * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
+     * @return A new <tt>List</tt> of locations that create a hollow cube
+     */
+    public static List<Location> getCubeHollowLocations(Location loc1, Location loc2, double density)
+    {
+        World world = loc1.getWorld();
+        List<Vector> vectorList = getCubeHollowVectors(loc1, loc2, density);
+        return ArrayUtil.toLocationList(vectorList, world);
+    }
+
+    /**
+     * Get a list of vectors that create an outline of a cube
+     *
+     * @param loc1 The first location of the cube
+     * @param loc2 The second location of the cube
+     * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
+     * @return A new <tt>List</tt> of vectors that create an outline of a cube
+     */
+    public static List<Vector> getCubeOutlineVectors(Location loc1, Location loc2, double density)
+    {
+
+        List<Vector> list = new ArrayList<>();
+
+        double loc1X = loc1.getX();
+        double loc1Y = loc1.getY();
+        double loc1Z = loc1.getZ();
+        double loc2X = loc2.getX();
+        double loc2Y = loc2.getY();
+        double loc2Z = loc2.getZ();
+
+        // Vertical
+        xyzLoop(list, loc1X, loc2Y, loc1Z, loc1X, loc1Y, loc1Z, density); // +X +Z
+        xyzLoop(list, loc2X, loc2Y, loc1Z, loc2X, loc1Y, loc1Z, density); // -X +Z
+        xyzLoop(list, loc1X, loc2Y, loc2Z, loc1X, loc1Y, loc2Z, density); // +X -Z
+        xyzLoop(list, loc2X, loc2Y, loc2Z, loc2X, loc1Y, loc2Z, density); // -X -Z
+
+        // Top
+        xyzLoop(list, loc2X, loc1Y, loc1Z, loc1X, loc1Y, loc1Z, density); // +Y +Z
+        xyzLoop(list, loc2X, loc1Y, loc2Z, loc1X, loc1Y, loc2Z, density); // +Y -Z
+        xyzLoop(list, loc1X, loc1Y, loc2Z, loc1X, loc1Y, loc1Z, density); // +Y +X
+        xyzLoop(list, loc2X, loc1Y, loc2Z, loc2X, loc1Y, loc1Z, density); // +Y -X
+
+        // Bottom
+        xyzLoop(list, loc2X, loc2Y, loc1Z, loc1X, loc2Y, loc1Z, density); // -Y +Z
+        xyzLoop(list, loc2X, loc2Y, loc2Z, loc1X, loc2Y, loc2Z, density); // -Y -Z
+        xyzLoop(list, loc1X, loc2Y, loc2Z, loc1X, loc2Y, loc1Z, density); // -Y +X
+        xyzLoop(list, loc2X, loc2Y, loc2Z, loc2X, loc2Y, loc1Z, density); // -Y -X
+
+        return list;
+    }
+
+    /**
+     * Get a list of locations that create an outline of a cube
+     *
+     * @param loc1 The first location of the cube
+     * @param loc2 The second location of the cube
+     * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
+     * @return A new <tt>List</tt> of locations that create an outline of a cube
+     */
+    public static List<Location> getCubeOutlineLocations(Location loc1, Location loc2, double density)
+    {
+        World world = loc1.getWorld();
+        List<Vector> vectorList = getCubeOutlineVectors(loc1, loc2, density);
+        return ArrayUtil.toLocationList(vectorList, world);
+    }
 }
