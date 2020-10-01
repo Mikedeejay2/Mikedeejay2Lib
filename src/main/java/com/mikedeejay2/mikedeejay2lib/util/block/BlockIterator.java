@@ -77,6 +77,20 @@ public class BlockIterator
         locs.forEach(location -> runnable.run(location, location.getBlock()));
     }
 
+
+    /**
+     * Iterate through all blocks around a location in a square outline.
+     *
+     * @param loc1 The first location of the cube
+     * @param loc2 The second location of the cube
+     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     */
+    public static void iterateBlocksOutline(Location loc1, Location loc2, BlockRunnable runnable)
+    {
+        List<Location> locs = MathUtil.getCubeOutlineLocations(loc1, loc2, 1);
+        locs.forEach(location -> runnable.run(location, location.getBlock()));
+    }
+
     /**
      * Iterate through all blocks in a sphere.
      *
