@@ -1,7 +1,10 @@
 package com.mikedeejay2.mikedeejay2lib.util.block;
 
+import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 import org.bukkit.Location;
 import org.bukkit.World;
+
+import java.util.List;
 
 public class BlockIterator
 {
@@ -16,28 +19,20 @@ public class BlockIterator
      */
     public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockRunnable runnable)
     {
-        World world = loc.getWorld();
-        int startX = loc.getBlockX() - xWidth;
-        int startY = loc.getBlockY() - yWidth;
-        int startZ = loc.getBlockZ() - zWidth;
-        int endX = loc.getBlockX() + xWidth;
-        int endY = loc.getBlockY() + yWidth;
-        int endZ = loc.getBlockZ() + zWidth;
-        for(int x = startX; x <= endX; x++)
-        {
-            for(int y = startY; y <= endY; y++)
-            {
-                for(int z = startZ; z <= endZ; z++)
-                {
-                    Location location = new Location(world, x, y, z);
-                    runnable.run(location, world.getBlockAt(x, y, z));
-                }
-            }
-        }
+        List<Location> locs = MathUtil.getCubeFilledLocations(loc, xWidth, yWidth, zWidth, 1);
+        locs.forEach(location -> runnable.run(location, location.getBlock()));
     }
 
-    public static void iterateBlocksCircular(Location loc, double xWidth, double yWidth, double zWidth, double density, BlockRunnable runnable)
+    /**
+     * Iterate through all blocks in a sphere.
+     *
+     * @param loc The location in which to iterate blocks around
+     * @param radius The radius of the sphere to iterate through
+     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     */
+    public static void iterateBlocksSphere(Location loc, double radius, BlockRunnable runnable)
     {
-
+        List<Location> locs = MathUtil.getSphereFilledLocations(loc, radius, 1);
+        locs.forEach(location -> runnable.run(location, location.getBlock()));
     }
 }
