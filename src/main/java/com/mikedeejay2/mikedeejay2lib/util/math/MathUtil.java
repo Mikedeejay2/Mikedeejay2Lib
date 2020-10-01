@@ -61,7 +61,7 @@ public final class MathUtil
 
         if(circleRefs.containsKey(angleInRadian))
         {
-            return circleRefs.get(angleInRadian);
+            return circleRefs.get(angleInRadian).multiply(radius).add(center.toVector());
         }
 
         double cos = Math.cos(angleInRadian);
@@ -118,7 +118,10 @@ public final class MathUtil
     {
         if(sphereOutlineRefs.containsKey(density))
         {
-            return sphereOutlineRefs.get(density);
+            List<Vector> list = sphereOutlineRefs.get(density);
+            List<Vector> translatedList = new ArrayList<>();
+            list.forEach(vector -> translatedList.add(vector.multiply(radius)));
+            return ArrayUtil.offsetVectors(translatedList, loc);
         }
 
         List<Vector> list = new ArrayList<>();
@@ -170,7 +173,10 @@ public final class MathUtil
     {
         if(sphereFilledRefs.containsKey(density))
         {
-            return sphereFilledRefs.get(density);
+            List<Vector> list = sphereFilledRefs.get(density);
+            List<Vector> translatedList = new ArrayList<>();
+            list.forEach(vector -> translatedList.add(vector.multiply(radius)));
+            return ArrayUtil.offsetVectors(translatedList, loc);
         }
         List<Vector> list = new ArrayList<>();
         for(double x = -radius; x < radius; x += 1.0 / density)
