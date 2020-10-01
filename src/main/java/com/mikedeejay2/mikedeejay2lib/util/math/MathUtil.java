@@ -33,11 +33,11 @@ public final class MathUtil
      */
     private static List<Vector> xyzLoop(List<Vector> list, double xStart, double yStart, double zStart, double xEnd, double yEnd, double zEnd, double density)
     {
-        for(double x = xStart; x < xEnd; x += 1.0 / density)
+        for(double x = xStart; x <= xEnd; x += 1.0 / density)
         {
-            for(double y = yStart; y < yEnd; y += 1.0 / density)
+            for(double y = yStart; y <= yEnd; y += 1.0 / density)
             {
-                for(double z = zStart; z < zEnd; z += 1.0 / density)
+                for(double z = zStart; z <= zEnd; z += 1.0 / density)
                 {
                     list.add(new Vector(x, y, z));
                 }
@@ -179,11 +179,11 @@ public final class MathUtil
             return ArrayUtil.offsetVectors(translatedList, loc);
         }
         List<Vector> list = new ArrayList<>();
-        for(double x = -radius; x < radius; x += 1.0 / density)
+        for(double x = -radius; x <= radius; x += 1.0 / density)
         {
-            for(double y = -radius; y < radius; y += 1.0 / density)
+            for(double y = -radius; y <= radius; y += 1.0 / density)
             {
-                for(double z = -radius; z < radius; z += 1.0 / density)
+                for(double z = -radius; z <= radius; z += 1.0 / density)
                 {
                     if(!(Math.sqrt((x * x) + (y * y) + (z * z)) <= radius)) continue;
                     list.add(new Vector(x, y, z));
@@ -412,7 +412,7 @@ public final class MathUtil
     public static List<Location> getCubeFilledLocations(Location loc1, Location loc2, double density)
     {
         World world = loc1.getWorld();
-        List<Vector> vectorList = getCubeOutlineVectors(loc1, loc2, density);
+        List<Vector> vectorList = getCubeFilledVectors(loc1, loc2, density);
         return ArrayUtil.toLocationList(vectorList, world);
     }
 
