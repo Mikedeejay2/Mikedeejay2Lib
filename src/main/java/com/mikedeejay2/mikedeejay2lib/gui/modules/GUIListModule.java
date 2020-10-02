@@ -122,7 +122,7 @@ public class GUIListModule extends GUIModule
                 backMeta.setDisplayName(Chat.chat("&fPage " + i));
                 back.setItemMeta(backMeta);
                 gui.setItem(gui.getRows(), col, back);
-                gui.setSlotEvent(gui.getRows(), col, new GUISwitchListPageEvent(plugin));
+                gui.addItemEvent(gui.getRows(), col, new GUISwitchListPageEvent(plugin));
             }
             else if(i > curPage && i - 3 <= curPage)
             {
@@ -133,19 +133,19 @@ public class GUIListModule extends GUIModule
                 forwardMeta.setDisplayName(Chat.chat("&fPage " + i));
                 forward.setItemMeta(forwardMeta);
                 gui.setItem(gui.getRows(), col, forward);
-                gui.setSlotEvent(gui.getRows(), col, new GUISwitchListPageEvent(plugin));
+                gui.addItemEvent(gui.getRows(), col, new GUISwitchListPageEvent(plugin));
             }
         }
 
         if(searchEnabled)
         {
             gui.setItem(gui.getRows(), 1, searchItem);
-            gui.setSlotEvent(gui.getRows(), 1, new GUIListSearchEvent(plugin));
+            gui.addItemEvent(gui.getRows(), 1, new GUIListSearchEvent(plugin));
 
             if(searchMode)
             {
                 gui.setItem(gui.getRows(), 9, searchOffItem);
-                gui.setSlotEvent(gui.getRows(), 9, new GUIListSearchOffEvent(plugin));
+                gui.addItemEvent(gui.getRows(), 9, new GUIListSearchOffEvent(plugin));
             }
         }
     }

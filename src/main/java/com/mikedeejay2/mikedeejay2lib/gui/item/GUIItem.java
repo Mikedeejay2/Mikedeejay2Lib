@@ -1,7 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.gui.item;
 
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUISlotEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIItemEvent;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -11,13 +11,32 @@ import org.bukkit.inventory.meta.ItemMeta;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * Represents an item in a GUI. Holds a few useful things such as:
+ * <ul>
+ *     <li>A base item</li>
+ *     <li>A view item</li>
+ *     <li>Whether or not it's movable in the GUI or not</li>
+ *     <li>GUI Events</li>
+ *     <li>The row it's located on</li>
+ *     <li>The column it's located on</li>
+ * </ul>
+ *
+ * @author Mikedeejay2
+ */
 public class GUIItem
 {
+    // The base item
     protected ItemStack baseItem;
+    // The view item
     protected ItemStack viewItem;
+    // Whether or not this item can be moved
     protected boolean movable;
-    protected GUISlotEvent events;
+    // GUI Events for this item
+    protected GUIItemEvent events;
+    // The row that this item is located on
     protected int row;
+    // The column that this item is located on
     protected int col;
 
     public GUIItem(ItemStack item)
@@ -25,103 +44,217 @@ public class GUIItem
         this.baseItem = item;
         this.viewItem = item;
         this.movable = false;
-        this.events = new GUISlotEvent();
+        this.events = new GUIItemEvent();
     }
 
+    /**
+     * Set the row that this item is on
+     *
+     * @param row The row that this item is on
+     */
     public void setRow(int row)
     {
         this.row = row;
     }
 
+    /**
+     * Set the column that this item is on
+     *
+     * @param col the column that this item is on
+     */
     public void setCol(int col)
     {
         this.col = col;
     }
 
+    /**
+     * Gets the current row in a GUI that this item is on
+     *
+     * @return The row
+     */
     public int getRow()
     {
         return row;
     }
 
+    /**
+     * Gets the current row in a GUI that this item is on
+     *
+     * @return The column
+     */
     public int getCol()
     {
         return col;
     }
 
+    /**
+     * Get the base <tt>ItemStack</tt> of this <tt>GUIItem</tt>
+     *
+     * @return The base item
+     */
     public ItemStack getItemBase()
     {
         return baseItem;
     }
 
+    /**
+     * Get the <tt>ItemStack</tt> of this <tt>GUIItem</tt> (view item)
+     *
+     * @return The requested <tt>ItemStack</tt>
+     */
     public ItemStack getItem()
     {
         return viewItem;
     }
 
+    /**
+     * Set the <tt>ItemStack</tt> that this <tt>GUIItem</tt> stores (modifies
+     * both the base item and the view item)
+     *
+     * @param item The item to set
+     */
     public void setItem(ItemStack item)
     {
         this.baseItem = item;
         this.viewItem = item;
     }
 
+    /**
+     * Set the <tt>ItemStack</tt> for the base item of this <tt>GUIItem</tt>
+     *
+     * @param baseItem Item that will be set to the base item
+     */
     public void setBaseItem(ItemStack baseItem)
     {
         this.baseItem = baseItem;
     }
 
+    /**
+     * Get the view item of this <tt>GUIItem</tt>
+     *
+     * @return The view item
+     */
     public ItemStack getItemView()
     {
         return viewItem;
     }
 
+    /**
+     * Set the <tt>ItemStack</tt> for the view item of this <tt>GUIItem</tt>
+     *
+     * @param viewItem Item that will be set to the view item
+     */
     public void setViewItem(ItemStack viewItem)
     {
         this.viewItem = viewItem;
     }
 
+    /**
+     * Reset the view item to the base item
+     */
     public void resetViewItem()
     {
         this.viewItem = baseItem;
     }
 
+    /**
+     * Returns whether this <tt>GUIItem</tt> is movable or not
+     *
+     * @return Move state
+     */
     public boolean isMovable()
     {
         return movable;
     }
 
+    /**
+     * Set whether this <tt>GUIItem</tt> is movable or not
+     *
+     * @param movable Move state to set this item to
+     */
     public void setMovable(boolean movable)
     {
         this.movable = movable;
     }
 
-    public GUISlotEvent getEvents()
+    /**
+     * Get the <tt>GUIItemEvent</tt> of this item
+     *
+     * @return the item event of this item
+     */
+    public GUIItemEvent getEvents()
     {
         return events;
     }
 
-    public void setEvents(GUISlotEvent events)
+    /**
+     * Set the <tt>GUIItemEvent</tt> for this item
+     *
+     * @param events Events to set this item to use
+     */
+    public void setEvents(GUIItemEvent events)
     {
         this.events = events;
     }
 
+    /**
+     * Add an event to this <tt>GUIItem</tt>
+     *
+     * @param event Event to add
+     */
     public void addEvent(GUIEvent event)
     {
         events.addEvent(event);
     }
 
+    /**
+     * Remove an event via instance
+     *
+     * @param event Event to remove
+     */
     public void removeEvent(GUIEvent event)
     {
         events.removeEvent(event);
     }
 
+    /**
+     * Remove an event via the event's class
+     *
+     * @param eventClass The class of the event to remove
+     */
+    public void removeEvent(Class<? extends GUIEvent> eventClass)
+    {
+        events.removeEvent(eventClass);
+    }
+
+    /**
+     * Returns whether the event instance exists in this <tt>GUIEvent</tt>
+     *
+     * @param event The event to search for
+     * @return Whether the event exists in this item
+     */
     public boolean containsEvent(GUIEvent event)
     {
         return events.containsEvent(event);
     }
 
+    /**
+     * Returns whether an event of a class exists in this <tt>GUIEvent</tt>
+     *
+     * @param eventClass The event class to search for
+     * @return Whether the event exists in this item
+     */
+    public boolean containsEvent(Class<? extends GUIEvent> eventClass)
+    {
+        return events.containsEvent(eventClass);
+    }
+
+    /**
+     * Reset the GUI Events for this item
+     */
     public void resetEvents()
     {
-        this.events = new GUISlotEvent();
+        this.events = new GUIItemEvent();
     }
 
     public ItemMeta getMetaView()

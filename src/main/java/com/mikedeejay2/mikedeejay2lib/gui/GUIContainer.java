@@ -2,7 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUISlotEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIItemEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
@@ -91,7 +91,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     public void clicked(Player player, int row, int col, GUIItem clicked)
     {
         modules.forEach(module -> module.onClickedHead(player, row, col, clicked, this));
-        GUISlotEvent manager = getSlotEvents(row, col);
+        GUIItemEvent manager = getItemEvents(row, col);
         if(manager == null) return;
         manager.execute(player, row, col, clicked, this);
         modules.forEach(module -> module.onClickedTail(player, row, col, clicked, this));
@@ -133,25 +133,25 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         item.setMovable(movable);
     }
 
-    public GUISlotEvent getSlotEvents(int row, int col)
+    public GUIItemEvent getItemEvents(int row, int col)
     {
         GUIItem item = items[--row][--col];
         return item == null ? null : item.getEvents();
     }
 
-    public void setSlotEvents(int row, int col, GUISlotEvent manager)
+    public void setItemEvents(int row, int col, GUIItemEvent manager)
     {
         GUIItem item = items[--row][--col];
         item.setEvents(manager);
     }
 
-    public void setSlotEvent(int row, int col, GUIEvent event)
+    public void addItemEvent(int row, int col, GUIEvent event)
     {
         GUIItem item = items[--row][--col];
         item.addEvent(event);
     }
 
-    public void removeSlotEvent(int row, int col, GUIEvent event)
+    public void removeItemEvent(int row, int col, GUIEvent event)
     {
         GUIItem item = items[--row][--col];
         if(item != null) item.removeEvent(event);
@@ -163,7 +163,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         return item != null && item.containsEvent(event);
     }
 
-    public void removeSlotEvents(int row, int col)
+    public void removeItemEvents(int row, int col)
     {
         GUIItem item = items[--row][--col];
         if(item != null) item.resetEvents();

@@ -10,8 +10,8 @@ import java.util.*;
 /**
  * This Enhanced Yaml class inherits YamlConfiguration and is meant to be
  * a middle layer that adds extra processing and features to the YamlConfiguration
- * class.
- * <br>
+ * class. <p>
+ *
  * The main things that this class does is
  * <ul>
  *     <li>Adds the ability to add comments above keys in a yaml file</li>

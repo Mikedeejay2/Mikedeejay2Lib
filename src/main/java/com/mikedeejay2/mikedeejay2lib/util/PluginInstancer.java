@@ -18,11 +18,6 @@ public abstract class PluginInstancer<P extends PluginBase>
     // The plugin instance
     protected final P plugin;
 
-    /**
-     * Constructor that fills the plugin instance for use.
-     *
-     * @param plugin The plugin instance to use
-     */
     public PluginInstancer(P plugin)
     {
         this.plugin = plugin;

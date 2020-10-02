@@ -32,6 +32,7 @@ public final class Chat extends PluginInstancer<PluginBase>
     }
 
     /**
+     * Format a message using Minecraft's legacy color codes
      *
      * @param message The input string to be formatted
      * @return The string formatted with Minecraft color codes

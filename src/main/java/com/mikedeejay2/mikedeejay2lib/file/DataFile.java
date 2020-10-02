@@ -74,8 +74,8 @@ public abstract class DataFile extends PluginInstancer<PluginBase>
 
     /**
      * Resets this file's data to the default file specified in the jar.
-     * DO NOT use this method if this file does not exist in this plugin's jar.
-     * <br><br>
+     * DO NOT use this method if this file does not exist in this plugin's jar. <p>
+     *
      * This method does the following in order:
      * <ol>
      *      <li>Delete the file from the disk</li>
@@ -95,8 +95,8 @@ public abstract class DataFile extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Resets this file's data to nothing.
-     * <br><br>
+     * Resets this file's data to nothing. <p>
+     *
      * This method does the following in order:
      * <ol>
      *      <li>Delete the file from the disk</li>
@@ -172,8 +172,8 @@ public abstract class DataFile extends PluginInstancer<PluginBase>
     /**
      * Update this file from the jar, keeping existing values but adding any
      * new values that the jar file's version has but the disk's version does
-     * not.
-     * <br>
+     * not. <p>
+     *
      * This is useful for configs, especially when a config is updated so that the
      * user does not have to manually add new keys to the config.
      *

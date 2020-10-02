@@ -6,8 +6,8 @@ import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitTask;
 
 /**
- * EnhancedRunnable does several things on top of BukkitRunnable.
- * <br>
+ * EnhancedRunnable does several things on top of BukkitRunnable. <p>
+ *
  * The features that this class adds is:
  * <ul>
  *     <li>A counter that increments by 1 every run, useful for seeing if this runnable is at a certain amount of runs</li>

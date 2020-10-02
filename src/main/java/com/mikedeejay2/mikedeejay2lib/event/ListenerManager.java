@@ -33,8 +33,8 @@ public class ListenerManager extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Register all added listeners.
-     * <br>
+     * Register all added listeners. <p>
+     *
      * This should only be called once! Add all listeners before running
      * this method.
      */

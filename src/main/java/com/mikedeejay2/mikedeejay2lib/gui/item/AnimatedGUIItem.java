@@ -9,13 +9,30 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A <tt>GUIItem</tt> with the added ability of having animation capabilities. <p>
+ *
+ * <b>IMPORTANT: To use the animation capabilities of this class, <tt>GUIAnimationModule</tt>
+ * must be a module that has been appended to the <tt>GUIContainer</tt>. This is because the
+ * <tt>GUIAnimationModule</tt> adds animation functionality to the GUI while this object is
+ * just some added information to a regular <tt>GUIItem</tt> that gives the information needed
+ * to animate this item.</b>
+ *
+ * @author Mikedeejay2
+ */
 public class AnimatedGUIItem extends GUIItem
 {
+    // The list of AnimationFrames of this item
     protected List<AnimationFrame> frames;
+    // The current frame index of this item
     protected int index;
+    // The current wait time of this item
     protected long wait;
+    // Whether this item's animation will loop or not
     protected boolean loop;
+    // Whether or not it is this item's first run or not
     protected boolean firstRun;
+    // The delay that this item has before its animation begins
     protected long delay;
 
     public AnimatedGUIItem(ItemStack item, boolean loop)
@@ -35,6 +52,16 @@ public class AnimatedGUIItem extends GUIItem
         this.frames = new ArrayList<>();
     }
 
+    /**
+     * Tick this item's animation. Calling this method does not mean that the
+     * animation will progress, it just checks to see whether the animation should
+     * progress. If the animation should progress, it will calculate the frame and
+     * process to land on and animate the current frame.
+     *
+     * @param tickTime The time between the last tick and this tick. Used for calculating framerate
+     * @param gui The GUI that this tick method is being called from
+     * @return Whether the tick updated the animation or not
+     */
     public boolean tick(long tickTime, GUIContainer gui)
     {
         wait += tickTime;
@@ -61,6 +88,13 @@ public class AnimatedGUIItem extends GUIItem
         return true;
     }
 
+    /**
+     * When a new frame should be called, this method runs.
+     * This method does the work for modifying the item to the next frame.
+     *
+     * @param framePass The amount of frames forward the animation to go to
+     * @param gui The GUI that this item exists in
+     */
     private void processFrame(int framePass, GUIContainer gui)
     {
         AnimationFrame frame = frames.get(index);
@@ -87,11 +121,22 @@ public class AnimatedGUIItem extends GUIItem
         index += framePass;
     }
 
+    /**
+     * Process an item frame
+     *
+     * @param frame The AnimationFrame that will be processed
+     */
     private void processItem(AnimationFrame frame)
     {
         setViewItem(frame.getItem());
     }
 
+    /**
+     * Process the movement for a movement frame
+     *
+     * @param frame The AnimationFrame that will be processed
+     * @param gui The gui that the AnimationFrame will move in
+     */
     private void processMovement(AnimationFrame frame, GUIContainer gui)
     {
         boolean moveRelatively = frame.moveRelative();
@@ -162,21 +207,54 @@ public class AnimatedGUIItem extends GUIItem
         }
     }
 
+    /**
+     * Check to see whether a row and column is a valid position in a GUI
+     *
+     * @param row The row to check
+     * @param col The column to check
+     * @param gui The GUI that should be checked
+     * @return Whether the position is valid or not
+     */
     private boolean validCheck(int row, int col, GUIContainer gui)
     {
         return !(row < 1 || col < 1 || row > gui.getRows() || col > gui.getCols());
     }
 
+    /**
+     * Add an item frame to this item
+     *
+     * @param item The item to add to the frame
+     * @param period The time to wait between this frame and the frame after it
+     */
     public void addFrame(ItemStack item, long period)
     {
         frames.add(new AnimationFrame(item, period));
     }
 
+    /**
+     * Add a movement frame to this item
+     *
+     * @param row The row to move the item to
+     * @param col The column to move the item to
+     * @param movementType The type of movement that will be performed when the item is moved
+     * @param relativeMovement Whether or not the movement should move relatively (locally)
+     * @param period The time to wait between this frame and the frame after it
+     */
     public void addFrame(int row, int col, MovementType movementType, boolean relativeMovement, long period)
     {
         frames.add(new AnimationFrame(row, col, movementType, relativeMovement, period));
     }
 
+    /**
+     * Add a movement + item frame to this item
+     *
+     * @param item The item to add to the frame
+     * @param row The row to move the item to
+     * @param col The column to move the item to
+     * @param movementType The type of movement that will be performed when the item is moved
+     * @param relativeMovement Whether or not the movement should move relatively (locally)
+     * @param period The time to wait between this frame and the frame after it
+     */
     public void addFrame(ItemStack item, int row, int col, MovementType movementType, boolean relativeMovement, long period)
     {
         frames.add(new AnimationFrame(item, row, col, movementType, relativeMovement, period));

@@ -9,15 +9,34 @@ import org.bukkit.inventory.ItemStack;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GUISlotEvent
+/**
+ * Holds all <tt>GUIEvents</tt> in a <tt>GUIItem</tt>. This class only serves the purpose
+ * of holding multiple <tt>GUIEvents</tt> in a <tt>GUIItem</tt> and activating the events
+ * when a player clicks on the <tt>GUIItem</tt>.
+ *
+ * @author Mikedeejay2
+ */
+public class GUIItemEvent
 {
+    // A list of GUIEvents that this GUIItemEvent holds
     List<GUIEvent> events;
 
-    public GUISlotEvent()
+    public GUIItemEvent()
     {
         events = new ArrayList<>();
     }
 
+    /**
+     * Called when a player clicks on the parent <tt>GUIItem</tt>. This method iterates
+     * through all of the <tt>GUIEvents</tt> that are held in the <tt>events</tt> list
+     * and runs their <tt>execute()</tt> method.
+     *
+     * @param player The player that clicked the item
+     * @param row The row that the item was clicked on
+     * @param col The column that the item was clicked on
+     * @param clicked the <tt>GUIItem</tt> that was clicked
+     * @param gui The GUI that this event took place in
+     */
     public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui)
     {
         for(GUIEvent event : events)
@@ -26,26 +45,52 @@ public class GUISlotEvent
         }
     }
 
+    /**
+     * Get a list of the events that this object holds
+     *
+     * @return All events being stored
+     */
     public List<GUIEvent> getEvents()
     {
         return events;
     }
 
+    /**
+     * Add a <tt>GUIEvent</tt> to this object that will be activated upon click
+     *
+     * @param event The event to add
+     */
     public void addEvent(GUIEvent event)
     {
         events.add(event);
     }
 
+    /**
+     * Remove an event via instance of the event
+     *
+     * @param event The event to be removed
+     */
     public void removeEvent(GUIEvent event)
     {
         events.remove(event);
     }
 
+    /**
+     * Returns whether this object holds the <tt>GUIEvent</tt>
+     *
+     * @param event The event to check for
+     * @return Whether this object holds the event
+     */
     public boolean containsEvent(GUIEvent event)
     {
         return events.contains(event);
     }
 
+    /**
+     * Remove an event via the event's class
+     *
+     * @param eventClass The class of the event that should be removed
+     */
     public void removeEvent(Class<? extends GUIEvent> eventClass)
     {
         String className = eventClass.getName();
@@ -59,6 +104,12 @@ public class GUISlotEvent
         }
     }
 
+    /**
+     * Returns whether this object holds a <tt>GUIEvent</tt> of the specified class
+     *
+     * @param eventClass The event class to search for
+     * @return Whether this object holds the event
+     */
     public boolean containsEvent(Class<? extends GUIEvent> eventClass)
     {
         String className = eventClass.getName();
