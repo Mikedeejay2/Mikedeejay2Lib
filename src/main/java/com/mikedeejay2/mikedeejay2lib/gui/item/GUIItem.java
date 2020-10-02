@@ -277,6 +277,17 @@ public class GUIItem
         baseItem.setItemMeta(meta);
     }
 
+    public ItemMeta getMeta()
+    {
+        return getMetaView();
+    }
+
+    public void setMeta(ItemMeta meta)
+    {
+        setMetaView(meta);
+        setMetaBase(meta);
+    }
+
     public String getNameView()
     {
         return getMetaView().getDisplayName();
@@ -301,6 +312,17 @@ public class GUIItem
         setMetaBase(meta);
     }
 
+    public String getName()
+    {
+        return getNameView();
+    }
+
+    public void setName(String name)
+    {
+        setNameView(name);
+        setNameBase(name);
+    }
+
     public int getAmountView()
     {
         return viewItem.getAmount();
@@ -321,6 +343,17 @@ public class GUIItem
         baseItem.setAmount(amount);
     }
 
+    public int getAmount()
+    {
+        return getAmountView();
+    }
+
+    public void setAmount(int amount)
+    {
+        setAmountView(amount);
+        setAmountBase(amount);
+    }
+
     public Material getMatView()
     {
         return viewItem.getType();
@@ -339,6 +372,17 @@ public class GUIItem
     public void setMatBase(Material material)
     {
         baseItem.setType(material);
+    }
+
+    public Material getMat()
+    {
+        return getMatView();
+    }
+
+    public void setMat(Material material)
+    {
+        setMatView(material);
+        setMatBase(material);
     }
 
     public List<String> getLoreView()
@@ -365,6 +409,17 @@ public class GUIItem
         setMetaBase(meta);
     }
 
+    public List<String> getLore()
+    {
+        return getLoreView();
+    }
+
+    public void setLore(List<String> lore)
+    {
+        setLoreView(lore);
+        setLoreBase(lore);
+    }
+
     public Map<Enchantment, Integer> getEnchantsView()
     {
         return viewItem.getEnchantments();
@@ -373,6 +428,11 @@ public class GUIItem
     public Map<Enchantment, Integer> getEnchantsBase()
     {
         return baseItem.getEnchantments();
+    }
+
+    public Map<Enchantment, Integer> getEnchants()
+    {
+        return getEnchantsView();
     }
 
     public boolean hasEnchantView(Enchantment enchantment)
@@ -385,6 +445,11 @@ public class GUIItem
         return getMetaBase().hasEnchant(enchantment);
     }
 
+    public boolean hasEnchant(Enchantment enchantment)
+    {
+        return hasEnchantView(enchantment);
+    }
+
     public int getEnchantView(Enchantment enchantment)
     {
         return getMetaView().getEnchantLevel(enchantment);
@@ -393,6 +458,11 @@ public class GUIItem
     public int getEnchantBase(Enchantment enchantment)
     {
         return getMetaBase().getEnchantLevel(enchantment);
+    }
+
+    public int getEnchant(Enchantment enchantment)
+    {
+        return getEnchantView(enchantment);
     }
 
     public void removeEnchantView(Enchantment enchantment)
@@ -409,6 +479,12 @@ public class GUIItem
         setMetaBase(meta);
     }
 
+    public void removeEnchant(Enchantment enchantment)
+    {
+        removeEnchantView(enchantment);
+        removeEnchantBase(enchantment);
+    }
+
     public void addEnchantView(Enchantment enchantment, int level)
     {
         ItemMeta meta = getMetaView();
@@ -421,5 +497,11 @@ public class GUIItem
         ItemMeta meta = getMetaBase();
         meta.addEnchant(enchantment, level, true);
         setMetaBase(meta);
+    }
+
+    public void addEnchant(Enchantment enchantment, int level)
+    {
+        addEnchantView(enchantment, level);
+        addEnchantBase(enchantment, level);
     }
 }
