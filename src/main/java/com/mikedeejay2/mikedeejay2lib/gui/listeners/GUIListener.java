@@ -7,6 +7,7 @@ import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
@@ -30,6 +31,7 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
     @EventHandler
     public void onClick(InventoryClickEvent event)
     {
+        if(event.getAction() == InventoryAction.NOTHING) return;
         Player player = (Player) event.getWhoClicked();
         GUIContainer curGUI = plugin.guiManager().getPlayer(player).getGUI();
         if(curGUI == null) return;
