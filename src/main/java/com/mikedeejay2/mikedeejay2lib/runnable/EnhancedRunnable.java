@@ -42,8 +42,8 @@ public abstract class EnhancedRunnable extends BukkitRunnable
 
     /**
      * Run method. Marked as final because it should not be overridden because it contains functionality
-     * that is required for other parts of this runnable to function. Use onRun() for the same functionality
-     * of a standard BukkitRunnable.
+     * that is required for other parts of this runnable to function. Use {@link EnhancedRunnable#onRun()} for the same functionality
+     * of a standard <tt>BukkitRunnable</tt>.
      * @see EnhancedRunnable#onRun()
      */
     @Override

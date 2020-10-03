@@ -23,7 +23,7 @@ import java.util.UUID;
 public final class ItemCreator
 {
     /**
-     * Create an item based off of several arguments.
+     * Create an item based off of several arguments
      *
      * @param material Material of item
      * @param amount Amount of item
@@ -54,7 +54,7 @@ public final class ItemCreator
     }
 
     /**
-     * Create a Base64 head based off of several arguments.
+     * Create a Base64 head based off of several arguments
      *
      * @param base64Head The base 64 string of the head's texture
      * @param amount Amount of item

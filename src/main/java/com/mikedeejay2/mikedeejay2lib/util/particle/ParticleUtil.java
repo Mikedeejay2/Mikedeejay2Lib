@@ -11,7 +11,7 @@ import org.bukkit.util.Vector;
 /**
  * A util for making particles do specific things
  *
- * @author Mikedeejay2 (I think, I looked at a lot of Spigot resources though)
+ * @author Mikedeejay2 (With the help of Spigot resources)
  */
 public final class ParticleUtil
 {

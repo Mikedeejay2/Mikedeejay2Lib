@@ -24,7 +24,7 @@ public final class FallingBlockUtil
     {
         World world = block.getWorld();
         BlockData blockData = block.getBlockData();
-        Location newLocation = new Location(world, block.getX() + 0.5f, block.getY() + 0.5f, block.getZ() + 0.5f);
+        Location newLocation = new Location(world, block.getX() + 0.5f, block.getY(), block.getZ() + 0.5f);
         block.setType(Material.AIR);
         return world.spawnFallingBlock(newLocation, blockData);
     }

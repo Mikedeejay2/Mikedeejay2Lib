@@ -121,7 +121,7 @@ public final class Chat extends PluginInstancer<PluginBase>
     /**
      * Sends the command sender (player or console) a formatted message
      *
-     * @param sender Input CommandSender that will receive the message
+     * @param sender Input <tt>CommandSender</tt> that will receive the message
      * @param message The message to be printed (will be formatted with colors)
      */
     public void sendMessage(CommandSender sender, String message)
@@ -132,7 +132,7 @@ public final class Chat extends PluginInstancer<PluginBase>
     /**
      * Sends the player a formatted message based off of a lang path
      *
-     * @param sender Input CommandSender that will receive the message
+     * @param sender Input <tt>CommandSender</tt> that will receive the message
      * @param path The lang path
      */
     public void sendMessageLang(CommandSender sender, String path)
@@ -143,7 +143,7 @@ public final class Chat extends PluginInstancer<PluginBase>
     /**
      * Sends the player a formatted message based off of a lang path
      *
-     * @param sender Input CommandSender that will receive the message
+     * @param sender Input <tt>CommandSender</tt> that will receive the message
      * @param prefix A prefix string that will be appended before the lang String
      * @param path The lang path
      */
@@ -163,10 +163,10 @@ public final class Chat extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Converts strings into Bungee API baseComponent arrays
+     * Converts strings into Bungee API <tt>BaseComponent</tt> arrays
      *
      * @param strings The strings that will be converted to base components
-     * @return BaseComponent array of converted strings
+     * @return <tt>BaseComponent</tt> array of converted strings
      */
     public BaseComponent[] getBaseComponentArray(String... strings)
     {
@@ -179,11 +179,11 @@ public final class Chat extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Creates a Bungee API ClickEvent to do something with a command
+     * Creates a Bungee API <tt>ClickEvent</tt> to do something with a command
      *
-     * @param action The ClickEvent Action that should happen on click
-     * @param command The command to be used on the ClickEvent
-     * @return A new click event that can be used with BaseComponents
+     * @param action The <tt>ClickEvent</tt> Action that should happen on click
+     * @param command The command to be used on the <tt>ClickEvent</tt>
+     * @return A new <tt>ClickEvent</tt> that can be used with <tt>BaseComponents</tt>
      */
     public ClickEvent getClickEvent(ClickEvent.Action action, String command)
     {
@@ -191,11 +191,11 @@ public final class Chat extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Creates a Bungee API ClickEvent to do something with a command
+     * Creates a Bungee API <tt>HoverEvent</tt> to do something with a command
      *
-     * @param action The HoverEvent Action to be used when cursor is hovered over applied text
+     * @param action The <tt>HoverEvent</tt> Action to be used when cursor is hovered over applied text
      * @param text The string of text that will be used in the hover event
-     * @return The HoverEvent that was created
+     * @return The <tt>HoverEvent</tt> that was created
      */
     public HoverEvent getHoverEvent(HoverEvent.Action action, String text)
     {
@@ -203,11 +203,11 @@ public final class Chat extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Creates a Bungee API ClickEvent to do something with a command
+     * Creates a Bungee API <tt>HoverEvent</tt> to do something with a command
      *
-     * @param action The HoverEvent Action to be used when cursor is hovered over applied text
+     * @param action The <tt>HoverEvent</tt> Action to be used when cursor is hovered over applied text
      * @param item The item that will be displayed
-     * @return The HoverEvent that was created
+     * @return The <tt>HoverEvent</tt> that was created
      */
     public HoverEvent getHoverEvent(HoverEvent.Action action, ItemStack item)
     {
@@ -215,11 +215,11 @@ public final class Chat extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Creates a Bungee API ClickEvent to do something with a command
+     * Creates a Bungee API <tt>HoverEvent</tt> to do something with a command
      *
-     * @param action The HoverEvent Action to be used when cursor is hovered over applied text
+     * @param action The <tt>HoverEvent</tt> Action to be used when cursor is hovered over applied text
      * @param entity The entity that will be displayed
-     * @return The HoverEvent that was created
+     * @return The <tt>HoverEvent</tt> that was created
      */
     public HoverEvent getHoverEvent(HoverEvent.Action action, org.bukkit.entity.Entity entity)
     {
@@ -227,7 +227,7 @@ public final class Chat extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Creates a Hover Item from an ItemStack
+     * Creates a Hover Item from an <tt>ItemStack</tt>
      *
      * @param item Item to be converted
      * @return HoverEvent Item
@@ -239,6 +239,12 @@ public final class Chat extends PluginInstancer<PluginBase>
         return new Item(itemId, itemAmount, null);
     }
 
+    /**
+     * Get a hover entity based off of a bukkit entity
+     *
+     * @param entity The entity to convert
+     * @return A new Hover Entity
+     */
     public Entity getHoverEntity(org.bukkit.entity.Entity entity)
     {
         String entityType = entity.getType().toString().toLowerCase();
@@ -248,11 +254,11 @@ public final class Chat extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Applies a ClickEvent to an array of BaseComponents
+     * Applies a <tt>ClickEvent</tt> to an array of <tt>BaseComponents</tt>
      *
-     * @param components An array of BaseComponents that will have a ClickEvent applied to them
-     * @param event The ClickEvent to be added to the components
-     * @return The same BaseComponents array but with the click events applied
+     * @param components An array of <tt>BaseComponents</tt> that will have a <tt>ClickEvent</tt> applied to them
+     * @param event The <tt>ClickEvent</tt> to be added to the components
+     * @return The same <tt>BaseComponents</tt> array but with the click events applied
      */
     public BaseComponent[] setClickEvent(BaseComponent[] components, ClickEvent event)
     {
@@ -264,11 +270,11 @@ public final class Chat extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Applies a HoverEvent to an array of BaseComponents
+     * Applies a <tt>HoverEvent</tt> to an array of <tt>BaseComponents</tt>
      *
-     * @param components An array of BaseComponents that will have a HoverEvent applied to them
-     * @param event The HoverEvent to be added to the components
-     * @return The same BaseComponents array but with the hover events applied
+     * @param components An array of <tt>BaseComponents</tt> that will have a <tt>HoverEvent</tt> applied to them
+     * @param event The <tt>HoverEvent</tt> to be added to the components
+     * @return The same <tt>BaseComponents</tt> array but with the hover events applied
      */
     public BaseComponent[] setHoverEvent(BaseComponent[] components, HoverEvent event)
     {
@@ -280,10 +286,10 @@ public final class Chat extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Combines multiple BaseComponent arrays and combines them into 1 larger array
+     * Combines multiple <tt>BaseComponent</tt> arrays and combines them into 1 larger array
      *
-     * @param components An array of BaseComponents arrays that will be combined into one base components array
-     * @return A combined array of all BaseComponents
+     * @param components An array of <tt>BaseComponents</tt> arrays that will be combined into one base components array
+     * @return A combined array of all <tt>BaseComponents</tt>
      */
     public BaseComponent[] combineComponents(BaseComponent[]... components)
     {
@@ -296,7 +302,7 @@ public final class Chat extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Print all BaseComponents to a CommandSender
+     * Print all <tt>BaseComponents</tt> to a CommandSender
      *
      * @param sender The CommandSender that will receive the message
      * @param components An Array of BaseComponents arrays that will be printed, Each BaseComponent array being 1 line
@@ -307,7 +313,7 @@ public final class Chat extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Print all BaseComponents to a Player
+     * Print all <tt>BaseComponents</tt> to a Player
      *
      * @param player The Player that will receive the message
      * @param components An Array of BaseComponents arrays that will be printed, Each BaseComponent array being 1 line
@@ -318,7 +324,7 @@ public final class Chat extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Print all BaseComponents to a CommandSender
+     * Print all <tt>BaseComponents</tt> to a CommandSender
      *
      * @param sender The CommandSender that will receive the message
      * @param type The ChatMessageType to display the components at
@@ -337,7 +343,7 @@ public final class Chat extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Print all BaseComponents to a Player
+     * Print all <tt>BaseComponents</tt> to a Player
      *
      * @param player The Player that will receive the message
      * @param type The ChatMessageType to display the components at

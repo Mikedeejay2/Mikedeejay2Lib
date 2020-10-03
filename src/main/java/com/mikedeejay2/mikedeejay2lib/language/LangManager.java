@@ -36,9 +36,9 @@ public class LangManager extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Set the default lang of the LangManager
+     * Set the default lang of the <tt>LangManager</tt>
      * This only affects the console and depending on the configuration
-     * of the operating system the characters won't show up properly :(
+     * of the operating system the characters won't show up properly
      *
      * @param defaultLang The locale to set the defaultLang to
      */

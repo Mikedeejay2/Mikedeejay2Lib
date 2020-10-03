@@ -1,5 +1,10 @@
 package com.mikedeejay2.mikedeejay2lib.util.head;
 
+/**
+ * A list of Base 64 head Strings that could be used
+ *
+ * @author Mikedeejay2
+ */
 public final class Base64Heads
 {
     // Navigation heads

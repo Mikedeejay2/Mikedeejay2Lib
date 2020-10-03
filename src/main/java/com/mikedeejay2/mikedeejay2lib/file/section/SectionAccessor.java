@@ -107,11 +107,6 @@ public abstract class SectionAccessor<D extends DataFile, T>
      */
     public abstract Map<String, T> getKeyValuePairs(boolean deep);
 
-    /*
-     * Everything below this point is self explanatory.
-     * Sorry for no Javadocs, you should be able to figure it out.
-     */
-
     public abstract boolean getBoolean(String name);
     public abstract int getInt(String name);
     public abstract float getFloat(String name);

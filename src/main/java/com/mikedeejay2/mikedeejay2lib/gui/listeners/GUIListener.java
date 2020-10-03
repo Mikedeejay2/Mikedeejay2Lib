@@ -10,6 +10,11 @@ import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
 
+/**
+ * A listener class that listens for GUI interactions with a <tt>GUIContainer</tt>
+ *
+ * @author Mikedeejay2
+ */
 public class GUIListener extends PluginInstancer<PluginBase> implements Listener
 {
     public GUIListener(PluginBase plugin)
@@ -17,6 +22,11 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
         super(plugin);
     }
 
+    /**
+     * The on click event to detect when a player clicks on a GUI
+     *
+     * @param event The inventory click event to be processed
+     */
     @EventHandler
     public void onClick(InventoryClickEvent event)
     {
@@ -41,6 +51,12 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
         }
     }
 
+    /**
+     * On inventory close. This listener exists to detect whether a player
+     * is in a GUI or not.
+     *
+     * @param event The event to be processed
+     */
     @EventHandler
     public void onClose(InventoryCloseEvent event)
     {

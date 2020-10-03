@@ -12,21 +12,18 @@ import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * Plugin base handles all of the boiler plate stuff for any plugin that uses it.
+ * The plugin base for plugins that use this library plugin.
+ * This plugin base must be used if this library plugin is being used
+ * because many classes in the library require a reference to a PluginBase.
  *
  * @author Mikedeejay2
  */
 public class PluginBase extends JavaPlugin
 {
-    // The Minecraft version array that this server is running on
     protected int[] MCVersion;
-    // The file manager for this plugin
     protected FileManager fileManager;
-    // The lang manager for this plugin
     protected LangManager langManager;
-    // The command manager for this plugin
     protected CommandManager commandManager;
-
     protected Chat chat;
     protected ListenerManager listenerManager;
     protected GUIManager guiManager;
@@ -56,36 +53,71 @@ public class PluginBase extends JavaPlugin
 
     }
 
+    /**
+     * Get the Minecraft server's Minecraft version
+     *
+     * @return The Minecraft version
+     */
     public int[] getMCVersion()
     {
         return MCVersion;
     }
 
+    /**
+     * Get this plugin's file manager
+     *
+     * @return The file manager
+     */
     public FileManager fileManager()
     {
         return fileManager;
     }
 
+    /**
+     * Get this plugin's language manager
+     *
+     * @return The language manager
+     */
     public LangManager langManager()
     {
         return langManager;
     }
 
+    /**
+     * Get this plugin's command manager
+     *
+     * @return The command manager
+     */
     public CommandManager commandManager()
     {
         return commandManager;
     }
 
+    /**
+     * Get this plugin's chat processor
+     *
+     * @return The chat util
+     */
     public Chat chat()
     {
         return chat;
     }
 
+    /**
+     * Get this plugin's listener manager
+     *
+     * @return The listener manager
+     */
     public ListenerManager listenerManager()
     {
         return listenerManager;
     }
 
+    /**
+     * Get this plugin's GUI manager
+     *
+     * @return The GUI manager
+     */
     public GUIManager guiManager()
     {
         return guiManager;
