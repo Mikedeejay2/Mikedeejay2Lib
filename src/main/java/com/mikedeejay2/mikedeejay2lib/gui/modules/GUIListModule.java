@@ -41,13 +41,13 @@ public class GUIListModule extends GUIModule
     private List<GUIItem> endItems;
 
     // The back item that will be used
-    private ItemStack backItem;
+    private GUIItem backItem;
     // The forward item that will be used
-    private ItemStack forwardItem;
+    private GUIItem forwardItem;
     // The search item that will be used
-    private ItemStack searchItem;
+    private GUIItem searchItem;
     // The turn search off item that will be used
-    private ItemStack searchOffItem;
+    private GUIItem searchOffItem;
     // Whether search is allowed or not
     private boolean searchEnabled;
 
@@ -60,10 +60,10 @@ public class GUIListModule extends GUIModule
 
         curPage = 1;
         endItems = new ArrayList<>();
-        this.backItem = ItemCreator.createHeadItem(Base64Heads.HEAD_BACKWARDS_WHITE, 1, GUIContainer.EMPTY_NAME);
-        this.forwardItem = ItemCreator.createHeadItem(Base64Heads.HEAD_FORWARD_WHITE, 1, GUIContainer.EMPTY_NAME);
-        this.searchItem = ItemCreator.createItem(Material.COMPASS, 1, "&f&oSearch list...");
-        this.searchOffItem = ItemCreator.createItem(Material.BOOK, 1, "&f&oTurn off search mode");
+        this.backItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.HEAD_BACKWARDS_WHITE, 1, GUIContainer.EMPTY_NAME));
+        this.forwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.HEAD_FORWARD_WHITE, 1, GUIContainer.EMPTY_NAME));
+        this.searchItem = new GUIItem(ItemCreator.createItem(Material.COMPASS, 1, "&f&oSearch list..."));
+        this.searchOffItem = new GUIItem(ItemCreator.createItem(Material.BOOK, 1, "&f&oTurn off search mode"));
 
         this.searchEnabled = false;
     }
@@ -168,23 +168,15 @@ public class GUIListModule extends GUIModule
             if(i < curPage && i + 3 >= curPage)
             {
                 int col = (i - curPage) + 5;
-                ItemStack back = backItem.clone();
-                back.setAmount(i <= 64 ? i : 1);
-                ItemMeta backMeta = back.getItemMeta();
-                backMeta.setDisplayName(Chat.chat("&fPage " + i));
-                back.setItemMeta(backMeta);
-                gui.setItem(gui.getRows(), col, back);
+                backItem.setNameView(Chat.chat("&fPage " + i));
+                gui.setItem(gui.getRows(), col, backItem);
                 gui.addEvent(gui.getRows(), col, new GUISwitchListPageEvent(plugin));
             }
             else if(i > curPage && i - 3 <= curPage)
             {
                 int col = (i - curPage) + 5;
-                ItemStack forward = forwardItem.clone();
-                forward.setAmount(i <= 64 ? i : 1);
-                ItemMeta forwardMeta = forward.getItemMeta();
-                forwardMeta.setDisplayName(Chat.chat("&fPage " + i));
-                forward.setItemMeta(forwardMeta);
-                gui.setItem(gui.getRows(), col, forward);
+                forwardItem.setNameView(Chat.chat("&fPage " + i));
+                gui.setItem(gui.getRows(), col, forwardItem);
                 gui.addEvent(gui.getRows(), col, new GUISwitchListPageEvent(plugin));
             }
         }
@@ -328,7 +320,7 @@ public class GUIListModule extends GUIModule
      *
      * @return The back item
      */
-    public ItemStack getBackItem()
+    public GUIItem getBackItem()
     {
         return backItem;
     }
@@ -338,7 +330,7 @@ public class GUIListModule extends GUIModule
      *
      * @param backItem The new back item
      */
-    public void setBackItem(ItemStack backItem)
+    public void setBackItem(GUIItem backItem)
     {
         this.backItem = backItem;
     }
@@ -348,7 +340,7 @@ public class GUIListModule extends GUIModule
      *
      * @return The forward button
      */
-    public ItemStack getForwardItem()
+    public GUIItem getForwardItem()
     {
         return forwardItem;
     }
@@ -358,7 +350,7 @@ public class GUIListModule extends GUIModule
      *
      * @param forwardItem The new forward button
      */
-    public void setForwardItem(ItemStack forwardItem)
+    public void setForwardItem(GUIItem forwardItem)
     {
         this.forwardItem = forwardItem;
     }
@@ -398,7 +390,7 @@ public class GUIListModule extends GUIModule
      *
      * @return The search item
      */
-    public ItemStack getSearchItem()
+    public GUIItem getSearchItem()
     {
         return searchItem;
     }
@@ -408,7 +400,7 @@ public class GUIListModule extends GUIModule
      *
      * @param searchItem The new search item
      */
-    public void setSearchItem(ItemStack searchItem)
+    public void setSearchItem(GUIItem searchItem)
     {
         this.searchItem = searchItem;
     }
@@ -418,7 +410,7 @@ public class GUIListModule extends GUIModule
      *
      * @return The search off item
      */
-    public ItemStack getSearchOffItem()
+    public GUIItem getSearchOffItem()
     {
         return searchOffItem;
     }
@@ -428,7 +420,7 @@ public class GUIListModule extends GUIModule
      *
      * @param searchOffItem The new search off item
      */
-    public void setSearchOffItem(ItemStack searchOffItem)
+    public void setSearchOffItem(GUIItem searchOffItem)
     {
         this.searchOffItem = searchOffItem;
     }

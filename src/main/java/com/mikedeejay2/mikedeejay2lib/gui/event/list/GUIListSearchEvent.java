@@ -7,6 +7,11 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIListModule;
 import org.bukkit.entity.Player;
 
+/**
+ * An event that prompts the user to search for something in a list GUI
+ *
+ * @author Mikedeejay2
+ */
 public class GUIListSearchEvent extends GUIEvent
 {
     public GUIListSearchEvent(PluginBase plugin)

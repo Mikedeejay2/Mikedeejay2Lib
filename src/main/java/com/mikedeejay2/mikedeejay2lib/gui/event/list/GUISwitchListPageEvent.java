@@ -7,6 +7,11 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIListModule;
 import org.bukkit.entity.Player;
 
+/**
+ * An event that changes the current page of a list
+ *
+ * @author Mikedeejay2
+ */
 public class GUISwitchListPageEvent extends GUIEvent
 {
     public GUISwitchListPageEvent(PluginBase plugin)

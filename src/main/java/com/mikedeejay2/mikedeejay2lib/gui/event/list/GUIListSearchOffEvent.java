@@ -8,6 +8,11 @@ import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIListModule;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
+/**
+ * Event that disables search mode on the player's current GUI
+ *
+ * @author Mikedeejay2
+ */
 public class GUIListSearchOffEvent extends GUIEvent
 {
     public GUIListSearchOffEvent(PluginBase plugin)

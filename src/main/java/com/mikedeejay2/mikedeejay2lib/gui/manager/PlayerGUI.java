@@ -6,6 +6,10 @@ import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
+
 /**
  * An object that holds a player's relevant GUI information about the
  * current GUI that the player is currently in and whether they are in
@@ -15,6 +19,8 @@ import org.bukkit.scheduler.BukkitRunnable;
  */
 public class PlayerGUI extends PluginInstancer<PluginBase>
 {
+    // The map of NavigationSystems of this player
+    protected Map<String, NavigationSystem> naviSystems;
     // The player's current GUIContainer
     protected GUIContainer gui;
     // The player of this PlayerGUI
@@ -28,6 +34,7 @@ public class PlayerGUI extends PluginInstancer<PluginBase>
         this.player = player;
         this.gui = null;
         this.guiOpened = false;
+        this.naviSystems = new HashMap<>();
     }
 
     /**
@@ -107,5 +114,33 @@ public class PlayerGUI extends PluginInstancer<PluginBase>
     public boolean isGuiOpened()
     {
         return guiOpened;
+    }
+
+    /**
+     * Get a <tt>NavigationSystem</tt> for this player. This
+     * method will never return null, if the <tt>NavigationSystem</tt>
+     * doesn't exist it will be made
+     *
+     * @param navigationID The ID of the <tt>NavigationSystem</tt> to get
+     * @return The requested <tt>NavigationSystem</tt>
+     */
+    public NavigationSystem getNaviSystem(String navigationID)
+    {
+        naviCheck(navigationID);
+        return naviSystems.get(navigationID);
+    }
+
+    /**
+     * Check whether a navigation system exists for this player.
+     * If a system doesn't exist with the requested ID, a system will be
+     * created with that ID. {@link PlayerGUI#getNaviSystem(String)} already
+     * calls this method.
+     *
+     * @param navigationID The navigation ID to check for
+     */
+    public void naviCheck(String navigationID)
+    {
+        if(naviSystems.containsKey(navigationID)) return;
+        naviSystems.put(navigationID, new NavigationSystem(player, navigationID));
     }
 }
