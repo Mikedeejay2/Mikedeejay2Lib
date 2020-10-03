@@ -42,8 +42,6 @@ public class PluginBase extends JavaPlugin
         this.listenerManager = new ListenerManager(this);
         this.guiManager = new GUIManager(this);
 
-
-
         this.getServer().getPluginManager().registerEvents(new GUIListener(this), this);
     }
 
