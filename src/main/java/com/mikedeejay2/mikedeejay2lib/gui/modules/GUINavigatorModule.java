@@ -21,9 +21,13 @@ public class GUINavigatorModule extends GUIModule
     // The ID of the Navigator
     protected String navigationID;
 
+    // The valid back item
     protected GUIItem validBackItem;
+    // The valid forward item
     protected GUIItem validForwardItem;
+    // The invalid back item
     protected GUIItem invalidBackItem;
+    // The invalid forward item
     protected GUIItem invalidForwardItem;
 
     public GUINavigatorModule(PluginBase plugin, String navigationID)
