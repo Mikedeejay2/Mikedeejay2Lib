@@ -5,6 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIItemEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
+import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import com.mikedeejay2.mikedeejay2lib.util.array.ArrayUtil;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
@@ -138,6 +139,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public void update(Player player)
     {
+        long time = System.nanoTime();
         modules.forEach(module -> module.onUpdateHead(player, this));
         int newInvRows = Math.min(inventoryRows, MAX_INVENTORY_ROWS);
 
@@ -152,6 +154,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
 
         for(GUILayer layer : layers)
         {
+            if(!layer.isVisible()) continue;
             int curRowOffset = rowOffset;
             int curColOffset = colOffset;
             if(layer.isOverlay())
@@ -167,7 +170,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
                     GUIItem guiItem = layer.getItem(row + 1, col + 1);
                     if(guiItem == null)
                     {
-                        if(!defaultMoveState && inventory.getItem(invSlot).equals(EMPTY_STACK))
+                        if(layer.getDefaultMoveState() && EMPTY_STACK.equals(inventory.getItem(invSlot)))
                         {
                             inventory.setItem(invSlot, null);
                         }
@@ -188,6 +191,10 @@ public class GUIContainer extends PluginInstancer<PluginBase>
             }
         }
         modules.forEach(module -> module.onUpdateTail(player, this));
+        long time2 = System.nanoTime();
+        double finalTime = (time2 - time)/1000000.0;
+        plugin.chat().debug("Update took: " + finalTime + "ms");
+        plugin.chat().debug("GUI would be able to update " + (50.0 / finalTime) + " times a tick");
     }
 
     /**

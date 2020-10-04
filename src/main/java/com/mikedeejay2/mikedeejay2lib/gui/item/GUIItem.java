@@ -542,6 +542,8 @@ public class GUIItem implements Cloneable
         }
         newItem.setBaseItem(newItem.getItemBase().clone());
         newItem.setViewItem(newItem.getItemView().clone());
+
+        newItem.setEvents(newItem.getEvents().clone());
         return newItem;
     }
 }

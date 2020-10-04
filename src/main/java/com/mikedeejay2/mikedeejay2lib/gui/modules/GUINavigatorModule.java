@@ -38,7 +38,9 @@ public class GUINavigatorModule extends GUIModule
         this.navigationID = navigationID;
 
         this.validBackItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_WHITE, 1, "&fBack"));
+        validBackItem.addEvent(new GUINavBackEvent(plugin));
         this.validForwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_WHITE, 1, "&fForward"));
+        validForwardItem.addEvent(new GUINavForwardEvent(plugin));
         this.invalidBackItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_LIGHT_GRAY, 1, "&7Back"));
         this.invalidForwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_LIGHT_GRAY, 1, "&7Forward"));
     }
@@ -53,7 +55,7 @@ public class GUINavigatorModule extends GUIModule
     public void onUpdateHead(Player player, GUIContainer gui)
     {
         NavigationSystem system = plugin.guiManager().getPlayer(player).getNaviSystem(navigationID);
-        GUILayer layer = gui.getLayer("navigation", true);
+        GUILayer layer = gui.getLayer("overlay", true);
 
         if(system.hasBack())
         {
@@ -62,7 +64,6 @@ public class GUINavigatorModule extends GUIModule
             else if(backAmount > 64) { backAmount = 64; }
             validBackItem.setAmountView(backAmount);
             layer.setItem(1, 1, validBackItem);
-            layer.addEvent(1, 1, new GUINavBackEvent(plugin));
         }
         else
         {
@@ -75,7 +76,6 @@ public class GUINavigatorModule extends GUIModule
             else if(forwardAmount > 64) { forwardAmount = 64; }
             validForwardItem.setAmountView(forwardAmount);
             layer.setItem(1, 9, validForwardItem);
-            layer.addEvent(1, 9, new GUINavForwardEvent(plugin));
         }
         else
         {

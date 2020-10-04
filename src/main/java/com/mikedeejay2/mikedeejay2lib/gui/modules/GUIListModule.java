@@ -63,8 +63,12 @@ public class GUIListModule extends GUIModule
         endItems = new ArrayList<>();
         this.backItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_BACKWARD_WHITE, 1, GUIContainer.EMPTY_NAME));
         this.forwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_FORWARD_WHITE, 1, GUIContainer.EMPTY_NAME));
+        backItem.addEvent(new GUISwitchListPageEvent(plugin));
+        forwardItem.addEvent(new GUISwitchListPageEvent(plugin));
         this.searchItem = new GUIItem(ItemCreator.createItem(Material.COMPASS, 1, "&f&oSearch list..."));
         this.searchOffItem = new GUIItem(ItemCreator.createItem(Material.BOOK, 1, "&f&oTurn off search mode"));
+        searchOffItem.addEvent(new GUIListSearchOffEvent(plugin));
+        searchItem.addEvent(new GUIListSearchEvent(plugin));
 
         this.searchEnabled = false;
     }
@@ -164,14 +168,18 @@ public class GUIListModule extends GUIModule
 
         int amountOfPages = (int)Math.ceil((pageList.size() + endItems.size()) / ((layer.getRows() - 2.0f) * layer.getCols()));
 
+        for(int i = 2; i <= 8; i++)
+        {
+            layer.removeItem(layer.getRows(), i);
+        }
+
         for(int i = 1; i <= amountOfPages; i++)
         {
-            if(i == curPage) continue;
+            if(i == curPage || i > curPage + 3 || i < curPage - 3) continue;
             if(i < curPage && i + 3 >= curPage)
             {
                 int col = (i - curPage) + 5;
                 GUIItem curItem = backItem.clone();
-                curItem.addEvent(new GUISwitchListPageEvent(plugin));
                 curItem.setNameView(Chat.chat("&fPage " + i));
                 layer.setItem(layer.getRows(), col, curItem);
             }
@@ -179,7 +187,6 @@ public class GUIListModule extends GUIModule
             {
                 int col = (i - curPage) + 5;
                 GUIItem curItem = forwardItem.clone();
-                curItem.addEvent(new GUISwitchListPageEvent(plugin));
                 curItem.setNameView(Chat.chat("&fPage " + i));
                 layer.setItem(layer.getRows(), col, curItem);
             }
@@ -188,12 +195,10 @@ public class GUIListModule extends GUIModule
         if(searchEnabled)
         {
             layer.setItem(layer.getRows(), 1, searchItem);
-            layer.addEvent(layer.getRows(), 1, new GUIListSearchEvent(plugin));
 
             if(searchMode)
             {
                 layer.setItem(layer.getRows(), 9, searchOffItem);
-                layer.addEvent(layer.getRows(), 9, new GUIListSearchOffEvent(plugin));
             }
         }
     }
