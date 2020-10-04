@@ -5,10 +5,9 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIItemEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
-import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
-import com.mikedeejay2.mikedeejay2lib.util.array.ArrayUtil;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -139,7 +138,8 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public void update(Player player)
     {
-        long time = System.nanoTime();
+        DebugTimer timer = new DebugTimer("Update");
+
         modules.forEach(module -> module.onUpdateHead(player, this));
         int newInvRows = Math.min(inventoryRows, MAX_INVENTORY_ROWS);
 
@@ -162,11 +162,12 @@ public class GUIContainer extends PluginInstancer<PluginBase>
                 curRowOffset = 0;
                 curColOffset = 0;
             }
+            int invSlot = -1;
             for(int row = curRowOffset; row < newInvRows; row++)
             {
                 for(int col = curColOffset; col < MAX_INVENTORY_COLS; col++)
                 {
-                    int invSlot = getSlotFromRowCol(row, col);
+                    ++invSlot;
                     GUIItem guiItem = layer.getItem(row + 1, col + 1);
                     if(guiItem == null)
                     {
@@ -177,13 +178,12 @@ public class GUIContainer extends PluginInstancer<PluginBase>
                         continue;
                     }
                     ItemStack itemStack = guiItem.getItem();
-                    boolean movable = guiItem.isMovable();
 
                     if(itemStack != null)
                     {
                         inventory.setItem(invSlot, itemStack);
                     }
-                    else if(movable && inventory.getItem(invSlot).equals(EMPTY_STACK))
+                    else if(guiItem.isMovable() && EMPTY_STACK.equals(inventory.getItem(invSlot)))
                     {
                         inventory.setItem(invSlot, null);
                     }
@@ -191,10 +191,8 @@ public class GUIContainer extends PluginInstancer<PluginBase>
             }
         }
         modules.forEach(module -> module.onUpdateTail(player, this));
-        long time2 = System.nanoTime();
-        double finalTime = (time2 - time)/1000000.0;
-        plugin.chat().debug("Update took: " + finalTime + "ms");
-        plugin.chat().debug("GUI would be able to update " + (50.0 / finalTime) + " times a tick");
+
+        timer.printReport();
     }
 
     /**
