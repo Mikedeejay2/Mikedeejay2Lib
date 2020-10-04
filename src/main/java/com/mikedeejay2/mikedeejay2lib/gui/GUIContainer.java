@@ -27,8 +27,10 @@ import java.util.List;
  */
 public class GUIContainer extends PluginInstancer<PluginBase>
 {
+    // The default (Minecraft) amount of inventory rows
+    public static final int MAX_INVENTORY_ROWS = 6;
     // The default (Minecraft) amount of inventory columns
-    protected static final int INVENTORY_COLS = 9;
+    public static final int MAX_INVENTORY_COLS = 9;
     // An empty name so that items that shouldn't have a title have the smallest
     // title possible for Minecraft (Because you can't specify no specify)
     public static final String EMPTY_NAME = "§7";
@@ -42,23 +44,65 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     protected int inventorySlots;
     // The amount of rows in this GUI
     protected int inventoryRows;
-    // The 2D array of items that this GUI displays
-    protected GUIItem[][] items;
+    // The amount of columns in this GUI
+    protected int inventoryCols;
+    // The layers of this GUI
+    protected List<GUILayer> layers;
     // The list of GUIModules that this GUI contains
     protected List<GUIModule> modules;
     // The default move state of this GUI
     protected boolean defaultMoveState;
+    // The offset of the row
+    protected int rowOffset;
+    // The offset of the column
+    protected int colOffset;
 
+    /**
+     * Create a GUI of a regular size.
+     *
+     * @param plugin The plugin that this GUI is created by
+     * @param inventoryName The name of this GUI
+     * @param inventoryRows The amount of inventory rows of this GUI. Max amount: 6
+     */
     public GUIContainer(PluginBase plugin, String inventoryName, int inventoryRows)
     {
         super(plugin);
         this.EMPTY_STACK = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1 , EMPTY_NAME);
         this.inventoryName = Chat.chat(inventoryName);
-        this.inventorySlots = inventoryRows * INVENTORY_COLS;
+        if(inventoryRows > MAX_INVENTORY_ROWS) inventoryRows = MAX_INVENTORY_ROWS;
+        this.inventorySlots = inventoryRows * MAX_INVENTORY_COLS;
         this.inventoryRows = inventoryRows;
-        this.items = new GUIItem[inventoryRows][INVENTORY_COLS];
+        this.inventoryCols = MAX_INVENTORY_COLS;
+        this.layers = new ArrayList<>();
         this.modules = new ArrayList<>();
         this.defaultMoveState = false;
+        rowOffset = 0;
+        colOffset = 0;
+
+        inventory = Bukkit.createInventory(null, inventorySlots, this.inventoryName);
+    }
+
+    /**
+     * Create a GUI of a large size. Note that to travel the GUI you must use a <tt>GUIScrollerModule</tt>
+     *
+     * @param plugin The plugin that this GUI is created by
+     * @param inventoryName The name of this GUI
+     * @param inventoryRows The amount of inventory rows of this GUI
+     * @param inventoryCols The amount of inventory columns of this GUI
+     */
+    public GUIContainer(PluginBase plugin, String inventoryName, int inventoryRows, int inventoryCols)
+    {
+        super(plugin);
+        this.EMPTY_STACK = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1 , EMPTY_NAME);
+        this.inventoryName = Chat.chat(inventoryName);
+        this.inventorySlots = Math.min(inventoryRows * MAX_INVENTORY_COLS, MAX_INVENTORY_ROWS * MAX_INVENTORY_COLS);
+        this.inventoryRows = inventoryRows;
+        this.inventoryCols = inventoryCols;
+        this.layers = new ArrayList<>();
+        this.modules = new ArrayList<>();
+        this.defaultMoveState = false;
+        rowOffset = 0;
+        colOffset = 0;
 
         inventory = Bukkit.createInventory(null, inventorySlots, this.inventoryName);
     }
@@ -95,27 +139,51 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     public void update(Player player)
     {
         modules.forEach(module -> module.onUpdateHead(player, this));
-        for(int row = 0; row < inventoryRows; row++)
+        int newInvRows = Math.min(inventoryRows, MAX_INVENTORY_ROWS);
+
+        for(int row = 0; row < newInvRows; row++)
         {
-            for(int col = 0; col < INVENTORY_COLS; col++)
+            for(int col = 0; col < MAX_INVENTORY_COLS; col++)
             {
                 int invSlot = getSlotFromRowCol(row, col);
-                GUIItem guiItem = items[row][col];
-                if(guiItem == null)
-                {
-                    if(!defaultMoveState) inventory.setItem(invSlot, EMPTY_STACK);
-                    continue;
-                }
-                ItemStack itemStack = guiItem.getItem();
-                boolean movable = guiItem.isMovable();
+                inventory.setItem(invSlot, EMPTY_STACK);
+            }
+        }
 
-                if(itemStack != null)
+        for(GUILayer layer : layers)
+        {
+            int curRowOffset = rowOffset;
+            int curColOffset = colOffset;
+            if(layer.isOverlay())
+            {
+                curRowOffset = 0;
+                curColOffset = 0;
+            }
+            for(int row = curRowOffset; row < newInvRows; row++)
+            {
+                for(int col = curColOffset; col < MAX_INVENTORY_COLS; col++)
                 {
-                    inventory.setItem(invSlot, itemStack);
-                }
-                else if(!movable)
-                {
-                    inventory.setItem(invSlot, EMPTY_STACK);
+                    int invSlot = getSlotFromRowCol(row, col);
+                    GUIItem guiItem = layer.getItem(row + 1, col + 1);
+                    if(guiItem == null)
+                    {
+                        if(!defaultMoveState && inventory.getItem(invSlot).equals(EMPTY_STACK))
+                        {
+                            inventory.setItem(invSlot, null);
+                        }
+                        continue;
+                    }
+                    ItemStack itemStack = guiItem.getItem();
+                    boolean movable = guiItem.isMovable();
+
+                    if(itemStack != null)
+                    {
+                        inventory.setItem(invSlot, itemStack);
+                    }
+                    else if(movable && inventory.getItem(invSlot).equals(EMPTY_STACK))
+                    {
+                        inventory.setItem(invSlot, null);
+                    }
                 }
             }
         }
@@ -140,21 +208,6 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Set an item to a new item in the GUI
-     *
-     * @param row Row that should be set
-     * @param col Column that should be set
-     * @param material The material of the item
-     * @param amount The amount of the item
-     * @param displayName The display of the new item
-     * @param loreString The lores of the item
-     */
-    public void setItem(int row, int col, Material material, int amount, String displayName, String... loreString)
-    {
-        setItem(row, col, ItemCreator.createItem(material, amount, displayName, loreString));
-    }
-
-    /**
      * Remove an item from the GUI based on a row and a column
      *
      * @param row Row that should be removed
@@ -162,7 +215,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public void removeItem(int row, int col)
     {
-        setItem(row, col, (GUIItem)null);
+        setItem(row, col, null);
     }
 
     /**
@@ -175,33 +228,6 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         int row = item.getRow();
         int col = item.getCol();
         removeItem(row, col);
-    }
-
-    /**
-     * Set an item using a base64 head string
-     *
-     * @param row Row that should be set
-     * @param col Column that should be set
-     * @param headStr The base 64 head string that should be used
-     * @param amount The amount of the item
-     * @param displayName The display name of the item
-     * @param loreString The lore strings of the item
-     */
-    public void setItem(int row, int col, String headStr, int amount, String displayName, String... loreString)
-    {
-        setItem(row, col, ItemCreator.createHeadItem(headStr, amount, displayName, loreString));
-    }
-
-    /**
-     * Set an item from an <tt>ItemStack</tt>
-     *
-     * @param row Row that should be set
-     * @param col Column that should be set
-     * @param stack The <tt>ItemStack</tt> to set the slot to
-     */
-    public void setItem(int row, int col, ItemStack stack)
-    {
-        setItem(row, col, new GUIItem(stack));
     }
 
     /**
@@ -218,7 +244,8 @@ public class GUIContainer extends PluginInstancer<PluginBase>
             item.setRow(row);
             item.setCol(col);
         }
-        items[--row][--col] = item;
+        GUILayer layer = getLayer(0);
+        layer.setItem(row, col, item);
     }
 
     /**
@@ -230,8 +257,16 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public void setMoveState(int row, int col, boolean movable)
     {
-        GUIItem item = items[--row][--col];
-        item.setMovable(movable);
+        for(int i = layers.size() - 1; i >= 0; i--)
+        {
+            GUILayer layer = getLayer(i);
+            GUIItem item = layer.getItem(row, col);
+            if(item != null)
+            {
+                item.setMovable(true);
+                return;
+            }
+        }
     }
 
     /**
@@ -243,8 +278,13 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public GUIItemEvent getItemEvents(int row, int col)
     {
-        GUIItem item = items[--row][--col];
-        return item == null ? null : item.getEvents();
+        for(int i = layers.size() - 1; i >= 0; i--)
+        {
+            GUILayer layer = getLayer(i);
+            GUIItem item = layer.getItem(row, col);
+            if(item != null) return item.getEvents();
+        }
+        return null;
     }
 
     /**
@@ -256,8 +296,16 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public void setItemEvents(int row, int col, GUIItemEvent events)
     {
-        GUIItem item = items[--row][--col];
-        item.setEvents(events);
+        for(int i = layers.size() - 1; i >= 0; i--)
+        {
+            GUILayer layer = getLayer(i);
+            GUIItem item = layer.getItem(row, col);
+            if(item != null)
+            {
+                item.setEvents(events);
+                return;
+            }
+        }
     }
 
     /**
@@ -269,8 +317,16 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public void addEvent(int row, int col, GUIEvent event)
     {
-        GUIItem item = items[--row][--col];
-        item.addEvent(event);
+        for(int i = layers.size() - 1; i >= 0; i--)
+        {
+            GUILayer layer = getLayer(i);
+            GUIItem item = layer.getItem(row, col);
+            if(item != null)
+            {
+                item.addEvent(event);
+                return;
+            }
+        }
     }
 
     /**
@@ -282,8 +338,16 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public void removeEvent(int row, int col, GUIEvent event)
     {
-        GUIItem item = items[--row][--col];
-        if(item != null) item.removeEvent(event);
+        for(int i = layers.size() - 1; i >= 0; i--)
+        {
+            GUILayer layer = getLayer(i);
+            GUIItem item = layer.getItem(row, col);
+            if(item != null)
+            {
+                item.removeEvent(event);
+                return;
+            }
+        }
     }
 
     /**
@@ -295,8 +359,16 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public void removeEvent(int row, int col, Class<? extends GUIEvent> eventClass)
     {
-        GUIItem item = items[--row][--col];
-        if(item != null) item.removeEvent(eventClass);
+        for(int i = layers.size() - 1; i >= 0; i--)
+        {
+            GUILayer layer = getLayer(i);
+            GUIItem item = layer.getItem(row, col);
+            if(item != null)
+            {
+                item.removeEvent(eventClass);
+                return;
+            }
+        }
     }
 
     /**
@@ -309,8 +381,13 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public boolean doesSlotContainEvent(int row, int col, GUIEvent event)
     {
-        GUIItem item = items[--row][--col];
-        return item != null && item.containsEvent(event);
+        for(int i = layers.size() - 1; i >= 0; i--)
+        {
+            GUILayer layer = getLayer(i);
+            GUIItem item = layer.getItem(row, col);
+            if(item != null) return item.containsEvent(event);
+        }
+        return false;
     }
 
     /**
@@ -323,8 +400,13 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public boolean doesSlotContainEvent(int row, int col, Class<? extends GUIEvent> eventClass)
     {
-        GUIItem item = items[--row][--col];
-        return item != null && item.containsEvent(eventClass);
+        for(int i = layers.size() - 1; i >= 0; i--)
+        {
+            GUILayer layer = getLayer(i);
+            GUIItem item = layer.getItem(row, col);
+            if(item != null) return item.containsEvent(eventClass);
+        }
+        return false;
     }
 
     /**
@@ -335,8 +417,16 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public void removeItemEvents(int row, int col)
     {
-        GUIItem item = items[--row][--col];
-        if(item != null) item.resetEvents();
+        for(int i = layers.size() - 1; i >= 0; i--)
+        {
+            GUILayer layer = getLayer(i);
+            GUIItem item = layer.getItem(row, col);
+            if(item != null)
+            {
+                item.resetEvents();
+                return;
+            }
+        }
     }
 
     /**
@@ -348,24 +438,49 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public boolean canSlotBeMoved(int row, int col)
     {
-        GUIItem item = items[--row][--col];
-        return item == null ? defaultMoveState : item.isMovable();
+        for(int i = layers.size() - 1; i >= 0; i--)
+        {
+            GUILayer layer = getLayer(i);
+            GUIItem item = layer.getItem(row, col);
+            if(item != null) return item.isMovable();
+        }
+        return defaultMoveState;
     }
 
     /**
-     * Swap the items between the first and second slot
+     * Returns whether an item exists in a slot
      *
-     * @param row Row 1
-     * @param col Column 1
-     * @param newRow Row 2
-     * @param newCol Column 2
+     * @param row The row to check
+     * @param col The column to check
+     * @return Whether the item exists or not
      */
-    public void swapItems(int row, int col, int newRow, int newCol)
+    public boolean itemExists(int row, int col)
     {
-        --newRow; --newCol; --row; --col;
-        GUIItem itemToMove = items[row][col];
-        items[row][col] = items[newRow][newCol];
-        items[newRow][newCol] = itemToMove;
+        for(int i = layers.size() - 1; i >= 0; i--)
+        {
+            GUILayer layer = getLayer(i);
+            GUIItem item = layer.getItem(row, col);
+            if(item != null) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get an item from a slot
+     *
+     * @param row The row to get
+     * @param col The column to get
+     * @return The <tt>GUIItem</tt> that is contained in that slot
+     */
+    public GUIItem getItem(int row, int col)
+    {
+        for(int i = layers.size() - 1; i >= 0; i--)
+        {
+            GUILayer layer = getLayer(i);
+            GUIItem item = layer.getItem(row, col);
+            if(item != null) return item;
+        }
+        return null;
     }
 
     /**
@@ -377,18 +492,6 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     {
         this.inventoryName = Chat.chat(newName);
         this.inventory = Bukkit.createInventory(null, inventorySlots, inventoryName);
-    }
-
-    /**
-     * Returns whether an item exists in a slot
-     * 
-     * @param row The row to check
-     * @param col The column to check
-     * @return Whether the item exists or not
-     */
-    public boolean itemExists(int row, int col)
-    {
-        return items[--row][--col] != null;
     }
 
     /**
@@ -418,7 +521,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public int getCols()
     {
-        return INVENTORY_COLS;
+        return inventoryCols;
     }
 
     /**
@@ -522,18 +625,6 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Get an item from a slot
-     *
-     * @param row The row to get
-     * @param col The column to get
-     * @return The <tt>GUIItem</tt> that is contained in that slot
-     */
-    public GUIItem getItem(int row, int col)
-    {
-        return items[--row][--col];
-    }
-
-    /**
      * Get the default move state of this GUI
      *
      * @return The default move state
@@ -554,26 +645,6 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Get all <tt>GUIItems</tt> in list form
-     *
-     * @return A list of all GUI items
-     */
-    public List<GUIItem> getItemsAsList()
-    {
-        return ArrayUtil.toList(items);
-    }
-
-    /**
-     * Get all <tt>GUIItems</tt> as a 2D array
-     *
-     * @return The 2D array of GUI Items
-     */
-    public GUIItem[][] getItemsAsArray()
-    {
-        return items;
-    }
-
-    /**
      * Convert a row and a column to a slot
      *
      * @param row The row to use
@@ -582,7 +653,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public int getSlotFromRowCol(int row, int col)
     {
-        return (row * INVENTORY_COLS) + col;
+        return (row * inventoryCols) + col;
     }
 
     /**
@@ -593,7 +664,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public int getRowFromSlot(int slot)
     {
-        return (slot / INVENTORY_COLS) + 1;
+        return (slot / inventoryCols) + 1;
     }
 
     /**
@@ -604,6 +675,174 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public int getColFromSlot(int slot)
     {
-        return (slot % INVENTORY_COLS) + 1;
+        return (slot % inventoryCols) + 1;
+    }
+
+    /**
+     * Get the current offset of the row
+     *
+     * @return The row offset
+     */
+    public int getRowOffset()
+    {
+        return rowOffset;
+    }
+
+    /**
+     * Set the current offset of the row
+     *
+     * @param rowOffset The new row offset
+     */
+    public void setRowOffset(int rowOffset)
+    {
+        this.rowOffset = rowOffset;
+    }
+
+    /**
+     * Get the current offset of the column
+     *
+     * @return The column offset
+     */
+    public int getColOffset()
+    {
+        return colOffset;
+    }
+
+    /**
+     * Set the current offset of the column
+     *
+     * @param colOffset The new column offset
+     */
+    public void setColOffset(int colOffset)
+    {
+        this.colOffset = colOffset;
+    }
+
+    /**
+     * Adds an amount to the row offset
+     *
+     * @param amount The amount to add
+     */
+    public void addRowOffset(int amount)
+    {
+        rowOffset += amount;
+    }
+
+    /**
+     * Adds an amount to the column offset
+     *
+     * @param amount The amount to add
+     */
+    public void addColOffset(int amount)
+    {
+        colOffset += amount;
+    }
+
+    /**
+     * Get a <tt>GUILayer</tt> from this GUI
+     *
+     * @param layerName The name of the new layer
+     * @return The requested layer
+     */
+    public GUILayer getLayer(String layerName, boolean overlay)
+    {
+        if(!containsLayer(layerName))
+        {
+            GUILayer newLayer = new GUILayer(this, layerName, overlay, defaultMoveState);
+            layers.add(newLayer);
+        }
+        return getLayer(layerName);
+    }
+
+    /**
+     * Remove a <tt>GUILayer</tt> from this GUI based off of it's name
+     *
+     * @param layerName The name of the layer to remove
+     */
+    public void removeLayer(String layerName)
+    {
+        layers.removeIf(guiLayer -> guiLayer.getName().equals(layerName));
+    }
+
+    /**
+     * Remove a <tt>GUILayer</tt> from the layer's instance
+     *
+     * @param layer The layer to remove
+     */
+    public void removeLayer(GUILayer layer)
+    {
+        layers.remove(layer);
+    }
+
+    /**
+     * See if this GUI contains a <tt>GUILayer</tt> based off of an instance
+     *
+     * @param layer The layer to search for
+     * @return Whether this GUI contains the layer or not
+     */
+    public boolean containsLayer(GUILayer layer)
+    {
+        return layers.contains(layer);
+    }
+
+    /**
+     * See if this GUI contains a <tt>GUILayer</tt> based off of the name of the layer
+     *
+     * @param layerName The name of the layer to search for
+     * @return Whether this GUI contains the layer or not
+     */
+    public boolean containsLayer(String layerName)
+    {
+        for(GUILayer layer : layers)
+        {
+            if(layer.getName().equals(layerName)) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get a <tt>GUILayer</tt> based off of the GUILayer's name
+     *
+     * @param layerName The name of the layer to get
+     * @return The <tt>GUILayer</tt>, null if not found
+     */
+    public GUILayer getLayer(String layerName)
+    {
+        if(!containsLayer(layerName))
+        {
+            GUILayer layer = new GUILayer(this, layerName, false, defaultMoveState);
+            layers.add(layer);
+            return layer;
+        }
+        for(GUILayer layer : layers)
+        {
+            if(layer.getName().equals(layerName)) return layer;
+        }
+        return null;
+    }
+
+    /**
+     * Get a <tt>GUILayer</tt> based off of the GUILayer's index
+     *
+     * @param index The index of the layer to get
+     * @return The <tt>GUILayer</tt>
+     */
+    public GUILayer getLayer(int index)
+    {
+        if(layers.isEmpty())
+        {
+            layers.add(new GUILayer(this, "base", false, defaultMoveState));
+        }
+        return layers.get(index);
+    }
+
+    /**
+     * Gets a list of all layers in this <tt>GUIContainer</tt>
+     *
+     * @return The list of layers
+     */
+    public List<GUILayer> getAllLayers()
+    {
+        return layers;
     }
 }

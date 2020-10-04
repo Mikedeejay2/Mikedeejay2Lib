@@ -1,5 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.item;
 
+import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIItemEvent;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
@@ -24,7 +25,7 @@ import java.util.Map;
  *
  * @author Mikedeejay2
  */
-public class GUIItem
+public class GUIItem implements Cloneable
 {
     // The base item
     protected ItemStack baseItem;
@@ -38,6 +39,8 @@ public class GUIItem
     protected int row;
     // The column that this item is located on
     protected int col;
+    // The name of the layer that the item was added on
+    protected GUILayer layer;
 
     public GUIItem(ItemStack item)
     {
@@ -45,6 +48,26 @@ public class GUIItem
         this.viewItem = item;
         this.movable = false;
         this.events = new GUIItemEvent();
+    }
+
+    /**
+     * Get the <tt>GUILayer</tt> of this item
+     *
+     * @return The layer of this item
+     */
+    public GUILayer getLayer()
+    {
+        return layer;
+    }
+
+    /**
+     * Set the <tt>GUILayer</tt> of this item
+     *
+     * @param layer The new layer of this item
+     */
+    public void setLayer(GUILayer layer)
+    {
+        this.layer = layer;
     }
 
     /**
@@ -503,5 +526,22 @@ public class GUIItem
     {
         addEnchantView(enchantment, level);
         addEnchantBase(enchantment, level);
+    }
+
+    public GUIItem clone()
+    {
+        GUIItem newItem = null;
+
+        try
+        {
+            newItem = (GUIItem) super.clone();
+        }
+        catch(CloneNotSupportedException e)
+        {
+            e.printStackTrace();
+        }
+        newItem.setBaseItem(newItem.getItemBase().clone());
+        newItem.setViewItem(newItem.getItemView().clone());
+        return newItem;
     }
 }

@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchOffEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUISwitchListPageEvent;
@@ -60,8 +61,8 @@ public class GUIListModule extends GUIModule
 
         curPage = 1;
         endItems = new ArrayList<>();
-        this.backItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.HEAD_BACKWARDS_WHITE, 1, GUIContainer.EMPTY_NAME));
-        this.forwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.HEAD_FORWARD_WHITE, 1, GUIContainer.EMPTY_NAME));
+        this.backItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_BACKWARD_WHITE, 1, GUIContainer.EMPTY_NAME));
+        this.forwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_FORWARD_WHITE, 1, GUIContainer.EMPTY_NAME));
         this.searchItem = new GUIItem(ItemCreator.createItem(Material.COMPASS, 1, "&f&oSearch list..."));
         this.searchOffItem = new GUIItem(ItemCreator.createItem(Material.BOOK, 1, "&f&oTurn off search mode"));
 
@@ -77,12 +78,13 @@ public class GUIListModule extends GUIModule
     @Override
     public void onUpdateHead(Player player, GUIContainer gui)
     {
+        GUILayer layer = gui.getLayer("list", false);
         if(searchMode)
         {
             searchThroughList();
         }
-        updateListControls(searchMode, gui);
-        updatePage(searchMode, gui);
+        updateListControls(searchMode, layer);
+        updatePage(searchMode, layer);
     }
 
     /**
@@ -120,22 +122,22 @@ public class GUIListModule extends GUIModule
      * Updates the current page, called on {@link GUIListModule#onUpdateHead(Player player, GUIContainer gui)}
      *
      * @param search Whether search mode is enabled or not
-     * @param gui The GUI to update the page on
+     * @param layer The layer to update the page on
      */
-    private void updatePage(boolean search, GUIContainer gui)
+    private void updatePage(boolean search, GUILayer layer)
     {
         ArrayList<GUIItem> pageList = (ArrayList<GUIItem>) (search ? searchList : list);
-        int pageSize = ((gui.getRows() - 2) * gui.getCols());
+        int pageSize = ((layer.getRows() - 2) * layer.getCols());
         for(int i = 0; i < pageSize; i++)
         {
             int pageOffset = ((curPage-1) * pageSize);
-            int row = gui.getRowFromSlot(i + gui.getCols()), col = gui.getColFromSlot(i);
-            gui.removeItem(row, col);
+            int row = layer.getRowFromSlot(i + layer.getCols()), col = layer.getColFromSlot(i);
+            layer.removeItem(row, col);
 
             if(pageList.size() >= (i+1) + pageOffset)
             {
                 GUIItem item = pageList.get(i + pageOffset);
-                gui.setItem(gui.getRowFromSlot(i + gui.getCols()), gui.getColFromSlot(i), item.getItem());
+                layer.setItem(layer.getRowFromSlot(i + layer.getCols()), layer.getColFromSlot(i), item);
             }
             else if((i + 1) + pageOffset > pageList.size() && !search)
             {
@@ -144,7 +146,7 @@ public class GUIListModule extends GUIModule
                 if(endItems.size() > index)
                 {
                     GUIItem item = endItems.get(index);
-                    gui.setItem(row, col, item.getItem());
+                    layer.setItem(row, col, item);
                 }
             }
         }
@@ -154,13 +156,13 @@ public class GUIListModule extends GUIModule
      * Update the controls for the list, called on {@link GUIListModule#onUpdateHead(Player player, GUIContainer gui)}
      *
      * @param search Whether search mode is enabled or not
-     * @param gui The GUI to update the controls on
+     * @param layer The layer to update the controls on
      */
-    private void updateListControls(boolean search, GUIContainer gui)
+    private void updateListControls(boolean search, GUILayer layer)
     {
         ArrayList<GUIItem> pageList = (ArrayList<GUIItem>) (search ? searchList : list);
 
-        int amountOfPages = (int)Math.ceil((pageList.size() + endItems.size()) / ((gui.getRows() - 2.0f) * gui.getCols()));
+        int amountOfPages = (int)Math.ceil((pageList.size() + endItems.size()) / ((layer.getRows() - 2.0f) * layer.getCols()));
 
         for(int i = 1; i <= amountOfPages; i++)
         {
@@ -168,28 +170,30 @@ public class GUIListModule extends GUIModule
             if(i < curPage && i + 3 >= curPage)
             {
                 int col = (i - curPage) + 5;
-                backItem.setNameView(Chat.chat("&fPage " + i));
-                gui.setItem(gui.getRows(), col, backItem);
-                gui.addEvent(gui.getRows(), col, new GUISwitchListPageEvent(plugin));
+                GUIItem curItem = backItem.clone();
+                curItem.addEvent(new GUISwitchListPageEvent(plugin));
+                curItem.setNameView(Chat.chat("&fPage " + i));
+                layer.setItem(layer.getRows(), col, curItem);
             }
             else if(i > curPage && i - 3 <= curPage)
             {
                 int col = (i - curPage) + 5;
-                forwardItem.setNameView(Chat.chat("&fPage " + i));
-                gui.setItem(gui.getRows(), col, forwardItem);
-                gui.addEvent(gui.getRows(), col, new GUISwitchListPageEvent(plugin));
+                GUIItem curItem = forwardItem.clone();
+                curItem.addEvent(new GUISwitchListPageEvent(plugin));
+                curItem.setNameView(Chat.chat("&fPage " + i));
+                layer.setItem(layer.getRows(), col, curItem);
             }
         }
 
         if(searchEnabled)
         {
-            gui.setItem(gui.getRows(), 1, searchItem);
-            gui.addEvent(gui.getRows(), 1, new GUIListSearchEvent(plugin));
+            layer.setItem(layer.getRows(), 1, searchItem);
+            layer.addEvent(layer.getRows(), 1, new GUIListSearchEvent(plugin));
 
             if(searchMode)
             {
-                gui.setItem(gui.getRows(), 9, searchOffItem);
-                gui.addEvent(gui.getRows(), 9, new GUIListSearchOffEvent(plugin));
+                layer.setItem(layer.getRows(), 9, searchOffItem);
+                layer.addEvent(layer.getRows(), 9, new GUIListSearchOffEvent(plugin));
             }
         }
     }
@@ -326,16 +330,6 @@ public class GUIListModule extends GUIModule
     }
 
     /**
-     * Set the item that represents the back button
-     *
-     * @param backItem The new back item
-     */
-    public void setBackItem(GUIItem backItem)
-    {
-        this.backItem = backItem;
-    }
-
-    /**
      * Get the item that represents the forward button
      *
      * @return The forward button
@@ -343,16 +337,6 @@ public class GUIListModule extends GUIModule
     public GUIItem getForwardItem()
     {
         return forwardItem;
-    }
-
-    /**
-     * Set the item that represents the forward button
-     *
-     * @param forwardItem The new forward button
-     */
-    public void setForwardItem(GUIItem forwardItem)
-    {
-        this.forwardItem = forwardItem;
     }
 
     /**
@@ -396,16 +380,6 @@ public class GUIListModule extends GUIModule
     }
 
     /**
-     * Set the item that represents the search button
-     *
-     * @param searchItem The new search item
-     */
-    public void setSearchItem(GUIItem searchItem)
-    {
-        this.searchItem = searchItem;
-    }
-
-    /**
      * Get the item that represents the turn off search button
      *
      * @return The search off item
@@ -413,16 +387,6 @@ public class GUIListModule extends GUIModule
     public GUIItem getSearchOffItem()
     {
         return searchOffItem;
-    }
-
-    /**
-     * Set the item that represents the turn off search button
-     *
-     * @param searchOffItem The new search off item
-     */
-    public void setSearchOffItem(GUIItem searchOffItem)
-    {
-        this.searchOffItem = searchOffItem;
     }
 
     /**

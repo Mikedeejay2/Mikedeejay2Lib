@@ -70,7 +70,7 @@ public class AnimationRuntime extends EnhancedRunnable
         boolean shouldUpdate = false;
         for(AnimatedGUIItem item : items)
         {
-            if(item.tick(period, gui)) shouldUpdate = true;
+            if(item.tick(period)) shouldUpdate = true;
         }
         if(shouldUpdate) gui.update(player);
     }

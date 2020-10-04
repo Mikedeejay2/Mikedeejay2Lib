@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class GUIItemEvent
+public class GUIItemEvent implements Cloneable
 {
     // A list of GUIEvents that this GUIItemEvent holds
     List<GUIEvent> events;
@@ -39,8 +39,9 @@ public class GUIItemEvent
      */
     public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui)
     {
-        for(GUIEvent event : events)
+        for(int i = 0; i < events.size(); i++)
         {
+            GUIEvent event = events.get(i);
             event.execute(player, row, col, clicked, gui);
         }
     }
@@ -53,6 +54,11 @@ public class GUIItemEvent
     public List<GUIEvent> getEvents()
     {
         return events;
+    }
+
+    public void setEvents(List<GUIEvent> events)
+    {
+        this.events = events;
     }
 
     /**
@@ -121,5 +127,20 @@ public class GUIItemEvent
             return true;
         }
         return false;
+    }
+
+    @Override
+    public GUIItemEvent clone()
+    {
+        GUIItemEvent newEvents = null;
+        try
+        {
+            newEvents = (GUIItemEvent) super.clone();
+        }
+        catch(CloneNotSupportedException e)
+        {
+            e.printStackTrace();
+        }
+        return newEvents;
     }
 }

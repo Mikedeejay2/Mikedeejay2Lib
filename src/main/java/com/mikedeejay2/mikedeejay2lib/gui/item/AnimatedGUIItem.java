@@ -59,10 +59,9 @@ public class AnimatedGUIItem extends GUIItem
      * process to land on and animate the current frame.
      *
      * @param tickTime The time between the last tick and this tick. Used for calculating framerate
-     * @param gui The GUI that this tick method is being called from
      * @return Whether the tick updated the animation or not
      */
-    public boolean tick(long tickTime, GUIContainer gui)
+    public boolean tick(long tickTime)
     {
         wait += tickTime;
         if(firstRun)
@@ -70,7 +69,7 @@ public class AnimatedGUIItem extends GUIItem
             if(wait > delay)
             {
                 firstRun = false;
-                processFrame(1, gui);
+                processFrame(1);
                 wait = 0;
             }
             return true;
@@ -84,7 +83,7 @@ public class AnimatedGUIItem extends GUIItem
         if(wait < curWait) return false;
         int framePass = (int)(wait / curWait);
         wait = 0;
-        processFrame(framePass, gui);
+        processFrame(framePass);
         return true;
     }
 
@@ -93,9 +92,8 @@ public class AnimatedGUIItem extends GUIItem
      * This method does the work for modifying the item to the next frame.
      *
      * @param framePass The amount of frames forward the animation to go to
-     * @param gui The GUI that this item exists in
      */
-    private void processFrame(int framePass, GUIContainer gui)
+    private void processFrame(int framePass)
     {
         AnimationFrame frame = frames.get(index);
         FrameType type = frame.getType();
@@ -108,13 +106,13 @@ public class AnimatedGUIItem extends GUIItem
             }
             case MOVEMENT:
             {
-                processMovement(frame, gui);
+                processMovement(frame);
                 break;
             }
             case BOTH:
             {
                 processItem(frame);
-                processMovement(frame, gui);
+                processMovement(frame);
                 break;
             }
         }
@@ -135,9 +133,8 @@ public class AnimatedGUIItem extends GUIItem
      * Process the movement for a movement frame
      *
      * @param frame The AnimationFrame that will be processed
-     * @param gui The gui that the AnimationFrame will move in
      */
-    private void processMovement(AnimationFrame frame, GUIContainer gui)
+    private void processMovement(AnimationFrame frame)
     {
         boolean moveRelatively = frame.moveRelative();
         int frameRow = frame.getRow();
@@ -146,62 +143,62 @@ public class AnimatedGUIItem extends GUIItem
         int currentCol = this.getCol();
         int newRow = moveRelatively ? currentRow + frameRow : frameRow;
         int newCol = moveRelatively ? currentCol + frameCol : currentCol;
-        if(!validCheck(newRow, newCol, gui))
+        if(!validCheck(newRow, newCol))
         {
-            gui.removeItem(currentRow, currentCol);
+            layer.removeItem(currentRow, currentCol);
             return;
         }
-        GUIItem previousItem = gui.getItem(newRow, newCol);
+        GUIItem previousItem = layer.getItem(newRow, newCol);
 
         MovementType movementType = frame.getMovementType();
         switch(movementType)
         {
             case SWAP_ITEM:
             {
-                gui.setItem(newRow, newCol, this);
-                gui.setItem(currentRow, currentCol, previousItem);
+                layer.setItem(newRow, newCol, this);
+                layer.setItem(currentRow, currentCol, previousItem);
                 break;
             }
             case OVERRIDE_ITEM:
             {
-                gui.removeItem(currentRow, currentCol);
-                gui.setItem(newRow, newCol, this);
+                layer.removeItem(currentRow, currentCol);
+                layer.setItem(newRow, newCol, this);
                 break;
             }
             case PUSH_ITEM_UP:
             {
                 int pushRow = newRow-1;
                 int pushCol = newCol;
-                if(!validCheck(pushRow, pushCol, gui)) break;
-                gui.removeItem(currentRow, currentCol);
-                gui.setItem(pushRow, pushCol, previousItem);
+                if(!validCheck(pushRow, pushCol)) break;
+                layer.removeItem(currentRow, currentCol);
+                layer.setItem(pushRow, pushCol, previousItem);
                 break;
             }
             case PUSH_ITEM_DOWN:
             {
                 int pushRow = newRow+1;
                 int pushCol = newCol;
-                if(!validCheck(pushRow, pushCol, gui)) break;
-                gui.removeItem(currentRow, currentCol);
-                gui.setItem(pushRow, pushCol, previousItem);
+                if(!validCheck(pushRow, pushCol)) break;
+                layer.removeItem(currentRow, currentCol);
+                layer.setItem(pushRow, pushCol, previousItem);
                 break;
             }
             case PUSH_ITEM_LEFT:
             {
                 int pushRow = newRow;
                 int pushCol = newCol-1;
-                if(!validCheck(pushRow, pushCol, gui)) break;
-                gui.removeItem(currentRow, currentCol);
-                gui.setItem(pushRow, pushCol, previousItem);
+                if(!validCheck(pushRow, pushCol)) break;
+                layer.removeItem(currentRow, currentCol);
+                layer.setItem(pushRow, pushCol, previousItem);
                 break;
             }
             case PUSH_ITEM_RIGHT:
             {
                 int pushRow = newRow;
                 int pushCol = newCol+1;
-                if(!validCheck(pushRow, pushCol, gui)) break;
-                gui.removeItem(currentRow, currentCol);
-                gui.setItem(pushRow, pushCol, previousItem);
+                if(!validCheck(pushRow, pushCol)) break;
+                layer.removeItem(currentRow, currentCol);
+                layer.setItem(pushRow, pushCol, previousItem);
                 break;
             }
         }
@@ -212,12 +209,11 @@ public class AnimatedGUIItem extends GUIItem
      *
      * @param row The row to check
      * @param col The column to check
-     * @param gui The GUI that should be checked
      * @return Whether the position is valid or not
      */
-    private boolean validCheck(int row, int col, GUIContainer gui)
+    private boolean validCheck(int row, int col)
     {
-        return !(row < 1 || col < 1 || row > gui.getRows() || col > gui.getCols());
+        return !(row < 1 || col < 1 || row > layer.getRows() || col > layer.getCols());
     }
 
     /**

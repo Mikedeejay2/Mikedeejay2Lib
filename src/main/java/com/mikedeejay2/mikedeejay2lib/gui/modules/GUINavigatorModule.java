@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.navigator.GUINavBackEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.navigator.GUINavForwardEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
@@ -36,10 +37,10 @@ public class GUINavigatorModule extends GUIModule
 
         this.navigationID = navigationID;
 
-        this.validBackItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.HEAD_ARROW_LEFT_WHITE, 1, "&fBack"));
-        this.validForwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.HEAD_ARROW_RIGHT_WHITE, 1, "&fForward"));
-        this.invalidBackItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.HEAD_ARROW_LEFT_LIGHT_GRAY, 1, "&7Back"));
-        this.invalidForwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.HEAD_ARROW_RIGHT_LIGHT_GRAY, 1, "&7Forward"));
+        this.validBackItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_WHITE, 1, "&fBack"));
+        this.validForwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_WHITE, 1, "&fForward"));
+        this.invalidBackItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_LIGHT_GRAY, 1, "&7Back"));
+        this.invalidForwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_LIGHT_GRAY, 1, "&7Forward"));
     }
 
     /**
@@ -52,6 +53,7 @@ public class GUINavigatorModule extends GUIModule
     public void onUpdateHead(Player player, GUIContainer gui)
     {
         NavigationSystem system = plugin.guiManager().getPlayer(player).getNaviSystem(navigationID);
+        GUILayer layer = gui.getLayer("navigation", true);
 
         if(system.hasBack())
         {
@@ -59,12 +61,12 @@ public class GUINavigatorModule extends GUIModule
             if(backAmount == 0) { backAmount = 1; }
             else if(backAmount > 64) { backAmount = 64; }
             validBackItem.setAmountView(backAmount);
-            gui.setItem(1, 1, validBackItem);
-            gui.addEvent(1, 1, new GUINavBackEvent(plugin));
+            layer.setItem(1, 1, validBackItem);
+            layer.addEvent(1, 1, new GUINavBackEvent(plugin));
         }
         else
         {
-            gui.setItem(1, 1, invalidBackItem);
+            layer.setItem(1, 1, invalidBackItem);
         }
         if(system.hasForward())
         {
@@ -72,19 +74,19 @@ public class GUINavigatorModule extends GUIModule
             if(forwardAmount == 0) { forwardAmount = 1; }
             else if(forwardAmount > 64) { forwardAmount = 64; }
             validForwardItem.setAmountView(forwardAmount);
-            gui.setItem(1, 9, validForwardItem);
-            gui.addEvent(1, 9, new GUINavForwardEvent(plugin));
+            layer.setItem(1, 9, validForwardItem);
+            layer.addEvent(1, 9, new GUINavForwardEvent(plugin));
         }
         else
         {
-            gui.setItem(1, 9, invalidForwardItem);
+            layer.setItem(1, 9, invalidForwardItem);
         }
     }
 
     /**
      * Get this GUI Navigator's ID
      *
-     * @return
+     * @return The navigation ID
      */
     public String getNavigationID()
     {

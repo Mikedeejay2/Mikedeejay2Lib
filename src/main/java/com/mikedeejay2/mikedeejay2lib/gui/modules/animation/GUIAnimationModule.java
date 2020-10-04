@@ -1,10 +1,12 @@
-package com.mikedeejay2.mikedeejay2lib.gui.modules;
+package com.mikedeejay2.mikedeejay2lib.gui.modules.animation;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.animation.AnimationRuntime;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
+import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -53,31 +55,6 @@ public class GUIAnimationModule extends GUIModule
     }
 
     /**
-     * Iterate through the items of the GUI and get the new list of GUI Items to be animated.
-     * This occurs because there is a chance that an item has been added / removed since the
-     * last update
-     *
-     * @param player The player that requires the GUI update
-     * @param gui The GUI
-     */
-    @Override
-    public void onUpdateTail(Player player, GUIContainer gui)
-    {
-        GUIItem[][] items = gui.getItemsAsArray();
-        List<AnimatedGUIItem> newAnimatedItems = new ArrayList<>();
-        for(GUIItem[] subArray : items)
-        {
-            for(GUIItem item : subArray)
-            {
-                if(item == null || item.getClass() != AnimatedGUIItem.class) continue;
-                newAnimatedItems.add((AnimatedGUIItem) item);
-            }
-        }
-        animatedItems.clear();
-        animatedItems.addAll(newAnimatedItems);
-    }
-
-    /**
      * When the GUI is closed, stop the <tt>AnimationRuntime</tt>
      *
      * @param player The player that closed the GUI
@@ -87,5 +64,26 @@ public class GUIAnimationModule extends GUIModule
     public void onClose(Player player, GUIContainer gui)
     {
         runtime.cancel();
+    }
+
+    /**
+     * Add an item to the runtime
+     *
+     * @param item Item to add
+     */
+    public void addItem(AnimatedGUIItem item)
+    {
+        if(animatedItems.contains(item)) return;
+        animatedItems.add(item);
+    }
+
+    /**
+     * Remove an item from the runtime
+     *
+     * @param item Item to remove
+     */
+    public void removeItem(AnimatedGUIItem item)
+    {
+        animatedItems.remove(item);
     }
 }
