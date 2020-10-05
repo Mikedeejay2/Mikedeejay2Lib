@@ -81,6 +81,11 @@ public class GUILayer
      */
     public GUIItem getItem(int row, int col)
     {
+        if(overlay)
+        {
+            row -= gui.getRowOffset();
+            col -= gui.getColOffset();
+        }
         return items[--row][--col];
     }
 
@@ -438,7 +443,11 @@ public class GUILayer
      */
     public int getRowFromSlot(int slot)
     {
-        return (slot / inventoryCols) + 1;
+        if(overlay)
+        {
+            return (slot / GUIContainer.MAX_INVENTORY_COLS) + 1;
+        }
+        return (slot / GUIContainer.MAX_INVENTORY_COLS) + 1 + gui.getRowOffset();
     }
 
     /**
@@ -449,7 +458,11 @@ public class GUILayer
      */
     public int getColFromSlot(int slot)
     {
-        return (slot % inventoryCols) + 1;
+        if(overlay)
+        {
+            return (slot % GUIContainer.MAX_INVENTORY_COLS) + 1;
+        }
+        return (slot / GUIContainer.MAX_INVENTORY_COLS) + 1 + gui.getColOffset();
     }
 
     public GUIContainer getGUI()

@@ -4,6 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -44,6 +45,7 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
             int row = curGUI.getRowFromSlot(slot);
             int col = curGUI.getColFromSlot(slot);
 
+            plugin.chat().debug("Row clicked: " + row + ", Col clicked: " + col);
             if(!curGUI.canSlotBeMoved(row, col))
             {
                 event.setCancelled(true);

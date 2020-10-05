@@ -138,21 +138,22 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public void update(Player player)
     {
-        // DebugTimer timer = new DebugTimer("Update");
+//         DebugTimer timer = new DebugTimer("Update");
 
         modules.forEach(module -> module.onUpdateHead(player, this));
-        // timer.addPrintPoint("onUpdateHead");
+//         timer.addPrintPoint("onUpdateHead");
         int newInvRows = Math.min(inventoryRows, MAX_INVENTORY_ROWS);
 
-        for(int row = 0; row < newInvRows; row++)
+        int fillSlot = -1;
+        for(int row = 0; row < newInvRows; ++row)
         {
-            for(int col = 0; col < MAX_INVENTORY_COLS; col++)
+            for(int col = 0; col < MAX_INVENTORY_COLS; ++col)
             {
-                int invSlot = getSlotFromRowCol(row, col);
-                inventory.setItem(invSlot, EMPTY_STACK);
+                ++fillSlot;
+                inventory.setItem(fillSlot, EMPTY_STACK);
             }
         }
-        // timer.addPrintPoint("Fill empty");
+//         timer.addPrintPoint("Fill empty");
 
         for(GUILayer layer : layers)
         {
@@ -165,12 +166,12 @@ public class GUIContainer extends PluginInstancer<PluginBase>
                 curColOffset = 0;
             }
             int invSlot = -1;
-            for(int row = curRowOffset; row < newInvRows; row++)
+            for(int row = 0; row < newInvRows; ++row)
             {
-                for(int col = curColOffset; col < MAX_INVENTORY_COLS; col++)
+                for(int col = 0; col < MAX_INVENTORY_COLS; ++col)
                 {
                     ++invSlot;
-                    GUIItem guiItem = layer.getItem(row + 1, col + 1);
+                    GUIItem guiItem = layer.getItem(row + 1 + curRowOffset, col + 1 + curColOffset);
                     if(guiItem == null)
                     {
                         if(layer.getDefaultMoveState() && EMPTY_STACK.equals(inventory.getItem(invSlot)))
@@ -192,11 +193,11 @@ public class GUIContainer extends PluginInstancer<PluginBase>
                 }
             }
         }
-        // timer.addPrintPoint("Fill GUI");
+//         timer.addPrintPoint("Fill GUI");
         modules.forEach(module -> module.onUpdateTail(player, this));
-        // timer.addPrintPoint("onUpdateTail");
+//         timer.addPrintPoint("onUpdateTail");
 
-        // timer.printReport();
+//         timer.printReport();
     }
 
     /**
@@ -287,10 +288,13 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public GUIItemEvent getItemEvents(int row, int col)
     {
-        for(int i = layers.size() - 1; i >= 0; i--)
+        for(int i = layers.size() - 1; i >= 0; --i)
         {
             GUILayer layer = getLayer(i);
+            plugin.chat().debug("Layer: " + layer.getName());
             GUIItem item = layer.getItem(row, col);
+            plugin.chat().debug("Item: " + item);
+            plugin.chat().debug("Row: " + row + ", Col: " + col);
             if(item != null) return item.getEvents();
         }
         return null;
@@ -662,7 +666,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public int getSlotFromRowCol(int row, int col)
     {
-        return (row * inventoryCols) + col;
+        return (row * GUIContainer.MAX_INVENTORY_COLS) + col;
     }
 
     /**
@@ -673,7 +677,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public int getRowFromSlot(int slot)
     {
-        return (slot / inventoryCols) + 1;
+        return (slot / MAX_INVENTORY_COLS) + 1 + rowOffset;
     }
 
     /**
@@ -684,7 +688,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public int getColFromSlot(int slot)
     {
-        return (slot % inventoryCols) + 1;
+        return (slot % MAX_INVENTORY_COLS) + 1 + colOffset;
     }
 
     /**
