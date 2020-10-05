@@ -138,9 +138,10 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public void update(Player player)
     {
-        DebugTimer timer = new DebugTimer("Update");
+        // DebugTimer timer = new DebugTimer("Update");
 
         modules.forEach(module -> module.onUpdateHead(player, this));
+        // timer.addPrintPoint("onUpdateHead");
         int newInvRows = Math.min(inventoryRows, MAX_INVENTORY_ROWS);
 
         for(int row = 0; row < newInvRows; row++)
@@ -151,6 +152,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
                 inventory.setItem(invSlot, EMPTY_STACK);
             }
         }
+        // timer.addPrintPoint("Fill empty");
 
         for(GUILayer layer : layers)
         {
@@ -190,9 +192,11 @@ public class GUIContainer extends PluginInstancer<PluginBase>
                 }
             }
         }
+        // timer.addPrintPoint("Fill GUI");
         modules.forEach(module -> module.onUpdateTail(player, this));
+        // timer.addPrintPoint("onUpdateTail");
 
-        timer.printReport();
+        // timer.printReport();
     }
 
     /**

@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.animation;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
 import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
+import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -67,11 +68,13 @@ public class AnimationRuntime extends EnhancedRunnable
     @Override
     public void onRun()
     {
+        // DebugTimer timer = new DebugTimer("Animation Runtime");
         boolean shouldUpdate = false;
         for(AnimatedGUIItem item : items)
         {
             if(item.tick(period)) shouldUpdate = true;
         }
+        // timer.printReport();
         if(shouldUpdate) gui.update(player);
     }
 
