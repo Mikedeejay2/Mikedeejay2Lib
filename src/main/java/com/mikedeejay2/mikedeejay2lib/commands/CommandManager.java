@@ -82,7 +82,7 @@ public class CommandManager extends PluginInstancer<PluginBase> implements Comma
                 plugin.chat().sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "errors.permission.nopermission"));
                 return false;
             }
-            if(sender instanceof Player != target.playerRequired())
+            if(!(sender instanceof Player) && target.playerRequired())
             {
                 plugin.chat().sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "errors.player_required"));
                 return false;
