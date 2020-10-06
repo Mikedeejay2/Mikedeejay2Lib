@@ -207,7 +207,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     {
         modules.forEach(module -> module.onClickedHead(player, row, col, clicked, this));
         GUIItem item = getItem(row, col);
-        item.onClick(player, row, col, clicked, this);
+        if(item != null) item.onClick(player, row, col, clicked, this);
         modules.forEach(module -> module.onClickedTail(player, row, col, clicked, this));
     }
 
