@@ -160,11 +160,6 @@ public class GUIContainer extends PluginInstancer<PluginBase>
             if(!layer.isVisible()) continue;
             int curRowOffset = rowOffset;
             int curColOffset = colOffset;
-            if(layer.isOverlay())
-            {
-                curRowOffset = 0;
-                curColOffset = 0;
-            }
             int invSlot = -1;
             for(int row = 0; row < newInvRows; ++row)
             {

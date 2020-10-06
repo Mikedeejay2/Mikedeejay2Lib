@@ -26,16 +26,18 @@ public class GUIScrollEvent extends GUIEvent
     @Override
     public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui)
     {
-        int totalRow = gui.getRowOffset() + Math.min(GUIContainer.MAX_INVENTORY_ROWS, gui.getRows());
-        int totalCol = gui.getColOffset() + GUIContainer.MAX_INVENTORY_COLS;
+        int rowOffset = gui.getRowOffset();
+        int colOffset = gui.getColOffset();
+        int totalRow = rowOffset + Math.min(GUIContainer.MAX_INVENTORY_ROWS, gui.getRows());
+        int totalCol = colOffset + GUIContainer.MAX_INVENTORY_COLS;
         plugin.chat().debug("Total rows: " + totalRow + ", rows: " + gui.getRows() + "\n" +
                             "Total cols: " + totalCol + ", cols: " + gui.getCols() + "\n" +
                             "Rows execute? " + (totalRow <= gui.getRows()) + ", Cols execute? " + (totalCol <= gui.getCols()));
-        if(totalRow <= gui.getRows())
+        if(gui.getRows() >= totalRow + rowAmt && rowOffset + rowAmt >= 0)
         {
             gui.addRowOffset(rowAmt);
         }
-        if(totalCol <= gui.getCols())
+        if(gui.getCols() >= totalCol + colAmt && colOffset + colAmt >= 0)
         {
             gui.addColOffset(colAmt);
         }

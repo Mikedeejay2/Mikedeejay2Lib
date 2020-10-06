@@ -54,7 +54,6 @@ public class GUILayer
         this.items = new GUIItem[inventoryRows][inventoryCols];
         this.defaultMoveState = defaultMoveState;
         this.visible = true;
-        this.overlay = false;
     }
 
     /**
