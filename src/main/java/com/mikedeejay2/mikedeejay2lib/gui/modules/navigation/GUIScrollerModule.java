@@ -40,6 +40,5 @@ public class GUIScrollerModule extends GUIModule
         layer.setItem(row, 2, rightItem);
         layer.setItem(row, 8, upItem);
         layer.setItem(row, 9, downItem);
-        plugin.chat().debug("Row: " + row);
     }
 }

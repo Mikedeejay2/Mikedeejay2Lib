@@ -45,7 +45,6 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
             int row = curGUI.getRowFromSlot(slot);
             int col = curGUI.getColFromSlot(slot);
 
-            plugin.chat().debug("Row clicked: " + row + ", Col clicked: " + col);
             if(!curGUI.canSlotBeMoved(row, col))
             {
                 event.setCancelled(true);

@@ -286,10 +286,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         for(int i = layers.size() - 1; i >= 0; --i)
         {
             GUILayer layer = getLayer(i);
-            plugin.chat().debug("Layer: " + layer.getName());
             GUIItem item = layer.getItem(row, col);
-            plugin.chat().debug("Item: " + item);
-            plugin.chat().debug("Row: " + row + ", Col: " + col);
             if(item != null) return item.getEvents();
         }
         return null;

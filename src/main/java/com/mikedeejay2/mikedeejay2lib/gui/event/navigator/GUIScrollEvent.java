@@ -30,9 +30,6 @@ public class GUIScrollEvent extends GUIEvent
         int colOffset = gui.getColOffset();
         int totalRow = rowOffset + Math.min(GUIContainer.MAX_INVENTORY_ROWS, gui.getRows());
         int totalCol = colOffset + GUIContainer.MAX_INVENTORY_COLS;
-        plugin.chat().debug("Total rows: " + totalRow + ", rows: " + gui.getRows() + "\n" +
-                            "Total cols: " + totalCol + ", cols: " + gui.getCols() + "\n" +
-                            "Rows execute? " + (totalRow <= gui.getRows()) + ", Cols execute? " + (totalCol <= gui.getCols()));
         if(gui.getRows() >= totalRow + rowAmt && rowOffset + rowAmt >= 0)
         {
             gui.addRowOffset(rowAmt);
