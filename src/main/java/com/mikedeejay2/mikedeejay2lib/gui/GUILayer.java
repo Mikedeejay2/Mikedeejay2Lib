@@ -158,7 +158,7 @@ public class GUILayer
         if(item.getClass() == AnimatedGUIItem.class)
         {
             AnimatedGUIItem animItem = (AnimatedGUIItem) item;
-            gui.getModule(GUIAnimationModule.class).addItem(animItem);
+            if(gui.containsModule(GUIAnimationModule.class)) gui.getModule(GUIAnimationModule.class).addItem(animItem);
         }
     }
 
