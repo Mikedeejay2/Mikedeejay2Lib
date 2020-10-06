@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.gui.modules;
+package com.mikedeejay2.mikedeejay2lib.gui.modules.navigation;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
@@ -7,6 +7,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.navigator.GUINavBackEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.navigator.GUINavForwardEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.NavigationSystem;
+import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Heads;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.entity.Player;

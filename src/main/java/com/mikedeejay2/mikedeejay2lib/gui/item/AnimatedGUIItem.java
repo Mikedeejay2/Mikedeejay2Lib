@@ -4,6 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.animation.AnimationFrame;
 import com.mikedeejay2.mikedeejay2lib.gui.animation.FrameType;
 import com.mikedeejay2.mikedeejay2lib.gui.animation.MovementType;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -34,6 +35,8 @@ public class AnimatedGUIItem extends GUIItem
     protected boolean firstRun;
     // The delay that this item has before its animation begins
     protected long delay;
+    // Whether to reset the animation of this item on click
+    protected boolean resetOnClick;
 
     public AnimatedGUIItem(ItemStack item, boolean loop)
     {
@@ -41,6 +44,11 @@ public class AnimatedGUIItem extends GUIItem
     }
 
     public AnimatedGUIItem(ItemStack item, boolean loop, long delay)
+    {
+        this(item, loop, delay, false);
+    }
+
+    public AnimatedGUIItem(ItemStack item, boolean loop, long delay, boolean resetAnimOnClick)
     {
         super(item);
 
@@ -50,6 +58,7 @@ public class AnimatedGUIItem extends GUIItem
         this.wait = 0;
         this.firstRun = true;
         this.frames = new ArrayList<>();
+        this.resetOnClick = resetAnimOnClick;
     }
 
     /**
@@ -254,5 +263,96 @@ public class AnimatedGUIItem extends GUIItem
     public void addFrame(ItemStack item, int row, int col, MovementType movementType, boolean relativeMovement, long period)
     {
         frames.add(new AnimationFrame(item, row, col, movementType, relativeMovement, period));
+    }
+
+    /**
+     * The current frame index of the animation
+     *
+     * @return The frame index
+     */
+    public int getIndex()
+    {
+        return index;
+    }
+
+    /**
+     * Set the current frame index of the animation
+     *
+     * @param index The new index
+     */
+    public void setIndex(int index)
+    {
+        this.index = index;
+    }
+
+    /**
+     * Whether the animation for this item should loop or not
+     *
+     * @return Whether to loop or not
+     */
+    public boolean shouldLoop()
+    {
+        return loop;
+    }
+
+    /**
+     * Set whether this animation should loop or not
+     *
+     * @param loop New loop state
+     */
+    public void setLoop(boolean loop)
+    {
+        this.loop = loop;
+    }
+
+    /**
+     * Get the delay of this animation
+     *
+     * @return The delay
+     */
+    public long getDelay()
+    {
+        return delay;
+    }
+
+    /**
+     * Set the delay of this animation
+     *
+     * @param delay The new delay
+     */
+    public void setDelay(long delay)
+    {
+        this.delay = delay;
+    }
+
+    /**
+     * Whether the animation should reset on click or not
+     *
+     * @return Whether the animation should reset on click or not
+     */
+    public boolean shouldResetOnClick()
+    {
+        return resetOnClick;
+    }
+
+    /**
+     * Set the reset on click of this item
+     *
+     * @param resetOnClick The new reset on click state
+     */
+    public void setResetOnClick(boolean resetOnClick)
+    {
+        this.resetOnClick = resetOnClick;
+    }
+
+    @Override
+    public void onClick(Player player, int row, int col, GUIItem clicked, GUIContainer gui)
+    {
+        super.onClick(player, row, col, clicked, gui);
+        if(resetOnClick)
+        {
+            index = index - frames.size();
+            wait = 0;
+        }
     }
 }

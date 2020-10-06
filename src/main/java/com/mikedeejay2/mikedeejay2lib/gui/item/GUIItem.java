@@ -1,11 +1,13 @@
 package com.mikedeejay2.mikedeejay2lib.gui.item;
 
+import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIItemEvent;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -48,6 +50,21 @@ public class GUIItem implements Cloneable
         this.viewItem = item;
         this.movable = false;
         this.events = new GUIItemEvent();
+    }
+
+    /**
+     * Called when this <tt>GUIItem</tt> is clicked
+     *
+     * @param player The player that clicked on the GUI
+     * @param row The row that was clicked on
+     * @param col The column that was clicked on
+     * @param clicked The GUIItem that was clicked on
+     * @param gui The GUI that was clicked on
+     */
+    public void onClick(Player player, int row, int col, GUIItem clicked, GUIContainer gui)
+    {
+        if(events == null) return;
+        events.execute(player, row, col, clicked, gui);
     }
 
     /**

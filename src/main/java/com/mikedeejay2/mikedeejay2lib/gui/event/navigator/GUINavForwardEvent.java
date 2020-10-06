@@ -6,7 +6,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.NavigationSystem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
-import com.mikedeejay2.mikedeejay2lib.gui.modules.GUINavigatorModule;
+import com.mikedeejay2.mikedeejay2lib.gui.modules.navigation.GUINavigatorModule;
 import org.bukkit.entity.Player;
 
 /**

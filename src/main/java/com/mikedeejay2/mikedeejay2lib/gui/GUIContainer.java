@@ -206,9 +206,8 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     public void clicked(Player player, int row, int col, GUIItem clicked)
     {
         modules.forEach(module -> module.onClickedHead(player, row, col, clicked, this));
-        GUIItemEvent manager = getItemEvents(row, col);
-        if(manager == null) return;
-        manager.execute(player, row, col, clicked, this);
+        GUIItem item = getItem(row, col);
+        item.onClick(player, row, col, clicked, this);
         modules.forEach(module -> module.onClickedTail(player, row, col, clicked, this));
     }
 
