@@ -461,7 +461,7 @@ public class GUILayer
         {
             return (slot % GUIContainer.MAX_INVENTORY_COLS) + 1;
         }
-        return (slot / GUIContainer.MAX_INVENTORY_COLS) + 1 + gui.getColOffset();
+        return (slot % GUIContainer.MAX_INVENTORY_COLS) + 1 + gui.getColOffset();
     }
 
     public GUIContainer getGUI()
