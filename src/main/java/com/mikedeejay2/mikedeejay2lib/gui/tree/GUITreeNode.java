@@ -41,6 +41,4 @@ public class GUITreeNode extends PluginInstancer<PluginBase>
     {
         children.add(node);
     }
-
-    public void
 }
