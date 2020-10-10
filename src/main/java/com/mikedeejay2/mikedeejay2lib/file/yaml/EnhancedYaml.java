@@ -91,8 +91,24 @@ public class EnhancedYaml extends YamlConfiguration
     @Override
     public void loadFromString(String contents) throws InvalidConfigurationException
     {
-        super.loadFromString(removeComments(contents));
         List<String> lines = new ArrayList<>(Arrays.asList(contents.split("\n")));
+        boolean shouldRemoveHeader = false;
+        int length = 0;
+        if(!lines.isEmpty())
+        {
+            for(int i = 0; i < lines.size(); i++)
+            {
+                String line = lines.get(i).trim();
+                length += line.length();
+                if(!line.startsWith("#") && line.contains(":"))
+                {
+                    shouldRemoveHeader = true;
+                    break;
+                }
+                if(line.isEmpty()) break;
+            }
+        }
+        super.loadFromString(shouldRemoveHeader ? removeComments(contents) : contents.substring(0, length) + removeComments(contents));
 
         String currentPath = "";
         int previousDeepness = 0;
