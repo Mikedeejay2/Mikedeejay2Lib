@@ -78,6 +78,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         this.defaultMoveState = false;
         rowOffset = 0;
         colOffset = 0;
+        layers.add(new GUILayer(this, "base", false, defaultMoveState));
 
         inventory = Bukkit.createInventory(null, inventorySlots, this.inventoryName);
     }
@@ -103,6 +104,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         this.defaultMoveState = false;
         rowOffset = 0;
         colOffset = 0;
+        layers.add(new GUILayer(this, "base", false, defaultMoveState));
 
         inventory = Bukkit.createInventory(null, inventorySlots, this.inventoryName);
     }
@@ -646,6 +648,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     public void setDefaultMoveState(boolean defaultMoveState)
     {
         this.defaultMoveState = defaultMoveState;
+        layers.get(0).setDefaultMoveState(defaultMoveState);
     }
 
     /**
@@ -833,10 +836,6 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public GUILayer getLayer(int index)
     {
-        if(layers.isEmpty())
-        {
-            layers.add(new GUILayer(this, "base", false, defaultMoveState));
-        }
         return layers.get(index);
     }
 
