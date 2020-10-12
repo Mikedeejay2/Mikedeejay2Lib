@@ -5,6 +5,8 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryAction;
 
 /**
  * A method that acts as an injection into a <tt>GUIContainer</tt> to add features to the
@@ -69,8 +71,10 @@ public abstract class GUIModule extends PluginInstancer<PluginBase>
      * @param col The column that was clicked on
      * @param clicked The <tt>GUIItem</tt> that was clicked
      * @param gui The GUI
+     * @param action The <tt>InventoryAction</tt> of the click
+     * @param clickType The <tt>ClickType</tt> of the click
      */
-    public void onClickedHead(Player player, int row, int col, GUIItem clicked, GUIContainer gui) {}
+    public void onClickedHead(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType) {}
 
     /**
      * Called when the GUI is clicked, called in the tail of the click method in <tt>GUIContainer</tt>
@@ -80,6 +84,8 @@ public abstract class GUIModule extends PluginInstancer<PluginBase>
      * @param col The column that was clicked on
      * @param clicked The <tt>GUIItem</tt> that was clicked
      * @param gui The GUI
+     * @param action The <tt>InventoryAction</tt> of the click
+     * @param clickType The <tt>ClickType</tt> of the click
      */
-    public void onClickedTail(Player player, int row, int col, GUIItem clicked, GUIContainer gui) {}
+    public void onClickedTail(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType) {}
 }

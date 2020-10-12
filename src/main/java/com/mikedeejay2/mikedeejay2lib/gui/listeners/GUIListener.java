@@ -8,6 +8,7 @@ import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.inventory.InventoryCloseEvent;
@@ -32,7 +33,9 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
     @EventHandler
     public void onClick(InventoryClickEvent event)
     {
-        if(event.getAction() == InventoryAction.NOTHING) return;
+        InventoryAction action = event.getAction();
+        ClickType clickType = event.getClick();
+        if(action == InventoryAction.NOTHING) return;
         Player player = (Player) event.getWhoClicked();
         GUIContainer curGUI = plugin.guiManager().getPlayer(player).getGUI();
         if(curGUI == null) return;
@@ -50,7 +53,7 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
                 event.setCancelled(true);
             }
 
-            curGUI.clicked(player, row, col, curGUI.getItem(row, col));
+            curGUI.clicked(player, row, col, curGUI.getItem(row, col), action, clickType);
         }
     }
 

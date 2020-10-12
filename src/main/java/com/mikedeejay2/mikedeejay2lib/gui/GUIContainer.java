@@ -12,6 +12,8 @@ import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -203,14 +205,16 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      * @param player The player that clicked on the GUI
      * @param row The row that was clicked on
      * @param col The column that was clicked on
-     * @param clicked The GUIItem that was clicked on
+     * @param clicked The <tt>GUIItem</tt> that was clicked on
+     * @param action The <tt>InventoryAction</tt> of the click
+     * @param clickType The <tt>ClickType</tt> of the click
      */
-    public void clicked(Player player, int row, int col, GUIItem clicked)
+    public void clicked(Player player, int row, int col, GUIItem clicked, InventoryAction action, ClickType clickType)
     {
-        modules.forEach(module -> module.onClickedHead(player, row, col, clicked, this));
+        modules.forEach(module -> module.onClickedHead(player, row, col, clicked, this, action, clickType));
         GUIItem item = getItem(row, col);
-        if(item != null) item.onClick(player, row, col, clicked, this);
-        modules.forEach(module -> module.onClickedTail(player, row, col, clicked, this));
+        if(item != null) item.onClick(player, row, col, clicked, this, action, clickType);
+        modules.forEach(module -> module.onClickedTail(player, row, col, clicked, this, action, clickType));
     }
 
     /**

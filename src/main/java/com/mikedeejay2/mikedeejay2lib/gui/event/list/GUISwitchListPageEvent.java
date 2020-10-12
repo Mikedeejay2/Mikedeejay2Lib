@@ -6,6 +6,8 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIListModule;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryAction;
 
 /**
  * An event that changes the current page of a list
@@ -20,7 +22,7 @@ public class GUISwitchListPageEvent extends GUIEvent
     }
 
     @Override
-    public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui)
+    public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType)
     {
         String displayName = clicked.getNameView();
         String[] split = displayName.split(" ");

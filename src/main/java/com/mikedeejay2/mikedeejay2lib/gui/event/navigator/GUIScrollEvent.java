@@ -5,6 +5,8 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryAction;
 
 /**
  * An event for scrolling a large GUI in a direction
@@ -24,7 +26,7 @@ public class GUIScrollEvent extends GUIEvent
     }
 
     @Override
-    public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui)
+    public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType)
     {
         int rowOffset = gui.getRowOffset();
         int colOffset = gui.getColOffset();

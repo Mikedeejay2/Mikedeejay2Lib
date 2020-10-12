@@ -8,6 +8,8 @@ import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -60,11 +62,13 @@ public class GUIItem implements Cloneable
      * @param col The column that was clicked on
      * @param clicked The GUIItem that was clicked on
      * @param gui The GUI that was clicked on
+     * @param action The <tt>InventoryAction</tt> of the click
+     * @param clickType The <tt>ClickType</tt> of the click
      */
-    public void onClick(Player player, int row, int col, GUIItem clicked, GUIContainer gui)
+    public void onClick(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType)
     {
         if(events == null) return;
-        events.execute(player, row, col, clicked, gui);
+        events.execute(player, row, col, clicked, gui, action, clickType);
     }
 
     /**
