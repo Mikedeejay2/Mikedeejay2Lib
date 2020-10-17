@@ -184,10 +184,10 @@ public class GUITreeNode extends PluginInstancer<PluginBase>
 
             GUIItem nodeBranchItem = node.getBranchItem();
             BranchType nodeBranchType = node.getBranchType();
-            int startRow = Math.min(row, nodeRow);
-            int endRow = Math.max(row, nodeRow);
-            int startCol = Math.min(col, nodeCol);
-            int endCol = Math.max(col, nodeCol);
+            int startRow = Math.min(curRow, nodeRow);
+            int endRow = Math.max(curRow, nodeRow);
+            int startCol = Math.min(curCol, nodeCol);
+            int endCol = Math.max(curCol, nodeCol);
 
             switch(nodeBranchType)
             {
@@ -195,7 +195,7 @@ public class GUITreeNode extends PluginInstancer<PluginBase>
                 {
                     for(int i = startCol + 1; i < endCol; i++)
                     {
-                        layer.setItem(row, i, nodeBranchItem);
+                        layer.setItem(curRow, i, nodeBranchItem);
                     }
                     for(int i = startRow; i < endRow; i++)
                     {
@@ -205,11 +205,11 @@ public class GUITreeNode extends PluginInstancer<PluginBase>
                 }
                 case VERTICAL_FIRST:
                 {
-                    for(int i = startRow + 1; i < endRow; i++)
+                    for(int i = startRow; i < endRow; i++)
                     {
-                        layer.setItem(i, col, nodeBranchItem);
+                        layer.setItem(i, curCol, nodeBranchItem);
                     }
-                    for(int i = startCol; i < endCol; i++)
+                    for(int i = startCol + 1; i < endCol; i++)
                     {
                         layer.setItem(nodeRow, i, nodeBranchItem);
                     }
