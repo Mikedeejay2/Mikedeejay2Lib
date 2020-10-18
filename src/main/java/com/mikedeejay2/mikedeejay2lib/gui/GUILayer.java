@@ -135,7 +135,9 @@ public class GUILayer
      */
     public void setItem(int row, int col, ItemStack stack)
     {
-        setItem(row, col, new GUIItem(stack));
+        GUIItem newItem = new GUIItem(stack);
+        newItem.setMovable(defaultMoveState);
+        setItem(row, col, newItem);
     }
 
     /**

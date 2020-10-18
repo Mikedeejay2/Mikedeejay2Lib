@@ -7,7 +7,6 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
-import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -15,6 +14,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.Inventory;
+import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -200,6 +200,97 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     }
 
     /**
+     * Called when a <tt>Player</tt> interacts (adds or removes an item) with the GUI.
+     *
+     * @param player The player interacting with the GUI
+     * @param row The row that the player interacted on
+     * @param col The column that the player interacted on
+     * @param action The <tt>InventoryAction</tt> performed by the player
+     * @param type The <tt>ClickType</tt> performed by the player
+     * @param rawSlot The raw slot of the inventory that was clicked
+     */
+    public void onPlayerInteract(Player player, int row, int col, InventoryAction action, ClickType type, int rawSlot)
+    {
+        modules.forEach(module -> module.onPlayerInteractHead(player, row, col, action, type, rawSlot, this));
+        player.sendMessage("Moved: " + action);
+        ItemStack cursorItem = player.getItemOnCursor();
+        if(cursorItem.getType() == Material.AIR) cursorItem = null;
+        GUIItem cursorGUIItem = new GUIItem(cursorItem);
+        cursorGUIItem.setMovable(getDefaultMoveState());
+        GUILayer layer = getLayer(0);
+        GUIItem bottomGUIItem = layer.getItem(row, col);
+        ItemStack bottomItem = bottomGUIItem == null ? null : bottomGUIItem.getItem();
+        switch(type)
+        {
+            case LEFT:
+            {
+                if(bottomItem == null)
+                {
+                    layer.setItem(row, col, cursorGUIItem);
+                    player.setItemOnCursor(null);
+                }
+                else if(cursorItem == null)
+                {
+                    layer.removeItem(row, col);
+                    player.setItemOnCursor(bottomItem);
+                }
+                break;
+            }
+            case RIGHT:
+            {
+                if(cursorItem != null && bottomItem == null)
+                {
+                    int bottomAmount = 1;
+                    int cursorAmount = cursorItem.getAmount() - 1;
+                    bottomItem = cursorItem.clone();
+                    bottomItem.setAmount(1);
+                    cursorItem.setAmount(cursorItem.getAmount() - 1);
+                    layer.setItem(row, col, bottomItem);
+                    player.setItemOnCursor(cursorItem);
+                }
+                else if(cursorItem != null)
+                {
+                    int bottomAmount = bottomItem.getAmount() + 1;
+                    int cursorAmount = cursorItem.getAmount() - 1;
+                    bottomGUIItem.setAmount(bottomAmount);
+                    cursorItem.setAmount(cursorAmount);
+                    player.setItemOnCursor(cursorItem);
+                }
+                else if(bottomItem != null)
+                {
+                    int cursorAmount = (int) Math.ceil(bottomItem.getAmount() / 2.0f);
+                    int bottomAmount = (int) (bottomItem.getAmount() / 2.0f);
+                    bottomGUIItem.setAmount(bottomAmount);
+                    cursorItem = bottomItem.clone();
+                    cursorItem.setAmount(cursorAmount);
+                    player.setItemOnCursor(cursorItem);
+                    if(bottomAmount <= 0) layer.removeItem(row, col);
+                }
+                break;
+            }
+            case SHIFT_LEFT:
+            case SHIFT_RIGHT:
+            {
+                InventoryView inventoryView = player.getOpenInventory();
+                ItemStack itemToMove = inventoryView.getItem(rawSlot);
+                if(rawSlot >= getSlotAmount())
+                {
+                    layer.setItem(row, col, itemToMove);
+                    inventoryView.setItem(rawSlot, null);
+                }
+                else
+                {
+                    layer.removeItem(row, col);
+                    player.getInventory().addItem(bottomItem);
+                }
+                break;
+            }
+        }
+        modules.forEach(module -> module.onPlayerInteractTail(player, row, col, action, type, rawSlot, this));
+        update(player);
+    }
+
+    /**
      * Called when this GUI is clicked on
      *
      * @param player The player that clicked on the GUI
@@ -209,12 +300,12 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      * @param action The <tt>InventoryAction</tt> of the click
      * @param clickType The <tt>ClickType</tt> of the click
      */
-    public void clicked(Player player, int row, int col, GUIItem clicked, InventoryAction action, ClickType clickType)
+    public void onClicked(Player player, int row, int col, GUIItem clicked, InventoryAction action, ClickType clickType)
     {
-        modules.forEach(module -> module.onClickedHead(player, row, col, clicked, this, action, clickType));
+        modules.forEach(module -> module.onClickedHead(player, row, col, clicked, action, clickType, this));
         GUIItem item = getItem(row, col);
         if(item != null) item.onClick(player, row, col, clicked, this, action, clickType);
-        modules.forEach(module -> module.onClickedTail(player, row, col, clicked, this, action, clickType));
+        modules.forEach(module -> module.onClickedTail(player, row, col, clicked, action, clickType, this));
     }
 
     /**
@@ -851,5 +942,16 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     public List<GUILayer> getAllLayers()
     {
         return layers;
+    }
+
+    /**
+     * Get the amount of slots of the viewable <tt>Inventory</tt>.
+     * This does not account for large GUIs.
+     *
+     * @return The total amount of slots of the viewable inventory
+     */
+    public int getSlotAmount()
+    {
+        return inventorySlots;
     }
 }

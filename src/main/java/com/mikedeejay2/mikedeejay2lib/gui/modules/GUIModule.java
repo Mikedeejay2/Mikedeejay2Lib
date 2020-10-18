@@ -70,11 +70,11 @@ public abstract class GUIModule extends PluginInstancer<PluginBase>
      * @param row The row that was clicked on
      * @param col The column that was clicked on
      * @param clicked The <tt>GUIItem</tt> that was clicked
-     * @param gui The GUI
      * @param action The <tt>InventoryAction</tt> of the click
      * @param clickType The <tt>ClickType</tt> of the click
+     * @param gui The GUI
      */
-    public void onClickedHead(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType) {}
+    public void onClickedHead(Player player, int row, int col, GUIItem clicked, InventoryAction action, ClickType clickType, GUIContainer gui) {}
 
     /**
      * Called when the GUI is clicked, called in the tail of the click method in <tt>GUIContainer</tt>
@@ -83,9 +83,35 @@ public abstract class GUIModule extends PluginInstancer<PluginBase>
      * @param row The row that was clicked on
      * @param col The column that was clicked on
      * @param clicked The <tt>GUIItem</tt> that was clicked
-     * @param gui The GUI
      * @param action The <tt>InventoryAction</tt> of the click
      * @param clickType The <tt>ClickType</tt> of the click
+     * @param gui The GUI
      */
-    public void onClickedTail(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType) {}
+    public void onClickedTail(Player player, int row, int col, GUIItem clicked, InventoryAction action, ClickType clickType, GUIContainer gui) {}
+
+    /**
+     * Called when a <tt>Player</tt> interacts (adds or removes an item) with the GUI, called in the head of the onPlayerInteract method in<tt>GUIContainer</tt>
+     *
+     * @param player The player interacting with the GUI
+     * @param row The row that the player interacted on
+     * @param col The column that the player interacted on
+     * @param action The <tt>InventoryAction</tt> performed by the player
+     * @param type The <tt>ClickType</tt> performed by the player
+     * @param rawSlot The raw slot of the inventory that was clicked
+     * @param gui The GUI
+     */
+    public void onPlayerInteractHead(Player player, int row, int col, InventoryAction action, ClickType type, int rawSlot, GUIContainer gui) {}
+
+    /**
+     * Called when a <tt>Player</tt> interacts (adds or removes an item) with the GUI, called in the tail of the onPlayerInteract method in<tt>GUIContainer</tt>
+     *
+     * @param player The player interacting with the GUI
+     * @param row The row that the player interacted on
+     * @param col The column that the player interacted on
+     * @param action The <tt>InventoryAction</tt> performed by the player
+     * @param type The <tt>ClickType</tt> performed by the player
+     * @param rawSlot The raw slot of the inventory that was clicked
+     * @param gui The GUI
+     */
+    public void onPlayerInteractTail(Player player, int row, int col, InventoryAction action, ClickType type, int rawSlot, GUIContainer gui) {}
 }
