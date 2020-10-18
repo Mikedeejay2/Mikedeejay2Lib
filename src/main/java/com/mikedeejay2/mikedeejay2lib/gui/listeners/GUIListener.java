@@ -5,6 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
+import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -35,7 +36,7 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
     {
         InventoryAction action = event.getAction();
         ClickType clickType = event.getClick();
-        if(action == InventoryAction.NOTHING || action == InventoryAction.CLONE_STACK) return;
+        if(action == InventoryAction.CLONE_STACK) return;
         Player player = (Player) event.getWhoClicked();
         PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
         GUIContainer curGUI = playerGUI.getGUI();
@@ -78,10 +79,6 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
         event.setCancelled(true);
         if(curGUI.canSlotBeMoved(row, col))
         {
-            GUIItem guiItem = curGUI.getItem(row, col);
-            ItemStack guiStack = guiItem == null ? null : guiItem.getItem();
-            ItemStack cursorStack = event.getCursor();
-            if(!(guiStack == null || cursorStack.getType() == Material.AIR)) return;
             curGUI.onPlayerInteract(player, row, col, action, clickType, rawSlot);
             return;
         }

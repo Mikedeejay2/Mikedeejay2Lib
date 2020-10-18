@@ -234,26 +234,30 @@ public class GUIContainer extends PluginInstancer<PluginBase>
                     layer.removeItem(row, col);
                     player.setItemOnCursor(bottomItem);
                 }
+                else
+                {
+                    int bottomAmount = bottomItem.getAmount() + cursorItem.getAmount();
+                    bottomGUIItem.setAmount(bottomAmount);
+                    player.setItemOnCursor(null);
+                }
                 break;
             }
             case RIGHT:
             {
-                if(cursorItem != null && bottomItem == null)
-                {
-                    int bottomAmount = 1;
-                    int cursorAmount = cursorItem.getAmount() - 1;
-                    bottomItem = cursorItem.clone();
-                    bottomItem.setAmount(1);
-                    cursorItem.setAmount(cursorItem.getAmount() - 1);
-                    layer.setItem(row, col, bottomItem);
-                    player.setItemOnCursor(cursorItem);
-                }
-                else if(cursorItem != null)
+                if(cursorItem != null && bottomItem != null)
                 {
                     int bottomAmount = bottomItem.getAmount() + 1;
                     int cursorAmount = cursorItem.getAmount() - 1;
                     bottomGUIItem.setAmount(bottomAmount);
                     cursorItem.setAmount(cursorAmount);
+                    player.setItemOnCursor(cursorItem);
+                }
+                else if(cursorItem != null)
+                {
+                    bottomItem = cursorItem.clone();
+                    bottomItem.setAmount(1);
+                    cursorItem.setAmount(cursorItem.getAmount() - 1);
+                    layer.setItem(row, col, bottomItem);
                     player.setItemOnCursor(cursorItem);
                 }
                 else if(bottomItem != null)
@@ -278,7 +282,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
                     layer.setItem(row, col, itemToMove);
                     inventoryView.setItem(rawSlot, null);
                 }
-                else
+                else if(bottomItem != null)
                 {
                     layer.removeItem(row, col);
                     player.getInventory().addItem(bottomItem);
