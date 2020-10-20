@@ -82,15 +82,27 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
         if(gui.isGuiOpened()) gui.closeGUI();
     }
 
+    /**
+     * The inventory drag event for handling the dragging of items in the GUI
+     *
+     * @param event The event to be processed
+     */
     @EventHandler
     public void onDrag(InventoryDragEvent event)
     {
         Player player = (Player) event.getWhoClicked();
         GUIContainer curGUI = plugin.guiManager().getPlayer(player).getGUI();
-        if(event.getInventory() != curGUI.getInventory()) return;
+        Inventory inventory = event.getInventory();
+        Inventory guiInventory = curGUI.getInventory();
+        if(inventory != guiInventory) return;
         event.setCancelled(true);
     }
 
+    /**
+     * Removes the <tt>Player</tt> from the <tt>GUIManager</tt> when they leave to prevent memory leaks
+     *
+     * @param event The event to be processed
+     */
     @EventHandler
     public void onPlayerQuit(PlayerQuitEvent event)
     {
