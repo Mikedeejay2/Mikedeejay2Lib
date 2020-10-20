@@ -7,6 +7,7 @@ import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.inventory.Inventory;
 
 /**
  * A method that acts as an injection into a <tt>GUIContainer</tt> to add features to the
@@ -93,25 +94,25 @@ public abstract class GUIModule extends PluginInstancer<PluginBase>
      * Called when a <tt>Player</tt> interacts (adds or removes an item) with the GUI, called in the head of the onPlayerInteract method in<tt>GUIContainer</tt>
      *
      * @param player The player interacting with the GUI
+     * @param inventory The inventory that was clicked
      * @param row The row that the player interacted on
      * @param col The column that the player interacted on
      * @param action The <tt>InventoryAction</tt> performed by the player
      * @param type The <tt>ClickType</tt> performed by the player
-     * @param rawSlot The raw slot of the inventory that was clicked
      * @param gui The GUI
      */
-    public void onPlayerInteractHead(Player player, int row, int col, InventoryAction action, ClickType type, int rawSlot, GUIContainer gui) {}
+    public void onPlayerInteractHead(Player player, Inventory inventory, int row, int col, InventoryAction action, ClickType type, GUIContainer gui) {}
 
     /**
      * Called when a <tt>Player</tt> interacts (adds or removes an item) with the GUI, called in the tail of the onPlayerInteract method in<tt>GUIContainer</tt>
      *
      * @param player The player interacting with the GUI
+     * @param inventory The inventory that was clicked
      * @param row The row that the player interacted on
      * @param col The column that the player interacted on
      * @param action The <tt>InventoryAction</tt> performed by the player
      * @param type The <tt>ClickType</tt> performed by the player
-     * @param rawSlot The raw slot of the inventory that was clicked
      * @param gui The GUI
      */
-    public void onPlayerInteractTail(Player player, int row, int col, InventoryAction action, ClickType type, int rawSlot, GUIContainer gui) {}
+    public void onPlayerInteractTail(Player player, Inventory inventory, int row, int col, InventoryAction action, ClickType type, GUIContainer gui) {}
 }

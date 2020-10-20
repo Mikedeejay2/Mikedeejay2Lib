@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
+import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractHandleDefault;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
@@ -14,7 +15,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -58,6 +58,8 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     protected int rowOffset;
     // The offset of the column
     protected int colOffset;
+    // The item interaction handler
+    protected GUIInteractHandleDefault interactionHandler;
 
     /**
      * Create a GUI of a regular size.
@@ -81,6 +83,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         rowOffset = 0;
         colOffset = 0;
         layers.add(new GUILayer(this, "base", false, defaultMoveState));
+        this.interactionHandler = new GUIInteractHandleDefault();
 
         inventory = Bukkit.createInventory(null, inventorySlots, this.inventoryName);
     }
@@ -107,6 +110,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         rowOffset = 0;
         colOffset = 0;
         layers.add(new GUILayer(this, "base", false, defaultMoveState));
+        this.interactionHandler = new GUIInteractHandleDefault();
 
         inventory = Bukkit.createInventory(null, inventorySlots, this.inventoryName);
     }
@@ -203,94 +207,18 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      * Called when a <tt>Player</tt> interacts (adds or removes an item) with the GUI.
      *
      * @param player The player interacting with the GUI
-     * @param row The row that the player interacted on
-     * @param col The column that the player interacted on
+     * @param inventory The inventory that was interacted with
+     * @param slot The slot that was interacted with
      * @param action The <tt>InventoryAction</tt> performed by the player
      * @param type The <tt>ClickType</tt> performed by the player
-     * @param rawSlot The raw slot of the inventory that was clicked
      */
-    public void onPlayerInteract(Player player, int row, int col, InventoryAction action, ClickType type, int rawSlot)
+    public void onPlayerInteract(Player player, Inventory inventory, int slot, InventoryAction action, ClickType type)
     {
-        modules.forEach(module -> module.onPlayerInteractHead(player, row, col, action, type, rawSlot, this));
-        player.sendMessage("Moved: " + action);
-        ItemStack cursorItem = player.getItemOnCursor();
-        if(cursorItem.getType() == Material.AIR) cursorItem = null;
-        GUIItem cursorGUIItem = new GUIItem(cursorItem);
-        cursorGUIItem.setMovable(getDefaultMoveState());
-        GUILayer layer = getLayer(0);
-        GUIItem bottomGUIItem = layer.getItem(row, col);
-        ItemStack bottomItem = bottomGUIItem == null ? null : bottomGUIItem.getItem();
-        switch(type)
-        {
-            case LEFT:
-            {
-                if(bottomItem == null)
-                {
-                    layer.setItem(row, col, cursorGUIItem);
-                    player.setItemOnCursor(null);
-                }
-                else if(cursorItem == null)
-                {
-                    layer.removeItem(row, col);
-                    player.setItemOnCursor(bottomItem);
-                }
-                else
-                {
-                    int bottomAmount = bottomItem.getAmount() + cursorItem.getAmount();
-                    bottomGUIItem.setAmount(bottomAmount);
-                    player.setItemOnCursor(null);
-                }
-                break;
-            }
-            case RIGHT:
-            {
-                if(cursorItem != null && bottomItem != null)
-                {
-                    int bottomAmount = bottomItem.getAmount() + 1;
-                    int cursorAmount = cursorItem.getAmount() - 1;
-                    bottomGUIItem.setAmount(bottomAmount);
-                    cursorItem.setAmount(cursorAmount);
-                    player.setItemOnCursor(cursorItem);
-                }
-                else if(cursorItem != null)
-                {
-                    bottomItem = cursorItem.clone();
-                    bottomItem.setAmount(1);
-                    cursorItem.setAmount(cursorItem.getAmount() - 1);
-                    layer.setItem(row, col, bottomItem);
-                    player.setItemOnCursor(cursorItem);
-                }
-                else if(bottomItem != null)
-                {
-                    int cursorAmount = (int) Math.ceil(bottomItem.getAmount() / 2.0f);
-                    int bottomAmount = (int) (bottomItem.getAmount() / 2.0f);
-                    bottomGUIItem.setAmount(bottomAmount);
-                    cursorItem = bottomItem.clone();
-                    cursorItem.setAmount(cursorAmount);
-                    player.setItemOnCursor(cursorItem);
-                    if(bottomAmount <= 0) layer.removeItem(row, col);
-                }
-                break;
-            }
-            case SHIFT_LEFT:
-            case SHIFT_RIGHT:
-            {
-                InventoryView inventoryView = player.getOpenInventory();
-                ItemStack itemToMove = inventoryView.getItem(rawSlot);
-                if(rawSlot >= getSlotAmount())
-                {
-                    layer.setItem(row, col, itemToMove);
-                    inventoryView.setItem(rawSlot, null);
-                }
-                else if(bottomItem != null)
-                {
-                    layer.removeItem(row, col);
-                    player.getInventory().addItem(bottomItem);
-                }
-                break;
-            }
-        }
-        modules.forEach(module -> module.onPlayerInteractTail(player, row, col, action, type, rawSlot, this));
+        int row = getRowFromSlot(slot);
+        int col = getColFromSlot(slot);
+        modules.forEach(module -> module.onPlayerInteractHead(player, inventory, row, col, action, type, this));
+        interactionHandler.handleInteraction(player, inventory, row, col, slot, action, type, this);
+        modules.forEach(module -> module.onPlayerInteractTail(player, inventory, row, col, action, type, this));
         update(player);
     }
 

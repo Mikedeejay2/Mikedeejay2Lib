@@ -42,7 +42,7 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
         GUIContainer curGUI = playerGUI.getGUI();
         Inventory clickedInventory = event.getClickedInventory();
         Inventory inventory = event.getInventory();
-        int rawSlot = event.getRawSlot();
+        int slot = event.getSlot();
         if(clickedInventory != inventory)
         {
             if(playerGUI.isGuiOpened())
@@ -60,9 +60,7 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
                         ItemStack curItem = inventory.getItem(i);
                         if(curItem != null) continue;
 
-                        int row = curGUI.getRowFromSlot(i);
-                        int col = curGUI.getColFromSlot(i);
-                        curGUI.onPlayerInteract(player, row, col, action, clickType, rawSlot);
+                        curGUI.onPlayerInteract(player, inventory, slot, action, clickType);
                         return;
                     }
                 }
@@ -71,7 +69,6 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
         }
 
         if(event.getCurrentItem() == null && event.getCursor() == null) return;
-        int slot = event.getSlot();
 
         int row = curGUI.getRowFromSlot(slot);
         int col = curGUI.getColFromSlot(slot);
@@ -79,7 +76,7 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
         event.setCancelled(true);
         if(curGUI.canSlotBeMoved(row, col))
         {
-            curGUI.onPlayerInteract(player, row, col, action, clickType, rawSlot);
+            curGUI.onPlayerInteract(player, inventory, slot, action, clickType);
             return;
         }
 
