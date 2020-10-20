@@ -49,4 +49,17 @@ public class GUIManager extends PluginInstancer<PluginBase>
         if(playerGUIs.containsKey(player)) return;
         playerGUIs.put(player, new PlayerGUI(plugin, player));
     }
+
+    /**
+     * Remove a player from the <tt>GUIManager</tt>.
+     *
+     * @param player The player to remove
+     */
+    public void removePlayer(Player player)
+    {
+        if(!playerGUIs.containsKey(player)) return;
+        PlayerGUI gui = playerGUIs.get(player);
+        gui.closeGUI();
+        playerGUIs.remove(player);
+    }
 }

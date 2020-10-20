@@ -143,4 +143,14 @@ public class PlayerGUI extends PluginInstancer<PluginBase>
         if(naviSystems.containsKey(navigationID)) return;
         naviSystems.put(navigationID, new NavigationSystem(player, navigationID));
     }
+
+    /**
+     * Get a list a map of String (Navigation System name) to <tt>NavigationSystem</tt>
+     *
+     * @return The map of systems
+     */
+    public Map<String, NavigationSystem> getNaviSystems()
+    {
+        return naviSystems;
+    }
 }

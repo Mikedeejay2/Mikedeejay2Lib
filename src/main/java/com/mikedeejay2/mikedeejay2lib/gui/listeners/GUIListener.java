@@ -11,6 +11,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.*;
+import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -36,35 +37,19 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
     {
         InventoryAction action = event.getAction();
         ClickType clickType = event.getClick();
-        if(action == InventoryAction.CLONE_STACK) return;
         Player player = (Player) event.getWhoClicked();
         PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
+        if(!playerGUI.isGuiOpened()) return;
+
         GUIContainer curGUI = playerGUI.getGUI();
         Inventory clickedInventory = event.getClickedInventory();
         Inventory inventory = event.getInventory();
         int slot = event.getSlot();
+
         if(clickedInventory != inventory)
         {
-            if(playerGUI.isGuiOpened())
-            {
-                if(action == InventoryAction.COLLECT_TO_CURSOR)
-                {
-                    event.setCancelled(true);
-                    return;
-                }
-                else if(clickType.isShiftClick())
-                {
-                    event.setCancelled(true);
-                    for(int i = 0; i < inventory.getSize(); i++)
-                    {
-                        ItemStack curItem = inventory.getItem(i);
-                        if(curItem != null) continue;
-
-                        curGUI.onPlayerInteract(player, inventory, slot, action, clickType);
-                        return;
-                    }
-                }
-            }
+            event.setCancelled(true);
+            curGUI.onPlayerInteract(player, inventory, slot, action, clickType);
             return;
         }
 
@@ -104,5 +89,12 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
         GUIContainer curGUI = plugin.guiManager().getPlayer(player).getGUI();
         if(event.getInventory() != curGUI.getInventory()) return;
         event.setCancelled(true);
+    }
+
+    @EventHandler
+    public void onPlayerQuit(PlayerQuitEvent event)
+    {
+        Player player = event.getPlayer();
+        plugin.guiManager().removePlayer(player);
     }
 }
