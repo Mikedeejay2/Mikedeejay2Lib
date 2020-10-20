@@ -16,7 +16,7 @@ import org.bukkit.event.inventory.InventoryAction;
  * will be called for the event. <p>
  *
  * Multiple <tt>GUIEvents</tt> can be added to a <tt>GUIItem</tt>
- * through the use of a <tt>GUIItemEvent</tt> which can hold multiple
+ * through the use of a <tt>GUIEventHandler</tt> which can hold multiple
  * <tt>GUIEvents</tt>. This is automatically done so you don't have to
  * worry about it.
  *

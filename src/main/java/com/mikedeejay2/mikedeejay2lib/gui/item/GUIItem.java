@@ -3,7 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.item;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIItemEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -38,7 +38,7 @@ public class GUIItem implements Cloneable
     // Whether or not this item can be moved
     protected boolean movable;
     // GUI Events for this item
-    protected GUIItemEvent events;
+    protected GUIEventHandler events;
     // The row that this item is located on
     protected int row;
     // The column that this item is located on
@@ -51,7 +51,7 @@ public class GUIItem implements Cloneable
         this.baseItem = item;
         this.viewItem = item;
         this.movable = false;
-        this.events = new GUIItemEvent();
+        this.events = new GUIEventHandler();
     }
 
     /**
@@ -222,21 +222,21 @@ public class GUIItem implements Cloneable
     }
 
     /**
-     * Get the <tt>GUIItemEvent</tt> of this item
+     * Get the <tt>GUIEventHandler</tt> of this item
      *
      * @return the item event of this item
      */
-    public GUIItemEvent getEvents()
+    public GUIEventHandler getEvents()
     {
         return events;
     }
 
     /**
-     * Set the <tt>GUIItemEvent</tt> for this item
+     * Set the <tt>GUIEventHandler</tt> for this item
      *
      * @param events Events to set this item to use
      */
-    public void setEvents(GUIItemEvent events)
+    public void setEvents(GUIEventHandler events)
     {
         this.events = events;
     }
@@ -298,7 +298,7 @@ public class GUIItem implements Cloneable
      */
     public void resetEvents()
     {
-        this.events = new GUIItemEvent();
+        this.events = new GUIEventHandler();
     }
 
     public ItemMeta getMetaView()

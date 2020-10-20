@@ -2,7 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIItemEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
@@ -375,13 +375,13 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Get the <tt>GUIItemEvent</tt> from a slot
+     * Get the <tt>GUIEventHandler</tt> from a slot
      *
      * @param row The row to get
      * @param col The column to get
      * @return The events of the slot
      */
-    public GUIItemEvent getItemEvents(int row, int col)
+    public GUIEventHandler getEventHandler(int row, int col)
     {
         for(int i = layers.size() - 1; i >= 0; --i)
         {
@@ -393,13 +393,13 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     }
 
     /**
-     * Set the <tt>GUIItemEvent</tt> for a slot
+     * Set the <tt>GUIEventHandler</tt> for a slot
      *
      * @param row The row to set
      * @param col The column to set
      * @param events The events to set the slot to
      */
-    public void setItemEvents(int row, int col, GUIItemEvent events)
+    public void setEventHandler(int row, int col, GUIEventHandler events)
     {
         for(int i = layers.size() - 1; i >= 0; i--)
         {
@@ -520,7 +520,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      * @param row Row to remove events from
      * @param col Column to remove events from
      */
-    public void removeItemEvents(int row, int col)
+    public void removeEventHandler(int row, int col)
     {
         for(int i = layers.size() - 1; i >= 0; i--)
         {

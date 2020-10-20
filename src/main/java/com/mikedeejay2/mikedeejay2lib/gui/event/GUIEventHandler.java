@@ -2,11 +2,9 @@ package com.mikedeejay2.mikedeejay2lib.gui.event;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
-import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
-import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -18,12 +16,12 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class GUIItemEvent implements Cloneable
+public class GUIEventHandler implements Cloneable
 {
-    // A list of GUIEvents that this GUIItemEvent holds
+    // A list of GUIEvents that this GUIEventHandler holds
     List<GUIEvent> events;
 
-    public GUIItemEvent()
+    public GUIEventHandler()
     {
         events = new ArrayList<>();
     }
@@ -134,12 +132,12 @@ public class GUIItemEvent implements Cloneable
     }
 
     @Override
-    public GUIItemEvent clone()
+    public GUIEventHandler clone()
     {
-        GUIItemEvent newEvents = null;
+        GUIEventHandler newEvents = null;
         try
         {
-            newEvents = (GUIItemEvent) super.clone();
+            newEvents = (GUIEventHandler) super.clone();
         }
         catch(CloneNotSupportedException e)
         {
