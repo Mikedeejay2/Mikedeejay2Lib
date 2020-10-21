@@ -34,7 +34,6 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
         InventoryAction action = event.getAction();
         ClickType clickType = event.getClick();
         Player player = (Player) event.getWhoClicked();
-        player.sendMessage("Moved: " + action);
         PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
         if(!playerGUI.isGuiOpened()) return;
 

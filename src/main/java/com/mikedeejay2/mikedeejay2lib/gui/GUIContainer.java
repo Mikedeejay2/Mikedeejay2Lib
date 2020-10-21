@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
+import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractExecutor;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefault;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
@@ -865,6 +866,34 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     public GUILayer getLayer(int index)
     {
         return layers.get(index);
+    }
+
+    public GUILayer getTopLayer(int row, int col)
+    {
+        for(int i = layers.size() - 1; i <= 0; --i)
+        {
+            GUILayer layer = layers.get(i);
+            GUIItem item = layer.getItem(row, col);
+            if(item == null) continue;
+            return layer;
+        }
+        return layers.get(0);
+    }
+
+    /**
+     * Force add a layer at a specific index
+     *
+     * @param index The index to add the layer at
+     * @param layerName The name of the layer
+     * @param overlay Whether the layer is an overlay or not
+     * @return The new layer
+     */
+    public GUILayer addLayer(int index, String layerName, boolean overlay)
+    {
+        if(containsLayer(layerName)) return getLayer(layerName);
+        GUILayer layer = new GUILayer(this, layerName, overlay, defaultMoveState);
+        layers.add(layer);
+        return layer;
     }
 
     /**

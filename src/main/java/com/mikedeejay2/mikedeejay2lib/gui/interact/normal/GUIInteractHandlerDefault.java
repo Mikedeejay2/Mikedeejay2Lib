@@ -1,6 +1,8 @@
 package com.mikedeejay2.mikedeejay2lib.gui.interact.normal;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
+import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractExecutor;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractHandler;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -17,6 +19,7 @@ public class GUIInteractHandlerDefault extends GUIInteractHandler
     public GUIInteractHandlerDefault()
     {
         super();
+        executors.add(new GUIInteractExecutorDefault());
     }
 
     /**
@@ -33,6 +36,8 @@ public class GUIInteractHandlerDefault extends GUIInteractHandler
     @Override
     public void handleInteraction(Player player, Inventory inventory, int slot, InventoryAction action, ClickType type, GUIContainer gui)
     {
-
+        player.sendMessage("Moved: " + action);
+        GUILayer layer = gui.getLayer(0);
+        executeAction(player, inventory, slot, action, gui, layer);
     }
 }

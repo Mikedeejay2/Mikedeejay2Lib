@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.gui.interact;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefault;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -134,5 +135,31 @@ public abstract class GUIInteractHandler
             return executor;
         }
         return null;
+    }
+
+    public void executeAction(Player player, Inventory inventory, int slot, InventoryAction action, GUIContainer gui, GUILayer layer)
+    {
+        switch(action)
+        {
+            case NOTHING:                   for(GUIInteractExecutor e : executors) e.executeNothing(player, inventory, slot, gui, layer);               break;
+            case PICKUP_ALL:                for(GUIInteractExecutor e : executors) e.executePickupAll(player, inventory, slot, gui, layer);             break;
+            case PICKUP_SOME:               for(GUIInteractExecutor e : executors) e.executePickupSome(player, inventory, slot, gui, layer);            break;
+            case PICKUP_HALF:               for(GUIInteractExecutor e : executors) e.executePickupHalf(player, inventory, slot, gui, layer);            break;
+            case PICKUP_ONE:                for(GUIInteractExecutor e : executors) e.executePickupOne(player, inventory, slot, gui, layer);             break;
+            case PLACE_ALL:                 for(GUIInteractExecutor e : executors) e.executePlaceAll(player, inventory, slot, gui, layer);              break;
+            case PLACE_SOME:                for(GUIInteractExecutor e : executors) e.executePlaceSome(player, inventory, slot, gui, layer);             break;
+            case PLACE_ONE:                 for(GUIInteractExecutor e : executors) e.executePlaceOne(player, inventory, slot, gui, layer);              break;
+            case SWAP_WITH_CURSOR:          for(GUIInteractExecutor e : executors) e.executeSwapWithCursor(player, inventory, slot, gui, layer);        break;
+            case DROP_ALL_CURSOR:           for(GUIInteractExecutor e : executors) e.executeDropAllCursor(player, inventory, slot, gui, layer);         break;
+            case DROP_ONE_CURSOR:           for(GUIInteractExecutor e : executors) e.executeDropOneCursor(player, inventory, slot, gui, layer);         break;
+            case DROP_ALL_SLOT:             for(GUIInteractExecutor e : executors) e.executeDropAllSlot(player, inventory, slot, gui, layer);           break;
+            case DROP_ONE_SLOT:             for(GUIInteractExecutor e : executors) e.executeDropOneSlot(player, inventory, slot, gui, layer);           break;
+            case MOVE_TO_OTHER_INVENTORY:   for(GUIInteractExecutor e : executors) e.executeMoveToOtherInventory(player, inventory, slot, gui, layer);  break;
+            case HOTBAR_MOVE_AND_READD:     for(GUIInteractExecutor e : executors) e.executeHotbarMoveAndReadd(player, inventory, slot, gui, layer);    break;
+            case HOTBAR_SWAP:               for(GUIInteractExecutor e : executors) e.executeHotbarSwap(player, inventory, slot, gui, layer);            break;
+            case CLONE_STACK:               for(GUIInteractExecutor e : executors) e.executeCloneStack(player, inventory, slot, gui, layer);            break;
+            case COLLECT_TO_CURSOR:         for(GUIInteractExecutor e : executors) e.executeCollectToCursor(player, inventory, slot, gui, layer);       break;
+            default: for(GUIInteractExecutor e : executors) e.executeUnknown(player, inventory, slot, gui, layer); break;
+        }
     }
 }
