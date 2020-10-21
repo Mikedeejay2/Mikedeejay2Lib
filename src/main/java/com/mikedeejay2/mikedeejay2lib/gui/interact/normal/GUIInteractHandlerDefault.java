@@ -36,7 +36,6 @@ public class GUIInteractHandlerDefault extends GUIInteractHandler
     @Override
     public void handleInteraction(Player player, Inventory inventory, int slot, InventoryAction action, ClickType type, GUIContainer gui)
     {
-        player.sendMessage("Moved: " + action);
         GUILayer layer = gui.getLayer(0);
         executeAction(player, inventory, slot, action, gui, layer);
     }

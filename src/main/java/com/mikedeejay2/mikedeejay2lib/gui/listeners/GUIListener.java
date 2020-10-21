@@ -45,7 +45,7 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
         if(clickedInventory != inventory)
         {
             event.setCancelled(true);
-            curGUI.onPlayerInteract(player, inventory, slot, action, clickType);
+            curGUI.onPlayerInteract(player, clickedInventory, slot, action, clickType);
             return;
         }
 
@@ -57,7 +57,7 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
         event.setCancelled(true);
         if(curGUI.canSlotBeMoved(row, col))
         {
-            curGUI.onPlayerInteract(player, inventory, slot, action, clickType);
+            curGUI.onPlayerInteract(player, clickedInventory, slot, action, clickType);
         }
 
         curGUI.onClicked(player, row, col, curGUI.getItem(row, col), action, clickType);
