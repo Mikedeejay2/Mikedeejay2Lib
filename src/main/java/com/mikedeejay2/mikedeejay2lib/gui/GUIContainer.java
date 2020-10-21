@@ -3,7 +3,8 @@ package com.mikedeejay2.mikedeejay2lib.gui;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
-import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractHandleDefault;
+import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractHandler;
+import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefault;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
@@ -59,7 +60,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     // The offset of the column
     protected int colOffset;
     // The item interaction handler
-    protected GUIInteractHandleDefault interactionHandler;
+    protected GUIInteractHandler interactionHandler;
 
     /**
      * Create a GUI of a regular size.
@@ -83,7 +84,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         rowOffset = 0;
         colOffset = 0;
         layers.add(new GUILayer(this, "base", false, defaultMoveState));
-        this.interactionHandler = new GUIInteractHandleDefault();
+        this.interactionHandler = new GUIInteractHandlerDefault();
 
         inventory = Bukkit.createInventory(null, inventorySlots, this.inventoryName);
     }
@@ -110,7 +111,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         rowOffset = 0;
         colOffset = 0;
         layers.add(new GUILayer(this, "base", false, defaultMoveState));
-        this.interactionHandler = new GUIInteractHandleDefault();
+        this.interactionHandler = new GUIInteractHandlerDefault();
 
         inventory = Bukkit.createInventory(null, inventorySlots, this.inventoryName);
     }
@@ -217,7 +218,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
         int row = getRowFromSlot(slot);
         int col = getColFromSlot(slot);
         modules.forEach(module -> module.onPlayerInteractHead(player, inventory, row, col, action, type, this));
-        interactionHandler.handleInteraction(player, inventory, row, col, slot, action, type, this);
+        interactionHandler.handleInteraction(player, inventory, slot, action, type, this);
         modules.forEach(module -> module.onPlayerInteractTail(player, inventory, row, col, action, type, this));
         update(player);
     }
@@ -885,5 +886,25 @@ public class GUIContainer extends PluginInstancer<PluginBase>
     public int getSlotAmount()
     {
         return inventorySlots;
+    }
+
+    /**
+     * Get this GUIs <tt>GUIInteractHandler</tt>
+     *
+     * @return The <tt>GUIInteractHandler</tt> for this GUI
+     */
+    public GUIInteractHandler getInteractionHandler()
+    {
+        return interactionHandler;
+    }
+
+    /**
+     * Set this GUIs <tt>GUIInteractHandler</tt>
+     *
+     * @param interactionHandler The new <tt>GUIInteractHandler</tt> for this GUI
+     */
+    public void setInteractionHandler(GUIInteractHandler interactionHandler)
+    {
+        this.interactionHandler = interactionHandler;
     }
 }

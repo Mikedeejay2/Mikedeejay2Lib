@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.gui.interact;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefault;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
@@ -12,7 +13,7 @@ import java.util.List;
 /**
  * Handles interactions between the player and the GUI when moving items
  * <p>
- * For default item movement, use {@link GUIInteractHandleDefault}
+ * For default item movement, use {@link GUIInteractHandlerDefault}
  *
  * @author Mikedeejay2
  */
@@ -31,14 +32,12 @@ public abstract class GUIInteractHandler
      *
      * @param player The player interacting with the GUI
      * @param inventory The inventory that was clicked
-     * @param row The row that was interacted with
-     * @param col The column that was interacted with
      * @param slot The original slot that was interacted with
      * @param action The original <tt>InventoryAction</tt> that Minecraft suggests should happen
      * @param type The original <tt>ClickType</tt> that Minecraft suggests should happen
      * @param gui The GUI that the player interacted with
      */
-    public abstract void handleInteraction(Player player, Inventory inventory, int row, int col, int slot, InventoryAction action, ClickType type, GUIContainer gui);
+    public abstract void handleInteraction(Player player, Inventory inventory, int slot, InventoryAction action, ClickType type, GUIContainer gui);
 
     /**
      * Add a <tt>GUIInteractExecutor</tt> that will be executed upon the handling of an interaction
@@ -116,5 +115,24 @@ public abstract class GUIInteractHandler
     public List<GUIInteractExecutor> getExecutors()
     {
         return executors;
+    }
+
+    /**
+     * Get a <tt>GUIInteractExecutor</tt> from this handlers executor list
+     *
+     * @param executorClass The <tt>GUIInteractExecutor</tt> class to find and get from the list
+     * @return The requested <tt>GUIInteractExecutor</tt>
+     */
+    public GUIInteractExecutor getExecutor(Class<? extends GUIInteractExecutor> executorClass)
+    {
+        String className = executorClass.getName();
+        for(GUIInteractExecutor executor : executors)
+        {
+            Class<? extends GUIInteractExecutor> curClass = executor.getClass();
+            String curClassName = curClass.getName();
+            if(!className.equals(curClassName)) continue;
+            return executor;
+        }
+        return null;
     }
 }

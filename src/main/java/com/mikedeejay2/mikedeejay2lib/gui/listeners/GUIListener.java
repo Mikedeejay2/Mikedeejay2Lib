@@ -2,18 +2,14 @@ package com.mikedeejay2.mikedeejay2lib.gui.listeners;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
-import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
-import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.inventory.*;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * A listener class that listens for GUI interactions with a <tt>GUIContainer</tt>
@@ -38,6 +34,7 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
         InventoryAction action = event.getAction();
         ClickType clickType = event.getClick();
         Player player = (Player) event.getWhoClicked();
+        player.sendMessage("Moved: " + action);
         PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
         if(!playerGUI.isGuiOpened()) return;
 
@@ -62,7 +59,6 @@ public class GUIListener extends PluginInstancer<PluginBase> implements Listener
         if(curGUI.canSlotBeMoved(row, col))
         {
             curGUI.onPlayerInteract(player, inventory, slot, action, clickType);
-            return;
         }
 
         curGUI.onClicked(player, row, col, curGUI.getItem(row, col), action, clickType);
