@@ -13,6 +13,7 @@ import java.io.File;
  */
 public abstract class DataFile
 {
+    protected final PluginBase plugin;
     // Path from the plugins folder to the file. (This DOES NOT include plugin.getDataFolder())
     protected String filePath;
     // The file to to this file on the disk (This does not ensure that the file is on the disk)
@@ -24,6 +25,7 @@ public abstract class DataFile
 
     public DataFile(PluginBase plugin, String filePath)
     {
+        this.plugin = plugin;
         this.fileIO = new FileIO(plugin);
         this.filePath = filePath;
         this.file = new File(plugin.getDataFolder(), filePath);
