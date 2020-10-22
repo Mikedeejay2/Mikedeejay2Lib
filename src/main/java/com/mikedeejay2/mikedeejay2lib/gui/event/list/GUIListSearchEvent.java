@@ -33,6 +33,5 @@ public class GUIListSearchEvent implements GUIEvent
         // After that,
         GUIListModule list = gui.getModule(GUIListModule.class);
         list.enableSearchMode("search term");
-        gui.update(player);
     }
 }

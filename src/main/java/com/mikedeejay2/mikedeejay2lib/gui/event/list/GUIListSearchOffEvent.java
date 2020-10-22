@@ -22,6 +22,5 @@ public class GUIListSearchOffEvent implements GUIEvent
     {
         if(clickType != ClickType.LEFT) return;
         gui.getModule(GUIListModule.class).disableSearchMode();
-        gui.update(player);
     }
 }

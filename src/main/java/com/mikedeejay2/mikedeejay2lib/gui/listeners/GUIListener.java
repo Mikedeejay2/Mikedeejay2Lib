@@ -34,14 +34,14 @@ public class GUIListener implements Listener
     @EventHandler
     public void onClick(InventoryClickEvent event)
     {
-        DebugTimer timer = new DebugTimer("onClick");
+//        DebugTimer timer = new DebugTimer("onClick");
         InventoryAction action = event.getAction();
         ClickType clickType = event.getClick();
         Player player = (Player) event.getWhoClicked();
         PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
         if(!playerGUI.isGuiOpened())
         {
-            timer.printReport();
+//            timer.printReport();
             return;
         }
 
@@ -49,31 +49,33 @@ public class GUIListener implements Listener
         Inventory clickedInventory = event.getClickedInventory();
         Inventory inventory = event.getInventory();
         int slot = event.getSlot();
+//        timer.addPrintPoint("Initialize variables");
 
         if(clickedInventory != inventory)
         {
             event.setCancelled(true);
             curGUI.onPlayerInteract(player, clickedInventory, slot, action, clickType);
-            timer.printReport();
-            return;
-        }
-
-        if(event.getCurrentItem() == null && event.getCursor() == null)
-        {
-            timer.printReport();
+            curGUI.update(player);
+//            timer.printReport();
             return;
         }
 
         int row = curGUI.getRowFromSlot(slot);
         int col = curGUI.getColFromSlot(slot);
 
+//        timer.addPrintPoint("Check validity");
+
         event.setCancelled(true);
         if(curGUI.canSlotBeMoved(row, col))
         {
             curGUI.onPlayerInteract(player, clickedInventory, slot, action, clickType);
         }
+//        timer.addPrintPoint("Slot Move");
         curGUI.onClicked(player, row, col, curGUI.getItem(row, col), action, clickType);
-        timer.printReport();
+//        timer.addPrintPoint("Clicked");
+        curGUI.update(player);
+//        timer.addPrintPoint("Update");
+//        timer.printReport();
     }
 
     /**
@@ -92,7 +94,7 @@ public class GUIListener implements Listener
         Inventory guiInv = playerGUI.getGUI().getInventory();
         Inventory playerInv = event.getInventory();
         if(guiInv != playerInv) return;
-        playerGUI.setGUIState(false);
+        playerGUI.closeGUI();
     }
 
     /**

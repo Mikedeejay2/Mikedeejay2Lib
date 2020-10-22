@@ -40,6 +40,5 @@ public class GUIScrollEvent implements GUIEvent
         {
             gui.addColOffset(colAmt);
         }
-        gui.update(player);
     }
 }

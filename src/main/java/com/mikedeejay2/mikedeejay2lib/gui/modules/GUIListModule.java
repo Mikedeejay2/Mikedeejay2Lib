@@ -286,7 +286,6 @@ public class GUIListModule extends GUIModule
     public void toListPage(int page, Player player, GUIContainer gui)
     {
         curPage = page;
-        gui.update(player);
     }
 
     /**

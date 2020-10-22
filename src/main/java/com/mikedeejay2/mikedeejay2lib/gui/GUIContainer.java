@@ -9,6 +9,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefa
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -155,10 +156,17 @@ public class GUIContainer
         int newInvRows = Math.min(inventoryRows, MAX_INVENTORY_ROWS);
 
         int fillSlot = -1;
-        for(int row = 0; row < newInvRows; ++row)
+        GUILayer bottomLayer = layers.get(0);
+        for(int row = 1; row <= newInvRows; ++row)
         {
-            for(int col = 0; col < MAX_INVENTORY_COLS; ++col)
+            for(int col = 1; col <= MAX_INVENTORY_COLS; ++col)
             {
+                GUIItem item = bottomLayer.getItem(row, col);
+                if((item != null && item.isMovable()) || (item == null && bottomLayer.getDefaultMoveState()))
+                {
+                    ++fillSlot;
+                    continue;
+                }
                 ++fillSlot;
                 inventory.setItem(fillSlot, EMPTY_STACK);
             }
@@ -179,10 +187,6 @@ public class GUIContainer
                     GUIItem guiItem = layer.getItem(row + 1 + curRowOffset, col + 1 + curColOffset);
                     if(guiItem == null)
                     {
-                        if(layer.getDefaultMoveState() && EMPTY_STACK.equals(inventory.getItem(invSlot)))
-                        {
-                            inventory.setItem(invSlot, null);
-                        }
                         continue;
                     }
                     ItemStack itemStack = guiItem.getItem();
@@ -190,10 +194,6 @@ public class GUIContainer
                     if(itemStack != null)
                     {
                         inventory.setItem(invSlot, itemStack);
-                    }
-                    else if(guiItem.isMovable() && EMPTY_STACK.equals(inventory.getItem(invSlot)))
-                    {
-                        inventory.setItem(invSlot, null);
                     }
                 }
             }
@@ -221,7 +221,6 @@ public class GUIContainer
         modules.forEach(module -> module.onPlayerInteractHead(player, inventory, row, col, action, type, this));
         interactionHandler.handleInteraction(player, inventory, slot, action, type, this);
         modules.forEach(module -> module.onPlayerInteractTail(player, inventory, row, col, action, type, this));
-        update(player);
     }
 
     /**
