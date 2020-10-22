@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.listeners;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.gui.manager.GUIManager;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -74,8 +75,32 @@ public class GUIListener implements Listener
     public void onClose(InventoryCloseEvent event)
     {
         Player player = (Player) event.getPlayer();
-        PlayerGUI gui = plugin.guiManager().getPlayer(player);
-        if(gui.isGuiOpened()) gui.closeGUI();
+        GUIManager manager = plugin.guiManager();
+        if(!manager.containsPlayer(player)) return;
+        PlayerGUI playerGUI = manager.getPlayer(player);
+        Inventory guiInv = playerGUI.getGUI().getInventory();
+        Inventory playerInv = event.getInventory();
+        if(guiInv != playerInv) return;
+        playerGUI.setGUIState(false);
+    }
+
+    /**
+     * On inventory open. This listener exists to detect whether a player
+     * is in a GUI or not.
+     *
+     * @param event The event to be processed
+     */
+    @EventHandler
+    public void onOpen(InventoryOpenEvent event)
+    {
+        Player player = (Player) event.getPlayer();
+        GUIManager manager = plugin.guiManager();
+        if(!manager.containsPlayer(player)) return;
+        PlayerGUI playerGUI = manager.getPlayer(player);
+        Inventory guiInv = playerGUI.getGUI().getInventory();
+        Inventory playerInv = event.getInventory();
+        if(guiInv != playerInv) return;
+        playerGUI.setGUIState(true);
     }
 
     /**

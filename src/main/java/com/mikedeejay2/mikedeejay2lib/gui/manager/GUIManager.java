@@ -46,7 +46,7 @@ public class GUIManager
      */
     public void validCheck(Player player)
     {
-        if(playerGUIs.containsKey(player)) return;
+        if(containsPlayer(player)) return;
         playerGUIs.put(player, new PlayerGUI(plugin, player));
     }
 
@@ -57,9 +57,14 @@ public class GUIManager
      */
     public void removePlayer(Player player)
     {
-        if(!playerGUIs.containsKey(player)) return;
+        if(!containsPlayer(player)) return;
         PlayerGUI gui = playerGUIs.get(player);
         gui.closeGUI();
         playerGUIs.remove(player);
+    }
+
+    public boolean containsPlayer(Player player)
+    {
+        return playerGUIs.containsKey(player);
     }
 }

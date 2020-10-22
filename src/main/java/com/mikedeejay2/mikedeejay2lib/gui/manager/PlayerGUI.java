@@ -66,7 +66,6 @@ public class PlayerGUI
      */
     public void openGUI()
     {
-        setGUIState(true);
         gui.open(player);
     }
 
@@ -75,7 +74,6 @@ public class PlayerGUI
      */
     public void closeGUI()
     {
-        setGUIState(false);
         gui.close(player);
     }
 
@@ -86,14 +84,7 @@ public class PlayerGUI
      */
     public void setGUIState(boolean state)
     {
-        new BukkitRunnable()
-        {
-            @Override
-            public void run()
-            {
-                guiOpened = state;
-            }
-        }.runTask(plugin);
+        guiOpened = state;
     }
 
     /**
