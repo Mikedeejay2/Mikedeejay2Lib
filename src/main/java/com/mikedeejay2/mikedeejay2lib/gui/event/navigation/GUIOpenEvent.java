@@ -32,6 +32,7 @@ public class GUIOpenEvent implements GUIEvent
     @Override
     public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType)
     {
+        if(clickType != ClickType.LEFT) return;
         if(gui.equals(guiToOpen)) return;
         PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
         navigationCheck(gui, playerGUI);

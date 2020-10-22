@@ -28,6 +28,7 @@ public class GUINavForwardEvent implements GUIEvent
     @Override
     public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType)
     {
+        if(clickType != ClickType.LEFT) return;
         GUINavigatorModule module = gui.getModule(GUINavigatorModule.class);
         PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
         NavigationSystem system = playerGUI.getNaviSystem(module.getNavigationID());

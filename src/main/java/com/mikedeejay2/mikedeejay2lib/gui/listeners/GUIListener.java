@@ -4,6 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.GUIManager;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
+import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -33,11 +34,16 @@ public class GUIListener implements Listener
     @EventHandler
     public void onClick(InventoryClickEvent event)
     {
+        DebugTimer timer = new DebugTimer("onClick");
         InventoryAction action = event.getAction();
         ClickType clickType = event.getClick();
         Player player = (Player) event.getWhoClicked();
         PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
-        if(!playerGUI.isGuiOpened()) return;
+        if(!playerGUI.isGuiOpened())
+        {
+            timer.printReport();
+            return;
+        }
 
         GUIContainer curGUI = playerGUI.getGUI();
         Inventory clickedInventory = event.getClickedInventory();
@@ -48,10 +54,15 @@ public class GUIListener implements Listener
         {
             event.setCancelled(true);
             curGUI.onPlayerInteract(player, clickedInventory, slot, action, clickType);
+            timer.printReport();
             return;
         }
 
-        if(event.getCurrentItem() == null && event.getCursor() == null) return;
+        if(event.getCurrentItem() == null && event.getCursor() == null)
+        {
+            timer.printReport();
+            return;
+        }
 
         int row = curGUI.getRowFromSlot(slot);
         int col = curGUI.getColFromSlot(slot);
@@ -61,8 +72,8 @@ public class GUIListener implements Listener
         {
             curGUI.onPlayerInteract(player, clickedInventory, slot, action, clickType);
         }
-
         curGUI.onClicked(player, row, col, curGUI.getItem(row, col), action, clickType);
+        timer.printReport();
     }
 
     /**

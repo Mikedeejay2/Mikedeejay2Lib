@@ -27,6 +27,7 @@ public class GUIScrollEvent implements GUIEvent
     @Override
     public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType)
     {
+        if(clickType != ClickType.LEFT) return;
         int rowOffset = gui.getRowOffset();
         int colOffset = gui.getColOffset();
         int totalRow = rowOffset + Math.min(GUIContainer.MAX_INVENTORY_ROWS, gui.getRows());
