@@ -87,7 +87,7 @@ public class AnimatedGUIItem extends GUIItem
         }
         if(index >= frames.size())
         {
-            if(loop) index = index - frames.size();
+            if(loop) index -= frames.size();
             else return false;
         }
         long curWait = frames.get(index).getPeriod();
@@ -353,7 +353,7 @@ public class AnimatedGUIItem extends GUIItem
         super.onClick(player, row, col, clicked, gui, action, clickType);
         if(resetOnClick)
         {
-            index = index - frames.size();
+            index = 0;
             wait = 0;
         }
     }
