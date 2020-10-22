@@ -20,6 +20,7 @@ import org.bukkit.entity.Player;
  */
 public class GUINavigatorModule extends GUIModule
 {
+    protected final PluginBase plugin;
     // The ID of the Navigator
     protected String navigationID;
 
@@ -34,8 +35,7 @@ public class GUINavigatorModule extends GUIModule
 
     public GUINavigatorModule(PluginBase plugin, String navigationID)
     {
-        super(plugin);
-
+        this.plugin = plugin;
         this.navigationID = navigationID;
 
         this.validBackItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_WHITE, 1, "&fBack"));

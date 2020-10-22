@@ -1,7 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util.item;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;

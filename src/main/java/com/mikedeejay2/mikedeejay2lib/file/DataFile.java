@@ -1,7 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.file;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 
 import java.io.File;
 
@@ -12,7 +11,7 @@ import java.io.File;
  *
  * @author Mikedeejay2
  */
-public abstract class DataFile extends PluginInstancer<PluginBase>
+public abstract class DataFile
 {
     // Path from the plugins folder to the file. (This DOES NOT include plugin.getDataFolder())
     protected String filePath;
@@ -25,7 +24,6 @@ public abstract class DataFile extends PluginInstancer<PluginBase>
 
     public DataFile(PluginBase plugin, String filePath)
     {
-        super(plugin);
         this.fileIO = new FileIO(plugin);
         this.filePath = filePath;
         this.file = new File(plugin.getDataFolder(), filePath);

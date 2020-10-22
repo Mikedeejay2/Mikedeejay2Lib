@@ -7,7 +7,6 @@ import com.mikedeejay2.mikedeejay2lib.gui.listeners.GUIListener;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.GUIManager;
 import com.mikedeejay2.mikedeejay2lib.language.LangManager;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
-import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
 import org.bukkit.plugin.java.JavaPlugin;
 
@@ -38,7 +37,7 @@ public class PluginBase extends JavaPlugin
         this.MCVersion = new MinecraftVersion(this).getMCVersion();
         this.langManager = new LangManager(this);
         this.commandManager = new CommandManager(this);
-        this.fileManager = new FileManager(this);
+        this.fileManager = new FileManager();
         this.listenerManager = new ListenerManager(this);
         this.guiManager = new GUIManager(this);
 

@@ -13,14 +13,13 @@ import org.bukkit.event.inventory.InventoryAction;
  *
  * @author Mikedeejay2
  */
-public class GUIScrollEvent extends GUIEvent
+public class GUIScrollEvent implements GUIEvent
 {
     protected int rowAmt;
     protected int colAmt;
 
-    public GUIScrollEvent(PluginBase plugin, int rowAmt, int colAmt)
+    public GUIScrollEvent(int rowAmt, int colAmt)
     {
-        super(plugin);
         this.rowAmt = rowAmt;
         this.colAmt = colAmt;
     }

@@ -1,7 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.file;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -12,11 +11,13 @@ import java.util.logging.Level;
  *
  * @author Mikedeejay2
  */
-public class FileIO extends PluginInstancer<PluginBase>
+public class FileIO
 {
+    protected final PluginBase plugin;
+
     public FileIO(PluginBase plugin)
     {
-        super(plugin);
+        this.plugin = plugin;
     }
 
     /**
@@ -189,7 +190,6 @@ public class FileIO extends PluginInstancer<PluginBase>
      *
      * @param filePath Path to print
      * @param exception The exception that was thrown
-     * @param throwErrors Whether this method should throw errors if something goes wrong or not
      */
     public void logFileCouldNotBeLoaded(String filePath, Exception exception)
     {

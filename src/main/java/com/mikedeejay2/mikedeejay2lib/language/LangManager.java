@@ -2,7 +2,6 @@ package com.mikedeejay2.mikedeejay2lib.language;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.file.json.JsonFile;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
@@ -15,8 +14,9 @@ import java.util.HashMap;
  *
  * @author Mikedeejay2
  */
-public class LangManager extends PluginInstancer<PluginBase>
+public class LangManager
 {
+    protected final PluginBase plugin;
     // The default language locale
     protected final String englishLang = "en_us";
     private String defaultLang;
@@ -31,7 +31,7 @@ public class LangManager extends PluginInstancer<PluginBase>
      */
     public LangManager(PluginBase plugin)
     {
-        super(plugin);
+        this.plugin = plugin;
         loadLangFile(englishLang);
     }
 

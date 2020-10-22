@@ -1,7 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.event;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 
@@ -12,13 +11,14 @@ import java.util.ArrayList;
  *
  * @author Mikedeejay2
  */
-public class ListenerManager extends PluginInstancer<PluginBase>
+public class ListenerManager
 {
+    protected final PluginBase plugin;
     private final ArrayList<Listener> listeners;
 
     public ListenerManager(PluginBase plugin)
     {
-        super(plugin);
+        this.plugin = plugin;
         listeners = new ArrayList<>();
     }
 

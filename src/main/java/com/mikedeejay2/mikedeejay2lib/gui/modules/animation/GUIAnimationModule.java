@@ -22,6 +22,7 @@ import java.util.List;
  */
 public class GUIAnimationModule extends GUIModule
 {
+    protected final PluginBase plugin;
     // The list of Animated GUI Items to be animated
     protected List<AnimatedGUIItem> animatedItems;
     // The AnimationRuntime for this module
@@ -31,8 +32,7 @@ public class GUIAnimationModule extends GUIModule
 
     public GUIAnimationModule(PluginBase plugin, long period)
     {
-        super(plugin);
-
+        this.plugin = plugin;
         this.period = period == 0 ? 1 : period;
         this.animatedItems = new ArrayList<>();
     }

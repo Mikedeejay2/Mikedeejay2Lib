@@ -16,11 +16,13 @@ import org.bukkit.event.inventory.InventoryAction;
  *
  * @author Mikedeejay2
  */
-public class GUINavBackEvent extends GUIEvent
+public class GUINavBackEvent implements GUIEvent
 {
+    protected final PluginBase plugin;
+
     public GUINavBackEvent(PluginBase plugin)
     {
-        super(plugin);
+        this.plugin = plugin;
     }
 
     @Override

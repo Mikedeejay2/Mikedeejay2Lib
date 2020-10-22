@@ -13,11 +13,13 @@ import org.bukkit.event.inventory.InventoryAction;
  *
  * @author Mikedeejay2
  */
-public class GUICloseEvent extends GUIEvent
+public class GUICloseEvent implements GUIEvent
 {
+    protected final PluginBase plugin;
+
     public GUICloseEvent(PluginBase plugin)
     {
-        super(plugin);
+        this.plugin = plugin;
     }
 
     @Override

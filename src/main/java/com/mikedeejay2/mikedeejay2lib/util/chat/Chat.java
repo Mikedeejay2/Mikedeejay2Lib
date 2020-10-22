@@ -1,7 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util.chat;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.*;
 import net.md_5.bungee.api.chat.hover.content.Entity;
@@ -21,13 +20,14 @@ import java.util.Arrays;
  *
  * @author Mikedeejay2
  */
-public final class Chat extends PluginInstancer<PluginBase>
+public final class Chat
 {
+    protected final PluginBase plugin;
     private String pluginString;
 
     public Chat(PluginBase plugin)
     {
-        super(plugin);
+        this.plugin = plugin;
         this.pluginString = plugin.getName();
     }
 

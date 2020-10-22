@@ -3,7 +3,6 @@ package com.mikedeejay2.mikedeejay2lib.gui.event;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
@@ -22,13 +21,8 @@ import org.bukkit.event.inventory.InventoryAction;
  *
  * @author Mikedeejay2
  */
-public abstract class GUIEvent extends PluginInstancer<PluginBase>
+public interface GUIEvent
 {
-    public GUIEvent(PluginBase plugin)
-    {
-        super(plugin);
-    }
-
     /**
      * Executes when the item that this event has been appended to is clicked on
      *
@@ -40,5 +34,5 @@ public abstract class GUIEvent extends PluginInstancer<PluginBase>
      * @param action The <tt>InventoryAction</tt> of the click
      * @param clickType The <tt>ClickType</tt> of the click
      */
-    public abstract void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType);
+    public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType);
 }

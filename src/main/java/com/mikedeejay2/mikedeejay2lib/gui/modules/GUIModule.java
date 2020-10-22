@@ -3,7 +3,6 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
@@ -17,13 +16,8 @@ import org.bukkit.inventory.Inventory;
  *
  * @author Mikedeejay2
  */
-public abstract class GUIModule extends PluginInstancer<PluginBase>
+public abstract class GUIModule
 {
-    public GUIModule(PluginBase plugin)
-    {
-        super(plugin);
-    }
-
     /**
      * Called on the head of the update method in <tt>GUIContainer</tt>
      *

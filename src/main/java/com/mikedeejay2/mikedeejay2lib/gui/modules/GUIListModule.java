@@ -28,6 +28,7 @@ import java.util.List;
  */
 public class GUIListModule extends GUIModule
 {
+    protected final PluginBase plugin;
     // The list of items that this list holds
     protected List<GUIItem> list;
     // The search list of the items if search is enabled
@@ -54,8 +55,7 @@ public class GUIListModule extends GUIModule
 
     public GUIListModule(PluginBase plugin)
     {
-        super(plugin);
-
+        this.plugin = plugin;
         this.list = new ArrayList<>();
         this.searchList = new ArrayList<>();
 
@@ -63,11 +63,11 @@ public class GUIListModule extends GUIModule
         endItems = new ArrayList<>();
         this.backItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_BACKWARD_WHITE, 1, GUIContainer.EMPTY_NAME));
         this.forwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_FORWARD_WHITE, 1, GUIContainer.EMPTY_NAME));
-        backItem.addEvent(new GUISwitchListPageEvent(plugin));
-        forwardItem.addEvent(new GUISwitchListPageEvent(plugin));
+        backItem.addEvent(new GUISwitchListPageEvent());
+        forwardItem.addEvent(new GUISwitchListPageEvent());
         this.searchItem = new GUIItem(ItemCreator.createItem(Material.COMPASS, 1, "&f&oSearch list..."));
         this.searchOffItem = new GUIItem(ItemCreator.createItem(Material.BOOK, 1, "&f&oTurn off search mode"));
-        searchOffItem.addEvent(new GUIListSearchOffEvent(plugin));
+        searchOffItem.addEvent(new GUIListSearchOffEvent());
         searchItem.addEvent(new GUIListSearchEvent(plugin));
 
         this.searchEnabled = false;

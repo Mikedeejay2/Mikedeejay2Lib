@@ -1,7 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.commands;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
@@ -14,8 +13,9 @@ import java.util.*;
  *
  * @author Mikedeejay2 (Originally from a tutorial)
  */
-public class CommandManager extends PluginInstancer<PluginBase> implements CommandExecutor
+public class CommandManager implements CommandExecutor
 {
+    protected final PluginBase plugin;
     protected ArrayList<AbstractSubCommand> commands = new ArrayList<>();
     private CustomTabCompleter completer;
 
@@ -23,7 +23,7 @@ public class CommandManager extends PluginInstancer<PluginBase> implements Comma
 
     public CommandManager(PluginBase plugin)
     {
-        super(plugin);
+        this.plugin = plugin;
     }
 
     // Add new subcommands here:

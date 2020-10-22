@@ -4,7 +4,6 @@ import com.google.gson.*;
 import com.google.gson.stream.JsonWriter;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.file.FileIO;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 
 import java.io.*;
 import java.util.Map;
@@ -15,13 +14,14 @@ import java.util.Set;
  *
  * @author Mikedeejay2
  */
-public final class JsonFileIO extends PluginInstancer<PluginBase>
+public final class JsonFileIO
 {
+    protected final PluginBase plugin;
     private final FileIO fileIO;
 
     public JsonFileIO(PluginBase plugin)
     {
-        super(plugin);
+        this.plugin = plugin;
         this.fileIO = new FileIO(plugin);
     }
 

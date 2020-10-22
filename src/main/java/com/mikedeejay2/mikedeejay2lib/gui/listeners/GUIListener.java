@@ -3,7 +3,6 @@ package com.mikedeejay2.mikedeejay2lib.gui.listeners;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,11 +15,13 @@ import org.bukkit.inventory.Inventory;
  *
  * @author Mikedeejay2
  */
-public class GUIListener extends PluginInstancer<PluginBase> implements Listener
+public class GUIListener implements Listener
 {
+    protected final PluginBase plugin;
+
     public GUIListener(PluginBase plugin)
     {
-        super(plugin);
+        this.plugin = plugin;
     }
 
     /**

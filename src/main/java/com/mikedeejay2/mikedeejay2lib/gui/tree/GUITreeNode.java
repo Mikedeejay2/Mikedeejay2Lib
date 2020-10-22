@@ -4,7 +4,6 @@ import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Material;
 
@@ -16,7 +15,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class GUITreeNode extends PluginInstancer<PluginBase>
+public class GUITreeNode
 {
     // A list of the node children
     protected List<GUITreeNode> children;
@@ -31,9 +30,8 @@ public class GUITreeNode extends PluginInstancer<PluginBase>
     // The Branch Type to display
     protected BranchType branchType;
 
-    public GUITreeNode(PluginBase plugin, GUIItem item, int row, int col, BranchType type)
+    public GUITreeNode(GUIItem item, int row, int col, BranchType type)
     {
-        super(plugin);
         this.children = new ArrayList<>();
         this.item = item;
         this.branchItem = new GUIItem(ItemCreator.createItem(Material.GRAY_STAINED_GLASS_PANE, 1, GUIContainer.EMPTY_NAME));

@@ -20,10 +20,8 @@ public class GUITreeModule extends GUIModule
     // The list of nodes that this tree module displays
     protected List<GUITreeNode> nodes;
 
-    public GUITreeModule(PluginBase plugin)
+    public GUITreeModule()
     {
-        super(plugin);
-
         this.nodes = new ArrayList<>();
     }
 

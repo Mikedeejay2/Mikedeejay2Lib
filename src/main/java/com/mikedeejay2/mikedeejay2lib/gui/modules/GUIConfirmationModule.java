@@ -17,10 +17,8 @@ public class GUIConfirmationModule extends GUIModule
     // The deny item
     protected GUIItem denyItem;
 
-    public GUIConfirmationModule(PluginBase plugin, GUIItem confirmItem, GUIItem denyItem)
+    public GUIConfirmationModule(GUIItem confirmItem, GUIItem denyItem)
     {
-        super(plugin);
-
         this.confirmItem = confirmItem;
         this.denyItem = denyItem;
     }

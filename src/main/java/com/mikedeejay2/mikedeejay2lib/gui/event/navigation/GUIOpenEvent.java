@@ -16,15 +16,16 @@ import org.bukkit.event.inventory.InventoryAction;
  *
  * @author Mikedeejay2
  */
-public class GUIOpenEvent extends GUIEvent
+public class GUIOpenEvent implements GUIEvent
 {
+    protected final PluginBase plugin;
+
     // The GUI that will be opened
     private GUIContainer guiToOpen;
 
     public GUIOpenEvent(PluginBase plugin, GUIContainer gui)
     {
-        super(plugin);
-
+        this.plugin = plugin;
         this.guiToOpen = gui;
     }
 

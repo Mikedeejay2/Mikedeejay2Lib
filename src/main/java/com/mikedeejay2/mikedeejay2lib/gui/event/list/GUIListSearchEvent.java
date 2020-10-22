@@ -14,11 +14,13 @@ import org.bukkit.event.inventory.InventoryAction;
  *
  * @author Mikedeejay2
  */
-public class GUIListSearchEvent extends GUIEvent
+public class GUIListSearchEvent implements GUIEvent
 {
+    protected final PluginBase plugin;
+
     public GUIListSearchEvent(PluginBase plugin)
     {
-        super(plugin);
+        this.plugin = plugin;
     }
 
     @Override

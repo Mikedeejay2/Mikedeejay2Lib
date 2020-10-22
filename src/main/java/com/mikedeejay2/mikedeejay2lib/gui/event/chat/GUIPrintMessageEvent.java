@@ -13,15 +13,15 @@ import org.bukkit.event.inventory.InventoryAction;
  *
  * @author Mikedeejay2
  */
-public class GUIPrintMessageEvent extends GUIEvent
+public class GUIPrintMessageEvent implements GUIEvent
 {
+    protected final PluginBase plugin;
     // The message to be printed
     private String message;
 
     public GUIPrintMessageEvent(PluginBase plugin, String message)
     {
-        super(plugin);
-
+        this.plugin = plugin;
         this.message = message;
     }
 

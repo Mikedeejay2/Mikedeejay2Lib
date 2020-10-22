@@ -18,33 +18,31 @@ public class GUIScrollerModule extends GUIModule
     protected GUIItem leftItem;
     protected GUIItem rightItem;
 
-    public GUIScrollerModule(PluginBase plugin)
+    public GUIScrollerModule()
     {
-        super(plugin);
-
         this.upItem = new AnimatedGUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_UP_WHITE, 1, "Up"), false, 1, true);
-        upItem.addEvent(new GUIScrollEvent(plugin, -1, 0));
+        upItem.addEvent(new GUIScrollEvent(-1, 0));
         AnimatedGUIItem upItemAnim = (AnimatedGUIItem)upItem;
         upItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_UP_LIGHT_GRAY, 1, "Up"), 1);
         upItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_UP_WHITE, 1, "Up"), 1);
         upItemAnim.setIndex(1);
 
         this.downItem = new AnimatedGUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_DOWN_WHITE, 1, "Down"), false, 1, true);
-        downItem.addEvent(new GUIScrollEvent(plugin, 1, 0));
+        downItem.addEvent(new GUIScrollEvent(1, 0));
         AnimatedGUIItem downItemAnim = (AnimatedGUIItem)downItem;
         downItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_DOWN_LIGHT_GRAY, 1, "Down"), 1);
         downItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_DOWN_WHITE, 1, "Down"), 1);
         downItemAnim.setIndex(1);
 
         this.leftItem = new AnimatedGUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_WHITE, 1, "Left"), false, 1, true);
-        leftItem.addEvent(new GUIScrollEvent(plugin, 0, -1));
+        leftItem.addEvent(new GUIScrollEvent(0, -1));
         AnimatedGUIItem leftItemAnim = (AnimatedGUIItem)leftItem;
         leftItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_LIGHT_GRAY, 1, "Left"), 1);
         leftItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_WHITE, 1, "Left"), 1);
         leftItemAnim.setIndex(1);
 
         this.rightItem = new AnimatedGUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_WHITE, 1, "Right"), false, 1, true);
-        rightItem.addEvent(new GUIScrollEvent(plugin, 0, 1));
+        rightItem.addEvent(new GUIScrollEvent(0, 1));
         AnimatedGUIItem rightItemAnim = (AnimatedGUIItem)rightItem;
         rightItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_LIGHT_GRAY, 1, "Right"), 1);
         rightItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_WHITE, 1, "Right"), 1);

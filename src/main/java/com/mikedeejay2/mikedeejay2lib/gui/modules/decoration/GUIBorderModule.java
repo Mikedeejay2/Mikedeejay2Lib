@@ -20,9 +20,8 @@ public class GUIBorderModule extends GUIModule
     // The GUI item that will be used for the border
     private GUIItem borderItem;
 
-    public GUIBorderModule(PluginBase plugin)
+    public GUIBorderModule()
     {
-        super(plugin);
         this.borderItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.WHITE, 1, GUIContainer.EMPTY_NAME));
     }
 

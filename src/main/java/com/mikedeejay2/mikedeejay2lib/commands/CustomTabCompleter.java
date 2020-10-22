@@ -1,7 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.commands;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -15,11 +14,13 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class CustomTabCompleter extends PluginInstancer<PluginBase> implements TabCompleter
+public class CustomTabCompleter implements TabCompleter
 {
+    protected final PluginBase plugin;
+
     public CustomTabCompleter(PluginBase plugin)
     {
-        super(plugin);
+        this.plugin = plugin;
     }
 
     /**

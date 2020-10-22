@@ -2,7 +2,6 @@ package com.mikedeejay2.mikedeejay2lib.file.yaml;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.file.FileIO;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 
 import java.io.*;
 
@@ -11,13 +10,14 @@ import java.io.*;
  *
  * @author Mikedeejay2
  */
-public final class YamlFileIO extends PluginInstancer<PluginBase>
+public final class YamlFileIO
 {
+    protected final PluginBase plugin;
     private final FileIO fileIO;
 
     public YamlFileIO(PluginBase plugin)
     {
-        super(plugin);
+        this.plugin = plugin;
         this.fileIO = new FileIO(plugin);
     }
 

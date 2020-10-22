@@ -2,7 +2,6 @@ package com.mikedeejay2.mikedeejay2lib.gui.manager;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import org.bukkit.entity.Player;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -17,8 +16,9 @@ import java.util.Map;
  *
  * @author Mikedeejay2
  */
-public class PlayerGUI extends PluginInstancer<PluginBase>
+public class PlayerGUI
 {
+    protected final PluginBase plugin;
     // The map of NavigationSystems of this player
     protected Map<String, NavigationSystem> naviSystems;
     // The player's current GUIContainer
@@ -30,7 +30,7 @@ public class PlayerGUI extends PluginInstancer<PluginBase>
 
     public PlayerGUI(PluginBase plugin, Player player)
     {
-        super(plugin);
+        this.plugin = plugin;
         this.player = player;
         this.gui = null;
         this.guiOpened = false;

@@ -8,7 +8,6 @@ import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefault;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
-import com.mikedeejay2.mikedeejay2lib.util.PluginInstancer;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Bukkit;
@@ -29,8 +28,9 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class GUIContainer extends PluginInstancer<PluginBase>
+public class GUIContainer
 {
+    protected final PluginBase plugin;
     // The default (Minecraft) amount of inventory rows
     public static final int MAX_INVENTORY_ROWS = 6;
     // The default (Minecraft) amount of inventory columns
@@ -72,7 +72,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public GUIContainer(PluginBase plugin, String inventoryName, int inventoryRows)
     {
-        super(plugin);
+        this.plugin = plugin;
         this.EMPTY_STACK = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1 , EMPTY_NAME);
         this.inventoryName = Chat.chat(inventoryName);
         if(inventoryRows > MAX_INVENTORY_ROWS) inventoryRows = MAX_INVENTORY_ROWS;
@@ -100,7 +100,7 @@ public class GUIContainer extends PluginInstancer<PluginBase>
      */
     public GUIContainer(PluginBase plugin, String inventoryName, int inventoryRows, int inventoryCols)
     {
-        super(plugin);
+        this.plugin = plugin;
         this.EMPTY_STACK = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1 , EMPTY_NAME);
         this.inventoryName = Chat.chat(inventoryName);
         this.inventorySlots = Math.min(inventoryRows * MAX_INVENTORY_COLS, MAX_INVENTORY_ROWS * MAX_INVENTORY_COLS);

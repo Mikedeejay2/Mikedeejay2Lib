@@ -14,13 +14,8 @@ import org.bukkit.event.inventory.InventoryAction;
  *
  * @author Mikedeejay2
  */
-public class GUISwitchListPageEvent extends GUIEvent
+public class GUISwitchListPageEvent implements GUIEvent
 {
-    public GUISwitchListPageEvent(PluginBase plugin)
-    {
-        super(plugin);
-    }
-
     @Override
     public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType)
     {
