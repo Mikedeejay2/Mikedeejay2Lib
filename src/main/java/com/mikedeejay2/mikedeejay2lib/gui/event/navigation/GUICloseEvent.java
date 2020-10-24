@@ -26,7 +26,7 @@ public class GUICloseEvent implements GUIEvent
     public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType)
     {
         if(clickType != ClickType.LEFT) return;
-        plugin.guiManager().getPlayer(player).closeGUI();
+        plugin.guiManager().getPlayer(player).onClose();
         player.closeInventory();
     }
 }

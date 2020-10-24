@@ -4,7 +4,6 @@ import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.GUIManager;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
-import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -34,48 +33,37 @@ public class GUIListener implements Listener
     @EventHandler
     public void onClick(InventoryClickEvent event)
     {
-//        DebugTimer timer = new DebugTimer("onClick");
         InventoryAction action = event.getAction();
         ClickType clickType = event.getClick();
         Player player = (Player) event.getWhoClicked();
+        GUIManager guiManager = plugin.guiManager();
+        if(!guiManager.containsPlayer(player)) return;
         PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
-        if(!playerGUI.isGuiOpened())
-        {
-//            timer.printReport();
-            return;
-        }
+        if(!playerGUI.isGuiOpened()) return;
 
         GUIContainer curGUI = playerGUI.getGUI();
         Inventory clickedInventory = event.getClickedInventory();
         Inventory inventory = event.getInventory();
         int slot = event.getSlot();
-//        timer.addPrintPoint("Initialize variables");
 
         if(clickedInventory != inventory)
         {
             event.setCancelled(true);
             curGUI.onPlayerInteract(player, clickedInventory, slot, action, clickType);
             curGUI.update(player);
-//            timer.printReport();
             return;
         }
 
         int row = curGUI.getRowFromSlot(slot);
         int col = curGUI.getColFromSlot(slot);
 
-//        timer.addPrintPoint("Check validity");
-
         event.setCancelled(true);
         if(curGUI.canSlotBeMoved(row, col))
         {
             curGUI.onPlayerInteract(player, clickedInventory, slot, action, clickType);
         }
-//        timer.addPrintPoint("Slot Move");
         curGUI.onClicked(player, row, col, curGUI.getItem(row, col), action, clickType);
-//        timer.addPrintPoint("Clicked");
         curGUI.update(player);
-//        timer.addPrintPoint("Update");
-//        timer.printReport();
     }
 
     /**
@@ -91,10 +79,13 @@ public class GUIListener implements Listener
         GUIManager manager = plugin.guiManager();
         if(!manager.containsPlayer(player)) return;
         PlayerGUI playerGUI = manager.getPlayer(player);
-        Inventory guiInv = playerGUI.getGUI().getInventory();
+        GUIContainer curGUI = playerGUI.getGUI();
+        if(curGUI == null) return;
+        Inventory guiInv = curGUI.getInventory();
         Inventory playerInv = event.getInventory();
         if(guiInv != playerInv) return;
-        playerGUI.closeGUI();
+        playerGUI.onClose();
+        playerGUI.setGUIState(false);
     }
 
     /**

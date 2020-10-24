@@ -27,7 +27,7 @@ public class GUIListSearchEvent implements GUIEvent
     public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType)
     {
         if(clickType != ClickType.LEFT) return;
-        plugin.guiManager().getPlayer(player).closeGUI();
+        plugin.guiManager().getPlayer(player).onClose();
         player.closeInventory();
         // TODO: Open a book and quill here for the player to type in their search
         // After that,

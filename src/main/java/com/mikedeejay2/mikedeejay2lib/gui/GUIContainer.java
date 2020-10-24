@@ -137,7 +137,7 @@ public class GUIContainer
      *
      * @param player The player that was viewing the GUI
      */
-    public void close(Player player)
+    public void onClose(Player player)
     {
         modules.forEach(module -> module.onClose(player, this));
     }
@@ -149,10 +149,7 @@ public class GUIContainer
      */
     public void update(Player player)
     {
-//         DebugTimer timer = new DebugTimer("Update");
-
         modules.forEach(module -> module.onUpdateHead(player, this));
-//         timer.addPrintPoint("onUpdateHead");
         int newInvRows = Math.min(inventoryRows, MAX_INVENTORY_ROWS);
 
         int fillSlot = -1;
@@ -162,16 +159,15 @@ public class GUIContainer
             for(int col = 1; col <= MAX_INVENTORY_COLS; ++col)
             {
                 GUIItem item = bottomLayer.getItem(row, col);
+                ++fillSlot;
                 if((item != null && item.isMovable()) || (item == null && bottomLayer.getDefaultMoveState()))
                 {
-                    ++fillSlot;
+                    if(item == null) inventory.setItem(fillSlot, null);
                     continue;
                 }
-                ++fillSlot;
                 inventory.setItem(fillSlot, EMPTY_STACK);
             }
         }
-//         timer.addPrintPoint("Fill empty");
 
         for(GUILayer layer : layers)
         {
@@ -198,11 +194,7 @@ public class GUIContainer
                 }
             }
         }
-//         timer.addPrintPoint("Fill GUI");
         modules.forEach(module -> module.onUpdateTail(player, this));
-//         timer.addPrintPoint("onUpdateTail");
-
-//         timer.printReport();
     }
 
     /**

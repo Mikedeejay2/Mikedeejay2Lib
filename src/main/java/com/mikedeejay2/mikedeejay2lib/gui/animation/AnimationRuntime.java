@@ -68,13 +68,11 @@ public class AnimationRuntime extends EnhancedRunnable
     @Override
     public void onRun()
     {
-        // DebugTimer timer = new DebugTimer("Animation Runtime");
         boolean shouldUpdate = false;
         for(AnimatedGUIItem item : items)
         {
             if(item.tick(period)) shouldUpdate = true;
         }
-        // timer.printReport();
         if(shouldUpdate) gui.update(player);
     }
 

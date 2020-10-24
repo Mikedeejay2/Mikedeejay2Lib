@@ -271,7 +271,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
         Location location = player.getEyeLocation();
         World world = location.getWorld();
         Item item = world.dropItem(location, cursorItem);
-        item.setVelocity(location.getDirection());
+        item.setVelocity(location.getDirection().multiply(1.0/3.0));
         player.setItemOnCursor(null);
         player.sendMessage("Executed Drop All Cursor");
     }

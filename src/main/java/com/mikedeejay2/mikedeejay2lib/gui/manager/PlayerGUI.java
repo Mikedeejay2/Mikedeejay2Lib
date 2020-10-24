@@ -3,9 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.manager;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import org.bukkit.entity.Player;
-import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -72,9 +70,9 @@ public class PlayerGUI
     /**
      * Close this player's currently opened GUI
      */
-    public void closeGUI()
+    public void onClose()
     {
-        gui.close(player);
+        gui.onClose(player);
     }
 
     /**
