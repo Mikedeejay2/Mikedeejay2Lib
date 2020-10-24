@@ -279,18 +279,66 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     @Override
     public void executeDropOneCursor(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
     {
+        ItemStack cursorItem = player.getItemOnCursor();
+        ItemStack itemToDrop = cursorItem.clone();
+        itemToDrop.setAmount(1);
+        cursorItem.setAmount(cursorItem.getAmount() - 1);
+        Location location = player.getEyeLocation();
+        World world = location.getWorld();
+        Item item = world.dropItem(location, itemToDrop);
+        item.setVelocity(location.getDirection().multiply(1.0/3.0));
+        player.setItemOnCursor(cursorItem);
         player.sendMessage("Executed Drop One Cursor");
     }
 
     @Override
     public void executeDropAllSlot(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
     {
+        ItemStack itemToDrop;
+        if(inventory == gui.getInventory())
+        {
+            int row = layer.getRowFromSlot(slot);
+            int col = layer.getColFromSlot(slot);
+            GUIItem guiItem = layer.getItem(row, col);
+            itemToDrop = guiItem.getItemBase();
+            layer.removeItem(row, col);
+        }
+        else
+        {
+            itemToDrop = inventory.getItem(slot);
+            inventory.setItem(slot, null);
+        }
+        Location location = player.getEyeLocation();
+        World world = location.getWorld();
+        Item item = world.dropItem(location, itemToDrop);
+        item.setVelocity(location.getDirection().multiply(1.0/3.0));
         player.sendMessage("Executed Drop All Slot");
     }
 
     @Override
     public void executeDropOneSlot(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
     {
+        ItemStack itemToDrop;
+        if(inventory == gui.getInventory())
+        {
+            int row = layer.getRowFromSlot(slot);
+            int col = layer.getColFromSlot(slot);
+            GUIItem guiItem = layer.getItem(row, col);
+            itemToDrop = guiItem.getItemBase().clone();
+            itemToDrop.setAmount(1);
+            guiItem.setAmount(guiItem.getAmount() - 1);
+        }
+        else
+        {
+            ItemStack origItem = inventory.getItem(slot);
+            itemToDrop = origItem.clone();
+            itemToDrop.setAmount(1);
+            origItem.setAmount(origItem.getAmount() - 1);
+        }
+        Location location = player.getEyeLocation();
+        World world = location.getWorld();
+        Item item = world.dropItem(location, itemToDrop);
+        item.setVelocity(location.getDirection().multiply(1.0/3.0));
         player.sendMessage("Executed Drop One Slot");
     }
 
