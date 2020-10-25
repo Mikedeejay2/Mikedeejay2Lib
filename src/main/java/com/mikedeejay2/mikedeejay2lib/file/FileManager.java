@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.file;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A file manager that is stored in PluginBase to manage all of the plugin's files.
@@ -12,7 +13,12 @@ import java.util.HashMap;
 public class FileManager
 {
     // The hashmap of file paths to DataFiles
-    private HashMap<String, DataFile> files;
+    private Map<String, DataFile> files;
+
+    public FileManager()
+    {
+        this.files = new HashMap<>();
+    }
 
     /**
      * Method that returns whether this manager contains a file of a file path or not
