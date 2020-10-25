@@ -33,8 +33,6 @@ public class GUIListener implements Listener
     @EventHandler
     public void onClick(InventoryClickEvent event)
     {
-        InventoryAction action = event.getAction();
-        ClickType clickType = event.getClick();
         Player player = (Player) event.getWhoClicked();
         GUIManager guiManager = plugin.guiManager();
         if(!guiManager.containsPlayer(player)) return;
@@ -45,7 +43,6 @@ public class GUIListener implements Listener
         Inventory clickedInventory = event.getClickedInventory();
         Inventory inventory = event.getInventory();
         int slot = event.getSlot();
-        int hotbarButton = event.getHotbarButton();
 
         if(clickedInventory != inventory)
         {

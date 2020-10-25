@@ -205,9 +205,6 @@ public class GUIContainer
      */
     public void onPlayerInteract(InventoryClickEvent event)
     {
-        int slot = event.getSlot();
-        int row = getRowFromSlot(slot);
-        int col = getColFromSlot(slot);
         modules.forEach(module -> module.onPlayerInteractHead(event, this));
         interactionHandler.handleInteraction(event, this);
         modules.forEach(module -> module.onPlayerInteractTail(event, this));
