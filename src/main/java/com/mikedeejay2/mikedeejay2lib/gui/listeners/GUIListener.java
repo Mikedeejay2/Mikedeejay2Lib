@@ -34,8 +34,6 @@ public class GUIListener implements Listener
     public void onClick(InventoryClickEvent event)
     {
         Player player = (Player) event.getWhoClicked();
-        player.sendMessage("Action: " + event.getAction());
-        player.sendMessage("Click: " + event.getClick());
         GUIManager guiManager = plugin.guiManager();
         if(!guiManager.containsPlayer(player)) return;
         PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
