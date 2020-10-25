@@ -114,7 +114,9 @@ public class GUIListener implements Listener
     public void onDrag(InventoryDragEvent event)
     {
         Player player = (Player) event.getWhoClicked();
+        if(!plugin.guiManager().containsPlayer(player)) return;
         GUIContainer curGUI = plugin.guiManager().getPlayer(player).getGUI();
+        if(curGUI == null) return;
         Inventory inventory = event.getInventory();
         Inventory guiInventory = curGUI.getInventory();
         if(inventory != guiInventory) return;
