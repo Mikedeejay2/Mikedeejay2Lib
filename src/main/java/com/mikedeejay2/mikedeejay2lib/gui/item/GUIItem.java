@@ -10,6 +10,7 @@ import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -57,18 +58,13 @@ public class GUIItem implements Cloneable
     /**
      * Called when this <tt>GUIItem</tt> is clicked
      *
-     * @param player The player that clicked on the GUI
-     * @param row The row that was clicked on
-     * @param col The column that was clicked on
-     * @param clicked The GUIItem that was clicked on
+     * @param event The event of the click
      * @param gui The GUI that was clicked on
-     * @param action The <tt>InventoryAction</tt> of the click
-     * @param clickType The <tt>ClickType</tt> of the click
      */
-    public void onClick(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType)
+    public void onClick(InventoryClickEvent event, GUIContainer gui)
     {
         if(events == null) return;
-        events.execute(player, row, col, clicked, gui, action, clickType);
+        events.execute(event, gui);
     }
 
     /**

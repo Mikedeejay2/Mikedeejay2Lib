@@ -21,18 +21,6 @@ public class GUIInteractExecutorLimit extends GUIInteractExecutorDefault
         this.limit = Math.min(limit, 64);
     }
 
-    @Override
-    public void executePickupSome(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
-    {
-
-    }
-
-    @Override
-    public void executePlaceSome(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
-    {
-
-    }
-
     public int getLimit()
     {
         return limit;

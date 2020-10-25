@@ -5,6 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,20 +32,15 @@ public class GUIEventHandler implements Cloneable
      * through all of the <tt>GUIEvents</tt> that are held in the <tt>events</tt> list
      * and runs their <tt>execute()</tt> method.
      *
-     * @param player The player that clicked the item
-     * @param row The row that the item was clicked on
-     * @param col The column that the item was clicked on
-     * @param clicked the <tt>GUIItem</tt> that was clicked
+     * @param event The event of the click
      * @param gui The GUI that this event took place in
-     * @param action The <tt>InventoryAction</tt> of the click
-     * @param clickType The <tt>ClickType</tt> of the click
      */
-    public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType)
+    public void execute(InventoryClickEvent event, GUIContainer gui)
     {
         for(int i = 0; i < events.size(); i++)
         {
-            GUIEvent event = events.get(i);
-            event.execute(player, row, col, clicked, gui, action, clickType);
+            GUIEvent guiEvent = events.get(i);
+            guiEvent.execute(event, gui);
         }
     }
 

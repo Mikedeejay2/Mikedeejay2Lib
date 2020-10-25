@@ -8,6 +8,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIListModule;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -18,8 +19,9 @@ import org.bukkit.inventory.ItemStack;
 public class GUIListSearchOffEvent implements GUIEvent
 {
     @Override
-    public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType)
+    public void execute(InventoryClickEvent event, GUIContainer gui)
     {
+        ClickType clickType = event.getClick();
         if(clickType != ClickType.LEFT) return;
         gui.getModule(GUIListModule.class).disableSearchMode();
     }

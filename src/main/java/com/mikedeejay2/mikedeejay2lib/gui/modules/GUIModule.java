@@ -6,6 +6,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 
 /**
@@ -61,52 +62,32 @@ public abstract class GUIModule
     /**
      * Called when the GUI is clicked, called in the head of the click method in <tt>GUIContainer</tt>
      *
-     * @param player The player that is viewing the GUI
-     * @param row The row that was clicked on
-     * @param col The column that was clicked on
-     * @param clicked The <tt>GUIItem</tt> that was clicked
-     * @param action The <tt>InventoryAction</tt> of the click
-     * @param clickType The <tt>ClickType</tt> of the click
+     * @param event The event of the click
      * @param gui The GUI
      */
-    public void onClickedHead(Player player, int row, int col, GUIItem clicked, InventoryAction action, ClickType clickType, GUIContainer gui) {}
+    public void onClickedHead(InventoryClickEvent event, GUIContainer gui) {}
 
     /**
      * Called when the GUI is clicked, called in the tail of the click method in <tt>GUIContainer</tt>
      *
-     * @param player The player that is viewing the GUI
-     * @param row The row that was clicked on
-     * @param col The column that was clicked on
-     * @param clicked The <tt>GUIItem</tt> that was clicked
-     * @param action The <tt>InventoryAction</tt> of the click
-     * @param clickType The <tt>ClickType</tt> of the click
+     * @param event The event of the click
      * @param gui The GUI
      */
-    public void onClickedTail(Player player, int row, int col, GUIItem clicked, InventoryAction action, ClickType clickType, GUIContainer gui) {}
+    public void onClickedTail(InventoryClickEvent event, GUIContainer gui) {}
 
     /**
      * Called when a <tt>Player</tt> interacts (adds or removes an item) with the GUI, called in the head of the onPlayerInteract method in<tt>GUIContainer</tt>
      *
-     * @param player The player interacting with the GUI
-     * @param inventory The inventory that was clicked
-     * @param row The row that the player interacted on
-     * @param col The column that the player interacted on
-     * @param action The <tt>InventoryAction</tt> performed by the player
-     * @param type The <tt>ClickType</tt> performed by the player
+     * @param event The event of the interaction
      * @param gui The GUI
      */
-    public void onPlayerInteractHead(Player player, Inventory inventory, int row, int col, InventoryAction action, ClickType type, GUIContainer gui) {}
+    public void onPlayerInteractHead(InventoryClickEvent event, GUIContainer gui) {}
 
     /**
      * Called when a <tt>Player</tt> interacts (adds or removes an item) with the GUI, called in the tail of the onPlayerInteract method in<tt>GUIContainer</tt>
      *
-     * @param player The player interacting with the GUI
-     * @param inventory The inventory that was clicked
-     * @param row The row that the player interacted on
-     * @param col The column that the player interacted on
-     * @param action The <tt>InventoryAction</tt> performed by the player
-     * @param type The <tt>ClickType</tt> performed by the player
+     * @param event The event of the interaction
      * @param gui The GUI
      */
-    public void onPlayerInteractTail(Player player, Inventory inventory, int row, int col, InventoryAction action, ClickType type, GUIContainer gui) {}
+    public void onPlayerInteractTail(InventoryClickEvent event, GUIContainer gui) {}
 }

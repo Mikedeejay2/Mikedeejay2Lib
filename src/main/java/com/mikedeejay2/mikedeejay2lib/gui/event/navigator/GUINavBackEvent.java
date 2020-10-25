@@ -10,6 +10,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.modules.navigation.GUINavigatorModule;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
  * Navigate the GUI back one GUI.
@@ -26,8 +27,10 @@ public class GUINavBackEvent implements GUIEvent
     }
 
     @Override
-    public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType)
+    public void execute(InventoryClickEvent event, GUIContainer gui)
     {
+        Player player = (Player) event.getWhoClicked();
+        ClickType clickType = event.getClick();
         if(clickType != ClickType.LEFT) return;
         GUINavigatorModule module = gui.getModule(GUINavigatorModule.class);
         PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);

@@ -7,6 +7,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.animation.MovementType;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
@@ -348,9 +349,9 @@ public class AnimatedGUIItem extends GUIItem
     }
 
     @Override
-    public void onClick(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType)
+    public void onClick(InventoryClickEvent event, GUIContainer gui)
     {
-        super.onClick(player, row, col, clicked, gui, action, clickType);
+        super.onClick(event, gui);
         if(resetOnClick)
         {
             index = 0;

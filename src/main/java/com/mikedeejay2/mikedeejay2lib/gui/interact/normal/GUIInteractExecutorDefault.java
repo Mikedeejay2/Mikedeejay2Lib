@@ -10,6 +10,7 @@ import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -22,13 +23,13 @@ import org.bukkit.inventory.ItemStack;
 public class GUIInteractExecutorDefault implements GUIInteractExecutor
 {
     @Override
-    public void executeNothing(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executeNothing(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         player.sendMessage("Executed Nothing");
     }
 
     @Override
-    public void executePickupAll(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executePickupAll(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         ItemStack bottomItem;
         if(inventory == gui.getInventory())
@@ -48,7 +49,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     }
 
     @Override
-    public void executePickupSome(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executePickupSome(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         ItemStack cursorItem = player.getItemOnCursor();
         int maxAmount = cursorItem.getMaxStackSize();
@@ -74,7 +75,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     }
 
     @Override
-    public void executePickupHalf(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executePickupHalf(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         ItemStack cursorItem;
         if(inventory == gui.getInventory())
@@ -106,7 +107,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     }
 
     @Override
-    public void executePickupOne(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executePickupOne(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         ItemStack cursorItem = player.getItemOnCursor();
         int cursorAmount = cursorItem.getAmount();
@@ -149,7 +150,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     }
 
     @Override
-    public void executePlaceAll(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executePlaceAll(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         ItemStack cursorItem = player.getItemOnCursor();
         int cursorAmount = cursorItem.getAmount();
@@ -178,7 +179,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     }
 
     @Override
-    public void executePlaceSome(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executePlaceSome(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         ItemStack cursorItem = player.getItemOnCursor();
         int maxAmount = cursorItem.getMaxStackSize();
@@ -204,7 +205,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     }
 
     @Override
-    public void executePlaceOne(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executePlaceOne(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         ItemStack cursorItem = player.getItemOnCursor();
         int cursorAmount = cursorItem.getAmount();
@@ -244,7 +245,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     }
 
     @Override
-    public void executeSwapWithCursor(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executeSwapWithCursor(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         ItemStack cursorItem = player.getItemOnCursor();
         if(inventory == gui.getInventory())
@@ -266,7 +267,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     }
 
     @Override
-    public void executeDropAllCursor(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executeDropAllCursor(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         ItemStack cursorItem = player.getItemOnCursor();
         Location location = player.getEyeLocation();
@@ -278,7 +279,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     }
 
     @Override
-    public void executeDropOneCursor(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executeDropOneCursor(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         ItemStack cursorItem = player.getItemOnCursor();
         ItemStack itemToDrop = cursorItem.clone();
@@ -293,7 +294,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     }
 
     @Override
-    public void executeDropAllSlot(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executeDropAllSlot(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         ItemStack itemToDrop;
         if(inventory == gui.getInventory())
@@ -317,7 +318,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     }
 
     @Override
-    public void executeDropOneSlot(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executeDropOneSlot(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         ItemStack itemToDrop;
         if(inventory == gui.getInventory())
@@ -344,7 +345,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     }
 
     @Override
-    public void executeMoveToOtherInventory(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executeMoveToOtherInventory(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         if(inventory == gui.getInventory())
         {
@@ -456,31 +457,33 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     }
 
     @Override
-    public void executeHotbarMoveAndReadd(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executeHotbarMoveAndReadd(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
+        player.sendMessage("Slot: " + slot);
+        player.sendMessage("Inventory GUI? " + (inventory == gui.getInventory()));
         player.sendMessage("Executed Move And Readd");
     }
 
     @Override
-    public void executeHotbarSwap(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executeHotbarSwap(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         player.sendMessage("Executed Hotbar Swap");
     }
 
     @Override
-    public void executeCloneStack(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executeCloneStack(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         player.sendMessage("Executed Clone Stack");
     }
 
     @Override
-    public void executeCollectToCursor(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executeCollectToCursor(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         player.sendMessage("Executed Collect To Cursor");
     }
 
     @Override
-    public void executeUnknown(Player player, Inventory inventory, int slot, GUIContainer gui, GUILayer layer)
+    public void executeUnknown(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         player.sendMessage("Executed Unknown");
     }

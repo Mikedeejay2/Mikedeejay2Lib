@@ -45,11 +45,12 @@ public class GUIListener implements Listener
         Inventory clickedInventory = event.getClickedInventory();
         Inventory inventory = event.getInventory();
         int slot = event.getSlot();
+        int hotbarButton = event.getHotbarButton();
 
         if(clickedInventory != inventory)
         {
             event.setCancelled(true);
-            curGUI.onPlayerInteract(player, clickedInventory, slot, action, clickType);
+            curGUI.onPlayerInteract(event);
             curGUI.update(player);
             return;
         }
@@ -60,9 +61,9 @@ public class GUIListener implements Listener
         event.setCancelled(true);
         if(curGUI.canSlotBeMoved(row, col))
         {
-            curGUI.onPlayerInteract(player, clickedInventory, slot, action, clickType);
+            curGUI.onPlayerInteract(event);
         }
-        curGUI.onClicked(player, row, col, curGUI.getItem(row, col), action, clickType);
+        curGUI.onClicked(event);
         curGUI.update(player);
     }
 

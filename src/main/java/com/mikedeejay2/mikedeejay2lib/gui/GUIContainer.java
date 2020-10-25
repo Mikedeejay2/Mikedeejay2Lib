@@ -16,6 +16,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -200,37 +201,32 @@ public class GUIContainer
     /**
      * Called when a <tt>Player</tt> interacts (adds or removes an item) with the GUI.
      *
-     * @param player The player interacting with the GUI
-     * @param inventory The inventory that was interacted with
-     * @param slot The slot that was interacted with
-     * @param action The <tt>InventoryAction</tt> performed by the player
-     * @param type The <tt>ClickType</tt> performed by the player
+     * @param event The event of the click
      */
-    public void onPlayerInteract(Player player, Inventory inventory, int slot, InventoryAction action, ClickType type)
+    public void onPlayerInteract(InventoryClickEvent event)
     {
+        int slot = event.getSlot();
         int row = getRowFromSlot(slot);
         int col = getColFromSlot(slot);
-        modules.forEach(module -> module.onPlayerInteractHead(player, inventory, row, col, action, type, this));
-        interactionHandler.handleInteraction(player, inventory, slot, action, type, this);
-        modules.forEach(module -> module.onPlayerInteractTail(player, inventory, row, col, action, type, this));
+        modules.forEach(module -> module.onPlayerInteractHead(event, this));
+        interactionHandler.handleInteraction(event, this);
+        modules.forEach(module -> module.onPlayerInteractTail(event, this));
     }
 
     /**
      * Called when this GUI is clicked on
      *
-     * @param player The player that clicked on the GUI
-     * @param row The row that was clicked on
-     * @param col The column that was clicked on
-     * @param clicked The <tt>GUIItem</tt> that was clicked on
-     * @param action The <tt>InventoryAction</tt> of the click
-     * @param clickType The <tt>ClickType</tt> of the click
+     * @param event The event of the click
      */
-    public void onClicked(Player player, int row, int col, GUIItem clicked, InventoryAction action, ClickType clickType)
+    public void onClicked(InventoryClickEvent event)
     {
-        modules.forEach(module -> module.onClickedHead(player, row, col, clicked, action, clickType, this));
+        int slot = event.getSlot();
+        int row = getRowFromSlot(slot);
+        int col = getColFromSlot(slot);
+        modules.forEach(module -> module.onClickedHead(event, this));
         GUIItem item = getItem(row, col);
-        if(item != null) item.onClick(player, row, col, clicked, this, action, clickType);
-        modules.forEach(module -> module.onClickedTail(player, row, col, clicked, action, clickType, this));
+        if(item != null) item.onClick(event, this);
+        modules.forEach(module -> module.onClickedTail(event, this));
     }
 
     /**

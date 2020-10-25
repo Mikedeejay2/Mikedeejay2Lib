@@ -6,6 +6,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
+import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
  * An event that is called when a <tt>GUIItem</tt> is called. <p>
@@ -26,13 +27,8 @@ public interface GUIEvent
     /**
      * Executes when the item that this event has been appended to is clicked on
      *
-     * @param player The player that clicked the item
-     * @param row The row that the item was clicked on
-     * @param col The column that the item was clicked on
-     * @param clicked The <tt>GUIItem</tt> that was clicked
+     * @param event The event of the click
      * @param gui The GUI that the event took place in
-     * @param action The <tt>InventoryAction</tt> of the click
-     * @param clickType The <tt>ClickType</tt> of the click
      */
-    public void execute(Player player, int row, int col, GUIItem clicked, GUIContainer gui, InventoryAction action, ClickType clickType);
+    public void execute(InventoryClickEvent event, GUIContainer gui);
 }
