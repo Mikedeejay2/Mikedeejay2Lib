@@ -15,13 +15,24 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * The default <tt>GUIInteractExecutor</tt>. Moves items in a semi-vanilla way
- * without breaking the GUI.
+ * A <tt>GUIInteractExecutor</tt> that moves items with a custom limit specified on construction.
  *
  * @author Mikedeejay2
  */
 public class GUIInteractExecutorDefault implements GUIInteractExecutor
 {
+    protected int limit;
+
+    public GUIInteractExecutorDefault(int limit)
+    {
+        this.limit = Math.min(limit, 64);
+    }
+
+    public GUIInteractExecutorDefault()
+    {
+        this.limit = -1;
+    }
+
     @Override
     public void executeNothing(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
@@ -38,8 +49,8 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
             int col = layer.getColFromSlot(slot);
             GUIItem guiItem = layer.getItem(row, col);
             ItemStack bottomItem = guiItem.getItemBase();
-            int maxAmount = bottomItem.getMaxStackSize();
             int curAmount = bottomItem.getAmount();
+            int maxAmount = limit == -1 ? bottomItem.getMaxStackSize() : limit;
             if(curAmount > maxAmount)
             {
                 guiItem.setAmount(curAmount - maxAmount);
@@ -52,8 +63,8 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
         else
         {
             ItemStack bottomItem = inventory.getItem(slot);
-            int maxAmount = bottomItem.getMaxStackSize();
             int curAmount = bottomItem.getAmount();
+            int maxAmount = limit == -1 ? bottomItem.getMaxStackSize() : limit;
             if(curAmount > maxAmount)
             {
                 bottomItem.setAmount(curAmount - maxAmount);
@@ -70,7 +81,6 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     public void executePickupSome(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         ItemStack cursorItem = player.getItemOnCursor();
-        int maxAmount = cursorItem.getMaxStackSize();
         int cursorAmount = cursorItem.getAmount();
         if(inventory == gui.getInventory())
         {
@@ -79,6 +89,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
             GUIItem guiItem = layer.getItem(row, col);
             ItemStack bottomItem = guiItem.getItemBase();
             int bottomAmount = bottomItem.getAmount();
+            int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
             cursorItem.setAmount(maxAmount);
             guiItem.setAmount(bottomAmount - (maxAmount - cursorAmount));
         }
@@ -86,9 +97,11 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
         {
             ItemStack bottomItem = inventory.getItem(slot);
             int bottomAmount = bottomItem.getAmount();
+            int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
             cursorItem.setAmount(maxAmount);
             bottomItem.setAmount(bottomAmount - (maxAmount - cursorAmount));
         }
+        player.setItemOnCursor(cursorItem);
     }
 
     @Override
@@ -104,7 +117,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
             int bottomAmount = bottomItem.getAmount();
             int halfTop = (int) Math.ceil(bottomAmount / 2.0);
             int halfBottom = (int) Math.floor(bottomAmount / 2.0);
-            int maxAmount = bottomItem.getMaxStackSize();
+            int maxAmount = limit == -1 ? bottomItem.getMaxStackSize() : limit;
             if(halfTop > maxAmount)
             {
                 halfBottom += halfTop - maxAmount;
@@ -119,9 +132,9 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
         {
             ItemStack bottomItem = inventory.getItem(slot);
             int bottomAmount = bottomItem.getAmount();
+            int maxAmount = limit == -1 ? bottomItem.getMaxStackSize() : limit;
             int halfTop = (int) Math.ceil(bottomAmount / 2.0);
             int halfBottom = (int) Math.floor(bottomAmount / 2.0);
-            int maxAmount = bottomItem.getMaxStackSize();
             if(halfTop > maxAmount)
             {
                 halfBottom += halfTop - maxAmount;
@@ -132,6 +145,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
             player.setItemOnCursor(cursorItem);
             bottomItem.setAmount(halfBottom);
         }
+        player.setItemOnCursor(cursorItem);
     }
 
     @Override
@@ -174,6 +188,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
             }
             bottomItem.setAmount(bottomAmount - 1);
         }
+        player.setItemOnCursor(cursorItem);
     }
 
     @Override
@@ -191,9 +206,9 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
             GUIItem newItem = new GUIItem(cursorItem.clone());
             newItem.setMovable(true);
             int curAmount = cursorAmount + bottomAmount;
-            int maxAmount = cursorItem.getMaxStackSize();
             int newAmount = curAmount;
             int extraAmount = 0;
+            int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
             if(curAmount > maxAmount)
             {
                 extraAmount = curAmount - maxAmount;
@@ -209,9 +224,9 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
             int bottomAmount = 0;
             if(curItem != null) bottomAmount = curItem.getAmount();
             ItemStack bottomItem = cursorItem.clone();
-            int maxAmount = cursorItem.getMaxStackSize();
             int extraAmount = 0;
             int newAmount = cursorAmount + bottomAmount;
+            int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
             if(newAmount > maxAmount)
             {
                 extraAmount = newAmount - maxAmount;
@@ -221,13 +236,13 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
             cursorItem.setAmount(extraAmount);
             inventory.setItem(slot, bottomItem);
         }
+        player.setItemOnCursor(cursorItem);
     }
 
     @Override
     public void executePlaceSome(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         ItemStack cursorItem = player.getItemOnCursor();
-        int maxAmount = cursorItem.getMaxStackSize();
         int cursorAmount = cursorItem.getAmount();
         if(inventory == gui.getInventory())
         {
@@ -236,6 +251,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
             GUIItem guiItem = layer.getItem(row, col);
             ItemStack bottomItem = guiItem.getItemBase();
             int bottomAmount = bottomItem.getAmount();
+            int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
             cursorItem.setAmount(bottomAmount - (maxAmount - cursorAmount));
             guiItem.setAmount(maxAmount);
         }
@@ -243,9 +259,11 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
         {
             ItemStack bottomItem = inventory.getItem(slot);
             int bottomAmount = bottomItem.getAmount();
+            int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
             cursorItem.setAmount(bottomAmount - (maxAmount - cursorAmount));
             bottomItem.setAmount(maxAmount);
         }
+        player.setItemOnCursor(cursorItem);
     }
 
     @Override
@@ -285,6 +303,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
             }
         }
         cursorItem.setAmount(cursorAmount - 1);
+        player.setItemOnCursor(cursorItem);
     }
 
     @Override
@@ -293,7 +312,8 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
         ItemStack cursorItem = player.getItemOnCursor();
         if(inventory == gui.getInventory())
         {
-            if(cursorItem.getAmount() > cursorItem.getMaxStackSize()) return;
+            int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
+            if(cursorItem.getAmount() > maxAmount) return;
             int row = layer.getRowFromSlot(slot);
             int col = layer.getColFromSlot(slot);
             GUIItem guiItem = layer.getItem(row, col);
@@ -316,8 +336,8 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
         Location location = player.getEyeLocation();
         World world = location.getWorld();
         ItemStack itemToDrop = cursorItem.clone();
-        int maxAmount = cursorItem.getMaxStackSize();
         int curAmount = cursorItem.getAmount();
+        int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
         if(curAmount > maxAmount)
         {
             itemToDrop.setAmount(maxAmount);
@@ -355,9 +375,9 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
             int col = layer.getColFromSlot(slot);
             GUIItem guiItem = layer.getItem(row, col);
             ItemStack item = guiItem.getItemBase();
-            int maxAmount = item.getMaxStackSize();
             int curAmount = item.getAmount();
             int itemToDropAmount = curAmount;
+            int maxAmount = limit == -1 ? item.getMaxStackSize() : limit;
             if(curAmount > maxAmount)
             {
                 guiItem.setAmount(curAmount - maxAmount);
@@ -370,9 +390,9 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
         else
         {
             ItemStack item = inventory.getItem(slot);
-            int maxAmount = item.getMaxStackSize();
             int curAmount = item.getAmount();
             int itemToDropAmount = curAmount;
+            int maxAmount = limit == -1 ? item.getMaxStackSize() : limit;
             if(curAmount > maxAmount)
             {
                 item.setAmount(curAmount - maxAmount);
@@ -423,13 +443,13 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
             int col = layer.getColFromSlot(slot);
             GUIItem guiItem = layer.getItem(row, col);
             ItemStack itemToMove = guiItem.getItemBase();
-            int maxAmount = itemToMove.getMaxStackSize();
             Inventory playerInv = player.getInventory();
             for(int i = 0; i < playerInv.getStorageContents().length; ++i)
             {
                 ItemStack curItem = playerInv.getItem(i);
                 if(curItem == null) continue;
-                if(curItem.getAmount() >= curItem.getMaxStackSize()) continue;
+                int maxAmount = limit == -1 ? curItem.getMaxStackSize() : limit;
+                if(curItem.getAmount() >= maxAmount) continue;
                 if(!ItemComparison.equalsEachOther(curItem, itemToMove)) continue;
                 int newAmount = curItem.getAmount() + itemToMove.getAmount();
                 int extraAmount = 0;
@@ -458,6 +478,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
                 curItem = itemToMove.clone();
                 int newAmount = itemToMove.getAmount();
                 int extraAmount = 0;
+                int maxAmount = limit == -1 ? itemToMove.getMaxStackSize() : limit;
                 if(newAmount > maxAmount)
                 {
                     extraAmount = newAmount - maxAmount;
@@ -476,7 +497,6 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
         else
         {
             ItemStack itemToMove = inventory.getItem(slot);
-            int maxAmount = itemToMove.getMaxStackSize();
             for(int row = 1; row <= layer.getRows(); ++row)
             {
                 for(int col = 1; col <= layer.getCols(); ++col)
@@ -487,6 +507,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
                     if(!ItemComparison.equalsEachOther(curItem, itemToMove)) continue;
                     int newAmount = curGUIItem.getAmount() + itemToMove.getAmount();
                     int extraAmount = 0;
+                    int maxAmount = limit == -1 ? curItem.getMaxStackSize() : limit;
                     if(newAmount > maxAmount)
                     {
                         extraAmount = newAmount - maxAmount;
@@ -513,6 +534,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
                     }
                     int newAmount = itemToMove.getAmount();
                     int extraAmount = 0;
+                    int maxAmount = limit == -1 ? itemToMove.getMaxStackSize() : limit;
                     if(newAmount > maxAmount)
                     {
                         extraAmount = newAmount - maxAmount;
@@ -536,7 +558,8 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
         ItemStack hotbarItem = playerInv.getItem(hotbarSlot);
         GUIItem guiItem = layer.getItem(row, col);
         ItemStack topItem = guiItem.getItemBase();
-        if(hotbarItem.getAmount() > hotbarItem.getMaxStackSize()) return;
+        int maxAmount = limit == -1 ? hotbarItem.getMaxStackSize() : limit;
+        if(hotbarItem.getAmount() > maxAmount) return;
         guiItem.setItem(hotbarItem);
         playerInv.setItem(hotbarSlot, topItem);
     }
@@ -567,7 +590,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
             else
             {
                 int curAmount = curItem.getAmount();
-                int maxAmount = curItem.getMaxStackSize();
+                int maxAmount = limit == -1 ? curItem.getMaxStackSize() : limit;
                 if(curAmount > maxAmount)
                 {
                     int extraAmount = curAmount - maxAmount;
@@ -599,13 +622,15 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
             int col = layer.getColFromSlot(slot);
             GUIItem guiItem = layer.getItem(row, col);
             ItemStack item = guiItem.getItemBase().clone();
-            item.setAmount(item.getMaxStackSize());
+            int maxAmount = limit == -1 ? item.getMaxStackSize() : limit;
+            item.setAmount(maxAmount);
             player.setItemOnCursor(item);
         }
         else
         {
             ItemStack item = playerInv.getItem(slot).clone();
-            item.setAmount(item.getMaxStackSize());
+            int maxAmount = limit == -1 ? item.getMaxStackSize() : limit;
+            item.setAmount(maxAmount);
             player.setItemOnCursor(item);
         }
     }
@@ -615,7 +640,7 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     {
         ItemStack cursorItem = player.getItemOnCursor();
         Inventory playerInv = player.getInventory();
-        int maxAmount = cursorItem.getMaxStackSize();
+        int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
         if(cursorItem.getAmount() >= maxAmount) return;
         for(int amount = 1; amount <= maxAmount; ++amount)
         {
@@ -667,5 +692,15 @@ public class GUIInteractExecutorDefault implements GUIInteractExecutor
     public void executeUnknown(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
 
+    }
+
+    public int getLimit()
+    {
+        return limit;
+    }
+
+    public void setLimit(int limit)
+    {
+        this.limit = limit;
     }
 }
