@@ -27,14 +27,16 @@ public class GUIInteractHandlerDefault extends GUIInteractHandler
     {
         super();
         this.limit = Math.min(limit, 64);
-        executors.add(new GUIInteractExecutorDefault(this.limit));
+        executors.add(new GUIInteractExecutorDefaultInv(this.limit));
+        executors.add(new GUIInteractExecutorDefaultGUI(this.limit));
     }
 
     public GUIInteractHandlerDefault()
     {
         super();
         this.limit = -1;
-        executors.add(new GUIInteractExecutorDefault(this.limit));
+        executors.add(new GUIInteractExecutorDefaultInv(this.limit));
+        executors.add(new GUIInteractExecutorDefaultGUI(this.limit));
     }
 
     /**
@@ -129,6 +131,7 @@ public class GUIInteractHandlerDefault extends GUIInteractHandler
                 if(clickedInv == null) break;
                 action = InventoryAction.CLONE_STACK;
             }
+            break;
             case SHIFT_LEFT:
             case SHIFT_RIGHT:
             {

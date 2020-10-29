@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.gui.interact.list;
+package com.mikedeejay2.mikedeejay2lib.gui.interact.normal;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
@@ -19,16 +19,16 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author Mikedeejay2
  */
-public class GUIInteractExecutorListSingleton implements GUIInteractExecutor
+public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
 {
     protected int limit;
 
-    public GUIInteractExecutorListSingleton(int limit)
+    public GUIInteractExecutorDefaultGUI(int limit)
     {
         this.limit = Math.min(limit, 64);
     }
 
-    public GUIInteractExecutorListSingleton()
+    public GUIInteractExecutorDefaultGUI()
     {
         this.limit = -1;
     }
