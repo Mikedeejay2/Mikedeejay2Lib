@@ -3,7 +3,6 @@ package com.mikedeejay2.mikedeejay2lib.gui.interact.normal;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractExecutor;
-import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import org.bukkit.Location;
 import org.bukkit.Material;
@@ -251,61 +250,6 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor
     }
 
     @Override
-    public void executeMoveToOtherInventory(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
-    {
-        if(inventory != player.getInventory()) return;
-        ItemStack itemToMove = inventory.getItem(slot);
-        for(int row = 1; row <= layer.getRows(); ++row)
-        {
-            for(int col = 1; col <= layer.getCols(); ++col)
-            {
-                GUIItem curGUIItem = layer.getItem(row, col);
-                ItemStack curItem = curGUIItem == null ? null : curGUIItem.getItemBase();
-                if(curItem == null || !curGUIItem.isMovable()) continue;
-                if(!ItemComparison.equalsEachOther(curItem, itemToMove)) continue;
-                int newAmount = curGUIItem.getAmount() + itemToMove.getAmount();
-                int extraAmount = 0;
-                int maxAmount = limit == -1 ? curItem.getMaxStackSize() : limit;
-                if(newAmount > maxAmount)
-                {
-                    extraAmount = newAmount - maxAmount;
-                    newAmount = maxAmount;
-                }
-                itemToMove.setAmount(extraAmount);
-                curGUIItem.setAmount(newAmount);
-                if(itemToMove.getAmount() <= 0) return;
-            }
-        }
-        if(itemToMove.getAmount() <= 0 || !layer.getDefaultMoveState()) return;
-        for(int row = 1; row <= layer.getRows(); ++row)
-        {
-            for(int col = 1; col <= layer.getCols(); ++col)
-            {
-                GUIItem curGUIItem = layer.getItem(row, col);
-                ItemStack curItem = curGUIItem == null ? null : curGUIItem.getItemBase();
-                if(curItem != null || (curGUIItem != null && !curGUIItem.isMovable())) continue;
-                if(curGUIItem == null)
-                {
-                    curGUIItem = new GUIItem(itemToMove.clone());
-                    curGUIItem.setMovable(true);
-                    layer.setItem(row, col, curGUIItem);
-                }
-                int newAmount = itemToMove.getAmount();
-                int extraAmount = 0;
-                int maxAmount = limit == -1 ? itemToMove.getMaxStackSize() : limit;
-                if(newAmount > maxAmount)
-                {
-                    extraAmount = newAmount - maxAmount;
-                    newAmount = maxAmount;
-                }
-                itemToMove.setAmount(extraAmount);
-                curGUIItem.setAmount(newAmount);
-                if(itemToMove.getAmount() <= 0) return;
-            }
-        }
-    }
-
-    @Override
     public void executeHotbarSwap(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         if(inventory != player.getInventory()) return;
@@ -357,6 +301,7 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor
     }
 
     @Override public void executeNothing(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {}
+    @Override public void executeMoveToOtherInventory(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {}
     @Override public void executeHotbarMoveAndReadd(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {}
     @Override public void executeUnknown(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {}
 
