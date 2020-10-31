@@ -69,7 +69,6 @@ public class AnimationRuntime extends EnhancedRunnable
     @Override
     public void onRun()
     {
-        System.out.println("Tick " + System.currentTimeMillis() + ", Items size is " + items.size());
         boolean shouldUpdate = false;
         for(int i = 0 ; i < items.size(); ++i)
         {
