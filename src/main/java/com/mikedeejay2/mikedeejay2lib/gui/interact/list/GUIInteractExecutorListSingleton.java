@@ -42,7 +42,7 @@ public class GUIInteractExecutorListSingleton implements GUIInteractExecutor
         ItemStack cursorItem;
         int row = layer.getRowFromSlot(slot);
         int col = layer.getColFromSlot(slot);
-        GUIItem guiItem = list.getListItem(row, col, gui);
+        GUIItem guiItem = list.getItem(row, col, gui);
         ItemStack bottomItem = guiItem.getItemBase();
         int curAmount = bottomItem.getAmount();
         int maxAmount = limit == -1 ? bottomItem.getMaxStackSize() : limit;
@@ -66,7 +66,7 @@ public class GUIInteractExecutorListSingleton implements GUIInteractExecutor
         int cursorAmount = cursorItem.getAmount();
         int row = layer.getRowFromSlot(slot);
         int col = layer.getColFromSlot(slot);
-        GUIItem guiItem = list.getListItem(row, col, gui);
+        GUIItem guiItem = list.getItem(row, col, gui);
         ItemStack bottomItem = guiItem.getItemBase();
         int bottomAmount = bottomItem.getAmount();
         int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
@@ -84,7 +84,7 @@ public class GUIInteractExecutorListSingleton implements GUIInteractExecutor
         ItemStack cursorItem;
         int row = layer.getRowFromSlot(slot);
         int col = layer.getColFromSlot(slot);
-        GUIItem guiItem = list.getListItem(row, col, gui);
+        GUIItem guiItem = list.getItem(row, col, gui);
         ItemStack bottomItem = guiItem.getItemBase();
         int bottomAmount = bottomItem.getAmount();
         int halfTop = (int) Math.ceil(bottomAmount / 2.0);
@@ -112,7 +112,7 @@ public class GUIInteractExecutorListSingleton implements GUIInteractExecutor
         int cursorAmount = cursorItem.getAmount();
         int row = layer.getRowFromSlot(slot);
         int col = layer.getColFromSlot(slot);
-        GUIItem guiItem = list.getListItem(row, col, gui);
+        GUIItem guiItem = list.getItem(row, col, gui);
         ItemStack bottomItem = guiItem.getItemBase();
         int bottomAmount = bottomItem.getAmount();
         if(cursorItem.getType() == Material.AIR)
@@ -140,7 +140,7 @@ public class GUIInteractExecutorListSingleton implements GUIInteractExecutor
         int row = layer.getRowFromSlot(slot);
         int col = layer.getColFromSlot(slot);
         int bottomAmount = 0;
-        GUIItem curItem = list.getListItem(row, col, gui);
+        GUIItem curItem = list.getItem(row, col, gui);
         if(curItem != null) bottomAmount = curItem.getAmountBase();
         GUIItem newItem = new GUIItem(cursorItem.clone());
         newItem.setMovable(true);
@@ -177,7 +177,7 @@ public class GUIInteractExecutorListSingleton implements GUIInteractExecutor
         int cursorAmount = cursorItem.getAmount();
         int row = layer.getRowFromSlot(slot);
         int col = layer.getColFromSlot(slot);
-        GUIItem guiItem = list.getListItem(row, col, gui);
+        GUIItem guiItem = list.getItem(row, col, gui);
         ItemStack bottomItem = guiItem.getItemBase();
         int bottomAmount = bottomItem.getAmount();
         int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
@@ -195,7 +195,7 @@ public class GUIInteractExecutorListSingleton implements GUIInteractExecutor
         int cursorAmount = cursorItem.getAmount();
         int row = layer.getRowFromSlot(slot);
         int col = layer.getColFromSlot(slot);
-        GUIItem guiItem = list.getListItem(row, col, gui);
+        GUIItem guiItem = list.getItem(row, col, gui);
         if(guiItem == null)
         {
             guiItem = new GUIItem(cursorItem.clone());
@@ -221,7 +221,7 @@ public class GUIInteractExecutorListSingleton implements GUIInteractExecutor
         if(cursorItem.getAmount() > maxAmount) return;
         int row = layer.getRowFromSlot(slot);
         int col = layer.getColFromSlot(slot);
-        GUIItem guiItem = list.getListItem(row, col, gui);
+        GUIItem guiItem = list.getItem(row, col, gui);
         ItemStack bottomItem = guiItem.getItemBase();
         guiItem.setItem(cursorItem);
         player.setItemOnCursor(bottomItem);
@@ -235,7 +235,7 @@ public class GUIInteractExecutorListSingleton implements GUIInteractExecutor
         ItemStack itemToDrop;
         int row = layer.getRowFromSlot(slot);
         int col = layer.getColFromSlot(slot);
-        GUIItem guiItem = list.getListItem(row, col, gui);
+        GUIItem guiItem = list.getItem(row, col, gui);
         ItemStack stack = guiItem.getItemBase();
         int curAmount = stack.getAmount();
         int itemToDropAmount = curAmount;
@@ -262,7 +262,7 @@ public class GUIInteractExecutorListSingleton implements GUIInteractExecutor
         ItemStack itemToDrop;
         int row = layer.getRowFromSlot(slot);
         int col = layer.getColFromSlot(slot);
-        GUIItem guiItem = list.getListItem(row, col, gui);
+        GUIItem guiItem = list.getItem(row, col, gui);
         itemToDrop = guiItem.getItemBase().clone();
         itemToDrop.setAmount(1);
         guiItem.setAmount(guiItem.getAmount() - 1);
@@ -281,7 +281,7 @@ public class GUIInteractExecutorListSingleton implements GUIInteractExecutor
         {
             int row = layer.getRowFromSlot(slot);
             int col = layer.getColFromSlot(slot);
-            GUIItem guiItem = list.getListItem(row, col, gui);
+            GUIItem guiItem = list.getItem(row, col, gui);
             ItemStack itemToMove = guiItem.getItemBase();
             Inventory playerInv = player.getInventory();
             for(int i = 0; i < playerInv.getStorageContents().length; ++i)
@@ -339,7 +339,7 @@ public class GUIInteractExecutorListSingleton implements GUIInteractExecutor
             ItemStack itemToMove = inventory.getItem(slot);
             for(int i = 0; i < list.getSize(); ++i)
             {
-                GUIItem curGUIItem = list.getListItem(i);
+                GUIItem curGUIItem = list.getItem(i);
                 ItemStack curItem = curGUIItem == null ? null : curGUIItem.getItemBase();
                 if(curItem == null || !curGUIItem.isMovable()) continue;
                 if(!ItemComparison.equalsEachOther(curItem, itemToMove)) continue;
@@ -381,7 +381,7 @@ public class GUIInteractExecutorListSingleton implements GUIInteractExecutor
         int hotbarSlot = event.getHotbarButton();
         Inventory playerInv = player.getInventory();
         ItemStack hotbarItem = playerInv.getItem(hotbarSlot);
-        GUIItem guiItem = list.getListItem(row, col, gui);
+        GUIItem guiItem = list.getItem(row, col, gui);
         ItemStack topItem = guiItem.getItemBase();
         int maxAmount = limit == -1 ? hotbarItem.getMaxStackSize() : limit;
         if(hotbarItem.getAmount() > maxAmount) return;
@@ -398,7 +398,7 @@ public class GUIInteractExecutorListSingleton implements GUIInteractExecutor
         Inventory playerInv = player.getInventory();
         int row = layer.getRowFromSlot(slot);
         int col = layer.getColFromSlot(slot);
-        GUIItem guiItem = list.getListItem(row, col, gui);
+        GUIItem guiItem = list.getItem(row, col, gui);
         if(guiItem == null)
         {
             guiItem = new GUIItem(null);
@@ -437,7 +437,7 @@ public class GUIInteractExecutorListSingleton implements GUIInteractExecutor
         Inventory playerInv = player.getInventory();
         int row = layer.getRowFromSlot(slot);
         int col = layer.getColFromSlot(slot);
-        GUIItem guiItem = list.getListItem(row, col, gui);
+        GUIItem guiItem = list.getItem(row, col, gui);
         ItemStack item = guiItem.getItemBase().clone();
         int maxAmount = limit == -1 ? item.getMaxStackSize() : limit;
         item.setAmount(maxAmount);

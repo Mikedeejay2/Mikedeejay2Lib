@@ -17,8 +17,8 @@ public final class ItemComparison
         ItemMeta meta1 = stack1.getItemMeta();
         ItemMeta meta2 = stack2.getItemMeta();
         if(meta1 == null || meta2 == null) return false;
-        if(!meta1.equals(meta2)) return false;
         if(stack1.getType() != stack2.getType()) return false;
+        if(!meta1.equals(meta2)) return false;
         return true;
     }
 }

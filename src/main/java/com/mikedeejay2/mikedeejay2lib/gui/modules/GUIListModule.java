@@ -8,6 +8,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchOffEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUISwitchListPageEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Heads;
+import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import com.mikedeejay2.mikedeejay2lib.util.search.SearchUtil;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
@@ -289,9 +290,10 @@ public class GUIListModule extends GUIModule
      * @param gui The <tt>GUIContainer</tt> that this list is located in
      * @return The <tt>GUIItem</tt> at the location.
      */
-    public GUIItem getListItem(int row, int col, GUIContainer gui)
+    public GUIItem getItem(int row, int col, GUIContainer gui)
     {
         int index = getListItemIndex(row, col, gui);
+        if(index >= list.size()) return null;
         return list.get(index);
     }
 
@@ -301,7 +303,7 @@ public class GUIListModule extends GUIModule
      * @param slot The slot to get the item from
      * @return The <tt>GUIItem</tt> of the slot
      */
-    public GUIItem getListItem(int slot)
+    public GUIItem getItem(int slot)
     {
         return list.get(slot);
     }
@@ -502,5 +504,23 @@ public class GUIListModule extends GUIModule
     public int getSize()
     {
         return list.size();
+    }
+
+    /**
+     * See whether this list contains an item matching an <tt>ItemStack</tt>
+     *
+     * @param item The item to search for
+     * @return Whether the item was found in the list or not
+     */
+    public boolean containsItem(ItemStack item)
+    {
+        for(GUIItem guiItem : list)
+        {
+            ItemStack curItem = guiItem.getItemBase();
+            if(curItem == null) continue;
+            if(!ItemComparison.equalsEachOther(item, curItem)) continue;
+            return true;
+        }
+        return false;
     }
 }

@@ -5,6 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractExecutorDefaultInv;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
+import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIListModule;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -80,6 +81,8 @@ public class GUIInteractHandlerListSingleton extends GUIInteractHandler
             return;
         }
 
+        GUIListModule list = gui.getModule(GUIListModule.class);
+
         switch(clickType)
         {
             case LEFT:
@@ -89,7 +92,8 @@ public class GUIInteractHandlerListSingleton extends GUIInteractHandler
                 {
                     if(!ItemComparison.equalsEachOther(bottomItem, cursorItem))
                     {
-                        action = InventoryAction.SWAP_WITH_CURSOR;
+                        if(!list.containsItem(cursorItem)) action = InventoryAction.SWAP_WITH_CURSOR;
+                        else action = InventoryAction.NOTHING;
                     }
                     else
                     {
@@ -102,7 +106,8 @@ public class GUIInteractHandlerListSingleton extends GUIInteractHandler
                 }
                 else if(cursorItem != null)
                 {
-                    action = InventoryAction.PLACE_ALL;
+                    if(!list.containsItem(cursorItem)) action = InventoryAction.PLACE_ALL;
+                    else action = InventoryAction.NOTHING;
                 }
                 else if(bottomItem != null)
                 {

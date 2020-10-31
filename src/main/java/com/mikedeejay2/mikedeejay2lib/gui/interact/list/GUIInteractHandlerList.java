@@ -87,18 +87,10 @@ public class GUIInteractHandlerList extends GUIInteractHandler
                 if(clickedInv == null) break;
                 if(bottomItem != null && cursorItem != null)
                 {
-                    if(!ItemComparison.equalsEachOther(bottomItem, cursorItem))
-                    {
-                        action = InventoryAction.SWAP_WITH_CURSOR;
-                    }
-                    else
-                    {
-                        int bottomAmount = bottomItem.getAmount();
-                        int cursorAmount = cursorItem.getAmount();
-                        if(bottomAmount >= limit) action = InventoryAction.NOTHING;
-                        else if(bottomAmount + cursorAmount > limit) action = InventoryAction.PLACE_SOME;
-                        else action = InventoryAction.PLACE_ALL;
-                    }
+                    int bottomAmount = bottomItem.getAmount();
+                    int cursorAmount = cursorItem.getAmount();
+                    if(bottomAmount + cursorAmount > limit) action = InventoryAction.PLACE_SOME;
+                    else action = InventoryAction.PLACE_ALL;
                 }
                 else if(cursorItem != null)
                 {
