@@ -523,4 +523,22 @@ public class GUIListModule extends GUIModule
         }
         return false;
     }
+
+    /**
+     * See whether this list contains a material matching another material
+     *
+     * @param material The material to search for
+     * @return Whether the material was found in the list or not
+     */
+    public boolean containsMaterial(Material material)
+    {
+        for(GUIItem guiItem : list)
+        {
+            ItemStack curItem = guiItem.getItemBase();
+            if(curItem == null) continue;
+            if(curItem.getType() != material) continue;
+            return true;
+        }
+        return false;
+    }
 }

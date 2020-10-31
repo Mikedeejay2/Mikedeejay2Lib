@@ -96,13 +96,21 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Reomve a <tt>GUIInteractExecutor</tt> from this handler's executor list
+     * Remove a <tt>GUIInteractExecutor</tt> from this handler's executor list
      *
      * @param executor The <tt>GUIInteractExecutor</tt> object instance to find and remove from the list
      */
     public void removeExecutor(GUIInteractExecutor executor)
     {
         executors.remove(executor);
+    }
+
+    /**
+     * Clear all <tt>GUIInteractExecutors</tt> from this handler's executor list
+     */
+    public void resetExecutors()
+    {
+        executors.clear();
     }
 
     /**
