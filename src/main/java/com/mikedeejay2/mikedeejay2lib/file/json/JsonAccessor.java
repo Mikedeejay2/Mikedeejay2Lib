@@ -16,6 +16,7 @@ import org.bukkit.util.BlockVector;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
+import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.*;
 
@@ -637,8 +638,15 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
         {
             String memberName = entry.getKey();
             Object object = entry.getValue();
-            Type type = new TypeToken<Object>(){}.getType();
-            JsonElement element = gson.toJsonTree(object, type);
+            System.out.println("Object: " + object.getClass());
+            if(object instanceof ConfigurationSerializable)
+            {
+                ConfigurationSerializable meta = (ConfigurationSerializable)object;
+                jsonObject.add(memberName, new JsonObject());
+                setSerializable(jsonObject.getAsJsonObject(memberName), meta);
+                continue;
+            }
+            JsonElement element = gson.toJsonTree(object);
             jsonObject.add(memberName, element);
         }
     }
