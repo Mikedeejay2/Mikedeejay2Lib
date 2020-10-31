@@ -3,7 +3,9 @@ package com.mikedeejay2.mikedeejay2lib.gui;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
+import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItemProperties;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
+import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItemLocation;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.animation.GUIAnimationModule;
 import com.mikedeejay2.mikedeejay2lib.util.array.ArrayUtil;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
@@ -96,7 +98,17 @@ public class GUILayer
      */
     public void removeItem(int row, int col)
     {
+        GUIItem item = getItem(row, col);
         setItem(row, col, (GUIItem)null);
+        if(item == null) return;
+        if(item instanceof AnimatedGUIItem)
+        {
+            AnimatedGUIItem animItem = (AnimatedGUIItem) item;
+            if(gui.containsModule(GUIAnimationModule.class))
+            {
+                gui.getModule(GUIAnimationModule.class).removeItem(animItem);
+            }
+        }
     }
 
     /**
@@ -106,9 +118,15 @@ public class GUILayer
      */
     public void removeItem(GUIItem item)
     {
-        int row = item.getRow();
-        int col = item.getCol();
-        removeItem(row, col);
+        for(int row = 1; row <= inventoryRows; ++row)
+        {
+            for(int col = 1; col <= inventoryCols; ++col)
+            {
+                if(getItem(row, col) != item) continue;
+                removeItem(row, col);
+                return;
+            }
+        }
     }
 
     /**
@@ -149,18 +167,16 @@ public class GUILayer
      */
     public void setItem(int row, int col, GUIItem item)
     {
-        if(item != null)
-        {
-            item.setRow(row);
-            item.setCol(col);
-            item.setLayer(this);
-        }
-        items[--row][--col] = item;
+        if(items[row - 1][col - 1] == item) return;
+        items[row - 1][col - 1] = item;
         if(item == null) return;
-        if(item.getClass() == AnimatedGUIItem.class)
+        if(item instanceof AnimatedGUIItem)
         {
             AnimatedGUIItem animItem = (AnimatedGUIItem) item;
-            if(gui.containsModule(GUIAnimationModule.class)) gui.getModule(GUIAnimationModule.class).addItem(animItem);
+            if(gui.containsModule(GUIAnimationModule.class))
+            {
+                gui.getModule(GUIAnimationModule.class).addItem(animItem, new AnimatedGUIItemProperties(0, row, col, this));
+            }
         }
     }
 

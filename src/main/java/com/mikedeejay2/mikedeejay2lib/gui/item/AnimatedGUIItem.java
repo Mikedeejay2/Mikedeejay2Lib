@@ -1,9 +1,11 @@
 package com.mikedeejay2.mikedeejay2lib.gui.item;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.animation.AnimationFrame;
 import com.mikedeejay2.mikedeejay2lib.gui.animation.FrameType;
 import com.mikedeejay2.mikedeejay2lib.gui.animation.MovementType;
+import com.mikedeejay2.mikedeejay2lib.gui.modules.animation.GUIAnimationModule;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
@@ -28,18 +30,14 @@ public class AnimatedGUIItem extends GUIItem
 {
     // The list of AnimationFrames of this item
     protected List<AnimationFrame> frames;
-    // The current frame index of this item
-    protected int index;
-    // The current wait time of this item
-    protected long wait;
     // Whether this item's animation will loop or not
     protected boolean loop;
-    // Whether or not it is this item's first run or not
-    protected boolean firstRun;
     // The delay that this item has before its animation begins
     protected long delay;
     // Whether to reset the animation of this item on click
     protected boolean resetOnClick;
+    // Starting frame index
+    protected int startingIndex;
 
     public AnimatedGUIItem(ItemStack item, boolean loop)
     {
@@ -57,11 +55,9 @@ public class AnimatedGUIItem extends GUIItem
 
         this.delay = delay;
         this.loop = loop;
-        this.index = 0;
-        this.wait = 0;
-        this.firstRun = true;
         this.frames = new ArrayList<>();
         this.resetOnClick = resetAnimOnClick;
+        this.startingIndex = 0;
     }
 
     /**
@@ -71,31 +67,33 @@ public class AnimatedGUIItem extends GUIItem
      * process to land on and animate the current frame.
      *
      * @param tickTime The time between the last tick and this tick. Used for calculating framerate
+     * @param properties Reference to the item's properties
      * @return Whether the tick updated the animation or not
      */
-    public boolean tick(long tickTime)
+    public boolean tick(long tickTime, AnimatedGUIItemProperties properties)
     {
-        wait += tickTime;
-        if(firstRun)
+        properties.wait += tickTime;
+        if(properties.firstRun)
         {
-            if(wait > delay)
+            properties.index = startingIndex;
+            if(properties.wait > delay)
             {
-                firstRun = false;
-                processFrame(1);
-                wait = 0;
+                properties.firstRun = false;
+                processFrame(1, properties);
+                properties.wait = 0;
             }
             return true;
         }
-        if(index >= frames.size())
+        if(properties.index >= frames.size())
         {
-            if(loop) index -= frames.size();
+            if(loop) properties.index -= frames.size();
             else return false;
         }
-        long curWait = frames.get(index).getPeriod();
-        if(wait < curWait) return false;
-        int framePass = (int)(wait / curWait);
-        wait = 0;
-        processFrame(framePass);
+        long curWait = frames.get(properties.index).getPeriod();
+        if(properties.wait < curWait) return false;
+        int framePass = (int)(properties.wait / curWait);
+        properties.wait = 0;
+        processFrame(framePass, properties);
         return true;
     }
 
@@ -104,10 +102,11 @@ public class AnimatedGUIItem extends GUIItem
      * This method does the work for modifying the item to the next frame.
      *
      * @param framePass The amount of frames forward the animation to go to
+     * @param properties Reference to the item's properties
      */
-    private void processFrame(int framePass)
+    private void processFrame(int framePass, AnimatedGUIItemProperties properties)
     {
-        AnimationFrame frame = frames.get(index);
+        AnimationFrame frame = frames.get(properties.index);
         FrameType type = frame.getType();
         switch(type)
         {
@@ -118,17 +117,17 @@ public class AnimatedGUIItem extends GUIItem
             }
             case MOVEMENT:
             {
-                processMovement(frame);
+                processMovement(frame, properties);
                 break;
             }
             case BOTH:
             {
                 processItem(frame);
-                processMovement(frame);
+                processMovement(frame, properties);
                 break;
             }
         }
-        index += framePass;
+        properties.index += framePass;
     }
 
     /**
@@ -145,17 +144,19 @@ public class AnimatedGUIItem extends GUIItem
      * Process the movement for a movement frame
      *
      * @param frame The AnimationFrame that will be processed
+     * @param properties Reference to the item's properties
      */
-    private void processMovement(AnimationFrame frame)
+    private void processMovement(AnimationFrame frame, AnimatedGUIItemProperties properties)
     {
+        GUILayer layer = properties.getLocation().getLayer();
         boolean moveRelatively = frame.moveRelative();
         int frameRow = frame.getRow();
         int frameCol = frame.getCol();
-        int currentRow = this.getRow();
-        int currentCol = this.getCol();
+        int currentRow = properties.getLocation().getRow();
+        int currentCol = properties.getLocation().getCol();
         int newRow = moveRelatively ? currentRow + frameRow : frameRow;
         int newCol = moveRelatively ? currentCol + frameCol : currentCol;
-        if(!validCheck(newRow, newCol))
+        if(!validCheck(newRow, newCol, properties))
         {
             layer.removeItem(currentRow, currentCol);
             return;
@@ -163,54 +164,62 @@ public class AnimatedGUIItem extends GUIItem
         GUIItem previousItem = layer.getItem(newRow, newCol);
 
         MovementType movementType = frame.getMovementType();
+        GUIItem[][] items = layer.getItemsAsArray();
+        GUIItemLocation location = properties.getLocation();
         switch(movementType)
         {
             case SWAP_ITEM:
             {
-                layer.setItem(newRow, newCol, this);
-                layer.setItem(currentRow, currentCol, previousItem);
+                items[newRow - 1][newCol - 1] = this;
+                items[currentRow - 1][currentCol - 1] = previousItem;
+                location.setRow(newRow);
+                location.setCol(newCol);
                 break;
             }
             case OVERRIDE_ITEM:
             {
-                layer.removeItem(currentRow, currentCol);
-                layer.setItem(newRow, newCol, this);
+                items[currentRow - 1][currentCol - 1] = null;
+                items[newRow - 1][newCol - 1] = this;
+                location.setRow(newRow);
+                location.setCol(newCol);
                 break;
             }
             case PUSH_ITEM_UP:
             {
                 int pushRow = newRow-1;
                 int pushCol = newCol;
-                if(!validCheck(pushRow, pushCol)) break;
-                layer.removeItem(currentRow, currentCol);
-                layer.setItem(pushRow, pushCol, previousItem);
+                if(!validCheck(pushRow, pushCol, properties)) break;
+                items[currentRow - 1][currentCol - 1] = null;
+                items[pushRow - 1][pushCol - 1] = previousItem;
+                location.setRow(pushRow);
+                location.setCol(pushCol);
                 break;
             }
             case PUSH_ITEM_DOWN:
             {
                 int pushRow = newRow+1;
                 int pushCol = newCol;
-                if(!validCheck(pushRow, pushCol)) break;
-                layer.removeItem(currentRow, currentCol);
-                layer.setItem(pushRow, pushCol, previousItem);
+                if(!validCheck(pushRow, pushCol, properties)) break;
+                items[currentRow - 1][currentCol - 1] = null;
+                items[pushRow - 1][pushCol - 1] = previousItem;
                 break;
             }
             case PUSH_ITEM_LEFT:
             {
                 int pushRow = newRow;
                 int pushCol = newCol-1;
-                if(!validCheck(pushRow, pushCol)) break;
-                layer.removeItem(currentRow, currentCol);
-                layer.setItem(pushRow, pushCol, previousItem);
+                if(!validCheck(pushRow, pushCol, properties)) break;
+                items[currentRow - 1][currentCol - 1] = null;
+                items[pushRow - 1][pushCol - 1] = previousItem;
                 break;
             }
             case PUSH_ITEM_RIGHT:
             {
                 int pushRow = newRow;
                 int pushCol = newCol+1;
-                if(!validCheck(pushRow, pushCol)) break;
-                layer.removeItem(currentRow, currentCol);
-                layer.setItem(pushRow, pushCol, previousItem);
+                if(!validCheck(pushRow, pushCol, properties)) break;
+                items[currentRow - 1][currentCol - 1] = null;
+                items[pushRow - 1][pushCol - 1] = previousItem;
                 break;
             }
         }
@@ -221,11 +230,12 @@ public class AnimatedGUIItem extends GUIItem
      *
      * @param row The row to check
      * @param col The column to check
+     * @param properties Reference to the item's properties
      * @return Whether the position is valid or not
      */
-    private boolean validCheck(int row, int col)
+    private boolean validCheck(int row, int col, final AnimatedGUIItemProperties properties)
     {
-        return !(row < 1 || col < 1 || row > layer.getRows() || col > layer.getCols());
+        return !(row < 1 || col < 1 || row > properties.getLocation().getLayer().getRows() || col > properties.getLocation().getLayer().getCols());
     }
 
     /**
@@ -266,26 +276,6 @@ public class AnimatedGUIItem extends GUIItem
     public void addFrame(ItemStack item, int row, int col, MovementType movementType, boolean relativeMovement, long period)
     {
         frames.add(new AnimationFrame(item, row, col, movementType, relativeMovement, period));
-    }
-
-    /**
-     * The current frame index of the animation
-     *
-     * @return The frame index
-     */
-    public int getIndex()
-    {
-        return index;
-    }
-
-    /**
-     * Set the current frame index of the animation
-     *
-     * @param index The new index
-     */
-    public void setIndex(int index)
-    {
-        this.index = index;
     }
 
     /**
@@ -354,8 +344,31 @@ public class AnimatedGUIItem extends GUIItem
         super.onClick(event, gui);
         if(resetOnClick)
         {
-            index = 0;
-            wait = 0;
+            int slot = event.getSlot();
+            GUIAnimationModule module = gui.getModule(GUIAnimationModule.class);
+            AnimatedGUIItemProperties properties = module.getProperties(this);
+            properties.index = 0;
+            properties.wait = 0;
         }
+    }
+
+    /**
+     * Get the starting index for this <tt>AnimatedGUIItem</tt>
+     *
+     * @return The starting index
+     */
+    public int getStartingIndex()
+    {
+        return startingIndex;
+    }
+
+    /**
+     * Set the starting index for this <tt>AnimatedGUIItem</tt>
+     *
+     * @param startingIndex The new starting index
+     */
+    public void setStartingIndex(int startingIndex)
+    {
+        this.startingIndex = startingIndex;
     }
 }

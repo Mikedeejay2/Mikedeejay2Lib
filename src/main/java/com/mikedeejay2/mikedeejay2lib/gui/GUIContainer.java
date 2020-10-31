@@ -8,6 +8,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefa
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -240,9 +241,8 @@ public class GUIContainer
      */
     public void removeItem(GUIItem item)
     {
-        int row = item.getRow();
-        int col = item.getCol();
-        removeItem(row, col);
+        GUILayer layer = getLayer(0);
+        layer.removeItem(item);
     }
 
     /**
@@ -254,11 +254,6 @@ public class GUIContainer
      */
     public void setItem(int row, int col, GUIItem item)
     {
-        if(item != null)
-        {
-            item.setRow(row);
-            item.setCol(col);
-        }
         GUILayer layer = getLayer(0);
         layer.setItem(row, col, item);
     }

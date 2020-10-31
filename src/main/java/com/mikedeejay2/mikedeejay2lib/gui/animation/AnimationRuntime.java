@@ -2,11 +2,12 @@ package com.mikedeejay2.mikedeejay2lib.gui.animation;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
+import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItemProperties;
 import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
-import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import org.bukkit.entity.Player;
 
 import java.util.List;
+import java.util.Map;
 
 /**
  * Runtime that times and executed <tt>AnimatedGUIItems</tt>
@@ -16,7 +17,7 @@ import java.util.List;
 public class AnimationRuntime extends EnhancedRunnable
 {
     // The list of items to be executed
-    protected List<AnimatedGUIItem> items;
+    protected List<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> items;
     // The GUIContainer that this AnimationRuntime is a child of
     protected GUIContainer gui;
     // The player that has opened the GUI
@@ -30,7 +31,7 @@ public class AnimationRuntime extends EnhancedRunnable
      *
      * @param items The list of AnimatedGUIItems that this runtime will iterate through
      */
-    public void setItems(List<AnimatedGUIItem> items)
+    public void setItems(List<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> items)
     {
         this.items = items;
     }
@@ -68,10 +69,14 @@ public class AnimationRuntime extends EnhancedRunnable
     @Override
     public void onRun()
     {
+        System.out.println("Tick " + System.currentTimeMillis() + ", Items size is " + items.size());
         boolean shouldUpdate = false;
-        for(AnimatedGUIItem item : items)
+        for(int i = 0 ; i < items.size(); ++i)
         {
-            if(item.tick(period)) shouldUpdate = true;
+            Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry = items.get(i);
+            AnimatedGUIItem item = entry.getKey();
+            AnimatedGUIItemProperties properties = entry.getValue();
+            if(item.tick(period, properties)) shouldUpdate = true;
         }
         if(shouldUpdate) gui.update(player);
     }
@@ -81,7 +86,7 @@ public class AnimationRuntime extends EnhancedRunnable
      *
      * @return The list of items
      */
-    public List<AnimatedGUIItem> getItems()
+    public List<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> getItems()
     {
         return items;
     }

@@ -5,12 +5,15 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.animation.AnimationRuntime;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
+import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItemProperties;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import org.bukkit.entity.Player;
 
+import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 /**
  * A module that processes <tt>AnimatedGUIItems</tt>.
@@ -24,7 +27,7 @@ public class GUIAnimationModule extends GUIModule
 {
     protected final PluginBase plugin;
     // The list of Animated GUI Items to be animated
-    protected List<AnimatedGUIItem> animatedItems;
+    protected List<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> animatedItems;
     // The AnimationRuntime for this module
     protected AnimationRuntime runtime;
     // The period of time between each update
@@ -71,10 +74,11 @@ public class GUIAnimationModule extends GUIModule
      *
      * @param item Item to add
      */
-    public void addItem(AnimatedGUIItem item)
+    public void addItem(AnimatedGUIItem item, AnimatedGUIItemProperties properties)
     {
-        if(animatedItems.contains(item)) return;
-        animatedItems.add(item);
+        Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry = new AbstractMap.SimpleEntry<>(item, properties);
+        if(animatedItems.contains(entry)) return;
+        animatedItems.add(entry);
     }
 
     /**
@@ -84,6 +88,24 @@ public class GUIAnimationModule extends GUIModule
      */
     public void removeItem(AnimatedGUIItem item)
     {
-        animatedItems.remove(item);
+        for(int i = 0; i < animatedItems.size(); ++i)
+        {
+            Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry = animatedItems.get(i);
+            if(!item.equals(entry.getKey())) continue;
+            animatedItems.remove(i);
+            return;
+        }
+    }
+
+    public AnimatedGUIItemProperties getProperties(AnimatedGUIItem item)
+    {
+        for(Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry : animatedItems)
+        {
+            AnimatedGUIItem curItem = entry.getKey();
+            if(item != curItem) continue;
+            return entry.getValue();
+        }
+        return null;
     }
 }
+

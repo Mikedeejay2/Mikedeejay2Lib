@@ -24,8 +24,6 @@ import java.util.Map;
  *     <li>A view item</li>
  *     <li>Whether or not it's movable in the GUI or not</li>
  *     <li>GUI Events</li>
- *     <li>The row it's located on</li>
- *     <li>The column it's located on</li>
  * </ul>
  *
  * @author Mikedeejay2
@@ -40,12 +38,6 @@ public class GUIItem implements Cloneable
     protected boolean movable;
     // GUI Events for this item
     protected GUIEventHandler events;
-    // The row that this item is located on
-    protected int row;
-    // The column that this item is located on
-    protected int col;
-    // The name of the layer that the item was added on
-    protected GUILayer layer;
 
     public GUIItem(ItemStack item)
     {
@@ -65,66 +57,6 @@ public class GUIItem implements Cloneable
     {
         if(events == null) return;
         events.execute(event, gui);
-    }
-
-    /**
-     * Get the <tt>GUILayer</tt> of this item
-     *
-     * @return The layer of this item
-     */
-    public GUILayer getLayer()
-    {
-        return layer;
-    }
-
-    /**
-     * Set the <tt>GUILayer</tt> of this item
-     *
-     * @param layer The new layer of this item
-     */
-    public void setLayer(GUILayer layer)
-    {
-        this.layer = layer;
-    }
-
-    /**
-     * Set the row that this item is on
-     *
-     * @param row The row that this item is on
-     */
-    public void setRow(int row)
-    {
-        this.row = row;
-    }
-
-    /**
-     * Set the column that this item is on
-     *
-     * @param col the column that this item is on
-     */
-    public void setCol(int col)
-    {
-        this.col = col;
-    }
-
-    /**
-     * Gets the current row in a GUI that this item is on
-     *
-     * @return The row
-     */
-    public int getRow()
-    {
-        return row;
-    }
-
-    /**
-     * Gets the current row in a GUI that this item is on
-     *
-     * @return The column
-     */
-    public int getCol()
-    {
-        return col;
     }
 
     /**
