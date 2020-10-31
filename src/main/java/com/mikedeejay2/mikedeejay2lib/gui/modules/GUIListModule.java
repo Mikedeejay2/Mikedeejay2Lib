@@ -16,8 +16,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * GUI Module that turns the GUI into a list that shows a list of different
@@ -32,7 +31,7 @@ public class GUIListModule extends GUIModule
     // The list of items that this list holds
     protected List<GUIItem> list;
     // The search list of the items if search is enabled
-    private List<GUIItem> searchList;
+    private List<Map.Entry<Integer, GUIItem>> searchList;
     // Whether search mode is enabled or not
     private boolean searchMode;
     // The search term that has previously been used
@@ -130,22 +129,22 @@ public class GUIListModule extends GUIModule
      */
     private void updatePage(boolean search, GUILayer layer)
     {
-        ArrayList<GUIItem> pageList = (ArrayList<GUIItem>) (search ? searchList : list);
         int pageSize = ((layer.getRows() - 2) * layer.getCols());
+        int listSize = search ? searchList.size() : list.size();
         for(int i = 0; i < pageSize; i++)
         {
             int pageOffset = ((curPage-1) * pageSize);
             int row = layer.getRowFromSlot(i + layer.getCols()), col = layer.getColFromSlot(i);
             layer.removeItem(row, col);
 
-            if(pageList.size() >= (i+1) + pageOffset)
+            if(listSize >= (i+1) + pageOffset)
             {
-                GUIItem item = pageList.get(i + pageOffset);
+                GUIItem item = search ? searchList.get(i + pageOffset).getValue() : list.get(i + pageOffset);
                 layer.setItem(layer.getRowFromSlot(i + layer.getCols()), layer.getColFromSlot(i), item);
             }
-            else if((i + 1) + pageOffset > pageList.size() && !search)
+            else if((i + 1) + pageOffset > listSize && !search)
             {
-                int index = (i + pageOffset) - pageList.size();
+                int index = (i + pageOffset) - listSize;
 
                 if(endItems.size() > index)
                 {
@@ -273,7 +272,67 @@ public class GUIListModule extends GUIModule
     {
         int pageSize = ((gui.getRows() - 2) * 9);
         int pageOffset = ((curPage-1) * pageSize);
-        return gui.getSlotFromRowCol(row-2, col-1) + pageOffset;
+        int index = gui.getSlotFromRowCol(row-2, col-1) + pageOffset;
+        if(searchMode)
+        {
+            index = searchList.get(index).getKey();
+        }
+        return index;
+    }
+
+    /**
+     * Get a list item based off of the <tt>GUIContainer</tt> that the list is located in
+     * and the row and column of the item.
+     *
+     * @param row The row to get the item from
+     * @param col The column to get the item from
+     * @param gui The <tt>GUIContainer</tt> that this list is located in
+     * @return The <tt>GUIItem</tt> at the location.
+     */
+    public GUIItem getListItem(int row, int col, GUIContainer gui)
+    {
+        int index = getListItemIndex(row, col, gui);
+        return list.get(index);
+    }
+
+    /**
+     * Get a list item from it's slot in the list.
+     *
+     * @param slot The slot to get the item from
+     * @return The <tt>GUIItem</tt> of the slot
+     */
+    public GUIItem getListItem(int slot)
+    {
+        return list.get(slot);
+    }
+
+    /**
+     * Remove a list item from the list based off of the <tt>GUIContainer</tt> that the list is located in
+     * and the row and column of the item.
+     *
+     * @param row The row to remove the item from
+     * @param col The column to remove the item from
+     * @param gui The <tt>GUIContainer</tt> that this list is located in
+     */
+    public void removeListItem(int row, int col, GUIContainer gui)
+    {
+        int index = getListItemIndex(row, col, gui);
+        List<GUIItem> list = this.list;
+        list.remove(index);
+    }
+
+    /**
+     * Add a list item to the list based off of the <tt>GUIContainer</tt> that the list is located in
+     *
+     * @param row The row to add the item to
+     * @param col The column to add the item to
+     * @param gui The <tt>GUIContainer</tt> that this list is located in
+     * @param item The <tt>GUIItem</tt> to be added
+     */
+    public void addListItem(int row, int col, GUIContainer gui, GUIItem item)
+    {
+        int index = getListItemIndex(row, col, gui);
+        list.add(index, item);
     }
 
     /**
@@ -316,10 +375,11 @@ public class GUIListModule extends GUIModule
     {
         searchMode = true;
         searchList.clear();
-        for(GUIItem item : list)
+        for(int i = 0; i < list.size(); ++i)
         {
+            GUIItem item = list.get(i);
             if(!SearchUtil.searchMetaFuzzy(item.getMetaView(), searchTerm)) continue;
-            searchList.add(item);
+            searchList.add(new AbstractMap.SimpleEntry<>(i, item));
         }
     }
 
@@ -405,11 +465,11 @@ public class GUIListModule extends GUIModule
 
     /**
      * Get all <tt>GUIItems</tt> that are currently in the
-     * search list
+     * search list and the indexes that they relate to in the list
      *
      * @return All items that are in the search list
      */
-    public List<GUIItem> getSearchList()
+    public List<Map.Entry<Integer, GUIItem>> getSearchMap()
     {
         return searchList;
     }
@@ -432,5 +492,15 @@ public class GUIListModule extends GUIModule
     public List<GUIItem> getEndItems()
     {
         return endItems;
+    }
+
+    /**
+     * Get the current size of the list
+     *
+     * @return The size of the list
+     */
+    public int getSize()
+    {
+        return list.size();
     }
 }

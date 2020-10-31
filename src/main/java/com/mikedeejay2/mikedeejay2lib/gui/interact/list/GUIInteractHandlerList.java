@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.interact.list;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractHandler;
+import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractExecutorDefaultInv;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import org.bukkit.Material;
@@ -27,6 +28,7 @@ public class GUIInteractHandlerList extends GUIInteractHandler
     {
         super();
         this.limit = Math.min(limit, 64);
+        executors.add(new GUIInteractExecutorDefaultInv(this.limit));
         executors.add(new GUIInteractExecutorList(this.limit));
     }
 
@@ -34,6 +36,7 @@ public class GUIInteractHandlerList extends GUIInteractHandler
     {
         super();
         this.limit = -1;
+        executors.add(new GUIInteractExecutorDefaultInv(this.limit));
         executors.add(new GUIInteractExecutorList(this.limit));
     }
 
