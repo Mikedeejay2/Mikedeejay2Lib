@@ -145,3 +145,7 @@ Finally, shade Mikedeejay2Lib into your plugin like so:
 ```
 
 After Maven is setup and Mikedeejay2Lib is imported, make your plugin's main class extend Mikedeejay2Lib's `PluginBase`.
+
+### How to Use
+
+Currently, the only way to figure out how this library works is by looking through source code. Usage examples and a wiki will be posted eventually.
