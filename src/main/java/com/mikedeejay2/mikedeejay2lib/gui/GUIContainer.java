@@ -3,19 +3,15 @@ package com.mikedeejay2.mikedeejay2lib.gui;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
-import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractExecutor;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefault;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
-import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
@@ -41,7 +37,7 @@ public class GUIContainer
     // title possible for Minecraft (Because you can't specify no specify)
     public static final String EMPTY_NAME = "§7";
     // An empty stack, usually a light gray stained glass pane so it's nearly invisible
-    protected final ItemStack EMPTY_STACK;
+    protected ItemStack backgroundItem;
     // The inventory of this GUI
     protected Inventory inventory;
     // The name of this GUI's inventory
@@ -75,7 +71,7 @@ public class GUIContainer
     public GUIContainer(PluginBase plugin, String inventoryName, int inventoryRows)
     {
         this.plugin = plugin;
-        this.EMPTY_STACK = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1 , EMPTY_NAME);
+        this.backgroundItem = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1 , EMPTY_NAME);
         this.inventoryName = Chat.chat(inventoryName);
         if(inventoryRows > MAX_INVENTORY_ROWS) inventoryRows = MAX_INVENTORY_ROWS;
         this.inventorySlots = inventoryRows * MAX_INVENTORY_COLS;
@@ -103,7 +99,7 @@ public class GUIContainer
     public GUIContainer(PluginBase plugin, String inventoryName, int inventoryRows, int inventoryCols)
     {
         this.plugin = plugin;
-        this.EMPTY_STACK = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1 , EMPTY_NAME);
+        this.backgroundItem = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1 , EMPTY_NAME);
         this.inventoryName = Chat.chat(inventoryName);
         this.inventorySlots = Math.min(inventoryRows * MAX_INVENTORY_COLS, MAX_INVENTORY_ROWS * MAX_INVENTORY_COLS);
         this.inventoryRows = inventoryRows;
@@ -166,7 +162,7 @@ public class GUIContainer
                     if(item == null) inventory.setItem(fillSlot, null);
                     continue;
                 }
-                inventory.setItem(fillSlot, EMPTY_STACK);
+                inventory.setItem(fillSlot, backgroundItem);
             }
         }
 
@@ -919,5 +915,25 @@ public class GUIContainer
     public void setInteractionHandler(GUIInteractHandler interactionHandler)
     {
         this.interactionHandler = interactionHandler;
+    }
+
+    /**
+     * Get the background item for this GUI
+     *
+     * @return The background item for this GUI
+     */
+    public ItemStack getBackgroundItem()
+    {
+        return backgroundItem;
+    }
+
+    /**
+     * Get the background item for this GUI
+     *
+     * @param backgroundItem The new background item for this GUI
+     */
+    public void setBackgroundItem(ItemStack backgroundItem)
+    {
+        this.backgroundItem = backgroundItem;
     }
 }
