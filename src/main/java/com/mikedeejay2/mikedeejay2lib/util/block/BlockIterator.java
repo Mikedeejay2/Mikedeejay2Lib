@@ -4,7 +4,6 @@ import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
 import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 import org.bukkit.Location;
-import org.bukkit.World;
 
 import java.util.List;
 

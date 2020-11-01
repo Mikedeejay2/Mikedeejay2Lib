@@ -1,6 +1,5 @@
 package com.mikedeejay2.mikedeejay2lib.gui.modules.navigation;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.navigator.GUIScrollEvent;

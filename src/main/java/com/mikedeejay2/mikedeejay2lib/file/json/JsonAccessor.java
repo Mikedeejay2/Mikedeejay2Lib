@@ -1,7 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.file.json;
 
 import com.google.gson.*;
-import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 import com.mikedeejay2.mikedeejay2lib.file.section.SectionAccessor;
 import org.bukkit.*;
@@ -12,12 +11,10 @@ import org.bukkit.configuration.serialization.ConfigurationSerialization;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.util.BlockVector;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
-import java.io.Serializable;
 import java.lang.reflect.Type;
 import java.util.*;
 

@@ -1,9 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.file.yaml;
 
-import org.bukkit.OfflinePlayer;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.entity.Player;
 
 import java.util.*;
 

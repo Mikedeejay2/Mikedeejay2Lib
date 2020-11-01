@@ -1,6 +1,5 @@
 package com.mikedeejay2.mikedeejay2lib.commands;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import org.bukkit.command.CommandSender;
 
 /**

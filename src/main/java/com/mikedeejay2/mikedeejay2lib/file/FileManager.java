@@ -1,7 +1,5 @@
 package com.mikedeejay2.mikedeejay2lib.file;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
-
 import java.util.HashMap;
 import java.util.Map;
 

@@ -9,7 +9,6 @@ import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
 
 import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 /**
  * A class for dealing with getting locations that an entity is looking at.

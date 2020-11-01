@@ -5,7 +5,6 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItemProperties;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
-import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItemLocation;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.animation.GUIAnimationModule;
 import com.mikedeejay2.mikedeejay2lib.util.array.ArrayUtil;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
