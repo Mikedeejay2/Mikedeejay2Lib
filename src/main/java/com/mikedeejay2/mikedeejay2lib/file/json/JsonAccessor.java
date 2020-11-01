@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.file.json;
 
 import com.google.gson.*;
+import com.google.gson.internal.LinkedTreeMap;
 import com.google.gson.reflect.TypeToken;
 import com.mikedeejay2.mikedeejay2lib.file.section.SectionAccessor;
 import org.bukkit.*;
@@ -634,11 +635,12 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         Map<String, Object> map = data.serialize();
         Gson gson = new GsonBuilder().create();
+        JsonElement typeElement = gson.toJsonTree(ConfigurationSerialization.getAlias(data.getClass()));
+        jsonObject.add(ConfigurationSerialization.SERIALIZED_TYPE_KEY, typeElement);
         for(Map.Entry<String, Object> entry : map.entrySet())
         {
             String memberName = entry.getKey();
             Object object = entry.getValue();
-            System.out.println("Object: " + object.getClass());
             if(object instanceof ConfigurationSerializable)
             {
                 ConfigurationSerializable meta = (ConfigurationSerializable)object;
@@ -661,7 +663,12 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
      */
     private <T extends ConfigurationSerializable> T getSerialized(JsonObject jsonObject, Class<T> clazz)
     {
-        Set<Map.Entry<String, JsonElement>> set = jsonObject.entrySet();
+        Map<String, Object> map = getSerializedMap(jsonObject.entrySet());
+        return (T)ConfigurationSerialization.deserializeObject(map, clazz);
+    }
+
+    private Map<String, Object> getSerializedMap(Set<Map.Entry<String, JsonElement>> set)
+    {
         Map<String, Object> map = new HashMap<>();
         Gson gson = new GsonBuilder().create();
         for(Map.Entry<String, JsonElement> entry : set)
@@ -669,9 +676,21 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
             String member = entry.getKey();
             Type type = new TypeToken<Object>(){}.getType();
             Object object = gson.fromJson(entry.getValue(), type);
+            if(object instanceof Map)
+            {
+                Map<String, Object> newMap = (Map<String, Object>) object;
+                map.put(member, getSerialized(newMap));
+                continue;
+            }
+            System.out.println("Object: " + object.getClass());
             map.put(member, object);
         }
-        return (T)ConfigurationSerialization.deserializeObject(map, clazz);
+        return map;
+    }
+
+    private <T extends ConfigurationSerializable> T getSerialized(Map<String, Object> map)
+    {
+        return (T)ConfigurationSerialization.deserializeObject(map);
     }
 
     /**

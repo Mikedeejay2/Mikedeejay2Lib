@@ -30,11 +30,12 @@ public final class JsonFileIO
      *
      * @param filePath Path to the file. This should NOT include plugin.getDataFolder()
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
+     * @param json The <tt>JsonObject</tt> to load the JSON into
      * @return The requested JsonObject
      */
-    public JsonObject loadJsonObjectFromDisk(String filePath, boolean throwErrors)
+    public JsonObject loadJsonObjectFromDisk(String filePath, JsonObject json, boolean throwErrors)
     {
-        return loadJsonObjectFromDisk(new File(plugin.getDataFolder(), filePath), throwErrors);
+        return loadJsonObjectFromDisk(new File(plugin.getDataFolder(), filePath), json, throwErrors);
     }
 
     /**
@@ -42,18 +43,19 @@ public final class JsonFileIO
      *
      * @param file The file to be loaded
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
+     * @param json The <tt>JsonObject</tt> to load the JSON into
      * @return The requested JsonObject
      */
-    public JsonObject loadJsonObjectFromDisk(File file, boolean throwErrors)
+    public JsonObject loadJsonObjectFromDisk(File file, JsonObject json, boolean throwErrors)
     {
-        JsonObject json = null;
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
         Gson gson = builder.create();
         Reader reader = fileIO.getReaderFromDisk(file, throwErrors);
         try
         {
-            json = gson.fromJson(reader, JsonObject.class);
+            JsonObject newJson = gson.fromJson(reader, JsonObject.class);
+            newJson.entrySet().forEach(entry -> json.add(entry.getKey(), entry.getValue()));
             reader.close();
         }
         catch(Exception e)
@@ -68,18 +70,19 @@ public final class JsonFileIO
      *
      * @param filePath The path to the json file in the jar
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
+     * @param json The <tt>JsonObject</tt> to load the JSON into
      * @return The requested JsonObject
      */
-    public JsonObject loadJsonObjectFromJar(String filePath, boolean throwErrors)
+    public JsonObject loadJsonObjectFromJar(String filePath, JsonObject json, boolean throwErrors)
     {
-        JsonObject json = null;
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
         Gson gson = builder.create();
         Reader reader = fileIO.getReaderFromJar(filePath, throwErrors);
         try
         {
-            json = gson.fromJson(reader, JsonObject.class);
+            JsonObject newJson = gson.fromJson(reader, JsonObject.class);
+            newJson.entrySet().forEach(entry -> json.add(entry.getKey(), entry.getValue()));
             reader.close();
         }
         catch(Exception e)

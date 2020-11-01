@@ -30,14 +30,14 @@ public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
     @Override
     public boolean loadFromDisk(boolean throwErrors)
     {
-        jsonObject = jsonFileIO.loadJsonObjectFromDisk(file, throwErrors);
+        jsonFileIO.loadJsonObjectFromDisk(file, jsonObject, throwErrors);
         return file.exists();
     }
 
     @Override
     public boolean loadFromJar(boolean throwErrors)
     {
-        jsonObject = jsonFileIO.loadJsonObjectFromJar(filePath, throwErrors);
+        jsonFileIO.loadJsonObjectFromJar(filePath, jsonObject, throwErrors);
         return fileIO.getInputStreamFromJar(filePath) != null;
     }
 
