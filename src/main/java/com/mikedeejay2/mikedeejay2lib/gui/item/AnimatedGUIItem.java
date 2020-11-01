@@ -75,6 +75,7 @@ public class AnimatedGUIItem extends GUIItem
             properties.index = startingIndex;
             if(properties.wait > delay)
             {
+                if(properties.index < frames.size()) properties.index = 0;
                 properties.firstRun = false;
                 processFrame(1, properties);
                 properties.wait = 0;
