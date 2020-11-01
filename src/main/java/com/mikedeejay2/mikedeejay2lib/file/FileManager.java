@@ -71,4 +71,15 @@ public class FileManager
     {
         removeDataFile(file.getFilePath());
     }
+
+    /**
+     * Save all files that the file manager stores
+     */
+    public void saveAllFiles()
+    {
+        for(DataFile file : files.values())
+        {
+            file.saveToDisk(true);
+        }
+    }
 }
