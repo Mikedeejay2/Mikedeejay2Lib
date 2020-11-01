@@ -11,6 +11,13 @@ import org.bukkit.inventory.meta.Repairable;
 
 import java.util.Map;
 
+/**
+ * Helper methods for comparing items.
+ * Methods are heavily modified forms of CraftBukkit methods modified
+ * for use with the standard Bukkit API
+ *
+ * @author Mikedeejay2
+ */
 public final class ItemComparison
 {
     /**
