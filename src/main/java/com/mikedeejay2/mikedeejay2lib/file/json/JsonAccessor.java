@@ -682,7 +682,6 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
                 map.put(member, getSerialized(newMap));
                 continue;
             }
-            System.out.println("Object: " + object.getClass());
             map.put(member, object);
         }
         return map;
