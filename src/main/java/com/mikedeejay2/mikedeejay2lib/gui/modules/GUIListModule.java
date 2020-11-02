@@ -64,12 +64,23 @@ public class GUIListModule extends GUIModule
         this.forwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_FORWARD_WHITE, 1, GUIContainer.EMPTY_NAME));
         backItem.addEvent(new GUISwitchListPageEvent());
         forwardItem.addEvent(new GUISwitchListPageEvent());
-        this.searchItem = new GUIItem(ItemCreator.createItem(Material.COMPASS, 1, "&f&oSearch list..."));
-        this.searchOffItem = new GUIItem(ItemCreator.createItem(Material.BOOK, 1, "&f&oTurn off search mode"));
-        searchOffItem.addEvent(new GUIListSearchOffEvent());
-        searchItem.addEvent(new GUIListSearchEvent(plugin));
 
         this.searchEnabled = false;
+    }
+
+    @Override
+    public void onOpenHead(Player player, GUIContainer gui)
+    {
+        if(searchItem == null)
+        {
+            this.searchItem = new GUIItem(ItemCreator.createItem(Material.COMPASS, 1, "&f&o" + plugin.langManager().getTextLib(player, "gui.modules.list.search")));
+            searchItem.addEvent(new GUIListSearchEvent(plugin));
+        }
+        if(searchOffItem == null)
+        {
+            this.searchOffItem = new GUIItem(ItemCreator.createItem(Material.BOOK, 1, "&f&o" + plugin.langManager().getTextLib(player, "gui.modules.list.search_off")));
+            searchOffItem.addEvent(new GUIListSearchOffEvent());
+        }
     }
 
     /**
@@ -86,7 +97,7 @@ public class GUIListModule extends GUIModule
         {
             searchThroughList();
         }
-        updateListControls(searchMode, layer);
+        updateListControls(searchMode, layer, player);
         updatePage(searchMode, layer);
     }
 
@@ -161,7 +172,7 @@ public class GUIListModule extends GUIModule
      * @param search Whether search mode is enabled or not
      * @param layer The layer to update the controls on
      */
-    private void updateListControls(boolean search, GUILayer layer)
+    private void updateListControls(boolean search, GUILayer layer, Player player)
     {
         ArrayList<GUIItem> pageList = (ArrayList<GUIItem>) (search ? searchList : list);
 
@@ -179,14 +190,24 @@ public class GUIListModule extends GUIModule
             {
                 int col = (i - curPage) + 5;
                 GUIItem curItem = backItem.clone();
-                curItem.setNameView(Chat.chat("&fPage " + i));
+                curItem.setNameView(Chat.chat("&f" + plugin.langManager().getTextLib
+                (
+                    player, "gui.modules.list.page",
+                    new String[]{"PAGE"},
+                    new String[]{String.valueOf(i)}
+                )));
                 layer.setItem(layer.getRows(), col, curItem);
             }
             else if(i > curPage && i - 3 <= curPage)
             {
                 int col = (i - curPage) + 5;
                 GUIItem curItem = forwardItem.clone();
-                curItem.setNameView(Chat.chat("&fPage " + i));
+                curItem.setNameView(Chat.chat("&f" + plugin.langManager().getTextLib
+                (
+                    player, "gui.modules.list.page",
+                    new String[]{"PAGE"},
+                    new String[]{String.valueOf(i)}
+                )));
                 layer.setItem(layer.getRows(), col, curItem);
             }
         }

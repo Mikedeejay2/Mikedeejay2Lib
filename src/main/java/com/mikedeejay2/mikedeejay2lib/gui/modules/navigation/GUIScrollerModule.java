@@ -1,5 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.modules.navigation;
 
+import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.navigator.GUIScrollEvent;
@@ -12,40 +13,64 @@ import org.bukkit.entity.Player;
 
 public class GUIScrollerModule extends GUIModule
 {
+    protected final PluginBase plugin;
+
     protected GUIItem upItem;
     protected GUIItem downItem;
     protected GUIItem leftItem;
     protected GUIItem rightItem;
 
-    public GUIScrollerModule()
+    public GUIScrollerModule(PluginBase plugin)
     {
-        this.upItem = new AnimatedGUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_UP_WHITE, 1, "Up"), false, 1, true);
-        upItem.addEvent(new GUIScrollEvent(-1, 0));
-        AnimatedGUIItem upItemAnim = (AnimatedGUIItem)upItem;
-        upItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_UP_LIGHT_GRAY, 1, "Up"), 1);
-        upItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_UP_WHITE, 1, "Up"), 1);
-        upItemAnim.setStartingIndex(1);
+        this.plugin = plugin;
+    }
 
-        this.downItem = new AnimatedGUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_DOWN_WHITE, 1, "Down"), false, 1, true);
-        downItem.addEvent(new GUIScrollEvent(1, 0));
-        AnimatedGUIItem downItemAnim = (AnimatedGUIItem)downItem;
-        downItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_DOWN_LIGHT_GRAY, 1, "Down"), 1);
-        downItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_DOWN_WHITE, 1, "Down"), 1);
-        downItemAnim.setStartingIndex(1);
+    @Override
+    public void onOpenHead(Player player, GUIContainer gui)
+    {
+        if(upItem == null)
+        {
+            String name = plugin.langManager().getTextLib(player, "gui.modules.scroller.up");
+            this.upItem = new AnimatedGUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_UP_WHITE, 1, "&f" + name), false, 1, true);
+            upItem.addEvent(new GUIScrollEvent(-1, 0));
+            AnimatedGUIItem upItemAnim = (AnimatedGUIItem) upItem;
+            upItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_UP_LIGHT_GRAY, 1, "&f" + name), 1);
+            upItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_UP_WHITE, 1, "&f" + name), 1);
+            upItemAnim.setStartingIndex(1);
+        }
 
-        this.leftItem = new AnimatedGUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_WHITE, 1, "Left"), false, 1, true);
-        leftItem.addEvent(new GUIScrollEvent(0, -1));
-        AnimatedGUIItem leftItemAnim = (AnimatedGUIItem)leftItem;
-        leftItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_LIGHT_GRAY, 1, "Left"), 1);
-        leftItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_WHITE, 1, "Left"), 1);
-        leftItemAnim.setStartingIndex(1);
+        if(downItem == null)
+        {
+            String name = plugin.langManager().getTextLib(player, "gui.modules.scroller.down");
+            this.downItem = new AnimatedGUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_DOWN_WHITE, 1, "&f" + name), false, 1, true);
+            downItem.addEvent(new GUIScrollEvent(1, 0));
+            AnimatedGUIItem downItemAnim = (AnimatedGUIItem) downItem;
+            downItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_DOWN_LIGHT_GRAY, 1, "&f" + name), 1);
+            downItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_DOWN_WHITE, 1, "&f" + name), 1);
+            downItemAnim.setStartingIndex(1);
+        }
 
-        this.rightItem = new AnimatedGUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_WHITE, 1, "Right"), false, 1, true);
-        rightItem.addEvent(new GUIScrollEvent(0, 1));
-        AnimatedGUIItem rightItemAnim = (AnimatedGUIItem)rightItem;
-        rightItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_LIGHT_GRAY, 1, "Right"), 1);
-        rightItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_WHITE, 1, "Right"), 1);
-        rightItemAnim.setStartingIndex(1);
+        if(leftItem == null)
+        {
+            String name = plugin.langManager().getTextLib(player, "gui.modules.scroller.left");
+            this.leftItem = new AnimatedGUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_WHITE, 1, "&f" + name), false, 1, true);
+            leftItem.addEvent(new GUIScrollEvent(0, -1));
+            AnimatedGUIItem leftItemAnim = (AnimatedGUIItem) leftItem;
+            leftItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_LIGHT_GRAY, 1, "&f" + name), 1);
+            leftItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_WHITE, 1, "&f" + name), 1);
+            leftItemAnim.setStartingIndex(1);
+        }
+
+        if(rightItem == null)
+        {
+            String name = plugin.langManager().getTextLib(player, "gui.modules.scroller.right");
+            this.rightItem = new AnimatedGUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_WHITE, 1, "&f" + name), false, 1, true);
+            rightItem.addEvent(new GUIScrollEvent(0, 1));
+            AnimatedGUIItem rightItemAnim = (AnimatedGUIItem) rightItem;
+            rightItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_LIGHT_GRAY, 1, "&f" + name), 1);
+            rightItemAnim.addFrame(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_WHITE, 1, "&f" + name), 1);
+            rightItemAnim.setStartingIndex(1);
+        }
     }
 
     @Override

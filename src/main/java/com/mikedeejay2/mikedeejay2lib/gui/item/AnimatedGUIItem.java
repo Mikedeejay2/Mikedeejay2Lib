@@ -277,6 +277,22 @@ public class AnimatedGUIItem extends GUIItem
     }
 
     /**
+     * Helper method to get the item of a frame
+     *
+     * @param index The frame index to get
+     * @return The <tt>ItemStack</tt> of the frame
+     */
+    public ItemStack getFrameItem(int index)
+    {
+        return frames.get(index).getItem();
+    }
+
+    public AnimationFrame getFrame(int index)
+    {
+        return frames.get(index);
+    }
+
+    /**
      * Whether the animation for this item should loop or not
      *
      * @return Whether to loop or not

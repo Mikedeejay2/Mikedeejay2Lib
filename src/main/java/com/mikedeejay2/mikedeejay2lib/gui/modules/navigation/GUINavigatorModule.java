@@ -37,13 +37,33 @@ public class GUINavigatorModule extends GUIModule
     {
         this.plugin = plugin;
         this.navigationID = navigationID;
+    }
 
-        this.validBackItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_WHITE, 1, "&fBack"));
-        validBackItem.addEvent(new GUINavBackEvent(plugin));
-        this.validForwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_WHITE, 1, "&fForward"));
-        validForwardItem.addEvent(new GUINavForwardEvent(plugin));
-        this.invalidBackItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_LIGHT_GRAY, 1, "&7Back"));
-        this.invalidForwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_LIGHT_GRAY, 1, "&7Forward"));
+    @Override
+    public void onOpenHead(Player player, GUIContainer gui)
+    {
+        if(validBackItem == null)
+        {
+            String backward = plugin.langManager().getTextLib(player, "gui.modules.navigator.backward");
+            this.validBackItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_WHITE, 1, "&f" + backward));
+            validBackItem.addEvent(new GUINavBackEvent(plugin));
+        }
+        if(validForwardItem == null)
+        {
+            String forward = plugin.langManager().getTextLib(player, "gui.modules.navigator.forward");
+            this.validForwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_WHITE, 1, "&f" + forward));
+            validForwardItem.addEvent(new GUINavForwardEvent(plugin));
+        }
+        if(invalidBackItem == null)
+        {
+            String backward = plugin.langManager().getTextLib(player, "gui.modules.navigator.backward");
+            this.invalidBackItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_LEFT_LIGHT_GRAY, 1, "&7" + backward));
+        }
+        if(invalidForwardItem == null)
+        {
+            String forward = plugin.langManager().getTextLib(player, "gui.modules.navigator.forward");
+            this.invalidForwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_RIGHT_LIGHT_GRAY, 1, "&7" + forward));
+        }
     }
 
     /**
