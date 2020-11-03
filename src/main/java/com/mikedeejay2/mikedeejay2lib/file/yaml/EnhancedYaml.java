@@ -160,13 +160,18 @@ public class EnhancedYaml extends YamlConfiguration
             currentPath = getPath(currentPath, key, previousDeepness, deepness);
             previousDeepness = deepness;
 
-            if(this.contains(currentPath)) continue;
-            this.set(currentPath, yaml.get(currentPath));
+            if(!this.contains(currentPath))
+            {
+                this.set(currentPath, yaml.get(currentPath));
+            }
 
             int startingCommentIndex = getStartingCommentIndex(lines, index);
             if(startingCommentIndex == -1) continue;
             String comment = compileComments(lines, index, startingCommentIndex);
-            comments.put(currentPath, comment);
+            if(!comments.containsKey(currentPath) || comments.get(currentPath).equals(comment))
+            {
+                comments.put(currentPath, comment);
+            }
         }
         return true;
     }
