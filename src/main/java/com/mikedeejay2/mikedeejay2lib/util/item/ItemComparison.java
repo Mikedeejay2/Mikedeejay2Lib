@@ -149,6 +149,73 @@ public final class ItemComparison
         return true;
     }
 
+    /**
+     * Simple helper method meta2 takes 2 item metas and checks to see if they equal each other.
+     *
+     * @param stack1 First <tt>ItemStack</tt> to check
+     * @param stack2 Second <tt>ItemStack</tt> to compare with
+     * @return If items are equal
+     */
+    public static boolean isSimilar(ItemStack stack1, ItemStack stack2)
+    {
+        ItemMeta meta1 = stack1.getItemMeta();
+        ItemMeta meta2 = stack2.getItemMeta();
+        if(stack1.getType() != stack2.getType())
+        {
+            return false;
+        }
+
+        if(meta1.hasEnchants())
+        {
+            if(!meta2.hasEnchants() || !meta1.getEnchants().equals(meta2.getEnchants()))
+            {
+                return false;
+            }
+        }
+        else if(meta2.hasEnchants())
+        {
+            return false;
+        }
+
+        if(meta1.hasCustomModelData())
+        {
+            if(!meta2.hasCustomModelData() || meta1.getCustomModelData() != meta2.getCustomModelData())
+            {
+                return false;
+            }
+        }
+        else if(meta2.hasCustomModelData())
+        {
+            return false;
+        }
+
+        if(meta1 instanceof BlockDataMeta && ((BlockDataMeta) meta1).hasBlockData())
+        {
+            if(!(meta2 instanceof BlockDataMeta) || !((BlockDataMeta) meta2).hasBlockData() || !((BlockDataMeta) meta1).getBlockData(stack1.getType()).equals(((BlockDataMeta) meta2).getBlockData(stack2.getType())))
+            {
+                return false;
+            }
+        }
+        else if(meta2 instanceof BlockDataMeta && ((BlockDataMeta) meta2).hasBlockData())
+        {
+            return false;
+        }
+
+        if(meta1.hasAttributeModifiers())
+        {
+            if(!meta2.hasAttributeModifiers() || !compareModifiers(meta1.getAttributeModifiers(), meta2.getAttributeModifiers()))
+            {
+                return false;
+            }
+        }
+        else if(meta2.hasAttributeModifiers())
+        {
+            return false;
+        }
+
+        return true;
+    }
+
     public static boolean compareModifiers(Multimap<Attribute, AttributeModifier> attribs1, Multimap<Attribute, AttributeModifier> attribs2)
     {
         if (attribs1 == null || attribs2 == null) return false;
