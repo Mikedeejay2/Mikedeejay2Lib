@@ -1,13 +1,11 @@
 package com.mikedeejay2.mikedeejay2lib.file.yaml;
 
 import com.mikedeejay2.mikedeejay2lib.file.section.SectionAccessor;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.banner.Pattern;
 import org.bukkit.configuration.ConfigurationSection;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -193,6 +191,24 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
     }
 
     @Override
+    public Material getMaterial(String name)
+    {
+        return (Material) yaml.get(name);
+    }
+
+    @Override
+    public ConfigurationSerializable getSerialized(String name)
+    {
+        return (ConfigurationSerializable) yaml.get(name);
+    }
+
+    @Override
+    public <C extends ConfigurationSerializable> C getSerialized(String name, Class<C> clazz)
+    {
+        return (C)yaml.get(name);
+    }
+
+    @Override
     public List<Boolean> getBooleanList(String name)
     {
         return yaml.getBooleanList(name);
@@ -292,6 +308,24 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
     public List<PotionEffect> getPotionEffectList(String name)
     {
         return (List<PotionEffect>) yaml.getList(name);
+    }
+
+    @Override
+    public List<Material> getMaterialList(String name)
+    {
+        return (List<Material>) yaml.getList(name);
+    }
+
+    @Override
+    public List<ConfigurationSerializable> getSerializedList(String name)
+    {
+        return (List<ConfigurationSerializable>) yaml.getList(name);
+    }
+
+    @Override
+    public <C extends ConfigurationSerializable> List<C> getSerializedList(String name, Class<C> clazz)
+    {
+        return (List<C>) yaml.getList(name);
     }
 
     @Override
@@ -397,6 +431,18 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
     }
 
     @Override
+    public void setMaterial(String name, Material data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setSerialized(String name, ConfigurationSerializable data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
     public void setBooleanList(String name, List<Boolean> data)
     {
         yaml.set(name, data);
@@ -494,6 +540,18 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
 
     @Override
     public void setPotionEffectList(String name, List<PotionEffect> data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setMaterialList(String name, List<Material> data)
+    {
+        yaml.set(name, data);
+    }
+
+    @Override
+    public void setSerializedList(String name, List<ConfigurationSerializable> data)
     {
         yaml.set(name, data);
     }

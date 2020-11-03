@@ -1,12 +1,10 @@
 package com.mikedeejay2.mikedeejay2lib.file.section;
 
 import com.mikedeejay2.mikedeejay2lib.file.DataFile;
-import org.bukkit.Color;
-import org.bukkit.FireworkEffect;
-import org.bukkit.Location;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.banner.Pattern;
+import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.potion.PotionEffect;
@@ -125,6 +123,9 @@ public abstract class SectionAccessor<D extends DataFile, T>
     public abstract FireworkEffect getFireworkEffect(String name);
     public abstract Pattern getPattern(String name);
     public abstract PotionEffect getPotionEffect(String name);
+    public abstract Material getMaterial(String name);
+    public abstract ConfigurationSerializable getSerialized(String name);
+    public abstract <C extends ConfigurationSerializable> C getSerialized(String name, Class<C> clazz);
 
     public abstract List<Boolean> getBooleanList(String name);
     public abstract List<Integer> getIntList(String name);
@@ -143,6 +144,9 @@ public abstract class SectionAccessor<D extends DataFile, T>
     public abstract List<FireworkEffect> getFireworkEffectList(String name);
     public abstract List<Pattern> getPatternList(String name);
     public abstract List<PotionEffect> getPotionEffectList(String name);
+    public abstract List<Material> getMaterialList(String name);
+    public abstract List<ConfigurationSerializable> getSerializedList(String name);
+    public abstract <C extends ConfigurationSerializable> List<C> getSerializedList(String name, Class<C> clazz);
 
     public abstract void setBoolean(String name, boolean data);
     public abstract void setInt(String name, int data);
@@ -161,6 +165,8 @@ public abstract class SectionAccessor<D extends DataFile, T>
     public abstract void setFireworkEffect(String name, FireworkEffect data);
     public abstract void setPattern(String name, Pattern data);
     public abstract void setPotionEffect(String name, PotionEffect data);
+    public abstract void setMaterial(String name, Material data);
+    public abstract void setSerialized(String name, ConfigurationSerializable data);
 
     public abstract void setBooleanList(String name, List<Boolean> data);
     public abstract void setIntList(String name, List<Integer> data);
@@ -179,6 +185,8 @@ public abstract class SectionAccessor<D extends DataFile, T>
     public abstract void setFireworkEffectList(String name, List<FireworkEffect> data);
     public abstract void setPatternList(String name, List<Pattern> data);
     public abstract void setPotionEffectList(String name, List<PotionEffect> data);
+    public abstract void setMaterialList(String name, List<Material> data);
+    public abstract void setSerializedList(String name, List<ConfigurationSerializable> data);
 
     public D getDataFile()
     {

@@ -184,73 +184,91 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public ItemStack getItemStack(String name)
     {
-        return getSerialized(getObject(name), ItemStack.class);
+        return getSerializedInternal(getObject(name), ItemStack.class);
     }
 
     @Override
     public Location getLocation(String name)
     {
-        return getSerialized(getObject(name), Location.class);
+        return getSerializedInternal(getObject(name), Location.class);
     }
 
     @Override
     public Vector getVector(String name)
     {
-        return getSerialized(getObject(name), Vector.class);
+        return getSerializedInternal(getObject(name), Vector.class);
     }
 
     @Override
     public ItemMeta getItemMeta(String name)
     {
-        return getSerialized(getObject(name), ItemMeta.class);
+        return getSerializedInternal(getObject(name), ItemMeta.class);
     }
 
     @Override
     public OfflinePlayer getPlayer(String name)
     {
-        return getSerialized(getObject(name), OfflinePlayer.class);
+        return getSerializedInternal(getObject(name), OfflinePlayer.class);
     }
 
     @Override
     public AttributeModifier getAttributeModifier(String name)
     {
-        return getSerialized(getObject(name), AttributeModifier.class);
+        return getSerializedInternal(getObject(name), AttributeModifier.class);
     }
 
     @Override
     public BlockVector getBlockVector(String name)
     {
-        return getSerialized(getObject(name), BlockVector.class);
+        return getSerializedInternal(getObject(name), BlockVector.class);
     }
 
     @Override
     public BoundingBox getBoundingBox(String name)
     {
-        return getSerialized(getObject(name), BoundingBox.class);
+        return getSerializedInternal(getObject(name), BoundingBox.class);
     }
 
     @Override
     public Color getColor(String name)
     {
-        return getSerialized(getObject(name), Color.class);
+        return getSerializedInternal(getObject(name), Color.class);
     }
 
     @Override
     public FireworkEffect getFireworkEffect(String name)
     {
-        return getSerialized(getObject(name), FireworkEffect.class);
+        return getSerializedInternal(getObject(name), FireworkEffect.class);
     }
 
     @Override
     public Pattern getPattern(String name)
     {
-        return getSerialized(getObject(name), Pattern.class);
+        return getSerializedInternal(getObject(name), Pattern.class);
     }
 
     @Override
     public PotionEffect getPotionEffect(String name)
     {
-        return getSerialized(getObject(name), PotionEffect.class);
+        return getSerializedInternal(getObject(name), PotionEffect.class);
+    }
+
+    @Override
+    public Material getMaterial(String name)
+    {
+        return Material.matchMaterial(getString(name));
+    }
+
+    @Override
+    public ConfigurationSerializable getSerialized(String name)
+    {
+        return getSerializedInternal(getObject(name));
+    }
+
+    @Override
+    public <C extends ConfigurationSerializable> C getSerialized(String name, Class<C> clazz)
+    {
+        return getSerializedInternal(getObject(name), clazz);
     }
 
     @Override
@@ -407,6 +425,33 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     }
 
     @Override
+    public List<Material> getMaterialList(String name)
+    {
+        List<Material> list = new ArrayList<>();
+        JsonArray array = getArray(name);
+        array.forEach(element -> list.add(Material.matchMaterial(element.getAsString())));
+        return list;
+    }
+
+    @Override
+    public List<ConfigurationSerializable> getSerializedList(String name)
+    {
+        List<ConfigurationSerializable> list = new ArrayList<>();
+        JsonArray array = getArray(name);
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getSerialized((String) null)));
+        return list;
+    }
+
+    @Override
+    public <C extends ConfigurationSerializable> List<C> getSerializedList(String name, Class<C> clazz)
+    {
+        List<C> list = new ArrayList<>();
+        JsonArray array = getArray(name);
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getSerialized(null, clazz)));
+        return list;
+    }
+
+    @Override
     public void setBoolean(String name, boolean data)
     {
         json.addProperty(name, data);
@@ -445,67 +490,79 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public void setItemStack(String name, ItemStack data)
     {
-        setSerializable(getObject(name), data);
+        setSerializedInternal(getObject(name), data);
     }
 
     @Override
     public void setLocation(String name, Location data)
     {
-        setSerializable(getObject(name), data);
+        setSerializedInternal(getObject(name), data);
     }
 
     @Override
     public void setVector(String name, Vector data)
     {
-        setSerializable(getObject(name), data);
+        setSerializedInternal(getObject(name), data);
     }
 
     @Override
     public void setPlayer(String name, OfflinePlayer data)
     {
-        setSerializable(getObject(name), data);
+        setSerializedInternal(getObject(name), data);
     }
 
     @Override
     public void setAttributeModifier(String name, AttributeModifier data)
     {
-        setSerializable(getObject(name), data);
+        setSerializedInternal(getObject(name), data);
     }
 
     @Override
     public void setBlockVector(String name, BlockVector data)
     {
-        setSerializable(getObject(name), data);
+        setSerializedInternal(getObject(name), data);
     }
 
     @Override
     public void setBoundingBox(String name, BoundingBox data)
     {
-        setSerializable(getObject(name), data);
+        setSerializedInternal(getObject(name), data);
     }
 
     @Override
     public void setColor(String name, Color data)
     {
-        setSerializable(getObject(name), data);
+        setSerializedInternal(getObject(name), data);
     }
 
     @Override
     public void setFireworkEffect(String name, FireworkEffect data)
     {
-        setSerializable(getObject(name), data);
+        setSerializedInternal(getObject(name), data);
     }
 
     @Override
     public void setPattern(String name, Pattern data)
     {
-        setSerializable(getObject(name), data);
+        setSerializedInternal(getObject(name), data);
     }
 
     @Override
     public void setPotionEffect(String name, PotionEffect data)
     {
-        setSerializable(getObject(name), data);
+        setSerializedInternal(getObject(name), data);
+    }
+
+    @Override
+    public void setMaterial(String name, Material data)
+    {
+        setString(name, data.toString());
+    }
+
+    @Override
+    public void setSerialized(String name, ConfigurationSerializable data)
+    {
+        setSerializedInternal(getObject(name), data);
     }
 
     @Override
@@ -559,67 +616,81 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public void setItemStackList(String name, List<ItemStack> data)
     {
-        setSerializableList(name, data);
+        setSerializedListInternal(name, data);
     }
 
     @Override
     public void setLocationList(String name, List<Location> data)
     {
-        setSerializableList(name, data);
+        setSerializedListInternal(name, data);
     }
 
     @Override
     public void setVectorList(String name, List<Vector> data)
     {
-        setSerializableList(name, data);
+        setSerializedListInternal(name, data);
     }
 
     @Override
     public void setPlayerList(String name, List<OfflinePlayer> data)
     {
-        setSerializableList(name, data);
+        setSerializedListInternal(name, data);
     }
 
     @Override
     public void setAttributeModifierList(String name, List<AttributeModifier> data)
     {
-        setSerializableList(name, data);
+        setSerializedListInternal(name, data);
     }
 
     @Override
     public void setBlockVectorList(String name, List<BlockVector> data)
     {
-        setSerializableList(name, data);
+        setSerializedListInternal(name, data);
     }
 
     @Override
     public void setBoundingBoxList(String name, List<BoundingBox> data)
     {
-        setSerializableList(name, data);
+        setSerializedListInternal(name, data);
     }
 
     @Override
     public void setColorList(String name, List<Color> data)
     {
-        setSerializableList(name, data);
+        setSerializedListInternal(name, data);
     }
 
     @Override
     public void setFireworkEffectList(String name, List<FireworkEffect> data)
     {
-        setSerializableList(name, data);
+        setSerializedListInternal(name, data);
     }
 
     @Override
     public void setPatternList(String name, List<Pattern> data)
     {
-        setSerializableList(name, data);
+        setSerializedListInternal(name, data);
     }
 
     @Override
     public void setPotionEffectList(String name, List<PotionEffect> data)
     {
-        setSerializableList(name, data);
+        setSerializedListInternal(name, data);
+    }
+
+    @Override
+    public void setMaterialList(String name, List<Material> data)
+    {
+        JsonArray array = getArray(name);
+        data.forEach(material -> array.add(material.toString()));
+        json.add(name, array);
+    }
+
+    @Override
+    public void setSerializedList(String name, List<ConfigurationSerializable> data)
+    {
+        setSerializedListInternal(name, data);
     }
 
     /**
@@ -628,7 +699,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
      * @param jsonObject The <tt>JsonObject</tt> to add the data to
      * @param data The data to add to the jsonObject
      */
-    private void setSerializable(JsonObject jsonObject, ConfigurationSerializable data)
+    private void setSerializedInternal(JsonObject jsonObject, ConfigurationSerializable data)
     {
         Map<String, Object> map = data.serialize();
         Gson gson = new GsonBuilder().create();
@@ -642,7 +713,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
             {
                 ConfigurationSerializable meta = (ConfigurationSerializable)object;
                 jsonObject.add(memberName, new JsonObject());
-                setSerializable(jsonObject.getAsJsonObject(memberName), meta);
+                setSerializedInternal(jsonObject.getAsJsonObject(memberName), meta);
                 continue;
             }
             JsonElement element = gson.toJsonTree(object);
@@ -658,10 +729,22 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
      * @param <T> The type of <tt>ConfigurationSerializable</tt>, same as class type
      * @return The requested <tt>ConfigurationSerializable</tt>
      */
-    private <T extends ConfigurationSerializable> T getSerialized(JsonObject jsonObject, Class<T> clazz)
+    private <T extends ConfigurationSerializable> T getSerializedInternal(JsonObject jsonObject, Class<T> clazz)
     {
         Map<String, Object> map = getSerializedMap(jsonObject.entrySet());
         return (T)ConfigurationSerialization.deserializeObject(map, clazz);
+    }
+
+    /**
+     * Get a <tt>ConfigurationSerializable</tt> object from a <tt>JsonObject</tt>
+     *
+     * @param jsonObject Object to get the <tt>ConfigurationSerializable</tt> from
+     * @return The requested <tt>ConfigurationSerializable</tt>
+     */
+    private ConfigurationSerializable getSerializedInternal(JsonObject jsonObject)
+    {
+        Map<String, Object> map = getSerializedMap(jsonObject.entrySet());
+        return ConfigurationSerialization.deserializeObject(map);
     }
 
     private Map<String, Object> getSerializedMap(Set<Map.Entry<String, JsonElement>> set)
@@ -695,12 +778,12 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
      * @param name The memberName that the list will be added under
      * @param data The list of data to add
      */
-    private void setSerializableList(String name, List<? extends ConfigurationSerializable> data)
+    private void setSerializedListInternal(String name, List<? extends ConfigurationSerializable> data)
     {
         JsonArray array = new JsonArray();
         data.forEach(vector -> {
             JsonObject object = new JsonObject();
-            setSerializable(object, vector);
+            setSerializedInternal(object, vector);
             array.add(object);
         });
         json.add(name, array);
