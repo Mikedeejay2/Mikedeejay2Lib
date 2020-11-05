@@ -72,6 +72,10 @@ public class GUIInteractHandlerDefault extends GUIInteractHandler
                 bottomItem = guiItem.getItemBase();
             }
         }
+        else
+        {
+            bottomItem = playerInv.getItem(slot);
+        }
 
         if(limit == -1)
         {
