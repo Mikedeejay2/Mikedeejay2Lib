@@ -60,6 +60,8 @@ public class GUIContainer
     protected int colOffset;
     // The item interaction handler
     protected GUIInteractHandler interactionHandler;
+    // Boolean for whether non-filled items should be filled in the GUI
+    protected boolean fillEmpty;
 
     /**
      * Create a GUI of a regular size.
@@ -80,6 +82,7 @@ public class GUIContainer
         this.layers = new ArrayList<>();
         this.modules = new ArrayList<>();
         this.defaultMoveState = false;
+        this.fillEmpty = false;
         rowOffset = 0;
         colOffset = 0;
         layers.add(new GUILayer(this, "base", false, defaultMoveState));
@@ -107,6 +110,7 @@ public class GUIContainer
         this.layers = new ArrayList<>();
         this.modules = new ArrayList<>();
         this.defaultMoveState = false;
+        this.fillEmpty = false;
         rowOffset = 0;
         colOffset = 0;
         layers.add(new GUILayer(this, "base", false, defaultMoveState));
@@ -149,20 +153,30 @@ public class GUIContainer
         modules.forEach(module -> module.onUpdateHead(player, this));
         int newInvRows = Math.min(inventoryRows, MAX_INVENTORY_ROWS);
 
-        int fillSlot = -1;
-        GUILayer bottomLayer = layers.get(0);
-        for(int row = 1; row <= newInvRows; ++row)
+        if(fillEmpty)
         {
-            for(int col = 1; col <= MAX_INVENTORY_COLS; ++col)
+            int fillSlot = -1;
+            GUILayer bottomLayer = layers.get(0);
+            for(int row = 1; row <= newInvRows; ++row)
             {
-                GUIItem item = bottomLayer.getItem(row, col);
-                ++fillSlot;
-                if((item != null && item.isMovable()) || (item == null && bottomLayer.getDefaultMoveState()))
+                for(int col = 1; col <= MAX_INVENTORY_COLS; ++col)
                 {
-                    if(item == null) inventory.setItem(fillSlot, null);
-                    continue;
+                    GUIItem item = bottomLayer.getItem(row, col);
+                    ++fillSlot;
+                    if((item != null && item.isMovable()) || (item == null && bottomLayer.getDefaultMoveState()))
+                    {
+                        if(item == null) inventory.setItem(fillSlot, null);
+                        continue;
+                    }
+                    inventory.setItem(fillSlot, backgroundItem);
                 }
-                inventory.setItem(fillSlot, backgroundItem);
+            }
+        }
+        else
+        {
+            for(int i = 0; i < inventorySlots; ++i)
+            {
+                inventory.setItem(i, null);
             }
         }
 
@@ -929,5 +943,26 @@ public class GUIContainer
     public void setBackgroundItem(ItemStack backgroundItem)
     {
         this.backgroundItem = backgroundItem;
+    }
+
+    /**
+     * Returns whether this GUI should fill its empty GUI slots
+     *
+     * @return Empty fill state
+     */
+    public boolean shouldFillEmpty()
+    {
+        return fillEmpty;
+    }
+
+    /**
+     * Set whether this GUI should fill its empty slots.
+     * This slightly decreases performance (~0.15ms on full size inventory)
+     *
+     * @param fillEmpty The new fill empty state
+     */
+    public void setFillEmpty(boolean fillEmpty)
+    {
+        this.fillEmpty = fillEmpty;
     }
 }
