@@ -61,7 +61,7 @@ public class GUIBorderModule extends GUIModule
      * @param gui The GUi
      */
     @Override
-    public void onUpdateHead(Player player, GUIContainer gui)
+    public void onOpenHead(Player player, GUIContainer gui)
     {
         for(int i = 1; i <= gui.getCols(); i++)
         {
