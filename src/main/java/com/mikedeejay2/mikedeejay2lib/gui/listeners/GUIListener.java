@@ -73,7 +73,6 @@ public class GUIListener implements Listener
     @EventHandler
     public void onClose(InventoryCloseEvent event)
     {
-        System.out.println("Close 1");
         Player player = (Player) event.getPlayer();
         GUIManager manager = plugin.guiManager();
         if(!manager.containsPlayer(player)) return;
@@ -87,7 +86,6 @@ public class GUIListener implements Listener
         }
         playerGUI.onClose();
         playerGUI.setGUIState(false);
-        System.out.println("Close 2");
     }
 
     /**
