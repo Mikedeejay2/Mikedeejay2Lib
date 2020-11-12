@@ -25,6 +25,7 @@ public class PlayerGUI
     protected Player player;
     // Boolean for if the GUI is currently opened or not
     protected boolean guiOpened;
+    protected boolean guiChange;
 
     public PlayerGUI(PluginBase plugin, Player player)
     {
@@ -32,6 +33,7 @@ public class PlayerGUI
         this.player = player;
         this.gui = null;
         this.guiOpened = false;
+        this.guiChange = false;
         this.naviSystems = new HashMap<>();
     }
 
@@ -55,6 +57,11 @@ public class PlayerGUI
      */
     public void setGUI(GUIContainer gui)
     {
+        if(this.guiOpened)
+        {
+            this.guiChange = true;
+            onClose();
+        }
         this.gui = gui;
         openGUI();
     }
@@ -141,5 +148,15 @@ public class PlayerGUI
     public Map<String, NavigationSystem> getNaviSystems()
     {
         return naviSystems;
+    }
+
+    public boolean isGuiChange()
+    {
+        return guiChange;
+    }
+
+    public void setGuiChange(boolean guiChange)
+    {
+        this.guiChange = guiChange;
     }
 }

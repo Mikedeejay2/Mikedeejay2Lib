@@ -65,6 +65,7 @@ public class GUIAnimationModule extends GUIModule
     public void onClose(Player player, GUIContainer gui)
     {
         runtime.cancel();
+        System.out.println("CANCEL!!!!!!!!!!!!!!!" + gui.getName());
     }
 
     /**

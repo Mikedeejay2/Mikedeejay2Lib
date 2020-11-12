@@ -77,6 +77,7 @@ public class AnimationRuntime extends EnhancedRunnable
             AnimatedGUIItemProperties properties = entry.getValue();
             if(item.tick(period, properties)) shouldUpdate = true;
         }
+        System.out.println("Tick");
         if(shouldUpdate) gui.update(player);
     }
 
