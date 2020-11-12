@@ -6,6 +6,7 @@ import com.mikedeejay2.mikedeejay2lib.file.FileManager;
 import com.mikedeejay2.mikedeejay2lib.gui.listeners.GUIListener;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.GUIManager;
 import com.mikedeejay2.mikedeejay2lib.language.LangManager;
+import com.mikedeejay2.mikedeejay2lib.util.bstats.BStats;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -26,6 +27,7 @@ public class PluginBase extends JavaPlugin
     protected Chat chat;
     protected ListenerManager listenerManager;
     protected GUIManager guiManager;
+    protected BStats bStats;
 
     public PluginBase()
     {}
@@ -40,6 +42,7 @@ public class PluginBase extends JavaPlugin
         this.fileManager = new FileManager();
         this.listenerManager = new ListenerManager(this);
         this.guiManager = new GUIManager(this);
+        this.bStats = new BStats(this);
 
         this.getServer().getPluginManager().registerEvents(new GUIListener(this), this);
     }
@@ -118,5 +121,15 @@ public class PluginBase extends JavaPlugin
     public GUIManager guiManager()
     {
         return guiManager;
+    }
+
+    /**
+     * Get this plugin's BStats manager
+     *
+     * @return The BStats manager
+     */
+    public BStats bStats()
+    {
+        return bStats;
     }
 }
