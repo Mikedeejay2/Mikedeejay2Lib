@@ -73,17 +73,16 @@ public class GUIListener implements Listener
     @EventHandler
     public void onClose(InventoryCloseEvent event)
     {
+        System.out.println("OnClose 1");
         Player player = (Player) event.getPlayer();
         GUIManager manager = plugin.guiManager();
         if(!manager.containsPlayer(player)) return;
         PlayerGUI playerGUI = manager.getPlayer(player);
         GUIContainer curGUI = playerGUI.getGUI();
         if(curGUI == null) return;
-        Inventory guiInv = curGUI.getInventory();
-        Inventory playerInv = event.getInventory();
-        if(guiInv != playerInv) return;
         playerGUI.onClose();
         playerGUI.setGUIState(false);
+        System.out.println("OnClose 2");
     }
 
     /**
@@ -95,6 +94,7 @@ public class GUIListener implements Listener
     @EventHandler
     public void onOpen(InventoryOpenEvent event)
     {
+        System.out.println("OnOpen 1");
         Player player = (Player) event.getPlayer();
         GUIManager manager = plugin.guiManager();
         if(!manager.containsPlayer(player)) return;
@@ -103,6 +103,7 @@ public class GUIListener implements Listener
         Inventory playerInv = event.getInventory();
         if(guiInv != playerInv) return;
         playerGUI.setGUIState(true);
+        System.out.println("OnOpen 2");
     }
 
     /**
