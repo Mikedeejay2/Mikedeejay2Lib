@@ -129,7 +129,16 @@ public class GUIListModule extends GUIModule
      */
     public void resetEndItems()
     {
-        endItems = new ArrayList<>();
+        endItems.clear();
+    }
+
+    /**
+     * Reset the end items to have no appended end items.
+     */
+    public void resetList()
+    {
+        list.clear();
+        searchList.clear();
     }
 
     /**
