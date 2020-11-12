@@ -51,6 +51,8 @@ public class GUIListModule extends GUIModule
     private GUIItem searchOffItem;
     // Whether search is allowed or not
     private boolean searchEnabled;
+    // Whether this list has been changed since its last update
+    private boolean changed;
 
     public GUIListModule(PluginBase plugin)
     {
@@ -66,6 +68,7 @@ public class GUIListModule extends GUIModule
         forwardItem.addEvent(new GUISwitchListPageEvent());
 
         this.searchEnabled = false;
+        this.changed = false;
     }
 
     @Override
@@ -112,6 +115,7 @@ public class GUIListModule extends GUIModule
     public void addEndItem(GUIItem endItem)
     {
         endItems.add(endItem);
+        changed = true;
     }
 
     /**
@@ -122,6 +126,7 @@ public class GUIListModule extends GUIModule
     public void removeEndItem(GUIItem endItem)
     {
         endItems.remove(endItem);
+        changed = true;
     }
 
     /**
@@ -130,6 +135,7 @@ public class GUIListModule extends GUIModule
     public void resetEndItems()
     {
         endItems.clear();
+        changed = true;
     }
 
     /**
@@ -139,6 +145,7 @@ public class GUIListModule extends GUIModule
     {
         list.clear();
         searchList.clear();
+        changed = true;
     }
 
     /**
@@ -155,7 +162,7 @@ public class GUIListModule extends GUIModule
         {
             int pageOffset = ((curPage-1) * pageSize);
             int row = layer.getRowFromSlot(i + layer.getCols()), col = layer.getColFromSlot(i);
-            layer.removeItem(row, col);
+            if(changed) layer.removeItem(row, col);
 
             if(listSize >= (i+1) + pageOffset)
             {
@@ -173,6 +180,7 @@ public class GUIListModule extends GUIModule
                 }
             }
         }
+        changed = false;
     }
 
     /**
@@ -240,6 +248,7 @@ public class GUIListModule extends GUIModule
     public void addListItem(GUIItem item)
     {
         list.add(item);
+        changed = true;
     }
 
     /**
@@ -257,6 +266,7 @@ public class GUIListModule extends GUIModule
         int pageOffset = ((curPage-1) * pageSize);
         int index = gui.getSlotFromRowCol(row-2, col-1) + pageOffset;
         list.set(index, item);
+        changed = true;
     }
 
     /**
@@ -267,6 +277,7 @@ public class GUIListModule extends GUIModule
     public void setGUIItems(List<GUIItem> items)
     {
         this.list = items;
+        changed = true;
     }
 
     /**
@@ -277,6 +288,7 @@ public class GUIListModule extends GUIModule
     public void removeGUIItem(int index)
     {
         list.remove(index);
+        changed = true;
     }
 
     /**
@@ -287,6 +299,7 @@ public class GUIListModule extends GUIModule
     public void removeGUIItem(GUIItem item)
     {
         list.remove(item);
+        changed = true;
     }
 
     /**
@@ -350,6 +363,7 @@ public class GUIListModule extends GUIModule
         int index = getListItemIndex(row, col, gui);
         List<GUIItem> list = this.list;
         list.remove(index);
+        changed = true;
     }
 
     /**
@@ -364,6 +378,7 @@ public class GUIListModule extends GUIModule
     {
         int index = getListItemIndex(row, col, gui);
         list.add(index, item);
+        changed = true;
     }
 
     /**
@@ -376,6 +391,7 @@ public class GUIListModule extends GUIModule
     public void toListPage(int page, Player player, GUIContainer gui)
     {
         curPage = page;
+        changed = true;
     }
 
     /**
@@ -387,6 +403,7 @@ public class GUIListModule extends GUIModule
     {
         this.searchMode = true;
         this.searchTerm = search;
+        changed = true;
     }
 
     /**
@@ -396,6 +413,7 @@ public class GUIListModule extends GUIModule
     {
         this.searchMode = false;
         this.searchTerm = null;
+        changed = true;
     }
 
     /**
