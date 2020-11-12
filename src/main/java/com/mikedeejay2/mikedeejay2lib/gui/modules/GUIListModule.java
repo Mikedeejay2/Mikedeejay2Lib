@@ -183,7 +183,7 @@ public class GUIListModule extends GUIModule
      */
     private void updateListControls(boolean search, GUILayer layer, Player player)
     {
-        ArrayList<GUIItem> pageList = (ArrayList<GUIItem>) (search ? searchList : list);
+        List<GUIItem> pageList = (List<GUIItem>) (search ? searchList : list);
 
         int amountOfPages = (int)Math.ceil((pageList.size() + endItems.size()) / ((layer.getRows() - 2.0f) * layer.getCols()));
 
@@ -264,7 +264,7 @@ public class GUIListModule extends GUIModule
      *
      * @param items The list of items to set this list to
      */
-    public void setGUIItems(ArrayList<GUIItem> items)
+    public void setGUIItems(List<GUIItem> items)
     {
         this.list = items;
     }
