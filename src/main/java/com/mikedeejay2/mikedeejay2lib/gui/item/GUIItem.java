@@ -156,6 +156,29 @@ public class GUIItem implements Cloneable
     }
 
     /**
+     * Get a <tt>GUIEvent</tt> based off of the event's class
+     *
+     * @param eventClass The class of the <tt>GUIEvent</tt> to get
+     * @param <T> The class type
+     * @return The requested <tt>GUIEvent</tt>
+     */
+    public <T extends GUIEvent> T getEvent(Class<T> eventClass)
+    {
+        return events.getEvent(eventClass);
+    }
+
+    /**
+     * Get a <tt>GUIEvent</tt> based off of the index of the event
+     *
+     * @param index The index that the <tt>GUIEvent</tt> is located at in the list
+     * @return The requested event
+     */
+    public GUIEvent getEvent(int index)
+    {
+        return events.getEvent(index);
+    }
+
+    /**
      * Set the <tt>GUIEventHandler</tt> for this item
      *
      * @param events Events to set this item to use

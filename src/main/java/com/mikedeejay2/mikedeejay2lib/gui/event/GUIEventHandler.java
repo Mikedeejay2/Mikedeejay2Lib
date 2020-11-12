@@ -123,6 +123,36 @@ public class GUIEventHandler implements Cloneable
         return false;
     }
 
+    /**
+     * Attempts to get a <tt>GUIEvent</tt> of the specified class
+     *
+     * @param eventClass The event class to search for
+     * @return The <tt>GUIEvent</tt> of the class type if it exists, null if it doesn't
+     */
+    public <T extends GUIEvent> T getEvent(Class<T> eventClass)
+    {
+        String className = eventClass.getName();
+        for(GUIEvent event : events)
+        {
+            Class<? extends GUIEvent> curClass = event.getClass();
+            String curClassName = curClass.getName();
+            if(!className.equals(curClassName)) continue;
+            return (T) event;
+        }
+        return null;
+    }
+
+    /**
+     * Get a <tt>GUIEvent</tt> based on the index that it's located in
+     *
+     * @param index The index of the event to get
+     * @return The <tt>GUIEvent</tt> contained within the index
+     */
+    public GUIEvent getEvent(int index)
+    {
+        return events.get(index);
+    }
+
     @Override
     public GUIEventHandler clone()
     {
