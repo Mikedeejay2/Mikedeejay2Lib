@@ -56,7 +56,7 @@ public class LangManager
      */
     public boolean loadLangFile(String locale)
     {
-        if(locale == null || doNotLoad.contains(locale)) return false;
+        if(locale == null || doNotLoad.contains(locale)) return true;
         JsonFile file = new JsonFile(plugin, locale + ".json");
 
         doNotLoad.add(locale);
