@@ -127,6 +127,7 @@ public class GUIInteractHandlerList extends GUIInteractHandler
                 if(clickedInv == null) break;
                 action = InventoryAction.CLONE_STACK;
             }
+            break;
             case SHIFT_LEFT:
             case SHIFT_RIGHT:
             {

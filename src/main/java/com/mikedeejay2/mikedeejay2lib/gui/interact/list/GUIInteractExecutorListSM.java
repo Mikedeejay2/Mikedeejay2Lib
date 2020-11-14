@@ -487,6 +487,7 @@ public class GUIInteractExecutorListSM implements GUIInteractExecutor
         int row = layer.getRowFromSlot(slot);
         int col = layer.getColFromSlot(slot);
         GUIItem guiItem = list.getItem(row, col, gui);
+        if(guiItem == null) return;
         ItemStack item = guiItem.getItemBase().clone();
         int maxAmount = limit == -1 ? item.getMaxStackSize() : limit;
         item.setAmount(maxAmount);
