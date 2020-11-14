@@ -118,7 +118,7 @@ public class GUIInteractHandlerList extends GUIInteractHandler
                 }
                 else if(bottomItem != null)
                 {
-                    action = InventoryAction.PICKUP_ALL;
+                    action = InventoryAction.PICKUP_HALF;
                 }
             }
             break;
