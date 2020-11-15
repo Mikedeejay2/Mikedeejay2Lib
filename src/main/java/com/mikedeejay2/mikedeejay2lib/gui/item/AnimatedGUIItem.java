@@ -88,7 +88,7 @@ public class AnimatedGUIItem extends GUIItem
             if(loop) properties.index -= frames.size();
             else return false;
         }
-        long curWait = frames.get(properties.index).getPeriod();
+        long curWait = frames.get(properties.index - 1 < 0 ? frames.size() - 1 : properties.index - 1).getPeriod();
         if(properties.wait < curWait) return false;
         int framePass = (int)(properties.wait / curWait);
         properties.wait = 0;
