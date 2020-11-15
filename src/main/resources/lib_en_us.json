@@ -4,6 +4,8 @@
   "command.errors.invalid_arguments": "Error: The arguments provided are incorrect. Please input valid arguments.",
   "errors.permission.nopermission": "You don't have permission to run this command!",
   "generic.success": "Success!",
+  "generic.enabled": "Enabled",
+  "generic.disabled": "Disabled",
   "warnings.big_number": "Warning: The number you entered is above the recommended limit and might act oddly.",
   "errors.player_required": "Error: You must be a player to run this command.",
   "errors.number_required": "Error: A number is required to run this subcommand.",

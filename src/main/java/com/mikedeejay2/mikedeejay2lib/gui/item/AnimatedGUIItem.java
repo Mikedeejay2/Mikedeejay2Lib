@@ -69,6 +69,7 @@ public class AnimatedGUIItem extends GUIItem
      */
     public boolean tick(long tickTime, AnimatedGUIItemProperties properties)
     {
+        if(frames.size() == 0) return false;
         properties.wait += tickTime;
         if(properties.firstRun)
         {
