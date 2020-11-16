@@ -15,10 +15,10 @@
   "gui.modules.list.search": "Search list...",
   "gui.modules.list.search_off": "Turn off search mode",
   "gui.modules.list.page": "Page {PAGE}",
-  "gui.modules.scroller.up": "Up",
-  "gui.modules.scroller.down": "Down",
-  "gui.modules.scroller.left": "Left",
-  "gui.modules.scroller.right": "Right",
-  "gui.modules.navigator.forward": "Forward",
-  "gui.modules.navigator.backward": "Backward"
+  "gui.modules.scroller.up": "Click to go up",
+  "gui.modules.scroller.down": "Click to go down",
+  "gui.modules.scroller.left": "Click to go left",
+  "gui.modules.scroller.right": "Click to go right",
+  "gui.modules.navigator.forward": "Click to go forward",
+  "gui.modules.navigator.backward": "Click to go back"
 }
