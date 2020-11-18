@@ -128,7 +128,7 @@ public abstract class GUIInteractHandler
      * @param executorClass The <tt>GUIInteractExecutor</tt> class to find and get from the list
      * @return The requested <tt>GUIInteractExecutor</tt>
      */
-    public GUIInteractExecutor getExecutor(Class<? extends GUIInteractExecutor> executorClass)
+    public <T extends GUIInteractExecutor> T getExecutor(Class<T> executorClass)
     {
         String className = executorClass.getName();
         for(GUIInteractExecutor executor : executors)
@@ -136,7 +136,7 @@ public abstract class GUIInteractHandler
             Class<? extends GUIInteractExecutor> curClass = executor.getClass();
             String curClassName = curClass.getName();
             if(!className.equals(curClassName)) continue;
-            return executor;
+            return (T)executor;
         }
         return null;
     }
