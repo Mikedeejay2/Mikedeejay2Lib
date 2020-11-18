@@ -61,6 +61,10 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
     @Override
     public SectionAccessor<YamlFile, Object> getSection(String name)
     {
+        if(!yaml.isConfigurationSection(name))
+        {
+            yaml.createSection(name);
+        }
         return new YamlAccessor(dataFile, yaml.getConfigurationSection(name));
     }
 
