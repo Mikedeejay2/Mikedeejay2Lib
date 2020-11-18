@@ -423,4 +423,14 @@ public class LangManager
         }
         return text;
     }
+
+    /**
+     * Get the default lang locale of this lang manager
+     *
+     * @return The lang locale (i.e en_us)
+     */
+    public String getDefaultLang()
+    {
+        return defaultLang;
+    }
 }
