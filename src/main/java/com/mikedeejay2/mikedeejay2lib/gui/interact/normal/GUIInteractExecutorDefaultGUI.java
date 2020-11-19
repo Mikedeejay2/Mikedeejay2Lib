@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.interact.normal;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractExecutor;
+import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractType;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import org.bukkit.Location;
@@ -21,16 +22,64 @@ import org.bukkit.inventory.ItemStack;
  */
 public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
 {
+    protected GUIInteractType interactType;
     protected int limit;
+    protected boolean consume;
 
     public GUIInteractExecutorDefaultGUI(int limit)
     {
         this.limit = Math.min(limit, 64);
+        this.interactType = GUIInteractType.ANY;
+        this.consume = true;
     }
 
     public GUIInteractExecutorDefaultGUI()
     {
         this.limit = -1;
+        this.interactType = GUIInteractType.ANY;
+        this.consume = true;
+    }
+
+    public GUIInteractExecutorDefaultGUI(int limit, boolean consume)
+    {
+        this.limit = Math.min(limit, 64);
+        this.interactType = GUIInteractType.ANY;
+        this.consume = consume;
+    }
+
+    public GUIInteractExecutorDefaultGUI(boolean consume)
+    {
+        this.limit = -1;
+        this.interactType = GUIInteractType.ANY;
+        this.consume = consume;
+    }
+
+    public GUIInteractExecutorDefaultGUI(GUIInteractType type, int limit)
+    {
+        this.limit = Math.min(limit, 64);
+        this.interactType = type;
+        this.consume = true;
+    }
+
+    public GUIInteractExecutorDefaultGUI(GUIInteractType type)
+    {
+        this.limit = -1;
+        this.interactType = type;
+        this.consume = true;
+    }
+
+    public GUIInteractExecutorDefaultGUI(GUIInteractType type, int limit, boolean consume)
+    {
+        this.limit = Math.min(limit, 64);
+        this.interactType = type;
+        this.consume = consume;
+    }
+
+    public GUIInteractExecutorDefaultGUI(GUIInteractType type, boolean consume)
+    {
+        this.limit = -1;
+        this.interactType = type;
+        this.consume = consume;
     }
 
     @Override

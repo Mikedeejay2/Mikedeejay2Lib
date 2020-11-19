@@ -8,6 +8,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefa
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -964,5 +965,53 @@ public class GUIContainer
     public void setFillEmpty(boolean fillEmpty)
     {
         this.fillEmpty = fillEmpty;
+    }
+
+    /**
+     * See whether this GUI contains an item matching an <tt>ItemStack</tt>
+     *
+     * @param item The item to search for
+     * @return Whether the item was found in the GUI or not
+     */
+    public boolean containsItem(ItemStack item)
+    {
+        for(GUILayer layer : layers)
+        {
+            for(GUIItem[] arr : layer.getItemsAsArray())
+            {
+                for(GUIItem guiItem : arr)
+                {
+                    ItemStack curItem = guiItem.getItemBase();
+                    if(curItem == null) continue;
+                    if(!ItemComparison.equalsEachOther(item, curItem)) continue;
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    /**
+     * See whether this GUI contains a material matching another material
+     *
+     * @param material The material to search for
+     * @return Whether the material was found in the GUI or not
+     */
+    public boolean containsMaterial(Material material)
+    {
+        for(GUILayer layer : layers)
+        {
+            for(GUIItem[] arr : layer.getItemsAsArray())
+            {
+                for(GUIItem guiItem : arr)
+                {
+                    ItemStack curItem = guiItem.getItemBase();
+                    if(curItem == null) continue;
+                    if(curItem.getType() != material) continue;
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }
