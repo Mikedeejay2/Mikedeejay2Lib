@@ -183,14 +183,20 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
     {
         if(inventory != gui.getInventory()) return;
         ItemStack cursorItem = player.getItemOnCursor();
-        if(interactType == GUIInteractType.SINGLE_ITEM && layer.containsItem(cursorItem)) return;
-        if(interactType == GUIInteractType.SINGLE_MATERIAL && layer.containsMaterial(cursorItem.getType())) return;
         int cursorAmount = cursorItem.getAmount();
         int row = layer.getRowFromSlot(slot);
         int col = layer.getColFromSlot(slot);
         int bottomAmount = 0;
         GUIItem curItem = layer.getItem(row, col);
-        if(curItem != null) bottomAmount = curItem.getAmountBase();
+        if(curItem != null)
+        {
+            bottomAmount = curItem.getAmountBase();
+        }
+        else
+        {
+            if(interactType == GUIInteractType.SINGLE_ITEM && layer.containsItem(cursorItem)) return;
+            if(interactType == GUIInteractType.SINGLE_MATERIAL && layer.containsMaterial(cursorItem.getType())) return;
+        }
         GUIItem newItem = new GUIItem(cursorItem.clone());
         newItem.setMovable(true);
         int curAmount = cursorAmount + bottomAmount;
@@ -238,14 +244,14 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
     {
         if(inventory != gui.getInventory()) return;
         ItemStack cursorItem = player.getItemOnCursor();
-        if(interactType == GUIInteractType.SINGLE_ITEM && layer.containsItem(cursorItem)) return;
-        if(interactType == GUIInteractType.SINGLE_MATERIAL && layer.containsMaterial(cursorItem.getType())) return;
         int cursorAmount = cursorItem.getAmount();
         int row = layer.getRowFromSlot(slot);
         int col = layer.getColFromSlot(slot);
         GUIItem guiItem = layer.getItem(row, col);
         if(guiItem == null)
         {
+            if(interactType == GUIInteractType.SINGLE_ITEM && layer.containsItem(cursorItem)) return;
+            if(interactType == GUIInteractType.SINGLE_MATERIAL && layer.containsMaterial(cursorItem.getType())) return;
             guiItem = new GUIItem(cursorItem.clone());
             guiItem.setMovable(true);
             guiItem.setAmount(1);
