@@ -32,28 +32,28 @@ public class GUIInteractExecutorList implements GUIInteractExecutor
     public GUIInteractExecutorList(int limit)
     {
         this.limit = Math.min(limit, 64);
-        this.interactType = GUIInteractType.ANY;
+        this.interactType = GUIInteractType.DEFAULT;
         this.consume = true;
     }
 
     public GUIInteractExecutorList()
     {
         this.limit = -1;
-        this.interactType = GUIInteractType.ANY;
+        this.interactType = GUIInteractType.DEFAULT;
         this.consume = true;
     }
 
     public GUIInteractExecutorList(int limit, boolean consume)
     {
         this.limit = Math.min(limit, 64);
-        this.interactType = GUIInteractType.ANY;
+        this.interactType = GUIInteractType.DEFAULT;
         this.consume = consume;
     }
 
     public GUIInteractExecutorList(boolean consume)
     {
         this.limit = -1;
-        this.interactType = GUIInteractType.ANY;
+        this.interactType = GUIInteractType.DEFAULT;
         this.consume = consume;
     }
 

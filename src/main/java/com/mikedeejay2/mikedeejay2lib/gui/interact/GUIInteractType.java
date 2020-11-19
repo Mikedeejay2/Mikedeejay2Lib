@@ -8,7 +8,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.interact;
  */
 public enum GUIInteractType
 {
-    ANY,
-    ITEM,
-    MATERIAL;
+    DEFAULT,
+    SINGLE_ITEM,
+    SINGLE_MATERIAL;
 }

@@ -29,28 +29,28 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
     public GUIInteractExecutorDefaultGUI(int limit)
     {
         this.limit = Math.min(limit, 64);
-        this.interactType = GUIInteractType.ANY;
+        this.interactType = GUIInteractType.DEFAULT;
         this.consume = true;
     }
 
     public GUIInteractExecutorDefaultGUI()
     {
         this.limit = -1;
-        this.interactType = GUIInteractType.ANY;
+        this.interactType = GUIInteractType.DEFAULT;
         this.consume = true;
     }
 
     public GUIInteractExecutorDefaultGUI(int limit, boolean consume)
     {
         this.limit = Math.min(limit, 64);
-        this.interactType = GUIInteractType.ANY;
+        this.interactType = GUIInteractType.DEFAULT;
         this.consume = consume;
     }
 
     public GUIInteractExecutorDefaultGUI(boolean consume)
     {
         this.limit = -1;
-        this.interactType = GUIInteractType.ANY;
+        this.interactType = GUIInteractType.DEFAULT;
         this.consume = consume;
     }
 
