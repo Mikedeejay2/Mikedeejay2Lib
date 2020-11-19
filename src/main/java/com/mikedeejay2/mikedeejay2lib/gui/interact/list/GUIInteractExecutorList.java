@@ -573,4 +573,24 @@ public class GUIInteractExecutorList implements GUIInteractExecutor
     {
         this.limit = limit;
     }
+
+    public boolean consumesItems()
+    {
+        return consume;
+    }
+
+    public void setConsume(boolean consume)
+    {
+        this.consume = consume;
+    }
+
+    public GUIInteractType getInteractType()
+    {
+        return interactType;
+    }
+
+    public void setInteractType(GUIInteractType interactType)
+    {
+        this.interactType = interactType;
+    }
 }

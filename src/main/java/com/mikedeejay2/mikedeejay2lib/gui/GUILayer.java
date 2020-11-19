@@ -7,6 +7,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItemProperties;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.animation.GUIAnimationModule;
 import com.mikedeejay2.mikedeejay2lib.util.array.ArrayUtil;
+import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
@@ -485,4 +486,49 @@ public class GUILayer
     {
         return gui;
     }
+
+    /**
+     * See whether this <tt>GUILayer</tt> contains an item matching an <tt>ItemStack</tt>
+     *
+     * @param item The item to search for
+     * @return Whether the item was found in the GUI or not
+     */
+    public boolean containsItem(ItemStack item)
+    {
+        for(GUIItem[] arr : items)
+        {
+            for(GUIItem guiItem : arr)
+            {
+                if(guiItem == null) continue;
+                ItemStack curItem = guiItem.getItemBase();
+                if(curItem == null) continue;
+                if(!ItemComparison.equalsEachOther(item, curItem)) continue;
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * See whether this <tt>GUILayer</tt> contains a material matching another material
+     *
+     * @param material The material to search for
+     * @return Whether the material was found in the GUI or not
+     */
+    public boolean containsMaterial(Material material)
+    {
+        for(GUIItem[] arr : items)
+        {
+            for(GUIItem guiItem : arr)
+            {
+                if(guiItem == null) continue;
+                ItemStack curItem = guiItem.getItemBase();
+                if(curItem == null) continue;
+                if(curItem.getType() != material) continue;
+                return true;
+            }
+        }
+        return false;
+    }
+
 }

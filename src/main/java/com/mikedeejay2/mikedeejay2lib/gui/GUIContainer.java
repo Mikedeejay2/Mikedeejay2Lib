@@ -977,16 +977,7 @@ public class GUIContainer
     {
         for(GUILayer layer : layers)
         {
-            for(GUIItem[] arr : layer.getItemsAsArray())
-            {
-                for(GUIItem guiItem : arr)
-                {
-                    ItemStack curItem = guiItem.getItemBase();
-                    if(curItem == null) continue;
-                    if(!ItemComparison.equalsEachOther(item, curItem)) continue;
-                    return true;
-                }
-            }
+            if(layer.containsItem(item)) return true;
         }
         return false;
     }
@@ -1001,16 +992,7 @@ public class GUIContainer
     {
         for(GUILayer layer : layers)
         {
-            for(GUIItem[] arr : layer.getItemsAsArray())
-            {
-                for(GUIItem guiItem : arr)
-                {
-                    ItemStack curItem = guiItem.getItemBase();
-                    if(curItem == null) continue;
-                    if(curItem.getType() != material) continue;
-                    return true;
-                }
-            }
+            if(layer.containsMaterial(material)) return true;
         }
         return false;
     }
