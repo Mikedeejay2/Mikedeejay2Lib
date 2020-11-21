@@ -483,6 +483,7 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         int col = layer.getColFromSlot(slot);
         GUIItem guiItem = layer.getItem(row, col);
         ItemStack curItem = playerInv.getItem(hotbarSlot);
+        if(!consume) curItem = curItem.clone();
         if(interactType == GUIInteractType.SINGLE_ITEM && layer.containsItem(curItem)) return;
         if(interactType == GUIInteractType.SINGLE_MATERIAL && layer.containsMaterial(curItem.getType())) return;
         if(guiItem == null)
@@ -513,8 +514,8 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
                     playerInv.setItem(hotbarSlot, extraItem);
                 }
             }
-            guiItem.setItem(curItem);
         }
+        guiItem.setItem(curItem);
     }
 
     @Override

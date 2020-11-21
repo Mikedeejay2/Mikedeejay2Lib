@@ -512,7 +512,10 @@ public class GUIInteractExecutorList implements GUIInteractExecutor
         Inventory playerInv = player.getInventory();
         int row = layer.getRowFromSlot(slot);
         int col = layer.getColFromSlot(slot);
+        ItemStack curItem = playerInv.getItem(hotbarSlot);
         GUIItem guiItem = list.getItem(row, col, gui);
+        if(interactType == GUIInteractType.SINGLE_ITEM && list.containsItem(curItem)) return;
+        if(interactType == GUIInteractType.SINGLE_MATERIAL && list.containsMaterial(curItem.getType())) return;
         if(guiItem == null)
         {
             guiItem = new GUIItem(null);
@@ -520,7 +523,6 @@ public class GUIInteractExecutorList implements GUIInteractExecutor
             list.addListItem(guiItem);
         }
         ItemStack item = guiItem.getItemBase();
-        ItemStack curItem = playerInv.getItem(hotbarSlot);
         if(consume) playerInv.setItem(hotbarSlot, item);
         if(curItem == null)
         {
