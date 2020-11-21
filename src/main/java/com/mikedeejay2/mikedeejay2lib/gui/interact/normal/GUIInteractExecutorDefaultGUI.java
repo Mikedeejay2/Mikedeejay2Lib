@@ -259,6 +259,8 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         }
         else
         {
+            int maxAmount = limit == -1 ? guiItem.getItemBase().getMaxStackSize() : limit;
+            if(guiItem.getAmount() >= maxAmount) return;
             guiItem.setAmount(guiItem.getAmount() + 1);
         }
         if(consume)

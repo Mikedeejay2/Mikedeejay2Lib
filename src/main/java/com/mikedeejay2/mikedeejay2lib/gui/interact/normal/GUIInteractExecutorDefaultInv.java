@@ -171,7 +171,10 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor
     {
         if(inventory != player.getInventory()) return;
         ItemStack cursorItem = player.getItemOnCursor();
+        int maxAmountCursor = limit == -1 ? cursorItem.getAmount() : limit;
         ItemStack bottomItem = inventory.getItem(slot);
+        int maxAmountBottom = limit == -1 ? bottomItem.getAmount() : limit;
+        if(cursorItem.getAmount() > maxAmountCursor || bottomItem.getAmount() > maxAmountBottom) return;
         inventory.setItem(slot, cursorItem);
         player.setItemOnCursor(bottomItem);
     }
