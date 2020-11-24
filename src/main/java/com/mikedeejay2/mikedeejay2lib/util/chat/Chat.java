@@ -8,6 +8,7 @@ import net.md_5.bungee.api.chat.hover.content.Item;
 import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
+import org.bukkit.World;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -28,7 +29,7 @@ public final class Chat
     public Chat(PluginBase plugin)
     {
         this.plugin = plugin;
-        this.pluginString = plugin.getName();
+        this.pluginString = "&b[&9" + pluginString + "&b] &r";
     }
 
     /**
@@ -159,7 +160,18 @@ public final class Chat
      */
     public String getTitleString()
     {
-        return "&b[&9" + pluginString + "&b] &r";
+        return pluginString;
+    }
+
+    /**
+     * Set a new title tag that will be added to the beginning of text to define
+     * what this text is coming from
+     *
+     * @param titleString The new title string
+     */
+    public void setTitleString(String titleString)
+    {
+        this.pluginString = titleString;
     }
 
     /**
@@ -352,5 +364,15 @@ public final class Chat
     public void printComponents(Player player, ChatMessageType type, BaseComponent[]... components)
     {
         player.spigot().sendMessage(type, combineComponents(components));
+    }
+
+    /**
+     * Broadcast a message to all players on the server.
+     *
+     * @param message The message to broadcast to players
+     */
+    public void broadcastMessage(String message)
+    {
+        Bukkit.broadcastMessage(chat(getTitleString() + message));
     }
 }
