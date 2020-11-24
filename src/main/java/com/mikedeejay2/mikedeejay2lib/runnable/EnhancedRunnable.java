@@ -88,8 +88,11 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     @Override
     public synchronized void cancel()
     {
-        super.cancel();
-        onLastRun();
+        if(!this.isCancelled())
+        {
+            super.cancel();
+            onLastRun();
+        }
     }
 
     /**
