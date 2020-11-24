@@ -20,5 +20,12 @@
   "gui.modules.scroller.left": "Click to go left",
   "gui.modules.scroller.right": "Click to go right",
   "gui.modules.navigator.forward": "Click to go forward",
-  "gui.modules.navigator.backward": "Click to go back"
+  "gui.modules.navigator.backward": "Click to go back",
+  "update_checker.error.invalid_url": "Unable to access api.github.com to check for updates! Update checking will not occur.",
+  "update_checker.error.cant_open": "Could not access api.github.com to check for updates. Update checking will not occur.",
+  "update_checker.error.cant_close": "Unable to close stream to api.github.com. Update checking will not occur.",
+  "update_checker.update_available": "An update for {PLUGIN} is available!",
+  "update_checker.new_version": "{PLUGIN} has a new version {VERSION} available for download.",
+  "update_checker.release_time": "The update was released at {TIME}",
+  "update_checker.download_link": "Direct download link: {LINK}"
 }
