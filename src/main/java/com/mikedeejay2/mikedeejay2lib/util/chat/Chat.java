@@ -29,7 +29,7 @@ public final class Chat
     public Chat(PluginBase plugin)
     {
         this.plugin = plugin;
-        this.pluginString = "&b[&9" + pluginString + "&b] &r";
+        this.pluginString = "&b[&9" + plugin.getDescription().getName() + "&b] &r";
     }
 
     /**
