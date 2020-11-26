@@ -5,7 +5,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
 
 /**
  * A class for holding a single piece of chat text.
- * This class is used in {@link ChatCanvas} and {@link ChatLine}
+ * This class is used in {@link ChatCanvas}
  *
  * @author Mikedeejay2
  */
