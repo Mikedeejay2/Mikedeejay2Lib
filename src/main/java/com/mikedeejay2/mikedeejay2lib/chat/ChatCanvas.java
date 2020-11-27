@@ -2,9 +2,6 @@ package com.mikedeejay2.mikedeejay2lib.chat;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
-import net.md_5.bungee.api.chat.BaseComponent;
-import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -23,577 +20,99 @@ public class ChatCanvas
 {
     protected final PluginBase plugin;
     protected final Chat chat;
-    protected List<ChatText> texts;
-    protected BaseComponent[] components;
-    protected boolean converted;
+    protected List<ChatSection> sections;
 
     public ChatCanvas(PluginBase plugin)
     {
         this.plugin = plugin;
         this.chat = plugin.chat();
-        this.texts = new ArrayList<>();
-        this.converted = false;
+        this.sections = new ArrayList<>();
     }
 
-    public ChatText addText(String text)
+    /**
+     * Add a <tt>ChatSection</tt> to this <tt>ChatCanvas</tt>.
+     *
+     * @param section The section to add
+     * @return A reference to this <tt>ChatCanvas</tt>
+     */
+    public ChatCanvas addSection(ChatSection section)
     {
-        ChatText chatText = new ChatText(text);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addText(String text, ClickEvent.Action clickAction, String clickString)
-    {
-        ChatText chatText = new ChatText(text, clickAction, clickString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addText(String text, HoverEvent.Action hoverAction, String hoverString)
-    {
-        ChatText chatText = new ChatText(text, hoverAction, hoverString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addText(String text, ClickEvent.Action clickAction, HoverEvent.Action hoverAction, String clickString, String hoverString)
-    {
-        ChatText chatText = new ChatText(text, clickAction, hoverAction, clickString, hoverString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addText(String text, int index)
-    {
-        ChatText chatText = new ChatText(text);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addText(String text, ClickEvent.Action clickAction, String clickString, int index)
-    {
-        ChatText chatText = new ChatText(text, clickAction, clickString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addText(String text, HoverEvent.Action hoverAction, String hoverString, int index)
-    {
-        ChatText chatText = new ChatText(text, hoverAction, hoverString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addText(String text, ClickEvent.Action clickAction, HoverEvent.Action hoverAction, String clickString, String hoverString, int index)
-    {
-        ChatText chatText = new ChatText(text, clickAction, hoverAction, clickString, hoverString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(String text)
-    {
-        text = plugin.langManager().getText(text);
-        ChatText chatText = new ChatText(text);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(String text, ClickEvent.Action clickAction, String clickString)
-    {
-        text = plugin.langManager().getText(text);
-        ChatText chatText = new ChatText(text, clickAction, clickString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(String text, HoverEvent.Action hoverAction, String hoverString)
-    {
-        text = plugin.langManager().getText(text);
-        ChatText chatText = new ChatText(text, hoverAction, hoverString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(String text, ClickEvent.Action clickAction, HoverEvent.Action hoverAction, String clickString, String hoverString)
-    {
-        text = plugin.langManager().getText(text);
-        ChatText chatText = new ChatText(text, clickAction, hoverAction, clickString, hoverString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(String text, int index)
-    {
-        text = plugin.langManager().getText(text);
-        ChatText chatText = new ChatText(text);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(String text, ClickEvent.Action clickAction, String clickString, int index)
-    {
-        text = plugin.langManager().getText(text);
-        ChatText chatText = new ChatText(text, clickAction, clickString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(String text, HoverEvent.Action hoverAction, String hoverString, int index)
-    {
-        text = plugin.langManager().getText(text);
-        ChatText chatText = new ChatText(text, hoverAction, hoverString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(String text, ClickEvent.Action clickAction, HoverEvent.Action hoverAction, String clickString, String hoverString, int index)
-    {
-        text = plugin.langManager().getText(text);
-        ChatText chatText = new ChatText(text, clickAction, hoverAction, clickString, hoverString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(CommandSender sender, String text)
-    {
-        text = plugin.langManager().getText(sender, text);
-        ChatText chatText = new ChatText(text);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(CommandSender sender, String text, ClickEvent.Action clickAction, String clickString)
-    {
-        text = plugin.langManager().getText(sender, text);
-        ChatText chatText = new ChatText(text, clickAction, clickString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(CommandSender sender, String text, HoverEvent.Action hoverAction, String hoverString)
-    {
-        text = plugin.langManager().getText(sender, text);
-        ChatText chatText = new ChatText(text, hoverAction, hoverString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(CommandSender sender, String text, ClickEvent.Action clickAction, HoverEvent.Action hoverAction, String clickString, String hoverString)
-    {
-        text = plugin.langManager().getText(sender, text);
-        ChatText chatText = new ChatText(text, clickAction, hoverAction, clickString, hoverString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(CommandSender sender, String text, int index)
-    {
-        text = plugin.langManager().getText(sender, text);
-        ChatText chatText = new ChatText(text);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(CommandSender sender, String text, ClickEvent.Action clickAction, String clickString, int index)
-    {
-        text = plugin.langManager().getText(sender, text);
-        ChatText chatText = new ChatText(text, clickAction, clickString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(CommandSender sender, String text, HoverEvent.Action hoverAction, String hoverString, int index)
-    {
-        text = plugin.langManager().getText(sender, text);
-        ChatText chatText = new ChatText(text, hoverAction, hoverString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(CommandSender sender, String text, ClickEvent.Action clickAction, HoverEvent.Action hoverAction, String clickString, String hoverString, int index)
-    {
-        text = plugin.langManager().getText(sender, text);
-        ChatText chatText = new ChatText(text, clickAction, hoverAction, clickString, hoverString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(Player player, String text)
-    {
-        text = plugin.langManager().getText(player, text);
-        ChatText chatText = new ChatText(text);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(Player player, String text, ClickEvent.Action clickAction, String clickString)
-    {
-        text = plugin.langManager().getText(player, text);
-        ChatText chatText = new ChatText(text, clickAction, clickString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(Player player, String text, HoverEvent.Action hoverAction, String hoverString)
-    {
-        text = plugin.langManager().getText(player, text);
-        ChatText chatText = new ChatText(text, hoverAction, hoverString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(Player player, String text, ClickEvent.Action clickAction, HoverEvent.Action hoverAction, String clickString, String hoverString)
-    {
-        text = plugin.langManager().getText(player, text);
-        ChatText chatText = new ChatText(text, clickAction, hoverAction, clickString, hoverString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(Player player, String text, int index)
-    {
-        text = plugin.langManager().getText(player, text);
-        ChatText chatText = new ChatText(text);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(Player player, String text, ClickEvent.Action clickAction, String clickString, int index)
-    {
-        text = plugin.langManager().getText(player, text);
-        ChatText chatText = new ChatText(text, clickAction, clickString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(Player player, String text, HoverEvent.Action hoverAction, String hoverString, int index)
-    {
-        text = plugin.langManager().getText(player, text);
-        ChatText chatText = new ChatText(text, hoverAction, hoverString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLang(Player player, String text, ClickEvent.Action clickAction, HoverEvent.Action hoverAction, String clickString, String hoverString, int index)
-    {
-        text = plugin.langManager().getText(player, text);
-        ChatText chatText = new ChatText(text, clickAction, hoverAction, clickString, hoverString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(String text)
-    {
-        text = plugin.langManager().getTextLib(text);
-        ChatText chatText = new ChatText(text);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(String text, ClickEvent.Action clickAction, String clickString)
-    {
-        text = plugin.langManager().getTextLib(text);
-        ChatText chatText = new ChatText(text, clickAction, clickString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(String text, HoverEvent.Action hoverAction, String hoverString)
-    {
-        text = plugin.langManager().getTextLib(text);
-        ChatText chatText = new ChatText(text, hoverAction, hoverString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(String text, ClickEvent.Action clickAction, HoverEvent.Action hoverAction, String clickString, String hoverString)
-    {
-        text = plugin.langManager().getTextLib(text);
-        ChatText chatText = new ChatText(text, clickAction, hoverAction, clickString, hoverString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(String text, int index)
-    {
-        text = plugin.langManager().getTextLib(text);
-        ChatText chatText = new ChatText(text);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(String text, ClickEvent.Action clickAction, String clickString, int index)
-    {
-        text = plugin.langManager().getTextLib(text);
-        ChatText chatText = new ChatText(text, clickAction, clickString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(String text, HoverEvent.Action hoverAction, String hoverString, int index)
-    {
-        text = plugin.langManager().getTextLib(text);
-        ChatText chatText = new ChatText(text, hoverAction, hoverString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(String text, ClickEvent.Action clickAction, HoverEvent.Action hoverAction, String clickString, String hoverString, int index)
-    {
-        text = plugin.langManager().getTextLib(text);
-        ChatText chatText = new ChatText(text, clickAction, hoverAction, clickString, hoverString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(CommandSender sender, String text)
-    {
-        text = plugin.langManager().getTextLib(sender, text);
-        ChatText chatText = new ChatText(text);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(CommandSender sender, String text, ClickEvent.Action clickAction, String clickString)
-    {
-        text = plugin.langManager().getTextLib(sender, text);
-        ChatText chatText = new ChatText(text, clickAction, clickString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(CommandSender sender, String text, HoverEvent.Action hoverAction, String hoverString)
-    {
-        text = plugin.langManager().getTextLib(sender, text);
-        ChatText chatText = new ChatText(text, hoverAction, hoverString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(CommandSender sender, String text, ClickEvent.Action clickAction, HoverEvent.Action hoverAction, String clickString, String hoverString)
-    {
-        text = plugin.langManager().getTextLib(sender, text);
-        ChatText chatText = new ChatText(text, clickAction, hoverAction, clickString, hoverString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(CommandSender sender, String text, int index)
-    {
-        text = plugin.langManager().getTextLib(sender, text);
-        ChatText chatText = new ChatText(text);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(CommandSender sender, String text, ClickEvent.Action clickAction, String clickString, int index)
-    {
-        text = plugin.langManager().getTextLib(sender, text);
-        ChatText chatText = new ChatText(text, clickAction, clickString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(CommandSender sender, String text, HoverEvent.Action hoverAction, String hoverString, int index)
-    {
-        text = plugin.langManager().getTextLib(sender, text);
-        ChatText chatText = new ChatText(text, hoverAction, hoverString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(CommandSender sender, String text, ClickEvent.Action clickAction, HoverEvent.Action hoverAction, String clickString, String hoverString, int index)
-    {
-        text = plugin.langManager().getTextLib(sender, text);
-        ChatText chatText = new ChatText(text, clickAction, hoverAction, clickString, hoverString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(Player player, String text)
-    {
-        text = plugin.langManager().getTextLib(player, text);
-        ChatText chatText = new ChatText(text);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(Player player, String text, ClickEvent.Action clickAction, String clickString)
-    {
-        text = plugin.langManager().getTextLib(player, text);
-        ChatText chatText = new ChatText(text, clickAction, clickString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(Player player, String text, HoverEvent.Action hoverAction, String hoverString)
-    {
-        text = plugin.langManager().getTextLib(player, text);
-        ChatText chatText = new ChatText(text, hoverAction, hoverString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(Player player, String text, ClickEvent.Action clickAction, HoverEvent.Action hoverAction, String clickString, String hoverString)
-    {
-        text = plugin.langManager().getTextLib(player, text);
-        ChatText chatText = new ChatText(text, clickAction, hoverAction, clickString, hoverString);
-        texts.add(chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(Player player, String text, int index)
-    {
-        text = plugin.langManager().getTextLib(player, text);
-        ChatText chatText = new ChatText(text);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(Player player, String text, ClickEvent.Action clickAction, String clickString, int index)
-    {
-        text = plugin.langManager().getTextLib(player, text);
-        ChatText chatText = new ChatText(text, clickAction, clickString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(Player player, String text, HoverEvent.Action hoverAction, String hoverString, int index)
-    {
-        text = plugin.langManager().getTextLib(player, text);
-        ChatText chatText = new ChatText(text, hoverAction, hoverString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public ChatText addTextLangLib(Player player, String text, ClickEvent.Action clickAction, HoverEvent.Action hoverAction, String clickString, String hoverString, int index)
-    {
-        text = plugin.langManager().getTextLib(player, text);
-        ChatText chatText = new ChatText(text, clickAction, hoverAction, clickString, hoverString);
-        texts.add(index, chatText);
-        return chatText;
-    }
-
-    public void removeText(String text)
-    {
-        for(int i = 0; i < texts.size(); ++i)
-        {
-            ChatText chatText = texts.get(i);
-            if(chatText == null) continue;
-            String curText = chatText.getText();
-            if(!text.equals(curText)) continue;
-            texts.remove(i);
-            return;
-        }
-    }
-
-    public void removeText(ChatText text)
-    {
-        texts.remove(text);
-    }
-
-    public boolean containsText(String text)
-    {
-        for(int i = 0; i < texts.size(); ++i)
-        {
-            ChatText chatText = texts.get(i);
-            if(chatText == null) continue;
-            String curText = chatText.getText();
-            if(!text.equals(curText)) continue;
-            return true;
-        }
-        return false;
-    }
-
-    public boolean containsText(ChatText text)
-    {
-        return texts.contains(text);
-    }
-
-    public boolean isConverted()
-    {
-        return converted;
-    }
-
-    public ChatCanvas convert()
-    {
-        List<BaseComponent[]> baseComponents = new ArrayList<>();
-        for(ChatText chatText : texts)
-        {
-            String text = chatText.getText();
-            ChatTextType type = chatText.getType();
-            switch(type)
-            {
-                case NORMAL:
-                {
-                    BaseComponent[] components = chat.getBaseComponentArray(text);
-                    baseComponents.add(components);
-                } break;
-                case CLICKABLE:
-                {
-                    BaseComponent[] components = chat.getBaseComponentArray(text);
-                    ClickEvent.Action clickAction = chatText.getClickAction();
-                    String clickString = chatText.getClickString();
-                    ClickEvent event = chat.getClickEvent(clickAction, clickString);
-                    chat.setClickEvent(components, event);
-                    baseComponents.add(components);
-                } break;
-                case HOVERABLE:
-                {
-                    BaseComponent[] components = chat.getBaseComponentArray(text);
-                    HoverEvent.Action hoverAction = chatText.getHoverAction();
-                    String hoverString = chatText.getHoverString();
-                    HoverEvent event = chat.getHoverEvent(hoverAction, hoverString);
-                    chat.setHoverEvent(components, event);
-                    baseComponents.add(components);
-                } break;
-                case HOVERCLICKABLE:
-                {
-                    BaseComponent[] components = chat.getBaseComponentArray(text);
-                    HoverEvent.Action hoverAction = chatText.getHoverAction();
-                    ClickEvent.Action clickAction = chatText.getClickAction();
-                    String hoverString = chatText.getHoverString();
-                    String clickString = chatText.getClickString();
-                    HoverEvent hoverEvent = chat.getHoverEvent(hoverAction, hoverString);
-                    ClickEvent clickEvent = chat.getClickEvent(clickAction, clickString);
-                    chat.setHoverEvent(components, hoverEvent);
-                    chat.setClickEvent(components, clickEvent);
-                    baseComponents.add(components);
-                } break;
-            }
-        }
-        BaseComponent[][] newComponents = baseComponents.toArray(new BaseComponent[0][]);
-        components = chat.combineComponents(newComponents);
-        converted = true;
+        sections.add(section);
         return this;
     }
 
+    /**
+     * Add a <tt>ChatSection</tt> to this <tt>ChatCanvas</tt>.
+     *
+     * @param section The section to add
+     * @param index The index to add the section at
+     * @return A reference to this <tt>ChatCanvas</tt>
+     */
+    public ChatCanvas addSection(ChatSection section, int index)
+    {
+        sections.add(index, section);
+        return this;
+    }
+
+    /**
+     * Print this <tt>ChatCanvas</tt> to the console.
+     *
+     * @return A reference to this <tt>ChatCanvas</tt>
+     */
     public ChatCanvas printToConsole()
     {
-        if(!converted) convert();
-        Bukkit.getConsoleSender().spigot().sendMessage(components);
+        for(ChatSection section : sections)
+        {
+            if(!section.isConverted()) section.convert();
+            section.printToConsole();
+        }
         return this;
     }
 
+    /**
+     * Broadcast this <tt>ChatCanvas</tt> to the entire server
+     *
+     * @return A reference to this <tt>ChatCanvas</tt>
+     */
     public ChatCanvas broadcast()
     {
-        if(!converted) convert();
-        Bukkit.spigot().broadcast(components);
+        for(ChatSection section : sections)
+        {
+            if(!section.isConverted()) section.convert();
+            section.broadcast();
+        }
         return this;
     }
 
+    /**
+     * Print this <tt>ChatCanvas</tt> to a <tt>CommandSender</tt>
+     *
+     * @param sender The <tt>CommandSender</tt> to send this chat to
+     * @return A reference to this <tt>ChatCanvas</tt>
+     */
     public ChatCanvas print(CommandSender sender)
     {
-        if(!converted) convert();
-        sender.spigot().sendMessage(components);
+        for(ChatSection section : sections)
+        {
+            if(!section.isConverted()) section.convert();
+            section.print(sender);
+        }
         return this;
     }
 
+    /**
+     * Print this <tt>ChatCanvas</tt> to a Player
+     *
+     * @param player The Player to send this chat to
+     * @return A reference to this <tt>ChatCanvas</tt>
+     */
     public ChatCanvas print(Player player)
     {
-        if(!converted) convert();
-        player.spigot().sendMessage(components);
+        for(ChatSection section : sections)
+        {
+            if(!section.isConverted()) section.convert();
+            section.print(player);
+        }
         return this;
     }
 }
