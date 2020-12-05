@@ -2,7 +2,6 @@ package com.mikedeejay2.mikedeejay2lib.chat;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
-import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
