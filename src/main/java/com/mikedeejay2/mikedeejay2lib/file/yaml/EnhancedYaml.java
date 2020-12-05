@@ -168,7 +168,7 @@ public class EnhancedYaml extends YamlConfiguration
             int startingCommentIndex = getStartingCommentIndex(lines, index);
             if(startingCommentIndex == -1) continue;
             String comment = compileComments(lines, index, startingCommentIndex);
-            if(!comments.containsKey(currentPath) || comments.get(currentPath).equals(comment))
+            if(!comments.containsKey(currentPath) || !comments.get(currentPath).equals(comment))
             {
                 comments.put(currentPath, comment);
             }
