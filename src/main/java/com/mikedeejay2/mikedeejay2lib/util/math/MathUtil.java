@@ -535,4 +535,60 @@ public final class MathUtil
         List<Vector> vectorList = getCubeOutlineVectors(loc1, loc2, density);
         return ArrayUtil.toLocationList(vectorList, world);
     }
+
+    /**
+     * Get a line based off of a starting, ending, and direction vector
+     *
+     * @param start The start vector to use
+     * @param end The end vector to use
+     * @param lookVec The look vector to use
+     * @param density The density of the line
+     * @return The list of vectors that represent the line
+     */
+    public static List<Vector> getLine(Vector start, Vector end, Vector lookVec, double density)
+    {
+        List<Vector> lines = new ArrayList<>();
+        Vector curVec = start.clone();
+        double length = Math.abs(start.distance(end));
+
+        for(double i = 0; i < length; i += density)
+        {
+            Vector newVec = lookVec.clone();
+            newVec.multiply(i);
+            curVec.add(newVec);
+
+            lines.add(curVec.clone());
+
+            curVec.subtract(newVec);
+        }
+        return lines;
+    }
+
+    /**
+     * Get a line based off of a starting and ending location
+     *
+     * @param start The start location to use
+     * @param end The end location to use
+     * @param density The density of the line
+     * @return The list of locations that represent the line
+     */
+    public static List<Location> getLine(Location start, Location end, double density)
+    {
+        List<Location> lines = new ArrayList<>();
+        Location curLoc = start.clone();
+        Vector lookVec = start.getDirection().clone();
+        double length = Math.abs(start.distance(end));
+
+        for(double i = 0; i < length; i += density)
+        {
+            Vector newVec = lookVec.clone();
+            newVec.multiply(i);
+            curLoc.add(newVec);
+
+            lines.add(curLoc.clone());
+
+            curLoc.subtract(newVec);
+        }
+        return lines;
+    }
 }

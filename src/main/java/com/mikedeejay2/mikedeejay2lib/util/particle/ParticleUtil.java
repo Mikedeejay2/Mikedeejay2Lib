@@ -1,12 +1,14 @@
 package com.mikedeejay2.mikedeejay2lib.util.particle;
 
+import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
+import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
-import org.bukkit.plugin.Plugin;
-import org.bukkit.scheduler.BukkitRunnable;
-import org.bukkit.util.Vector;
+
+import java.util.List;
 
 /**
  * A util for making particles do specific things
@@ -23,25 +25,19 @@ public final class ParticleUtil
      * @param particle The particle that should be used
      * @param count The count of particles per 0.5 blocks
      * @param speed The speed of the particles
-     * @param width The width that the particles spawn at
+     * @param offsetX The offset in the X direction of the particle
+     * @param offsetY The offset in the Y direction of the particle
+     * @param offsetZ The offset in the Z direction of the particle
      * @param force Force the particles to be rendered even when outside of view distance
      */
-    public static void particleLine(Location start, Location end, Particle particle, int count, float speed, float width, boolean force)
+    public static void particleLine(Location start, Location end, Particle particle, int count, float speed, double offsetX, double offsetY, double offsetZ, boolean force)
     {
-        Location location = start.clone();
-        double length = Math.abs(start.distance(end));
-        Vector lookVec = start.getDirection().clone();
+        List<Location> lineLocs = MathUtil.getLine(start, end, 0.5f);
         World world = start.getWorld();
 
-        for(double i = 0; i < length; i += 0.5f)
+        for(Location location : lineLocs)
         {
-            Vector newVec = lookVec.clone();
-            newVec.multiply(i);
-            location.add(newVec);
-
-            world.spawnParticle(particle, location, count, width, width, width, speed, null, force);
-
-            location.subtract(newVec);
+            world.spawnParticle(particle, location, count, offsetX, offsetY, offsetZ, speed, null, force);
         }
     }
 
@@ -51,30 +47,25 @@ public final class ParticleUtil
      * @param entity Entity to add the particle to
      * @param particle The particle type to add
      * @param timeToLive The time for the particle to exist on the entity
-     * @param count The count of particles per tick
+     * @param particleCount The count of particles per tick
      * @param speed The speed of the particles
-     * @param width The width that the particles spawn at
+     * @param offsetX The offset in the X direction of the particle
+     * @param offsetY The offset in the Y direction of the particle
+     * @param offsetZ The offset in the Z direction of the particle
      * @param force Force the particles to be rendered even when outside of view distance
      */
-    public static void addParticleToEntity(Plugin plugin, Entity entity, Particle particle, long timeToLive, int count, float speed, float width, boolean force)
+    public static void addParticleToEntity(PluginBase plugin, Entity entity, Particle particle, long timeToLive, int particleCount, float speed, double offsetX, double offsetY, double offsetZ, boolean force)
     {
         if(particle == null) return;
-        new BukkitRunnable()
+        new EnhancedRunnable()
         {
-            int tick = 0;
-
             @Override
-            public void run()
+            public void onRun()
             {
-                if(timeToLive > 0)
-                {
-                    if(tick >= timeToLive) this.cancel();
-                    tick++;
-                }
                 if(entity.isDead()) this.cancel();
 
-                entity.getWorld().spawnParticle(particle, entity.getLocation(), count, width, width, width, speed, null, force);
+                entity.getWorld().spawnParticle(particle, entity.getLocation(), particleCount, offsetX, offsetY, offsetZ, speed, null, force);
             }
-        }.runTaskTimer(plugin, 0, 0);
+        }.runTaskTimerCounted(plugin, 0, 0, timeToLive);
     }
 }
