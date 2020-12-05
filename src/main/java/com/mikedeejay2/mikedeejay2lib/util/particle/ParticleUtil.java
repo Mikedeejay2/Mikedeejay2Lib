@@ -30,9 +30,9 @@ public final class ParticleUtil
      * @param offsetZ The offset in the Z direction of the particle
      * @param force Force the particles to be rendered even when outside of view distance
      */
-    public static void particleLine(Location start, Location end, Particle particle, int count, float speed, double offsetX, double offsetY, double offsetZ, boolean force)
+    public static void particleLine(Location start, Location end, Particle particle, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
     {
-        List<Location> lineLocs = MathUtil.getLine(start, end, 0.5f);
+        List<Location> lineLocs = MathUtil.getLine(start, end, density);
         World world = start.getWorld();
 
         for(Location location : lineLocs)
