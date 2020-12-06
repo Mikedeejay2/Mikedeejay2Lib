@@ -42,6 +42,35 @@ public final class ParticleUtil
     }
 
     /**
+     * Create a line of particles based on two locations
+     *
+     * @param start The start location of the line
+     * @param end The end location of the line
+     * @param particle The particle that should be used
+     * @param count The count of particles per 0.5 blocks
+     * @param speed The speed of the particles
+     * @param force Force the particles to be rendered even when outside of view distance
+     */
+    public static void particleLine(Location start, Location end, Particle particle, int count, float speed, double density, boolean force)
+    {
+        particleLine(start, end, particle, count, speed, 0, 0, 0, density, force);
+    }
+
+    /**
+     * Create a line of particles based on two locations
+     *
+     * @param start The start location of the line
+     * @param end The end location of the line
+     * @param particle The particle that should be used
+     * @param count The count of particles per 0.5 blocks
+     * @param speed The speed of the particles
+     */
+    public static void particleLine(Location start, Location end, Particle particle, int count, float speed, double density)
+    {
+        particleLine(start, end, particle, count, speed, 0, 0, 0, density, false);
+    }
+
+    /**
      * Add a particle to an entity that will track the entity for the lifetime of the entity or the lifetime of the server
      *
      * @param entity Entity to add the particle to
