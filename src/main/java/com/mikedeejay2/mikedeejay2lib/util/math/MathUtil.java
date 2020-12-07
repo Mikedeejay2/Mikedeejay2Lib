@@ -101,6 +101,7 @@ public final class MathUtil
     public static List<Vector> getCircleVectors(Location loc, double radius, double density)
     {
         List<Vector> list = new ArrayList<>();
+        double amt = 360.0 / (density * 100);
         for(double i = 0; i < 360; i += density)
         {
             Vector vector = getVectorAroundCircle(loc, radius, i);
@@ -613,7 +614,7 @@ public final class MathUtil
         Vector lookVec = start.getDirection().clone();
         double length = Math.abs(start.distance(end));
 
-        for(double i = 0; i < length; i += density)
+        for(double i = 0; i < length; i += 1.0 / density)
         {
             Vector newVec = lookVec.clone();
             newVec.multiply(i);

@@ -8,6 +8,7 @@ import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -151,5 +152,117 @@ public final class ParticleUtil
     public static void particleCircle(Location location, Particle particle, int radius, int count, float speed, double density)
     {
         particleCircle(location, particle, radius, count, speed, 0, 0, 0, density, false);
+    }
+
+    /**
+     * Create a sphere of particles at a specified location
+     *
+     * @param location The center of the circle
+     * @param particle The particle type to use
+     * @param radius The radius of the circle
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param offsetX The offset in the X direction of the particle
+     * @param offsetY The offset in the Y direction of the particle
+     * @param offsetZ The offset in the Z direction of the particle
+     * @param density The density (Amount of points) of the circle
+     * @param force Whether the particles should be force rendered or not
+     */
+    public static void particleSphereHollow(Location location, Particle particle, int radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
+    {
+        List<Location> sphere = MathUtil.getSphereHollowLocations(location, radius, density);
+        World world = location.getWorld();
+
+        for(Location curLoc : sphere)
+        {
+            world.spawnParticle(particle, curLoc, count, offsetX, offsetY, offsetZ, speed, null, force);
+        }
+    }
+
+    /**
+     * Create a sphere of particles at a specified location
+     *
+     * @param location The center of the circle
+     * @param particle The particle type to use
+     * @param radius The radius of the circle
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param density The density (Amount of points) of the circle
+     * @param force Whether the particles should be force rendered or not
+     */
+    public static void particleSphereHollow(Location location, Particle particle, int radius, int count, float speed, double density, boolean force)
+    {
+        particleSphereHollow(location, particle, radius, count, speed, 0, 0, 0, density, force);
+    }
+
+    /**
+     * Create a sphere of particles at a specified location
+     *
+     * @param location The center of the circle
+     * @param particle The particle type to use
+     * @param radius The radius of the circle
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param density The density (Amount of points) of the circle
+     */
+    public static void particleSphereHollow(Location location, Particle particle, int radius, int count, float speed, double density)
+    {
+        particleSphereHollow(location, particle, radius, count, speed, 0, 0, 0, density, false);
+    }
+
+    /**
+     * Create a sphere of particles at a specified location
+     *
+     * @param location The center of the circle
+     * @param particle The particle type to use
+     * @param radius The radius of the circle
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param offsetX The offset in the X direction of the particle
+     * @param offsetY The offset in the Y direction of the particle
+     * @param offsetZ The offset in the Z direction of the particle
+     * @param density The density (Amount of points) of the circle
+     * @param force Whether the particles should be force rendered or not
+     */
+    public static void particleSphereFilled(Location location, Particle particle, int radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
+    {
+        List<Location> sphere = MathUtil.getSphereFilledLocations(location, radius, density);
+        World world = location.getWorld();
+
+        for(Location curLoc : sphere)
+        {
+            world.spawnParticle(particle, curLoc, count, offsetX, offsetY, offsetZ, speed, null, force);
+        }
+    }
+
+    /**
+     * Create a sphere of particles at a specified location
+     *
+     * @param location The center of the circle
+     * @param particle The particle type to use
+     * @param radius The radius of the circle
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param density The density (Amount of points) of the circle
+     * @param force Whether the particles should be force rendered or not
+     */
+    public static void particleSphereFilled(Location location, Particle particle, int radius, int count, float speed, double density, boolean force)
+    {
+        particleSphereFilled(location, particle, radius, count, speed, 0, 0, 0, density, force);
+    }
+
+    /**
+     * Create a sphere of particles at a specified location
+     *
+     * @param location The center of the circle
+     * @param particle The particle type to use
+     * @param radius The radius of the circle
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param density The density (Amount of points) of the circle
+     */
+    public static void particleSphereFilled(Location location, Particle particle, int radius, int count, float speed, double density)
+    {
+        particleSphereFilled(location, particle, radius, count, speed, 0, 0, 0, density, false);
     }
 }
