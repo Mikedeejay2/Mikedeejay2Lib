@@ -114,7 +114,7 @@ public final class ParticleUtil
      */
     public static void particleCircle(Location location, Particle particle, int radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
     {
-        List<Location> circle = MathUtil.getCircleLocations(location, radius, density * 1000);
+        List<Location> circle = MathUtil.getCircleLocations(location, radius, density);
         World world = location.getWorld();
         for(Location curLoc : circle)
         {
