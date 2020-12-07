@@ -91,6 +91,41 @@ public final class MathUtil
     }
 
     /**
+     * Get a list of vectors that represent a circle
+     *
+     * @param loc The center location of the circle
+     * @param radius The radius of the circle
+     * @param density The density of the circle (The amount of points around the circle that will be mapped)
+     * @return The list of vectors of the circle
+     */
+    public static List<Vector> getCircleVectors(Location loc, double radius, double density)
+    {
+        List<Vector> list = new ArrayList<>();
+        double radPerIter = density / 360.0D;
+        for(double i = 0; i < 360; i += radPerIter)
+        {
+            Vector vector = getVectorAroundCircle(loc, radius, i);
+            list.add(vector);
+        }
+        return list;
+    }
+
+    /**
+     * Get a list of locations that represent a circle
+     *
+     * @param loc The center location of the circle
+     * @param radius The radius of the circle
+     * @param density The denisity of the circle (The amount of points around the circle that will be mapped)
+     * @return The list of locations of the circle
+     */
+    public static List<Location> getCircleLocations(Location loc, double radius, double density)
+    {
+        World world = loc.getWorld();
+        List<Vector> vectorList = getCircleVectors(loc, radius, density);
+        return ArrayUtil.toLocationList(vectorList, world);
+    }
+
+    /**
      * Rotate a point around an origin
      *
      * @param origin Origin Vector

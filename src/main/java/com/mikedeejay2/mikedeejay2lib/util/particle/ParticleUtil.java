@@ -97,4 +97,59 @@ public final class ParticleUtil
             }
         }.runTaskTimerCounted(plugin, 0, 0, timeToLive);
     }
+
+    /**
+     * Create a circle of particles at a specified location
+     *
+     * @param location The center of the circle
+     * @param particle The particle type to use
+     * @param radius The radius of the circle
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param offsetX The offset in the X direction of the particle
+     * @param offsetY The offset in the Y direction of the particle
+     * @param offsetZ The offset in the Z direction of the particle
+     * @param density The density (Amount of points) of the circle
+     * @param force Whether the particles should be force rendered or not
+     */
+    public static void particleCircle(Location location, Particle particle, int radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
+    {
+        List<Location> circle = MathUtil.getCircleLocations(location, radius, density * 1000);
+        World world = location.getWorld();
+        for(Location curLoc : circle)
+        {
+            world.spawnParticle(particle, curLoc, count, offsetX, offsetY, offsetZ, speed, null, force);
+        }
+    }
+
+    /**
+     * Create a circle of particles at a specified location
+     *
+     * @param location The center of the circle
+     * @param particle The particle type to use
+     * @param radius The radius of the circle
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param density The density (Amount of points) of the circle
+     * @param force Whether the particles should be force rendered or not
+     */
+    public static void particleCircle(Location location, Particle particle, int radius, int count, float speed, double density, boolean force)
+    {
+        particleCircle(location, particle, radius, count, speed, 0, 0, 0, density, force);
+    }
+
+    /**
+     * Create a circle of particles at a specified location
+     *
+     * @param location The center of the circle
+     * @param particle The particle type to use
+     * @param radius The radius of the circle
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param density The density (Amount of points) of the circle
+     */
+    public static void particleCircle(Location location, Particle particle, int radius, int count, float speed, double density)
+    {
+        particleCircle(location, particle, radius, count, speed, 0, 0, 0, density, false);
+    }
 }
