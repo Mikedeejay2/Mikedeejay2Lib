@@ -156,7 +156,7 @@ public final class MathUtil
     public static Vector getFacingVector(Location current, Location destination, float multiplier)
     {
         Vector newVec = current.toVector().subtract(destination.toVector());
-        newVec.normalize().multiply(multiplier);
+        newVec.normalize().multiply(-multiplier);
         return newVec;
     }
 
@@ -170,8 +170,8 @@ public final class MathUtil
      */
     public static Vector getFacingVector(Vector current, Vector destination, float multiplier)
     {
-        Vector newVec = current.subtract(destination);
-        newVec.normalize().multiply(multiplier);
+        Vector newVec = current.clone().subtract(destination);
+        newVec.normalize().multiply(-multiplier);
         return newVec;
     }
 
@@ -599,7 +599,7 @@ public final class MathUtil
     {
         List<Vector> lines = new ArrayList<>();
         Vector curVec = start.clone();
-        Vector lookVec = getFacingVector(start, end, -1);
+        Vector lookVec = getFacingVector(start, end, 1);
         double length = Math.abs(start.distance(end));
 
         for(double i = 0; i < length; i += 1.0 / density)
@@ -654,11 +654,13 @@ public final class MathUtil
     public static List<Vector> getStarVectors(Location location, double size, double density)
     {
         List<Vector> star = new ArrayList<>();
-        Vector top = new Vector(location.getX() + size, location.getY(), location.getZ());
-        Vector bottomLeft = new Vector(location.getX() - size, location.getY(), location.getZ() - size);
-        Vector bottomRight = new Vector(location.getX() - size, location.getY(), location.getZ() + size);
-        Vector left = new Vector(location.getX(), location.getY(), location.getZ() - size);
-        Vector right = new Vector(location.getX(), location.getY(), location.getZ() + size);
+        double partSize = (size * 0.75);
+        double smallSize = (size * 0.25);
+        Vector top          = new Vector(location.getX() + size      , location.getY(), location.getZ());
+        Vector left         = new Vector(location.getX() + smallSize , location.getY(), location.getZ() - size);
+        Vector right        = new Vector(location.getX() + smallSize , location.getY(), location.getZ() + size);
+        Vector bottomLeft   = new Vector(location.getX() - size      , location.getY(), location.getZ() - partSize);
+        Vector bottomRight  = new Vector(location.getX() - size      , location.getY(), location.getZ() + partSize);
         star.addAll(getLine(bottomLeft, top, density));
         star.addAll(getLine(top, bottomRight, density));
         star.addAll(getLine(bottomRight, left, density));

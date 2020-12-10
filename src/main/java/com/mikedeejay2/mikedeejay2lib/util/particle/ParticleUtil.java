@@ -7,6 +7,7 @@ import org.bukkit.Location;
 import org.bukkit.Particle;
 import org.bukkit.World;
 import org.bukkit.entity.Entity;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -33,12 +34,12 @@ public final class ParticleUtil
      */
     public static void particleLine(Location start, Location end, Particle particle, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
     {
-        List<Location> lineLocs = MathUtil.getLine(start, end, density);
+        List<Vector> lineLocs = MathUtil.getLine(start.toVector(), end.toVector(), density);
         World world = start.getWorld();
 
-        for(Location location : lineLocs)
+        for(Vector location : lineLocs)
         {
-            world.spawnParticle(particle, location, count, offsetX, offsetY, offsetZ, speed, null, force);
+            world.spawnParticle(particle, location.toLocation(world), count, offsetX, offsetY, offsetZ, speed, null, force);
         }
     }
 
