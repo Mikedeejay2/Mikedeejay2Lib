@@ -1,5 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util.math;
 
+import com.google.common.collect.Lists;
 import com.mikedeejay2.mikedeejay2lib.util.array.ArrayUtil;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -147,15 +148,30 @@ public final class MathUtil
     /**
      * Get a velocity vector that points towards a location
      *
-     * @param toLook The location that should be pointed towards
-     * @param currentLoc The current location
+     * @param current The current location
+     * @param destination The location that should be pointed towards
      * @param multiplier The speed multiplier
      * @return The new velocity vector
      */
-    public static Vector getFacingVector(Location toLook, Location currentLoc, float multiplier)
+    public static Vector getFacingVector(Location current, Location destination, float multiplier)
     {
-        Vector newVec = currentLoc.toVector().subtract(toLook.toVector());
-        newVec.normalize().multiply(-multiplier);
+        Vector newVec = current.toVector().subtract(destination.toVector());
+        newVec.normalize().multiply(multiplier);
+        return newVec;
+    }
+
+    /**
+     * Get a velocity vector that points towards a vector
+     *
+     * @param current The current vector
+     * @param destination The vector that should be pointed towards
+     * @param multiplier The speed multiplier
+     * @return The new velocity vector
+     */
+    public static Vector getFacingVector(Vector current, Vector destination, float multiplier)
+    {
+        Vector newVec = current.subtract(destination);
+        newVec.normalize().multiply(multiplier);
         return newVec;
     }
 
@@ -576,17 +592,17 @@ public final class MathUtil
      *
      * @param start The start vector to use
      * @param end The end vector to use
-     * @param lookVec The look vector to use
      * @param density The density of the line
      * @return The list of vectors that represent the line
      */
-    public static List<Vector> getLine(Vector start, Vector end, Vector lookVec, double density)
+    public static List<Vector> getLine(Vector start, Vector end, double density)
     {
         List<Vector> lines = new ArrayList<>();
         Vector curVec = start.clone();
+        Vector lookVec = getFacingVector(start, end, -1);
         double length = Math.abs(start.distance(end));
 
-        for(double i = 0; i < length; i += density)
+        for(double i = 0; i < length; i += 1.0 / density)
         {
             Vector newVec = lookVec.clone();
             newVec.multiply(i);
@@ -625,5 +641,44 @@ public final class MathUtil
             curLoc.subtract(newVec);
         }
         return lines;
+    }
+
+    /**
+     * Get a list of locations that create a star
+     *
+     * @param location The location of the star
+     * @param size The size of the star
+     * @param density The density between each point
+     * @return A new <tt>List</tt> of locations that create a star
+     */
+    public static List<Vector> getStarVectors(Location location, double size, double density)
+    {
+        List<Vector> star = new ArrayList<>();
+        Vector top = new Vector(location.getX() + size, location.getY(), location.getZ());
+        Vector bottomLeft = new Vector(location.getX() - size, location.getY(), location.getZ() - size);
+        Vector bottomRight = new Vector(location.getX() - size, location.getY(), location.getZ() + size);
+        Vector left = new Vector(location.getX(), location.getY(), location.getZ() - size);
+        Vector right = new Vector(location.getX(), location.getY(), location.getZ() + size);
+        star.addAll(getLine(bottomLeft, top, density));
+        star.addAll(getLine(top, bottomRight, density));
+        star.addAll(getLine(bottomRight, left, density));
+        star.addAll(getLine(left, right, density));
+        star.addAll(getLine(right, bottomLeft, density));
+        return star;
+    }
+
+    /**
+     * Get a list of locations that create a star
+     *
+     * @param location The location of the star
+     * @param size The size of the star
+     * @param density The density between each point
+     * @return A new <tt>List</tt> of locations that create a star
+     */
+    public static List<Location> getStarLocations(Location location, double size, double density)
+    {
+        World world = location.getWorld();
+        List<Vector> vectorList = getStarVectors(location, size, density);
+        return ArrayUtil.toLocationList(vectorList, world);
     }
 }

@@ -14,7 +14,7 @@ import java.util.List;
 /**
  * A util for making particles do specific things
  *
- * @author Mikedeejay2 (With the help of Spigot resources)
+ * @author Mikedeejay2
  */
 public final class ParticleUtil
 {
@@ -264,5 +264,61 @@ public final class ParticleUtil
     public static void particleSphereFilled(Location location, Particle particle, int radius, int count, float speed, double density)
     {
         particleSphereFilled(location, particle, radius, count, speed, 0, 0, 0, density, false);
+    }
+
+    /**
+     * Create a star of particles at a specified location
+     *
+     * @param location The center of the star
+     * @param particle The particle type to use
+     * @param size The size of the star
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param offsetX The offset in the X direction of the particle
+     * @param offsetY The offset in the Y direction of the particle
+     * @param offsetZ The offset in the Z direction of the particle
+     * @param density The density (Amount of points)
+     * @param force Whether the particles should be force rendered or not
+     */
+    public static void particleStar(Location location, Particle particle, int size, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
+    {
+        List<Location> star = MathUtil.getStarLocations(location, size, density);
+        World world = location.getWorld();
+
+        for(Location curLoc : star)
+        {
+            world.spawnParticle(particle, curLoc, count, offsetX, offsetY, offsetZ, speed, null, force);
+        }
+    }
+
+    /**
+     * Create a star of particles at a specified location
+     *
+     * @param location The center of the star
+     * @param particle The particle type to use
+     * @param size The size of the star
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param density The density (Amount of points)
+     * @param force Whether the particles should be force rendered or not
+     */
+    public static void particleStar(Location location, Particle particle, int size, int count, float speed, double density, boolean force)
+    {
+        particleStar(location, particle, size, count, speed, 0, 0, 0, density, force);
+    }
+
+    /**
+     * Create a star of particles at a specified location
+     *
+     * @param location The center of the star
+     * @param particle The particle type to use
+     * @param size The size of the star
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param density The density (Amount of points)
+     */
+    public static void particleStar(Location location, Particle particle, int size, int count, float speed, double density)
+    {
+        particleStar(location, particle, size, count, speed, 0, 0, 0, density, false);
     }
 }
