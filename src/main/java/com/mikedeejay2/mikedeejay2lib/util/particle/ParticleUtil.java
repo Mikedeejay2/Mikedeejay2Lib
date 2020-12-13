@@ -9,7 +9,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -153,6 +152,61 @@ public final class ParticleUtil
     public static void particleCircle(Location location, Particle particle, int radius, int count, float speed, double density)
     {
         particleCircle(location, particle, radius, count, speed, 0, 0, 0, density, false);
+    }
+
+    /**
+     * Create a filled circle of particles at a specified location
+     *
+     * @param location The center of the circle
+     * @param particle The particle type to use
+     * @param radius The radius of the circle
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param offsetX The offset in the X direction of the particle
+     * @param offsetY The offset in the Y direction of the particle
+     * @param offsetZ The offset in the Z direction of the particle
+     * @param density The density (Amount of points) of the circle
+     * @param force Whether the particles should be force rendered or not
+     */
+    public static void particleCircleFilled(Location location, Particle particle, int radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
+    {
+        List<Location> circle = MathUtil.getCircleFilledLocations(location, radius, density);
+        World world = location.getWorld();
+        for(Location curLoc : circle)
+        {
+            world.spawnParticle(particle, curLoc, count, offsetX, offsetY, offsetZ, speed, null, force);
+        }
+    }
+
+    /**
+     * Create a filled circle of particles at a specified location
+     *
+     * @param location The center of the circle
+     * @param particle The particle type to use
+     * @param radius The radius of the circle
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param density The density (Amount of points) of the circle
+     * @param force Whether the particles should be force rendered or not
+     */
+    public static void particleCircleFilled(Location location, Particle particle, int radius, int count, float speed, double density, boolean force)
+    {
+        particleCircleFilled(location, particle, radius, count, speed, 0, 0, 0, density, force);
+    }
+
+    /**
+     * Create a filled circle of particles at a specified location
+     *
+     * @param location The center of the circle
+     * @param particle The particle type to use
+     * @param radius The radius of the circle
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param density The density (Amount of points) of the circle
+     */
+    public static void particleCircleFilled(Location location, Particle particle, int radius, int count, float speed, double density)
+    {
+        particleCircleFilled(location, particle, radius, count, speed, 0, 0, 0, density, false);
     }
 
     /**
@@ -338,7 +392,7 @@ public final class ParticleUtil
      * @param density The density (Amount of points)
      * @param force Whether the particles should be force rendered or not
      */
-    public static void particleCylinder(Location location, Particle particle, double height, double radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
+    public static void particleCylinderHollow(Location location, Particle particle, double height, double radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
     {
         List<Location> cylinder = MathUtil.getCylinderHollowLocations(location, height, radius, density);
         World world = location.getWorld();
@@ -361,9 +415,9 @@ public final class ParticleUtil
      * @param density The density (Amount of points)
      * @param force Whether the particles should be force rendered or not
      */
-    public static void particleCylinder(Location location, Particle particle, double height, double radius, int count, float speed, double density, boolean force)
+    public static void particleCylinderHollow(Location location, Particle particle, double height, double radius, int count, float speed, double density, boolean force)
     {
-        particleCylinder(location, particle, height, radius, count, speed, 0, 0, 0, density, force);
+        particleCylinderHollow(location, particle, height, radius, count, speed, 0, 0, 0, density, force);
     }
 
     /**
@@ -377,8 +431,67 @@ public final class ParticleUtil
      * @param speed The speed that the particles move at
      * @param density The density (Amount of points)
      */
-    public static void particleCylinder(Location location, Particle particle, double height, double radius, int count, float speed, double density)
+    public static void particleCylinderHollow(Location location, Particle particle, double height, double radius, int count, float speed, double density)
     {
-        particleCylinder(location, particle, height, radius, count, speed, 0, 0, 0, density, false);
+        particleCylinderHollow(location, particle, height, radius, count, speed, 0, 0, 0, density, false);
+    }
+
+    /**
+     * Create a filled cylinder of particles at a specified location
+     *
+     * @param location The center of the cylinder
+     * @param particle The particle type to use
+     * @param height The height of the cylinder
+     * @param radius The radius of the cylinder
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param offsetX The offset X of particles
+     * @param offsetY The offset Y of particles
+     * @param offsetZ The offset Z of particles
+     * @param density The density (Amount of points)
+     * @param force Whether the particles should be force rendered or not
+     */
+    public static void particleCylinderFilled(Location location, Particle particle, double height, double radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
+    {
+        List<Location> cylinder = MathUtil.getCylinderFilledLocations(location, height, radius, density);
+        World world = location.getWorld();
+
+        for(Location curLoc : cylinder)
+        {
+            world.spawnParticle(particle, curLoc, count, offsetX, offsetY, offsetZ, speed, null, force);
+        }
+    }
+
+    /**
+     * Create a filled cylinder of particles at a specified location
+     *
+     * @param location The center of the cylinder
+     * @param particle The particle type to use
+     * @param height The height of the cylinder
+     * @param radius The radius of the cylinder
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param density The density (Amount of points)
+     * @param force Whether the particles should be force rendered or not
+     */
+    public static void particleCylinderFilled(Location location, Particle particle, double height, double radius, int count, float speed, double density, boolean force)
+    {
+        particleCylinderFilled(location, particle, height, radius, count, speed, 0, 0, 0, density, force);
+    }
+
+    /**
+     * Create a filled cylinder of particles at a specified location
+     *
+     * @param location The center of the cylinder
+     * @param particle The particle type to use
+     * @param height The height of the cylinder
+     * @param radius The radius of the cylinder
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param density The density (Amount of points)
+     */
+    public static void particleCylinderFilled(Location location, Particle particle, double height, double radius, int count, float speed, double density)
+    {
+        particleCylinderFilled(location, particle, height, radius, count, speed, 0, 0, 0, density, false);
     }
 }

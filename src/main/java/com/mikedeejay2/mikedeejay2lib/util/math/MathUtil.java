@@ -16,6 +16,7 @@ import java.util.*;
 public final class MathUtil
 {
     private static Map<Double, Vector> circleRefs = new HashMap<>();
+    private static Map<Double, List<Vector>> circleFilledRefs = new HashMap<>();
     private static Map<Double, List<Vector>> sphereHollowRefs = new HashMap<>();
     private static Map<Double, List<Vector>> sphereFilledRefs = new HashMap<>();
 
@@ -115,13 +116,62 @@ public final class MathUtil
      *
      * @param loc The center location of the circle
      * @param radius The radius of the circle
-     * @param density The denisity of the circle (The amount of points around the circle that will be mapped)
+     * @param density The density of the circle (The amount of points around the circle that will be mapped)
      * @return The list of locations of the circle
      */
     public static List<Location> getCircleLocations(Location loc, double radius, double density)
     {
         World world = loc.getWorld();
         List<Vector> vectorList = getCircleVectors(loc, radius, density);
+        return ArrayUtil.toLocationList(vectorList, world);
+    }
+
+    /**
+     * Get a list of vectors that represent a filled circle
+     *
+     * @param loc The center location of the circle
+     * @param radius The radius of the circle
+     * @param density The density of the circle (The amount of points around the circle that will be mapped)
+     * @return The list of vectors of the circle
+     */
+    public static List<Vector> getCircleFilledVectors(Location loc, double radius, double density)
+    {
+        density = density * radius;
+        if(circleFilledRefs.containsKey(density))
+        {
+            List<Vector> list = circleFilledRefs.get(density);
+            List<Vector> translatedList = new ArrayList<>();
+            list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
+            return offsetVectors(translatedList, loc);
+        }
+        List<Vector> list = new ArrayList<>();
+        for(double x = -1; x <= 1; x += 1.0 / density)
+        {
+            for(double z = -1; z <= 1; z += 1.0 / density)
+            {
+                if(!(Math.sqrt((x * x) + (z * z)) <= 1)) continue;
+                list.add(new Vector(x, 0, z));
+            }
+        }
+
+        circleFilledRefs.put(density, list);
+        List<Vector> translatedList = new ArrayList<>();
+        list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
+        return offsetVectors(translatedList, loc);
+    }
+
+    /**
+     * Get a list of locations that represent a filled circle
+     *
+     * @param loc The center location of the circle
+     * @param radius The radius of the circle
+     * @param density The density of the circle (The amount of points around the circle that will be mapped)
+     * @return The list of locations of the circle
+     */
+    public static List<Location> getCircleFilledLocations(Location loc, double radius, double density)
+    {
+        World world = loc.getWorld();
+        List<Vector> vectorList = getCircleFilledVectors(loc, radius, density);
         return ArrayUtil.toLocationList(vectorList, world);
     }
 
@@ -719,6 +769,45 @@ public final class MathUtil
     {
         World world = center.getWorld();
         List<Vector> vectorList = getCylinderHollowVectors(center, height, radius, density);
+        return ArrayUtil.toLocationList(vectorList, world);
+    }
+
+    /**
+     * Get a list of vectors that create a filled cylinder
+     *
+     * @param center The center of the cylinder
+     * @param height The height of the cylinder
+     * @param radius The radius of the cylinder
+     * @param density The density between each point
+     * @return A new <tt>List</tt> of locations that create a cylinder
+     */
+    public static List<Vector> getCylinderFilledVectors(Location center, double height, double radius, double density)
+    {
+        List<Vector> cylinder = new ArrayList<>();
+        List<Vector> circle = getCircleFilledVectors(center, radius, density);
+        Vector transVec = new Vector(0, 1.0 / density, 0);
+
+        for(double y = 0; y < height; y += 1.0 / density)
+        {
+            ArrayUtil.addClonedVectorsToList(circle, cylinder);
+            addVectors(circle, transVec);
+        }
+        return cylinder;
+    }
+
+    /**
+     * Get a list of locations that create a filled cylinder
+     *
+     * @param center The center of the cylinder
+     * @param height The height of the cylinder
+     * @param radius The radius of the cylinder
+     * @param density The density between each point
+     * @return A new <tt>List</tt> of locations that create a cylinder
+     */
+    public static List<Location> getCylinderFilledLocations(Location center, double height, double radius, double density)
+    {
+        World world = center.getWorld();
+        List<Vector> vectorList = getCylinderFilledVectors(center, height, radius, density);
         return ArrayUtil.toLocationList(vectorList, world);
     }
 
