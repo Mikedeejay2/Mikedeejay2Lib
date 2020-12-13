@@ -102,7 +102,6 @@ public final class MathUtil
     public static List<Vector> getCircleVectors(Location loc, double radius, double density)
     {
         List<Vector> list = new ArrayList<>();
-        double amt = 360.0 / (density * 100);
         for(double i = 0; i < 360; i += density)
         {
             Vector vector = getVectorAroundCircle(loc, radius, i);
@@ -191,7 +190,7 @@ public final class MathUtil
             List<Vector> list = sphereHollowRefs.get(density);
             List<Vector> translatedList = new ArrayList<>();
             list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
-            return ArrayUtil.offsetVectors(translatedList, loc);
+            return offsetVectors(translatedList, loc);
         }
 
         List<Vector> list = new ArrayList<>();
@@ -213,7 +212,7 @@ public final class MathUtil
         sphereHollowRefs.put(density, list);
         List<Vector> translatedList = new ArrayList<>();
         list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
-        return ArrayUtil.offsetVectors(translatedList, loc);
+        return offsetVectors(translatedList, loc);
     }
 
     /**
@@ -247,7 +246,7 @@ public final class MathUtil
             List<Vector> list = sphereFilledRefs.get(density);
             List<Vector> translatedList = new ArrayList<>();
             list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
-            return ArrayUtil.offsetVectors(translatedList, loc);
+            return offsetVectors(translatedList, loc);
         }
         List<Vector> list = new ArrayList<>();
         for(double x = -1; x <= 1; x += 1.0 / density)
@@ -265,7 +264,7 @@ public final class MathUtil
         sphereFilledRefs.put(density, list);
         List<Vector> translatedList = new ArrayList<>();
         list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
-        return ArrayUtil.offsetVectors(translatedList, loc);
+        return offsetVectors(translatedList, loc);
     }
 
     /**
@@ -682,5 +681,198 @@ public final class MathUtil
         World world = location.getWorld();
         List<Vector> vectorList = getStarVectors(location, size, density);
         return ArrayUtil.toLocationList(vectorList, world);
+    }
+
+    /**
+     * Get a list of vectors that create a hollow cylinder
+     *
+     * @param center The center of the cylinder
+     * @param height The height of the cylinder
+     * @param radius The radius of the cylinder
+     * @param density The density between each point
+     * @return A new <tt>List</tt> of locations that create a cylinder
+     */
+    public static List<Vector> getCylinderHollowVectors(Location center, double height, double radius, double density)
+    {
+        List<Vector> cylinder = new ArrayList<>();
+        List<Vector> circle = getCircleVectors(center, radius, density);
+        Vector transVec = new Vector(0, 1.0 / density, 0);
+
+        for(double y = 0; y < height; y += 1.0 / density)
+        {
+            ArrayUtil.addClonedVectorsToList(circle, cylinder);
+            addVectors(circle, transVec);
+        }
+        return cylinder;
+    }
+
+    /**
+     * Get a list of locations that create a hollow cylinder
+     *
+     * @param center The center of the cylinder
+     * @param height The height of the cylinder
+     * @param radius The radius of the cylinder
+     * @param density The density between each point
+     * @return A new <tt>List</tt> of locations that create a cylinder
+     */
+    public static List<Location> getCylinderHollowLocations(Location center, double height, double radius, double density)
+    {
+        World world = center.getWorld();
+        List<Vector> vectorList = getCylinderHollowVectors(center, height, radius, density);
+        return ArrayUtil.toLocationList(vectorList, world);
+    }
+
+    /**
+     * Offset a <tt>List</tt> of vectors by another <tt>Vector</tt>
+     *
+     * @param vectors The list of vectors that will be offset
+     * @param offset The vector to use that will offset the list of vectors
+     * @return The new list of offset vectors
+     */
+    public static List<Vector> offsetVectors(List<Vector> vectors, Vector offset)
+    {
+        List<Vector> newVecs = new ArrayList<>();
+        vectors.forEach(vector -> newVecs.add(vector.add(offset)));
+        return newVecs;
+    }
+
+    /**
+     * Offset a <tt>List</tt> of locations by another <tt>Location</tt>
+     *
+     * @param locations The list of locations that will be offset
+     * @param offset The location to use that will offset the list of locations
+     * @return The new list of offset locations
+     */
+    public static List<Location> offsetLocations(List<Location> locations, Location offset)
+    {
+        List<Location> newLocs = new ArrayList<>();
+        locations.forEach(location -> newLocs.add(location.add(offset)));
+        return newLocs;
+    }
+
+    /**
+     * Offset a <tt>List</tt> of vectors by another <tt>Vector</tt>
+     *
+     * @param vectors The list of vectors that will be offset
+     * @param offset The location to use that will offset the list of vectors
+     * @return The new list of offset vectors
+     */
+    public static List<Vector> offsetVectors(List<Vector> vectors, Location offset)
+    {
+        List<Vector> newVecs = new ArrayList<>();
+        vectors.forEach(vector -> newVecs.add(vector.add(offset.toVector())));
+        return newVecs;
+    }
+
+    /**
+     * Offset a <tt>List</tt> of locations by another <tt>Location</tt>
+     *
+     * @param locations The list of locations that will be offset
+     * @param offset The vector to use that will offset the list of locations
+     * @return The new list of offset locations
+     */
+    public static List<Location> offsetLocations(List<Location> locations, Vector offset)
+    {
+        List<Location> newLocs = new ArrayList<>();
+        locations.forEach(location -> newLocs.add(location.add(offset)));
+        return newLocs;
+    }
+
+    /**
+     * Add a translation <tt>Vector</tt> to a list of <tt>Locations</tt>
+     *
+     * @param locations The list of <tt>Locations</tt> to translate
+     * @param translation The translation <tt>Vector</tt> to use
+     */
+    public static void addLocations(List<Location> locations, Vector translation)
+    {
+        locations.forEach(location -> location.add(translation));
+    }
+
+    /**
+     * Subtract a translation <tt>Vector</tt> to a list of <tt>Locations</tt>
+     *
+     * @param locations The list of <tt>Locations</tt> to translate
+     * @param translation The translation <tt>Vector</tt> to use
+     */
+    public static void subLocations(List<Location> locations, Vector translation)
+    {
+        locations.forEach(location -> location.subtract(translation));
+    }
+
+    /**
+     * Add a translation <tt>Location</tt> to a list of <tt>Locations</tt>
+     *
+     * @param locations The list of <tt>Locations</tt> to translate
+     * @param translation The translation <tt>Location</tt> to use
+     */
+    public static void addLocations(List<Location> locations, Location translation)
+    {
+        locations.forEach(location -> location.add(translation));
+    }
+
+    /**
+     * Subtract a translation <tt>Location</tt> to a list of <tt>Locations</tt>
+     *
+     * @param locations The list of <tt>Locations</tt> to translate
+     * @param translation The translation <tt>Location</tt> to use
+     */
+    public static void subLocations(List<Location> locations, Location translation)
+    {
+        locations.forEach(location -> location.subtract(translation));
+    }
+
+    /**
+     * Multiply a list of <tt>Locations</tt> by a double
+     *
+     * @param locations The list of <tt>Locations</tt> to translate
+     * @param translation The multiplier
+     */
+    public static void mulLocations(List<Location> locations, double translation)
+    {
+        locations.forEach(location -> location.multiply(translation));
+    }
+
+    /**
+     * Add a translation <tt>Vector</tt> to a list of <tt>Vectors</tt>
+     *
+     * @param vectors The list of <tt>Vectors</tt> to translate
+     * @param translation The translation <tt>Vector</tt> to use
+     */
+    public static void addVectors(List<Vector> vectors, Vector translation)
+    {
+        vectors.forEach(vector -> vector.add(translation));
+    }
+
+    /**
+     * Subtract a translation <tt>Vector</tt> to a list of <tt>Vectors</tt>
+     *
+     * @param vectors The list of <tt>Vectors</tt> to translate
+     * @param translation The translation <tt>Vector</tt> to use
+     */
+    public static void subVectors(List<Vector> vectors, Vector translation)
+    {
+        vectors.forEach(vector -> vector.subtract(translation));
+    }
+
+    /**
+     * Multiply a list of <tt>Vectors</tt> by a double
+     *
+     * @param vectors The list of <tt>Vectors</tt> to translate
+     * @param translation The multiplier
+     */
+    public static void mulVectors(List<Vector> vectors, double translation)
+    {
+        vectors.forEach(vector -> vector.multiply(translation));
+    }
+
+    /**
+     * Normalize an entire list of <tt>Vectors</tt>
+     *
+     * @param vectors The list of <tt>Vectors</tt> to normalize
+     */
+    public static void normalizeList(List<Vector> vectors)
+    {
+        vectors.forEach(Vector::normalize);
     }
 }

@@ -322,4 +322,63 @@ public final class ParticleUtil
     {
         particleStar(location, particle, size, count, speed, 0, 0, 0, density, false);
     }
+
+    /**
+     * Create a cylinder of particles at a specified location
+     *
+     * @param location The center of the cylinder
+     * @param particle The particle type to use
+     * @param height The height of the cylinder
+     * @param radius The radius of the cylinder
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param offsetX The offset X of particles
+     * @param offsetY The offset Y of particles
+     * @param offsetZ The offset Z of particles
+     * @param density The density (Amount of points)
+     * @param force Whether the particles should be force rendered or not
+     */
+    public static void particleCylinder(Location location, Particle particle, double height, double radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
+    {
+        List<Location> cylinder = MathUtil.getCylinderHollowLocations(location, height, radius, density);
+        World world = location.getWorld();
+
+        for(Location curLoc : cylinder)
+        {
+            world.spawnParticle(particle, curLoc, count, offsetX, offsetY, offsetZ, speed, null, force);
+        }
+    }
+
+    /**
+     * Create a cylinder of particles at a specified location
+     *
+     * @param location The center of the cylinder
+     * @param particle The particle type to use
+     * @param height The height of the cylinder
+     * @param radius The radius of the cylinder
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param density The density (Amount of points)
+     * @param force Whether the particles should be force rendered or not
+     */
+    public static void particleCylinder(Location location, Particle particle, double height, double radius, int count, float speed, double density, boolean force)
+    {
+        particleCylinder(location, particle, height, radius, count, speed, 0, 0, 0, density, force);
+    }
+
+    /**
+     * Create a cylinder of particles at a specified location
+     *
+     * @param location The center of the cylinder
+     * @param particle The particle type to use
+     * @param height The height of the cylinder
+     * @param radius The radius of the cylinder
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param density The density (Amount of points)
+     */
+    public static void particleCylinder(Location location, Particle particle, double height, double radius, int count, float speed, double density)
+    {
+        particleCylinder(location, particle, height, radius, count, speed, 0, 0, 0, density, false);
+    }
 }

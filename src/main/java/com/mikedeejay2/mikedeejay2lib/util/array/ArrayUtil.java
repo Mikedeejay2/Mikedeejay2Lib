@@ -308,58 +308,24 @@ public final class ArrayUtil
     }
 
     /**
-     * Offset a <tt>List</tt> of vectors by another <tt>Vector</tt>
+     * Clone all <tt>Locations</tt> in a list and add them to another list of <tt>Locations</tt>
      *
-     * @param vectors The list of vectors that will be offset
-     * @param offset The vector to use that will offset the list of vectors
-     * @return The new list of offset vectors
+     * @param senderList The list which objects will be cloned
+     * @param receiverList The list which will receiver the new objects
      */
-    public static List<Vector> offsetVectors(List<Vector> vectors, Vector offset)
+    public static void addClonedLocationsToList(List<Location> senderList, List<Location> receiverList)
     {
-        List<Vector> newVecs = new ArrayList<>();
-        vectors.forEach(vector -> newVecs.add(vector.add(offset)));
-        return newVecs;
+        senderList.forEach(cloneable -> receiverList.add(cloneable.clone()));
     }
 
     /**
-     * Offset a <tt>List</tt> of locations by another <tt>Location</tt>
+     * Clone all <tt>Vectors</tt> in a list and add them to another list of <tt>Vectors</tt>
      *
-     * @param locations The list of locations that will be offset
-     * @param offset The location to use that will offset the list of locations
-     * @return The new list of offset locations
+     * @param senderList The list which objects will be cloned
+     * @param receiverList The list which will receiver the new objects
      */
-    public static List<Location> offsetLocations(List<Location> locations, Location offset)
+    public static void addClonedVectorsToList(List<Vector> senderList, List<Vector> receiverList)
     {
-        List<Location> newLocs = new ArrayList<>();
-        locations.forEach(location -> newLocs.add(location.add(offset)));
-        return newLocs;
-    }
-
-    /**
-     * Offset a <tt>List</tt> of vectors by another <tt>Vector</tt>
-     *
-     * @param vectors The list of vectors that will be offset
-     * @param offset The location to use that will offset the list of vectors
-     * @return The new list of offset vectors
-     */
-    public static List<Vector> offsetVectors(List<Vector> vectors, Location offset)
-    {
-        List<Vector> newVecs = new ArrayList<>();
-        vectors.forEach(vector -> newVecs.add(vector.add(offset.toVector())));
-        return newVecs;
-    }
-
-    /**
-     * Offset a <tt>List</tt> of locations by another <tt>Location</tt>
-     *
-     * @param locations The list of locations that will be offset
-     * @param offset The vector to use that will offset the list of locations
-     * @return The new list of offset locations
-     */
-    public static List<Location> offsetLocations(List<Location> locations, Vector offset)
-    {
-        List<Location> newLocs = new ArrayList<>();
-        locations.forEach(location -> newLocs.add(location.add(offset)));
-        return newLocs;
+        senderList.forEach(cloneable -> receiverList.add(cloneable.clone()));
     }
 }
