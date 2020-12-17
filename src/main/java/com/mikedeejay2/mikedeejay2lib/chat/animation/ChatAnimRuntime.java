@@ -34,7 +34,7 @@ public class ChatAnimRuntime extends EnhancedRunnable
             return;
         }
         ChatSlide curSlide = slides.get(index);
-        long amtToWait = curSlide.getPeriod();
+        long amtToWait = slides.get(index - 1 < 0 ? slides.size() - 1 : index - 1).getPeriod();
         if(curWait < amtToWait) return;
         curSlide.print(receivers);
         ++index;
