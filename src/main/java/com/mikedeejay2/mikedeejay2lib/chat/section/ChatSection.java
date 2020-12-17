@@ -25,6 +25,12 @@ public class ChatSection
         this.baked = false;
     }
 
+    /**
+     * Add a <tt>ChatModule</tt> to this <tt>ChatSection</tt>
+     *
+     * @param module The <tt>ChatModule</tt> to add
+     * @return The current <tt>ChatSection</tt>
+     */
     public ChatSection addModule(ChatModule module)
     {
         modules.add(module);
@@ -32,6 +38,12 @@ public class ChatSection
         return this;
     }
 
+    /**
+     * Add a String of text to this <tt>ChatSection</tt>
+     *
+     * @param text The String of text to add
+     * @return The current <tt>ChatSection</tt>
+     */
     public ChatSection addText(String text)
     {
         this.text += Chat.chat(text);
@@ -39,6 +51,11 @@ public class ChatSection
         return this;
     }
 
+    /**
+     * Cleaer the current text of this <tt>ChatSection</tt>
+     *
+     * @return The current <tt>ChatSection</tt>
+     */
     public ChatSection clearText()
     {
         this.text = "";
@@ -46,6 +63,9 @@ public class ChatSection
         return this;
     }
 
+    /**
+     * Bake this <tt>ChatSection</tt> into Bungee's chat API
+     */
     protected void bake()
     {
         components = plugin.chat().getBaseComponentArray(text);
@@ -53,9 +73,17 @@ public class ChatSection
         baked = true;
     }
 
-    public void print(CommandSender sender)
+    /**
+     * Print this <tt>ChatSection</tt> to a <tt>CommandSender</tt>
+     *
+     * @param sender The <tt>CommandSender</tt> that will receive the text
+     * @return The current <tt>ChatSection</tt>
+     */
+    public ChatSection print(CommandSender sender)
     {
         if(!baked) bake();
+        modules.forEach(module -> module.onPrint(this, sender));
         sender.spigot().sendMessage(components);
+        return this;
     }
 }

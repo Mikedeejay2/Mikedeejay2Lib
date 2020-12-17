@@ -7,12 +7,22 @@ import org.bukkit.command.CommandSender;
 
 import java.util.List;
 
+/**
+ * The <tt>BukkitRunnable</tt> that acts as the animation runtime of <tt>ChatSlides</tt>
+ *
+ * @author Mikedeejay2
+ */
 public class ChatAnimRuntime extends EnhancedRunnable
 {
+    // The chat system of this runnable
     protected ChatSystem system;
+    // The list of slides that this runtime animates through
     protected List<ChatSlide> slides;
+    // The current wait time of the animation
     protected long curWait;
+    // The current frame index of the animation
     protected int index;
+    // The list of command senders to receive the slides
     protected CommandSender[] receivers;
 
     public ChatAnimRuntime(ChatSystem system, CommandSender... receivers)
@@ -24,6 +34,9 @@ public class ChatAnimRuntime extends EnhancedRunnable
         this.receivers = receivers;
     }
 
+    /**
+     * Overridden <tt>onRun()</tt> method that animates through the slides
+     */
     @Override
     public void onRun()
     {
