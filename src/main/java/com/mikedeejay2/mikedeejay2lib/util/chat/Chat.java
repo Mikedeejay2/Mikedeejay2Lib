@@ -182,7 +182,7 @@ public final class Chat
      */
     public BaseComponent[] getBaseComponentArray(String... strings)
     {
-        ArrayList<BaseComponent> baseComponents = new ArrayList<BaseComponent>();
+        ArrayList<BaseComponent> baseComponents = new ArrayList<>();
         for(String str : strings)
         {
             baseComponents.addAll(Arrays.asList(TextComponent.fromLegacyText(chat(str))));
