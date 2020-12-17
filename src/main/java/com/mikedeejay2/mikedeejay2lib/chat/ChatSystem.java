@@ -10,18 +10,23 @@ import org.bukkit.entity.Player;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * <tt>ChatSystem</tt> is a container of objects that help to make printing and
+ * animating text easier
+ *
+ * @author Mikedeejay2
+ */
 public class ChatSystem
 {
     protected final PluginBase plugin;
+    // The chat slides that this system contains
     protected List<ChatSlide> slides;
-    protected ChatPresentMode mode;
     protected ChatAnimRuntime runtime;
 
     public ChatSystem(PluginBase plugin)
     {
         this.plugin = plugin;
         this.slides = new ArrayList<>();
-        this.mode = null;
     }
 
     public ChatSystem addSlide(ChatSlide slide)

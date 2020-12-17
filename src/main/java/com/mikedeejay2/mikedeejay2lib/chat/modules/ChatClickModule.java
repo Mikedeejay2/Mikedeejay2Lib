@@ -5,7 +5,6 @@ import com.mikedeejay2.mikedeejay2lib.chat.section.ChatSection;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
-import net.md_5.bungee.api.chat.HoverEvent;
 
 public class ChatClickModule extends ChatModule
 {
