@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.particle.shape.circle;
 import com.mikedeejay2.mikedeejay2lib.particle.shape.ParticleShape;
 import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class ParticleCircleFilled implements ParticleShape
     }
 
     @Override
-    public List<Location> getShape()
+    public List<Vector> getShape()
     {
-        return MathUtil.getCircleFilledLocations(location, radius, density);
+        return MathUtil.getCircleFilledVectors(location, radius, density);
     }
 }

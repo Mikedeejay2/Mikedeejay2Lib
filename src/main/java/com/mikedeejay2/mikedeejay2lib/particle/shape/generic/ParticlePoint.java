@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.particle.shape.generic;
 import com.mikedeejay2.mikedeejay2lib.particle.shape.ParticleShape;
 import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,10 +19,10 @@ public class ParticlePoint implements ParticleShape
     }
 
     @Override
-    public List<Location> getShape()
+    public List<Vector> getShape()
     {
-        List<Location> list = new ArrayList<>();
-        list.add(location);
+        List<Vector> list = new ArrayList<>();
+        list.add(location.toVector());
         return list;
     }
 }

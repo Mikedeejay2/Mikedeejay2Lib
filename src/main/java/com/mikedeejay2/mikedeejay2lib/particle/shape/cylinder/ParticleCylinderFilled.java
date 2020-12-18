@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.particle.shape.cylinder;
 import com.mikedeejay2.mikedeejay2lib.particle.shape.ParticleShape;
 import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 
@@ -22,8 +23,8 @@ public class ParticleCylinderFilled implements ParticleShape
     }
 
     @Override
-    public List<Location> getShape()
+    public List<Vector> getShape()
     {
-        return MathUtil.getCylinderFilledLocations(location, radius, height, density);
+        return MathUtil.getCylinderFilledVectors(location, radius, height, density);
     }
 }

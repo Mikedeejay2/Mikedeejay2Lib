@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.particle.shape.cube;
 import com.mikedeejay2.mikedeejay2lib.particle.shape.ParticleShape;
 import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 
@@ -36,12 +37,12 @@ public class ParticleCubeHollow implements ParticleShape
     }
 
     @Override
-    public List<Location> getShape()
+    public List<Vector> getShape()
     {
         if(mode)
         {
-            return MathUtil.getCubeHollowLocations(loc1, loc2, density);
+            return MathUtil.getCubeHollowVectors(loc1, loc2, density);
         }
-        return MathUtil.getCubeHollowLocations(location, xWidth, yWidth, zWidth, density);
+        return MathUtil.getCubeHollowVectors(location, xWidth, yWidth, zWidth, density);
     }
 }

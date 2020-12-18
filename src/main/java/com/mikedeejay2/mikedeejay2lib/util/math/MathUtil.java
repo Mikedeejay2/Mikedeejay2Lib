@@ -185,7 +185,7 @@ public final class MathUtil
      * @param degZ The degrees in Z to rotate the vector
      * @return The new rotated vector
      */
-    public static Vector rotateAroundOrigin(Vector origin, Vector vector, float degX, float degY, float degZ)
+    public static Vector rotateAroundOrigin(Vector origin, Vector vector, double degX, double degY, double degZ)
     {
         Vector newVec = vector.subtract(origin);
         newVec.rotateAroundX(Math.toRadians(degX));

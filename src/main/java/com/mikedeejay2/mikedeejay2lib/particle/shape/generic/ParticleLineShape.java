@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.particle.shape.generic;
 import com.mikedeejay2.mikedeejay2lib.particle.shape.ParticleShape;
 import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 
@@ -20,8 +21,8 @@ public class ParticleLineShape implements ParticleShape
     }
 
     @Override
-    public List<Location> getShape()
+    public List<Vector> getShape()
     {
-        return MathUtil.getLine(start, end, density);
+        return MathUtil.getLine(start.toVector(), end.toVector(), density);
     }
 }

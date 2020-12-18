@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.particle.shape.cube;
 import com.mikedeejay2.mikedeejay2lib.particle.shape.ParticleShape;
 import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 import org.bukkit.Location;
+import org.bukkit.util.Vector;
 
 import java.util.List;
 
@@ -36,12 +37,12 @@ public class ParticleCubeFilled implements ParticleShape
     }
 
     @Override
-    public List<Location> getShape()
+    public List<Vector> getShape()
     {
         if(mode)
         {
-            return MathUtil.getCubeFilledLocations(loc1, loc2, density);
+            return MathUtil.getCubeFilledVectors(loc1, loc2, density);
         }
-        return MathUtil.getCubeFilledLocations(location, xWidth, yWidth, zWidth, density);
+        return MathUtil.getCubeFilledVectors(location, xWidth, yWidth, zWidth, density);
     }
 }
