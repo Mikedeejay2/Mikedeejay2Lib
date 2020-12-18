@@ -3,8 +3,8 @@ package com.mikedeejay2.mikedeejay2lib.util.version;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 
 /**
- * A util for getting this Minecraft server's version and turning it into an
- * easily comparable array
+ * A util for getting the Minecraft server's version and converting it into multiple different
+ * data types.
  *
  * @author Mikedeejay2
  */
@@ -12,46 +12,157 @@ public final class MinecraftVersion
 {
     // Holds the version string, like "git.paper-RC_03 (MC:1.16.2)" or something like that
     private final String versionString;
-    // An array of a Minecraft version like [1, 16, 3], you probably only care about version[1]
-    private final int[] version;
+    // An array of a Minecraft version like [1, 16, 3]
+    private final int[] versionLong;
+    // A short integer of the minor version (i.e 16, 15, 14)
+    private final int versionShort;
+    // String version of the NMS identifier
+    private final String versionNMS;
+    // Enum version of the NMS identifier
+    private final VersionEnum versionEnum;
 
     public MinecraftVersion(PluginBase plugin)
     {
-        this.versionString = plugin.getServer().getVersion();
-        this.version = genMCVersion();
+        this.versionString = calcVersionString(plugin);
+        this.versionLong = calcLongVersion();
+        this.versionShort = calcShortVersion();
+        this.versionEnum = calcVersionEnum(plugin);
+        this.versionNMS = calcVersionNMS(plugin);
     }
 
     /**
-     * Generates an int array of this server's Minecraft version for easy access
+     * Calculate the version in String form. Example: "1.16.3"
      *
-     * @return Int Array that represents this server's Minecraft version
+     * @param plugin A reference to the plugin
+     * @return The calculated version String
      */
-    private int[] genMCVersion()
+    private String calcVersionString(PluginBase plugin)
     {
-        boolean flag = false;
-        String[] splitStr = versionString.split("\\.");
-        int[] arr = new int[3];
-        arr[0] = Integer.parseInt(String.valueOf(splitStr[0].charAt(splitStr[0].length()-1)));
+        String[] splitStr = plugin.getServer().getVersion().split("\\.");
+        StringBuilder result = new StringBuilder();
+        result.append(splitStr[0].charAt(splitStr[0].length()-1)).append(".");
         if(splitStr.length == 2)
         {
-            arr[1] = Integer.parseInt(splitStr[1].substring(0, splitStr[1].length() - 1));
+            result.append(splitStr[1], 0, splitStr[1].length() - 1);
         }
         else
         {
-            arr[1] = Integer.parseInt(splitStr[1]);
-            arr[2] = Integer.parseInt(splitStr[2].substring(0, splitStr[2].length() - 1));
+            result.append(splitStr[1]).append(".");
+            result.append(splitStr[2], 0, splitStr[2].length() - 1);
         }
 
+        return result.toString();
+    }
+
+    /**
+     * Calculate the long array version. Example: [1, 16, 3]
+     *
+     * @return A long array version
+     */
+    private int[] calcLongVersion()
+    {
+        String[] splitStr = versionString.split("\\.");
+        int[] arr = new int[splitStr.length];
+        for(int i = 0; i < splitStr.length; ++i)
+        {
+            arr[i] = Integer.parseInt(splitStr[i]);
+        }
         return arr;
     }
 
     /**
-     * Get the Minecraft version array
+     * Calculate the short int version. Example: 16
      *
-     * @return The Minecraft version array
+     * @return The short int version
      */
-    public int[] getMCVersion()
+    private int calcShortVersion()
     {
-        return version;
+        String[] splitStr = versionString.split("\\.");
+        int ver;
+        if(splitStr.length == 2)
+        {
+            ver = Integer.parseInt(splitStr[1].substring(0, splitStr[1].length() - 1));
+        }
+        else
+        {
+            ver = Integer.parseInt(splitStr[1]);
+        }
+        return ver;
+    }
+
+    /**
+     * Calculate the version enum. Example: v1_16_R3
+     *
+     * @param plugin A reference to the plugin
+     * @return The calculated version enum
+     */
+    private VersionEnum calcVersionEnum(PluginBase plugin)
+    {
+        String ver = calcVersionNMS(plugin);
+        return VersionEnum.valueOf(ver);
+    }
+
+    /**
+     * Calculate the NMS version String. Example: "v1_16_R3"
+     *
+     * @param plugin A reference to the plugin
+     * @return The calculated NMS version String
+     */
+    private String calcVersionNMS(PluginBase plugin)
+    {
+        String raw = plugin.getServer().getClass().getPackage().getName();
+        String[] split = raw.split("\\.");
+        return split[split.length - 1];
+    }
+
+    /**
+     * Get the version String that the Minecraft server is running on. Example "1.16.3"
+     *
+     * @return The version String
+     */
+    public String getVersionString()
+    {
+        return versionString;
+    }
+
+    /**
+     * Get the long version array that the Minecraft server is running on. Example: [1, 16, 3]
+     *
+     * @return The long version array
+     */
+    public int[] getVersionLong()
+    {
+        return versionLong;
+    }
+
+    /**
+     * Get the short int version that the Minecraft server is running on. Example: 16
+     *
+     * @return The short int version
+     */
+    public int getVersionShort()
+    {
+        return versionShort;
+    }
+
+    /**
+     * Get the NMS String version that the Minecraft server is running on. Example: "v1_16_R3"
+     *
+     * @return The NMS String version
+     */
+    public String getVersionNMS()
+    {
+        return versionNMS;
+    }
+
+    /**
+     * Get the NMS Enum version that the Minecraft server is running on. Example: v1_16_R3
+     * @see VersionEnum
+     *
+     * @return The NMS Enum version
+     */
+    public VersionEnum getVersionEnum()
+    {
+        return versionEnum;
     }
 }

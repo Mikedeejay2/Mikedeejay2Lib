@@ -21,7 +21,7 @@ import org.bukkit.plugin.java.JavaPlugin;
  */
 public class PluginBase extends JavaPlugin
 {
-    protected int[] MCVersion;
+    protected MinecraftVersion minecraftVersion;
     protected FileManager fileManager;
     protected LangManager langManager;
     protected CommandManager commandManager;
@@ -38,7 +38,7 @@ public class PluginBase extends JavaPlugin
     public void onEnable()
     {
         this.chat = new Chat(this);
-        this.MCVersion = new MinecraftVersion(this).getMCVersion();
+        this.minecraftVersion = new MinecraftVersion(this);
         this.langManager = new LangManager(this);
         this.commandManager = new CommandManager(this);
         this.fileManager = new FileManager();
@@ -61,9 +61,9 @@ public class PluginBase extends JavaPlugin
      *
      * @return The Minecraft version
      */
-    public int[] getMCVersion()
+    public MinecraftVersion getMCVersion()
     {
-        return MCVersion;
+        return minecraftVersion;
     }
 
     /**
