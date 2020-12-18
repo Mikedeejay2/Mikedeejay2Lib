@@ -77,7 +77,7 @@ public final class MathUtil
      */
     public static Vector getVectorAroundCircle(Location center, double radius, double angleInRadian)
     {
-        angleInRadian = angleInRadian % Math.PI * 2;
+        angleInRadian = angleInRadian % (Math.PI * 2);
 
         if(circleRefs.containsKey(angleInRadian))
         {
@@ -710,7 +710,7 @@ public final class MathUtil
         for(int i = 0; i < points; ++i)
         {
             double newAngle = i % 2 == 0 ? curAngle : curAngle + 180;
-            Vector curVec = getVectorAroundCircle(location, size / 2.0, Math.toRadians(newAngle / 2));
+            Vector curVec = getVectorAroundCircle(location, size / 2.0, Math.toRadians(newAngle));
             starEdge.add(curVec);
             curAngle += edgeAngle;
         }
