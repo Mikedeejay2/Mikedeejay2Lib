@@ -693,7 +693,7 @@ public final class MathUtil
     }
 
     /**
-     * Get a list of locations that create a star
+     * Get a list of vectors that create a star
      *
      * @param location The location of the star
      * @param size The size of the star
@@ -737,6 +737,53 @@ public final class MathUtil
     {
         World world = location.getWorld();
         List<Vector> vectorList = getStarVectors(location, size, density, points);
+        return ArrayUtil.toLocationList(vectorList, world);
+    }
+
+    /**
+     * Get a list of vectors that create a shape with the specific amount of edges
+     *
+     * @param location The location of the shape
+     * @param size The size of the shape
+     * @param density The density between each point
+     * @param edges The amount of edges on the shape
+     * @return A new <tt>List</tt> of locations that create a shape
+     */
+    public static List<Vector> getShapeVectors(Location location, double size, double density, int edges)
+    {
+        List<Vector> shape = new ArrayList<>();
+        List<Vector> shapeEdge = new ArrayList<>();
+        double edgeAngle = 360.0 / edges;
+        double curAngle = 0;
+        for(int i = 0; i < edges; ++i)
+        {
+            Vector curVec = getVectorAroundCircle(location, size / 2.0, Math.toRadians(curAngle));
+            shapeEdge.add(curVec);
+            curAngle += edgeAngle;
+        }
+        for(int i = 0; i < shapeEdge.size(); ++i)
+        {
+            Vector curVec = shapeEdge.get(i);
+            Vector nextVec = i == shapeEdge.size() - 1 ? shapeEdge.get(0) : shapeEdge.get(i + 1);
+            List<Vector> curLine = getLine(curVec, nextVec, density);
+            shape.addAll(curLine);
+        }
+        return shape;
+    }
+
+    /**
+     * Get a list of locations that create a shape with the specific amount of edges
+     *
+     * @param location The location of the shape
+     * @param size The size of the shape
+     * @param density The density between each point
+     * @param edges The amount of edges of the shape
+     * @return A new <tt>List</tt> of locations that create a shape
+     */
+    public static List<Location> getShapeLocations(Location location, double size, double density, int edges)
+    {
+        World world = location.getWorld();
+        List<Vector> vectorList = getShapeVectors(location, size, density, edges);
         return ArrayUtil.toLocationList(vectorList, world);
     }
 

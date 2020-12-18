@@ -497,4 +497,63 @@ public final class ParticleUtil
     {
         particleCylinderFilled(location, particle, height, radius, count, speed, 0, 0, 0, density, false);
     }
+
+    /**
+     * Create a shape of particles at a specified location with a specified amount of edges
+     *
+     * @param location The center of the shape
+     * @param particle The particle type to use
+     * @param size The size of the shape
+     * @param edges The amount of points of the shape
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param offsetX The offset in the X direction of the particle
+     * @param offsetY The offset in the Y direction of the particle
+     * @param offsetZ The offset in the Z direction of the particle
+     * @param density The density (Amount of points)
+     * @param force Whether the particles should be force rendered or not
+     */
+    public static void particleShape(Location location, Particle particle, int size, int edges, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
+    {
+        List<Location> star = MathUtil.getShapeLocations(location, size, density, edges);
+        World world = location.getWorld();
+
+        for(Location curLoc : star)
+        {
+            world.spawnParticle(particle, curLoc, count, offsetX, offsetY, offsetZ, speed, null, force);
+        }
+    }
+
+    /**
+     * Create a shape of particles at a specified location with a specified amount of edges
+     *
+     * @param location The center of the shape
+     * @param particle The particle type to use
+     * @param size The size of the shape
+     * @param edges The amount of points of the shape
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param density The density (Amount of points)
+     * @param force Whether the particles should be force rendered or not
+     */
+    public static void particleShape(Location location, Particle particle, int size, int edges, int count, float speed, double density, boolean force)
+    {
+        particleShape(location, particle, size, edges, count, speed, 0, 0, 0, density, force);
+    }
+
+    /**
+     * Create a shape of particles at a specified location with a specified amount of edges
+     *
+     * @param location The center of the shape
+     * @param particle The particle type to use
+     * @param size The size of the shape
+     * @param edges The amount of points of the shape
+     * @param count The count of particles per point
+     * @param speed The speed that the particles move at
+     * @param density The density (Amount of points)
+     */
+    public static void particleShape(Location location, Particle particle, int size, int edges, int count, float speed, double density)
+    {
+        particleShape(location, particle, size, edges, count, speed, 0, 0, 0, density, false);
+    }
 }
