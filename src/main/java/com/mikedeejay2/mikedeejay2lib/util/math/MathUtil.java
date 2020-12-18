@@ -84,10 +84,10 @@ public final class MathUtil
             return circleRefs.get(angleInRadian).clone().multiply(radius).add(center.toVector());
         }
 
-        double cos = Math.cos(angleInRadian);
         double sin = Math.sin(angleInRadian);
+        double cos = Math.cos(angleInRadian);
 
-        Vector vector = new Vector(cos, 0, sin);
+        Vector vector = new Vector(sin, 0, cos);
         circleRefs.put(angleInRadian, vector);
         return vector.clone().multiply(radius).add(center.toVector());
     }
@@ -105,7 +105,7 @@ public final class MathUtil
         List<Vector> list = new ArrayList<>();
         for(double i = 0; i < 360; i += density)
         {
-            Vector vector = getVectorAroundCircle(loc, radius, i);
+            Vector vector = getVectorAroundCircle(loc, radius, Math.toRadians(i));
             list.add(vector);
         }
         return list;
@@ -698,23 +698,29 @@ public final class MathUtil
      * @param location The location of the star
      * @param size The size of the star
      * @param density The density between each point
+     * @param points The amount of points of the star
      * @return A new <tt>List</tt> of locations that create a star
      */
-    public static List<Vector> getStarVectors(Location location, double size, double density)
+    public static List<Vector> getStarVectors(Location location, double size, double density, int points)
     {
         List<Vector> star = new ArrayList<>();
-        double partSize = (size * 0.75);
-        double smallSize = (size * 0.25);
-        Vector top          = new Vector(location.getX() + size      , location.getY(), location.getZ());
-        Vector left         = new Vector(location.getX() + smallSize , location.getY(), location.getZ() - size);
-        Vector right        = new Vector(location.getX() + smallSize , location.getY(), location.getZ() + size);
-        Vector bottomLeft   = new Vector(location.getX() - size      , location.getY(), location.getZ() - partSize);
-        Vector bottomRight  = new Vector(location.getX() - size      , location.getY(), location.getZ() + partSize);
-        star.addAll(getLine(bottomLeft, top, density));
-        star.addAll(getLine(top, bottomRight, density));
-        star.addAll(getLine(bottomRight, left, density));
-        star.addAll(getLine(left, right, density));
-        star.addAll(getLine(right, bottomLeft, density));
+        List<Vector> starEdge = new ArrayList<>();
+        double edgeAngle = 180.0 / points;
+        double curAngle = 0;
+        for(int i = 0; i < points; ++i)
+        {
+            double newAngle = i % 2 == 0 ? curAngle : curAngle + 180;
+            Vector curVec = getVectorAroundCircle(location, size / 2.0, Math.toRadians(newAngle / 2));
+            starEdge.add(curVec);
+            curAngle += edgeAngle;
+        }
+        for(int i = 0; i < starEdge.size(); ++i)
+        {
+            Vector curVec = starEdge.get(i);
+            Vector nextVec = i == starEdge.size() - 1 ? starEdge.get(0) : starEdge.get(i + 1);
+            List<Vector> curLine = getLine(curVec, nextVec, density);
+            star.addAll(curLine);
+        }
         return star;
     }
 
@@ -724,12 +730,13 @@ public final class MathUtil
      * @param location The location of the star
      * @param size The size of the star
      * @param density The density between each point
+     * @param points The amount of points of the star
      * @return A new <tt>List</tt> of locations that create a star
      */
-    public static List<Location> getStarLocations(Location location, double size, double density)
+    public static List<Location> getStarLocations(Location location, double size, double density, int points)
     {
         World world = location.getWorld();
-        List<Vector> vectorList = getStarVectors(location, size, density);
+        List<Vector> vectorList = getStarVectors(location, size, density, points);
         return ArrayUtil.toLocationList(vectorList, world);
     }
 

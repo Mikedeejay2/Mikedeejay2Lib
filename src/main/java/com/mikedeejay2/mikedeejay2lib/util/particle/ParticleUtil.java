@@ -327,6 +327,7 @@ public final class ParticleUtil
      * @param location The center of the star
      * @param particle The particle type to use
      * @param size The size of the star
+     * @param points The amount of points of the star
      * @param count The count of particles per point
      * @param speed The speed that the particles move at
      * @param offsetX The offset in the X direction of the particle
@@ -335,9 +336,9 @@ public final class ParticleUtil
      * @param density The density (Amount of points)
      * @param force Whether the particles should be force rendered or not
      */
-    public static void particleStar(Location location, Particle particle, int size, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
+    public static void particleStar(Location location, Particle particle, int size, int points, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
     {
-        List<Location> star = MathUtil.getStarLocations(location, size, density);
+        List<Location> star = MathUtil.getStarLocations(location, size, density, points);
         World world = location.getWorld();
 
         for(Location curLoc : star)
@@ -352,14 +353,15 @@ public final class ParticleUtil
      * @param location The center of the star
      * @param particle The particle type to use
      * @param size The size of the star
+     * @param points The amount of points of the star
      * @param count The count of particles per point
      * @param speed The speed that the particles move at
      * @param density The density (Amount of points)
      * @param force Whether the particles should be force rendered or not
      */
-    public static void particleStar(Location location, Particle particle, int size, int count, float speed, double density, boolean force)
+    public static void particleStar(Location location, Particle particle, int size, int points, int count, float speed, double density, boolean force)
     {
-        particleStar(location, particle, size, count, speed, 0, 0, 0, density, force);
+        particleStar(location, particle, size, points, count, speed, 0, 0, 0, density, force);
     }
 
     /**
@@ -368,13 +370,14 @@ public final class ParticleUtil
      * @param location The center of the star
      * @param particle The particle type to use
      * @param size The size of the star
+     * @param points The amount of points of the star
      * @param count The count of particles per point
      * @param speed The speed that the particles move at
      * @param density The density (Amount of points)
      */
-    public static void particleStar(Location location, Particle particle, int size, int count, float speed, double density)
+    public static void particleStar(Location location, Particle particle, int size, int points, int count, float speed, double density)
     {
-        particleStar(location, particle, size, count, speed, 0, 0, 0, density, false);
+        particleStar(location, particle, size, points, count, speed, 0, 0, 0, density, false);
     }
 
     /**
