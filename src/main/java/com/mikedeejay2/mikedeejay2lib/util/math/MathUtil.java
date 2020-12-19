@@ -710,7 +710,7 @@ public final class MathUtil
         for(int i = 0; i < points; ++i)
         {
             double newAngle = i % 2 == 0 ? curAngle : curAngle + 180;
-            Vector curVec = getVectorAroundCircle(location, size / 2.0, Math.toRadians(newAngle));
+            Vector curVec = getVectorAroundCircle(location, size, Math.toRadians(newAngle));
             starEdge.add(curVec);
             curAngle += edgeAngle;
         }
@@ -757,7 +757,7 @@ public final class MathUtil
         double curAngle = 0;
         for(int i = 0; i < edges; ++i)
         {
-            Vector curVec = getVectorAroundCircle(location, size / 2.0, Math.toRadians(curAngle));
+            Vector curVec = getVectorAroundCircle(location, size, Math.toRadians(curAngle));
             shapeEdge.add(curVec);
             curAngle += edgeAngle;
         }
