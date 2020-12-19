@@ -12,6 +12,7 @@
   "errors.number_less_than_zero": "Error: The number entered was less than 0. Please enter a number greater than 0.",
   "errors.not_a_number": "Error: The data entered is not a number. Please enter a number.",
   "errors.invalid_item_held": "The item that is being held is invalid. Please hold a valid item.",
+  "errors.version_not_valid": "The server's Minecraft version ({VERSION}) is not a valid version for this plugin. Errors may occur.",
   "gui.modules.list.search": "Search list...",
   "gui.modules.list.search_off": "Turn off search mode",
   "gui.modules.list.page": "Page {PAGE}",

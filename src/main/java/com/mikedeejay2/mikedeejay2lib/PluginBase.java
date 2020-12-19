@@ -6,6 +6,7 @@ import com.mikedeejay2.mikedeejay2lib.file.FileManager;
 import com.mikedeejay2.mikedeejay2lib.gui.listeners.GUIListener;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.GUIManager;
 import com.mikedeejay2.mikedeejay2lib.language.LangManager;
+import com.mikedeejay2.mikedeejay2lib.nms.NMSHandler;
 import com.mikedeejay2.mikedeejay2lib.util.bstats.BStats;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import com.mikedeejay2.mikedeejay2lib.util.update.UpdateChecker;
@@ -30,6 +31,7 @@ public class PluginBase extends JavaPlugin
     protected GUIManager guiManager;
     protected BStats bStats;
     protected UpdateChecker updateChecker;
+    protected NMSHandler nms;
 
     public PluginBase()
     {}
@@ -40,6 +42,7 @@ public class PluginBase extends JavaPlugin
         this.chat = new Chat(this);
         this.minecraftVersion = new MinecraftVersion(this);
         this.langManager = new LangManager(this);
+        this.nms = new NMSHandler(this);
         this.commandManager = new CommandManager(this);
         this.fileManager = new FileManager();
         this.listenerManager = new ListenerManager(this);
@@ -144,5 +147,15 @@ public class PluginBase extends JavaPlugin
     public UpdateChecker updateChecker()
     {
         return updateChecker;
+    }
+
+    /**
+     * Gets the Net Minecraft Server handler
+     *
+     * @return The Net Minecraft Server handler
+     */
+    public NMSHandler NMS()
+    {
+        return nms;
     }
 }
