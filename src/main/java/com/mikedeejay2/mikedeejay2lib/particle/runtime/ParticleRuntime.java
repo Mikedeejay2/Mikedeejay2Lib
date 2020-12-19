@@ -41,10 +41,15 @@ public class ParticleRuntime extends EnhancedRunnable
             if(shouldUpdate)
             {
                 effect.update();
+                effect.updateSystem(system);
             }
         }
         system.getModules().forEach(module -> module.onUpdateTail(system));
-        if(shouldUpdate) curUpdateRate = 0;
+        if(shouldUpdate)
+        {
+            curUpdateRate = 0;
+            system.setUpdated(true);
+        }
 
         Bukkit.getScheduler().runTask(plugin, () -> {
             system.getModules().forEach(module -> module.onDisplayHead(system));

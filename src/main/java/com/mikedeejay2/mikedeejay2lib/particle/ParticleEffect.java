@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.particle;
 
-import com.mikedeejay2.mikedeejay2lib.particle.module.ParticleEModule;
+import com.mikedeejay2.mikedeejay2lib.particle.module.effect.ParticleEModule;
 import com.mikedeejay2.mikedeejay2lib.particle.shape.ParticleShape;
 import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 import org.bukkit.Location;
@@ -130,16 +130,55 @@ public class ParticleEffect
         for(Vector vector : untranslatedVecs)
         {
             Vector newVec = vector.clone();
-            newVec.subtract(originVec);
-            newVec.multiply(scaleVec);
-            newVec.add(originVec);
-            MathUtil.rotateAroundOrigin(originVec, newVec, rotX, rotY, rotZ);
-            newVec.add(translationVec);
+            if(scaleVec.getX() != 1.0 && scaleVec.getY() != 1.0 && scaleVec.getZ() != 1.0)
+            {
+                newVec.subtract(originVec);
+                newVec.multiply(scaleVec);
+                newVec.add(originVec);
+            }
+            if(rotX != 1.0 && rotY != 1.0 && rotZ != 1.0)
+            {
+                MathUtil.rotateAroundOrigin(originVec, newVec, rotX, rotY, rotZ);
+            }
+            if(translationVec.getX() != 1.0 && translationVec.getY() != 1.0 && translationVec.getZ() != 1.0)
+            {
+                newVec.add(translationVec);
+            }
             newList.add(newVec);
         }
         translatedVecs = newList;
         modules.forEach(module -> module.onUpdateTail(this));
         updated = true;
+        return this;
+    }
+
+    public ParticleEffect updateSystem(ParticleSystem system)
+    {
+        if(system.isUpdated()) return this;
+        Vector originVec = system.getOrigin().toVector();
+        Vector sysScaleVec = system.getScaleVec();
+        Vector sysRotationVec = system.getRotationVec();
+        Vector sysTranslationVec = system.getTranslationVec();
+        double rotX = sysRotationVec.getX();
+        double rotY = sysRotationVec.getY();
+        double rotZ = sysRotationVec.getZ();
+        for(Vector vector : translatedVecs)
+        {
+            if(sysScaleVec.getX() != 1.0 && sysScaleVec.getY() != 1.0 && sysScaleVec.getZ() != 1.0)
+            {
+                vector.subtract(originVec);
+                vector.multiply(scaleVec);
+                vector.add(originVec);
+            }
+            if(rotX != 1.0 && rotY != 1.0 && rotZ != 1.0)
+            {
+                MathUtil.rotateAroundOrigin(originVec, vector, rotX, rotY, rotZ);
+            }
+            if(sysTranslationVec.getX() != 1.0 && sysTranslationVec.getY() != 1.0 && sysTranslationVec.getZ() != 1.0)
+            {
+                vector.add(translationVec);
+            }
+        }
         return this;
     }
 

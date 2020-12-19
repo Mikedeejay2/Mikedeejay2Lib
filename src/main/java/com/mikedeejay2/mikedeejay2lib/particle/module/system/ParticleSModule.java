@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.particle.module;
+package com.mikedeejay2.mikedeejay2lib.particle.module.system;
 
 import com.mikedeejay2.mikedeejay2lib.particle.ParticleSystem;
 

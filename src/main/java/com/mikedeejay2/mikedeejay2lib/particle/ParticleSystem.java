@@ -1,7 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.particle;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.particle.module.ParticleSModule;
+import com.mikedeejay2.mikedeejay2lib.particle.module.system.ParticleSModule;
 import com.mikedeejay2.mikedeejay2lib.particle.runtime.ParticleRuntime;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -24,6 +24,7 @@ public class ParticleSystem
     protected long updateRate;
     protected ParticleRuntime runtime;
     protected List<ParticleSModule> modules;
+    protected boolean updated;
 
     public ParticleSystem(PluginBase plugin, Location origin, long playTicks, long tickRate, long updateRate)
     {
@@ -37,6 +38,7 @@ public class ParticleSystem
         this.tickRate = tickRate;
         this.updateRate = updateRate;
         this.modules = new ArrayList<>();
+        this.updated = true;
     }
 
     public ParticleSystem(PluginBase plugin, Location origin, long playTicks, long tickRate)
@@ -154,21 +156,25 @@ public class ParticleSystem
     public void setScaleVec(Vector scaleVec)
     {
         this.scaleVec = scaleVec;
+        this.updated = false;
     }
 
     public void setRotationVec(Vector rotationVec)
     {
         this.rotationVec = rotationVec;
+        this.updated = false;
     }
 
     public void setTranslationVec(Vector translationVec)
     {
         this.translationVec = translationVec;
+        this.updated = false;
     }
 
     public void setOrigin(Location origin)
     {
         this.origin = origin;
+        this.updated = false;
     }
 
     public long getPlayTicks()
@@ -204,5 +210,15 @@ public class ParticleSystem
     public List<ParticleSModule> getModules()
     {
         return modules;
+    }
+
+    public boolean isUpdated()
+    {
+        return updated;
+    }
+
+    public void setUpdated(boolean updated)
+    {
+        this.updated = updated;
     }
 }
