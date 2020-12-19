@@ -771,7 +771,7 @@ public class GUIContainer
     }
 
     /**
-     * Remove a <tt>GUILayer</tt> from this GUI based off of it's name
+     * Remove a <tt>GUILayer</tt> from this GUI based off of its name
      *
      * @param layerName The name of the layer to remove
      */

@@ -6,7 +6,7 @@ import java.io.File;
 
 /**
  * A data file is a file of any type that this plugin uses.
- * This class has multiple functions but it's main purpose it to
+ * This class has multiple functions but its main purpose it to
  * act as a base to structure all file types on.
  *
  * @author Mikedeejay2

@@ -103,7 +103,7 @@ public class CommandManager implements CommandExecutor
     }
 
     /**
-     * Get a subcommand according to it's name.
+     * Get a subcommand according to its name.
      *
      * @param name Name of subcommand to get
      * @return The subcommand that corresponds to the name

@@ -303,7 +303,7 @@ public class GUIListModule extends GUIModule
     }
 
     /**
-     * Get a list's index based off of it's row and column in the GUI.
+     * Get a list's index based off of its row and column in the GUI.
      * Not recommended to use but included just in case.
      *
      * @param row The row to get the item from
