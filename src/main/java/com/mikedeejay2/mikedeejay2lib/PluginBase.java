@@ -5,7 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.event.ListenerManager;
 import com.mikedeejay2.mikedeejay2lib.file.FileManager;
 import com.mikedeejay2.mikedeejay2lib.gui.listeners.GUIListener;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.GUIManager;
-import com.mikedeejay2.mikedeejay2lib.language.LangManager;
+import com.mikedeejay2.mikedeejay2lib.text.language.LangManager;
 import com.mikedeejay2.mikedeejay2lib.nms.NMSHandler;
 import com.mikedeejay2.mikedeejay2lib.util.bstats.BStats;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;

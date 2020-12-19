@@ -1,7 +1,7 @@
-package com.mikedeejay2.mikedeejay2lib.chat.animation;
+package com.mikedeejay2.mikedeejay2lib.text.chat.system.animation;
 
-import com.mikedeejay2.mikedeejay2lib.chat.ChatSystem;
-import com.mikedeejay2.mikedeejay2lib.chat.slide.ChatSlide;
+import com.mikedeejay2.mikedeejay2lib.text.chat.system.ChatSystem;
+import com.mikedeejay2.mikedeejay2lib.text.chat.system.slide.ChatSlide;
 import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
 import org.bukkit.command.CommandSender;
 

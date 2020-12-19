@@ -1,6 +1,6 @@
-package com.mikedeejay2.mikedeejay2lib.chat.modules;
+package com.mikedeejay2.mikedeejay2lib.text.chat.system.modules;
 
-import com.mikedeejay2.mikedeejay2lib.chat.section.ChatSection;
+import com.mikedeejay2.mikedeejay2lib.text.chat.system.section.ChatSection;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.command.CommandSender;
 

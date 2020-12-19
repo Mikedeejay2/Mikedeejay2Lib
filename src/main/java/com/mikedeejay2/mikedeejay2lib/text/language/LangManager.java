@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.language;
+package com.mikedeejay2.mikedeejay2lib.text.language;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.file.json.JsonFile;
