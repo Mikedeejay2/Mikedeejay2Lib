@@ -2,6 +2,9 @@ package com.mikedeejay2.mikedeejay2lib.util.version;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 /**
  * A util for getting the Minecraft server's version and converting it into multiple different
  * data types.
@@ -10,7 +13,7 @@ import com.mikedeejay2.mikedeejay2lib.PluginBase;
  */
 public final class MinecraftVersion
 {
-    // Holds the version string, like "git.paper-RC_03 (MC:1.16.2)" or something like that
+    // Holds the version string like "1.16.3"
     private final String versionString;
     // An array of a Minecraft version like [1, 16, 3]
     private final int[] versionLong;
@@ -38,20 +41,14 @@ public final class MinecraftVersion
      */
     private String calcVersionString(PluginBase plugin)
     {
-        String[] splitStr = plugin.getServer().getVersion().split("\\.");
-        StringBuilder result = new StringBuilder();
-        result.append(splitStr[0].charAt(splitStr[0].length()-1)).append(".");
-        if(splitStr.length == 2)
+        String version = plugin.getServer().getVersion();
+        Pattern pattern = Pattern.compile("(\\(MC: )([\\d\\.]+)(\\))");
+        Matcher matcher = pattern.matcher(version);
+        if(matcher.find())
         {
-            result.append(splitStr[1], 0, splitStr[1].length() - 1);
+            return matcher.group(2);
         }
-        else
-        {
-            result.append(splitStr[1]).append(".");
-            result.append(splitStr[2], 0, splitStr[2].length() - 1);
-        }
-
-        return result.toString();
+        return null;
     }
 
     /**
