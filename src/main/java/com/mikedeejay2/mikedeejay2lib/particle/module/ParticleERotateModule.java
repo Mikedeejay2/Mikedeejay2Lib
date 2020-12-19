@@ -1,7 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.particle.module;
 
 import com.mikedeejay2.mikedeejay2lib.particle.ParticleEffect;
-import net.minecraft.server.v1_16_R3.MinecraftServer;
 import org.bukkit.util.Vector;
 
 public class ParticleERotateModule extends ParticleEModule
