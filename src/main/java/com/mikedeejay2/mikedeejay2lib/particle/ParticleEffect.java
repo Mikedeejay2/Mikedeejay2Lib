@@ -1,5 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.particle;
 
+import com.mikedeejay2.mikedeejay2lib.particle.module.ParticleEModule;
 import com.mikedeejay2.mikedeejay2lib.particle.shape.ParticleShape;
 import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 import org.bukkit.Location;
@@ -24,6 +25,7 @@ public class ParticleEffect
     protected boolean updated;
     protected long delay;
     protected long count;
+    protected List<ParticleEModule> modules;
 
     public ParticleEffect(Location origin, ParticleData particleData)
     {
@@ -40,6 +42,7 @@ public class ParticleEffect
         this.updated = false;
         this.delay = 0;
         this.count = 0;
+        this.modules = new ArrayList<>();
     }
 
     public ParticleEffect addShape(ParticleShape shape)
@@ -65,14 +68,51 @@ public class ParticleEffect
         return this;
     }
 
+    public ParticleEffect addModule(ParticleEModule module)
+    {
+        modules.add(module);
+        return this;
+    }
+
+    public ParticleEffect addModule(ParticleEModule module, int index)
+    {
+        modules.add(index, module);
+        return this;
+    }
+
+    public boolean containsModule(ParticleEModule module)
+    {
+        return modules.contains(module);
+    }
+
+    public ParticleEffect removeModule(int index)
+    {
+        modules.remove(index);
+        return this;
+    }
+
+    public ParticleEffect removeModule(ParticleEModule module)
+    {
+        modules.remove(module);
+        return this;
+    }
+
+    public ParticleEffect resetModules()
+    {
+        modules.clear();
+        return this;
+    }
+
     public ParticleEffect bake()
     {
+        modules.forEach(module -> module.onBakeHead(this));
         List<Vector> newList = new ArrayList<>();
         for(ParticleShape shape : shapes)
         {
             newList.addAll(shape.getShape());
         }
         untranslatedVecs = newList;
+        modules.forEach(module -> module.onBakeTail(this));
         baked = true;
         updated = false;
         return this;
@@ -80,6 +120,8 @@ public class ParticleEffect
 
     public ParticleEffect update()
     {
+        modules.forEach(module -> module.onUpdateHead(this));
+        if(updated) return this;
         List<Vector> newList = new ArrayList<>();
         Vector originVec = origin.toVector();
         double rotX = rotationVec.getX();
@@ -96,13 +138,14 @@ public class ParticleEffect
             newList.add(newVec);
         }
         translatedVecs = newList;
+        modules.forEach(module -> module.onUpdateTail(this));
         updated = true;
         return this;
     }
 
     public ParticleEffect display()
     {
-        if(!baked) return this;
+        modules.forEach(module -> module.onDisplayHead(this));
         for(int i = 0; i < translatedVecs.size(); ++i)
         {
             Vector vector = translatedVecs.get(i);
@@ -112,6 +155,7 @@ public class ParticleEffect
                     particleData.getOffsetX(), particleData.getOffsetY(), particleData.getOffsetZ(),
                     particleData.getSpeed(), particleData.getData(), particleData.isForce());
         }
+        modules.forEach(module -> module.onDisplayTail(this));
         return this;
     }
 
@@ -212,5 +256,10 @@ public class ParticleEffect
     public void setCount(long count)
     {
         this.count = count;
+    }
+
+    public List<ParticleEModule> getModules()
+    {
+        return modules;
     }
 }

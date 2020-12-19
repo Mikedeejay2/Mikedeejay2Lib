@@ -31,20 +31,23 @@ public class ParticleRuntime extends EnhancedRunnable
         curUpdateRate += period;
         boolean shouldUpdate = curUpdateRate >= updateRate;
 
+        system.getModules().forEach(module -> module.onUpdateHead(system));
         for(ParticleEffect effect : effects)
         {
             if(!effect.isBaked())
             {
                 effect.bake();
             }
-            if(shouldUpdate && !effect.isUpdated())
+            if(shouldUpdate)
             {
                 effect.update();
             }
         }
+        system.getModules().forEach(module -> module.onUpdateTail(system));
         if(shouldUpdate) curUpdateRate = 0;
 
         Bukkit.getScheduler().runTask(plugin, () -> {
+            system.getModules().forEach(module -> module.onDisplayHead(system));
             for(ParticleEffect effect : effects)
             {
                 long effectCount = effect.getCount();
@@ -53,6 +56,7 @@ public class ParticleRuntime extends EnhancedRunnable
                 if(effectDelay > 0 && count >= delay) continue;
                 effect.display();
             }
+            system.getModules().forEach(module -> module.onDisplayTail(system));
         });
     }
 }

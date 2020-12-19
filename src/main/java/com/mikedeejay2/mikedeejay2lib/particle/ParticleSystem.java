@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.particle;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.particle.module.ParticleSModule;
 import com.mikedeejay2.mikedeejay2lib.particle.runtime.ParticleRuntime;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -22,6 +23,7 @@ public class ParticleSystem
     protected long tickRate;
     protected long updateRate;
     protected ParticleRuntime runtime;
+    protected List<ParticleSModule> modules;
 
     public ParticleSystem(PluginBase plugin, Location origin, long playTicks, long tickRate, long updateRate)
     {
@@ -34,6 +36,7 @@ public class ParticleSystem
         this.playTicks = playTicks;
         this.tickRate = tickRate;
         this.updateRate = updateRate;
+        this.modules = new ArrayList<>();
     }
 
     public ParticleSystem(PluginBase plugin, Location origin, long playTicks, long tickRate)
@@ -50,6 +53,41 @@ public class ParticleSystem
     {
         this.runtime = new ParticleRuntime(this, updateRate);
         this.runtime.runTaskTimerCountedAsynchronously(plugin, tickRate, playTicks);
+        return this;
+    }
+
+    public ParticleSystem addModule(ParticleSModule module)
+    {
+        modules.add(module);
+        return this;
+    }
+
+    public ParticleSystem addModule(ParticleSModule module, int index)
+    {
+        modules.add(index, module);
+        return this;
+    }
+
+    public boolean containsModule(ParticleSModule module)
+    {
+        return modules.contains(module);
+    }
+
+    public ParticleSystem removeModule(int index)
+    {
+        modules.remove(index);
+        return this;
+    }
+
+    public ParticleSystem removeModule(ParticleSModule module)
+    {
+        modules.remove(module);
+        return this;
+    }
+
+    public ParticleSystem resetModules()
+    {
+        modules.clear();
         return this;
     }
 
@@ -161,5 +199,10 @@ public class ParticleSystem
     public void setUpdateRate(long updateRate)
     {
         this.updateRate = updateRate;
+    }
+
+    public List<ParticleSModule> getModules()
+    {
+        return modules;
     }
 }
