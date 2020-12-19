@@ -10,6 +10,14 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Represents a group of particle shapes to create a particle effect.
+ * Shapes can be added through {@link ParticleEffect#addShape(ParticleShape)}
+ * 
+ * @see ParticleShape
+ *
+ * @author Mikedeejay2
+ */
 public class ParticleEffect
 {
     protected List<ParticleShape> shapes;
