@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.particle.shape.circle;
+package com.mikedeejay2.mikedeejay2lib.particle.shape.cylinder;
 
 import com.mikedeejay2.mikedeejay2lib.particle.shape.ParticleShape;
 import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
@@ -7,22 +7,24 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
-public class ParticleCircleFilled implements ParticleShape
+public class ParticleShapeCylinder implements ParticleShape
 {
     protected Location location;
     protected double density;
     protected double radius;
+    protected double height;
 
-    public ParticleCircleFilled(Location location, double radius, double density)
+    public ParticleShapeCylinder(Location location, double radius, double height, double density)
     {
         this.location = location;
         this.density = density;
         this.radius = radius;
+        this.height = height;
     }
 
     @Override
     public List<Vector> getShape()
     {
-        return MathUtil.getCircleFilledVectors(location, radius, density);
+        return MathUtil.getCylinderHollowVectors(location, radius, height, density);
     }
 }

@@ -8,14 +8,14 @@ import org.bukkit.util.Vector;
 import java.util.ArrayList;
 import java.util.List;
 
-public class ParticlePolygon implements ParticleShape
+public class ParticleShapePolygon implements ParticleShape
 {
     protected Location location;
     protected double density;
     protected int edges;
     protected double size;
 
-    public ParticlePolygon(Location location, double size, double density, int edges)
+    public ParticleShapePolygon(Location location, double size, double density, int edges)
     {
         this.location = location;
         this.density = density;

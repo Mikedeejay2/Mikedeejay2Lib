@@ -7,22 +7,24 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
-public class ParticleLineShape implements ParticleShape
+public class ParticleShapeStar implements ParticleShape
 {
-    protected Location start;
-    protected Location end;
+    protected Location location;
     protected double density;
+    protected int points;
+    protected double radius;
 
-    public ParticleLineShape(Location start, Location end, double density)
+    public ParticleShapeStar(Location location, double radius, double density, int points)
     {
-        this.start = start;
-        this.end = end;
+        this.location = location;
         this.density = density;
+        this.points = points;
+        this.radius = radius;
     }
 
     @Override
     public List<Vector> getShape()
     {
-        return MathUtil.getLine(start.toVector(), end.toVector(), density);
+        return MathUtil.getStarVectors(location, radius, density, points);
     }
 }

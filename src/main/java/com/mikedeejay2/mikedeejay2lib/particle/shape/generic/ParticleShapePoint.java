@@ -9,11 +9,11 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class ParticlePoint implements ParticleShape
+public class ParticleShapePoint implements ParticleShape
 {
     protected Location location;
 
-    public ParticlePoint(Location location)
+    public ParticleShapePoint(Location location)
     {
         this.location = location;
     }

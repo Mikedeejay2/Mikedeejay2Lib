@@ -7,7 +7,7 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
-public class ParticleCubeOutline implements ParticleShape
+public class ParticleShapeCubeFilled implements ParticleShape
 {
     protected Location location;
     protected double density;
@@ -18,7 +18,7 @@ public class ParticleCubeOutline implements ParticleShape
     protected Location loc2;
     boolean mode;
 
-    public ParticleCubeOutline(Location location, double xWidth, double yWidth, double zWidth, double density)
+    public ParticleShapeCubeFilled(Location location, double xWidth, double yWidth, double zWidth, double density)
     {
         this.location = location;
         this.density = density;
@@ -28,7 +28,7 @@ public class ParticleCubeOutline implements ParticleShape
         this.mode = false;
     }
 
-    public ParticleCubeOutline(Location loc1, Location loc2, double density)
+    public ParticleShapeCubeFilled(Location loc1, Location loc2, double density)
     {
         this.loc1 = loc1;
         this.loc2 = loc2;
@@ -41,8 +41,8 @@ public class ParticleCubeOutline implements ParticleShape
     {
         if(mode)
         {
-            return MathUtil.getCubeOutlineVectors(loc1, loc2, density);
+            return MathUtil.getCubeFilledVectors(loc1, loc2, density);
         }
-        return MathUtil.getCubeOutlineVectors(location, xWidth, yWidth, zWidth, density);
+        return MathUtil.getCubeFilledVectors(location, xWidth, yWidth, zWidth, density);
     }
 }
