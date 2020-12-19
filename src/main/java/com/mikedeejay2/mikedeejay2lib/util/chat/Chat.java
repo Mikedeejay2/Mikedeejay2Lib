@@ -375,4 +375,19 @@ public final class Chat
     {
         Bukkit.broadcastMessage(chat(getTitleString() + message));
     }
+
+    /**
+     * Send a title to a player
+     *
+     * @param player The player to send the title to
+     * @param title The title to send the player
+     * @param subtitle The subtitle to send the player
+     * @param fadeIn The fade in rate of the title
+     * @param stay The stay length of the title
+     * @param fadeOut The fade out rate of the title
+     */
+    public void sendTitle(Player player, String title, String subtitle, int fadeIn, int stay, int fadeOut)
+    {
+        player.sendTitle(Chat.chat(title), Chat.chat(subtitle), fadeIn, stay, fadeOut);
+    }
 }
