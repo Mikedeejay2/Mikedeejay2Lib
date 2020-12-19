@@ -100,7 +100,8 @@ public class ParticleEffect
     public ParticleEffect display()
     {
         if(!baked) return this;
-        for(Vector vector : translatedVecs)
+        List<Vector> toDisplay = new ArrayList<>(translatedVecs);
+        for(Vector vector : toDisplay)
         {
             Location location = vector.toLocation(world);
             world.spawnParticle(
