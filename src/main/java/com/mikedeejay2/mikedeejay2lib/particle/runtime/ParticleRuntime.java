@@ -3,17 +3,29 @@ package com.mikedeejay2.mikedeejay2lib.particle.runtime;
 import com.mikedeejay2.mikedeejay2lib.particle.ParticleEffect;
 import com.mikedeejay2.mikedeejay2lib.particle.ParticleSystem;
 import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
-import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import org.bukkit.Bukkit;
-import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.List;
 
+/**
+ * The runtime which runs and manages displaying particles for <tt>ParticleSystems</tt>. <p>
+ * This runtime should not be declared outside of a <tt>ParticleSystem</tt>. <p>
+ * To create this runtime internally {@link ParticleSystem#display()} should be called which
+ * creates this runtime automatically and properly configures this runtime.
+ *
+ * @see ParticleSystem
+ *
+ * @author Mikedeejay2
+ */
 public class ParticleRuntime extends EnhancedRunnable
 {
+    // The particle system that this runtime is controlling
     protected ParticleSystem system;
+    // The list of particle effects (from the particle system)
     protected List<ParticleEffect> effects;
+    // The rate at which updates occur at the runtime
     protected long updateRate;
+    // The current update rate (run-time temporary variable for tracking)
     protected long curUpdateRate;
 
     public ParticleRuntime(ParticleSystem system, long updateRate)
@@ -25,6 +37,10 @@ public class ParticleRuntime extends EnhancedRunnable
         this.curUpdateRate = 0;
     }
 
+    /**
+     * Overridden <tt>onRun()</tt> method that processes all of the logic for baking, updating, and
+     * displaying a <tt>ParticleSystem</tt>. This should run asynchronously.
+     */
     @Override
     public void onRun()
     {

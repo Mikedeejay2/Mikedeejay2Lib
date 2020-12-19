@@ -7,12 +7,25 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
+/**
+ * Particle Shape of a line.
+ *
+ * @author Mikedeejay2
+ */
 public class ParticleShapeLine implements ParticleShape
 {
+    // The starting location
     protected Location start;
+    // The ending location
     protected Location end;
+    // The density of particles
     protected double density;
 
+    /**
+     * @param start The starting location
+     * @param end The ending location
+     * @param density The density of particles
+     */
     public ParticleShapeLine(Location start, Location end, double density)
     {
         this.start = start;

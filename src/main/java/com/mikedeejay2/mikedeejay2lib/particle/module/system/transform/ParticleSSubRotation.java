@@ -1,11 +1,14 @@
 package com.mikedeejay2.mikedeejay2lib.particle.module.system.transform;
 
-import com.mikedeejay2.mikedeejay2lib.particle.ParticleEffect;
 import com.mikedeejay2.mikedeejay2lib.particle.ParticleSystem;
-import com.mikedeejay2.mikedeejay2lib.particle.module.effect.ParticleEModule;
 import com.mikedeejay2.mikedeejay2lib.particle.module.system.ParticleSModule;
 import org.bukkit.util.Vector;
 
+/**
+ * Particle system module for subtracting rotation.
+ *
+ * @author Mikedeejay2
+ */
 public class ParticleSSubRotation extends ParticleSModule
 {
     protected Vector vector;

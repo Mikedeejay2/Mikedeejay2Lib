@@ -7,17 +7,39 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
+/**
+ * Particle Shape of a hollow cube.
+ *
+ * @author Mikedeejay2
+ */
 public class ParticleShapeCubeHollow implements ParticleShape
 {
+    // The center location
     protected Location location;
+    // The density of particles
     protected double density;
+    // The X width
     protected double xWidth;
+    // The Y width
     protected double yWidth;
+    // The Z width
     protected double zWidth;
+    // First location
     protected Location loc1;
+    // Second location
     protected Location loc2;
+    // The mode of the cube
+    // true - Dual location method
+    // false - Widths method
     boolean mode;
 
+    /**
+     * @param location The center location
+     * @param xWidth The X width
+     * @param yWidth The Y width
+     * @param zWidth The Z width
+     * @param density The density of particles
+     */
     public ParticleShapeCubeHollow(Location location, double xWidth, double yWidth, double zWidth, double density)
     {
         this.location = location;
@@ -28,6 +50,11 @@ public class ParticleShapeCubeHollow implements ParticleShape
         this.mode = false;
     }
 
+    /**
+     * @param loc1 First location
+     * @param loc2 Second location
+     * @param density The density of particles
+     */
     public ParticleShapeCubeHollow(Location loc1, Location loc2, double density)
     {
         this.loc1 = loc1;

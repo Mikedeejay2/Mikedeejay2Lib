@@ -7,13 +7,28 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
+/**
+ * Particle Shape of a filled cylinder.
+ *
+ * @author Mikedeejay2
+ */
 public class ParticleShapeCylinderFilled implements ParticleShape
 {
+    // The center location
     protected Location location;
-    protected double density;
+    // The radius
     protected double radius;
+    // The height
+    protected double density;
+    // The density of particles
     protected double height;
 
+    /**
+     * @param location The center location
+     * @param radius The radius
+     * @param height The height
+     * @param density The density of particles
+     */
     public ParticleShapeCylinderFilled(Location location, double radius, double height, double density)
     {
         this.location = location;

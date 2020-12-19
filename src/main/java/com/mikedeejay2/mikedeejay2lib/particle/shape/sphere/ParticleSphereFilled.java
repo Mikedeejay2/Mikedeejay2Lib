@@ -7,12 +7,25 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
+/**
+ * Particle Shape of a filled sphere.
+ *
+ * @author Mikedeejay2
+ */
 public class ParticleSphereFilled implements ParticleShape
 {
+    // The center location
     protected Location location;
+    // The density of particles
     protected double density;
+    // The radius
     protected double radius;
 
+    /**
+     * @param location The center location
+     * @param radius The radius
+     * @param density The density of particles
+     */
     public ParticleSphereFilled(Location location, double radius, double density)
     {
         this.location = location;

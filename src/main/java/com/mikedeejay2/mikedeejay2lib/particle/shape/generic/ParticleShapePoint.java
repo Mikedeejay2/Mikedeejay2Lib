@@ -9,10 +9,19 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+/**
+ * Particle Shape of a point.
+ *
+ * @author Mikedeejay2
+ */
 public class ParticleShapePoint implements ParticleShape
 {
+    // The location
     protected Location location;
 
+    /**
+     * @param location The location
+     */
     public ParticleShapePoint(Location location)
     {
         this.location = location;

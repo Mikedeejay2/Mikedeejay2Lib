@@ -181,6 +181,32 @@ public class ParticleSystem
     }
 
     /**
+     * Get a module from this <tt>ParticleSystem</tt> by the index of the module
+     *
+     * @param index The module's index in the list
+     * @return The requested <tt>ParticleSModule</tt>
+     */
+    public ParticleSModule getModule(int index)
+    {
+        return modules.get(index);
+    }
+
+    /**
+     * Get a module from this <tt>ParticleSystem</tt> based off of the class of the module
+     *
+     * @param moduleClass The class of the module to get
+     * @return The requested <tt>ParticleSModule</tt>, null if not found
+     */
+    public ParticleSModule getModule(Class<? extends ParticleSModule> moduleClass)
+    {
+        for(ParticleSModule module : modules)
+        {
+            if(moduleClass == module.getClass()) return module;
+        }
+        return null;
+    }
+
+    /**
      * Reset this system's module list to be empty
      *
      * @return A reference to this <tt>ParticleSystem</tt>
@@ -281,6 +307,32 @@ public class ParticleSystem
             return this;
         }
         return this;
+    }
+
+    /**
+     * Get a <tt>ParticleEffect</tt> from this system by its index
+     *
+     * @param index The index to get the effect at
+     * @return The requested <tt>ParticleEffect</tt>
+     */
+    public ParticleEffect getParticleEffect(int index)
+    {
+        return effects.get(index);
+    }
+
+    /**
+     * Get a <tt>ParticleEffect</tt> from this system by the effect's class
+     *
+     * @param effectClass The class of the effect to get
+     * @return The requested <tt>ParticleEffect</tt>, null if not found
+     */
+    public ParticleEffect getParticleEffect(Class<? extends ParticleEffect> effectClass)
+    {
+        for(ParticleEffect effect : effects)
+        {
+            if(effectClass == effect.getClass()) return effect;
+        }
+        return null;
     }
 
     /**

@@ -7,12 +7,25 @@ import org.bukkit.util.Vector;
 
 import java.util.List;
 
+/**
+ * Particle Shape of the outline of a circle. Facing down by default.
+ *
+ * @author Mikedeejay2
+ */
 public class ParticleShapeCircle implements ParticleShape
 {
+    // The center location
     protected Location location;
-    protected double density;
+    // The radius
     protected double radius;
+    // The density of particles
+    protected double density;
 
+    /**
+     * @param location The center location
+     * @param radius The radius
+     * @param density The density of particles
+     */
     public ParticleShapeCircle(Location location, double radius, double density)
     {
         this.location = location;

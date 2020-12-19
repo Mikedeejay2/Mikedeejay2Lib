@@ -4,6 +4,11 @@ import com.mikedeejay2.mikedeejay2lib.particle.ParticleEffect;
 import com.mikedeejay2.mikedeejay2lib.particle.module.effect.ParticleEModule;
 import org.bukkit.util.Vector;
 
+/**
+ * Particle effect module for adding translation.
+ *
+ * @author Mikedeejay2
+ */
 public class ParticleEAddTranslation extends ParticleEModule
 {
     protected Vector vector;
