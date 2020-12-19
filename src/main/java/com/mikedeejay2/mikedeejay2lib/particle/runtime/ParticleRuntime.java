@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.particle.runtime;
 import com.mikedeejay2.mikedeejay2lib.particle.ParticleEffect;
 import com.mikedeejay2.mikedeejay2lib.particle.ParticleSystem;
 import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
+import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import org.bukkit.Bukkit;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -36,7 +37,7 @@ public class ParticleRuntime extends EnhancedRunnable
             {
                 effect.bake();
             }
-            if(shouldUpdate)
+            if(shouldUpdate && !effect.isUpdated())
             {
                 effect.update();
             }

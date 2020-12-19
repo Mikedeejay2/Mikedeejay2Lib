@@ -67,10 +67,12 @@ public class ParticleEffect
 
     public ParticleEffect bake()
     {
+        List<Vector> newList = new ArrayList<>();
         for(ParticleShape shape : shapes)
         {
-            untranslatedVecs.addAll(shape.getShape());
+            newList.addAll(shape.getShape());
         }
+        untranslatedVecs = newList;
         baked = true;
         updated = false;
         return this;
@@ -78,7 +80,7 @@ public class ParticleEffect
 
     public ParticleEffect update()
     {
-        translatedVecs.clear();
+        List<Vector> newList = new ArrayList<>();
         Vector originVec = origin.toVector();
         double rotX = rotationVec.getX();
         double rotY = rotationVec.getY();
@@ -91,8 +93,9 @@ public class ParticleEffect
             newVec.add(originVec);
             MathUtil.rotateAroundOrigin(originVec, newVec, rotX, rotY, rotZ);
             newVec.add(translationVec);
-            translatedVecs.add(newVec);
+            newList.add(newVec);
         }
+        translatedVecs = newList;
         updated = true;
         return this;
     }
@@ -100,9 +103,9 @@ public class ParticleEffect
     public ParticleEffect display()
     {
         if(!baked) return this;
-        List<Vector> toDisplay = new ArrayList<>(translatedVecs);
-        for(Vector vector : toDisplay)
+        for(int i = 0; i < translatedVecs.size(); ++i)
         {
+            Vector vector = translatedVecs.get(i);
             Location location = vector.toLocation(world);
             world.spawnParticle(
                     particleData.getParticle(), location, particleData.getCount(),
