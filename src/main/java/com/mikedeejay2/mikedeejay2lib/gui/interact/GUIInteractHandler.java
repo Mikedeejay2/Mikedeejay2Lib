@@ -54,13 +54,9 @@ public abstract class GUIInteractHandler
      */
     public boolean containsExecutor(Class<? extends GUIInteractExecutor> executorClass)
     {
-        String className = executorClass.getName();
         for(GUIInteractExecutor event : executors)
         {
-            Class<? extends GUIInteractExecutor> curClass = event.getClass();
-            String curClassName = curClass.getName();
-            if(!className.equals(curClassName)) continue;
-            return true;
+            if(executorClass == event.getClass()) return true;
         }
         return false;
     }
@@ -83,12 +79,9 @@ public abstract class GUIInteractHandler
      */
     public void removeExecutor(Class<? extends GUIInteractExecutor> executorClass)
     {
-        String className = executorClass.getName();
         for(GUIInteractExecutor executor : executors)
         {
-            Class<? extends GUIInteractExecutor> curClass = executor.getClass();
-            String curClassName = curClass.getName();
-            if(!className.equals(curClassName)) continue;
+            if(executorClass != executor.getClass()) continue;
             executors.remove(executor);
             return;
         }
@@ -130,13 +123,9 @@ public abstract class GUIInteractHandler
      */
     public <T extends GUIInteractExecutor> T getExecutor(Class<T> executorClass)
     {
-        String className = executorClass.getName();
         for(GUIInteractExecutor executor : executors)
         {
-            Class<? extends GUIInteractExecutor> curClass = executor.getClass();
-            String curClassName = curClass.getName();
-            if(!className.equals(curClassName)) continue;
-            return (T)executor;
+            if(executorClass == executor.getClass()) return (T)executor;
         }
         return null;
     }

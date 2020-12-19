@@ -93,12 +93,9 @@ public class GUIEventHandler implements Cloneable
      */
     public void removeEvent(Class<? extends GUIEvent> eventClass)
     {
-        String className = eventClass.getName();
         for(GUIEvent event : events)
         {
-            Class<? extends GUIEvent> curClass = event.getClass();
-            String curClassName = curClass.getName();
-            if(!className.equals(curClassName)) continue;
+            if(eventClass != event.getClass()) continue;
             events.remove(event);
             break;
         }
@@ -112,12 +109,9 @@ public class GUIEventHandler implements Cloneable
      */
     public boolean containsEvent(Class<? extends GUIEvent> eventClass)
     {
-        String className = eventClass.getName();
         for(GUIEvent event : events)
         {
-            Class<? extends GUIEvent> curClass = event.getClass();
-            String curClassName = curClass.getName();
-            if(!className.equals(curClassName)) continue;
+            if(eventClass != event.getClass()) continue;
             return true;
         }
         return false;
@@ -131,12 +125,9 @@ public class GUIEventHandler implements Cloneable
      */
     public <T extends GUIEvent> T getEvent(Class<T> eventClass)
     {
-        String className = eventClass.getName();
         for(GUIEvent event : events)
         {
-            Class<? extends GUIEvent> curClass = event.getClass();
-            String curClassName = curClass.getName();
-            if(!className.equals(curClassName)) continue;
+            if(eventClass != event.getClass()) continue;
             return (T) event;
         }
         return null;

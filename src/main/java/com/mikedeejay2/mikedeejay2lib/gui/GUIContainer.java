@@ -575,12 +575,9 @@ public class GUIContainer
      */
     public void removeModule(Class<? extends GUIModule> moduleClass)
     {
-        String className = moduleClass.getName();
         for(GUIModule module : modules)
         {
-            Class<? extends GUIModule> curClass = module.getClass();
-            String curClassName = curClass.getName();
-            if(!className.equals(curClassName)) continue;
+            if(moduleClass != module.getClass()) continue;
             modules.remove(module);
             break;
         }
@@ -605,12 +602,9 @@ public class GUIContainer
      */
     public boolean containsModule(Class<? extends GUIModule> moduleClass)
     {
-        String className = moduleClass.getName();
         for(GUIModule module : modules)
         {
-            Class<? extends GUIModule> curClass = module.getClass();
-            String curClassName = curClass.getName();
-            if(!className.equals(curClassName)) continue;
+            if(moduleClass != module.getClass()) continue;
             return true;
         }
         return false;
@@ -625,12 +619,9 @@ public class GUIContainer
      */
     public <T extends GUIModule> T getModule(Class<T> moduleClass)
     {
-        String className = moduleClass.getName();
         for(GUIModule module : modules)
         {
-            Class<? extends GUIModule> curClass = module.getClass();
-            String curClassName = curClass.getName();
-            if(!className.equals(curClassName)) continue;
+            if(moduleClass != module.getClass()) continue;
             return (T) module;
         }
         return null;
