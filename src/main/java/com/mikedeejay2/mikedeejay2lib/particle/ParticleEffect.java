@@ -130,17 +130,17 @@ public class ParticleEffect
         for(Vector vector : untranslatedVecs)
         {
             Vector newVec = vector.clone();
-            if(scaleVec.getX() != 1.0 && scaleVec.getY() != 1.0 && scaleVec.getZ() != 1.0)
+            if(scaleVec.getX() != 1.0 || scaleVec.getY() != 1.0 || scaleVec.getZ() != 1.0)
             {
                 newVec.subtract(originVec);
                 newVec.multiply(scaleVec);
                 newVec.add(originVec);
             }
-            if(rotX != 1.0 && rotY != 1.0 && rotZ != 1.0)
+            if(rotX != 1.0 || rotY != 1.0 || rotZ != 1.0)
             {
                 MathUtil.rotateAroundOrigin(originVec, newVec, rotX, rotY, rotZ);
             }
-            if(translationVec.getX() != 1.0 && translationVec.getY() != 1.0 && translationVec.getZ() != 1.0)
+            if(translationVec.getX() != 1.0 || translationVec.getY() != 1.0 || translationVec.getZ() != 1.0)
             {
                 newVec.add(translationVec);
             }
@@ -164,17 +164,17 @@ public class ParticleEffect
         double rotZ = sysRotationVec.getZ();
         for(Vector vector : translatedVecs)
         {
-            if(sysScaleVec.getX() != 1.0 && sysScaleVec.getY() != 1.0 && sysScaleVec.getZ() != 1.0)
+            if(sysScaleVec.getX() != 1.0 || sysScaleVec.getY() != 1.0 || sysScaleVec.getZ() != 1.0)
             {
                 vector.subtract(originVec);
                 vector.multiply(scaleVec);
                 vector.add(originVec);
             }
-            if(rotX != 1.0 && rotY != 1.0 && rotZ != 1.0)
+            if(rotX != 1.0 || rotY != 1.0 || rotZ != 1.0)
             {
                 MathUtil.rotateAroundOrigin(originVec, vector, rotX, rotY, rotZ);
             }
-            if(sysTranslationVec.getX() != 1.0 && sysTranslationVec.getY() != 1.0 && sysTranslationVec.getZ() != 1.0)
+            if(sysTranslationVec.getX() != 1.0 || sysTranslationVec.getY() != 1.0 || sysTranslationVec.getZ() != 1.0)
             {
                 vector.add(translationVec);
             }
