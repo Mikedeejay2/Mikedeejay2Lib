@@ -348,12 +348,12 @@ public final class MathUtil
         xWidth = xWidth / 2.0;
         yWidth = yWidth / 2.0;
         zWidth = zWidth / 2.0;
-        double startX = loc.getBlockX() - xWidth;
-        double startY = loc.getBlockY() - yWidth;
-        double startZ = loc.getBlockZ() - zWidth;
-        double endX = loc.getBlockX() + xWidth;
-        double endY = loc.getBlockY() + yWidth;
-        double endZ = loc.getBlockZ() + zWidth;
+        double startX = loc.getX() - xWidth;
+        double startY = loc.getY() - yWidth;
+        double startZ = loc.getZ() - zWidth;
+        double endX = loc.getX() + xWidth;
+        double endY = loc.getY() + yWidth;
+        double endZ = loc.getZ() + zWidth;
 
         return xyzLoop(list, startX, startY, startZ, endX, endY, endZ, density);
     }
