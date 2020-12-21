@@ -29,7 +29,7 @@ public class GUIEventHandler implements Cloneable
      * and runs their <tt>execute()</tt> method.
      *
      * @param event The event of the click
-     * @param gui The GUI that this event took place in
+     * @param gui   The GUI that this event took place in
      */
     public void execute(InventoryClickEvent event, GUIContainer gui)
     {

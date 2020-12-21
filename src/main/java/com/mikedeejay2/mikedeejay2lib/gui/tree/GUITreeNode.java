@@ -175,16 +175,16 @@ public class GUITreeNode
         for(GUITreeNode node : children)
         {
             GUIItem nodeItem = node.getItem();
-            int nodeRow = curRow + node.getRow();
-            int nodeCol = curCol + node.getCol();
+            int     nodeRow  = curRow + node.getRow();
+            int     nodeCol  = curCol + node.getCol();
             layer.setItem(nodeRow, nodeCol, nodeItem);
 
-            GUIItem nodeBranchItem = node.getBranchItem();
+            GUIItem    nodeBranchItem = node.getBranchItem();
             BranchType nodeBranchType = node.getBranchType();
-            int startRow = Math.min(curRow, nodeRow);
-            int endRow = Math.max(curRow, nodeRow);
-            int startCol = Math.min(curCol, nodeCol);
-            int endCol = Math.max(curCol, nodeCol);
+            int        startRow       = Math.min(curRow, nodeRow);
+            int        endRow         = Math.max(curRow, nodeRow);
+            int        startCol       = Math.min(curCol, nodeCol);
+            int        endCol         = Math.max(curCol, nodeCol);
 
             switch(nodeBranchType)
             {

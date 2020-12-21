@@ -101,7 +101,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
     @Override
     public float getFloat(String name)
     {
-        return (float)yaml.getDouble(name);
+        return (float) yaml.getDouble(name);
     }
 
     @Override
@@ -209,7 +209,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
     @Override
     public <C extends ConfigurationSerializable> C getSerialized(String name, Class<C> clazz)
     {
-        return (C)yaml.get(name);
+        return (C) yaml.get(name);
     }
 
     @Override

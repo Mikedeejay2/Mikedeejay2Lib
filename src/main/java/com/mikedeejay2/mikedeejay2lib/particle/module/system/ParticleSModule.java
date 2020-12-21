@@ -6,9 +6,8 @@ import com.mikedeejay2.mikedeejay2lib.particle.runtime.ParticleRuntime;
 /**
  * Module base for particle systems
  *
- * @see ParticleSystem
- *
  * @author Mikedeejay2
+ * @see ParticleSystem
  */
 public abstract class ParticleSModule
 {

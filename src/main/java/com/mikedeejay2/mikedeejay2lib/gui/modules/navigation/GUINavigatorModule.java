@@ -70,13 +70,13 @@ public class GUINavigatorModule extends GUIModule
      * Method that adds the forward and back
      *
      * @param player The player that is viewing the GUI
-     * @param gui The GUI
+     * @param gui    The GUI
      */
     @Override
     public void onUpdateHead(Player player, GUIContainer gui)
     {
         NavigationSystem system = plugin.guiManager().getPlayer(player).getNaviSystem(navigationID);
-        GUILayer layer = gui.getLayer("overlay", true);
+        GUILayer         layer  = gui.getLayer("overlay", true);
 
         if(system.hasBack())
         {

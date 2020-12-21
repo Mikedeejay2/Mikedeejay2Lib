@@ -41,7 +41,7 @@ public final class MinecraftVersion
      */
     private String calcVersionString(PluginBase plugin)
     {
-        String version = plugin.getServer().getVersion();
+        String  version = plugin.getServer().getVersion();
         Pattern pattern = Pattern.compile("(\\(MC: )([\\d\\.]+)(\\))");
         Matcher matcher = pattern.matcher(version);
         if(matcher.find())
@@ -59,7 +59,7 @@ public final class MinecraftVersion
     private int[] calcLongVersion()
     {
         String[] splitStr = versionString.split("\\.");
-        int[] arr = new int[splitStr.length];
+        int[]    arr      = new int[splitStr.length];
         for(int i = 0; i < splitStr.length; ++i)
         {
             arr[i] = Integer.parseInt(splitStr[i]);
@@ -75,7 +75,7 @@ public final class MinecraftVersion
     private int calcShortVersion()
     {
         String[] splitStr = versionString.split("\\.");
-        int ver;
+        int      ver;
         if(splitStr.length == 2)
         {
             ver = Integer.parseInt(splitStr[1].substring(0, splitStr[1].length() - 1));
@@ -107,7 +107,7 @@ public final class MinecraftVersion
      */
     private String calcVersionNMS(PluginBase plugin)
     {
-        String raw = plugin.getServer().getClass().getPackage().getName();
+        String   raw   = plugin.getServer().getClass().getPackage().getName();
         String[] split = raw.split("\\.");
         return split[split.length - 1];
     }
@@ -154,9 +154,9 @@ public final class MinecraftVersion
 
     /**
      * Get the NMS Enum version that the Minecraft server is running on. Example: v1_16_R3
-     * @see VersionEnum
      *
      * @return The NMS Enum version
+     * @see VersionEnum
      */
     public VersionEnum getVersionEnum()
     {

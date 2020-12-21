@@ -5,11 +5,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
  * An event that is called when a <tt>GUIItem</tt> is called. <p>
- *
+ * <p>
  * When a <tt>GUIEvent</tt> is added to a <tt>GUIItem</tt> through
  * <tt>addEvent(GUIEvent event)</tt>, the <tt>execute()</tt> method
  * will be called for the event. <p>
- *
+ * <p>
  * Multiple <tt>GUIEvents</tt> can be added to a <tt>GUIItem</tt>
  * through the use of a <tt>GUIEventHandler</tt> which can hold multiple
  * <tt>GUIEvents</tt>. This is automatically done so you don't have to
@@ -23,7 +23,7 @@ public interface GUIEvent
      * Executes when the item that this event has been appended to is clicked on
      *
      * @param event The event of the click
-     * @param gui The GUI that the event took place in
+     * @param gui   The GUI that the event took place in
      */
     public void execute(InventoryClickEvent event, GUIContainer gui);
 }

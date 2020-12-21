@@ -13,10 +13,9 @@ import java.util.List;
 /**
  * Represents a group of particle shapes to create a particle effect.
  * Shapes can be added through {@link ParticleEffect#addShape(ParticleShape)}
- * 
- * @see ParticleShape
  *
  * @author Mikedeejay2
+ * @see ParticleShape
  */
 public class ParticleEffect
 {
@@ -172,7 +171,7 @@ public class ParticleEffect
      * Add a <tt>ParticleEModule</tt> to this effect at a specified index
      *
      * @param module The module to add
-     * @param index The index to add the module at
+     * @param index  The index to add the module at
      * @return A reference to this <tt>ParticleEffect</tt>
      */
     public ParticleEffect addModule(ParticleEModule module, int index)
@@ -320,11 +319,11 @@ public class ParticleEffect
     {
         modules.forEach(module -> module.onUpdateHead(this));
         if(updated) return this;
-        List<Vector> newList = new ArrayList<>();
-        Vector originVec = origin.toVector();
-        double rotX = rotationVec.getX();
-        double rotY = rotationVec.getY();
-        double rotZ = rotationVec.getZ();
+        List<Vector> newList   = new ArrayList<>();
+        Vector       originVec = origin.toVector();
+        double       rotX      = rotationVec.getX();
+        double       rotY      = rotationVec.getY();
+        double       rotZ      = rotationVec.getZ();
         for(Vector vector : untranslatedVecs)
         {
             Vector newVec = vector.clone();
@@ -361,13 +360,13 @@ public class ParticleEffect
     public ParticleEffect updateSystem(ParticleSystem system)
     {
         if(system.isUpdated()) return this;
-        Vector originVec = system.getOrigin().toVector();
-        Vector sysScaleVec = system.getScaleVec();
-        Vector sysRotationVec = system.getRotationVec();
+        Vector originVec         = system.getOrigin().toVector();
+        Vector sysScaleVec       = system.getScaleVec();
+        Vector sysRotationVec    = system.getRotationVec();
         Vector sysTranslationVec = system.getTranslationVec();
-        double rotX = sysRotationVec.getX();
-        double rotY = sysRotationVec.getY();
-        double rotZ = sysRotationVec.getZ();
+        double rotX              = sysRotationVec.getX();
+        double rotY              = sysRotationVec.getY();
+        double rotZ              = sysRotationVec.getZ();
         for(Vector vector : translatedVecs)
         {
             if(sysScaleVec.getX() != 1.0 || sysScaleVec.getY() != 1.0 || sysScaleVec.getZ() != 1.0)
@@ -398,7 +397,7 @@ public class ParticleEffect
         modules.forEach(module -> module.onDisplayHead(this));
         for(int i = 0; i < translatedVecs.size(); ++i)
         {
-            Vector vector = translatedVecs.get(i);
+            Vector   vector   = translatedVecs.get(i);
             Location location = vector.toLocation(world);
             world.spawnParticle(
                     particleData.getParticle(), location, particleData.getCount(),
@@ -454,6 +453,16 @@ public class ParticleEffect
     }
 
     /**
+     * Set the <tt>ParticleData</tt> of this effect
+     *
+     * @param particleData The new <tt>ParticleData</tt> to use
+     */
+    public void setParticleData(ParticleData particleData)
+    {
+        this.particleData = particleData;
+    }
+
+    /**
      * Get the scale vector of this <tt>ParticleEffect</tt>. <p>
      * If modified, {@link ParticleEffect#setScaleVec(Vector)} should also
      * be called to propagate updates.
@@ -463,6 +472,19 @@ public class ParticleEffect
     public Vector getScaleVec()
     {
         return scaleVec;
+    }
+
+    /**
+     * Set the scale vector for this <tt>ParticleEffect</tt>. <p>
+     * This method must be called when updating the scale vector in order
+     * to propagate updates.
+     *
+     * @param scaleVec The new scale vector
+     */
+    public void setScaleVec(Vector scaleVec)
+    {
+        this.scaleVec = scaleVec;
+        updated = false;
     }
 
     /**
@@ -478,6 +500,19 @@ public class ParticleEffect
     }
 
     /**
+     * Set the rotation vector for this <tt>ParticleEffect</tt>. <p>
+     * This method must be called when updating the rotation vector in order
+     * to propagate updates.
+     *
+     * @param rotationVec The new rotation vector
+     */
+    public void setRotationVec(Vector rotationVec)
+    {
+        this.rotationVec = rotationVec;
+        updated = false;
+    }
+
+    /**
      * Get the translation vector of this <tt>ParticleEffect</tt>. <p>
      * If modified, {@link ParticleEffect#setScaleVec(Vector)} should also
      * be called to propagate updates.
@@ -490,6 +525,19 @@ public class ParticleEffect
     }
 
     /**
+     * Set the translation vector for this <tt>ParticleEffect</tt>. <p>
+     * This method must be called when updating the translation vector in order
+     * to propagate updates.
+     *
+     * @param translationVec The new translation vector
+     */
+    public void setTranslationVec(Vector translationVec)
+    {
+        this.translationVec = translationVec;
+        updated = false;
+    }
+
+    /**
      * Get the origin location of this <tt>ParticleEffect</tt>. <p>
      * If modified, {@link ParticleEffect#setOrigin(Location)} should also
      * be called to propagate updates.
@@ -499,6 +547,19 @@ public class ParticleEffect
     public Location getOrigin()
     {
         return origin;
+    }
+
+    /**
+     * Set the origin location for this <tt>ParticleEffect</tt> <p>
+     * This method must be called when updating the origin location in order
+     * to propagate updates.
+     *
+     * @param origin The new origin location
+     */
+    public void setOrigin(Location origin)
+    {
+        this.origin = origin;
+        updated = false;
     }
 
     /**
@@ -520,68 +581,6 @@ public class ParticleEffect
     public boolean isUpdated()
     {
         return updated;
-    }
-
-    /**
-     * Set the <tt>ParticleData</tt> of this effect
-     *
-     * @param particleData The new <tt>ParticleData</tt> to use
-     */
-    public void setParticleData(ParticleData particleData)
-    {
-        this.particleData = particleData;
-    }
-
-    /**
-     * Set the scale vector for this <tt>ParticleEffect</tt>. <p>
-     * This method must be called when updating the scale vector in order
-     * to propagate updates.
-     *
-     * @param scaleVec The new scale vector
-     */
-    public void setScaleVec(Vector scaleVec)
-    {
-        this.scaleVec = scaleVec;
-        updated = false;
-    }
-
-    /**
-     * Set the rotation vector for this <tt>ParticleEffect</tt>. <p>
-     * This method must be called when updating the rotation vector in order
-     * to propagate updates.
-     *
-     * @param rotationVec The new rotation vector
-     */
-    public void setRotationVec(Vector rotationVec)
-    {
-        this.rotationVec = rotationVec;
-        updated = false;
-    }
-
-    /**
-     * Set the translation vector for this <tt>ParticleEffect</tt>. <p>
-     * This method must be called when updating the translation vector in order
-     * to propagate updates.
-     *
-     * @param translationVec The new translation vector
-     */
-    public void setTranslationVec(Vector translationVec)
-    {
-        this.translationVec = translationVec;
-        updated = false;
-    }
-
-    /**
-     * Set the origin location for this <tt>ParticleEffect</tt> <p>
-     * This method must be called when updating the origin location in order
-     * to propagate updates.
-     *
-     * @param origin The new origin location
-     */
-    public void setOrigin(Location origin)
-    {
-        this.origin = origin;
-        updated = false;
     }
 
     /**

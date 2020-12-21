@@ -86,7 +86,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public Set<String> getKeys(boolean deep)
     {
-        HashSet<String> set = new HashSet<>();
+        HashSet<String>                     set      = new HashSet<>();
         Set<Map.Entry<String, JsonElement>> entrySet = json.entrySet();
         getKeysRecursive(set, entrySet, deep);
         return set;
@@ -96,7 +96,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         for(Map.Entry<String, JsonElement> element : entrySet)
         {
-            String key = element.getKey();
+            String      key         = element.getKey();
             JsonElement jsonElement = element.getValue();
             set.add(key);
             if(!(jsonElement.isJsonObject() && deep)) continue;
@@ -107,7 +107,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public Set<JsonElement> getValues(boolean deep)
     {
-        HashSet<JsonElement> set = new HashSet<>();
+        HashSet<JsonElement>                set      = new HashSet<>();
         Set<Map.Entry<String, JsonElement>> entrySet = json.entrySet();
         getValuesRecursive(set, entrySet, deep);
         return set;
@@ -127,7 +127,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public Map<String, JsonElement> getKeyValuePairs(boolean deep)
     {
-        Map<String, JsonElement> set = new HashMap<>();
+        Map<String, JsonElement>            set      = new HashMap<>();
         Set<Map.Entry<String, JsonElement>> entrySet = json.entrySet();
         getKeyValuePairsRecursive(set, entrySet, deep);
         return set;
@@ -137,7 +137,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     {
         for(Map.Entry<String, JsonElement> element : entrySet)
         {
-            String key = element.getKey();
+            String      key         = element.getKey();
             JsonElement jsonElement = element.getValue();
             set.put(key, jsonElement);
             if(!(jsonElement.isJsonObject() && deep)) continue;
@@ -274,8 +274,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<Boolean> getBooleanList(String name)
     {
-        List<Boolean> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<Boolean> list  = new ArrayList<>();
+        JsonArray     array = getArray(name);
         array.forEach(element -> list.add(element.getAsBoolean()));
         return list;
     }
@@ -283,8 +283,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<Integer> getIntList(String name)
     {
-        List<Integer> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<Integer> list  = new ArrayList<>();
+        JsonArray     array = getArray(name);
         array.forEach(element -> list.add(element.getAsInt()));
         return list;
     }
@@ -292,8 +292,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<Float> getFloatList(String name)
     {
-        List<Float> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<Float> list  = new ArrayList<>();
+        JsonArray   array = getArray(name);
         array.forEach(element -> list.add(element.getAsFloat()));
         return list;
     }
@@ -301,8 +301,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<Double> getDoubleList(String name)
     {
-        List<Double> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<Double> list  = new ArrayList<>();
+        JsonArray    array = getArray(name);
         array.forEach(element -> list.add(element.getAsDouble()));
         return list;
     }
@@ -310,8 +310,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<Long> getLongList(String name)
     {
-        List<Long> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<Long> list  = new ArrayList<>();
+        JsonArray  array = getArray(name);
         array.forEach(element -> list.add(element.getAsLong()));
         return list;
     }
@@ -319,8 +319,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<String> getStringList(String name)
     {
-        List<String> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<String> list  = new ArrayList<>();
+        JsonArray    array = getArray(name);
         array.forEach(element -> list.add(element.getAsString()));
         return list;
     }
@@ -328,8 +328,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<ItemStack> getItemStackList(String name)
     {
-        List<ItemStack> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<ItemStack> list  = new ArrayList<>();
+        JsonArray       array = getArray(name);
         array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getItemStack(null)));
         return list;
     }
@@ -337,8 +337,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<Location> getLocationList(String name)
     {
-        List<Location> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<Location> list  = new ArrayList<>();
+        JsonArray      array = getArray(name);
         array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getLocation(null)));
         return list;
     }
@@ -346,8 +346,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<Vector> getVectorList(String name)
     {
-        List<Vector> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<Vector> list  = new ArrayList<>();
+        JsonArray    array = getArray(name);
         array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getVector(null)));
         return list;
     }
@@ -355,8 +355,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<OfflinePlayer> getPlayerList(String name)
     {
-        List<OfflinePlayer> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<OfflinePlayer> list  = new ArrayList<>();
+        JsonArray           array = getArray(name);
         array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getPlayer(null)));
         return list;
     }
@@ -364,8 +364,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<AttributeModifier> getAttributeModifierList(String name)
     {
-        List<AttributeModifier> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<AttributeModifier> list  = new ArrayList<>();
+        JsonArray               array = getArray(name);
         array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getAttributeModifier(null)));
         return list;
     }
@@ -373,8 +373,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<BlockVector> getBlockVectorList(String name)
     {
-        List<BlockVector> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<BlockVector> list  = new ArrayList<>();
+        JsonArray         array = getArray(name);
         array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getBlockVector(null)));
         return list;
     }
@@ -382,8 +382,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<BoundingBox> getBoundingBoxList(String name)
     {
-        List<BoundingBox> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<BoundingBox> list  = new ArrayList<>();
+        JsonArray         array = getArray(name);
         array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getBoundingBox(null)));
         return list;
     }
@@ -391,8 +391,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<Color> getColorList(String name)
     {
-        List<Color> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<Color> list  = new ArrayList<>();
+        JsonArray   array = getArray(name);
         array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getColor(null)));
         return list;
     }
@@ -400,8 +400,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<FireworkEffect> getFireworkEffectList(String name)
     {
-        List<FireworkEffect> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<FireworkEffect> list  = new ArrayList<>();
+        JsonArray            array = getArray(name);
         array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getFireworkEffect(null)));
         return list;
     }
@@ -409,8 +409,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<Pattern> getPatternList(String name)
     {
-        List<Pattern> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<Pattern> list  = new ArrayList<>();
+        JsonArray     array = getArray(name);
         array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getPattern(null)));
         return list;
     }
@@ -418,8 +418,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<PotionEffect> getPotionEffectList(String name)
     {
-        List<PotionEffect> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<PotionEffect> list  = new ArrayList<>();
+        JsonArray          array = getArray(name);
         array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getPotionEffect(null)));
         return list;
     }
@@ -427,8 +427,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<Material> getMaterialList(String name)
     {
-        List<Material> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<Material> list  = new ArrayList<>();
+        JsonArray      array = getArray(name);
         array.forEach(element -> list.add(Material.matchMaterial(element.getAsString())));
         return list;
     }
@@ -436,8 +436,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public List<ConfigurationSerializable> getSerializedList(String name)
     {
-        List<ConfigurationSerializable> list = new ArrayList<>();
-        JsonArray array = getArray(name);
+        List<ConfigurationSerializable> list  = new ArrayList<>();
+        JsonArray                       array = getArray(name);
         array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getSerialized((String) null)));
         return list;
     }
@@ -445,7 +445,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public <C extends ConfigurationSerializable> List<C> getSerializedList(String name, Class<C> clazz)
     {
-        List<C> list = new ArrayList<>();
+        List<C>   list  = new ArrayList<>();
         JsonArray array = getArray(name);
         array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getSerialized(null, clazz)));
         return list;
@@ -697,21 +697,21 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
      * Add a <tt>ConfigurationSerializable</tt> object to a <tt>JsonObject</tt>
      *
      * @param jsonObject The <tt>JsonObject</tt> to add the data to
-     * @param data The data to add to the jsonObject
+     * @param data       The data to add to the jsonObject
      */
     private void setSerializedInternal(JsonObject jsonObject, ConfigurationSerializable data)
     {
-        Map<String, Object> map = data.serialize();
-        Gson gson = new GsonBuilder().create();
-        JsonElement typeElement = gson.toJsonTree(ConfigurationSerialization.getAlias(data.getClass()));
+        Map<String, Object> map         = data.serialize();
+        Gson                gson        = new GsonBuilder().create();
+        JsonElement         typeElement = gson.toJsonTree(ConfigurationSerialization.getAlias(data.getClass()));
         jsonObject.add(ConfigurationSerialization.SERIALIZED_TYPE_KEY, typeElement);
         for(Map.Entry<String, Object> entry : map.entrySet())
         {
             String memberName = entry.getKey();
-            Object object = entry.getValue();
+            Object object     = entry.getValue();
             if(object instanceof ConfigurationSerializable)
             {
-                ConfigurationSerializable meta = (ConfigurationSerializable)object;
+                ConfigurationSerializable meta = (ConfigurationSerializable) object;
                 jsonObject.add(memberName, new JsonObject());
                 setSerializedInternal(jsonObject.getAsJsonObject(memberName), meta);
                 continue;
@@ -725,14 +725,14 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
      * Get a <tt>ConfigurationSerializable</tt> object from a <tt>JsonObject</tt>
      *
      * @param jsonObject Object to get the <tt>ConfigurationSerializable</tt> from
-     * @param clazz The class that the object should be serialized to
-     * @param <T> The type of <tt>ConfigurationSerializable</tt>, same as class type
+     * @param clazz      The class that the object should be serialized to
+     * @param <T>        The type of <tt>ConfigurationSerializable</tt>, same as class type
      * @return The requested <tt>ConfigurationSerializable</tt>
      */
     private <T extends ConfigurationSerializable> T getSerializedInternal(JsonObject jsonObject, Class<T> clazz)
     {
         Map<String, Object> map = getSerializedMap(jsonObject.entrySet());
-        return (T)ConfigurationSerialization.deserializeObject(map, clazz);
+        return (T) ConfigurationSerialization.deserializeObject(map, clazz);
     }
 
     /**
@@ -749,12 +749,12 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
 
     private Map<String, Object> getSerializedMap(Set<Map.Entry<String, JsonElement>> set)
     {
-        Map<String, Object> map = new HashMap<>();
-        Gson gson = new GsonBuilder().create();
+        Map<String, Object> map  = new HashMap<>();
+        Gson                gson = new GsonBuilder().create();
         for(Map.Entry<String, JsonElement> entry : set)
         {
             String member = entry.getKey();
-            Type type = new TypeToken<Object>(){}.getType();
+            Type   type   = new TypeToken<Object>() {}.getType();
             Object object = gson.fromJson(entry.getValue(), type);
             if(object instanceof Map)
             {
@@ -769,7 +769,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
 
     private <T extends ConfigurationSerializable> T getSerialized(Map<String, Object> map)
     {
-        return (T)ConfigurationSerialization.deserializeObject(map);
+        return (T) ConfigurationSerialization.deserializeObject(map);
     }
 
     /**

@@ -16,9 +16,8 @@ import java.util.List;
  * This system serves as an easy way to initialize, animate, and efficiently work with
  * particles.
  *
- * @see ParticleEffect
- *
  * @author Mikedeejay2
+ * @see ParticleEffect
  */
 public class ParticleSystem
 {
@@ -89,10 +88,9 @@ public class ParticleSystem
     /**
      * Add a <tt>ParticleSModule</tt> to this <tt>ParticleSystem</tt>
      *
-     * @see ParticleSModule
-     *
      * @param module The module to add
      * @return A reference to this <tt>ParticleSystem</tt>
+     * @see ParticleSModule
      */
     public ParticleSystem addModule(ParticleSModule module)
     {
@@ -104,7 +102,7 @@ public class ParticleSystem
      * Add a <tt>ParticleSModule</tt> to this <tt>ParticleSystem</tt> at a specified index
      *
      * @param module The module to add
-     * @param index The index to add the module at
+     * @param index  The index to add the module at
      * @return A reference to this <tt>ParticleSystem</tt>
      */
     public ParticleSystem addModule(ParticleSModule module, int index)
@@ -233,7 +231,7 @@ public class ParticleSystem
      * Add a <tt>ParticleEffect</tt> to this system at a specific index
      *
      * @param effect The effect to add
-     * @param index The index to add the effect to
+     * @param index  The index to add the effect to
      * @return A reference to this <tt>ParticleSystem</tt>
      */
     public ParticleSystem addParticleEffect(ParticleEffect effect, int index)
@@ -367,36 +365,6 @@ public class ParticleSystem
     }
 
     /**
-     * Get the global rotation vector of this system
-     *
-     * @return The global rotation vector
-     */
-    public Vector getRotationVec()
-    {
-        return rotationVec;
-    }
-
-    /**
-     * Get the global translation vector of this system
-     *
-     * @return The global translation vector
-     */
-    public Vector getTranslationVec()
-    {
-        return translationVec;
-    }
-
-    /**
-     * Get this system's global origin location
-     *
-     * @return The global origin location
-     */
-    public Location getOrigin()
-    {
-        return origin;
-    }
-
-    /**
      * Set the scale vector of this system. <p>
      * Even if the vector has only been modified and not replaced this method still should be called
      * in order to propagate updates.
@@ -407,6 +375,16 @@ public class ParticleSystem
     {
         this.scaleVec = scaleVec;
         this.updated = false;
+    }
+
+    /**
+     * Get the global rotation vector of this system
+     *
+     * @return The global rotation vector
+     */
+    public Vector getRotationVec()
+    {
+        return rotationVec;
     }
 
     /**
@@ -423,6 +401,16 @@ public class ParticleSystem
     }
 
     /**
+     * Get the global translation vector of this system
+     *
+     * @return The global translation vector
+     */
+    public Vector getTranslationVec()
+    {
+        return translationVec;
+    }
+
+    /**
      * Set the translation vector of this system. <p>
      * Even if the vector has only been modified and not replaced this method still should be called
      * in order to propagate updates.
@@ -433,6 +421,16 @@ public class ParticleSystem
     {
         this.translationVec = translationVec;
         this.updated = false;
+    }
+
+    /**
+     * Get this system's global origin location
+     *
+     * @return The global origin location
+     */
+    public Location getOrigin()
+    {
+        return origin;
     }
 
     /**

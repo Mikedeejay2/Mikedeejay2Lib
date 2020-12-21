@@ -48,10 +48,10 @@ public class CommandManager implements CommandExecutor
     /**
      * Receive a command
      *
-     * @param sender The CommandSender that sent the command
+     * @param sender  The CommandSender that sent the command
      * @param command The command that was sent
-     * @param label The label
-     * @param args The command arguments (subcommands)
+     * @param label   The label
+     * @param args    The command arguments (subcommands)
      * @return Successful or not
      */
     @Override
@@ -118,7 +118,7 @@ public class CommandManager implements CommandExecutor
             }
 
             String[] aliases;
-            int length = (aliases = sc.aliases()).length;
+            int      length = (aliases = sc.aliases()).length;
 
             for(int var5 = 0; var5 < length; ++var5)
             {

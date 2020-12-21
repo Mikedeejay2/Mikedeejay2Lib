@@ -9,7 +9,7 @@ import java.util.*;
  * This Enhanced Yaml class inherits YamlConfiguration and is meant to be
  * a middle layer that adds extra processing and features to the YamlConfiguration
  * class. <p>
- *
+ * <p>
  * The main things that this class does is
  * <ul>
  *     <li>Adds the ability to add comments above keys in a yaml file</li>
@@ -48,8 +48,8 @@ public class EnhancedYaml extends YamlConfiguration
 
         StringBuilder newStr = new StringBuilder();
 
-        String currentPath = "";
-        int previousDeepness = 0;
+        String currentPath      = "";
+        int    previousDeepness = 0;
         for(String line : lines)
         {
             String trimmed = line.trim();
@@ -58,8 +58,8 @@ public class EnhancedYaml extends YamlConfiguration
                 newStr.append(line).append("\n");
                 continue;
             }
-            int deepness = getDeepness(line);
-            String key = getKey(trimmed);
+            int    deepness = getDeepness(line);
+            String key      = getKey(trimmed);
             currentPath = getPath(currentPath, key, previousDeepness, deepness);
             previousDeepness = deepness;
 
@@ -89,9 +89,9 @@ public class EnhancedYaml extends YamlConfiguration
     @Override
     public void loadFromString(String contents) throws InvalidConfigurationException
     {
-        List<String> lines = new ArrayList<>(Arrays.asList(contents.split("\n")));
-        boolean shouldRemoveHeader = false;
-        int length = 0;
+        List<String> lines              = new ArrayList<>(Arrays.asList(contents.split("\n")));
+        boolean      shouldRemoveHeader = false;
+        int          length             = 0;
         if(!lines.isEmpty())
         {
             for(int i = 0; i < lines.size(); i++)
@@ -108,17 +108,17 @@ public class EnhancedYaml extends YamlConfiguration
         }
         super.loadFromString(shouldRemoveHeader ? removeComments(contents) : contents.substring(0, length) + removeComments(contents));
 
-        String currentPath = "";
-        int previousDeepness = 0;
-        int index = 0;
+        String currentPath      = "";
+        int    previousDeepness = 0;
+        int    index            = 0;
         for(String line : lines)
         {
             ++index;
             String trimmed = line.trim();
             if(line.isEmpty() || trimmed.startsWith("#") || !trimmed.contains(":")) continue;
 
-            int deepness = getDeepness(line);
-            String key = getKey(trimmed);
+            int    deepness = getDeepness(line);
+            String key      = getKey(trimmed);
             currentPath = getPath(currentPath, key, previousDeepness, deepness);
             previousDeepness = deepness;
 
@@ -140,23 +140,23 @@ public class EnhancedYaml extends YamlConfiguration
      */
     public boolean updateFromJar(String filePath)
     {
-        EnhancedYaml yaml = new EnhancedYaml(yamlFileIO);
-        boolean loadSuccess = yamlFileIO.loadYamlConfigFromJar(yaml, filePath, false);
+        EnhancedYaml yaml        = new EnhancedYaml(yamlFileIO);
+        boolean      loadSuccess = yamlFileIO.loadYamlConfigFromJar(yaml, filePath, false);
         if(!loadSuccess) return false;
-        String contents = yaml.saveToString();
-        List<String> lines = new ArrayList<>(Arrays.asList(contents.split("\n")));
+        String       contents = yaml.saveToString();
+        List<String> lines    = new ArrayList<>(Arrays.asList(contents.split("\n")));
 
-        String currentPath = "";
-        int previousDeepness = 0;
-        int index = 0;
+        String currentPath      = "";
+        int    previousDeepness = 0;
+        int    index            = 0;
         for(String line : lines)
         {
             ++index;
             String trimmed = line.trim();
             if(line.isEmpty() || trimmed.startsWith("#") || !trimmed.contains(":")) continue;
 
-            int deepness = getDeepness(line);
-            String key = getKey(trimmed);
+            int    deepness = getDeepness(line);
+            String key      = getKey(trimmed);
             currentPath = getPath(currentPath, key, previousDeepness, deepness);
             previousDeepness = deepness;
 
@@ -190,7 +190,7 @@ public class EnhancedYaml extends YamlConfiguration
         StringBuilder newHeader = new StringBuilder();
         for(int i = 0; i < lines.length; i++)
         {
-            String line = lines[i];
+            String line    = lines[i];
             String trimmed = line.trim();
             if(trimmed.startsWith("#")) continue;
             newHeader.append(line).append("\n");
@@ -201,10 +201,10 @@ public class EnhancedYaml extends YamlConfiguration
     /**
      * Get the path of a new key using several different params
      *
-     * @param currentPath The current path to the key that will be modified to reach the new path
-     * @param key The key (name of the key) to get the current path for
+     * @param currentPath      The current path to the key that will be modified to reach the new path
+     * @param key              The key (name of the key) to get the current path for
      * @param previousDeepness The previous deepness (layer) that the iterator was at
-     * @param deepness THe current deepness (layer) that the iterator is at
+     * @param deepness         THe current deepness (layer) that the iterator is at
      * @return The String of the path (ex. "my.new.path")
      */
     private String getPath(String currentPath, String key, int previousDeepness, int deepness)
@@ -212,7 +212,7 @@ public class EnhancedYaml extends YamlConfiguration
         String newCurPath = currentPath;
         if(previousDeepness >= deepness)
         {
-            newCurPath = regressPath(newCurPath, previousDeepness+1 - deepness);
+            newCurPath = regressPath(newCurPath, previousDeepness + 1 - deepness);
         }
         if(!newCurPath.isEmpty()) newCurPath += ".";
         newCurPath += key;
@@ -222,15 +222,15 @@ public class EnhancedYaml extends YamlConfiguration
     /**
      * Compiles a comment for a specific key in the yaml file
      *
-     * @param lines All of the lines of the yaml file
-     * @param index The index that this method will be getting the comments for
+     * @param lines                All of the lines of the yaml file
+     * @param index                The index that this method will be getting the comments for
      * @param startingCommentIndex The starting comment index, the first line that the comments start on
      * @return The String of comments
      */
     private String compileComments(List<String> lines, int index, int startingCommentIndex)
     {
         StringBuilder commentsBuilder = new StringBuilder();
-        for(int i = startingCommentIndex; i < index-1; i++)
+        for(int i = startingCommentIndex; i < index - 1; i++)
         {
             String commentLine = lines.get(i);
             commentsBuilder.append(commentLine).append("\n");
@@ -248,7 +248,7 @@ public class EnhancedYaml extends YamlConfiguration
     private int getStartingCommentIndex(List<String> lines, int index)
     {
         int startingCommentIndex = -1;
-        for(int i = index-2; i >= 0; i--)
+        for(int i = index - 2; i >= 0; i--)
         {
             String curLine = lines.get(i).trim();
             if(!curLine.startsWith("#")) break;
@@ -260,15 +260,15 @@ public class EnhancedYaml extends YamlConfiguration
     /**
      * Go back a certain amount of paths to get the right path
      *
-     * @param currentPath The String for the current path
+     * @param currentPath     The String for the current path
      * @param amountToRegress The amount of directories to backtrack on
      * @return The new path
      */
     private String regressPath(String currentPath, int amountToRegress)
     {
-        String[] splitStr = currentPath.split("\\.");
-        StringBuilder newStr = new StringBuilder();
-        for(int i = 0; i < splitStr.length-amountToRegress; i++)
+        String[]      splitStr = currentPath.split("\\.");
+        StringBuilder newStr   = new StringBuilder();
+        for(int i = 0; i < splitStr.length - amountToRegress; i++)
         {
             if(i == 0) newStr.append(splitStr[i]);
             else newStr.append(".").append(splitStr[i]);
@@ -301,6 +301,6 @@ public class EnhancedYaml extends YamlConfiguration
             if(line.charAt(i) != ' ') break;
             deepness += 0.5f;
         }
-        return (int)deepness;
+        return (int) deepness;
     }
 }

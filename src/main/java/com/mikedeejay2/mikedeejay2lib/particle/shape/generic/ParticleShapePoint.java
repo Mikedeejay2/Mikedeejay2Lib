@@ -1,12 +1,10 @@
 package com.mikedeejay2.mikedeejay2lib.particle.shape.generic;
 
 import com.mikedeejay2.mikedeejay2lib.particle.shape.ParticleShape;
-import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**

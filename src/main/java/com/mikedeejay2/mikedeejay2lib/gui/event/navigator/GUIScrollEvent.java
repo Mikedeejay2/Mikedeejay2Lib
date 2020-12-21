@@ -28,8 +28,8 @@ public class GUIScrollEvent implements GUIEvent
         if(clickType != ClickType.LEFT) return;
         int rowOffset = gui.getRowOffset();
         int colOffset = gui.getColOffset();
-        int totalRow = rowOffset + Math.min(GUIContainer.MAX_INVENTORY_ROWS, gui.getRows());
-        int totalCol = colOffset + GUIContainer.MAX_INVENTORY_COLS;
+        int totalRow  = rowOffset + Math.min(GUIContainer.MAX_INVENTORY_ROWS, gui.getRows());
+        int totalCol  = colOffset + GUIContainer.MAX_INVENTORY_COLS;
         if(gui.getRows() >= totalRow + rowAmt && rowOffset + rowAmt >= 0)
         {
             gui.addRowOffset(rowAmt);

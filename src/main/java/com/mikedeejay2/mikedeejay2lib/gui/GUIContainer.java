@@ -8,7 +8,6 @@ import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefa
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
-import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -29,7 +28,6 @@ import java.util.List;
  */
 public class GUIContainer
 {
-    protected final PluginBase plugin;
     // The default (Minecraft) amount of inventory rows
     public static final int MAX_INVENTORY_ROWS = 6;
     // The default (Minecraft) amount of inventory columns
@@ -37,6 +35,7 @@ public class GUIContainer
     // An empty name so that items that shouldn't have a title have the smallest
     // title possible for Minecraft (Because you can't specify no specify)
     public static final String EMPTY_NAME = "§7";
+    protected final PluginBase plugin;
     // An empty stack, usually a light gray stained glass pane so it's nearly invisible
     protected ItemStack backgroundItem;
     // The inventory of this GUI
@@ -67,14 +66,14 @@ public class GUIContainer
     /**
      * Create a GUI of a regular size.
      *
-     * @param plugin The plugin that this GUI is created by
+     * @param plugin        The plugin that this GUI is created by
      * @param inventoryName The name of this GUI
      * @param inventoryRows The amount of inventory rows of this GUI. Max amount: 6
      */
     public GUIContainer(PluginBase plugin, String inventoryName, int inventoryRows)
     {
         this.plugin = plugin;
-        this.backgroundItem = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1 , EMPTY_NAME);
+        this.backgroundItem = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1, EMPTY_NAME);
         this.inventoryName = Chat.chat(inventoryName);
         if(inventoryRows > MAX_INVENTORY_ROWS) inventoryRows = MAX_INVENTORY_ROWS;
         this.inventorySlots = inventoryRows * MAX_INVENTORY_COLS;
@@ -95,7 +94,7 @@ public class GUIContainer
     /**
      * Create a GUI of a large size. Note that to travel the GUI you must use a <tt>GUIScrollerModule</tt>
      *
-     * @param plugin The plugin that this GUI is created by
+     * @param plugin        The plugin that this GUI is created by
      * @param inventoryName The name of this GUI
      * @param inventoryRows The amount of inventory rows of this GUI
      * @param inventoryCols The amount of inventory columns of this GUI
@@ -103,7 +102,7 @@ public class GUIContainer
     public GUIContainer(PluginBase plugin, String inventoryName, int inventoryRows, int inventoryCols)
     {
         this.plugin = plugin;
-        this.backgroundItem = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1 , EMPTY_NAME);
+        this.backgroundItem = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1, EMPTY_NAME);
         this.inventoryName = Chat.chat(inventoryName);
         this.inventorySlots = Math.min(inventoryRows * MAX_INVENTORY_COLS, MAX_INVENTORY_ROWS * MAX_INVENTORY_COLS);
         this.inventoryRows = inventoryRows;
@@ -156,7 +155,7 @@ public class GUIContainer
 
         if(fillEmpty)
         {
-            int fillSlot = -1;
+            int      fillSlot    = -1;
             GUILayer bottomLayer = layers.get(0);
             for(int row = 1; row <= newInvRows; ++row)
             {
@@ -186,7 +185,7 @@ public class GUIContainer
             if(!layer.isVisible()) continue;
             int curRowOffset = rowOffset;
             int curColOffset = colOffset;
-            int invSlot = -1;
+            int invSlot      = -1;
             for(int row = 0; row < newInvRows; ++row)
             {
                 for(int col = 0; col < MAX_INVENTORY_COLS; ++col)
@@ -229,8 +228,8 @@ public class GUIContainer
     public void onClicked(InventoryClickEvent event)
     {
         int slot = event.getSlot();
-        int row = getRowFromSlot(slot);
-        int col = getColFromSlot(slot);
+        int row  = getRowFromSlot(slot);
+        int col  = getColFromSlot(slot);
         modules.forEach(module -> module.onClickedHead(event, this));
         GUIItem item = getItem(row, col);
         if(item != null) item.onClick(event, this);
@@ -262,8 +261,8 @@ public class GUIContainer
     /**
      * Set an item from a <tt>GUIItem</tt>
      *
-     * @param row The row that should be set
-     * @param col The column that should be set
+     * @param row  The row that should be set
+     * @param col  The column that should be set
      * @param item The GUIItem to use
      */
     public void setItem(int row, int col, GUIItem item)
@@ -275,8 +274,8 @@ public class GUIContainer
     /**
      * Set the move state of an item
      *
-     * @param row The row to set
-     * @param col The column to set
+     * @param row     The row to set
+     * @param col     The column to set
      * @param movable Whether the item is movable or not
      */
     public void setMoveState(int row, int col, boolean movable)
@@ -284,7 +283,7 @@ public class GUIContainer
         for(int i = layers.size() - 1; i >= 0; i--)
         {
             GUILayer layer = getLayer(i);
-            GUIItem item = layer.getItem(row, col);
+            GUIItem  item  = layer.getItem(row, col);
             if(item != null)
             {
                 item.setMovable(true);
@@ -305,7 +304,7 @@ public class GUIContainer
         for(int i = layers.size() - 1; i >= 0; --i)
         {
             GUILayer layer = getLayer(i);
-            GUIItem item = layer.getItem(row, col);
+            GUIItem  item  = layer.getItem(row, col);
             if(item != null) return item.getEvents();
         }
         return null;
@@ -314,8 +313,8 @@ public class GUIContainer
     /**
      * Set the <tt>GUIEventHandler</tt> for a slot
      *
-     * @param row The row to set
-     * @param col The column to set
+     * @param row    The row to set
+     * @param col    The column to set
      * @param events The events to set the slot to
      */
     public void setEventHandler(int row, int col, GUIEventHandler events)
@@ -323,7 +322,7 @@ public class GUIContainer
         for(int i = layers.size() - 1; i >= 0; i--)
         {
             GUILayer layer = getLayer(i);
-            GUIItem item = layer.getItem(row, col);
+            GUIItem  item  = layer.getItem(row, col);
             if(item != null)
             {
                 item.setEvents(events);
@@ -335,8 +334,8 @@ public class GUIContainer
     /**
      * Add a <tt>GUIEvent</tt> to a slot
      *
-     * @param row The row to set
-     * @param col The column to set
+     * @param row   The row to set
+     * @param col   The column to set
      * @param event The GUIEvent to add
      */
     public void addEvent(int row, int col, GUIEvent event)
@@ -344,7 +343,7 @@ public class GUIContainer
         for(int i = layers.size() - 1; i >= 0; i--)
         {
             GUILayer layer = getLayer(i);
-            GUIItem item = layer.getItem(row, col);
+            GUIItem  item  = layer.getItem(row, col);
             if(item != null)
             {
                 item.addEvent(event);
@@ -356,8 +355,8 @@ public class GUIContainer
     /**
      * Remove a <tt>GUIEvent</tt> from a slot based off of instance
      *
-     * @param row The row to remove
-     * @param col The column to remove
+     * @param row   The row to remove
+     * @param col   The column to remove
      * @param event The GUIEvent to remove
      */
     public void removeEvent(int row, int col, GUIEvent event)
@@ -365,7 +364,7 @@ public class GUIContainer
         for(int i = layers.size() - 1; i >= 0; i--)
         {
             GUILayer layer = getLayer(i);
-            GUIItem item = layer.getItem(row, col);
+            GUIItem  item  = layer.getItem(row, col);
             if(item != null)
             {
                 item.removeEvent(event);
@@ -377,8 +376,8 @@ public class GUIContainer
     /**
      * Remove a <tt>GUIEvent</tt> from a slot based off of the event's class
      *
-     * @param row The row to remove
-     * @param col The column to remove
+     * @param row        The row to remove
+     * @param col        The column to remove
      * @param eventClass The class of the GUIEvent that should be removed
      */
     public void removeEvent(int row, int col, Class<? extends GUIEvent> eventClass)
@@ -386,7 +385,7 @@ public class GUIContainer
         for(int i = layers.size() - 1; i >= 0; i--)
         {
             GUILayer layer = getLayer(i);
-            GUIItem item = layer.getItem(row, col);
+            GUIItem  item  = layer.getItem(row, col);
             if(item != null)
             {
                 item.removeEvent(eventClass);
@@ -398,8 +397,8 @@ public class GUIContainer
     /**
      * Returns whether a row and a column contains a <tt>GUIEvent</tt> based off of instance
      *
-     * @param row The row to search in
-     * @param col The column to search in
+     * @param row   The row to search in
+     * @param col   The column to search in
      * @param event The event that should be searched for
      * @return Whether the slot contains the event
      */
@@ -408,7 +407,7 @@ public class GUIContainer
         for(int i = layers.size() - 1; i >= 0; i--)
         {
             GUILayer layer = getLayer(i);
-            GUIItem item = layer.getItem(row, col);
+            GUIItem  item  = layer.getItem(row, col);
             if(item != null) return item.containsEvent(event);
         }
         return false;
@@ -417,8 +416,8 @@ public class GUIContainer
     /**
      * Returns whether a row and a column contains a <tt>GUIEvent</tt> based off of the class of that event
      *
-     * @param row The row to search in
-     * @param col The column to search in
+     * @param row        The row to search in
+     * @param col        The column to search in
      * @param eventClass The class of the event that should be searched for
      * @return Whether the slot contains the event
      */
@@ -427,7 +426,7 @@ public class GUIContainer
         for(int i = layers.size() - 1; i >= 0; i--)
         {
             GUILayer layer = getLayer(i);
-            GUIItem item = layer.getItem(row, col);
+            GUIItem  item  = layer.getItem(row, col);
             if(item != null) return item.containsEvent(eventClass);
         }
         return false;
@@ -444,7 +443,7 @@ public class GUIContainer
         for(int i = layers.size() - 1; i >= 0; i--)
         {
             GUILayer layer = getLayer(i);
-            GUIItem item = layer.getItem(row, col);
+            GUIItem  item  = layer.getItem(row, col);
             if(item != null)
             {
                 item.resetEvents();
@@ -465,7 +464,7 @@ public class GUIContainer
         for(int i = layers.size() - 1; i >= 0; i--)
         {
             GUILayer layer = getLayer(i);
-            GUIItem item = layer.getItem(row, col);
+            GUIItem  item  = layer.getItem(row, col);
             if(item != null) return item.isMovable();
         }
         return defaultMoveState;
@@ -483,7 +482,7 @@ public class GUIContainer
         for(int i = layers.size() - 1; i >= 0; i--)
         {
             GUILayer layer = getLayer(i);
-            GUIItem item = layer.getItem(row, col);
+            GUIItem  item  = layer.getItem(row, col);
             if(item != null) return true;
         }
         return false;
@@ -501,7 +500,7 @@ public class GUIContainer
         for(int i = layers.size() - 1; i >= 0; i--)
         {
             GUILayer layer = getLayer(i);
-            GUIItem item = layer.getItem(row, col);
+            GUIItem  item  = layer.getItem(row, col);
             if(item != null) return item;
         }
         return null;
@@ -614,7 +613,7 @@ public class GUIContainer
      * Get a <tt>GUIModule</tt> based off of the module's class
      *
      * @param moduleClass The class of the module to get
-     * @param <T> The module type that will be returned
+     * @param <T>         The module type that will be returned
      * @return The module, null if not found
      */
     public <T extends GUIModule> T getModule(Class<T> moduleClass)
@@ -853,7 +852,7 @@ public class GUIContainer
         for(int i = layers.size() - 1; i <= 0; --i)
         {
             GUILayer layer = layers.get(i);
-            GUIItem item = layer.getItem(row, col);
+            GUIItem  item  = layer.getItem(row, col);
             if(item == null) continue;
             return layer;
         }
@@ -863,9 +862,9 @@ public class GUIContainer
     /**
      * Force add a layer at a specific index
      *
-     * @param index The index to add the layer at
+     * @param index     The index to add the layer at
      * @param layerName The name of the layer
-     * @param overlay Whether the layer is an overlay or not
+     * @param overlay   Whether the layer is an overlay or not
      * @return The new layer
      */
     public GUILayer addLayer(int index, String layerName, boolean overlay)

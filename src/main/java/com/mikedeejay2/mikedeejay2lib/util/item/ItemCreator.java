@@ -23,10 +23,10 @@ public final class ItemCreator
     /**
      * Create an item based off of several arguments
      *
-     * @param material Material of item
-     * @param amount Amount of item
+     * @param material    Material of item
+     * @param amount      Amount of item
      * @param displayName The display name of the item
-     * @param loreString Any lore that the item might have
+     * @param loreString  Any lore that the item might have
      * @return The new ItemStack
      */
     public static ItemStack createItem(Material material, int amount, String displayName, String... loreString)
@@ -54,10 +54,10 @@ public final class ItemCreator
     /**
      * Create a Base64 head based off of several arguments
      *
-     * @param base64Head The base 64 string of the head's texture
-     * @param amount Amount of item
+     * @param base64Head  The base 64 string of the head's texture
+     * @param amount      Amount of item
      * @param displayName The display name of the head
-     * @param loreString Any lore that the head might have
+     * @param loreString  Any lore that the head might have
      * @return The new head ItemStack
      */
     public static ItemStack createHeadItem(String base64Head, int amount, String displayName, String... loreString)
@@ -67,7 +67,7 @@ public final class ItemCreator
         List<String> lore = new ArrayList();
 
         item = new ItemStack(Material.PLAYER_HEAD, amount);
-        SkullMeta skullMeta = (SkullMeta)item.getItemMeta();
+        SkullMeta skullMeta = (SkullMeta) item.getItemMeta();
 
         GameProfile profile = new GameProfile(UUID.randomUUID(), "");
         profile.getProperties().put("textures", new Property("textures", base64Head));

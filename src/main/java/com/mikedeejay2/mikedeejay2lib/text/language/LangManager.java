@@ -19,11 +19,10 @@ public class LangManager
     protected final PluginBase plugin;
     // The default language locale
     protected final String englishLang = "en_us";
-    private String defaultLang;
-
     // Hash map of lang locales to lang files
     protected HashMap<String, JsonFile> langFiles = new HashMap<>();
     protected ArrayList<String> doNotLoad = new ArrayList<>();
+    private String defaultLang;
 
     /**
      * Create a LangManager and load the default language (if any) and
@@ -33,19 +32,6 @@ public class LangManager
     {
         this.plugin = plugin;
         loadLangFile(englishLang);
-    }
-
-    /**
-     * Set the default lang of the <tt>LangManager</tt>
-     * This only affects the console and depending on the configuration
-     * of the operating system the characters won't show up properly
-     *
-     * @param defaultLang The locale to set the defaultLang to
-     */
-    public void setDefaultLang(String defaultLang)
-    {
-        this.defaultLang = defaultLang;
-        loadLangFileDefaultLang(defaultLang);
     }
 
     /**
@@ -152,7 +138,7 @@ public class LangManager
     {
         if(sender instanceof Player)
         {
-            return langFiles.get(((Player)sender).getLocale().toLowerCase());
+            return langFiles.get(((Player) sender).getLocale().toLowerCase());
         }
         return getLang();
     }
@@ -161,7 +147,7 @@ public class LangManager
      * Gets a specific piece of text based off of a language locale and a path
      *
      * @param locale The language locale to be used
-     * @param path The path to be used to find the text
+     * @param path   The path to be used to find the text
      * @return The wanted text, null if text doesn't exist.
      */
     public String getText(String locale, String path)
@@ -200,7 +186,7 @@ public class LangManager
      * Gets text based off of a player and a path
      *
      * @param player Player that will be used to get language locale
-     * @param path The path to be used to find the text
+     * @param path   The path to be used to find the text
      * @return The wanted text, null if text doesn't exist.
      */
     public String getText(Player player, String path)
@@ -212,14 +198,14 @@ public class LangManager
      * Gets text based off of a CommandSender and a path
      *
      * @param sender CommandSender that will be used to get language locale
-     * @param path The path to be used to find the text
+     * @param path   The path to be used to find the text
      * @return The wanted text, null if text doesn't exist.
      */
     public String getText(CommandSender sender, String path)
     {
         if(sender instanceof Player)
         {
-            return getText(((Player)sender).getLocale().toLowerCase(), path);
+            return getText(((Player) sender).getLocale().toLowerCase(), path);
         }
         return getText(path);
     }
@@ -229,9 +215,9 @@ public class LangManager
      * strings in toReplace with the strings in replacements.
      * It's important that toReplace must be the same length as replacements
      *
-     * @param locale The language locale to use
-     * @param path The path to find the text from
-     * @param toReplace The array of Strings that should be replaced
+     * @param locale       The language locale to use
+     * @param path         The path to find the text from
+     * @param toReplace    The array of Strings that should be replaced
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
@@ -241,7 +227,7 @@ public class LangManager
         if(text == null) return null;
         for(int i = 0; i < toReplace.length; i++)
         {
-            String curToReplace = toReplace[i];
+            String curToReplace   = toReplace[i];
             String curReplacement = replacements[i];
             text = text.replaceAll("\\{" + curToReplace + "\\}", curReplacement);
         }
@@ -254,8 +240,8 @@ public class LangManager
      * language locale.
      * It's important that toReplace must be the same length as replacements
      *
-     * @param path The path to find the text from
-     * @param toReplace The array of Strings that should be replaced
+     * @param path         The path to find the text from
+     * @param toReplace    The array of Strings that should be replaced
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
@@ -274,9 +260,9 @@ public class LangManager
      * strings in toReplace with the strings in replacements.
      * It's important that toReplace must be the same length as replacements
      *
-     * @param sender The CommandSender to base the language Locale off of
-     * @param path The path to find the text from
-     * @param toReplace The array of Strings that should be replaced
+     * @param sender       The CommandSender to base the language Locale off of
+     * @param path         The path to find the text from
+     * @param toReplace    The array of Strings that should be replaced
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
@@ -284,7 +270,7 @@ public class LangManager
     {
         if(sender instanceof Player)
         {
-            return getText(((Player)sender).getLocale().toLowerCase(), path, toReplace, replacements);
+            return getText(((Player) sender).getLocale().toLowerCase(), path, toReplace, replacements);
         }
         return getText(path, toReplace, replacements);
     }
@@ -294,9 +280,9 @@ public class LangManager
      * strings in toReplace with the strings in replacements.
      * It's important that toReplace must be the same length as replacements
      *
-     * @param player The player to base the language Locale off of
-     * @param path The path to find the text from
-     * @param toReplace The array of Strings that should be replaced
+     * @param player       The player to base the language Locale off of
+     * @param path         The path to find the text from
+     * @param toReplace    The array of Strings that should be replaced
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
@@ -337,14 +323,14 @@ public class LangManager
      * Gets the text from Mikedeejay2Lib
      *
      * @param sender CommandSender that will be used to get language locale
-     * @param path The path to be used to find the text
+     * @param path   The path to be used to find the text
      * @return The wanted text, null if text doesn't exist.
      */
     public String getTextLib(CommandSender sender, String path)
     {
         if(sender instanceof Player)
         {
-            String text = getText("lib_" + ((Player)sender).getLocale().toLowerCase(), path);
+            String text = getText("lib_" + ((Player) sender).getLocale().toLowerCase(), path);
             if(text == null)
             {
                 text = getText("lib_" + englishLang, path);
@@ -361,8 +347,8 @@ public class LangManager
      * It's important that toReplace must be the same length as replacements
      * Gets the text from Mikedeejay2Lib
      *
-     * @param path The path to find the text from
-     * @param toReplace The array of Strings that should be replaced
+     * @param path         The path to find the text from
+     * @param toReplace    The array of Strings that should be replaced
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
@@ -382,9 +368,9 @@ public class LangManager
      * It's important that toReplace must be the same length as replacements
      * Gets the text from Mikedeejay2Lib
      *
-     * @param sender The CommandSender to base the language Locale off of
-     * @param path The path to find the text from
-     * @param toReplace The array of Strings that should be replaced
+     * @param sender       The CommandSender to base the language Locale off of
+     * @param path         The path to find the text from
+     * @param toReplace    The array of Strings that should be replaced
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
@@ -392,7 +378,7 @@ public class LangManager
     {
         if(sender instanceof Player)
         {
-            String text = getText("lib_" + ((Player)sender).getLocale().toLowerCase(), path, toReplace, replacements);
+            String text = getText("lib_" + ((Player) sender).getLocale().toLowerCase(), path, toReplace, replacements);
             if(text == null)
             {
                 text = getText("lib_" + englishLang, path);
@@ -408,9 +394,9 @@ public class LangManager
      * It's important that toReplace must be the same length as replacements
      * Gets the text from Mikedeejay2Lib
      *
-     * @param player The player to base the language Locale off of
-     * @param path The path to find the text from
-     * @param toReplace The array of Strings that should be replaced
+     * @param player       The player to base the language Locale off of
+     * @param path         The path to find the text from
+     * @param toReplace    The array of Strings that should be replaced
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
@@ -432,5 +418,18 @@ public class LangManager
     public String getDefaultLang()
     {
         return defaultLang;
+    }
+
+    /**
+     * Set the default lang of the <tt>LangManager</tt>
+     * This only affects the console and depending on the configuration
+     * of the operating system the characters won't show up properly
+     *
+     * @param defaultLang The locale to set the defaultLang to
+     */
+    public void setDefaultLang(String defaultLang)
+    {
+        this.defaultLang = defaultLang;
+        loadLangFileDefaultLang(defaultLang);
     }
 }

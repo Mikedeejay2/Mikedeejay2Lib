@@ -24,32 +24,6 @@ public class AnimationRuntime extends EnhancedRunnable
     protected Player player;
 
     /**
-     * Set the items of the AnimationRuntime
-     * <p>
-     * <b>This method MUST be run before the runtime is started, a <tt>NullPointerException</tt>
-     * will be thrown otherwise.</b>
-     *
-     * @param items The list of AnimatedGUIItems that this runtime will iterate through
-     */
-    public void setItems(List<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> items)
-    {
-        this.items = items;
-    }
-
-    /**
-     * Set the player that has opened the GUI
-     * <p>
-     * <b>This method MUST be run before the runtime is started, a <tt>NullPointerException</tt>
-     * will be thrown otherwise.</b>
-     *
-     * @param player The player that opened up the GUI
-     */
-    public void setPlayer(Player player)
-    {
-        this.player = player;
-    }
-
-    /**
      * Set the <tt>GUIContainer</tt> that this <tt>AnimationRuntime</tt> is a child of
      * <p>
      * <b>This method MUST be run before the runtime is started, a <tt>NullPointerException</tt>
@@ -70,11 +44,11 @@ public class AnimationRuntime extends EnhancedRunnable
     public void onRun()
     {
         boolean shouldUpdate = false;
-        for(int i = 0 ; i < items.size(); ++i)
+        for(int i = 0; i < items.size(); ++i)
         {
-            Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry = items.get(i);
-            AnimatedGUIItem item = entry.getKey();
-            AnimatedGUIItemProperties properties = entry.getValue();
+            Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry      = items.get(i);
+            AnimatedGUIItem                                       item       = entry.getKey();
+            AnimatedGUIItemProperties                             properties = entry.getValue();
             if(item.tick(period, properties)) shouldUpdate = true;
         }
         if(shouldUpdate) gui.update(player);
@@ -88,6 +62,19 @@ public class AnimationRuntime extends EnhancedRunnable
     public List<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> getItems()
     {
         return items;
+    }
+
+    /**
+     * Set the items of the AnimationRuntime
+     * <p>
+     * <b>This method MUST be run before the runtime is started, a <tt>NullPointerException</tt>
+     * will be thrown otherwise.</b>
+     *
+     * @param items The list of AnimatedGUIItems that this runtime will iterate through
+     */
+    public void setItems(List<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> items)
+    {
+        this.items = items;
     }
 
     /**
@@ -108,5 +95,18 @@ public class AnimationRuntime extends EnhancedRunnable
     public Player getPlayer()
     {
         return player;
+    }
+
+    /**
+     * Set the player that has opened the GUI
+     * <p>
+     * <b>This method MUST be run before the runtime is started, a <tt>NullPointerException</tt>
+     * will be thrown otherwise.</b>
+     *
+     * @param player The player that opened up the GUI
+     */
+    public void setPlayer(Player player)
+    {
+        this.player = player;
     }
 }

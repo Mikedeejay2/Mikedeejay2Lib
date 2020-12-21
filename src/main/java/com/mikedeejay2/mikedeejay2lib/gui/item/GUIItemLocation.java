@@ -44,26 +44,6 @@ public class GUIItemLocation
     }
 
     /**
-     * Set the row that this item is on
-     *
-     * @param row The row that this item is on
-     */
-    public void setRow(int row)
-    {
-        this.row = row;
-    }
-
-    /**
-     * Set the column that this item is on
-     *
-     * @param col the column that this item is on
-     */
-    public void setCol(int col)
-    {
-        this.col = col;
-    }
-
-    /**
      * Gets the current row in a GUI that this item is on
      *
      * @return The row
@@ -74,6 +54,16 @@ public class GUIItemLocation
     }
 
     /**
+     * Set the row that this item is on
+     *
+     * @param row The row that this item is on
+     */
+    public void setRow(int row)
+    {
+        this.row = row;
+    }
+
+    /**
      * Gets the current row in a GUI that this item is on
      *
      * @return The column
@@ -81,5 +71,15 @@ public class GUIItemLocation
     public int getCol()
     {
         return col;
+    }
+
+    /**
+     * Set the column that this item is on
+     *
+     * @param col the column that this item is on
+     */
+    public void setCol(int col)
+    {
+        this.col = col;
     }
 }

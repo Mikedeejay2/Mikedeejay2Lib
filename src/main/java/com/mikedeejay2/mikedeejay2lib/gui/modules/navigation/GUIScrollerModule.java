@@ -77,7 +77,7 @@ public class GUIScrollerModule extends GUIModule
     public void onUpdateHead(Player player, GUIContainer gui)
     {
         GUILayer layer = gui.getLayer("overlay", true);
-        int row = Math.min(gui.getRows(), GUIContainer.MAX_INVENTORY_ROWS);
+        int      row   = Math.min(gui.getRows(), GUIContainer.MAX_INVENTORY_ROWS);
         layer.setItem(row, 6, leftItem);
         layer.setItem(row, 7, rightItem);
         layer.setItem(row, 3, upItem);

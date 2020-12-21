@@ -29,13 +29,13 @@ public class ChatClickModule extends ChatModule
     /**
      * Overridden <tt>onBake()</tt> method that adds click functionality to the current <tt>BaseComponents</tt>
      *
-     * @param section The <tt>ChatSection</tt> that is being baked
+     * @param section    The <tt>ChatSection</tt> that is being baked
      * @param components The current array of <tt>BaseComonents</tt> that have been baked
      */
     @Override
     public void onBake(ChatSection section, BaseComponent[] components)
     {
-        Chat chat = plugin.chat();
+        Chat       chat       = plugin.chat();
         ClickEvent clickEvent = chat.getClickEvent(action, clickText);
         chat.setClickEvent(components, clickEvent);
     }

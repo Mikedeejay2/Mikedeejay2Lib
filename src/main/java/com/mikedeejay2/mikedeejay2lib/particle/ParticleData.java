@@ -29,13 +29,13 @@ public class ParticleData
 
     /**
      * @param particle The particle enum
-     * @param count The count of particles to spawn
-     * @param offsetX The X offset of the particles
-     * @param offsetY The Y offset of the particles
-     * @param offsetZ The Z offset of the particles
-     * @param speed The speed of the particles
-     * @param data The data of the particles (if any)
-     * @param force Whether or not to force the particles to render or not
+     * @param count    The count of particles to spawn
+     * @param offsetX  The X offset of the particles
+     * @param offsetY  The Y offset of the particles
+     * @param offsetZ  The Z offset of the particles
+     * @param speed    The speed of the particles
+     * @param data     The data of the particles (if any)
+     * @param force    Whether or not to force the particles to render or not
      */
     public ParticleData(Particle particle, int count, double offsetX, double offsetY, double offsetZ, double speed, Object data, boolean force)
     {
@@ -51,12 +51,12 @@ public class ParticleData
 
     /**
      * @param particle The particle enum
-     * @param count The count of particles to spawn
-     * @param offsetX The X offset of the particles
-     * @param offsetY The Y offset of the particles
-     * @param offsetZ The Z offset of the particles
-     * @param speed The speed of the particles
-     * @param force Whether or not to force the particles to render or not
+     * @param count    The count of particles to spawn
+     * @param offsetX  The X offset of the particles
+     * @param offsetY  The Y offset of the particles
+     * @param offsetZ  The Z offset of the particles
+     * @param speed    The speed of the particles
+     * @param force    Whether or not to force the particles to render or not
      */
     public ParticleData(Particle particle, int count, double offsetX, double offsetY, double offsetZ, double speed, boolean force)
     {
@@ -65,12 +65,12 @@ public class ParticleData
 
     /**
      * @param particle The particle enum
-     * @param count The count of particles to spawn
-     * @param offsetX The X offset of the particles
-     * @param offsetY The Y offset of the particles
-     * @param offsetZ The Z offset of the particles
-     * @param speed The speed of the particles
-     * @param data The data of the particles (if any)
+     * @param count    The count of particles to spawn
+     * @param offsetX  The X offset of the particles
+     * @param offsetY  The Y offset of the particles
+     * @param offsetZ  The Z offset of the particles
+     * @param speed    The speed of the particles
+     * @param data     The data of the particles (if any)
      */
     public ParticleData(Particle particle, int count, double offsetX, double offsetY, double offsetZ, double speed, Object data)
     {
@@ -79,11 +79,11 @@ public class ParticleData
 
     /**
      * @param particle The particle enum
-     * @param count The count of particles to spawn
-     * @param offsetX The X offset of the particles
-     * @param offsetY The Y offset of the particles
-     * @param offsetZ The Z offset of the particles
-     * @param speed The speed of the particles
+     * @param count    The count of particles to spawn
+     * @param offsetX  The X offset of the particles
+     * @param offsetY  The Y offset of the particles
+     * @param offsetZ  The Z offset of the particles
+     * @param speed    The speed of the particles
      */
     public ParticleData(Particle particle, int count, double offsetX, double offsetY, double offsetZ, double speed)
     {
@@ -92,11 +92,11 @@ public class ParticleData
 
     /**
      * @param particle The particle enum
-     * @param count The count of particles to spawn
-     * @param offsetX The X offset of the particles
-     * @param offsetY The Y offset of the particles
-     * @param offsetZ The Z offset of the particles
-     * @param force Whether or not to force the particles to render or not
+     * @param count    The count of particles to spawn
+     * @param offsetX  The X offset of the particles
+     * @param offsetY  The Y offset of the particles
+     * @param offsetZ  The Z offset of the particles
+     * @param force    Whether or not to force the particles to render or not
      */
     public ParticleData(Particle particle, int count, double offsetX, double offsetY, double offsetZ, boolean force)
     {
@@ -105,10 +105,10 @@ public class ParticleData
 
     /**
      * @param particle The particle enum
-     * @param count The count of particles to spawn
-     * @param speed The speed of the particles
-     * @param data The data of the particles (if any)
-     * @param force Whether or not to force the particles to render or not
+     * @param count    The count of particles to spawn
+     * @param speed    The speed of the particles
+     * @param data     The data of the particles (if any)
+     * @param force    Whether or not to force the particles to render or not
      */
     public ParticleData(Particle particle, int count, double speed, Object data, boolean force)
     {
@@ -117,9 +117,9 @@ public class ParticleData
 
     /**
      * @param particle The particle enum
-     * @param count The count of particles to spawn
-     * @param speed The speed of the particles
-     * @param force Whether or not to force the particles to render or not
+     * @param count    The count of particles to spawn
+     * @param speed    The speed of the particles
+     * @param force    Whether or not to force the particles to render or not
      */
     public ParticleData(Particle particle, int count, double speed, boolean force)
     {
@@ -128,8 +128,8 @@ public class ParticleData
 
     /**
      * @param particle The particle enum
-     * @param count The count of particles to spawn
-     * @param speed The speed of the particles
+     * @param count    The count of particles to spawn
+     * @param speed    The speed of the particles
      */
     public ParticleData(Particle particle, int count, double speed)
     {
@@ -138,8 +138,8 @@ public class ParticleData
 
     /**
      * @param particle The particle enum
-     * @param count The count of particles to spawn
-     * @param force Whether or not to force the particles to render or not
+     * @param count    The count of particles to spawn
+     * @param force    Whether or not to force the particles to render or not
      */
     public ParticleData(Particle particle, int count, boolean force)
     {
@@ -148,7 +148,7 @@ public class ParticleData
 
     /**
      * @param particle The particle enum
-     * @param count The count of particles to spawn
+     * @param count    The count of particles to spawn
      */
     public ParticleData(Particle particle, int count)
     {

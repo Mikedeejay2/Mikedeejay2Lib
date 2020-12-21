@@ -14,10 +14,10 @@ public final class SoundUtil
     /**
      * Play a sound to a player based off of different parameters
      *
-     * @param player The player to play the sound to
-     * @param sound The sound the play to the player
-     * @param volume The volume to play the sound at
-     * @param pitch The pitch to play the sound at
+     * @param player   The player to play the sound to
+     * @param sound    The sound the play to the player
+     * @param volume   The volume to play the sound at
+     * @param pitch    The pitch to play the sound at
      * @param category The <tt>SoundCategory</tt> to play the sound in
      */
     public static void playSound(Player player, Sound sound, float volume, float pitch, SoundCategory category)
@@ -29,9 +29,9 @@ public final class SoundUtil
      * Play a sound to a player based off of different parameters
      *
      * @param player The player to play the sound to
-     * @param sound The sound the play to the player
+     * @param sound  The sound the play to the player
      * @param volume The volume to play the sound at
-     * @param pitch The pitch to play the sound at
+     * @param pitch  The pitch to play the sound at
      */
     public static void playSound(Player player, Sound sound, float volume, float pitch)
     {
@@ -42,7 +42,7 @@ public final class SoundUtil
      * Play a sound to a player based off of different parameters
      *
      * @param player The player to play the sound to
-     * @param sound The sound the play to the player
+     * @param sound  The sound the play to the player
      * @param volume The volume to play the sound at
      */
     public static void playSound(Player player, Sound sound, float volume)
@@ -54,7 +54,7 @@ public final class SoundUtil
      * Play a sound to a player based off of different parameters
      *
      * @param player The player to play the sound to
-     * @param sound The sound the play to the player
+     * @param sound  The sound the play to the player
      */
     public static void playSound(Player player, Sound sound)
     {
@@ -65,9 +65,9 @@ public final class SoundUtil
      * Play a sound at a location based off of different parameters
      *
      * @param location The location to play the sound at
-     * @param sound The sound to play at the location
-     * @param volume The volume to play the sound at
-     * @param pitch The pitch to play the sound at
+     * @param sound    The sound to play at the location
+     * @param volume   The volume to play the sound at
+     * @param pitch    The pitch to play the sound at
      * @param category The <tt>SoundCategory</tt> to play the sound in
      */
     public static void playSound(Location location, Sound sound, float volume, float pitch, SoundCategory category)
@@ -80,9 +80,9 @@ public final class SoundUtil
      * Play a sound at a location based off of different parameters
      *
      * @param location The location to play the sound at
-     * @param sound The sound to play at the location
-     * @param volume The volume to play the sound at
-     * @param pitch The pitch to play the sound at
+     * @param sound    The sound to play at the location
+     * @param volume   The volume to play the sound at
+     * @param pitch    The pitch to play the sound at
      */
     public static void playSound(Location location, Sound sound, float volume, float pitch)
     {
@@ -93,8 +93,8 @@ public final class SoundUtil
      * Play a sound at a location based off of different parameters
      *
      * @param location The location to play the sound at
-     * @param sound The sound to play at the location
-     * @param volume The volume to play the sound at
+     * @param sound    The sound to play at the location
+     * @param volume   The volume to play the sound at
      */
     public static void playSound(Location location, Sound sound, float volume)
     {
@@ -105,7 +105,7 @@ public final class SoundUtil
      * Play a sound at a location based off of different parameters
      *
      * @param location The location to play the sound at
-     * @param sound The sound to play at the location
+     * @param sound    The sound to play at the location
      */
     public static void playSound(Location location, Sound sound)
     {
@@ -118,9 +118,9 @@ public final class SoundUtil
      * all players, regardless of their current world, can hear the
      * sound
      *
-     * @param sound The sound to play at the location
-     * @param volume The volume to play the sound at
-     * @param pitch The pitch to play the sound at
+     * @param sound    The sound to play at the location
+     * @param volume   The volume to play the sound at
+     * @param pitch    The pitch to play the sound at
      * @param category The <tt>SoundCategory</tt> to play the sound in
      */
     public static void broadcastSound(Sound sound, float volume, float pitch, SoundCategory category)
@@ -137,9 +137,9 @@ public final class SoundUtil
      * all players, regardless of their current world, can hear the
      * sound
      *
-     * @param sound The sound to play at the location
+     * @param sound  The sound to play at the location
      * @param volume The volume to play the sound at
-     * @param pitch The pitch to play the sound at
+     * @param pitch  The pitch to play the sound at
      */
     public static void broadcastSound(Sound sound, float volume, float pitch)
     {
@@ -152,7 +152,7 @@ public final class SoundUtil
      * all players, regardless of their current world, can hear the
      * sound
      *
-     * @param sound The sound to play at the location
+     * @param sound  The sound to play at the location
      * @param volume The volume to play the sound at
      */
     public static void broadcastSound(Sound sound, float volume)

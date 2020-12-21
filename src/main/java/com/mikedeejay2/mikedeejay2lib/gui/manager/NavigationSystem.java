@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Holds a web browser style navigation system that holds GUIs behind and forward 
+ * Holds a web browser style navigation system that holds GUIs behind and forward
  * This class shouldn't be initialized on its own, instead use {@link PlayerGUI#getNaviSystem(String)}
  *
  * @author Mikedeejay2

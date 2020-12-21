@@ -31,7 +31,7 @@ public class GUIOpenEvent implements GUIEvent
     @Override
     public void execute(InventoryClickEvent event, GUIContainer gui)
     {
-        Player player = (Player) event.getWhoClicked();
+        Player    player    = (Player) event.getWhoClicked();
         ClickType clickType = event.getClick();
         if(clickType != ClickType.LEFT) return;
         if(gui.equals(guiToOpen)) return;
@@ -44,16 +44,17 @@ public class GUIOpenEvent implements GUIEvent
      * Checks whether the GUI is using a navigation system and if so calculate the forward
      * and back navigations.
      *
-     * @param gui The GUI that is being viewed
+     * @param gui       The GUI that is being viewed
      * @param playerGUI The <tt>PlayerGUI</tt> of the player viewing the GUI
      */
     private void navigationCheck(GUIContainer gui, PlayerGUI playerGUI)
     {
-        if(!(guiToOpen.containsModule(GUINavigatorModule.class) && gui.containsModule(GUINavigatorModule.class))) return;
-        GUINavigatorModule curModule = gui.getModule(GUINavigatorModule.class);
+        if(!(guiToOpen.containsModule(GUINavigatorModule.class) && gui.containsModule(GUINavigatorModule.class)))
+            return;
+        GUINavigatorModule curModule  = gui.getModule(GUINavigatorModule.class);
         GUINavigatorModule openModule = gui.getModule(GUINavigatorModule.class);
-        String curID = curModule.getNavigationID();
-        String openID = openModule.getNavigationID();
+        String             curID      = curModule.getNavigationID();
+        String             openID     = openModule.getNavigationID();
         if(!curID.equals(openID)) return;
         NavigationSystem system = playerGUI.getNaviSystem(curID);
         if(system.hasBack() && system.getBack().equals(gui)) return;

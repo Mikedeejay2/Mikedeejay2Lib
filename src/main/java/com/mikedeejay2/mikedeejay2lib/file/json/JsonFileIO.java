@@ -1,6 +1,9 @@
 package com.mikedeejay2.mikedeejay2lib.file.json;
 
-import com.google.gson.*;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonWriter;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.file.FileIO;
@@ -28,9 +31,9 @@ public final class JsonFileIO
     /**
      * Load a JsonObject from the disk.
      *
-     * @param filePath Path to the file. This should NOT include plugin.getDataFolder()
+     * @param filePath    Path to the file. This should NOT include plugin.getDataFolder()
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
-     * @param json The <tt>JsonObject</tt> to load the JSON into
+     * @param json        The <tt>JsonObject</tt> to load the JSON into
      * @return The requested JsonObject
      */
     public JsonObject loadJsonObjectFromDisk(String filePath, JsonObject json, boolean throwErrors)
@@ -41,16 +44,16 @@ public final class JsonFileIO
     /**
      * Load a JsonObject from the disk.
      *
-     * @param file The file to be loaded
+     * @param file        The file to be loaded
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
-     * @param json The <tt>JsonObject</tt> to load the JSON into
+     * @param json        The <tt>JsonObject</tt> to load the JSON into
      * @return The requested JsonObject
      */
     public JsonObject loadJsonObjectFromDisk(File file, JsonObject json, boolean throwErrors)
     {
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
-        Gson gson = builder.create();
+        Gson   gson   = builder.create();
         Reader reader = fileIO.getReaderFromDisk(file, throwErrors);
         try
         {
@@ -68,16 +71,16 @@ public final class JsonFileIO
     /**
      * Load a JsonObject from this plugin's Jar.
      *
-     * @param filePath The path to the json file in the jar
+     * @param filePath    The path to the json file in the jar
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
-     * @param json The <tt>JsonObject</tt> to load the JSON into
+     * @param json        The <tt>JsonObject</tt> to load the JSON into
      * @return The requested JsonObject
      */
     public JsonObject loadJsonObjectFromJar(String filePath, JsonObject json, boolean throwErrors)
     {
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
-        Gson gson = builder.create();
+        Gson   gson   = builder.create();
         Reader reader = fileIO.getReaderFromJar(filePath, throwErrors);
         try
         {
@@ -95,7 +98,7 @@ public final class JsonFileIO
     /**
      * Get a JsonWriter from a file
      *
-     * @param file File to get JsonWriter from
+     * @param file        File to get JsonWriter from
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested JsonWriter
      */
@@ -116,8 +119,8 @@ public final class JsonFileIO
     /**
      * Save a json file to disk
      *
-     * @param file The file to save to
-     * @param json The json file that will be saved to the file
+     * @param file        The file to save to
+     * @param json        The json file that will be saved to the file
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return Whether the save was successful or not
      */
@@ -125,8 +128,8 @@ public final class JsonFileIO
     {
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
-        Gson gson = builder.create();
-        String str = gson.toJson(json);
+        Gson        gson        = builder.create();
+        String      str         = gson.toJson(json);
         InputStream inputStream = new ByteArrayInputStream(str.getBytes());
         return fileIO.saveFile(file, inputStream, true, throwErrors);
     }
@@ -134,26 +137,26 @@ public final class JsonFileIO
     /**
      * Update a json file on the disk with new values from a jar file of the corresponding name
      *
-     * @param filePath The path of the file that should be updated, WITHOUT plugin.getDataFolder()
-     * @param original The JsonObject that is currently loaded
+     * @param filePath    The path of the file that should be updated, WITHOUT plugin.getDataFolder()
+     * @param original    The JsonObject that is currently loaded
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return Whether the update was successful or not
      */
     public boolean updateFromJar(String filePath, JsonObject original, boolean throwErrors)
     {
         JsonFile jarFile = new JsonFile(plugin, filePath);
-        boolean success = jarFile.loadFromJar(true);
+        boolean  success = jarFile.loadFromJar(true);
         if(!success) return false;
-        JsonObject jarJsonObject = jarFile.getJsonObject();
-        Set<Map.Entry<String, JsonElement>> set = jarJsonObject.entrySet();
+        JsonObject                          jarJsonObject = jarFile.getJsonObject();
+        Set<Map.Entry<String, JsonElement>> set           = jarJsonObject.entrySet();
         return updateFromJarIterate(original, set, throwErrors);
     }
 
     /**
      * Update the json object in a recursive iterative format
      *
-     * @param original The original JsonObject from the currently loaded file
-     * @param set The root set of the json file
+     * @param original    The original JsonObject from the currently loaded file
+     * @param set         The root set of the json file
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return Whether the update was successful or not
      */
@@ -161,7 +164,7 @@ public final class JsonFileIO
     {
         for(Map.Entry<String, JsonElement> element : set)
         {
-            String memberName = element.getKey();
+            String      memberName  = element.getKey();
             JsonElement jsonElement = element.getValue();
             if(!original.has(memberName))
             {
