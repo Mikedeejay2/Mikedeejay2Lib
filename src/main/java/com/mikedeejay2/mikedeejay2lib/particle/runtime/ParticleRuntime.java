@@ -8,8 +8,10 @@ import org.bukkit.Bukkit;
 import java.util.List;
 
 /**
- * The runtime which runs and manages displaying particles for <tt>ParticleSystems</tt>. <p>
- * This runtime should not be declared outside of a <tt>ParticleSystem</tt>. <p>
+ * The runtime which runs and manages displaying particles for <tt>ParticleSystems</tt>.
+ * <p>
+ * This runtime should not be declared outside of a <tt>ParticleSystem</tt>.
+ * <p>
  * To create this runtime internally {@link ParticleSystem#display()} should be called which
  * creates this runtime automatically and properly configures this runtime.
  *

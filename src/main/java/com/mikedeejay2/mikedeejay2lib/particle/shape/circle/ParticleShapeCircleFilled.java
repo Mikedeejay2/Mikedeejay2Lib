@@ -23,8 +23,8 @@ public class ParticleShapeCircleFilled implements ParticleShape
 
     /**
      * @param location The center location
-     * @param radius The radius
-     * @param density The density of particles
+     * @param radius   The radius
+     * @param density  The density of particles
      */
     public ParticleShapeCircleFilled(Location location, double radius, double density)
     {

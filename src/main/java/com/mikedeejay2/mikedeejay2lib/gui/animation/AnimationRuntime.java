@@ -63,8 +63,8 @@ public class AnimationRuntime extends EnhancedRunnable
     }
 
     /**
-     * Overridden onRun() method. This method iterates through all items in the items list and runs their
-     * tick() method, if the tick method returns true the GUI is updated at the end of the run.
+     * Overridden <tt>onRun()</tt> method. This method iterates through all items in the items list and runs their
+     * <tt>tick()</tt> method, if the tick method returns true the GUI is updated at the end of the run.
      */
     @Override
     public void onRun()

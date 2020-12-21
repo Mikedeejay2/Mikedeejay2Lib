@@ -58,7 +58,7 @@ public class GUIOutlineModule extends GUIModule
      * Method injected into the head of the GUI that adds an outline to the GUI
      *
      * @param player Player that is viewing the GUI
-     * @param gui The GUi
+     * @param gui    The GUi
      */
     @Override
     public void onOpenHead(Player player, GUIContainer gui)

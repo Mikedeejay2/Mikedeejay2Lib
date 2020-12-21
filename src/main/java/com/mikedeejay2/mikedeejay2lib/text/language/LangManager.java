@@ -200,7 +200,7 @@ public class LangManager
      * Gets text based off of a player and a path
      *
      * @param player Player that will be used to get language locale
-     * @param path The path to be used to find the text
+     * @param path   The path to be used to find the text
      * @return The wanted text, null if text doesn't exist.
      */
     public String getText(Player player, String path)
@@ -212,7 +212,7 @@ public class LangManager
      * Gets text based off of a CommandSender and a path
      *
      * @param sender CommandSender that will be used to get language locale
-     * @param path The path to be used to find the text
+     * @param path   The path to be used to find the text
      * @return The wanted text, null if text doesn't exist.
      */
     public String getText(CommandSender sender, String path)
@@ -229,9 +229,9 @@ public class LangManager
      * strings in toReplace with the strings in replacements.
      * It's important that toReplace must be the same length as replacements
      *
-     * @param locale The language locale to use
-     * @param path The path to find the text from
-     * @param toReplace The array of Strings that should be replaced
+     * @param locale       The language locale to use
+     * @param path         The path to find the text from
+     * @param toReplace    The array of Strings that should be replaced
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
@@ -254,8 +254,8 @@ public class LangManager
      * language locale.
      * It's important that toReplace must be the same length as replacements
      *
-     * @param path The path to find the text from
-     * @param toReplace The array of Strings that should be replaced
+     * @param path         The path to find the text from
+     * @param toReplace    The array of Strings that should be replaced
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
@@ -274,9 +274,9 @@ public class LangManager
      * strings in toReplace with the strings in replacements.
      * It's important that toReplace must be the same length as replacements
      *
-     * @param sender The CommandSender to base the language Locale off of
-     * @param path The path to find the text from
-     * @param toReplace The array of Strings that should be replaced
+     * @param sender       The CommandSender to base the language Locale off of
+     * @param path         The path to find the text from
+     * @param toReplace    The array of Strings that should be replaced
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
@@ -294,9 +294,9 @@ public class LangManager
      * strings in toReplace with the strings in replacements.
      * It's important that toReplace must be the same length as replacements
      *
-     * @param player The player to base the language Locale off of
-     * @param path The path to find the text from
-     * @param toReplace The array of Strings that should be replaced
+     * @param player       The player to base the language Locale off of
+     * @param path         The path to find the text from
+     * @param toReplace    The array of Strings that should be replaced
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
@@ -305,6 +305,13 @@ public class LangManager
         return getText(player.getLocale().toLowerCase(), path, toReplace, replacements);
     }
 
+    /**
+     * Gets the text based only off a path, uses the default lang locale
+     * Gets text from Mikedeejay2Lib
+     *
+     * @param path The path to be used to find the text
+     * @return The wanted text, null if the text doesn't exist
+     */
     public String getTextLib(String path)
     {
         String text = getText("lib_" + defaultLang, path);
@@ -316,10 +323,11 @@ public class LangManager
     }
 
     /**
-     * Gets the text based only off of a path, uses the default lang locale
+     * Gets text based off of a Player and a path
      * Gets the text from Mikedeejay2Lib
      *
-     * @param path The path to be used to find the text
+     * @param player Player that will be used to get the language locale
+     * @param path   The path to be used to find the text
      * @return The wanted text, null if text doesn't exist.
      */
     public String getTextLib(Player player, String path)
@@ -337,7 +345,7 @@ public class LangManager
      * Gets the text from Mikedeejay2Lib
      *
      * @param sender CommandSender that will be used to get language locale
-     * @param path The path to be used to find the text
+     * @param path   The path to be used to find the text
      * @return The wanted text, null if text doesn't exist.
      */
     public String getTextLib(CommandSender sender, String path)
@@ -361,8 +369,8 @@ public class LangManager
      * It's important that toReplace must be the same length as replacements
      * Gets the text from Mikedeejay2Lib
      *
-     * @param path The path to find the text from
-     * @param toReplace The array of Strings that should be replaced
+     * @param path         The path to find the text from
+     * @param toReplace    The array of Strings that should be replaced
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
@@ -382,9 +390,9 @@ public class LangManager
      * It's important that toReplace must be the same length as replacements
      * Gets the text from Mikedeejay2Lib
      *
-     * @param sender The CommandSender to base the language Locale off of
-     * @param path The path to find the text from
-     * @param toReplace The array of Strings that should be replaced
+     * @param sender       The CommandSender to base the language Locale off of
+     * @param path         The path to find the text from
+     * @param toReplace    The array of Strings that should be replaced
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
@@ -408,9 +416,9 @@ public class LangManager
      * It's important that toReplace must be the same length as replacements
      * Gets the text from Mikedeejay2Lib
      *
-     * @param player The player to base the language Locale off of
-     * @param path The path to find the text from
-     * @param toReplace The array of Strings that should be replaced
+     * @param player       The player to base the language Locale off of
+     * @param path         The path to find the text from
+     * @param toReplace    The array of Strings that should be replaced
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */

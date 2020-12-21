@@ -29,7 +29,7 @@ public class ChatHoverModule extends ChatModule
     /**
      * Overridden <tt>onBake()</tt> method that adds hover functionality to the current <tt>BaseComponents</tt>
      *
-     * @param section The <tt>ChatSection</tt> that is being baked
+     * @param section    The <tt>ChatSection</tt> that is being baked
      * @param components The current array of <tt>BaseComponents</tt> that have been baked
      */
     @Override

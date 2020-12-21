@@ -39,6 +39,101 @@ public class ChatSection
     }
 
     /**
+     * Remove a <tt>ChatModule</tt> based off of the module's index
+     *
+     * @param index The index to remove the module at
+     * @return The current <tt>ChatSection</tt>
+     */
+    public ChatSection removeModule(int index)
+    {
+        modules.remove(index);
+        return this;
+    }
+
+    /**
+     * Remove a <tt>ChatModule</tt> based off of the class of the module
+     *
+     * @param moduleClass The class of the module to remove
+     * @return The current <tt>ChatSection</tt>
+     */
+    public ChatSection removeModule(Class<? extends ChatModule> moduleClass)
+    {
+        for(ChatModule module : modules)
+        {
+            if(moduleClass != module.getClass()) continue;
+            modules.remove(module);
+            return this;
+        }
+        return this;
+    }
+
+    /**
+     * Remove a <tt>ChatModule</tt> based off of a reference to the module
+     *
+     * @param module The <tt>ChatModule</tt> to remove
+     * @return The current <tt>ChatSection</tt>
+     */
+    public ChatSection removeModule(ChatModule module)
+    {
+        modules.remove(module);
+        return this;
+    }
+
+    /**
+     * See whether this <tt>ChatSection</tt> contains a <tt>ChatModule</tt> by reference
+     *
+     * @param module The <tt>ChatModule</tt> to search for
+     * @return Whether the specified module was found or not
+     */
+    public boolean containsModule(ChatModule module)
+    {
+        return modules.contains(module);
+    }
+
+    /**
+     * See whether this<tt>ChatSection</tt> contains a <tt>ChatModule</tt> based off of the
+     * module's class
+     *
+     * @param moduleClass The class of the module to search for
+     * @return Whether a module of the specified class was found or not
+     */
+    public boolean containsModule(Class<? extends ChatModule> moduleClass)
+    {
+        for(ChatModule module : modules)
+        {
+            if(moduleClass == module.getClass()) return true;
+        }
+        return false;
+    }
+
+    /**
+     * Get a <tt>ChatModule</tt> from this <tt>ChatSection</tt> based off of the class of the module
+     *
+     * @param moduleClass The class of the <tt>ChatModule</tt> to get
+     * @param <T>         The class type
+     * @return The requested <tt>ChatModule</tt>, null if not found
+     */
+    public <T extends ChatModule> T getModule(Class<T> moduleClass)
+    {
+        for(ChatModule module : modules)
+        {
+            if(moduleClass == module.getClass()) return (T) module;
+        }
+        return null;
+    }
+
+    /**
+     * Get a <tt>ChatModule</tt> from this <tt>ChatSection</tt> based off of the index of the module
+     *
+     * @param index The index to get the module from
+     * @return The requested module
+     */
+    public ChatModule getModule(int index)
+    {
+        return modules.get(index);
+    }
+
+    /**
      * Add a String of text to this <tt>ChatSection</tt>
      *
      * @param text The String of text to add
@@ -47,6 +142,19 @@ public class ChatSection
     public ChatSection addText(String text)
     {
         this.text += Chat.chat(text);
+        baked = false;
+        return this;
+    }
+
+    /**
+     * Set the String of text for this <tt>ChatSection</tt>
+     *
+     * @param text The String of text to set
+     * @return The current <tt>ChatSection</tt>
+     */
+    public ChatSection setText(String text)
+    {
+        this.text = text;
         baked = false;
         return this;
     }

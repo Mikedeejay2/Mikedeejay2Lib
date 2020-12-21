@@ -32,7 +32,7 @@ public abstract class GUIInteractHandler
      * Handle an interaction between a <tt>Player</tt> and a <tt>GUIContainer</tt> to properly move an item
      *
      * @param event The event of the interaction
-     * @param gui The GUI that the player interacted with
+     * @param gui   The GUI that the player interacted with
      */
     public abstract void handleInteraction(InventoryClickEvent event, GUIContainer gui);
 
@@ -130,6 +130,17 @@ public abstract class GUIInteractHandler
         return null;
     }
 
+    /**
+     * Executes a specific <tt>InventoryAction</tt> and sends the action to <tt>GUIInteractExecutor</tt>
+     *
+     * @param player The <tt>Player</tt> performing the action
+     * @param inventory The <tt>Inventory</tt> that the action is being performed in
+     * @param slot The slot that the action is being performed on
+     * @param action The <tt>InventoryAction</tt> that is being executed
+     * @param event The original <tt>InventoryClickEvent</tt>
+     * @param gui The GUI that the action is being performed in
+     * @param layer The <tt>GUILayer</tt> that the action should be performed on
+     */
     public void executeAction(Player player, Inventory inventory, int slot, InventoryAction action, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         switch(action)

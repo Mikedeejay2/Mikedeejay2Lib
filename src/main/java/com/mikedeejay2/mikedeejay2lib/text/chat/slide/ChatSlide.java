@@ -50,7 +50,7 @@ public class ChatSlide
      * Add an existing <tt>ChatSection</tt> to this <tt>ChatSlide</tt> at a specified index
      *
      * @param section The <tt>ChatSection</tt> to add
-     * @param index The index to add to
+     * @param index   The index to add to
      * @return The current <tt>ChatSlide</tt>
      */
     public ChatSlide addSection(ChatSection section, int index)
@@ -69,6 +69,17 @@ public class ChatSlide
         ChatSection section = new ChatSection(plugin);
         sections.add(section);
         return section;
+    }
+
+    /**
+     * Get a <tt>ChatSection</tt> based off of the index of the section
+     *
+     * @param index The index of the section to get
+     * @return The requested section
+     */
+    public ChatSection getSection(int index)
+    {
+        return sections.get(index);
     }
 
     /**

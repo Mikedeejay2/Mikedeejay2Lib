@@ -74,8 +74,8 @@ public abstract class DataFile
 
     /**
      * Resets this file's data to the default file specified in the jar.
-     * DO NOT use this method if this file does not exist in this plugin's jar. <p>
-     *
+     * DO NOT use this method if this file does not exist in this plugin's jar.
+     * <p>
      * This method does the following in order:
      * <ol>
      *      <li>Delete the file from the disk</li>
@@ -95,8 +95,8 @@ public abstract class DataFile
     }
 
     /**
-     * Resets this file's data to nothing. <p>
-     *
+     * Resets this file's data to nothing.
+     * <p>
      * This method does the following in order:
      * <ol>
      *      <li>Delete the file from the disk</li>
@@ -172,8 +172,8 @@ public abstract class DataFile
     /**
      * Update this file from the jar, keeping existing values but adding any
      * new values that the jar file's version has but the disk's version does
-     * not. <p>
-     *
+     * not.
+     * <p>
      * This is useful for configs, especially when a config is updated so that the
      * user does not have to manually add new keys to the config.
      *

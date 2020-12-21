@@ -35,10 +35,10 @@ public class ParticleShapeCubeOutline implements ParticleShape
 
     /**
      * @param location The center location
-     * @param xWidth The X width
-     * @param yWidth The Y width
-     * @param zWidth The Z width
-     * @param density The density of particles
+     * @param xWidth   The X width
+     * @param yWidth   The Y width
+     * @param zWidth   The Z width
+     * @param density  The density of particles
      */
     public ParticleShapeCubeOutline(Location location, double xWidth, double yWidth, double zWidth, double density)
     {
@@ -51,8 +51,8 @@ public class ParticleShapeCubeOutline implements ParticleShape
     }
 
     /**
-     * @param loc1 First location
-     * @param loc2 Second location
+     * @param loc1    First location
+     * @param loc2    Second location
      * @param density The density of particles
      */
     public ParticleShapeCubeOutline(Location loc1, Location loc2, double density)

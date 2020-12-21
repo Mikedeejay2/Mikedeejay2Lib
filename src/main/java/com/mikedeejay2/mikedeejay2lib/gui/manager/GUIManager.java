@@ -42,7 +42,7 @@ public class GUIManager
      * {@link GUIManager#getPlayer(Player)} automatically runs this method,
      * so you don't have to run this yourself.
      *
-     * @param player
+     * @param player The player to check for
      */
     public void validCheck(Player player)
     {

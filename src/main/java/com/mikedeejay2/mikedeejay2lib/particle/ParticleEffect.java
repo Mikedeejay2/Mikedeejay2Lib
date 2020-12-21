@@ -121,13 +121,14 @@ public class ParticleEffect
      * Get a <tt>ParticleShape</tt> from this effect by the class of the shape
      *
      * @param shapeClass The class of the shape to get
+     * @param <T>        The shape type
      * @return The requested <tt>ParticleShape</tt>, null if not found
      */
-    public ParticleShape getShape(Class<? extends ParticleShape> shapeClass)
+    public <T extends ParticleShape> T getShape(Class<T> shapeClass)
     {
         for(ParticleShape shape : shapes)
         {
-            if(shapeClass == shape.getClass()) return shape;
+            if(shapeClass == shape.getClass()) return (T) shape;
         }
         return null;
     }
@@ -172,7 +173,7 @@ public class ParticleEffect
      * Add a <tt>ParticleEModule</tt> to this effect at a specified index
      *
      * @param module The module to add
-     * @param index The index to add the module at
+     * @param index  The index to add the module at
      * @return A reference to this <tt>ParticleEffect</tt>
      */
     public ParticleEffect addModule(ParticleEModule module, int index)
@@ -264,13 +265,14 @@ public class ParticleEffect
      * Get a <tt>ParticleEModule</tt> from this effect based off of the index of the module
      *
      * @param moduleClass The class of the module to get
+     * @param <T>         The type of particle module
      * @return The requested <tt>ParticleEModule</tt>, null if not found
      */
-    public ParticleEModule getModule(Class<? extends ParticleEModule> moduleClass)
+    public <T extends ParticleEModule> T getModule(Class<T> moduleClass)
     {
         for(ParticleEModule module : modules)
         {
-            if(moduleClass == module.getClass()) return module;
+            if(moduleClass == module.getClass()) return (T) module;
         }
         return null;
     }
@@ -288,9 +290,11 @@ public class ParticleEffect
 
     /**
      * Process all data from <tt>ParticleShapes</tt> and turn it into raw vectors
-     * for use when displaying the particles. <p>
+     * for use when displaying the particles.
+     * <p>
      * This is the most intensive part of the particle system, only bake when absolutely
-     * necessary. <p>
+     * necessary.
+     * <p>
      * Bake time varies between density of shapes, amount of shapes, and complexity
      * of shapes. Average time can be between 0.5ms to 3ms.
      *
@@ -322,9 +326,9 @@ public class ParticleEffect
         if(updated) return this;
         List<Vector> newList = new ArrayList<>();
         Vector originVec = origin.toVector();
-        double rotX = rotationVec.getX();
-        double rotY = rotationVec.getY();
-        double rotZ = rotationVec.getZ();
+        double rotX      = rotationVec.getX();
+        double rotY      = rotationVec.getY();
+        double rotZ      = rotationVec.getZ();
         for(Vector vector : untranslatedVecs)
         {
             Vector newVec = vector.clone();
@@ -361,13 +365,13 @@ public class ParticleEffect
     public ParticleEffect updateSystem(ParticleSystem system)
     {
         if(system.isUpdated()) return this;
-        Vector originVec = system.getOrigin().toVector();
-        Vector sysScaleVec = system.getScaleVec();
-        Vector sysRotationVec = system.getRotationVec();
+        Vector originVec         = system.getOrigin().toVector();
+        Vector sysScaleVec       = system.getScaleVec();
+        Vector sysRotationVec    = system.getRotationVec();
         Vector sysTranslationVec = system.getTranslationVec();
-        double rotX = sysRotationVec.getX();
-        double rotY = sysRotationVec.getY();
-        double rotZ = sysRotationVec.getZ();
+        double rotX              = sysRotationVec.getX();
+        double rotY              = sysRotationVec.getY();
+        double rotZ              = sysRotationVec.getZ();
         for(Vector vector : translatedVecs)
         {
             if(sysScaleVec.getX() != 1.0 || sysScaleVec.getY() != 1.0 || sysScaleVec.getZ() != 1.0)
@@ -420,7 +424,8 @@ public class ParticleEffect
     }
 
     /**
-     * Get the list of all untranslated vectors of this <tt>ParticleEffect</tt>. <p>
+     * Get the list of all untranslated vectors of this <tt>ParticleEffect</tt>.
+     * <p>
      * Modifying this list without cloning it could result in concurrency issues if
      * the particle is currently being displayed!
      *
@@ -432,7 +437,8 @@ public class ParticleEffect
     }
 
     /**
-     * Get the list of all translated vectors of this <tt>ParticleEffect</tt> <p>
+     * Get the list of all translated vectors of this <tt>ParticleEffect</tt>
+     * <p>
      * Modifying this list without cloning it could result in concurrency issues if
      * the particle is currently being displayed!
      *
@@ -454,7 +460,8 @@ public class ParticleEffect
     }
 
     /**
-     * Get the scale vector of this <tt>ParticleEffect</tt>. <p>
+     * Get the scale vector of this <tt>ParticleEffect</tt>.
+     * <p>
      * If modified, {@link ParticleEffect#setScaleVec(Vector)} should also
      * be called to propagate updates.
      *
@@ -466,7 +473,8 @@ public class ParticleEffect
     }
 
     /**
-     * Get the rotation vector of this <tt>ParticleEffect</tt>. <p>
+     * Get the rotation vector of this <tt>ParticleEffect</tt>.
+     * <p>
      * If modified, {@link ParticleEffect#setRotationVec(Vector)} should also
      * be called to propagate updates.
      *
@@ -478,7 +486,8 @@ public class ParticleEffect
     }
 
     /**
-     * Get the translation vector of this <tt>ParticleEffect</tt>. <p>
+     * Get the translation vector of this <tt>ParticleEffect</tt>.
+     * <p>
      * If modified, {@link ParticleEffect#setScaleVec(Vector)} should also
      * be called to propagate updates.
      *
@@ -490,7 +499,8 @@ public class ParticleEffect
     }
 
     /**
-     * Get the origin location of this <tt>ParticleEffect</tt>. <p>
+     * Get the origin location of this <tt>ParticleEffect</tt>.
+     * <p>
      * If modified, {@link ParticleEffect#setOrigin(Location)} should also
      * be called to propagate updates.
      *
@@ -533,7 +543,8 @@ public class ParticleEffect
     }
 
     /**
-     * Set the scale vector for this <tt>ParticleEffect</tt>. <p>
+     * Set the scale vector for this <tt>ParticleEffect</tt>.
+     * <p>
      * This method must be called when updating the scale vector in order
      * to propagate updates.
      *
@@ -546,7 +557,8 @@ public class ParticleEffect
     }
 
     /**
-     * Set the rotation vector for this <tt>ParticleEffect</tt>. <p>
+     * Set the rotation vector for this <tt>ParticleEffect</tt>.
+     * <p>
      * This method must be called when updating the rotation vector in order
      * to propagate updates.
      *
@@ -559,7 +571,8 @@ public class ParticleEffect
     }
 
     /**
-     * Set the translation vector for this <tt>ParticleEffect</tt>. <p>
+     * Set the translation vector for this <tt>ParticleEffect</tt>.
+     * <p>
      * This method must be called when updating the translation vector in order
      * to propagate updates.
      *
@@ -572,7 +585,8 @@ public class ParticleEffect
     }
 
     /**
-     * Set the origin location for this <tt>ParticleEffect</tt> <p>
+     * Set the origin location for this <tt>ParticleEffect</tt>
+     * <p>
      * This method must be called when updating the origin location in order
      * to propagate updates.
      *

@@ -21,14 +21,10 @@ public enum TimeType
     {
         switch(this)
         {
-            case TICK:
-                return 1;
-            case SECOND:
-                return 20;
-            case MINUTE:
-                return 1200;
-            case HOUR:
-                return 72000;
+            case TICK: return 1;
+            case SECOND: return 20;
+            case MINUTE: return 1200;
+            case HOUR: return 72000;
         }
         return -1;
     }
@@ -42,14 +38,10 @@ public enum TimeType
     {
         switch(this)
         {
-            case TICK:
-                return SECOND;
-            case SECOND:
-                return MINUTE;
-            case MINUTE:
-                return HOUR;
-            case HOUR:
-                return TICK;
+            case TICK: return SECOND;
+            case SECOND: return MINUTE;
+            case MINUTE: return HOUR;
+            case HOUR: return TICK;
         }
         return null;
     }
@@ -63,14 +55,10 @@ public enum TimeType
     {
         switch(this)
         {
-            case TICK:
-                return "Tick";
-            case SECOND:
-                return "Second";
-            case MINUTE:
-                return "Minute";
-            case HOUR:
-                return "Hour";
+            case TICK: return "Tick";
+            case SECOND: return "Second";
+            case MINUTE: return "Minute";
+            case HOUR: return "Hour";
         }
         return null;
     }

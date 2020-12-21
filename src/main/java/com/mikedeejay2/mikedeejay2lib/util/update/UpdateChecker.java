@@ -15,12 +15,16 @@ import java.io.Reader;
 import java.net.URL;
 
 /**
- * An update checker that checks for a plugin for updates based off of its Github repository. <p>
+ * An update checker that checks for a plugin for updates based off of its Github repository.
+ * <p>
  * This class accesses the website <tt>api.github.com</tt>, if the Github API is down this update checker
- * won't work. <p>
- * The update checker must be initialized using the {@link UpdateChecker#init(String, String)} method. <p>
- * The method {@link UpdateChecker#checkForUpdates(int)} is the recommended method for checking for updates. <p>
- * If an update is found a message will be thrown to console.
+ * won't work.
+ * <p>
+ * The update checker must be initialized using the {@link UpdateChecker#init(String, String)} method.
+ * <p>
+ * The method {@link UpdateChecker#checkForUpdates(int)} is the recommended method for checking for updates.
+ * <p>
+ * If an update is found a message will be printed to console.
  *
  * @author Mikedeejay2
  */

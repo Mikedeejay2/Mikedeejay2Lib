@@ -23,7 +23,6 @@ import java.util.Set;
  *
  * @param <D> The DataFile type that is being accessed.
  * @param <T> The default return type of the Section Accessor, see <tt>get</tt> and <tt>set</tt> methods
- *
  * @author Mikedeejay2
  */
 public abstract class SectionAccessor<D extends DataFile, T>
@@ -50,7 +49,7 @@ public abstract class SectionAccessor<D extends DataFile, T>
     /**
      * Set a generic object to this section
      *
-     * @param name The name of the object to set
+     * @param name   The name of the object to set
      * @param object The object that will be set
      */
     public abstract void set(String name, T object);

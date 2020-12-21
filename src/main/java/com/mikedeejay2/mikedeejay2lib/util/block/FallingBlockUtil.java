@@ -12,7 +12,7 @@ import java.util.Random;
 
 public final class FallingBlockUtil
 {
-    private static Random random = new Random();
+    private static final Random random = new Random();
 
     /**
      * Make a block fall based off of a location
@@ -32,7 +32,7 @@ public final class FallingBlockUtil
     /**
      * Make a block explode and turn into a falling block with a random velocity
      *
-     * @param block The block to explode
+     * @param block         The block to explode
      * @param explosiveness The explosiveness (velocity) of the block
      * @return The falling block instance
      */

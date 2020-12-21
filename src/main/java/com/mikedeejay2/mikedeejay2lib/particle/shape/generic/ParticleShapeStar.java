@@ -24,9 +24,9 @@ public class ParticleShapeStar implements ParticleShape
 
     /**
      * @param location The center location
-     * @param radius The radius
-     * @param density The density of particles
-     * @param points The amount of points on the star
+     * @param radius   The radius
+     * @param density  The density of particles
+     * @param points   The amount of points on the star
      */
     public ParticleShapeStar(Location location, double radius, double density, int points)
     {

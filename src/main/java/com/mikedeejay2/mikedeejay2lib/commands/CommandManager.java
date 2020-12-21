@@ -6,7 +6,9 @@ import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 
 /**
  * Manages a command with subcommands
@@ -18,20 +20,18 @@ public class CommandManager implements CommandExecutor
     protected final PluginBase plugin;
     protected ArrayList<AbstractSubCommand> commands = new ArrayList<>();
     private CustomTabCompleter completer;
+    protected String defaultSubCommand;
 
     public String main;
 
     public CommandManager(PluginBase plugin)
     {
         this.plugin = plugin;
+        this.defaultSubCommand = "";
     }
-
-    // Add new subcommands here:
-    // example: public String help = "help";
 
     /**
      * Setup the command manager by initializing all subcommands
-     * This should only be called after AbstractCommandManager#setCommandName() has been called
      */
     public void setup(String commandName)
     {
@@ -40,18 +40,15 @@ public class CommandManager implements CommandExecutor
 
         completer = new CustomTabCompleter(plugin);
         plugin.getCommand(main).setTabCompleter(completer);
-
-        // Add new subcommands here:
-        // example: this.commands.add(new HelpCommand());
     }
 
     /**
      * Receive a command
      *
-     * @param sender The CommandSender that sent the command
+     * @param sender  The CommandSender that sent the command
      * @param command The command that was sent
-     * @param label The label
-     * @param args The command arguments (subcommands)
+     * @param label   The label
+     * @param args    The command arguments (subcommands)
      * @return Successful or not
      */
     @Override
@@ -62,7 +59,7 @@ public class CommandManager implements CommandExecutor
             if(args.length == 0)
             {
                 args = new String[1];
-                args[0] = "help";
+                args[0] = defaultSubCommand;
             }
 
             AbstractSubCommand target = this.getSubcommand(args[0]);
@@ -92,10 +89,10 @@ public class CommandManager implements CommandExecutor
             {
                 target.onCommand(sender, args);
             }
-            catch(Exception e)
+            catch(Exception exception)
             {
                 plugin.chat().sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "command.errors.general"));
-                e.printStackTrace();
+                exception.printStackTrace();
             }
         }
 
@@ -110,23 +107,23 @@ public class CommandManager implements CommandExecutor
      */
     public AbstractSubCommand getSubcommand(String name)
     {
-        for(AbstractSubCommand sc : this.commands)
+        for(AbstractSubCommand subcommand : this.commands)
         {
-            if(sc.name().equalsIgnoreCase(name))
+            if(subcommand.name().equalsIgnoreCase(name))
             {
-                return sc;
+                return subcommand;
             }
 
             String[] aliases;
-            int length = (aliases = sc.aliases()).length;
+            int length = (aliases = subcommand.aliases()).length;
 
-            for(int var5 = 0; var5 < length; ++var5)
+            for(int i = 0; i < length; ++i)
             {
-                String alias = aliases[var5];
+                String alias = aliases[i];
 
                 if(name.equalsIgnoreCase(alias))
                 {
-                    return sc;
+                    return subcommand;
                 }
             }
         }
@@ -183,5 +180,15 @@ public class CommandManager implements CommandExecutor
     public String getBaseCommand()
     {
         return main;
+    }
+
+    public String getDefaultSubCommand()
+    {
+        return defaultSubCommand;
+    }
+
+    public void setDefaultSubCommand(String defaultSubCommand)
+    {
+        this.defaultSubCommand = defaultSubCommand;
     }
 }

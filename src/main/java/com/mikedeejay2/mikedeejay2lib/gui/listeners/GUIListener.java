@@ -7,7 +7,10 @@ import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.inventory.*;
+import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.event.inventory.InventoryCloseEvent;
+import org.bukkit.event.inventory.InventoryDragEvent;
+import org.bukkit.event.inventory.InventoryOpenEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 
@@ -39,10 +42,10 @@ public class GUIListener implements Listener
         PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
         if(!playerGUI.isGuiOpened()) return;
 
-        GUIContainer curGUI = playerGUI.getGUI();
-        Inventory clickedInventory = event.getClickedInventory();
-        Inventory inventory = event.getInventory();
-        int slot = event.getSlot();
+        GUIContainer curGUI           = playerGUI.getGUI();
+        Inventory    clickedInventory = event.getClickedInventory();
+        Inventory    inventory        = event.getInventory();
+        int          slot             = event.getSlot();
 
         if(clickedInventory != inventory)
         {
@@ -97,12 +100,12 @@ public class GUIListener implements Listener
     @EventHandler
     public void onOpen(InventoryOpenEvent event)
     {
-        Player player = (Player) event.getPlayer();
-        GUIManager manager = plugin.guiManager();
+        Player     player    = (Player) event.getPlayer();
+        GUIManager manager   = plugin.guiManager();
         if(!manager.containsPlayer(player)) return;
-        PlayerGUI playerGUI = manager.getPlayer(player);
-        Inventory guiInv = playerGUI.getGUI().getInventory();
-        Inventory playerInv = event.getInventory();
+        PlayerGUI  playerGUI = manager.getPlayer(player);
+        Inventory  guiInv    = playerGUI.getGUI().getInventory();
+        Inventory  playerInv = event.getInventory();
         if(guiInv != playerInv) return;
         playerGUI.setGUIState(true);
     }

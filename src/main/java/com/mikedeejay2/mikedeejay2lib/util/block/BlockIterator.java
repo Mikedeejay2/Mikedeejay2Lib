@@ -12,13 +12,13 @@ public class BlockIterator
     /**
      * Iterate through all blocks around a location in a square.
      *
-     * @param loc The location in which to iterate blocks around
-     * @param xWidth The width of the iteration in the X direction
-     * @param yWidth The width of the iteration in the Y direction
-     * @param zWidth The width of the iteration in the Z direction
+     * @param loc      The location in which to iterate blocks around
+     * @param xWidth   The width of the iteration in the X direction
+     * @param yWidth   The width of the iteration in the Y direction
+     * @param zWidth   The width of the iteration in the Z direction
      * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
-     * @param plugin The plugin's instance to use
-     * @param async Whether this method should run asynchronously or not
+     * @param plugin   The plugin's instance to use
+     * @param async    Whether this method should run asynchronously or not
      */
     public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockRunnable runnable, PluginBase plugin, boolean async)
     {
@@ -34,14 +34,15 @@ public class BlockIterator
         if(async) iteration.runTaskAsynchronously(plugin);
         else iteration.runTask(plugin);
     }
+
     /**
      * Iterate through all blocks around a location in a hollow square.
      *
-     * @param loc1 The first location of the cube
-     * @param loc2 The second location of the cube
+     * @param loc1     The first location of the cube
+     * @param loc2     The second location of the cube
      * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
-     * @param plugin The plugin's instance to use
-     * @param async Whether this method should run asynchronously or not
+     * @param plugin   The plugin's instance to use
+     * @param async    Whether this method should run asynchronously or not
      */
     public static void iterateBlocksHollow(Location loc1, Location loc2, BlockRunnable runnable, PluginBase plugin, boolean async)
     {
@@ -61,11 +62,11 @@ public class BlockIterator
     /**
      * Iterate through all blocks around a location in a square.
      *
-     * @param loc1 The first location of the cube
-     * @param loc2 The second location of the cube
+     * @param loc1     The first location of the cube
+     * @param loc2     The second location of the cube
      * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
-     * @param plugin The plugin's instance to use
-     * @param async Whether this method should run asynchronously or not
+     * @param plugin   The plugin's instance to use
+     * @param async    Whether this method should run asynchronously or not
      */
     public static void iterateBlocks(Location loc1, Location loc2, BlockRunnable runnable, PluginBase plugin, boolean async)
     {
@@ -81,16 +82,17 @@ public class BlockIterator
         if(async) iteration.runTaskAsynchronously(plugin);
         else iteration.runTask(plugin);
     }
+
     /**
      * Iterate through all blocks around a location in a hollow square.
      *
-     * @param loc The location in which to iterate blocks around
-     * @param xWidth The width of the iteration in the X direction
-     * @param yWidth The width of the iteration in the Y direction
-     * @param zWidth The width of the iteration in the Z direction
+     * @param loc      The location in which to iterate blocks around
+     * @param xWidth   The width of the iteration in the X direction
+     * @param yWidth   The width of the iteration in the Y direction
+     * @param zWidth   The width of the iteration in the Z direction
      * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
-     * @param plugin The plugin's instance to use
-     * @param async Whether this method should run asynchronously or not
+     * @param plugin   The plugin's instance to use
+     * @param async    Whether this method should run asynchronously or not
      */
     public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockRunnable runnable, PluginBase plugin, boolean async)
     {
@@ -110,13 +112,13 @@ public class BlockIterator
     /**
      * Iterate through all blocks around a location in a square outline.
      *
-     * @param loc The location in which to iterate blocks around
-     * @param xWidth The width of the iteration in the X direction
-     * @param yWidth The width of the iteration in the Y direction
-     * @param zWidth The width of the iteration in the Z direction
+     * @param loc      The location in which to iterate blocks around
+     * @param xWidth   The width of the iteration in the X direction
+     * @param yWidth   The width of the iteration in the Y direction
+     * @param zWidth   The width of the iteration in the Z direction
      * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
-     * @param plugin The plugin's instance to use
-     * @param async Whether this method should run asynchronously or not
+     * @param plugin   The plugin's instance to use
+     * @param async    Whether this method should run asynchronously or not
      */
     public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockRunnable runnable, PluginBase plugin, boolean async)
     {
@@ -137,11 +139,11 @@ public class BlockIterator
     /**
      * Iterate through all blocks around a location in a square outline.
      *
-     * @param loc1 The first location of the cube
-     * @param loc2 The second location of the cube
+     * @param loc1     The first location of the cube
+     * @param loc2     The second location of the cube
      * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
-     * @param plugin The plugin's instance to use
-     * @param async Whether this method should run asynchronously or not
+     * @param plugin   The plugin's instance to use
+     * @param async    Whether this method should run asynchronously or not
      */
     public static void iterateBlocksOutline(Location loc1, Location loc2, BlockRunnable runnable, PluginBase plugin, boolean async)
     {
@@ -161,11 +163,11 @@ public class BlockIterator
     /**
      * Iterate through all blocks in a sphere.
      *
-     * @param loc The location in which to iterate blocks around
-     * @param radius The radius of the sphere to iterate through
+     * @param loc      The location in which to iterate blocks around
+     * @param radius   The radius of the sphere to iterate through
      * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
-     * @param plugin The plugin's instance to use
-     * @param async Whether this method should run asynchronously or not
+     * @param plugin   The plugin's instance to use
+     * @param async    Whether this method should run asynchronously or not
      */
     public static void iterateBlocksSphere(Location loc, double radius, BlockRunnable runnable, PluginBase plugin, boolean async)
     {
@@ -185,11 +187,11 @@ public class BlockIterator
     /**
      * Iterate through all blocks in a hollow sphere.
      *
-     * @param loc The location in which to iterate blocks around
-     * @param radius The radius of the sphere to iterate through
+     * @param loc      The location in which to iterate blocks around
+     * @param radius   The radius of the sphere to iterate through
      * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
-     * @param plugin The plugin's instance to use
-     * @param async Whether this method should run asynchronously or not
+     * @param plugin   The plugin's instance to use
+     * @param async    Whether this method should run asynchronously or not
      */
     public static void iterateBlocksSphereHollow(Location loc, double radius, BlockRunnable runnable, PluginBase plugin, boolean async)
     {

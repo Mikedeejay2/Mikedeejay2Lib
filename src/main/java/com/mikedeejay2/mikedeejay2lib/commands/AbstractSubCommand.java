@@ -5,7 +5,7 @@ import org.bukkit.command.CommandSender;
 /**
  * A base to all of the subcommands of all subcommands
  *
- * @author Mikedeejay2 (Originally from a tutorial)
+ * @author Mikedeejay2
  */
 public abstract class AbstractSubCommand
 {
@@ -13,7 +13,7 @@ public abstract class AbstractSubCommand
      * When this subcommand is run, onCommand is run
      *
      * @param sender The CommandSender that sent the command
-     * @param args The arguments sent with the command
+     * @param args   The arguments sent with the command
      */
     public abstract void onCommand(CommandSender sender, String[] args);
 

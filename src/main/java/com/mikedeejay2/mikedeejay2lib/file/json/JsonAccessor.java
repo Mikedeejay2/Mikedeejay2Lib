@@ -697,7 +697,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
      * Add a <tt>ConfigurationSerializable</tt> object to a <tt>JsonObject</tt>
      *
      * @param jsonObject The <tt>JsonObject</tt> to add the data to
-     * @param data The data to add to the jsonObject
+     * @param data       The data to add to the jsonObject
      */
     private void setSerializedInternal(JsonObject jsonObject, ConfigurationSerializable data)
     {
@@ -725,8 +725,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
      * Get a <tt>ConfigurationSerializable</tt> object from a <tt>JsonObject</tt>
      *
      * @param jsonObject Object to get the <tt>ConfigurationSerializable</tt> from
-     * @param clazz The class that the object should be serialized to
-     * @param <T> The type of <tt>ConfigurationSerializable</tt>, same as class type
+     * @param clazz      The class that the object should be serialized to
+     * @param <T>        The type of <tt>ConfigurationSerializable</tt>, same as class type
      * @return The requested <tt>ConfigurationSerializable</tt>
      */
     private <T extends ConfigurationSerializable> T getSerializedInternal(JsonObject jsonObject, Class<T> clazz)

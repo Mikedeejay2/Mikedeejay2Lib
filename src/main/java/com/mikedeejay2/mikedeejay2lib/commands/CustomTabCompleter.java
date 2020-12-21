@@ -27,10 +27,10 @@ public class CustomTabCompleter implements TabCompleter
      * This class is meant to autocomplete the /commandname command with options to make
      * typing out commands easier.
      *
-     * @param sender The CommandSender that sent the command
+     * @param sender  The CommandSender that sent the command
      * @param command The command that was sent
-     * @param alias The alias of the command
-     * @param args The command's arguments (subcommands)
+     * @param alias   The alias of the command
+     * @param args    The command's arguments (subcommands)
      * @return Return a list of autocomplete strings
      */
     @Override

@@ -27,7 +27,7 @@ public class AnimationFrame
     /**
      * Constructor for constructing an <tt>ITEM</tt> frame
      *
-     * @param item The new item that this frame will apply
+     * @param item   The new item that this frame will apply
      * @param period The period between this frame and the next frame
      */
     public AnimationFrame(ItemStack item, long period)
@@ -40,11 +40,11 @@ public class AnimationFrame
     /**
      * Constructor for constructing a <tt>MOVEMENT</tt> frame
      *
-     * @param row The row that the item will move to
-     * @param col The column that the item will move to
-     * @param movement The <tt>MovementType</tt> of this frame
+     * @param row              The row that the item will move to
+     * @param col              The column that the item will move to
+     * @param movement         The <tt>MovementType</tt> of this frame
      * @param relativeMovement Whether or not to use relative (local) movement
-     * @param period The period between this frame and the next frame
+     * @param period           The period between this frame and the next frame
      */
     public AnimationFrame(int row, int col, MovementType movement, boolean relativeMovement, long period)
     {
@@ -59,12 +59,12 @@ public class AnimationFrame
     /**
      * Constructor for constructing a <tt>BOTH</tt> (Item and movement) frame
      *
-     * @param item The new item that this frame will apply
-     * @param row The row that the item will move to
-     * @param col The column that the item will move to
-     * @param movement The <tt>MovementType</tt> of this frame
+     * @param item             The new item that this frame will apply
+     * @param row              The row that the item will move to
+     * @param col              The column that the item will move to
+     * @param movement         The <tt>MovementType</tt> of this frame
      * @param relativeMovement Whether or not to use relative (local) movement
-     * @param period The period between this frame and the next frame
+     * @param period           The period between this frame and the next frame
      */
     public AnimationFrame(ItemStack item, int row, int col, MovementType movement, boolean relativeMovement, long period)
     {

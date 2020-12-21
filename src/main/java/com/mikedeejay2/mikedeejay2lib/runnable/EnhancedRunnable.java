@@ -1,13 +1,13 @@
 package com.mikedeejay2.mikedeejay2lib.runnable;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.plugin.Plugin;
+import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
 
 /**
- * EnhancedRunnable does several things on top of BukkitRunnable. <p>
- *
+ * EnhancedRunnable does several things on top of BukkitRunnable.
+ * <p>
  * The features that this class adds is:
  * <ul>
  *     <li>A counter that increments by 1 every run, useful for seeing if this runnable is at a certain amount of runs</li>
@@ -82,6 +82,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
 
     /**
      * Attempts to cancel this task. Overridden to add functionality to onLastRun()
+     *
      * @see BukkitRunnable#cancel()
      * @see EnhancedRunnable#onLastRun()
      */
@@ -125,7 +126,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * Schedules this to run after the specified number of server ticks.
      *
      * @param plugin the reference to the plugin scheduling task
-     * @param delay the ticks to wait before running the task
+     * @param delay  the ticks to wait before running the task
      * @return a BukkitTask that contains the id number
      */
     @Override
@@ -151,7 +152,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * Schedules this to run asynchronously after the specified number of server ticks.
      *
      * @param plugin the reference to the plugin scheduling task
-     * @param delay the ticks to wait before running the task
+     * @param delay  the ticks to wait before running the task
      * @return a BukkitTask that contains the id number
      */
     @Override
@@ -177,7 +178,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * Schedules this to repeatedly run until cancelled, starting after the specified number of server ticks.
      *
      * @param plugin the reference to the plugin scheduling task
-     * @param delay the ticks to wait before running the task
+     * @param delay  the ticks to wait before running the task
      * @param period the ticks to wait between runs
      * @return a BukkitTask that contains the id number
      */
@@ -217,7 +218,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * Schedules this to repeatedly run asynchronously until cancelled, starting after the specified number of server ticks.
      *
      * @param plugin the reference to the plugin scheduling task
-     * @param delay the ticks to wait before running the task
+     * @param delay  the ticks to wait before running the task
      * @param period the ticks to wait between runs
      * @return a BukkitTask that contains the id number
      */
@@ -258,9 +259,9 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * Stops when the runnable has been run for count times
      *
      * @param plugin the reference to the plugin scheduling task
-     * @param delay the ticks to wait before running the task
+     * @param delay  the ticks to wait before running the task
      * @param period the ticks to wait between runs
-     * @param count the amount of times that this runnable should be run before it is stopped
+     * @param count  the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
      */
     public synchronized BukkitTask runTaskTimerCounted(Plugin plugin, long delay, long period, long count)
@@ -302,7 +303,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * Stops when the runnable has been run for count times
      *
      * @param period the ticks to wait between runs
-     * @param count the amount of times that this runnable should be run before it is stopped
+     * @param count  the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
      */
     public synchronized BukkitTask runTaskTimerCounted(Plugin plugin, long period, long count)
@@ -316,9 +317,9 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * Stops when the runnable has been run for count times
      *
      * @param plugin the reference to the plugin scheduling task
-     * @param delay the ticks to wait before running the task
+     * @param delay  the ticks to wait before running the task
      * @param period the ticks to wait between runs
-     * @param count the amount of times that this runnable should be run before it is stopped
+     * @param count  the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
      */
     public synchronized BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin, long delay, long period, long count)
@@ -360,7 +361,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * Stops when the runnable has been run for count times
      *
      * @param period the ticks to wait between runs
-     * @param count the amount of times that this runnable should be run before it is stopped
+     * @param count  the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
      */
     public synchronized BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin, long period, long count)

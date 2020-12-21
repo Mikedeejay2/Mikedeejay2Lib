@@ -14,9 +14,13 @@ import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
 import org.bukkit.plugin.java.JavaPlugin;
 
 /**
- * The plugin base for plugins that use this library plugin.
- * This plugin base must be used if this library plugin is being used
- * because many classes in the library require a reference to a PluginBase.
+ * Main class for Mikedeejay2Lib.
+ * <p>
+ * <tt>PluginBase</tt> is a robust plugin class that extends {@link JavaPlugin} to
+ * add new functions. Check source code on Github to find all features, planned additions,
+ * bugs, etc.
+ * <p>
+ * Source code: <a href="https://github.com/Mikedeejay2/Mikedeejay2Lib">https://github.com/Mikedeejay2/Mikedeejay2Lib</a>
  *
  * @author Mikedeejay2
  */

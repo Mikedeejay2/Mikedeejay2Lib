@@ -18,16 +18,16 @@ public class GUISwitchListPageEvent implements GUIEvent
     @Override
     public void execute(InventoryClickEvent event, GUIContainer gui)
     {
-        Player player = (Player) event.getWhoClicked();
-        ClickType clickType = event.getClick();
-        int slot = event.getSlot();
-        int row = gui.getRowFromSlot(slot);
-        int col = gui.getColFromSlot(slot);
-        GUIItem clicked = gui.getItem(row, col);
+        Player    player     = (Player) event.getWhoClicked();
+        ClickType clickType  = event.getClick();
+        int       slot       = event.getSlot();
+        int       row        = gui.getRowFromSlot(slot);
+        int       col        = gui.getColFromSlot(slot);
+        GUIItem   clicked    = gui.getItem(row, col);
         if(clickType != ClickType.LEFT) return;
-        String displayName = clicked.getNameView();
-        String[] split = displayName.split(" ");
-        int index = Integer.parseInt(split[split.length-1]);
+        String   displayName = clicked.getNameView();
+        String[] split       = displayName.split(" ");
+        int      index       = Integer.parseInt(split[split.length - 1]);
 
         gui.getModule(GUIListModule.class).toListPage(index, player, gui);
     }

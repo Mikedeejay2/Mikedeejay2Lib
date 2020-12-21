@@ -8,8 +8,8 @@ import java.util.*;
 /**
  * This Enhanced Yaml class inherits YamlConfiguration and is meant to be
  * a middle layer that adds extra processing and features to the YamlConfiguration
- * class. <p>
- *
+ * class.
+ * <p>
  * The main things that this class does is
  * <ul>
  *     <li>Adds the ability to add comments above keys in a yaml file</li>
@@ -201,10 +201,10 @@ public class EnhancedYaml extends YamlConfiguration
     /**
      * Get the path of a new key using several different params
      *
-     * @param currentPath The current path to the key that will be modified to reach the new path
-     * @param key The key (name of the key) to get the current path for
+     * @param currentPath      The current path to the key that will be modified to reach the new path
+     * @param key              The key (name of the key) to get the current path for
      * @param previousDeepness The previous deepness (layer) that the iterator was at
-     * @param deepness THe current deepness (layer) that the iterator is at
+     * @param deepness         THe current deepness (layer) that the iterator is at
      * @return The String of the path (ex. "my.new.path")
      */
     private String getPath(String currentPath, String key, int previousDeepness, int deepness)
@@ -222,8 +222,8 @@ public class EnhancedYaml extends YamlConfiguration
     /**
      * Compiles a comment for a specific key in the yaml file
      *
-     * @param lines All of the lines of the yaml file
-     * @param index The index that this method will be getting the comments for
+     * @param lines                All of the lines of the yaml file
+     * @param index                The index that this method will be getting the comments for
      * @param startingCommentIndex The starting comment index, the first line that the comments start on
      * @return The String of comments
      */
@@ -260,7 +260,7 @@ public class EnhancedYaml extends YamlConfiguration
     /**
      * Go back a certain amount of paths to get the right path
      *
-     * @param currentPath The String for the current path
+     * @param currentPath     The String for the current path
      * @param amountToRegress The amount of directories to backtrack on
      * @return The new path
      */

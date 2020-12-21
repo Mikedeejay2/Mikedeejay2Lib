@@ -61,12 +61,12 @@ public class GUILayer
     /**
      * Set an item to a new item in the GUI
      *
-     * @param row Row that should be set
-     * @param col Column that should be set
-     * @param material The material of the item
-     * @param amount The amount of the item
+     * @param row         Row that should be set
+     * @param col         Column that should be set
+     * @param material    The material of the item
+     * @param amount      The amount of the item
      * @param displayName The display of the new item
-     * @param loreString The lores of the item
+     * @param loreString  The lores of the item
      */
     public void setItem(int row, int col, Material material, int amount, String displayName, String... loreString)
     {
@@ -132,12 +132,12 @@ public class GUILayer
     /**
      * Set an item using a base64 head string
      *
-     * @param row Row that should be set
-     * @param col Column that should be set
-     * @param headStr The base 64 head string that should be used
-     * @param amount The amount of the item
+     * @param row         Row that should be set
+     * @param col         Column that should be set
+     * @param headStr     The base 64 head string that should be used
+     * @param amount      The amount of the item
      * @param displayName The display name of the item
-     * @param loreString The lore strings of the item
+     * @param loreString  The lore strings of the item
      */
     public void setItem(int row, int col, String headStr, int amount, String displayName, String... loreString)
     {
@@ -147,8 +147,8 @@ public class GUILayer
     /**
      * Set an item from an <tt>ItemStack</tt>
      *
-     * @param row Row that should be set
-     * @param col Column that should be set
+     * @param row   Row that should be set
+     * @param col   Column that should be set
      * @param stack The <tt>ItemStack</tt> to set the slot to
      */
     public void setItem(int row, int col, ItemStack stack)
@@ -161,8 +161,8 @@ public class GUILayer
     /**
      * Set an item from a <tt>GUIItem</tt>
      *
-     * @param row The row that should be set
-     * @param col The column that should be set
+     * @param row  The row that should be set
+     * @param col  The column that should be set
      * @param item The GUIItem to use
      */
     public void setItem(int row, int col, GUIItem item)
@@ -183,8 +183,8 @@ public class GUILayer
     /**
      * Set the move state of an item
      *
-     * @param row The row to set
-     * @param col The column to set
+     * @param row     The row to set
+     * @param col     The column to set
      * @param movable Whether the item is movable or not
      */
     public void setMoveState(int row, int col, boolean movable)
@@ -209,8 +209,8 @@ public class GUILayer
     /**
      * Set the <tt>GUIEventHandler</tt> for a slot
      *
-     * @param row The row to set
-     * @param col The column to set
+     * @param row    The row to set
+     * @param col    The column to set
      * @param events The events to set the slot to
      */
     public void setEventHandler(int row, int col, GUIEventHandler events)
@@ -222,8 +222,8 @@ public class GUILayer
     /**
      * Add a <tt>GUIEvent</tt> to a slot
      *
-     * @param row The row to set
-     * @param col The column to set
+     * @param row   The row to set
+     * @param col   The column to set
      * @param event The GUIEvent to add
      */
     public void addEvent(int row, int col, GUIEvent event)
@@ -235,8 +235,8 @@ public class GUILayer
     /**
      * Remove a <tt>GUIEvent</tt> from a slot based off of instance
      *
-     * @param row The row to remove
-     * @param col The column to remove
+     * @param row   The row to remove
+     * @param col   The column to remove
      * @param event The GUIEvent to remove
      */
     public void removeEvent(int row, int col, GUIEvent event)
@@ -248,8 +248,8 @@ public class GUILayer
     /**
      * Remove a <tt>GUIEvent</tt> from a slot based off of the event's class
      *
-     * @param row The row to remove
-     * @param col The column to remove
+     * @param row        The row to remove
+     * @param col        The column to remove
      * @param eventClass The class of the GUIEvent that should be removed
      */
     public void removeEvent(int row, int col, Class<? extends GUIEvent> eventClass)
@@ -261,8 +261,8 @@ public class GUILayer
     /**
      * Returns whether a row and a column contains a <tt>GUIEvent</tt> based off of instance
      *
-     * @param row The row to search in
-     * @param col The column to search in
+     * @param row   The row to search in
+     * @param col   The column to search in
      * @param event The event that should be searched for
      * @return Whether the slot contains the event
      */
@@ -275,8 +275,8 @@ public class GUILayer
     /**
      * Returns whether a row and a column contains a <tt>GUIEvent</tt> based off of the class of that event
      *
-     * @param row The row to search in
-     * @param col The column to search in
+     * @param row        The row to search in
+     * @param col        The column to search in
      * @param eventClass The class of the event that should be searched for
      * @return Whether the slot contains the event
      */
@@ -314,8 +314,8 @@ public class GUILayer
     /**
      * Swap the items between the first and second slot
      *
-     * @param row Row 1
-     * @param col Column 1
+     * @param row    Row 1
+     * @param col    Column 1
      * @param newRow Row 2
      * @param newCol Column 2
      */

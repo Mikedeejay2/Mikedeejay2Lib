@@ -1,12 +1,14 @@
 package com.mikedeejay2.mikedeejay2lib.util.math;
 
-import com.google.common.collect.Lists;
 import com.mikedeejay2.mikedeejay2lib.util.array.ArrayUtil;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * A util class for anything that manipulates vectors.
@@ -23,13 +25,13 @@ public final class MathUtil
     /**
      * Internal loop that iterates through x y z blocks, adding the vectors to the list as it goes
      *
-     * @param list List to add vectors to
-     * @param xStart The starting X position
-     * @param yStart The starting Y position
-     * @param zStart The starting Z position
-     * @param xEnd The ending X position
-     * @param yEnd The ending Y position
-     * @param zEnd The ending Z position
+     * @param list    List to add vectors to
+     * @param xStart  The starting X position
+     * @param yStart  The starting Y position
+     * @param zStart  The starting Z position
+     * @param xEnd    The ending X position
+     * @param yEnd    The ending Y position
+     * @param zEnd    The ending Z position
      * @param density The density of the vectors
      * @return The list
      */
@@ -70,8 +72,8 @@ public final class MathUtil
     /**
      * Get the vector around a circle based on a center location and a radius
      *
-     * @param center The center of the circle
-     * @param radius The radius of the circle
+     * @param center        The center of the circle
+     * @param radius        The radius of the circle
      * @param angleInRadian The angle in radians around the circle
      * @return The location of the angle around the circle
      */
@@ -95,8 +97,8 @@ public final class MathUtil
     /**
      * Get a list of vectors that represent a circle
      *
-     * @param loc The center location of the circle
-     * @param radius The radius of the circle
+     * @param loc     The center location of the circle
+     * @param radius  The radius of the circle
      * @param density The density of the circle (The amount of points around the circle that will be mapped)
      * @return The list of vectors of the circle
      */
@@ -114,8 +116,8 @@ public final class MathUtil
     /**
      * Get a list of locations that represent a circle
      *
-     * @param loc The center location of the circle
-     * @param radius The radius of the circle
+     * @param loc     The center location of the circle
+     * @param radius  The radius of the circle
      * @param density The density of the circle (The amount of points around the circle that will be mapped)
      * @return The list of locations of the circle
      */
@@ -129,8 +131,8 @@ public final class MathUtil
     /**
      * Get a list of vectors that represent a filled circle
      *
-     * @param loc The center location of the circle
-     * @param radius The radius of the circle
+     * @param loc     The center location of the circle
+     * @param radius  The radius of the circle
      * @param density The density of the circle (The amount of points around the circle that will be mapped)
      * @return The list of vectors of the circle
      */
@@ -163,8 +165,8 @@ public final class MathUtil
     /**
      * Get a list of locations that represent a filled circle
      *
-     * @param loc The center location of the circle
-     * @param radius The radius of the circle
+     * @param loc     The center location of the circle
+     * @param radius  The radius of the circle
      * @param density The density of the circle (The amount of points around the circle that will be mapped)
      * @return The list of locations of the circle
      */
@@ -180,9 +182,9 @@ public final class MathUtil
      *
      * @param origin Origin Vector
      * @param vector Vector that will be rotated
-     * @param degX The degrees in X to rotate the vector
-     * @param degY The degrees in Y to rotate the vector
-     * @param degZ The degrees in Z to rotate the vector
+     * @param degX   The degrees in X to rotate the vector
+     * @param degY   The degrees in Y to rotate the vector
+     * @param degZ   The degrees in Z to rotate the vector
      * @return The new rotated vector
      */
     public static Vector rotateAroundOrigin(Vector origin, Vector vector, double degX, double degY, double degZ)
@@ -197,9 +199,9 @@ public final class MathUtil
     /**
      * Get a velocity vector that points towards a location
      *
-     * @param current The current location
+     * @param current     The current location
      * @param destination The location that should be pointed towards
-     * @param multiplier The speed multiplier
+     * @param multiplier  The speed multiplier
      * @return The new velocity vector
      */
     public static Vector getFacingVector(Location current, Location destination, float multiplier)
@@ -212,9 +214,9 @@ public final class MathUtil
     /**
      * Get a velocity vector that points towards a vector
      *
-     * @param current The current vector
+     * @param current     The current vector
      * @param destination The vector that should be pointed towards
-     * @param multiplier The speed multiplier
+     * @param multiplier  The speed multiplier
      * @return The new velocity vector
      */
     public static Vector getFacingVector(Vector current, Vector destination, float multiplier)
@@ -227,8 +229,8 @@ public final class MathUtil
     /**
      * Get a list of vectors that create an outline of a sphere.
      *
-     * @param loc The origin location
-     * @param radius The radius of the sphere
+     * @param loc     The origin location
+     * @param radius  The radius of the sphere
      * @param density The density of the points of the sphere
      * @return A new list of vectors that create a sphere outline shape
      */
@@ -268,8 +270,8 @@ public final class MathUtil
     /**
      * Get a list of locations that create an outline of a sphere.
      *
-     * @param loc The origin location
-     * @param radius The radius of the sphere
+     * @param loc     The origin location
+     * @param radius  The radius of the sphere
      * @param density The density of the points of the sphere
      * @return A new list of locations that create a sphere outline shape
      */
@@ -283,8 +285,8 @@ public final class MathUtil
     /**
      * Get a list of vectors that create a filled sphere
      *
-     * @param loc The location of the origin of the sphere
-     * @param radius The radius of the sphere
+     * @param loc     The location of the origin of the sphere
+     * @param radius  The radius of the sphere
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <tt>List</tt> of vectors that create a filled sphere
      */
@@ -320,8 +322,8 @@ public final class MathUtil
     /**
      * Get a list of locations that create a filled sphere
      *
-     * @param loc The location of the origin of the sphere
-     * @param radius The radius of the sphere
+     * @param loc     The location of the origin of the sphere
+     * @param radius  The radius of the sphere
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <tt>List</tt> of locations that create a filled sphere
      */
@@ -335,10 +337,10 @@ public final class MathUtil
     /**
      * Get a list of vectors that create a filled cube
      *
-     * @param loc The location of the origin of the cube
-     * @param xWidth The X width of the cube
-     * @param yWidth The Y width of the cube
-     * @param zWidth The Z width of the cube
+     * @param loc     The location of the origin of the cube
+     * @param xWidth  The X width of the cube
+     * @param yWidth  The Y width of the cube
+     * @param zWidth  The Z width of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <tt>List</tt> of vectors that create a filled cube
      */
@@ -351,9 +353,9 @@ public final class MathUtil
         double startX = loc.getX() - xWidth;
         double startY = loc.getY() - yWidth;
         double startZ = loc.getZ() - zWidth;
-        double endX = loc.getX() + xWidth;
-        double endY = loc.getY() + yWidth;
-        double endZ = loc.getZ() + zWidth;
+        double endX   = loc.getX() + xWidth;
+        double endY   = loc.getY() + yWidth;
+        double endZ   = loc.getZ() + zWidth;
 
         return xyzLoop(list, startX, startY, startZ, endX, endY, endZ, density);
     }
@@ -361,10 +363,10 @@ public final class MathUtil
     /**
      * Get a list of locations that create a filled cube
      *
-     * @param loc The location of the origin of the cube
-     * @param xWidth The X width of the cube
-     * @param yWidth The Y width of the cube
-     * @param zWidth The Z width of the cube
+     * @param loc     The location of the origin of the cube
+     * @param xWidth  The X width of the cube
+     * @param yWidth  The Y width of the cube
+     * @param zWidth  The Z width of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <tt>List</tt> of locations that create a filled cube
      */
@@ -378,10 +380,10 @@ public final class MathUtil
     /**
      * Get a list of vectors that create a hollow cube
      *
-     * @param loc The location of the origin of the cube
-     * @param xWidth The X width of the cube
-     * @param yWidth The Y width of the cube
-     * @param zWidth The Z width of the cube
+     * @param loc     The location of the origin of the cube
+     * @param xWidth  The X width of the cube
+     * @param yWidth  The Y width of the cube
+     * @param zWidth  The Z width of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <tt>List</tt> of vectors that create a hollow cube
      */
@@ -418,10 +420,10 @@ public final class MathUtil
     /**
      * Get a list of locations that create a hollow cube
      *
-     * @param loc The location of the origin of the cube
-     * @param xWidth The X width of the cube
-     * @param yWidth The Y width of the cube
-     * @param zWidth The Z width of the cube
+     * @param loc     The location of the origin of the cube
+     * @param xWidth  The X width of the cube
+     * @param yWidth  The Y width of the cube
+     * @param zWidth  The Z width of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <tt>List</tt> of locations that create a hollow cube
      */
@@ -435,10 +437,10 @@ public final class MathUtil
     /**
      * Get a list of vectors that create an outline of a cube
      *
-     * @param loc The location of the origin of the cube
-     * @param xWidth The X width of the cube
-     * @param yWidth The Y width of the cube
-     * @param zWidth The Z width of the cube
+     * @param loc     The location of the origin of the cube
+     * @param xWidth  The X width of the cube
+     * @param yWidth  The Y width of the cube
+     * @param zWidth  The Z width of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <tt>List</tt> of vectors that create an outline of a cube
      */
@@ -486,10 +488,10 @@ public final class MathUtil
     /**
      * Get a list of locations that create an outline of a cube
      *
-     * @param loc The location of the origin of the cube
-     * @param xWidth The X width of the cube
-     * @param yWidth The Y width of the cube
-     * @param zWidth The Z width of the cube
+     * @param loc     The location of the origin of the cube
+     * @param xWidth  The X width of the cube
+     * @param yWidth  The Y width of the cube
+     * @param zWidth  The Z width of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <tt>List</tt> of locations that create an outline of a cube
      */
@@ -503,8 +505,8 @@ public final class MathUtil
     /**
      * Get a list of vectors that create a filled cube
      *
-     * @param loc1 The first location of the cube
-     * @param loc2 The second location of the cube
+     * @param loc1    The first location of the cube
+     * @param loc2    The second location of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <tt>List</tt> of vectors that create a filled cube
      */
@@ -524,8 +526,8 @@ public final class MathUtil
     /**
      * Get a list of locations that create a filled cube
      *
-     * @param loc1 The first location of the cube
-     * @param loc2 The second location of the cube
+     * @param loc1    The first location of the cube
+     * @param loc2    The second location of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <tt>List</tt> of locations that create a filled cube
      */
@@ -539,8 +541,8 @@ public final class MathUtil
     /**
      * Get a list of vectors that create a hollow cube
      *
-     * @param loc1 The first location of the cube
-     * @param loc2 The second location of the cube
+     * @param loc1    The first location of the cube
+     * @param loc2    The second location of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <tt>List</tt> of vectors that create a hollow cube
      */
@@ -568,8 +570,8 @@ public final class MathUtil
     /**
      * Get a list of locations that create a hollow cube
      *
-     * @param loc1 The first location of the cube
-     * @param loc2 The second location of the cube
+     * @param loc1    The first location of the cube
+     * @param loc2    The second location of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <tt>List</tt> of locations that create a hollow cube
      */
@@ -583,8 +585,8 @@ public final class MathUtil
     /**
      * Get a list of vectors that create an outline of a cube
      *
-     * @param loc1 The first location of the cube
-     * @param loc2 The second location of the cube
+     * @param loc1    The first location of the cube
+     * @param loc2    The second location of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <tt>List</tt> of vectors that create an outline of a cube
      */
@@ -624,8 +626,8 @@ public final class MathUtil
     /**
      * Get a list of locations that create an outline of a cube
      *
-     * @param loc1 The first location of the cube
-     * @param loc2 The second location of the cube
+     * @param loc1    The first location of the cube
+     * @param loc2    The second location of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <tt>List</tt> of locations that create an outline of a cube
      */
@@ -639,8 +641,8 @@ public final class MathUtil
     /**
      * Get a line based off of a starting, ending, and direction vector
      *
-     * @param start The start vector to use
-     * @param end The end vector to use
+     * @param start   The start vector to use
+     * @param end     The end vector to use
      * @param density The density of the line
      * @return The list of vectors that represent the line
      */
@@ -667,8 +669,8 @@ public final class MathUtil
     /**
      * Get a line based off of a starting and ending location
      *
-     * @param start The start location to use
-     * @param end The end location to use
+     * @param start   The start location to use
+     * @param end     The end location to use
      * @param density The density of the line
      * @return The list of locations that represent the line
      */
@@ -696,17 +698,17 @@ public final class MathUtil
      * Get a list of vectors that create a star
      *
      * @param location The location of the star
-     * @param size The size of the star
-     * @param density The density between each point
-     * @param points The amount of points of the star
+     * @param size     The size of the star
+     * @param density  The density between each point
+     * @param points   The amount of points of the star
      * @return A new <tt>List</tt> of locations that create a star
      */
     public static List<Vector> getStarVectors(Location location, double size, double density, int points)
     {
-        List<Vector> star = new ArrayList<>();
-        List<Vector> starEdge = new ArrayList<>();
-        double edgeAngle = 180.0 / points;
-        double curAngle = 0;
+        List<Vector> star      = new ArrayList<>();
+        List<Vector> starEdge  = new ArrayList<>();
+        double       edgeAngle = 180.0 / points;
+        double       curAngle  = 0;
         for(int i = 0; i < points; ++i)
         {
             double newAngle = i % 2 == 0 ? curAngle : curAngle + 180;
@@ -728,9 +730,9 @@ public final class MathUtil
      * Get a list of locations that create a star
      *
      * @param location The location of the star
-     * @param size The size of the star
-     * @param density The density between each point
-     * @param points The amount of points of the star
+     * @param size     The size of the star
+     * @param density  The density between each point
+     * @param points   The amount of points of the star
      * @return A new <tt>List</tt> of locations that create a star
      */
     public static List<Location> getStarLocations(Location location, double size, double density, int points)
@@ -744,9 +746,9 @@ public final class MathUtil
      * Get a list of vectors that create a shape with the specific amount of edges
      *
      * @param location The location of the shape
-     * @param size The size of the shape
-     * @param density The density between each point
-     * @param edges The amount of edges on the shape
+     * @param size     The size of the shape
+     * @param density  The density between each point
+     * @param edges    The amount of edges on the shape
      * @return A new <tt>List</tt> of locations that create a shape
      */
     public static List<Vector> getShapeVectors(Location location, double size, double density, int edges)
@@ -775,9 +777,9 @@ public final class MathUtil
      * Get a list of locations that create a shape with the specific amount of edges
      *
      * @param location The location of the shape
-     * @param size The size of the shape
-     * @param density The density between each point
-     * @param edges The amount of edges of the shape
+     * @param size     The size of the shape
+     * @param density  The density between each point
+     * @param edges    The amount of edges of the shape
      * @return A new <tt>List</tt> of locations that create a shape
      */
     public static List<Location> getShapeLocations(Location location, double size, double density, int edges)
@@ -790,9 +792,9 @@ public final class MathUtil
     /**
      * Get a list of vectors that create a hollow cylinder
      *
-     * @param center The center of the cylinder
-     * @param height The height of the cylinder
-     * @param radius The radius of the cylinder
+     * @param center  The center of the cylinder
+     * @param height  The height of the cylinder
+     * @param radius  The radius of the cylinder
      * @param density The density between each point
      * @return A new <tt>List</tt> of locations that create a cylinder
      */
@@ -813,9 +815,9 @@ public final class MathUtil
     /**
      * Get a list of locations that create a hollow cylinder
      *
-     * @param center The center of the cylinder
-     * @param height The height of the cylinder
-     * @param radius The radius of the cylinder
+     * @param center  The center of the cylinder
+     * @param height  The height of the cylinder
+     * @param radius  The radius of the cylinder
      * @param density The density between each point
      * @return A new <tt>List</tt> of locations that create a cylinder
      */
@@ -829,9 +831,9 @@ public final class MathUtil
     /**
      * Get a list of vectors that create a filled cylinder
      *
-     * @param center The center of the cylinder
-     * @param height The height of the cylinder
-     * @param radius The radius of the cylinder
+     * @param center  The center of the cylinder
+     * @param height  The height of the cylinder
+     * @param radius  The radius of the cylinder
      * @param density The density between each point
      * @return A new <tt>List</tt> of locations that create a cylinder
      */
@@ -852,9 +854,9 @@ public final class MathUtil
     /**
      * Get a list of locations that create a filled cylinder
      *
-     * @param center The center of the cylinder
-     * @param height The height of the cylinder
-     * @param radius The radius of the cylinder
+     * @param center  The center of the cylinder
+     * @param height  The height of the cylinder
+     * @param radius  The radius of the cylinder
      * @param density The density between each point
      * @return A new <tt>List</tt> of locations that create a cylinder
      */
@@ -869,7 +871,7 @@ public final class MathUtil
      * Offset a <tt>List</tt> of vectors by another <tt>Vector</tt>
      *
      * @param vectors The list of vectors that will be offset
-     * @param offset The vector to use that will offset the list of vectors
+     * @param offset  The vector to use that will offset the list of vectors
      * @return The new list of offset vectors
      */
     public static List<Vector> offsetVectors(List<Vector> vectors, Vector offset)
@@ -883,7 +885,7 @@ public final class MathUtil
      * Offset a <tt>List</tt> of locations by another <tt>Location</tt>
      *
      * @param locations The list of locations that will be offset
-     * @param offset The location to use that will offset the list of locations
+     * @param offset    The location to use that will offset the list of locations
      * @return The new list of offset locations
      */
     public static List<Location> offsetLocations(List<Location> locations, Location offset)
@@ -897,7 +899,7 @@ public final class MathUtil
      * Offset a <tt>List</tt> of vectors by another <tt>Vector</tt>
      *
      * @param vectors The list of vectors that will be offset
-     * @param offset The location to use that will offset the list of vectors
+     * @param offset  The location to use that will offset the list of vectors
      * @return The new list of offset vectors
      */
     public static List<Vector> offsetVectors(List<Vector> vectors, Location offset)
@@ -911,7 +913,7 @@ public final class MathUtil
      * Offset a <tt>List</tt> of locations by another <tt>Location</tt>
      *
      * @param locations The list of locations that will be offset
-     * @param offset The vector to use that will offset the list of locations
+     * @param offset    The vector to use that will offset the list of locations
      * @return The new list of offset locations
      */
     public static List<Location> offsetLocations(List<Location> locations, Vector offset)
@@ -924,7 +926,7 @@ public final class MathUtil
     /**
      * Add a translation <tt>Vector</tt> to a list of <tt>Locations</tt>
      *
-     * @param locations The list of <tt>Locations</tt> to translate
+     * @param locations   The list of <tt>Locations</tt> to translate
      * @param translation The translation <tt>Vector</tt> to use
      */
     public static void addLocations(List<Location> locations, Vector translation)
@@ -935,7 +937,7 @@ public final class MathUtil
     /**
      * Subtract a translation <tt>Vector</tt> to a list of <tt>Locations</tt>
      *
-     * @param locations The list of <tt>Locations</tt> to translate
+     * @param locations   The list of <tt>Locations</tt> to translate
      * @param translation The translation <tt>Vector</tt> to use
      */
     public static void subLocations(List<Location> locations, Vector translation)
@@ -946,7 +948,7 @@ public final class MathUtil
     /**
      * Add a translation <tt>Location</tt> to a list of <tt>Locations</tt>
      *
-     * @param locations The list of <tt>Locations</tt> to translate
+     * @param locations   The list of <tt>Locations</tt> to translate
      * @param translation The translation <tt>Location</tt> to use
      */
     public static void addLocations(List<Location> locations, Location translation)
@@ -957,7 +959,7 @@ public final class MathUtil
     /**
      * Subtract a translation <tt>Location</tt> to a list of <tt>Locations</tt>
      *
-     * @param locations The list of <tt>Locations</tt> to translate
+     * @param locations   The list of <tt>Locations</tt> to translate
      * @param translation The translation <tt>Location</tt> to use
      */
     public static void subLocations(List<Location> locations, Location translation)
@@ -968,7 +970,7 @@ public final class MathUtil
     /**
      * Multiply a list of <tt>Locations</tt> by a double
      *
-     * @param locations The list of <tt>Locations</tt> to translate
+     * @param locations   The list of <tt>Locations</tt> to translate
      * @param translation The multiplier
      */
     public static void mulLocations(List<Location> locations, double translation)
@@ -979,7 +981,7 @@ public final class MathUtil
     /**
      * Add a translation <tt>Vector</tt> to a list of <tt>Vectors</tt>
      *
-     * @param vectors The list of <tt>Vectors</tt> to translate
+     * @param vectors     The list of <tt>Vectors</tt> to translate
      * @param translation The translation <tt>Vector</tt> to use
      */
     public static void addVectors(List<Vector> vectors, Vector translation)
@@ -990,7 +992,7 @@ public final class MathUtil
     /**
      * Subtract a translation <tt>Vector</tt> to a list of <tt>Vectors</tt>
      *
-     * @param vectors The list of <tt>Vectors</tt> to translate
+     * @param vectors     The list of <tt>Vectors</tt> to translate
      * @param translation The translation <tt>Vector</tt> to use
      */
     public static void subVectors(List<Vector> vectors, Vector translation)
@@ -1001,7 +1003,7 @@ public final class MathUtil
     /**
      * Multiply a list of <tt>Vectors</tt> by a double
      *
-     * @param vectors The list of <tt>Vectors</tt> to translate
+     * @param vectors     The list of <tt>Vectors</tt> to translate
      * @param translation The multiplier
      */
     public static void mulVectors(List<Vector> vectors, double translation)

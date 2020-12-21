@@ -11,8 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * The main containing class for a system of particles. <p>
- * Particle effects can be added with {@link ParticleSystem#addParticleEffect(ParticleEffect)} <p>
+ * The main containing class for a system of particles.
+ * <p>
+ * Particle effects can be added with {@link ParticleSystem#addParticleEffect(ParticleEffect)}
+ * <p>
  * This system serves as an easy way to initialize, animate, and efficiently work with
  * particles.
  *
@@ -195,13 +197,14 @@ public class ParticleSystem
      * Get a module from this <tt>ParticleSystem</tt> based off of the class of the module
      *
      * @param moduleClass The class of the module to get
+     * @param <T>         The module type
      * @return The requested <tt>ParticleSModule</tt>, null if not found
      */
-    public ParticleSModule getModule(Class<? extends ParticleSModule> moduleClass)
+    public <T extends ParticleSModule> T getModule(Class<T> moduleClass)
     {
         for(ParticleSModule module : modules)
         {
-            if(moduleClass == module.getClass()) return module;
+            if(moduleClass == module.getClass()) return (T) module;
         }
         return null;
     }
@@ -233,7 +236,7 @@ public class ParticleSystem
      * Add a <tt>ParticleEffect</tt> to this system at a specific index
      *
      * @param effect The effect to add
-     * @param index The index to add the effect to
+     * @param index  The index to add the effect to
      * @return A reference to this <tt>ParticleSystem</tt>
      */
     public ParticleSystem addParticleEffect(ParticleEffect effect, int index)
@@ -324,13 +327,14 @@ public class ParticleSystem
      * Get a <tt>ParticleEffect</tt> from this system by the effect's class
      *
      * @param effectClass The class of the effect to get
+     * @param <T>         The particle effect type
      * @return The requested <tt>ParticleEffect</tt>, null if not found
      */
-    public ParticleEffect getParticleEffect(Class<? extends ParticleEffect> effectClass)
+    public <T extends ParticleEffect> T getParticleEffect(Class<T> effectClass)
     {
         for(ParticleEffect effect : effects)
         {
-            if(effectClass == effect.getClass()) return effect;
+            if(effectClass == effect.getClass()) return (T) effect;
         }
         return null;
     }
@@ -397,7 +401,8 @@ public class ParticleSystem
     }
 
     /**
-     * Set the scale vector of this system. <p>
+     * Set the scale vector of this system.
+     * <p>
      * Even if the vector has only been modified and not replaced this method still should be called
      * in order to propagate updates.
      *
@@ -410,7 +415,8 @@ public class ParticleSystem
     }
 
     /**
-     * Set the rotation vector of this system. <p>
+     * Set the rotation vector of this system.
+     * <p>
      * Even if the vector has only been modified and not replaced this method still should be called
      * in order to propagate updates.
      *
@@ -423,7 +429,8 @@ public class ParticleSystem
     }
 
     /**
-     * Set the translation vector of this system. <p>
+     * Set the translation vector of this system.
+     * <p>
      * Even if the vector has only been modified and not replaced this method still should be called
      * in order to propagate updates.
      *
@@ -436,11 +443,12 @@ public class ParticleSystem
     }
 
     /**
-     * Set the global origin location of this system. <p>
+     * Set the global origin location of this system.
+     * <p>
      * Even if the location has only been modified and not replaced this method still should be called
      * in order to propagate updates.
      *
-     * @param origin
+     * @param origin The new origin location
      */
     public void setOrigin(Location origin)
     {
@@ -459,7 +467,8 @@ public class ParticleSystem
     }
 
     /**
-     * Set the play time of this <tt>ParticleSystem</tt> <p>
+     * Set the play time of this <tt>ParticleSystem</tt>
+     * <p>
      * This value will not be updated during runtime, it must be set before runtime.
      *
      * @param playTicks The new play time (in ticks)
@@ -480,7 +489,8 @@ public class ParticleSystem
     }
 
     /**
-     * Set the tick rate of this <tt>ParticleSystem</tt> <p>
+     * Set the tick rate of this <tt>ParticleSystem</tt>
+     * <p>
      * This value will not be updated during runtime, it must be set before runtime.
      *
      * @param tickRate The new tick rate (amount of ticks between displays/updates)
@@ -501,7 +511,8 @@ public class ParticleSystem
     }
 
     /**
-     * Set the update rate of this <tt>ParticleSystem</tt> <p>
+     * Set the update rate of this <tt>ParticleSystem</tt>
+     * <p>
      * This value will not be updated during runtime, it must be set before runtime.
      *
      * @param updateRate The new update rate (amount of time between transformation updates are displayed)
@@ -532,7 +543,8 @@ public class ParticleSystem
     }
 
     /**
-     * Set whether this system is updated to the latest information. <p>
+     * Set whether this system is updated to the latest information.
+     * <p>
      * Only for internal use. This WILL NOT force update the system.
      *
      * @param updated The new updated state

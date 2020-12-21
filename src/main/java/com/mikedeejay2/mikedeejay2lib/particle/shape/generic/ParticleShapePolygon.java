@@ -5,7 +5,6 @@ import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 import org.bukkit.Location;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,9 +25,9 @@ public class ParticleShapePolygon implements ParticleShape
 
     /**
      * @param location The center location
-     * @param size The size (radius)
-     * @param density The density of particles
-     * @param edges The amount of edges of the shape
+     * @param size     The size (radius)
+     * @param density  The density of particles
+     * @param edges    The amount of edges of the shape
      */
     public ParticleShapePolygon(Location location, double size, double density, int edges)
     {

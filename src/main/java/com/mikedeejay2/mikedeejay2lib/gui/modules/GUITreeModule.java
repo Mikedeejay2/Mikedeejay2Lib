@@ -28,7 +28,7 @@ public class GUITreeModule extends GUIModule
      * Render the nodes
      *
      * @param player The player that is viewing the GUI
-     * @param gui The GUI
+     * @param gui    The GUI
      */
     @Override
     public void onUpdateHead(Player player, GUIContainer gui)

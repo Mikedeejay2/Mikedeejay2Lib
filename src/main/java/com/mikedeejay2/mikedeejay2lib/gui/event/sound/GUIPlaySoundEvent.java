@@ -8,6 +8,11 @@ import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+/**
+ * An event for playing a sound from a GUI.
+ *
+ * @author Mikedeejay2
+ */
 public class GUIPlaySoundEvent implements GUIEvent
 {
     protected Sound sound;

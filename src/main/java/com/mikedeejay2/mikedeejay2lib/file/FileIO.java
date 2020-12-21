@@ -34,7 +34,7 @@ public class FileIO
     /**
      * Get an input stream from a file path on the disk
      *
-     * @param filePath Path to get InputStream from
+     * @param filePath    Path to get InputStream from
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested InputStream
      */
@@ -46,7 +46,7 @@ public class FileIO
     /**
      * Get a Reader from a file path on the disk
      *
-     * @param filePath The path to get the reader from
+     * @param filePath    The path to get the reader from
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested Reader
      */
@@ -58,7 +58,7 @@ public class FileIO
     /**
      * Get a Reader from this plugin's jar from a path
      *
-     * @param filePath Path to get the Reader from
+     * @param filePath    Path to get the Reader from
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested Reader
      */
@@ -79,7 +79,7 @@ public class FileIO
     /**
      * Get a Reader from a file path on the disk
      *
-     * @param file The file to get the reader from
+     * @param file        The file to get the reader from
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested reader
      */
@@ -100,7 +100,7 @@ public class FileIO
     /**
      * Get an InputStream from a File on the disk
      *
-     * @param file File to get the InputStream from
+     * @param file        File to get the InputStream from
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested InputStream
      */
@@ -122,8 +122,8 @@ public class FileIO
     /**
      * Gets an InputStream from the jar and saves it to the file path
      *
-     * @param filePath Path to save the file to
-     * @param replace Replace existing file or not
+     * @param filePath    Path to save the file to
+     * @param replace     Replace existing file or not
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return If save was successful or not
      */
@@ -137,9 +137,9 @@ public class FileIO
     /**
      * Save the file to the requested file path using the requested InputStream
      *
-     * @param filePath Path to the file. This should NOT include plugin.getDataFolder()
-     * @param input The InputStream to use when saving the file
-     * @param replace Replace the existing file or not
+     * @param filePath    Path to the file. This should NOT include plugin.getDataFolder()
+     * @param input       The InputStream to use when saving the file
+     * @param replace     Replace the existing file or not
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return If save was successful or not
      */
@@ -151,9 +151,9 @@ public class FileIO
     /**
      * Save the file to the requested file using the requested InputStream
      *
-     * @param file The File to save the contents to
-     * @param input The InputStream to use when saving the file
-     * @param replace Replace the existing file or not
+     * @param file        The File to save the contents to
+     * @param input       The InputStream to use when saving the file
+     * @param replace     Replace the existing file or not
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return If the save was successful or not
      */
@@ -188,7 +188,7 @@ public class FileIO
     /**
      * Helper method for printing "The file {filePath} could not be loaded!"
      *
-     * @param filePath Path to print
+     * @param filePath  Path to print
      * @param exception The exception that was thrown
      */
     public void logFileCouldNotBeLoaded(String filePath, Exception exception)

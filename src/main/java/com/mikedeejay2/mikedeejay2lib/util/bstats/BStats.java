@@ -29,8 +29,6 @@ public class BStats
     {
         this.id = id;
         this.bStats = new Metrics(plugin, id);
-
-        bStats.addCustomChart(new Metrics.SimplePie("Version", () -> plugin.getDescription().getVersion()));
     }
 
     /**

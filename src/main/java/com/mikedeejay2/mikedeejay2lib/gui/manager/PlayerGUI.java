@@ -150,11 +150,21 @@ public class PlayerGUI
         return naviSystems;
     }
 
+    /**
+     * Internal value for safeness when closing GUIs
+     *
+     * @return Whether GUI has changed or not
+     */
     public boolean isGuiChange()
     {
         return guiChange;
     }
 
+    /**
+     * Set the internal value for safeness when closing GUIs
+     *
+     * @param guiChange The new GUI change state
+     */
     public void setGuiChange(boolean guiChange)
     {
         this.guiChange = guiChange;

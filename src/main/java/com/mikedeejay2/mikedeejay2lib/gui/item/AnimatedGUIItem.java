@@ -63,7 +63,7 @@ public class AnimatedGUIItem extends GUIItem
      * progress. If the animation should progress, it will calculate the frame and
      * process to land on and animate the current frame.
      *
-     * @param tickTime The time between the last tick and this tick. Used for calculating framerate
+     * @param tickTime   The time between the last tick and this tick. Used for calculating framerate
      * @param properties Reference to the item's properties
      * @return Whether the tick updated the animation or not
      */
@@ -90,7 +90,7 @@ public class AnimatedGUIItem extends GUIItem
         }
         long curWait = frames.get(properties.index - 1 < 0 ? frames.size() - 1 : properties.index - 1).getPeriod();
         if(properties.wait < curWait) return false;
-        int framePass = (int)(properties.wait / curWait);
+        int framePass = (int) (properties.wait / curWait);
         properties.wait = 0;
         processFrame(framePass, properties);
         return true;
@@ -100,7 +100,7 @@ public class AnimatedGUIItem extends GUIItem
      * When a new frame should be called, this method runs.
      * This method does the work for modifying the item to the next frame.
      *
-     * @param framePass The amount of frames forward the animation to go to
+     * @param framePass  The amount of frames forward the animation to go to
      * @param properties Reference to the item's properties
      */
     private void processFrame(int framePass, AnimatedGUIItemProperties properties)
@@ -142,19 +142,19 @@ public class AnimatedGUIItem extends GUIItem
     /**
      * Process the movement for a movement frame
      *
-     * @param frame The AnimationFrame that will be processed
+     * @param frame      The AnimationFrame that will be processed
      * @param properties Reference to the item's properties
      */
     private void processMovement(AnimationFrame frame, AnimatedGUIItemProperties properties)
     {
-        GUILayer layer = properties.getLocation().getLayer();
-        boolean moveRelatively = frame.moveRelative();
-        int frameRow = frame.getRow();
-        int frameCol = frame.getCol();
-        int currentRow = properties.getLocation().getRow();
-        int currentCol = properties.getLocation().getCol();
-        int newRow = moveRelatively ? currentRow + frameRow : frameRow;
-        int newCol = moveRelatively ? currentCol + frameCol : currentCol;
+        GUILayer layer          = properties.getLocation().getLayer();
+        boolean  moveRelatively = frame.moveRelative();
+        int      frameRow       = frame.getRow();
+        int      frameCol       = frame.getCol();
+        int      currentRow     = properties.getLocation().getRow();
+        int      currentCol     = properties.getLocation().getCol();
+        int      newRow         = moveRelatively ? currentRow + frameRow : frameRow;
+        int      newCol         = moveRelatively ? currentCol + frameCol : currentCol;
         if(!validCheck(newRow, newCol, properties))
         {
             layer.removeItem(currentRow, currentCol);
@@ -162,9 +162,9 @@ public class AnimatedGUIItem extends GUIItem
         }
         GUIItem previousItem = layer.getItem(newRow, newCol);
 
-        MovementType movementType = frame.getMovementType();
-        GUIItem[][] items = layer.getItemsAsArray();
-        GUIItemLocation location = properties.getLocation();
+        MovementType    movementType = frame.getMovementType();
+        GUIItem[][]     items        = layer.getItemsAsArray();
+        GUIItemLocation location     = properties.getLocation();
         switch(movementType)
         {
             case SWAP_ITEM:
@@ -227,8 +227,8 @@ public class AnimatedGUIItem extends GUIItem
     /**
      * Check to see whether a row and column is a valid position in a GUI
      *
-     * @param row The row to check
-     * @param col The column to check
+     * @param row        The row to check
+     * @param col        The column to check
      * @param properties Reference to the item's properties
      * @return Whether the position is valid or not
      */
@@ -240,7 +240,7 @@ public class AnimatedGUIItem extends GUIItem
     /**
      * Add an item frame to this item
      *
-     * @param item The item to add to the frame
+     * @param item   The item to add to the frame
      * @param period The time to wait between this frame and the frame after it
      */
     public void addFrame(ItemStack item, long period)
@@ -251,11 +251,11 @@ public class AnimatedGUIItem extends GUIItem
     /**
      * Add a movement frame to this item
      *
-     * @param row The row to move the item to
-     * @param col The column to move the item to
-     * @param movementType The type of movement that will be performed when the item is moved
+     * @param row              The row to move the item to
+     * @param col              The column to move the item to
+     * @param movementType     The type of movement that will be performed when the item is moved
      * @param relativeMovement Whether or not the movement should move relatively (locally)
-     * @param period The time to wait between this frame and the frame after it
+     * @param period           The time to wait between this frame and the frame after it
      */
     public void addFrame(int row, int col, MovementType movementType, boolean relativeMovement, long period)
     {
@@ -265,12 +265,12 @@ public class AnimatedGUIItem extends GUIItem
     /**
      * Add a movement + item frame to this item
      *
-     * @param item The item to add to the frame
-     * @param row The row to move the item to
-     * @param col The column to move the item to
-     * @param movementType The type of movement that will be performed when the item is moved
+     * @param item             The item to add to the frame
+     * @param row              The row to move the item to
+     * @param col              The column to move the item to
+     * @param movementType     The type of movement that will be performed when the item is moved
      * @param relativeMovement Whether or not the movement should move relatively (locally)
-     * @param period The time to wait between this frame and the frame after it
+     * @param period           The time to wait between this frame and the frame after it
      */
     public void addFrame(ItemStack item, int row, int col, MovementType movementType, boolean relativeMovement, long period)
     {
