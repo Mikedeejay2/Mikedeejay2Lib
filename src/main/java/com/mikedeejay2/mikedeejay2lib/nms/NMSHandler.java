@@ -31,33 +31,27 @@ public class NMSHandler
             case v1_16_R3:
             {
 
-            }
-            break;
+            } break;
             case v1_16_R2:
             {
 
-            }
-            break;
+            } break;
             case v1_16_R1:
             {
 
-            }
-            break;
+            } break;
             case v1_15_R1:
             {
 
-            }
-            break;
+            } break;
             case v1_14_R1:
             {
 
-            }
-            break;
+            } break;
             case v1_13_R2:
             {
 
-            }
-            break;
+            } break;
             default:
             {
                 plugin.getLogger().severe(plugin.langManager().getText("errors.version_not_valid"));

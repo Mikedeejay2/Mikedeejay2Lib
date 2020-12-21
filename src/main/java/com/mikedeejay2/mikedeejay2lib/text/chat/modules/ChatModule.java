@@ -15,7 +15,7 @@ public abstract class ChatModule
     /**
      * Method that is called when the <tt>ChatSection</tt> is printed to a <tt>CommandSender</tt>
      *
-     * @param section  The <tt>ChatSection</tt> that is being printed
+     * @param section The <tt>ChatSection</tt> that is being printed
      * @param receiver The <tt>CommandSender</tt> that is receiving the message
      */
     public void onPrint(ChatSection section, CommandSender receiver) {}
@@ -23,7 +23,7 @@ public abstract class ChatModule
     /**
      * Method that is called when the <tt>ChatSection</tt> is baked
      *
-     * @param section    The <tt>ChatSection</tt> that is being baked
+     * @param section The <tt>ChatSection</tt> that is being baked
      * @param components The current array of <tt>BaseComonents</tt> that have been baked
      */
     public void onBake(ChatSection section, BaseComponent[] components) {}

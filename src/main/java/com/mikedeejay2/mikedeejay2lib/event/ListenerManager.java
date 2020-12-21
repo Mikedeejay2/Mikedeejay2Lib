@@ -34,7 +34,7 @@ public class ListenerManager
 
     /**
      * Register all added listeners. <p>
-     * <p>
+     *
      * This should only be called once! Add all listeners before running
      * this method.
      */

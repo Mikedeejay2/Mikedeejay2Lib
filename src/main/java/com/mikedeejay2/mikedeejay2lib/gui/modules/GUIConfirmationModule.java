@@ -26,7 +26,7 @@ public class GUIConfirmationModule extends GUIModule
      * Add the confirm / deny items
      *
      * @param player The player that is viewing the GUI
-     * @param gui    The GUI
+     * @param gui The GUI
      */
     @Override
     public void onOpenHead(Player player, GUIContainer gui)

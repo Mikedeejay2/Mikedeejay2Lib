@@ -17,8 +17,9 @@ import java.util.Map;
  * A module that processes <tt>AnimatedGUIItems</tt>.
  * This module is required for the animation of <tt>AnimatedGUIItems</tt>
  *
- * @author Mikedeejay2
  * @see AnimatedGUIItem
+ *
+ * @author Mikedeejay2
  */
 public class GUIAnimationModule extends GUIModule
 {
@@ -42,7 +43,7 @@ public class GUIAnimationModule extends GUIModule
      * animates the GUI Items.
      *
      * @param player The player that opened the GUI
-     * @param gui    The GUI
+     * @param gui The GUI
      */
     @Override
     public void onOpenHead(Player player, GUIContainer gui)
@@ -58,7 +59,7 @@ public class GUIAnimationModule extends GUIModule
      * When the GUI is closed, stop the <tt>AnimationRuntime</tt>
      *
      * @param player The player that closed the GUI
-     * @param gui    The GUI
+     * @param gui The GUI
      */
     @Override
     public void onClose(Player player, GUIContainer gui)

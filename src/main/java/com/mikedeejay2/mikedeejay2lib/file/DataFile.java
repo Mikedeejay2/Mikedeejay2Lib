@@ -14,13 +14,14 @@ import java.io.File;
 public abstract class DataFile
 {
     protected final PluginBase plugin;
-    protected final FileIO fileIO;
     // Path from the plugins folder to the file. (This DOES NOT include plugin.getDataFolder())
     protected String filePath;
     // The file to to this file on the disk (This does not ensure that the file is on the disk)
     protected File file;
     // If the file is loaded
     protected boolean isLoaded;
+
+    protected final FileIO fileIO;
 
     public DataFile(PluginBase plugin, String filePath)
     {
@@ -74,7 +75,7 @@ public abstract class DataFile
     /**
      * Resets this file's data to the default file specified in the jar.
      * DO NOT use this method if this file does not exist in this plugin's jar. <p>
-     * <p>
+     *
      * This method does the following in order:
      * <ol>
      *      <li>Delete the file from the disk</li>
@@ -95,7 +96,7 @@ public abstract class DataFile
 
     /**
      * Resets this file's data to nothing. <p>
-     * <p>
+     *
      * This method does the following in order:
      * <ol>
      *      <li>Delete the file from the disk</li>
@@ -172,7 +173,7 @@ public abstract class DataFile
      * Update this file from the jar, keeping existing values but adding any
      * new values that the jar file's version has but the disk's version does
      * not. <p>
-     * <p>
+     *
      * This is useful for configs, especially when a config is updated so that the
      * user does not have to manually add new keys to the config.
      *

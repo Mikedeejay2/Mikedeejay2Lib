@@ -1,8 +1,8 @@
 package com.mikedeejay2.mikedeejay2lib.text.chat.animation;
 
-import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
 import com.mikedeejay2.mikedeejay2lib.text.chat.ChatSystem;
 import com.mikedeejay2.mikedeejay2lib.text.chat.slide.ChatSlide;
+import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
@@ -46,8 +46,8 @@ public class ChatAnimRuntime extends EnhancedRunnable
             this.cancel();
             return;
         }
-        ChatSlide curSlide  = slides.get(index);
-        long      amtToWait = slides.get(index - 1 < 0 ? slides.size() - 1 : index - 1).getPeriod();
+        ChatSlide curSlide = slides.get(index);
+        long amtToWait = slides.get(index - 1 < 0 ? slides.size() - 1 : index - 1).getPeriod();
         if(curWait < amtToWait) return;
         curSlide.print(receivers);
         ++index;

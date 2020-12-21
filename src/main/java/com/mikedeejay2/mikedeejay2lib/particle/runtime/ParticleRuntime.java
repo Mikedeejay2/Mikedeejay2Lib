@@ -13,8 +13,9 @@ import java.util.List;
  * To create this runtime internally {@link ParticleSystem#display()} should be called which
  * creates this runtime automatically and properly configures this runtime.
  *
- * @author Mikedeejay2
  * @see ParticleSystem
+ *
+ * @author Mikedeejay2
  */
 public class ParticleRuntime extends EnhancedRunnable
 {

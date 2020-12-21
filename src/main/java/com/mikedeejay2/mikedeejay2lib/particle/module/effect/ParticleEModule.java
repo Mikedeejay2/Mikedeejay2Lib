@@ -5,8 +5,9 @@ import com.mikedeejay2.mikedeejay2lib.particle.ParticleEffect;
 /**
  * Module base for particle effects
  *
- * @author Mikedeejay2
  * @see ParticleEffect
+ *
+ * @author Mikedeejay2
  */
 public abstract class ParticleEModule
 {

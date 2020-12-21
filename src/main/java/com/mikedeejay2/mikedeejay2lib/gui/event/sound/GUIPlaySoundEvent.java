@@ -31,7 +31,7 @@ public class GUIPlaySoundEvent implements GUIEvent
     @Override
     public void execute(InventoryClickEvent event, GUIContainer gui)
     {
-        Player   player   = (Player) event.getWhoClicked();
+        Player player = (Player) event.getWhoClicked();
         Location location = player.getLocation();
         if(category != null)
         {

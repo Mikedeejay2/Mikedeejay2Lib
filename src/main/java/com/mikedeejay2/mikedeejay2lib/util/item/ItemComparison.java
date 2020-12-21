@@ -1,7 +1,12 @@
 package com.mikedeejay2.mikedeejay2lib.util.item;
 
+import com.google.common.collect.Multimap;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.meta.*;
+
+import java.util.Map;
 
 /**
  * Helper methods for comparing items.

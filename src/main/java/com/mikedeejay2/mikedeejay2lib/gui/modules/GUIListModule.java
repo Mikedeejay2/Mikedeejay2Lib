@@ -7,19 +7,16 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchOffEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUISwitchListPageEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
-import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Heads;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
-import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import com.mikedeejay2.mikedeejay2lib.util.search.SearchUtil;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * GUI Module that turns the GUI into a list that shows a list of different
@@ -93,7 +90,7 @@ public class GUIListModule extends GUIModule
      * Method that displays the list on GUI update
      *
      * @param player The player that is viewing the GUI
-     * @param gui    The GUI
+     * @param gui The GUI
      */
     @Override
     public void onUpdateHead(Player player, GUIContainer gui)
@@ -155,7 +152,7 @@ public class GUIListModule extends GUIModule
      * Updates the current page, called on {@link GUIListModule#onUpdateHead(Player player, GUIContainer gui)}
      *
      * @param search Whether search mode is enabled or not
-     * @param layer  The layer to update the page on
+     * @param layer The layer to update the page on
      */
     private void updatePage(boolean search, GUILayer layer)
     {
@@ -163,11 +160,11 @@ public class GUIListModule extends GUIModule
         int listSize = search ? searchList.size() : list.size();
         for(int i = 0; i < pageSize; i++)
         {
-            int pageOffset = ((curPage - 1) * pageSize);
-            int row        = layer.getRowFromSlot(i + layer.getCols()), col = layer.getColFromSlot(i);
+            int pageOffset = ((curPage-1) * pageSize);
+            int row = layer.getRowFromSlot(i + layer.getCols()), col = layer.getColFromSlot(i);
             if(changed) layer.removeItem(row, col);
 
-            if(listSize >= (i + 1) + pageOffset)
+            if(listSize >= (i+1) + pageOffset)
             {
                 GUIItem item = search ? searchList.get(i + pageOffset).getValue() : list.get(i + pageOffset);
                 layer.setItem(layer.getRowFromSlot(i + layer.getCols()), layer.getColFromSlot(i), item);
@@ -190,13 +187,13 @@ public class GUIListModule extends GUIModule
      * Update the controls for the list, called on {@link GUIListModule#onUpdateHead(Player player, GUIContainer gui)}
      *
      * @param search Whether search mode is enabled or not
-     * @param layer  The layer to update the controls on
+     * @param layer The layer to update the controls on
      */
     private void updateListControls(boolean search, GUILayer layer, Player player)
     {
         List<GUIItem> pageList = (List<GUIItem>) (search ? searchList : list);
 
-        int amountOfPages = (int) Math.ceil((pageList.size() + endItems.size()) / ((layer.getRows() - 2.0f) * layer.getCols()));
+        int amountOfPages = (int)Math.ceil((pageList.size() + endItems.size()) / ((layer.getRows() - 2.0f) * layer.getCols()));
 
         for(int i = 2; i <= 8; i++)
         {
@@ -208,26 +205,26 @@ public class GUIListModule extends GUIModule
             if(i == curPage || i > curPage + 3 || i < curPage - 3) continue;
             if(i < curPage && i + 3 >= curPage)
             {
-                int     col     = (i - curPage) + 5;
+                int col = (i - curPage) + 5;
                 GUIItem curItem = backItem.clone();
                 curItem.setNameView(Chat.chat("&f" + plugin.langManager().getTextLib
-                        (
-                                player, "gui.modules.list.page",
-                                new String[]{"PAGE"},
-                                new String[]{String.valueOf(i)}
-                        )));
+                (
+                    player, "gui.modules.list.page",
+                    new String[]{"PAGE"},
+                    new String[]{String.valueOf(i)}
+                )));
                 layer.setItem(layer.getRows(), col, curItem);
             }
             else if(i > curPage && i - 3 <= curPage)
             {
-                int     col     = (i - curPage) + 5;
+                int col = (i - curPage) + 5;
                 GUIItem curItem = forwardItem.clone();
                 curItem.setNameView(Chat.chat("&f" + plugin.langManager().getTextLib
-                        (
-                                player, "gui.modules.list.page",
-                                new String[]{"PAGE"},
-                                new String[]{String.valueOf(i)}
-                        )));
+                (
+                    player, "gui.modules.list.page",
+                    new String[]{"PAGE"},
+                    new String[]{String.valueOf(i)}
+                )));
                 layer.setItem(layer.getRows(), col, curItem);
             }
         }
@@ -259,15 +256,15 @@ public class GUIListModule extends GUIModule
      * Not recommended for usage but still included just in case.
      *
      * @param item The item to replace the current item
-     * @param row  The row to replace
-     * @param col  The column to replace
-     * @param gui  The GUI to update
+     * @param row The row to replace
+     * @param col The column to replace
+     * @param gui The GUI to update
      */
     public void changeGUIItem(GUIItem item, int row, int col, GUIContainer gui)
     {
-        int pageSize   = ((gui.getRows() - 2) * 9);
-        int pageOffset = ((curPage - 1) * pageSize);
-        int index      = gui.getSlotFromRowCol(row - 2, col - 1) + pageOffset;
+        int pageSize = ((gui.getRows() - 2) * 9);
+        int pageOffset = ((curPage-1) * pageSize);
+        int index = gui.getSlotFromRowCol(row-2, col-1) + pageOffset;
         list.set(index, item);
         changed = true;
     }
@@ -316,9 +313,9 @@ public class GUIListModule extends GUIModule
      */
     public int getListItemIndex(int row, int col, GUIContainer gui)
     {
-        int pageSize   = ((gui.getRows() - 2) * 9);
-        int pageOffset = ((curPage - 1) * pageSize);
-        int index      = gui.getSlotFromRowCol(row - 2, col - 1) + pageOffset;
+        int pageSize = ((gui.getRows() - 2) * 9);
+        int pageOffset = ((curPage-1) * pageSize);
+        int index = gui.getSlotFromRowCol(row-2, col-1) + pageOffset;
         if(searchMode)
         {
             index = searchList.get(index).getKey();
@@ -363,8 +360,8 @@ public class GUIListModule extends GUIModule
      */
     public void removeListItem(int row, int col, GUIContainer gui)
     {
-        int           index = getListItemIndex(row, col, gui);
-        List<GUIItem> list  = this.list;
+        int index = getListItemIndex(row, col, gui);
+        List<GUIItem> list = this.list;
         list.remove(index);
         changed = true;
     }
@@ -372,9 +369,9 @@ public class GUIListModule extends GUIModule
     /**
      * Add a list item to the list based off of the <tt>GUIContainer</tt> that the list is located in
      *
-     * @param row  The row to add the item to
-     * @param col  The column to add the item to
-     * @param gui  The <tt>GUIContainer</tt> that this list is located in
+     * @param row The row to add the item to
+     * @param col The column to add the item to
+     * @param gui The <tt>GUIContainer</tt> that this list is located in
      * @param item The <tt>GUIItem</tt> to be added
      */
     public void addListItem(int row, int col, GUIContainer gui, GUIItem item)
@@ -387,9 +384,9 @@ public class GUIListModule extends GUIModule
     /**
      * Change the page to a new page
      *
-     * @param page   The page number
+     * @param page The page number
      * @param player The player that is viewing the GUI
-     * @param gui    The GUI
+     * @param gui The GUI
      */
     public void toListPage(int page, Player player, GUIContainer gui)
     {

@@ -58,7 +58,7 @@ public class GUIBorderModule extends GUIModule
      * Method injected into the head of the GUI that adds a border to the GUI
      *
      * @param player Player that is viewing the GUI
-     * @param gui    The GUi
+     * @param gui The GUi
      */
     @Override
     public void onOpenHead(Player player, GUIContainer gui)

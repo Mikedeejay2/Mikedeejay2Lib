@@ -28,7 +28,7 @@ public class GUITreeModule extends GUIModule
      * Render the nodes
      *
      * @param player The player that is viewing the GUI
-     * @param gui    The GUI
+     * @param gui The GUI
      */
     @Override
     public void onUpdateHead(Player player, GUIContainer gui)
@@ -37,8 +37,8 @@ public class GUITreeModule extends GUIModule
         for(GUITreeNode node : nodes)
         {
             GUIItem item = node.getItem();
-            int     row  = node.getRow();
-            int     col  = node.getCol();
+            int row = node.getRow();
+            int col = node.getCol();
             layer.setItem(row, col, item);
 
             node.buildChildren(layer, node.getRow(), node.getCol());

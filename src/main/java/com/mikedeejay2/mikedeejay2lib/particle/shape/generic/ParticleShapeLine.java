@@ -22,8 +22,8 @@ public class ParticleShapeLine implements ParticleShape
     protected double density;
 
     /**
-     * @param start   The starting location
-     * @param end     The ending location
+     * @param start The starting location
+     * @param end The ending location
      * @param density The density of particles
      */
     public ParticleShapeLine(Location start, Location end, double density)

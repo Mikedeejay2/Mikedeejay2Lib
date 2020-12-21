@@ -45,27 +45,27 @@ public class GUIInteractHandlerList extends GUIInteractHandler
      * This method override handles the default state of item movement where items move like default Minecraft.
      *
      * @param event The event of the click
-     * @param gui   The GUI that the player interacted with
+     * @param gui The GUI that the player interacted with
      */
     @Override
     public void handleInteraction(InventoryClickEvent event, GUIContainer gui)
     {
-        ClickType       clickType = event.getClick();
-        InventoryAction action    = event.getAction();
-        Player          player    = (Player) event.getWhoClicked();
-        int             slot      = event.getSlot();
+        ClickType clickType = event.getClick();
+        InventoryAction action = event.getAction();
+        Player player = (Player) event.getWhoClicked();
+        int slot = event.getSlot();
 
         Inventory clickedInv = event.getClickedInventory();
-        Inventory playerInv  = player.getInventory();
-        GUILayer  layer      = gui.getLayer(0);
+        Inventory playerInv = player.getInventory();
+        GUILayer layer = gui.getLayer(0);
 
         ItemStack cursorItem = player.getItemOnCursor();
         if(cursorItem.getType() == Material.AIR) cursorItem = null;
         ItemStack bottomItem = null;
         if(clickedInv == gui.getInventory())
         {
-            int     row     = gui.getRowFromSlot(slot);
-            int     col     = gui.getColFromSlot(slot);
+            int row = gui.getRowFromSlot(slot);
+            int col = gui.getColFromSlot(slot);
             GUIItem guiItem = layer.getItem(row, col);
             if(guiItem != null)
             {

@@ -47,7 +47,7 @@ public class GUIItem implements Cloneable
      * Called when this <tt>GUIItem</tt> is clicked
      *
      * @param event The event of the click
-     * @param gui   The GUI that was clicked on
+     * @param gui The GUI that was clicked on
      */
     public void onClick(InventoryClickEvent event, GUIContainer gui)
     {
@@ -156,20 +156,10 @@ public class GUIItem implements Cloneable
     }
 
     /**
-     * Set the <tt>GUIEventHandler</tt> for this item
-     *
-     * @param events Events to set this item to use
-     */
-    public void setEvents(GUIEventHandler events)
-    {
-        this.events = events;
-    }
-
-    /**
      * Get a <tt>GUIEvent</tt> based off of the event's class
      *
      * @param eventClass The class of the <tt>GUIEvent</tt> to get
-     * @param <T>        The class type
+     * @param <T> The class type
      * @return The requested <tt>GUIEvent</tt>
      */
     public <T extends GUIEvent> T getEvent(Class<T> eventClass)
@@ -186,6 +176,16 @@ public class GUIItem implements Cloneable
     public GUIEvent getEvent(int index)
     {
         return events.getEvent(index);
+    }
+
+    /**
+     * Set the <tt>GUIEventHandler</tt> for this item
+     *
+     * @param events Events to set this item to use
+     */
+    public void setEvents(GUIEventHandler events)
+    {
+        this.events = events;
     }
 
     /**

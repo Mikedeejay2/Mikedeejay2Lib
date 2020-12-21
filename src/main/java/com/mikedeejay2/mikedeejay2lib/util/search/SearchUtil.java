@@ -15,16 +15,16 @@ public final class SearchUtil
      * This method generalizes the search term by removing spaces and
      * changing all the text to lower case on both the ItemMeta and the search term.
      * AKA a "fuzzy" search.
-     * <p>
+     *
      * Uses <tt>.contains()</tt> to compare strings
      *
-     * @param meta       ItemMeta to search through
+     * @param meta ItemMeta to search through
      * @param searchTerm The search term to use
      * @return If search term was found in the ItemMeta or not
      */
     public static boolean searchMetaFuzzy(ItemMeta meta, String searchTerm)
     {
-        String newName        = searchTerm.toLowerCase().replaceAll(" ", "");
+        String newName = searchTerm.toLowerCase().replaceAll(" ", "");
         String newDisplayName = meta.getDisplayName().toLowerCase().replaceAll(" ", "");
         if(newDisplayName.contains(newName)) return true;
 
@@ -49,10 +49,10 @@ public final class SearchUtil
      * Search for a String in a piece of ItemMeta.
      * This method searches the ItemMeta without generalizing the Strings.
      * That means that capitalization, spacing, etc counts towards the search.
-     * <p>
+     *
      * Uses <tt>.contains()</tt> to compare strings
      *
-     * @param meta       ItemMeta to search through
+     * @param meta ItemMeta to search through
      * @param searchTerm The search term to use
      * @return If search term was found in the ItemMeta or not
      */
@@ -80,10 +80,10 @@ public final class SearchUtil
      * Search for a String in a piece of ItemMeta.
      * This method makes sure that the item's display name or a single lore string
      * matches the search term exactly.
-     * <p>
+     *
      * Uses <tt>.equals()</tt> to compare strings
      *
-     * @param meta       ItemMeta to search through
+     * @param meta ItemMeta to search through
      * @param searchTerm The search term to use
      * @return If search term was found in the ItemMeta or not
      */

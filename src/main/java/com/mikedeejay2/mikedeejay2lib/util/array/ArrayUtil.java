@@ -30,7 +30,7 @@ public final class ArrayUtil
     /**
      * Get an array as a String, each index separated by a space.
      *
-     * @param arr        The array to convert
+     * @param arr The array to convert
      * @param startIndex The index to start at
      * @return The array converted to a String
      */
@@ -42,9 +42,9 @@ public final class ArrayUtil
     /**
      * Get an array as a String, each index separated by a space.
      *
-     * @param arr        The array to convert
+     * @param arr The array to convert
      * @param startIndex The index to start at
-     * @param endIndex   The index to end at
+     * @param endIndex The index to end at
      * @return The array converted to a String
      */
     public static String getAsString(String[] arr, int startIndex, int endIndex)
@@ -61,9 +61,9 @@ public final class ArrayUtil
     /**
      * Trim an array down to a specific start and end index
      *
-     * @param arr        The array to trim
+     * @param arr The array to trim
      * @param startIndex The starting index to keep
-     * @param <T>        The type of the array
+     * @param <T> The type of the array
      * @return The trimmed array
      */
     public static <T> T[] trimArray(T[] arr, Class<T> clazz, int startIndex)
@@ -74,10 +74,10 @@ public final class ArrayUtil
     /**
      * Trim an array down to a specific start and end index
      *
-     * @param arr        The array to trim
+     * @param arr The array to trim
      * @param startIndex The starting index to keep
-     * @param endIndex   The ending index to keep (<tt>i < endIndex</tt>)
-     * @param <T>        The type of the array
+     * @param endIndex The ending index to keep (<tt>i < endIndex</tt>)
+     * @param <T> The type of the array
      * @return The trimmed array
      */
     public static <T> T[] trimArray(T[] arr, Class<T> clazz, int startIndex, int endIndex)
@@ -88,7 +88,7 @@ public final class ArrayUtil
             T cur = arr[i];
             newList.add(cur);
         }
-        return newList.toArray((T[]) Array.newInstance(clazz, newList.size()));
+        return newList.toArray((T[])Array.newInstance(clazz, newList.size()));
     }
 
     /**
@@ -283,7 +283,7 @@ public final class ArrayUtil
     /**
      * Converts a list of vectors to a list of locations
      *
-     * @param list  List of vectors that will be converted
+     * @param list List of vectors that will be converted
      * @param world The world to use when converting from vectors to locations
      * @return A new list of locations based off of the list of vectors
      */
@@ -310,7 +310,7 @@ public final class ArrayUtil
     /**
      * Clone all <tt>Locations</tt> in a list and add them to another list of <tt>Locations</tt>
      *
-     * @param senderList   The list which objects will be cloned
+     * @param senderList The list which objects will be cloned
      * @param receiverList The list which will receiver the new objects
      */
     public static void addClonedLocationsToList(List<Location> senderList, List<Location> receiverList)
@@ -321,7 +321,7 @@ public final class ArrayUtil
     /**
      * Clone all <tt>Vectors</tt> in a list and add them to another list of <tt>Vectors</tt>
      *
-     * @param senderList   The list which objects will be cloned
+     * @param senderList The list which objects will be cloned
      * @param receiverList The list which will receiver the new objects
      */
     public static void addClonedVectorsToList(List<Vector> senderList, List<Vector> receiverList)

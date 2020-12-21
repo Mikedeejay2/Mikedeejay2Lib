@@ -25,9 +25,9 @@ public class ParticleShapeCylinder implements ParticleShape
 
     /**
      * @param location The center location
-     * @param radius   The radius
-     * @param height   The height
-     * @param density  The density of particles
+     * @param radius The radius
+     * @param height The height
+     * @param density The density of particles
      */
     public ParticleShapeCylinder(Location location, double radius, double height, double density)
     {
