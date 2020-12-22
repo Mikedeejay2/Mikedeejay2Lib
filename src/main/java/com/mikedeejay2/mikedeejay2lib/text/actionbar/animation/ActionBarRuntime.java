@@ -7,12 +7,27 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+/**
+ * Runtime for the Action Bar system. This runtime animates and displays
+ * the <tt>ActionBar</tt> that it belongs to.
+ * <p>
+ * This runtime should only be created using {@link ActionBar#display(Player...)} or similar.
+ *
+ * @see ActionBar
+ *
+ * @author Mikedeejay2
+ */
 public class ActionBarRuntime extends EnhancedRunnable
 {
+    // The array of players to print the action bar to
     protected Player[] players;
+    // The parent action bar
     protected ActionBar actionBar;
+    // The current index of this action bar
     protected int curIndex;
+    // The current wait time of this action bar
     protected int wait;
+    // Whether this action bar is on its first run or not
     protected boolean firstRun;
 
     public ActionBarRuntime(ActionBar actionBar, Player... players)
@@ -24,6 +39,9 @@ public class ActionBarRuntime extends EnhancedRunnable
         this.firstRun = true;
     }
 
+    /**
+     * Overridden <tt>onRun()</tt> method that adds animation for the <tt>ActionBar</tt>
+     */
     @Override
     public void onRun()
     {
