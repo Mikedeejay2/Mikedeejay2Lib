@@ -41,7 +41,7 @@ public class ActionBar
     public void displayCount(long period, long count, Player... players)
     {
         this.runtime = new ActionBarRuntime(this, players);
-        runtime.runTaskTimerAsynchronously(plugin, period);
+        runtime.runTaskTimerCounted(plugin, period, count);
     }
 
     public void displayCount(long count, Player... players)
