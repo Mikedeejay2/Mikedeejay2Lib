@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.text.chat.section;
+package com.mikedeejay2.mikedeejay2lib.text.chat;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.text.chat.modules.ChatModule;
@@ -9,12 +9,24 @@ import org.bukkit.command.CommandSender;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * A section of text in a <tt>ChatSlide</tt>
+ *
+ * @see ChatSlide
+ * @see ChatSystem
+ *
+ * @author Mikedeejay2
+ */
 public class ChatSection
 {
     protected final PluginBase plugin;
+    // The list of Chat Modules for this section
     protected List<ChatModule> modules;
+    // The String of text for this section
     protected String text;
+    // Whether this section has been baked or not
     protected boolean baked;
+    // The baked array of components for this section
     protected BaseComponent[] components;
 
     public ChatSection(PluginBase plugin)

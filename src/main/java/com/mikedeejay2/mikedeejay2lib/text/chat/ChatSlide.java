@@ -1,7 +1,6 @@
-package com.mikedeejay2.mikedeejay2lib.text.chat.slide;
+package com.mikedeejay2.mikedeejay2lib.text.chat;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.text.chat.section.ChatSection;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

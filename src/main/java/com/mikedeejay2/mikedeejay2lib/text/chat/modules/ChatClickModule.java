@@ -1,7 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.text.chat.modules;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.text.chat.section.ChatSection;
+import com.mikedeejay2.mikedeejay2lib.text.chat.ChatSection;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.ClickEvent;
