@@ -20,7 +20,7 @@ public class BossBarRuntime extends EnhancedRunnable
     protected BossBarSystem system;
     // The boss bar object
     protected BossBar bar;
-    // The list of BBModules of this system
+    // The list of BossBarModules of this system
     protected List<BossBarModule> modules;
 
     public BossBarRuntime(BossBarSystem bar)
@@ -31,7 +31,7 @@ public class BossBarRuntime extends EnhancedRunnable
     }
 
     /**
-     * Run the onTick for all of the <tt>BBModules</tt>
+     * Run the onTick for all of the <tt>BossBarModules</tt>
      */
     @Override
     public void onRun()

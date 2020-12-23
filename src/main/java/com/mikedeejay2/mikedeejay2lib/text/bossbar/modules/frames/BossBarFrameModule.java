@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Special <tt>BBModule</tt> that adds frame like capabilities to modules.
+ * Special <tt>BossBarModule</tt> that adds frame like capabilities to modules.
  * <p>
  * Frames can be added through {@link BossBarFrameModule#addFrame(long, Object)} or similar.
  *
@@ -80,7 +80,7 @@ public abstract class BossBarFrameModule<T> extends BossBarModule
      * @param period The period (Time this frame and the next frame)
      * @param value The value of the frame (Different depending on the module)
      * @param index The index to add the module to
-     * @return The current <tt>BBFrameModule</tt>
+     * @return The current <tt>BossBarFrameModule</tt>
      */
     public BossBarFrameModule<T> addFrame(long period, T value, int index)
     {
@@ -93,7 +93,7 @@ public abstract class BossBarFrameModule<T> extends BossBarModule
      *
      * @param period The period (Time this frame and the next frame)
      * @param value The value of the frame (Different depending on the module)
-     * @return The current <tt>BBFrameModule</tt>
+     * @return The current <tt>BossBarFrameModule</tt>
      */
     public BossBarFrameModule<T> addFrame(long period, T value)
     {
@@ -105,7 +105,7 @@ public abstract class BossBarFrameModule<T> extends BossBarModule
      * Remove a frame based off of the index of the frame
      *
      * @param index The index to remove the frame at
-     * @return The current <tt>BBFrameModule</tt>
+     * @return The current <tt>BossBarFrameModule</tt>
      */
     public BossBarFrameModule<T> removeFrame(int index)
     {
@@ -117,7 +117,7 @@ public abstract class BossBarFrameModule<T> extends BossBarModule
      * Remove a frame based off of a reference of the value of the frame
      *
      * @param value The value of the frame to remove
-     * @return The current <tt>BBFrameModule</tt>
+     * @return The current <tt>BossBarFrameModule</tt>
      */
     public BossBarFrameModule<T> removeFrame(T value)
     {

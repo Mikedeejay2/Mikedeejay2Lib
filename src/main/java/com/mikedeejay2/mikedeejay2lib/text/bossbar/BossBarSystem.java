@@ -392,9 +392,9 @@ public class BossBarSystem
     }
 
     /**
-     * Add a <tt>BBModule</tt> to this system
+     * Add a <tt>BossBarModule</tt> to this system
      *
-     * @param module The <tt>BBModule</tt> to add to this system
+     * @param module The <tt>BossBarModule</tt> to add to this system
      * @return The current <tt>BossBarSystem</tt>
      */
     public BossBarSystem addModule(BossBarModule module)
@@ -404,9 +404,9 @@ public class BossBarSystem
     }
 
     /**
-     * Remove a <tt>BBModule</tt> from this system based off of a reference to the module
+     * Remove a <tt>BossBarModule</tt> from this system based off of a reference to the module
      *
-     * @param module The <tt>BBModule</tt> to remove from this system
+     * @param module The <tt>BossBarModule</tt> to remove from this system
      * @return The current <tt>BossBarSystem</tt>
      */
     public BossBarSystem removeModule(BossBarModule module)
@@ -416,7 +416,7 @@ public class BossBarSystem
     }
 
     /**
-     * Remove a <tt>BBModule</tt> from this system based off of the index of the module
+     * Remove a <tt>BossBarModule</tt> from this system based off of the index of the module
      *
      * @param index The index to remove the module at
      * @return The current <tt>BossBarSystem</tt>
@@ -428,7 +428,7 @@ public class BossBarSystem
     }
 
     /**
-     * Remove a <tt>BBModule</tt> based off of the class of the module
+     * Remove a <tt>BossBarModule</tt> based off of the class of the module
      *
      * @param moduleClass The class of the module to remove
      * @return The current <tt>BossBarSystem</tt>
@@ -445,9 +445,9 @@ public class BossBarSystem
     }
 
     /**
-     * See whether this system contains a specific <tt>BBModule</tt>
+     * See whether this system contains a specific <tt>BossBarModule</tt>
      *
-     * @param module The <tt>BBModule</tt> to search for
+     * @param module The <tt>BossBarModule</tt> to search for
      * @return Whether the module was found or not
      */
     public boolean containsModule(BossBarModule module)
@@ -456,7 +456,7 @@ public class BossBarSystem
     }
 
     /**
-     * See whether this system contains a <tt>BBModule</tt> of the specified class type
+     * See whether this system contains a <tt>BossBarModule</tt> of the specified class type
      *
      * @param moduleClass The class of the module to search for
      * @return Whether a module of the class was found or not
@@ -471,10 +471,10 @@ public class BossBarSystem
     }
 
     /**
-     * Get a <tt>BBModule</tt> based off of the index of the module
+     * Get a <tt>BossBarModule</tt> based off of the index of the module
      *
      * @param index The index of the module to get
-     * @return The requested <tt>BBModule</tt>
+     * @return The requested <tt>BossBarModule</tt>
      */
     public BossBarModule getModule(int index)
     {
@@ -482,11 +482,11 @@ public class BossBarSystem
     }
 
     /**
-     * Get a <tt>BBModule</tt> based off of the class of the module
+     * Get a <tt>BossBarModule</tt> based off of the class of the module
      *
-     * @param moduleClass The class of the <tt>BBModule</tt>
+     * @param moduleClass The class of the <tt>BossBarModule</tt>
      * @param <T> The class type of the module
-     * @return The requested <tt>BBModule</tt>, null if not found
+     * @return The requested <tt>BossBarModule</tt>, null if not found
      */
     public <T extends BossBarModule> T getModule(Class<T> moduleClass)
     {
@@ -509,9 +509,9 @@ public class BossBarSystem
     }
 
     /**
-     * Get the list of <tt>BBModules</tt> that are in this system
+     * Get the list of <tt>BossBarModules</tt> that are in this system
      *
-     * @return The list of <tt>BBModules</tt>
+     * @return The list of <tt>BossBarModules</tt>
      */
     public List<BossBarModule> getModules()
     {

@@ -4,7 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.text.bossbar.BossBarSystem;
 import com.mikedeejay2.mikedeejay2lib.text.bossbar.modules.BossBarModule;
 
 /**
- * <tt>BBModule</tt> for constantly subtracting an amount of progress to a boss bar.
+ * <tt>BossBarModule</tt> for constantly subtracting an amount of progress to a boss bar.
  *
  * @author Mikedeejay2
  */
