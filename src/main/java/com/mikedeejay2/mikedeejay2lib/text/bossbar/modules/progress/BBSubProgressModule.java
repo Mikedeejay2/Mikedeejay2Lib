@@ -3,6 +3,11 @@ package com.mikedeejay2.mikedeejay2lib.text.bossbar.modules.progress;
 import com.mikedeejay2.mikedeejay2lib.text.bossbar.BossBarSystem;
 import com.mikedeejay2.mikedeejay2lib.text.bossbar.modules.BBModule;
 
+/**
+ * <tt>BBModule</tt> for constantly subtracting an amount of progress to a boss bar.
+ *
+ * @author Mikedeejay2
+ */
 public class BBSubProgressModule extends BBModule
 {
     protected double progress;
