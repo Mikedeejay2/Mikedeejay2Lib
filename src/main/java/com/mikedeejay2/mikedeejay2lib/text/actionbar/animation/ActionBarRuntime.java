@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.text.actionbar.animation;
 import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
 import com.mikedeejay2.mikedeejay2lib.text.actionbar.ActionBar;
 import com.mikedeejay2.mikedeejay2lib.text.actionbar.ActionBarFrame;
+import com.mikedeejay2.mikedeejay2lib.text.actionbar.modules.ActionBarModule;
 import org.bukkit.entity.Player;
 
 import java.util.List;
@@ -46,15 +47,18 @@ public class ActionBarRuntime extends EnhancedRunnable
     public void onRun()
     {
         List<ActionBarFrame> frames = actionBar.getFrames();
+        List<ActionBarModule> modules = actionBar.getModules();
         if(frames.size() == 0) return;
         wait += period;
         if(firstRun)
         {
+            modules.forEach(module -> module.onTick(actionBar, frames.get(curIndex)));
             if(wait > delay)
             {
                 if(curIndex < frames.size()) curIndex = 0;
                 firstRun = false;
                 ActionBarFrame curFrame = frames.get(curIndex);
+                modules.forEach(module -> module.onFrame(actionBar, curFrame));
                 curFrame.display(players);
                 ++curIndex;
                 wait = 0;
@@ -73,11 +77,13 @@ public class ActionBarRuntime extends EnhancedRunnable
                 return;
             }
         }
+        modules.forEach(module -> module.onTick(actionBar, frames.get(curIndex)));
         long curWait = frames.get(curIndex - 1 < 0 ? frames.size() - 1 : curIndex - 1).getPeriod();
         if(wait < curWait) return;
         int framePass = (int) (wait / curWait);
         wait = 0;
         ActionBarFrame curFrame = frames.get(curIndex);
+        modules.forEach(module -> module.onFrame(actionBar, curFrame));
         curFrame.display(players);
         curIndex += framePass;
     }
