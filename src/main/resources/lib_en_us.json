@@ -6,6 +6,7 @@
   "generic.success": "Success!",
   "generic.enabled": "Enabled",
   "generic.disabled": "Disabled",
+  "generic.on_enable_message": "{PLUGIN} is powered by Mikedeejay2Lib, a collection of open source resources for developers to use.",
   "warnings.big_number": "Warning: The number you entered is above the recommended limit and might act oddly.",
   "errors.player_required": "Error: You must be a player to run this command.",
   "errors.number_required": "Error: A number is required to run this subcommand.",

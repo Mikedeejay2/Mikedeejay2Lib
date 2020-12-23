@@ -55,6 +55,8 @@ public class PluginBase extends JavaPlugin
         this.updateChecker = new UpdateChecker(this);
 
         this.getServer().getPluginManager().registerEvents(new GUIListener(this), this);
+
+        chat.sendMessage("&a" + langManager.getTextLib("generic.on_enable_message", new String[]{"PLUGIN"}, new String[]{this.getDescription().getName()}));
     }
 
     @Override
