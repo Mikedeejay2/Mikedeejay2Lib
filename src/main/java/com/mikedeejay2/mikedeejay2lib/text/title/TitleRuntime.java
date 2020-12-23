@@ -5,14 +5,25 @@ import org.bukkit.entity.Player;
 
 import java.util.List;
 
+/**
+ * Runtime for a <tt>TitleSystem</tt> that progresses through frames.
+ * This shouldn't be initialized independently! Instead, {@link TitleSystem#display(Player...)} or similar
+ * to use this runtime.
+ *
+ * @author Mikedeejay2
+ */
 public class TitleRuntime extends EnhancedRunnable
 {
+    // The system that this runtime is controlling
     protected TitleSystem system;
+    // The current wait time (run-time variable)
     protected long wait;
+    // Whether this runtime is on its first run or not
     protected boolean firstRun;
+    // The current index of the runtime (run-time variable)
     protected int curIndex;
+    // The array of players that this runtime is printing to
     protected Player[] players;
-
 
     public TitleRuntime(TitleSystem system, Player... players)
     {
@@ -23,6 +34,9 @@ public class TitleRuntime extends EnhancedRunnable
         this.players = players;
     }
 
+    /**
+     * <tt>onRun()</tt> method that animates and displays the <tt>TitleSystem</tt>
+     */
     @Override
     public void onRun()
     {
