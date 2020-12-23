@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.text.chat.animation;
 import com.mikedeejay2.mikedeejay2lib.text.chat.ChatSystem;
 import com.mikedeejay2.mikedeejay2lib.text.chat.ChatSlide;
 import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
+import com.mikedeejay2.mikedeejay2lib.text.title.TitleFrame;
 import org.bukkit.command.CommandSender;
 
 import java.util.List;
@@ -19,19 +20,22 @@ public class ChatAnimRuntime extends EnhancedRunnable
     // The list of slides that this runtime animates through
     protected List<ChatSlide> slides;
     // The current wait time of the animation
-    protected long curWait;
+    protected long wait;
     // The current frame index of the animation
     protected int index;
     // The list of command senders to receive the slides
     protected CommandSender[] receivers;
+    // Whether this is the runtimes first run or not
+    protected boolean firstRun;
 
     public ChatAnimRuntime(ChatSystem system, CommandSender... receivers)
     {
         this.system = system;
         this.slides = system.getSlides();
-        this.curWait = 0;
+        this.wait = 0;
         this.index = 0;
         this.receivers = receivers;
+        this.firstRun = true;
     }
 
     /**
@@ -40,17 +44,32 @@ public class ChatAnimRuntime extends EnhancedRunnable
     @Override
     public void onRun()
     {
-        curWait += period;
+        if(slides.size() == 0) return;
+        wait += period;
+        if(firstRun)
+        {
+            if(wait > delay)
+            {
+                if(index < slides.size()) index = 0;
+                firstRun = false;
+                ChatSlide slide = slides.get(index);
+                slide.print(receivers);
+                ++index;
+                wait = 0;
+            }
+            return;
+        }
         if(index >= slides.size())
         {
             this.cancel();
             return;
         }
-        ChatSlide curSlide = slides.get(index);
-        long amtToWait = slides.get(index - 1 < 0 ? slides.size() - 1 : index - 1).getPeriod();
-        if(curWait < amtToWait) return;
-        curSlide.print(receivers);
-        ++index;
-        curWait = 0;
+        long curWait = slides.get(index - 1 < 0 ? slides.size() - 1 : index - 1).getPeriod();
+        if(wait < curWait) return;
+        int framePass = (int) (wait / curWait);
+        wait = 0;
+        ChatSlide slide = slides.get(index);
+        slide.print(receivers);
+        index += framePass;
     }
 }
