@@ -127,6 +127,10 @@ public class LangManager
         if(file == null)
         {
             file = langFiles.get(englishLang);
+            if(file == null)
+            {
+                file = new JsonFile(plugin, "en_us.json");
+            }
         }
         return file;
     }
