@@ -1,7 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.text.bossbar;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.text.bossbar.modules.BBModule;
+import com.mikedeejay2.mikedeejay2lib.text.bossbar.modules.BossBarModule;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
@@ -42,7 +42,7 @@ public class BossBarSystem
     // Whether the boss bar is visible or not
     protected boolean visible;
     // The list of boss bar modules that this system has
-    protected List<BBModule> modules;
+    protected List<BossBarModule> modules;
 
     /**
      * @param plugin A reference to the plugin
@@ -397,7 +397,7 @@ public class BossBarSystem
      * @param module The <tt>BBModule</tt> to add to this system
      * @return The current <tt>BossBarSystem</tt>
      */
-    public BossBarSystem addModule(BBModule module)
+    public BossBarSystem addModule(BossBarModule module)
     {
         modules.add(module);
         return this;
@@ -409,7 +409,7 @@ public class BossBarSystem
      * @param module The <tt>BBModule</tt> to remove from this system
      * @return The current <tt>BossBarSystem</tt>
      */
-    public BossBarSystem removeModule(BBModule module)
+    public BossBarSystem removeModule(BossBarModule module)
     {
         modules.remove(module);
         return this;
@@ -433,9 +433,9 @@ public class BossBarSystem
      * @param moduleClass The class of the module to remove
      * @return The current <tt>BossBarSystem</tt>
      */
-    public BossBarSystem removeModule(Class<? extends BBModule> moduleClass)
+    public BossBarSystem removeModule(Class<? extends BossBarModule> moduleClass)
     {
-        for(BBModule module : modules)
+        for(BossBarModule module : modules)
         {
             if(moduleClass != module.getClass()) continue;
             modules.remove(module);
@@ -450,7 +450,7 @@ public class BossBarSystem
      * @param module The <tt>BBModule</tt> to search for
      * @return Whether the module was found or not
      */
-    public boolean containsModule(BBModule module)
+    public boolean containsModule(BossBarModule module)
     {
         return modules.contains(module);
     }
@@ -461,9 +461,9 @@ public class BossBarSystem
      * @param moduleClass The class of the module to search for
      * @return Whether a module of the class was found or not
      */
-    public boolean containsModule(Class<? extends BBModule> moduleClass)
+    public boolean containsModule(Class<? extends BossBarModule> moduleClass)
     {
-        for(BBModule module : modules)
+        for(BossBarModule module : modules)
         {
             if(moduleClass == module.getClass()) return true;
         }
@@ -476,7 +476,7 @@ public class BossBarSystem
      * @param index The index of the module to get
      * @return The requested <tt>BBModule</tt>
      */
-    public BBModule getModule(int index)
+    public BossBarModule getModule(int index)
     {
         return modules.get(index);
     }
@@ -488,9 +488,9 @@ public class BossBarSystem
      * @param <T> The class type of the module
      * @return The requested <tt>BBModule</tt>, null if not found
      */
-    public <T extends BBModule> T getModule(Class<T> moduleClass)
+    public <T extends BossBarModule> T getModule(Class<T> moduleClass)
     {
-        for(BBModule module : modules)
+        for(BossBarModule module : modules)
         {
             if(moduleClass == module.getClass()) return (T) module;
         }
@@ -513,7 +513,7 @@ public class BossBarSystem
      *
      * @return The list of <tt>BBModules</tt>
      */
-    public List<BBModule> getModules()
+    public List<BossBarModule> getModules()
     {
         return modules;
     }

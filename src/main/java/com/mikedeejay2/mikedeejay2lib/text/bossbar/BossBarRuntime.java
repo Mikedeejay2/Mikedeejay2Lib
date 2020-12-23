@@ -1,7 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.text.bossbar;
 
 import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
-import com.mikedeejay2.mikedeejay2lib.text.bossbar.modules.BBModule;
+import com.mikedeejay2.mikedeejay2lib.text.bossbar.modules.BossBarModule;
 import org.bukkit.boss.BossBar;
 
 import java.util.List;
@@ -21,7 +21,7 @@ public class BossBarRuntime extends EnhancedRunnable
     // The boss bar object
     protected BossBar bar;
     // The list of BBModules of this system
-    protected List<BBModule> modules;
+    protected List<BossBarModule> modules;
 
     public BossBarRuntime(BossBarSystem bar)
     {

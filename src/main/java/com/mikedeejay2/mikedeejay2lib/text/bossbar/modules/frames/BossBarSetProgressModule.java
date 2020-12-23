@@ -1,16 +1,15 @@
 package com.mikedeejay2.mikedeejay2lib.text.bossbar.modules.frames;
 
 import com.mikedeejay2.mikedeejay2lib.text.bossbar.BossBarSystem;
-import org.bukkit.boss.BarColor;
 
 /**
  * <tt>BBModule</tt> for setting the progress of a boss bar through frames.
  *
  * @author Mikedeejay2
  */
-public class BBSetProgressModule extends BBFrameModule<Double>
+public class BossBarSetProgressModule extends BossBarFrameModule<Double>
 {
-    public BBSetProgressModule(boolean loop)
+    public BossBarSetProgressModule(boolean loop)
     {
         super(loop);
     }

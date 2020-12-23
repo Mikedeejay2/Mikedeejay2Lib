@@ -8,9 +8,9 @@ import org.bukkit.boss.BarStyle;
  *
  * @author Mikedeejay2
  */
-public class BBSetStyleModule extends BBFrameModule<BarStyle>
+public class BossBarSetStyleModule extends BossBarFrameModule<BarStyle>
 {
-    public BBSetStyleModule(boolean loop)
+    public BossBarSetStyleModule(boolean loop)
     {
         super(loop);
     }

@@ -8,9 +8,9 @@ import org.bukkit.boss.BarColor;
  *
  * @author Mikedeejay2
  */
-public class BBSetColorModule extends BBFrameModule<BarColor>
+public class BossBarSetColorModule extends BossBarFrameModule<BarColor>
 {
-    public BBSetColorModule(boolean loop)
+    public BossBarSetColorModule(boolean loop)
     {
         super(loop);
     }

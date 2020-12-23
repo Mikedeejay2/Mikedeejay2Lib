@@ -7,9 +7,9 @@ import com.mikedeejay2.mikedeejay2lib.text.bossbar.BossBarSystem;
  *
  * @author Mikedeejay2
  */
-public class BBSetTitleModule extends BBFrameModule<String>
+public class BossBarSetTitleModule extends BossBarFrameModule<String>
 {
-    public BBSetTitleModule(boolean loop)
+    public BossBarSetTitleModule(boolean loop)
     {
         super(loop);
     }

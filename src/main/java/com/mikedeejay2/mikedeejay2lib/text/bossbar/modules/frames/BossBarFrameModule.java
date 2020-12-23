@@ -1,7 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.text.bossbar.modules.frames;
 
 import com.mikedeejay2.mikedeejay2lib.text.bossbar.BossBarSystem;
-import com.mikedeejay2.mikedeejay2lib.text.bossbar.modules.BBModule;
+import com.mikedeejay2.mikedeejay2lib.text.bossbar.modules.BossBarModule;
 
 import java.util.AbstractMap;
 import java.util.ArrayList;
@@ -11,11 +11,11 @@ import java.util.Map;
 /**
  * Special <tt>BBModule</tt> that adds frame like capabilities to modules.
  * <p>
- * Frames can be added through {@link BBFrameModule#addFrame(long, Object)} or similar.
+ * Frames can be added through {@link BossBarFrameModule#addFrame(long, Object)} or similar.
  *
  * @param <T> The data type of the frame
  */
-public abstract class BBFrameModule<T> extends BBModule
+public abstract class BossBarFrameModule<T> extends BossBarModule
 {
     // The list of map entries of frames
     protected List<Map.Entry<Long, T>> frames;
@@ -29,7 +29,7 @@ public abstract class BBFrameModule<T> extends BBModule
     /**
      * @param loop Whether this module should loop the frames or not
      */
-    public BBFrameModule(boolean loop)
+    public BossBarFrameModule(boolean loop)
     {
         this.frames = new ArrayList<>();
         this.loop = loop;
@@ -38,9 +38,9 @@ public abstract class BBFrameModule<T> extends BBModule
     /**
      * Processes the ticks, runs the frame if applicable.
      * <p>
-     * This method should not be overridden, use {@link BBFrameModule#onFrame(BossBarSystem, long, Object)} instead.
+     * This method should not be overridden, use {@link BossBarFrameModule#onFrame(BossBarSystem, long, Object)} instead.
      *
-     * @see BBFrameModule#onFrame(BossBarSystem, long, Object)
+     * @see BossBarFrameModule#onFrame(BossBarSystem, long, Object)
      * @param system The <tt>BossBarSystem</tt> being ticked
      */
     @Override
@@ -82,7 +82,7 @@ public abstract class BBFrameModule<T> extends BBModule
      * @param index The index to add the module to
      * @return The current <tt>BBFrameModule</tt>
      */
-    public BBFrameModule<T> addFrame(long period, T value, int index)
+    public BossBarFrameModule<T> addFrame(long period, T value, int index)
     {
         frames.add(index, new AbstractMap.SimpleEntry<>(period, value));
         return this;
@@ -95,7 +95,7 @@ public abstract class BBFrameModule<T> extends BBModule
      * @param value The value of the frame (Different depending on the module)
      * @return The current <tt>BBFrameModule</tt>
      */
-    public BBFrameModule<T> addFrame(long period, T value)
+    public BossBarFrameModule<T> addFrame(long period, T value)
     {
         frames.add(new AbstractMap.SimpleEntry<>(period, value));
         return this;
@@ -107,7 +107,7 @@ public abstract class BBFrameModule<T> extends BBModule
      * @param index The index to remove the frame at
      * @return The current <tt>BBFrameModule</tt>
      */
-    public BBFrameModule<T> removeFrame(int index)
+    public BossBarFrameModule<T> removeFrame(int index)
     {
         frames.remove(index);
         return this;
@@ -119,7 +119,7 @@ public abstract class BBFrameModule<T> extends BBModule
      * @param value The value of the frame to remove
      * @return The current <tt>BBFrameModule</tt>
      */
-    public BBFrameModule<T> removeFrame(T value)
+    public BossBarFrameModule<T> removeFrame(T value)
     {
         for(Map.Entry<Long, T> entry : frames)
         {
