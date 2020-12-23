@@ -36,7 +36,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     {
         this.count = 0;
         this.endCount = 0;
-        this.period = 0;
+        this.period = 1;
         this.delay = 0;
     }
 
