@@ -70,7 +70,7 @@ public abstract class BossBarFrameModule<T> extends BossBarModule
      *
      * @param system The <tt>BossBarSystem</tt> that should be modified
      * @param period The period of the current frame
-     * @param value The value of the frame
+     * @param value  The value of the frame
      */
     public abstract void onFrame(BossBarSystem system, long period, T value);
 
@@ -78,8 +78,8 @@ public abstract class BossBarFrameModule<T> extends BossBarModule
      * Add a frame to this module
      *
      * @param period The period (Time this frame and the next frame)
-     * @param value The value of the frame (Different depending on the module)
-     * @param index The index to add the module to
+     * @param value  The value of the frame (Different depending on the module)
+     * @param index  The index to add the module to
      * @return The current <tt>BossBarFrameModule</tt>
      */
     public BossBarFrameModule<T> addFrame(long period, T value, int index)

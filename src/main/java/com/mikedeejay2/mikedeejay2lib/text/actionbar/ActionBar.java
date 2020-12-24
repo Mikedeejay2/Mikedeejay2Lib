@@ -225,7 +225,7 @@ public class ActionBar
      * Add a <tt>ActionBarModule</tt> to this action bar at a specified index
      *
      * @param module The <tt>ActionBarModule</tt> to add
-     * @param index The index to add the module at
+     * @param index  The index to add the module at
      * @return The current <tt>ActionBar</tt>
      */
     public ActionBar addModule(ActionBarModule module, int index)
@@ -299,7 +299,7 @@ public class ActionBar
      * Get an <tt>ActionBarModule</tt> based off of the class type of the module
      *
      * @param moduleClass The class of the module to get
-     * @param <T> The class type of the module
+     * @param <T>         The class type of the module
      * @return The a <tt>ActionBarModule</tt> of the specified class, null if not found
      */
     public <T extends ActionBarModule> T getModule(Class<? extends ActionBarModule> moduleClass)

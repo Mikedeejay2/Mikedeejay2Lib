@@ -45,12 +45,12 @@ public class BossBarSystem
     protected List<BossBarModule> modules;
 
     /**
-     * @param plugin A reference to the plugin
-     * @param title The title String of the boss bar
-     * @param color The <tt>BarColor</tt> of the boss bar
-     * @param style The <tt>BarStyle</tt> of the boss bar
+     * @param plugin   A reference to the plugin
+     * @param title    The title String of the boss bar
+     * @param color    The <tt>BarColor</tt> of the boss bar
+     * @param style    The <tt>BarStyle</tt> of the boss bar
      * @param progress The progress (0.0 - 1.0) of the boss bar
-     * @param flags The <tt>BarFlags</tt> of the boss bar
+     * @param flags    The <tt>BarFlags</tt> of the boss bar
      */
     public BossBarSystem(PluginBase plugin, String title, BarColor color, BarStyle style, double progress, BarFlag... flags)
     {
@@ -78,7 +78,7 @@ public class BossBarSystem
     /**
      * Display this <tt>BossBarSystem</tt> to the players added to the system
      *
-     * @param delay The delay before the boss bar should be displayed
+     * @param delay  The delay before the boss bar should be displayed
      * @param period The period between tick updates of the boss bar
      */
     public void display(long delay, long period)
@@ -485,7 +485,7 @@ public class BossBarSystem
      * Get a <tt>BossBarModule</tt> based off of the class of the module
      *
      * @param moduleClass The class of the <tt>BossBarModule</tt>
-     * @param <T> The class type of the module
+     * @param <T>         The class type of the module
      * @return The requested <tt>BossBarModule</tt>, null if not found
      */
     public <T extends BossBarModule> T getModule(Class<T> moduleClass)

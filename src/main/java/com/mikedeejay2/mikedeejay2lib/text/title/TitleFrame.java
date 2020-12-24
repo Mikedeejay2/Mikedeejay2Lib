@@ -24,12 +24,12 @@ public class TitleFrame
     protected long period;
 
     /**
-     * @param title The title String of the frame
+     * @param title    The title String of the frame
      * @param subtitle The subtitle String of the frame
-     * @param fadeIn The fade in time of the frame
-     * @param stay The stay time of frame
-     * @param fadeOut The fade out time of the frame
-     * @param period The maximum period of ticks that the frame is displayed
+     * @param fadeIn   The fade in time of the frame
+     * @param stay     The stay time of frame
+     * @param fadeOut  The fade out time of the frame
+     * @param period   The maximum period of ticks that the frame is displayed
      */
     public TitleFrame(String title, String subtitle, int fadeIn, int stay, int fadeOut, long period)
     {

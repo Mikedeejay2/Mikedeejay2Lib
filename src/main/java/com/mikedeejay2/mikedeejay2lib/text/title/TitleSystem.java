@@ -28,8 +28,8 @@ public class TitleSystem
     /**
      * Display the title to a variable amount of players
      *
-     * @param period The period between updates of the title
-     * @param delay The delay before the title begins displaying
+     * @param period  The period between updates of the title
+     * @param delay   The delay before the title begins displaying
      * @param players The variable array of players
      */
     public void display(long period, long delay, Player... players)
@@ -41,7 +41,7 @@ public class TitleSystem
     /**
      * Display the title to a variable amount of players
      *
-     * @param period The period between updates of the title
+     * @param period  The period between updates of the title
      * @param players The variable array of players
      */
     public void display(long period, Player... players)
@@ -94,13 +94,13 @@ public class TitleSystem
     /**
      * Add a new <tt>TitleFrame</tt> to this <tt>TitleSystem</tt>
      *
-     * @param title The title String of the title
+     * @param title    The title String of the title
      * @param subtitle The subtitle String of the title
-     * @param fadeIn The fadeIn length (in ticks)
-     * @param stay The stay length (in ticks)
-     * @param fadeOut The fadeOut length (in ticks)
-     * @param period The total period of time that the title has to display
-     *               (for full time do fadeIn + stay + fadeOut)
+     * @param fadeIn   The fadeIn length (in ticks)
+     * @param stay     The stay length (in ticks)
+     * @param fadeOut  The fadeOut length (in ticks)
+     * @param period   The total period of time that the title has to display
+     *                 (for full time do fadeIn + stay + fadeOut)
      * @return The current <tt>TitleSystem</tt>
      */
     public TitleSystem addFrame(String title, String subtitle, int fadeIn, int stay, int fadeOut, long period)
