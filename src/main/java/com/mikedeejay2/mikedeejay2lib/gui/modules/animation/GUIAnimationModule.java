@@ -21,7 +21,7 @@ import java.util.Map;
  *
  * @author Mikedeejay2
  */
-public class GUIAnimationModule extends GUIModule
+public class GUIAnimationModule implements GUIModule
 {
     protected final PluginBase plugin;
     // The list of Animated GUI Items to be animated

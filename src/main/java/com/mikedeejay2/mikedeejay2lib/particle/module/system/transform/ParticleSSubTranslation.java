@@ -9,7 +9,7 @@ import org.bukkit.util.Vector;
  *
  * @author Mikedeejay2
  */
-public class ParticleSSubTranslation extends ParticleSModule
+public class ParticleSSubTranslation implements ParticleSModule
 {
     protected Vector vector;
 

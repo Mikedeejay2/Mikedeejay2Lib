@@ -18,7 +18,7 @@ import org.bukkit.entity.Player;
  *
  * @author Mikedeejay2
  */
-public class GUINavigatorModule extends GUIModule
+public class GUINavigatorModule implements GUIModule
 {
     protected final PluginBase plugin;
     // The ID of the Navigator

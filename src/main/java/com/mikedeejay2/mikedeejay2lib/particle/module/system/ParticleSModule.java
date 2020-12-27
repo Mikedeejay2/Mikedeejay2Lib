@@ -10,33 +10,33 @@ import com.mikedeejay2.mikedeejay2lib.particle.runtime.ParticleRuntime;
  *
  * @author Mikedeejay2
  */
-public abstract class ParticleSModule
+public interface ParticleSModule
 {
     /**
      * Called on the head of display of particles in {@link ParticleRuntime#onRun()}
      *
      * @param system The <tt>ParticleSystem</tt>
      */
-    public void onDisplayHead(ParticleSystem system) {}
+    default void onDisplayHead(ParticleSystem system) {}
 
     /**
      * Called on the tail of display of particles in {@link ParticleRuntime#onRun()}
      *
      * @param system The <tt>ParticleSystem</tt>
      */
-    public void onDisplayTail(ParticleSystem system) {}
+    default void onDisplayTail(ParticleSystem system) {}
 
     /**
      * Called on the head of update in {@link ParticleRuntime#onRun()}
      *
      * @param system The <tt>ParticleSystem</tt>
      */
-    public void onUpdateHead(ParticleSystem system) {}
+    default void onUpdateHead(ParticleSystem system) {}
 
     /**
      * Called on the tail of update in {@link ParticleRuntime#onRun()}
      *
      * @param system The <tt>ParticleSystem</tt>
      */
-    public void onUpdateTail(ParticleSystem system) {}
+    default void onUpdateTail(ParticleSystem system) {}
 }

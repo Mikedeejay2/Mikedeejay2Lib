@@ -10,7 +10,7 @@ import org.bukkit.command.CommandSender;
  *
  * @author Mikedeejay2
  */
-public abstract class ChatModule
+public interface ChatModule
 {
     /**
      * Method that is called when the <tt>ChatSection</tt> is printed to a <tt>CommandSender</tt>
@@ -18,7 +18,7 @@ public abstract class ChatModule
      * @param section  The <tt>ChatSection</tt> that is being printed
      * @param receiver The <tt>CommandSender</tt> that is receiving the message
      */
-    public void onPrint(ChatSection section, CommandSender receiver) {}
+    default void onPrint(ChatSection section, CommandSender receiver) {}
 
     /**
      * Method that is called when the <tt>ChatSection</tt> is baked
@@ -26,5 +26,5 @@ public abstract class ChatModule
      * @param section    The <tt>ChatSection</tt> that is being baked
      * @param components The current array of <tt>BaseComonents</tt> that have been baked
      */
-    public void onBake(ChatSection section, BaseComponent[] components) {}
+    default void onBake(ChatSection section, BaseComponent[] components) {}
 }

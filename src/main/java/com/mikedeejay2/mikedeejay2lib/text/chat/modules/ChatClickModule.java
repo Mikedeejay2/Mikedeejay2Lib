@@ -11,7 +11,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
  *
  * @author Mikedeejay2
  */
-public class ChatClickModule extends ChatModule
+public class ChatClickModule implements ChatModule
 {
     protected final PluginBase plugin;
     // The text that the click event will use

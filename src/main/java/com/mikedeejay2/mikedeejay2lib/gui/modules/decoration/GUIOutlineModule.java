@@ -14,7 +14,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author Mikedeejay2
  */
-public class GUIOutlineModule extends GUIModule
+public class GUIOutlineModule implements GUIModule
 {
     // The GUI item that will be used for the border
     private GUIItem outlineItem;

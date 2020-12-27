@@ -11,7 +11,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
  *
  * @author Mikedeejay2
  */
-public class ChatHoverModule extends ChatModule
+public class ChatHoverModule implements ChatModule
 {
     protected final PluginBase plugin;
     // The text that the hover event will use

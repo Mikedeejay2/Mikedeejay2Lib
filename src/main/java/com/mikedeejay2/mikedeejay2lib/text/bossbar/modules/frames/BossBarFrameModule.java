@@ -15,7 +15,7 @@ import java.util.Map;
  *
  * @param <T> The data type of the frame
  */
-public abstract class BossBarFrameModule<T> extends BossBarModule
+public abstract class BossBarFrameModule<T> implements BossBarModule
 {
     // The list of map entries of frames
     protected List<Map.Entry<Long, T>> frames;

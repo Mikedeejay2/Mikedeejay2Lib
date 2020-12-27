@@ -11,7 +11,7 @@ import com.mikedeejay2.mikedeejay2lib.text.actionbar.ActionBarFrame;
  *
  * @author Mikedeejay2
  */
-public abstract class ActionBarModule
+public interface ActionBarModule
 {
     /**
      * Called when an action bar is ticked
@@ -19,7 +19,7 @@ public abstract class ActionBarModule
      * @param bar   The <tt>ActionBarSystem</tt> being ticked
      * @param frame The frame that the action bar is on
      */
-    public void onTick(ActionBar bar, ActionBarFrame frame) {}
+    default void onTick(ActionBar bar, ActionBarFrame frame) {}
 
     /**
      * Called when an action bar is changing frames
@@ -27,5 +27,5 @@ public abstract class ActionBarModule
      * @param bar   The <tt>ActionBarSystem</tt> being ticked
      * @param frame The frame that the action bar is on
      */
-    public void onFrame(ActionBar bar, ActionBarFrame frame) {}
+    default void onFrame(ActionBar bar, ActionBarFrame frame) {}
 }

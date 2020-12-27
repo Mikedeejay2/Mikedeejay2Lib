@@ -9,7 +9,7 @@ import org.bukkit.util.Vector;
  *
  * @author Mikedeejay2
  */
-public class ParticleSAddScale extends ParticleSModule
+public class ParticleSAddScale implements ParticleSModule
 {
     protected Vector vector;
 

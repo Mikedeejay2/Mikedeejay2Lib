@@ -11,7 +11,7 @@ import com.mikedeejay2.mikedeejay2lib.util.head.Base64Heads;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.entity.Player;
 
-public class GUIScrollerModule extends GUIModule
+public class GUIScrollerModule implements GUIModule
 {
     protected final PluginBase plugin;
 

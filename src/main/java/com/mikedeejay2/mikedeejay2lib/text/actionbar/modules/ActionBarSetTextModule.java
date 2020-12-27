@@ -9,7 +9,7 @@ import com.mikedeejay2.mikedeejay2lib.text.actionbar.ActionBarFrame;
  *
  * @author Mikedeejay2
  */
-public class ActionBarSetTextModule extends ActionBarModule
+public class ActionBarSetTextModule implements ActionBarModule
 {
     // The String of text that the action bar will be changed to
     protected String text;

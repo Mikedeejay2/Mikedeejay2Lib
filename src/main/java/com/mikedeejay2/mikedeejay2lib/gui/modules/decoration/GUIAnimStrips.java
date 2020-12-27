@@ -6,7 +6,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import org.bukkit.entity.Player;
 
-public class GUIAnimStrips extends GUIModule
+public class GUIAnimStrips implements GUIModule
 {
     protected AnimatedGUIItem item;
 

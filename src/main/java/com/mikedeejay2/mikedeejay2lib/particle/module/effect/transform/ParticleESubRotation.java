@@ -9,7 +9,7 @@ import org.bukkit.util.Vector;
  *
  * @author Mikedeejay2
  */
-public class ParticleESubRotation extends ParticleEModule
+public class ParticleESubRotation implements ParticleEModule
 {
     protected Vector vector;
 

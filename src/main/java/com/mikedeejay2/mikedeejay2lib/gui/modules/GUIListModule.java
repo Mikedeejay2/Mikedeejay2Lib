@@ -28,7 +28,7 @@ import java.util.Map;
  *
  * @author Mikedeejay2
  */
-public class GUIListModule extends GUIModule
+public class GUIListModule implements GUIModule
 {
     protected final PluginBase plugin;
     // The list of items that this list holds

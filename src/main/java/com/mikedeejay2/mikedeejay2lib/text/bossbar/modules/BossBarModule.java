@@ -8,12 +8,12 @@ import com.mikedeejay2.mikedeejay2lib.text.bossbar.BossBarSystem;
  *
  * @author Mikedeejay2
  */
-public abstract class BossBarModule
+public interface BossBarModule
 {
     /**
      * Method that is called when a boss bar is ticked
      *
      * @param system The <tt>BossBarSystem</tt> being ticked
      */
-    public void onTick(BossBarSystem system) {}
+    default void onTick(BossBarSystem system) {}
 }

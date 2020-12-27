@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class GUITreeModule extends GUIModule
+public class GUITreeModule implements GUIModule
 {
     // The list of nodes that this tree module displays
     protected List<GUITreeNode> nodes;

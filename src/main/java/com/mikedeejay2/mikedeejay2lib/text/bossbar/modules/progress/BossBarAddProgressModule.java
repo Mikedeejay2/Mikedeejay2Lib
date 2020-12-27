@@ -8,7 +8,7 @@ import com.mikedeejay2.mikedeejay2lib.text.bossbar.modules.BossBarModule;
  *
  * @author Mikedeejay2
  */
-public class BossBarAddProgressModule extends BossBarModule
+public class BossBarAddProgressModule implements BossBarModule
 {
     protected double progress;
 

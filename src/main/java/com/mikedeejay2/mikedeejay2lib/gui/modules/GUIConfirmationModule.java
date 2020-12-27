@@ -9,7 +9,7 @@ import org.bukkit.entity.Player;
  *
  * @author Mikedeejay2
  */
-public class GUIConfirmationModule extends GUIModule
+public class GUIConfirmationModule implements GUIModule
 {
     // The confirm item
     protected GUIItem confirmItem;
