@@ -19,7 +19,7 @@ public final class DebugTimer
     private List<TimerEntry> entries;
     // The name of this timer
     private String name;
-    // The overall difference from interal processing
+    // The overall difference from internal processing
     long overallDifference;
 
     public DebugTimer(String name)
