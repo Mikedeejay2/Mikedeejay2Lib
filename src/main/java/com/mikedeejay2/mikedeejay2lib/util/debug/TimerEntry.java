@@ -37,4 +37,24 @@ public class TimerEntry
     {
         return name;
     }
+
+    /**
+     * Set the time
+     *
+     * @param time The new time
+     */
+    public void setTime(long time)
+    {
+        this.time = time;
+    }
+
+    /**
+     * Set the name
+     *
+     * @param name The new name
+     */
+    public void setName(String name)
+    {
+        this.name = name;
+    }
 }

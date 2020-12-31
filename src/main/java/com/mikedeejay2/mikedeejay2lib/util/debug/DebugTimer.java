@@ -19,12 +19,15 @@ public final class DebugTimer
     private List<TimerEntry> entries;
     // The name of this timer
     private String name;
+    // The overall difference from interal processing
+    long overallDifference;
 
     public DebugTimer(String name)
     {
         this.name = name;
         this.entries = new ArrayList<>();
         this.startTime = System.nanoTime();
+        overallDifference = 0;
     }
 
     /**
@@ -34,21 +37,32 @@ public final class DebugTimer
      */
     public void addPrintPoint(String pointName)
     {
-        entries.add(new TimerEntry(pointName, System.nanoTime()));
+        long startTime = System.nanoTime();
+        TimerEntry entry = new TimerEntry(pointName, startTime);
+        entries.add(entry);
+        long endTime = System.nanoTime();
+        long difference = endTime - startTime;
+        overallDifference += difference;
+        long finalTime = startTime - overallDifference;
+        entry.setTime(finalTime);
     }
 
     /**
      * Print the report for this debug timer
      */
-    public void printReport()
+    public void printReport(int decimalPlaces)
     {
         long endTime = System.nanoTime();
         ConsoleCommandSender printer = Bukkit.getConsoleSender();
+        double multiplier = Math.pow(10.0, decimalPlaces);
         printer.sendMessage(ChatColor.AQUA + "Time report for \"" + name + "\":");
-        double overallTime = Math.round(((endTime - startTime) / 1000000.0) * 100.0) / 100.0;
+        double overallNonRounded = ((endTime - startTime) / 1000000.0);
+        double overallTime = Math.round(overallNonRounded * multiplier) / multiplier;
+        int overallTick = (int)(Math.round(50.0 / overallNonRounded));
+        int overallSecond = (int)(Math.round(1000.0 / overallNonRounded));
         printer.sendMessage("Overall time: " + overallTime + "ms, " +
-                Math.round((50.0 / overallTime) * 100.0) / 100.0 + " times a tick, " +
-                Math.round((1000.0 / overallTime) * 100.0) / 100.0 + " times a second.");
+                overallTick + " times a tick, " +
+                overallSecond + " times a second.");
 
         for(int i = 0; i < entries.size(); i++)
         {
@@ -56,10 +70,21 @@ public final class DebugTimer
             long curStart = i == 0 ? startTime : entries.get(i - 1).getTime();
             long curEnd = entry.getTime();
             String pointName = entry.getName();
-            double finalTime = Math.round(((curEnd - curStart) / 1000000.0) * 100) / 100.0;
+            double finalNonRounded = ((curEnd - curStart) / 1000000.0);
+            double finalTime = Math.round(finalNonRounded * multiplier) / multiplier;
+            int perTick = (int)(Math.round(50.0 / finalNonRounded));
+            int perSecond = (int)(Math.round(1000.0 / finalNonRounded));
             printer.sendMessage("Point \"" + pointName + "\": " + finalTime + "ms, " +
-                    Math.round((50.0 / finalTime) * 100.0) / 100.0 + " times a tick, " +
-                    Math.round((1000.0 / finalTime) * 100.0) / 100.0 + " times a second.");
+                    perTick + " times a tick, " +
+                    perSecond + " times a second.");
         }
+    }
+
+    /**
+     * Print the report for this debug timer with the default 2 decimal places
+     */
+    public void printReport()
+    {
+        printReport(2);
     }
 }
