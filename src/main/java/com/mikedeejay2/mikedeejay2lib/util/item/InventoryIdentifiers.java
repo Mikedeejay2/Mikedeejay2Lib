@@ -9,6 +9,8 @@ public final class InventoryIdentifiers
     public static final int CHESTPLATE_SLOT = 38;
     public static final int LEGGINGS_SLOT = 37;
     public static final int BOOTS_SLOT = 36;
+    public static final int FIRST_BOTTOM_RAW_SLOT = 0;
+    public static final int FIRST_TOP_RAW_SLOT = 37;
 
     public static boolean isShulkerBox(Material material)
     {
@@ -120,5 +122,15 @@ public final class InventoryIdentifiers
             default:
                 return false;
         }
+    }
+
+    public static boolean isOffhandSlot(int slot)
+    {
+        return slot == OFFHAND_SLOT;
+    }
+
+    public static boolean isArmorSlot(int slot)
+    {
+        return slot <= HELMET_SLOT && slot >= BOOTS_SLOT;
     }
 }
