@@ -76,6 +76,7 @@ public final class InventoryIdentifiers
             case DIAMOND_CHESTPLATE:
             case NETHERITE_CHESTPLATE:
             case ELYTRA:
+                return true;
             default:
                 return false;
         }
