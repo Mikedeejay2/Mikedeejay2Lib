@@ -1,10 +1,8 @@
 package com.mikedeejay2.mikedeejay2lib.util.item;
 
 import org.bukkit.Material;
-import org.bukkit.block.data.Rotatable;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.InventoryView;
-import org.bukkit.inventory.LoomInventory;
 
 public final class InventoryIdentifiers
 {
@@ -139,7 +137,7 @@ public final class InventoryIdentifiers
         return slot <= HELMET_SLOT && slot >= BOOTS_SLOT;
     }
 
-    public static boolean belongsInSlot(int rawSlot, InventoryView invView, Material material)
+    public static boolean applicableForSlot(int rawSlot, InventoryView invView, Material material)
     {
         InventoryType.SlotType slotType = invView.getSlotType(rawSlot);
         InventoryType          invType  = invView.getType();
