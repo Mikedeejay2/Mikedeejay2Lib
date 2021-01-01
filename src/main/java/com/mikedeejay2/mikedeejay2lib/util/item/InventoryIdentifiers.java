@@ -1,6 +1,10 @@
 package com.mikedeejay2.mikedeejay2lib.util.item;
 
 import org.bukkit.Material;
+import org.bukkit.block.data.Rotatable;
+import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.LoomInventory;
 
 public final class InventoryIdentifiers
 {
@@ -133,5 +137,326 @@ public final class InventoryIdentifiers
     public static boolean isArmorSlot(int slot)
     {
         return slot <= HELMET_SLOT && slot >= BOOTS_SLOT;
+    }
+
+    public static boolean belongsInSlot(int rawSlot, InventoryView invView, Material material)
+    {
+        InventoryType.SlotType slotType = invView.getSlotType(rawSlot);
+        InventoryType          invType  = invView.getType();
+        int                    slot     = invView.convertSlot(rawSlot);
+        switch(slotType)
+        {
+            case RESULT:
+                return false;
+            case ARMOR:
+            {
+                if(slot == BOOTS_SLOT && !isBoots(material)) return true;
+                if(slot == LEGGINGS_SLOT && !isLeggings(material)) return true;
+                if(slot == CHESTPLATE_SLOT && !isChestplate(material)) return true;
+                if(slot == HELMET_SLOT && !isHelmet(material)) return true;
+                return false;
+            }
+            case FUEL:
+            {
+                return material.isFuel();
+            }
+            case QUICKBAR:
+            case CONTAINER:
+            case OUTSIDE:
+                return true;
+        }
+
+        switch(invType)
+        {
+            case LOOM:
+            {
+                switch(rawSlot)
+                {
+                    case 0:
+                        if(isBanner(material)) return true;
+                        break;
+                    case 1:
+                        if(isDye(material)) return true;
+                        break;
+                    case 2:
+                        if(isPattern(material)) return true;
+                        break;
+                }
+            } break;
+            case BREWING:
+            {
+                switch(rawSlot)
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                        if(isBottle(material)) return true;
+                        break;
+                    case 4:
+                        if(material == Material.BLAZE_POWDER) return true;
+                        break;
+                    case 3:
+                        if(isApplicableForBrewing(material)) return true;
+                        break;
+                }
+            } break;
+            case CARTOGRAPHY:
+            {
+                switch(rawSlot)
+                {
+                    case 0:
+                        if(material == Material.FILLED_MAP) return true;
+                        break;
+                    case 1:
+                        if(material == Material.PAPER) return true;
+                        break;
+                }
+            } break;
+            case ENCHANTING:
+            {
+                if(rawSlot == 1 && material == Material.LAPIS_LAZULI) return true;
+            } break;
+            case GRINDSTONE:
+            {
+                if((rawSlot == 0 || rawSlot == 1) && isTool(material)) return true;
+            } break;
+            case SHULKER_BOX:
+            {
+                if(!isShulkerBox(material)) return true;
+            }
+        }
+        return false;
+    }
+
+    public static boolean isBanner(Material material)
+    {
+        switch(material)
+        {
+            case WHITE_BANNER:
+            case ORANGE_BANNER:
+            case MAGENTA_BANNER:
+            case LIGHT_BLUE_BANNER:
+            case YELLOW_BANNER:
+            case LIME_BANNER:
+            case PINK_BANNER:
+            case GRAY_BANNER:
+            case LIGHT_GRAY_BANNER:
+            case CYAN_BANNER:
+            case PURPLE_BANNER:
+            case BLUE_BANNER:
+            case BROWN_BANNER:
+            case GREEN_BANNER:
+            case RED_BANNER:
+            case BLACK_BANNER:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isDye(Material material)
+    {
+        switch(material)
+        {
+            case WHITE_DYE:
+            case ORANGE_DYE:
+            case MAGENTA_DYE:
+            case LIGHT_BLUE_DYE:
+            case YELLOW_DYE:
+            case LIME_DYE:
+            case PINK_DYE:
+            case GRAY_DYE:
+            case LIGHT_GRAY_DYE:
+            case CYAN_DYE:
+            case PURPLE_DYE:
+            case BLUE_DYE:
+            case BROWN_DYE:
+            case GREEN_DYE:
+            case RED_DYE:
+            case BLACK_DYE:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isPattern(Material material)
+    {
+        switch(material)
+        {
+            case FLOWER_BANNER_PATTERN:
+            case CREEPER_BANNER_PATTERN:
+            case SKULL_BANNER_PATTERN:
+            case MOJANG_BANNER_PATTERN:
+            case GLOBE_BANNER_PATTERN:
+            case PIGLIN_BANNER_PATTERN:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isTool(Material material)
+    {
+        return isWeapon(material) ||
+                isArmor(material) ||
+                isPickaxe(material) ||
+                isShovel(material) ||
+                isHoe(material) ||
+                isAxe(material) ||
+                material == Material.FISHING_ROD ||
+                material == Material.ENCHANTED_BOOK;
+    }
+
+    public static boolean isWeapon(Material material)
+    {
+        return isBow(material) || isSword(material);
+    }
+
+    public static boolean isBow(Material material)
+    {
+        switch(material)
+        {
+            case BOW:
+            case CROSSBOW:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isSword(Material material)
+    {
+        switch(material)
+        {
+            case WOODEN_SWORD:
+            case STONE_SWORD:
+            case IRON_SWORD:
+            case GOLDEN_SWORD:
+            case DIAMOND_SWORD:
+            case NETHERITE_SWORD:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isPickaxe(Material material)
+    {
+        switch(material)
+        {
+            case WOODEN_PICKAXE:
+            case STONE_PICKAXE:
+            case IRON_PICKAXE:
+            case GOLDEN_PICKAXE:
+            case DIAMOND_PICKAXE:
+            case NETHERITE_PICKAXE:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isHoe(Material material)
+    {
+        switch(material)
+        {
+            case WOODEN_HOE:
+            case STONE_HOE:
+            case IRON_HOE:
+            case GOLDEN_HOE:
+            case DIAMOND_HOE:
+            case NETHERITE_HOE:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isShovel(Material material)
+    {
+        switch(material)
+        {
+            case WOODEN_SHOVEL:
+            case STONE_SHOVEL:
+            case IRON_SHOVEL:
+            case GOLDEN_SHOVEL:
+            case DIAMOND_SHOVEL:
+            case NETHERITE_SHOVEL:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isAxe(Material material)
+    {
+        switch(material)
+        {
+            case WOODEN_AXE:
+            case STONE_AXE:
+            case IRON_AXE:
+            case GOLDEN_AXE:
+            case DIAMOND_AXE:
+            case NETHERITE_AXE:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isApplicableForBeacon(Material material)
+    {
+        switch(material)
+        {
+            case IRON_INGOT:
+            case GOLD_INGOT:
+            case DIAMOND:
+            case EMERALD:
+            case NETHERITE_INGOT:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    public static boolean isBottle(Material material)
+    {
+        switch(material)
+        {
+            case GLASS_BOTTLE:
+            case POTION:
+            case LINGERING_POTION:
+            case SPLASH_POTION:
+                return true;
+            default:
+                return true;
+        }
+    }
+
+    public static boolean isApplicableForBrewing(Material material)
+    {
+        switch(material)
+        {
+            case NETHER_WART:
+            case GUNPOWDER:
+            case SPIDER_EYE:
+            case GHAST_TEAR:
+            case RABBIT_FOOT:
+            case BLAZE_POWDER:
+            case GLISTERING_MELON_SLICE:
+            case SUGAR:
+            case MAGMA_CREAM:
+            case REDSTONE:
+            case GLOWSTONE_DUST:
+            case PUFFERFISH:
+            case GOLDEN_CARROT:
+            case TURTLE_HELMET:
+            case PHANTOM_MEMBRANE:
+            case FERMENTED_SPIDER_EYE:
+                return true;
+            default:
+                return true;
+        }
     }
 }
