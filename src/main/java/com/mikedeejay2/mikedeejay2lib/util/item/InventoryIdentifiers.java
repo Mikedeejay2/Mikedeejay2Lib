@@ -361,6 +361,78 @@ public final class InventoryIdentifiers
     }
 
     /**
+     * See whether a raw slot is a singleton slot wherein it can only hold a single item
+     *
+     * @param rawSlot  The raw slot to test
+     * @param invView  The <tt>InventoryView</tt> to use as a reference
+     * @return A boolean representing whether the slot is or is not a singleton slot
+     */
+    public static boolean singletonSlot(int rawSlot, InventoryView invView)
+    {
+        InventoryType.SlotType slotType = invView.getSlotType(rawSlot);
+        InventoryType          invType  = invView.getType();
+        int                    slot     = invView.convertSlot(rawSlot);
+
+        switch(invType)
+        {
+            case LOOM:
+            {
+                switch(rawSlot)
+                {
+                    case 0:
+                    case 1:
+                        return false;
+                    case 2:
+                        return true;
+                }
+            }
+            break;
+            case BREWING:
+            {
+                switch(rawSlot)
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                        return true;
+                    case 4:
+                    case 3:
+                        return false;
+                }
+            }
+            break;
+            case CARTOGRAPHY:
+            {
+                if(rawSlot == 0 || rawSlot == 1)
+                {
+                    return false;
+                }
+            }
+            break;
+            case ENCHANTING:
+            {
+                return rawSlot == 0;
+            }
+            case GRINDSTONE:
+            {
+                return rawSlot == 0 || rawSlot == 1;
+            }
+            case BEACON:
+            {
+                return rawSlot == 0;
+            }
+        }
+
+        Inventory topInv = invView.getTopInventory();
+        if(topInv instanceof AbstractHorseInventory)
+        {
+            return rawSlot == 0 || rawSlot == 1;
+        }
+
+        return false;
+    }
+
+    /**
      * Returns whether the material is a banner or not
      *
      * @param material The material to check
