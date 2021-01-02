@@ -1,27 +1,32 @@
 package com.mikedeejay2.mikedeejay2lib.util.item;
 
 import com.mikedeejay2.mikedeejay2lib.util.recipe.RecipeUtil;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.InventoryView;
-import org.bukkit.inventory.Recipe;
 
 import java.util.AbstractMap;
-import java.util.Iterator;
 import java.util.Map;
 
 public final class InventoryIdentifiers
 {
+    // The slot of the offhand (Regular slot)
     public static final int OFFHAND_SLOT = 40;
+    // The helmet armor slot (Regular slot)
     public static final int HELMET_SLOT = 39;
+    // The chestplate armor slot (Regular slot)
     public static final int CHESTPLATE_SLOT = 38;
+    // The leggings armor slot (Regular slot)
     public static final int LEGGINGS_SLOT = 37;
+    // The boots armor slot (Regular slot)
     public static final int BOOTS_SLOT = 36;
-    public static final int FIRST_BOTTOM_RAW_SLOT = 0;
-    public static final int FIRST_TOP_RAW_SLOT = 37;
 
+    /**
+     * Returns whether the material is a shulker box or not
+     *
+     * @param material The material to check
+     * @return Whether the material is a shulker box or not
+     */
     public static boolean isShulkerBox(Material material)
     {
         switch(material)
@@ -49,11 +54,23 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the material is an armor piece or not
+     *
+     * @param material The material to check
+     * @return Whether the material is an armor piece or not
+     */
     public static boolean isArmor(Material material)
     {
         return isHelmet(material) || isChestplate(material) || isLeggings(material) || isBoots(material);
     }
 
+    /**
+     * Returns whether the material is a helmet or not
+     *
+     * @param material The material to check
+     * @return Whether the material is a helmet or not
+     */
     public static boolean isHelmet(Material material)
     {
         switch(material)
@@ -75,6 +92,12 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the material is a chestplate or not
+     *
+     * @param material The material to check
+     * @return Whether the material is a chestplate or not
+     */
     public static boolean isChestplate(Material material)
     {
         switch(material)
@@ -92,6 +115,12 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the material is leggings or not
+     *
+     * @param material The material to check
+     * @return Whether the material is leggings or not
+     */
     public static boolean isLeggings(Material material)
     {
         switch(material)
@@ -108,6 +137,12 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the material is boots or not
+     *
+     * @param material The material to check
+     * @return Whether the material is boots or not
+     */
     public static boolean isBoots(Material material)
     {
         switch(material)
@@ -124,6 +159,12 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the material shift clicks into the offhand or not
+     *
+     * @param material The material to check
+     * @return Whether the material shift clicks into the offhand or not
+     */
     public static boolean isOffhand(Material material)
     {
         switch(material)
@@ -135,16 +176,40 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the specified slot is a slot of the off hand
+     *
+     * @param slot The slot to check
+     * @return Whether the slot is the off hand or not
+     */
     public static boolean isOffhandSlot(int slot)
     {
         return slot == OFFHAND_SLOT;
     }
 
+    /**
+     * Returns whether the specified slot is an armor slot or not
+     *
+     * @param slot The slot to check
+     * @return Whether the slot is an armor slot or not
+     */
     public static boolean isArmorSlot(int slot)
     {
         return slot <= HELMET_SLOT && slot >= BOOTS_SLOT;
     }
 
+    /**
+     * See whether a specified material is applicable to be in a specific raw slot in an inventory
+     *
+     * @param rawSlot  The raw slot to test
+     * @param invView  The <tt>InventoryView</tt> to use as a reference
+     * @param material The material to test
+     * @return A <tt>Map.Entry</tt> containing two booleans:
+     * <ol>
+     *     <li>Boolean (Key) - Whether the material should be in that slot</li>
+     *     <li>Boolean (Value) - Whether the item has the ability to be in that slot, regardless of whether is should be</li>
+     * </ol>
+     */
     public static Map.Entry<Boolean, Boolean> applicableForSlot(int rawSlot, InventoryView invView, Material material)
     {
         InventoryType.SlotType slotType = invView.getSlotType(rawSlot);
@@ -225,6 +290,13 @@ public final class InventoryIdentifiers
                     return new AbstractMap.SimpleEntry<>(RecipeUtil.isSmokingInput(material), true);
                 }
             }
+            case BEACON:
+            {
+                if(rawSlot == 0)
+                {
+                    return new AbstractMap.SimpleEntry<>(isApplicableForBeacon(material), false);
+                }
+            }
         }
 
         switch(slotType)
@@ -252,6 +324,12 @@ public final class InventoryIdentifiers
         return new AbstractMap.SimpleEntry<>(false, false);
     }
 
+    /**
+     * Returns whether the material is a banner or not
+     *
+     * @param material The material to check
+     * @return Whether the material is a banner or not
+     */
     public static boolean isBanner(Material material)
     {
         switch(material)
@@ -278,6 +356,12 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the material is a dye or not
+     *
+     * @param material The material to check
+     * @return Whether the material is a dye or not
+     */
     public static boolean isDye(Material material)
     {
         switch(material)
@@ -304,6 +388,12 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the material is a pattern or not
+     *
+     * @param material The material to check
+     * @return Whether the material is a pattern or not
+     */
     public static boolean isPattern(Material material)
     {
         switch(material)
@@ -320,6 +410,12 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the material is a tool or not
+     *
+     * @param material The material to check
+     * @return Whether the material is a tool or not
+     */
     public static boolean isTool(Material material)
     {
         return isWeapon(material) ||
@@ -332,11 +428,23 @@ public final class InventoryIdentifiers
                 material == Material.ENCHANTED_BOOK;
     }
 
+    /**
+     * Returns whether the material is a weapon or not
+     *
+     * @param material The material to check
+     * @return Whether the material is a weapon or not
+     */
     public static boolean isWeapon(Material material)
     {
         return isBow(material) || isSword(material);
     }
 
+    /**
+     * Returns whether the material is a bow or not
+     *
+     * @param material The material to check
+     * @return Whether the material is a bow or not
+     */
     public static boolean isBow(Material material)
     {
         switch(material)
@@ -349,6 +457,12 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the material is a sword or not
+     *
+     * @param material The material to check
+     * @return Whether the material is a sword or not
+     */
     public static boolean isSword(Material material)
     {
         switch(material)
@@ -365,6 +479,12 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the material is a pickaxe or not
+     *
+     * @param material The material to check
+     * @return Whether the material is a pickaxe or not
+     */
     public static boolean isPickaxe(Material material)
     {
         switch(material)
@@ -381,6 +501,12 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the material is a hoe or not
+     *
+     * @param material The material to check
+     * @return Whether the material is a hoe or not
+     */
     public static boolean isHoe(Material material)
     {
         switch(material)
@@ -397,6 +523,12 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the material is a shovel or not
+     *
+     * @param material The material to check
+     * @return Whether the material is a shovel or not
+     */
     public static boolean isShovel(Material material)
     {
         switch(material)
@@ -413,6 +545,12 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the material is an axe or not
+     *
+     * @param material The material to check
+     * @return Whether the material is an axe or not
+     */
     public static boolean isAxe(Material material)
     {
         switch(material)
@@ -429,6 +567,12 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the material is applicable for a beacon or not
+     *
+     * @param material The material to check
+     * @return Whether the material is applicable for a beacon or not
+     */
     public static boolean isApplicableForBeacon(Material material)
     {
         switch(material)
@@ -444,6 +588,12 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the material is a bottle or not
+     *
+     * @param material The material to check
+     * @return Whether the material is a bottle or not
+     */
     public static boolean isBottle(Material material)
     {
         switch(material)
@@ -458,6 +608,12 @@ public final class InventoryIdentifiers
         }
     }
 
+    /**
+     * Returns whether the material is applicable for brewing or not
+     *
+     * @param material The material to check
+     * @return Whether the material is applicable for brewing or not
+     */
     public static boolean isApplicableForBrewing(Material material)
     {
         switch(material)

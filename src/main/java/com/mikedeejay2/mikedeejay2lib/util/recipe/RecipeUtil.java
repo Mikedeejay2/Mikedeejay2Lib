@@ -11,26 +11,26 @@ import java.util.*;
 public final class RecipeUtil
 {
     // Internal lists that store all crafting inputs and outputs if using preload
-    private static Set<Material> blastingInputs = new HashSet<>();
-    private static Set<Material> campfireInputs = new HashSet<>();
-    private static Set<Material> furnaceInputs = new HashSet<>();
-    private static Set<Material> cookingInputs = new HashSet<>();
-    private static Set<Material> merchantInputs = new HashSet<>();
-    private static Set<Material> shapedInputs = new HashSet<>();
-    private static Set<Material> shapelessInputs = new HashSet<>();
-    private static Set<Material> smithingInputs = new HashSet<>();
-    private static Set<Material> smokingInputs = new HashSet<>();
-    private static Set<Material> stonecuttingInputs = new HashSet<>();
-    private static Set<Material> blastingResults = new HashSet<>();
-    private static Set<Material> campfireResults = new HashSet<>();
-    private static Set<Material> furnaceResults = new HashSet<>();
-    private static Set<Material> cookingResults = new HashSet<>();
-    private static Set<Material> merchantResults = new HashSet<>();
-    private static Set<Material> shapedResults = new HashSet<>();
-    private static Set<Material> shapelessResults = new HashSet<>();
-    private static Set<Material> smithingResults = new HashSet<>();
-    private static Set<Material> smokingResults = new HashSet<>();
-    private static Set<Material> stonecuttingResults = new HashSet<>();
+    private static HashSet<Material> blastingInputs = new HashSet<>();
+    private static HashSet<Material> campfireInputs = new HashSet<>();
+    private static HashSet<Material> furnaceInputs = new HashSet<>();
+    private static HashSet<Material> cookingInputs = new HashSet<>();
+    private static HashSet<Material> merchantInputs = new HashSet<>();
+    private static HashSet<Material> shapedInputs = new HashSet<>();
+    private static HashSet<Material> shapelessInputs = new HashSet<>();
+    private static HashSet<Material> smithingInputs = new HashSet<>();
+    private static HashSet<Material> smokingInputs = new HashSet<>();
+    private static HashSet<Material> stonecuttingInputs = new HashSet<>();
+    private static HashSet<Material> blastingResults = new HashSet<>();
+    private static HashSet<Material> campfireResults = new HashSet<>();
+    private static HashSet<Material> furnaceResults = new HashSet<>();
+    private static HashSet<Material> cookingResults = new HashSet<>();
+    private static HashSet<Material> merchantResults = new HashSet<>();
+    private static HashSet<Material> shapedResults = new HashSet<>();
+    private static HashSet<Material> shapelessResults = new HashSet<>();
+    private static HashSet<Material> smithingResults = new HashSet<>();
+    private static HashSet<Material> smokingResults = new HashSet<>();
+    private static HashSet<Material> stonecuttingResults = new HashSet<>();
     // Whether RecipeUtil has been preloaded or not
     private static boolean preloaded = false;
 
@@ -60,9 +60,9 @@ public final class RecipeUtil
      * Preload takes an average of 6ms, but runs asynchronously.
      *
      * @param plugin A reference to a <tt>PluginBase</tt>
-     * @param delay The delay (in ticks) between running this method and the preload occurring.
-     *              A delay may want to be specified to wait for other plugins to register their
-     *              recipes.
+     * @param delay  The delay (in ticks) between running this method and the preload occurring.
+     *               A delay may want to be specified to wait for other plugins to register their
+     *               recipes.
      */
     public static void preload(PluginBase plugin, long delay)
     {
@@ -639,5 +639,205 @@ public final class RecipeUtil
             if(castRecipe.getResult().getType() == material) return true;
         }
         return false;
+    }
+
+    /**
+     * Get a list of all inputs of a blast furnace
+     *
+     * @return All inputs of a blast furnace
+     */
+    public static Set<Material> getBlastingInputs()
+    {
+        return (Set<Material>) blastingInputs.clone();
+    }
+
+    /**
+     * Get a list of all inputs of a campfire
+     *
+     * @return All inputs of a campfire
+     */
+    public static Set<Material> getCampfireInputs()
+    {
+        return (Set<Material>) campfireInputs.clone();
+    }
+
+    /**
+     * Get a list of all inputs of a furnace
+     *
+     * @return All inputs of a furnace
+     */
+    public static Set<Material> getFurnaceInputs()
+    {
+        return (Set<Material>) furnaceInputs.clone();
+    }
+
+    /**
+     * Get a list of all inputs of any cooking object
+     *
+     * @return All inputs of any cooking object
+     */
+    public static Set<Material> getCookingInputs()
+    {
+        return (Set<Material>) cookingInputs.clone();
+    }
+
+    /**
+     * Get a list of all inputs of a merchant
+     *
+     * @return All inputs of a merchant
+     */
+    public static Set<Material> getMerchantInputs()
+    {
+        return (Set<Material>) merchantInputs.clone();
+    }
+
+    /**
+     * Get a list of all inputs of a shaped crafting recipe
+     *
+     * @return All inputs of a shaped crafting recipe
+     */
+    public static Set<Material> getShapedInputs()
+    {
+        return (Set<Material>) shapedInputs.clone();
+    }
+
+    /**
+     * Get a list of all inputs of a shapeless crafting recipe
+     *
+     * @return All inputs of a blast furnace
+     */
+    public static Set<Material> getShapelessInputs()
+    {
+        return (Set<Material>) shapelessInputs.clone();
+    }
+
+    /**
+     * Get a list of all inputs of a smithing table
+     *
+     * @return All inputs of a smithing table
+     */
+    public static Set<Material> getSmithingInputs()
+    {
+        return (Set<Material>) smithingInputs.clone();
+    }
+
+    /**
+     * Get a list of all inputs of a smoker
+     *
+     * @return All inputs of a smoker
+     */
+    public static Set<Material> getSmokingInputs()
+    {
+        return (Set<Material>) smokingInputs.clone();
+    }
+
+    /**
+     * Get a list of all inputs of a stonecutter
+     *
+     * @return All inputs of a blast stonecutter
+     */
+    public static Set<Material> getStonecuttingInputs()
+    {
+        return (Set<Material>) stonecuttingInputs.clone();
+    }
+
+    /**
+     * Get a list of all results of a blast furnace
+     *
+     * @return All results of a blast furnace
+     */
+    public static Set<Material> getBlastingResults()
+    {
+        return (Set<Material>) blastingResults.clone();
+    }
+
+    /**
+     * Get a list of all results of a campfire
+     *
+     * @return All results of a campfire
+     */
+    public static Set<Material> getCampfireResults()
+    {
+        return (Set<Material>) campfireResults.clone();
+    }
+
+    /**
+     * Get a list of all results of a furnace
+     *
+     * @return All results of a furnace
+     */
+    public static Set<Material> getFurnaceResults()
+    {
+        return (Set<Material>) furnaceResults.clone();
+    }
+
+    /**
+     * Get a list of all results of any cooking object
+     *
+     * @return All results of any cooking object
+     */
+    public static Set<Material> getCookingResults()
+    {
+        return (Set<Material>) cookingResults.clone();
+    }
+
+    /**
+     * Get a list of all results of a merchant
+     *
+     * @return All results of a merchant
+     */
+    public static Set<Material> getMerchantResults()
+    {
+        return (Set<Material>) merchantResults.clone();
+    }
+
+    /**
+     * Get a list of all results of a shaped crafting recipe
+     *
+     * @return All results of a shaped crafting recipe
+     */
+    public static Set<Material> getShapedResults()
+    {
+        return (Set<Material>) shapedResults.clone();
+    }
+
+    /**
+     * Get a list of all results of a shapeless crafting recipe
+     *
+     * @return All results of a shapeless crafting recipe
+     */
+    public static Set<Material> getShapelessResults()
+    {
+        return (Set<Material>) shapelessResults.clone();
+    }
+
+    /**
+     * Get a list of all results of a smithing table
+     *
+     * @return All results of a smithing table
+     */
+    public static Set<Material> getSmithingResults()
+    {
+        return (Set<Material>) smithingResults.clone();
+    }
+
+    /**
+     * Get a list of all results of a smoker
+     *
+     * @return All results of a smoker
+     */
+    public static Set<Material> getSmokingResults()
+    {
+        return (Set<Material>) smokingResults.clone();
+    }
+
+    /**
+     * Get a list of all results of a stonecutter
+     *
+     * @return All results of a blast stonecutter
+     */
+    public static Set<Material> getStonecuttingResults()
+    {
+        return (Set<Material>) stonecuttingResults.clone();
     }
 }
