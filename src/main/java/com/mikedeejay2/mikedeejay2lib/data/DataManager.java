@@ -11,7 +11,7 @@ import java.util.Map;
 public class DataManager
 {
     // The hashmap of file paths to DataFiles
-    private Map<String, DataObject> data;
+    protected Map<String, DataObject> data;
 
     public DataManager()
     {
@@ -75,5 +75,10 @@ public class DataManager
     public DataFile getFile(String path)
     {
         return (DataFile) data.get(path);
+    }
+
+    public int getDataCount()
+    {
+        return data.size();
     }
 }
