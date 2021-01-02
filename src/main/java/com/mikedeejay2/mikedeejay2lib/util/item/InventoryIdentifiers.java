@@ -191,7 +191,10 @@ public final class InventoryIdentifiers
             } break;
             case ENCHANTING:
             {
-                return new AbstractMap.SimpleEntry<>(rawSlot == 1 && material == Material.LAPIS_LAZULI, false);
+                if(rawSlot == 1)
+                {
+                    return new AbstractMap.SimpleEntry<>(material == Material.LAPIS_LAZULI, false);
+                }
             }
             case GRINDSTONE:
             {
