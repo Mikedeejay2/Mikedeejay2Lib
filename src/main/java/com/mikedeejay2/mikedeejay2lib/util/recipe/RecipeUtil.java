@@ -1,17 +1,154 @@
 package com.mikedeejay2.mikedeejay2lib.util.recipe;
 
+import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.*;
+import org.bukkit.scheduler.BukkitRunnable;
 
-import java.util.Iterator;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-public class RecipeUtil
+public final class RecipeUtil
 {
+    private static Set<Material> blastingInputs = new HashSet<>();
+    private static Set<Material> campfireInputs = new HashSet<>();
+    private static Set<Material> furnaceInputs = new HashSet<>();
+    private static Set<Material> cookingInputs = new HashSet<>();
+    private static Set<Material> merchantInputs = new HashSet<>();
+    private static Set<Material> shapedInputs = new HashSet<>();
+    private static Set<Material> shapelessInputs = new HashSet<>();
+    private static Set<Material> smithingInputs = new HashSet<>();
+    private static Set<Material> smokingInputs = new HashSet<>();
+    private static Set<Material> stonecuttingInputs = new HashSet<>();
+    private static Set<Material> blastingResults = new HashSet<>();
+    private static Set<Material> campfireResults = new HashSet<>();
+    private static Set<Material> furnaceResults = new HashSet<>();
+    private static Set<Material> cookingResults = new HashSet<>();
+    private static Set<Material> merchantResults = new HashSet<>();
+    private static Set<Material> shapedResults = new HashSet<>();
+    private static Set<Material> shapelessResults = new HashSet<>();
+    private static Set<Material> smithingResults = new HashSet<>();
+    private static Set<Material> smokingResults = new HashSet<>();
+    private static Set<Material> stonecuttingResults = new HashSet<>();
+    private static boolean preloaded = false;
+
+    public static boolean isPreloaded()
+    {
+        return preloaded;
+    }
+
+    public static void preload(PluginBase plugin, long delay)
+    {
+        new BukkitRunnable()
+        {
+            @Override
+            public void run()
+            {
+                blastingInputs.clear();
+                campfireInputs.clear();
+                furnaceInputs.clear();
+                cookingInputs.clear();
+                merchantInputs.clear();
+                shapedInputs.clear();
+                shapelessInputs.clear();
+                smithingInputs.clear();
+                smokingInputs.clear();
+                stonecuttingInputs.clear();
+                blastingResults.clear();
+                campfireResults.clear();
+                furnaceResults.clear();
+                cookingResults.clear();
+                merchantResults.clear();
+                shapedResults.clear();
+                shapelessResults.clear();
+                smithingResults.clear();
+                smokingResults.clear();
+                stonecuttingResults.clear();
+                Iterator<Recipe> iterator = Bukkit.recipeIterator();
+                while(iterator.hasNext())
+                {
+                    Recipe recipe = iterator.next();
+                    if(recipe instanceof BlastingRecipe)
+                    {
+                        BlastingRecipe castRecipe = (BlastingRecipe) recipe;
+                        blastingInputs.add(castRecipe.getInput().getType());
+                        blastingResults.add(castRecipe.getResult().getType());
+                        cookingInputs.add(castRecipe.getInput().getType());
+                        cookingResults.add(castRecipe.getResult().getType());
+                    }
+                    else if(recipe instanceof CampfireRecipe)
+                    {
+                        CampfireRecipe castRecipe = (CampfireRecipe) recipe;
+                        campfireInputs.add(castRecipe.getInput().getType());
+                        campfireResults.add(castRecipe.getResult().getType());
+                        cookingInputs.add(castRecipe.getInput().getType());
+                        cookingResults.add(castRecipe.getResult().getType());
+                    }
+                    else if(recipe instanceof FurnaceRecipe)
+                    {
+                        FurnaceRecipe castRecipe = (FurnaceRecipe) recipe;
+                        furnaceInputs.add(castRecipe.getInput().getType());
+                        furnaceResults.add(castRecipe.getResult().getType());
+                        cookingInputs.add(castRecipe.getInput().getType());
+                        cookingResults.add(castRecipe.getResult().getType());
+                    }
+                    else if(recipe instanceof SmokingRecipe)
+                    {
+                        SmokingRecipe castRecipe = (SmokingRecipe) recipe;
+                        smokingInputs.add(castRecipe.getInput().getType());
+                        smokingResults.add(castRecipe.getResult().getType());
+                        cookingInputs.add(castRecipe.getInput().getType());
+                        cookingResults.add(castRecipe.getResult().getType());
+                    }
+                    else if(recipe instanceof MerchantRecipe)
+                    {
+                        MerchantRecipe castRecipe = (MerchantRecipe) recipe;
+                        castRecipe.getIngredients().forEach(ingredient -> {
+                            if(ingredient != null) merchantInputs.add(ingredient.getType());
+                        });
+                        merchantResults.add(castRecipe.getResult().getType());
+                    }
+                    else if(recipe instanceof ShapedRecipe)
+                    {
+                        ShapedRecipe castRecipe = (ShapedRecipe) recipe;
+                        castRecipe.getIngredientMap().values().forEach(ingredient -> {
+                            if(ingredient != null) shapedInputs.add(ingredient.getType());
+                        });
+                        shapedResults.add(castRecipe.getResult().getType());
+                    }
+                    else if(recipe instanceof ShapelessRecipe)
+                    {
+                        ShapelessRecipe castRecipe = (ShapelessRecipe) recipe;
+                        castRecipe.getIngredientList().forEach(ingredient -> {
+                            if(ingredient != null) shapelessInputs.add(ingredient.getType());
+                        });
+                        shapelessResults.add(castRecipe.getResult().getType());
+                    }
+                    else if(recipe instanceof SmithingRecipe)
+                    {
+                        SmithingRecipe castRecipe = (SmithingRecipe) recipe;
+                        smithingInputs.add(castRecipe.getBase().getItemStack().getType());
+                        smithingResults.add(castRecipe.getResult().getType());
+                    }
+                    else if(recipe instanceof StonecuttingRecipe)
+                    {
+                        StonecuttingRecipe castRecipe = (StonecuttingRecipe) recipe;
+                        stonecuttingInputs.add(castRecipe.getInput().getType());
+                        stonecuttingResults.add(castRecipe.getResult().getType());
+                    }
+                }
+                preloaded = true;
+            }
+        }.runTaskLaterAsynchronously(plugin, delay);
+    }
+
     public static boolean isBlastingInput(Material material)
     {
+        if(preloaded)
+        {
+            return blastingInputs.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -25,6 +162,10 @@ public class RecipeUtil
 
     public static boolean isCampfireInput(Material material)
     {
+        if(preloaded)
+        {
+            return campfireInputs.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -38,6 +179,10 @@ public class RecipeUtil
 
     public static boolean isFurnaceInput(Material material)
     {
+        if(preloaded)
+        {
+            return furnaceInputs.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -51,6 +196,10 @@ public class RecipeUtil
 
     public static boolean isCookingInput(Material material)
     {
+        if(preloaded)
+        {
+            return cookingInputs.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -64,6 +213,10 @@ public class RecipeUtil
 
     public static boolean isMerchantInput(Material material)
     {
+        if(preloaded)
+        {
+            return merchantInputs.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -81,6 +234,10 @@ public class RecipeUtil
 
     public static boolean isShapedInput(Material material)
     {
+        if(preloaded)
+        {
+            return shapedInputs.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -98,6 +255,10 @@ public class RecipeUtil
 
     public static boolean isShapelessInput(Material material)
     {
+        if(preloaded)
+        {
+            return shapelessInputs.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -115,6 +276,10 @@ public class RecipeUtil
 
     public static boolean isSmithingInput(Material material)
     {
+        if(preloaded)
+        {
+            return smithingInputs.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -128,6 +293,10 @@ public class RecipeUtil
 
     public static boolean isSmokingInput(Material material)
     {
+        if(preloaded)
+        {
+            return smokingInputs.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -141,6 +310,10 @@ public class RecipeUtil
 
     public static boolean isStoneCuttingInput(Material material)
     {
+        if(preloaded)
+        {
+            return stonecuttingInputs.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -152,51 +325,12 @@ public class RecipeUtil
         return false;
     }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static boolean isBlastingResult(Material material)
     {
+        if(preloaded)
+        {
+            return blastingResults.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -210,6 +344,10 @@ public class RecipeUtil
 
     public static boolean isCampfireResult(Material material)
     {
+        if(preloaded)
+        {
+            return campfireResults.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -223,6 +361,10 @@ public class RecipeUtil
 
     public static boolean isFurnaceResult(Material material)
     {
+        if(preloaded)
+        {
+            return furnaceResults.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -236,6 +378,10 @@ public class RecipeUtil
 
     public static boolean isCookingResult(Material material)
     {
+        if(preloaded)
+        {
+            return cookingResults.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -249,6 +395,10 @@ public class RecipeUtil
 
     public static boolean isMerchantResult(Material material)
     {
+        if(preloaded)
+        {
+            return merchantResults.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -262,6 +412,10 @@ public class RecipeUtil
 
     public static boolean isShapedResult(Material material)
     {
+        if(preloaded)
+        {
+            return shapedResults.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -275,6 +429,10 @@ public class RecipeUtil
 
     public static boolean isShapelessResult(Material material)
     {
+        if(preloaded)
+        {
+            return shapelessResults.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -286,8 +444,12 @@ public class RecipeUtil
         return false;
     }
 
-    public static boolean isSmithingRecipe(Material material)
+    public static boolean isSmithingResult(Material material)
     {
+        if(preloaded)
+        {
+            return smithingResults.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -301,6 +463,10 @@ public class RecipeUtil
 
     public static boolean isSmokingResult(Material material)
     {
+        if(preloaded)
+        {
+            return smokingResults.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
@@ -314,6 +480,10 @@ public class RecipeUtil
 
     public static boolean isStoneCuttingResult(Material material)
     {
+        if(preloaded)
+        {
+            return stonecuttingResults.contains(material);
+        }
         Iterator<Recipe> iterator = Bukkit.recipeIterator();
         while(iterator.hasNext())
         {
