@@ -355,7 +355,7 @@ public final class InventoryIdentifiers
             case CONTAINER:
             case OUTSIDE:
             case CRAFTING:
-                return new AbstractMap.SimpleEntry<>(true, false);
+                return new AbstractMap.SimpleEntry<>(true, true);
         }
         return new AbstractMap.SimpleEntry<>(false, false);
     }
