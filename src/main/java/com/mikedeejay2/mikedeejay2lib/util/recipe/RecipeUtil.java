@@ -1,7 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util.recipe;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.*;
@@ -11,6 +10,7 @@ import java.util.*;
 
 public final class RecipeUtil
 {
+    // Internal lists that store all crafting inputs and outputs if using preload
     private static Set<Material> blastingInputs = new HashSet<>();
     private static Set<Material> campfireInputs = new HashSet<>();
     private static Set<Material> furnaceInputs = new HashSet<>();
@@ -31,13 +31,39 @@ public final class RecipeUtil
     private static Set<Material> smithingResults = new HashSet<>();
     private static Set<Material> smokingResults = new HashSet<>();
     private static Set<Material> stonecuttingResults = new HashSet<>();
+    // Whether RecipeUtil has been preloaded or not
     private static boolean preloaded = false;
 
+    /**
+     * Get whether RecipeUtil has been preloaded or not.
+     * <p>
+     * Preloading is the act of prematurely organizing all crafting recipes for much more efficient
+     * access later on. The downside to preloading is that any recipes added after the preload won't
+     * be listed through RecipeUtil until preload is called again.
+     * <p>
+     * Preload takes an average of 6ms, but runs asynchronously.
+     *
+     * @return Whether RecipeUtil is preloaded or not
+     */
     public static boolean isPreloaded()
     {
         return preloaded;
     }
 
+    /**
+     * Preload this <tt>RecipeUtil</tt>.
+     * <p>
+     * Preloading is the act of prematurely organizing all crafting recipes for much more efficient
+     * access later on. The downside to preloading is that any recipes added after the preload won't
+     * be listed through RecipeUtil until preload is called again.
+     * <p>
+     * Preload takes an average of 6ms, but runs asynchronously.
+     *
+     * @param plugin A reference to a <tt>PluginBase</tt>
+     * @param delay The delay (in ticks) between running this method and the preload occurring.
+     *              A delay may want to be specified to wait for other plugins to register their
+     *              recipes.
+     */
     public static void preload(PluginBase plugin, long delay)
     {
         new BukkitRunnable()
@@ -143,6 +169,12 @@ public final class RecipeUtil
         }.runTaskLaterAsynchronously(plugin, delay);
     }
 
+    /**
+     * Get whether the specified Material is an input for a blasting recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is an input or not
+     */
     public static boolean isBlastingInput(Material material)
     {
         if(preloaded)
@@ -160,6 +192,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is an input for a campfire recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is an input or not
+     */
     public static boolean isCampfireInput(Material material)
     {
         if(preloaded)
@@ -177,6 +215,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is an input for a furnace recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is an input or not
+     */
     public static boolean isFurnaceInput(Material material)
     {
         if(preloaded)
@@ -194,6 +238,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is an input for a cooking recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is an input or not
+     */
     public static boolean isCookingInput(Material material)
     {
         if(preloaded)
@@ -211,6 +261,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is an input for a merchant recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is an input or not
+     */
     public static boolean isMerchantInput(Material material)
     {
         if(preloaded)
@@ -232,6 +288,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is an input for a shaped recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is an input or not
+     */
     public static boolean isShapedInput(Material material)
     {
         if(preloaded)
@@ -253,6 +315,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is an input for a shapeless recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is an input or not
+     */
     public static boolean isShapelessInput(Material material)
     {
         if(preloaded)
@@ -274,6 +342,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is an input for a smithing recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is an input or not
+     */
     public static boolean isSmithingInput(Material material)
     {
         if(preloaded)
@@ -291,6 +365,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is an input for a smoking recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is an input or not
+     */
     public static boolean isSmokingInput(Material material)
     {
         if(preloaded)
@@ -308,6 +388,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is an input for a stone cutting recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is an input or not
+     */
     public static boolean isStoneCuttingInput(Material material)
     {
         if(preloaded)
@@ -325,6 +411,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is a result for a blasting recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is a result or not
+     */
     public static boolean isBlastingResult(Material material)
     {
         if(preloaded)
@@ -342,6 +434,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is a result for a campfire recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is a result or not
+     */
     public static boolean isCampfireResult(Material material)
     {
         if(preloaded)
@@ -359,6 +457,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is a result for a furnace recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is a result or not
+     */
     public static boolean isFurnaceResult(Material material)
     {
         if(preloaded)
@@ -376,6 +480,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is a result for a cooking recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is a result or not
+     */
     public static boolean isCookingResult(Material material)
     {
         if(preloaded)
@@ -393,6 +503,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is a result for a merchant recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is a result or not
+     */
     public static boolean isMerchantResult(Material material)
     {
         if(preloaded)
@@ -410,6 +526,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is a result for a shaped recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is a result or not
+     */
     public static boolean isShapedResult(Material material)
     {
         if(preloaded)
@@ -427,6 +549,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is a result for a shapeless recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is a result or not
+     */
     public static boolean isShapelessResult(Material material)
     {
         if(preloaded)
@@ -444,6 +572,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is a result for a smithing recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is a result or not
+     */
     public static boolean isSmithingResult(Material material)
     {
         if(preloaded)
@@ -461,6 +595,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is a result for a smoking recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is a result or not
+     */
     public static boolean isSmokingResult(Material material)
     {
         if(preloaded)
@@ -478,6 +618,12 @@ public final class RecipeUtil
         return false;
     }
 
+    /**
+     * Get whether the specified Material is a result for a stone cutting recipe
+     *
+     * @param material The material to search for
+     * @return Whether the material is a result or not
+     */
     public static boolean isStoneCuttingResult(Material material)
     {
         if(preloaded)
