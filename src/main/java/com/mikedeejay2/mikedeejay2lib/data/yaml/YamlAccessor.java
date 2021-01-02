@@ -1,6 +1,6 @@
-package com.mikedeejay2.mikedeejay2lib.file.yaml;
+package com.mikedeejay2.mikedeejay2lib.data.yaml;
 
-import com.mikedeejay2.mikedeejay2lib.file.section.SectionAccessor;
+import com.mikedeejay2.mikedeejay2lib.data.section.SectionAccessor;
 import org.bukkit.*;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.banner.Pattern;

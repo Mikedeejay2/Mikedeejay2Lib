@@ -1,7 +1,7 @@
-package com.mikedeejay2.mikedeejay2lib.file.yaml;
+package com.mikedeejay2.mikedeejay2lib.data.yaml;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.file.FileIO;
+import com.mikedeejay2.mikedeejay2lib.data.FileIO;
 
 import java.io.File;
 import java.io.Reader;

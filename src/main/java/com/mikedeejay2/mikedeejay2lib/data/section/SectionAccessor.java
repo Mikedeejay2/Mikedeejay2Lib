@@ -1,6 +1,6 @@
-package com.mikedeejay2.mikedeejay2lib.file.section;
+package com.mikedeejay2.mikedeejay2lib.data.section;
 
-import com.mikedeejay2.mikedeejay2lib.file.DataFile;
+import com.mikedeejay2.mikedeejay2lib.data.DataFile;
 import org.bukkit.*;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.banner.Pattern;

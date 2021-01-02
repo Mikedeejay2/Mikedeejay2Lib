@@ -1,10 +1,10 @@
-package com.mikedeejay2.mikedeejay2lib.file.json;
+package com.mikedeejay2.mikedeejay2lib.data.json;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.file.DataFile;
-import com.mikedeejay2.mikedeejay2lib.file.section.SectionInstancer;
+import com.mikedeejay2.mikedeejay2lib.data.DataFile;
+import com.mikedeejay2.mikedeejay2lib.data.section.SectionInstancer;
 
 /**
  * Wrapper class for a DataFile of type Json

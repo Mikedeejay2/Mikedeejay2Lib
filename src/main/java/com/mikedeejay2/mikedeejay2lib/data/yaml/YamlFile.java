@@ -1,8 +1,8 @@
-package com.mikedeejay2.mikedeejay2lib.file.yaml;
+package com.mikedeejay2.mikedeejay2lib.data.yaml;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.file.DataFile;
-import com.mikedeejay2.mikedeejay2lib.file.section.SectionInstancer;
+import com.mikedeejay2.mikedeejay2lib.data.DataFile;
+import com.mikedeejay2.mikedeejay2lib.data.section.SectionInstancer;
 
 /**
  * A YamlFile is inherited from DataFile and it actually makes working with Yaml files slightly

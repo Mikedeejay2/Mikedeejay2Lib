@@ -1,7 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.text.language;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.file.json.JsonFile;
+import com.mikedeejay2.mikedeejay2lib.data.json.JsonFile;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

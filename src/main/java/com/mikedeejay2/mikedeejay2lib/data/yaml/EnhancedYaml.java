@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.file.yaml;
+package com.mikedeejay2.mikedeejay2lib.data.yaml;
 
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;

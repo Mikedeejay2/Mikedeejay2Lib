@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.file;
+package com.mikedeejay2.mikedeejay2lib.data;
 
 import java.util.HashMap;
 import java.util.Map;

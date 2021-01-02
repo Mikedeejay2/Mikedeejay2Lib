@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.file.section;
+package com.mikedeejay2.mikedeejay2lib.data.section;
 
 /**
  * Interface for instancing a SectionAccessor, usually used in a <tt>DataFile</tt>

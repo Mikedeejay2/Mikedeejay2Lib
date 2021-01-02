@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.file.json;
+package com.mikedeejay2.mikedeejay2lib.data.json;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -6,7 +6,7 @@ import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonWriter;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
-import com.mikedeejay2.mikedeejay2lib.file.FileIO;
+import com.mikedeejay2.mikedeejay2lib.data.FileIO;
 
 import java.io.*;
 import java.util.Map;

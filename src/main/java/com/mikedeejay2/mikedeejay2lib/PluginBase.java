@@ -2,7 +2,7 @@ package com.mikedeejay2.mikedeejay2lib;
 
 import com.mikedeejay2.mikedeejay2lib.commands.CommandManager;
 import com.mikedeejay2.mikedeejay2lib.event.ListenerManager;
-import com.mikedeejay2.mikedeejay2lib.file.FileManager;
+import com.mikedeejay2.mikedeejay2lib.data.FileManager;
 import com.mikedeejay2.mikedeejay2lib.gui.listeners.GUIListener;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.GUIManager;
 import com.mikedeejay2.mikedeejay2lib.text.language.LangManager;
