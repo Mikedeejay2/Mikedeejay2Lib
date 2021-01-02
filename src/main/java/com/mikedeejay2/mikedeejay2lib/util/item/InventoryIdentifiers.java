@@ -267,8 +267,12 @@ public final class InventoryIdentifiers
             break;
             case GRINDSTONE:
             {
-                return new AbstractMap.SimpleEntry<>((rawSlot == 0 || rawSlot == 1) && isTool(material), false);
+                if(rawSlot == 0 || rawSlot == 1)
+                {
+                    return new AbstractMap.SimpleEntry<>(isTool(material), false);
+                }
             }
+            break;
             case SHULKER_BOX:
             {
                 return new AbstractMap.SimpleEntry<>(!isShulkerBox(material), false);
