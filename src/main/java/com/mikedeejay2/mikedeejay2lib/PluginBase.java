@@ -2,7 +2,7 @@ package com.mikedeejay2.mikedeejay2lib;
 
 import com.mikedeejay2.mikedeejay2lib.commands.CommandManager;
 import com.mikedeejay2.mikedeejay2lib.event.ListenerManager;
-import com.mikedeejay2.mikedeejay2lib.data.FileManager;
+import com.mikedeejay2.mikedeejay2lib.data.DataManager;
 import com.mikedeejay2.mikedeejay2lib.gui.listeners.GUIListener;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.GUIManager;
 import com.mikedeejay2.mikedeejay2lib.text.language.LangManager;
@@ -27,7 +27,7 @@ import org.bukkit.plugin.java.JavaPlugin;
 public class PluginBase extends JavaPlugin
 {
     protected MinecraftVersion minecraftVersion;
-    protected FileManager fileManager;
+    protected DataManager dataManager;
     protected LangManager langManager;
     protected CommandManager commandManager;
     protected Chat chat;
@@ -48,7 +48,7 @@ public class PluginBase extends JavaPlugin
         this.langManager = new LangManager(this);
         this.nms = new NMSHandler(this);
         this.commandManager = new CommandManager(this);
-        this.fileManager = new FileManager();
+        this.dataManager = new DataManager();
         this.listenerManager = new ListenerManager(this);
         this.guiManager = new GUIManager(this);
         this.bStats = new BStats(this);
@@ -80,9 +80,9 @@ public class PluginBase extends JavaPlugin
      *
      * @return The file manager
      */
-    public FileManager fileManager()
+    public DataManager fileManager()
     {
-        return fileManager;
+        return dataManager;
     }
 
     /**

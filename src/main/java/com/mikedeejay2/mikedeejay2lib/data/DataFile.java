@@ -11,7 +11,7 @@ import java.io.File;
  *
  * @author Mikedeejay2
  */
-public abstract class DataFile
+public abstract class DataFile implements DataObject
 {
     protected final PluginBase plugin;
     // Path from the plugins folder to the file. (This DOES NOT include plugin.getDataFolder())
