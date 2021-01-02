@@ -195,7 +195,7 @@ public final class InventoryIdentifiers
                 {
                     return new AbstractMap.SimpleEntry<>(material == Material.LAPIS_LAZULI, false);
                 }
-            }
+            } break;
             case GRINDSTONE:
             {
                 return new AbstractMap.SimpleEntry<>((rawSlot == 0 || rawSlot == 1) && isTool(material), false);
