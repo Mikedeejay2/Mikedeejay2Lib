@@ -1,8 +1,13 @@
 package com.mikedeejay2.mikedeejay2lib.util.item;
 
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryType;
+import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.Recipe;
+
+import java.util.Iterator;
 
 public final class InventoryIdentifiers
 {
@@ -142,6 +147,59 @@ public final class InventoryIdentifiers
         InventoryType.SlotType slotType = invView.getSlotType(rawSlot);
         InventoryType          invType  = invView.getType();
         int                    slot     = invView.convertSlot(rawSlot);
+
+        switch(invType)
+        {
+            case LOOM:
+            {
+                switch(rawSlot)
+                {
+                    case 0:
+                        return isBanner(material);
+                    case 1:
+                        return isDye(material);
+                    case 2:
+                        return isPattern(material);
+                }
+            } break;
+            case BREWING:
+            {
+                switch(rawSlot)
+                {
+                    case 0:
+                    case 1:
+                    case 2:
+                        return isBottle(material);
+                    case 4:
+                        return material == Material.BLAZE_POWDER;
+                    case 3:
+                        return isApplicableForBrewing(material);
+                }
+            } break;
+            case CARTOGRAPHY:
+            {
+                switch(rawSlot)
+                {
+                    case 0:
+                        return material == Material.FILLED_MAP;
+                    case 1:
+                        return material == Material.PAPER;
+                }
+            } break;
+            case ENCHANTING:
+            {
+                return rawSlot == 1 && material == Material.LAPIS_LAZULI;
+            }
+            case GRINDSTONE:
+            {
+                return (rawSlot == 0 || rawSlot == 1) && isTool(material);
+            }
+            case SHULKER_BOX:
+            {
+                return !isShulkerBox(material);
+            }
+        }
+
         switch(slotType)
         {
             case RESULT:
@@ -161,67 +219,8 @@ public final class InventoryIdentifiers
             case QUICKBAR:
             case CONTAINER:
             case OUTSIDE:
+            case CRAFTING:
                 return true;
-        }
-
-        switch(invType)
-        {
-            case LOOM:
-            {
-                switch(rawSlot)
-                {
-                    case 0:
-                        if(isBanner(material)) return true;
-                        break;
-                    case 1:
-                        if(isDye(material)) return true;
-                        break;
-                    case 2:
-                        if(isPattern(material)) return true;
-                        break;
-                }
-            } break;
-            case BREWING:
-            {
-                switch(rawSlot)
-                {
-                    case 0:
-                    case 1:
-                    case 2:
-                        if(isBottle(material)) return true;
-                        break;
-                    case 4:
-                        if(material == Material.BLAZE_POWDER) return true;
-                        break;
-                    case 3:
-                        if(isApplicableForBrewing(material)) return true;
-                        break;
-                }
-            } break;
-            case CARTOGRAPHY:
-            {
-                switch(rawSlot)
-                {
-                    case 0:
-                        if(material == Material.FILLED_MAP) return true;
-                        break;
-                    case 1:
-                        if(material == Material.PAPER) return true;
-                        break;
-                }
-            } break;
-            case ENCHANTING:
-            {
-                if(rawSlot == 1 && material == Material.LAPIS_LAZULI) return true;
-            } break;
-            case GRINDSTONE:
-            {
-                if((rawSlot == 0 || rawSlot == 1) && isTool(material)) return true;
-            } break;
-            case SHULKER_BOX:
-            {
-                if(!isShulkerBox(material)) return true;
-            }
         }
         return false;
     }
