@@ -3,7 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.util.item;
 import com.mikedeejay2.mikedeejay2lib.util.recipe.RecipeUtil;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryType;
-import org.bukkit.inventory.InventoryView;
+import org.bukkit.inventory.*;
 
 import java.util.AbstractMap;
 import java.util.Map;
@@ -229,7 +229,8 @@ public final class InventoryIdentifiers
                     case 2:
                         return new AbstractMap.SimpleEntry<>(isPattern(material), false);
                 }
-            } break;
+            }
+            break;
             case BREWING:
             {
                 switch(rawSlot)
@@ -243,7 +244,8 @@ public final class InventoryIdentifiers
                     case 3:
                         return new AbstractMap.SimpleEntry<>(isApplicableForBrewing(material), false);
                 }
-            } break;
+            }
+            break;
             case CARTOGRAPHY:
             {
                 switch(rawSlot)
@@ -253,14 +255,16 @@ public final class InventoryIdentifiers
                     case 1:
                         return new AbstractMap.SimpleEntry<>(material == Material.PAPER, false);
                 }
-            } break;
+            }
+            break;
             case ENCHANTING:
             {
                 if(rawSlot == 1)
                 {
                     return new AbstractMap.SimpleEntry<>(material == Material.LAPIS_LAZULI, false);
                 }
-            } break;
+            }
+            break;
             case GRINDSTONE:
             {
                 return new AbstractMap.SimpleEntry<>((rawSlot == 0 || rawSlot == 1) && isTool(material), false);
@@ -296,6 +300,38 @@ public final class InventoryIdentifiers
                 {
                     return new AbstractMap.SimpleEntry<>(isApplicableForBeacon(material), false);
                 }
+            }
+        }
+
+        Inventory topInv = invView.getTopInventory();
+        if(topInv instanceof HorseInventory)
+        {
+            switch(rawSlot)
+            {
+                case 0:
+                    return new AbstractMap.SimpleEntry<>(material == Material.SADDLE, false);
+                case 1:
+                    return new AbstractMap.SimpleEntry<>(isHorseArmor(material), false);
+            }
+        }
+        else if(topInv instanceof LlamaInventory)
+        {
+            switch(rawSlot)
+            {
+                case 0:
+                    return new AbstractMap.SimpleEntry<>(false, false);
+                case 1:
+                    return new AbstractMap.SimpleEntry<>(isCarpet(material), false);
+            }
+        }
+        else if(topInv instanceof AbstractHorseInventory)
+        {
+            switch(rawSlot)
+            {
+                case 0:
+                    return new AbstractMap.SimpleEntry<>(material == Material.SADDLE, false);
+                case 1:
+                    return new AbstractMap.SimpleEntry<>(false, false);
             }
         }
 
@@ -425,7 +461,9 @@ public final class InventoryIdentifiers
                 isHoe(material) ||
                 isAxe(material) ||
                 material == Material.FISHING_ROD ||
-                material == Material.ENCHANTED_BOOK;
+                material == Material.ENCHANTED_BOOK ||
+                material == Material.SHEARS ||
+                material == Material.FLINT_AND_STEEL;
     }
 
     /**
@@ -436,7 +474,7 @@ public final class InventoryIdentifiers
      */
     public static boolean isWeapon(Material material)
     {
-        return isBow(material) || isSword(material);
+        return isBow(material) || isSword(material) || material == Material.TRIDENT;
     }
 
     /**
@@ -604,7 +642,7 @@ public final class InventoryIdentifiers
             case SPLASH_POTION:
                 return true;
             default:
-                return true;
+                return false;
         }
     }
 
@@ -636,7 +674,59 @@ public final class InventoryIdentifiers
             case FERMENTED_SPIDER_EYE:
                 return true;
             default:
+                return false;
+        }
+    }
+
+    /**
+     * Returns whether the material is horse armor or not
+     *
+     * @param material The material to check
+     * @return Whether the material is horse armor or not
+     */
+    public static boolean isHorseArmor(Material material)
+    {
+        switch(material)
+        {
+            case LEATHER_HORSE_ARMOR:
+            case IRON_HORSE_ARMOR:
+            case GOLDEN_HORSE_ARMOR:
+            case DIAMOND_HORSE_ARMOR:
                 return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Returns whether the material is carpet or not
+     *
+     * @param material The material to check
+     * @return Whether the material is carpet or not
+     */
+    public static boolean isCarpet(Material material)
+    {
+        switch(material)
+        {
+            case WHITE_CARPET:
+            case ORANGE_CARPET:
+            case MAGENTA_CARPET:
+            case LIGHT_BLUE_CARPET:
+            case YELLOW_CARPET:
+            case LIME_CARPET:
+            case PINK_CARPET:
+            case GRAY_CARPET:
+            case LIGHT_GRAY_CARPET:
+            case CYAN_CARPET:
+            case PURPLE_CARPET:
+            case BLUE_CARPET:
+            case BROWN_CARPET:
+            case GREEN_CARPET:
+            case RED_CARPET:
+            case BLACK_CARPET:
+                return true;
+            default:
+                return false;
         }
     }
 }

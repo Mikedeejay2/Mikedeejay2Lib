@@ -71,6 +71,7 @@ public final class RecipeUtil
             @Override
             public void run()
             {
+                int version = plugin.getMCVersion().getVersionShort();
                 blastingInputs.clear();
                 campfireInputs.clear();
                 furnaceInputs.clear();
@@ -95,7 +96,7 @@ public final class RecipeUtil
                 while(iterator.hasNext())
                 {
                     Recipe recipe = iterator.next();
-                    if(recipe instanceof BlastingRecipe)
+                    if(version >= 14 && recipe instanceof BlastingRecipe)
                     {
                         BlastingRecipe castRecipe = (BlastingRecipe) recipe;
                         blastingInputs.add(castRecipe.getInput().getType());
@@ -103,7 +104,7 @@ public final class RecipeUtil
                         cookingInputs.add(castRecipe.getInput().getType());
                         cookingResults.add(castRecipe.getResult().getType());
                     }
-                    else if(recipe instanceof CampfireRecipe)
+                    else if(version >= 14 && recipe instanceof CampfireRecipe)
                     {
                         CampfireRecipe castRecipe = (CampfireRecipe) recipe;
                         campfireInputs.add(castRecipe.getInput().getType());
@@ -119,7 +120,7 @@ public final class RecipeUtil
                         cookingInputs.add(castRecipe.getInput().getType());
                         cookingResults.add(castRecipe.getResult().getType());
                     }
-                    else if(recipe instanceof SmokingRecipe)
+                    else if(version >= 14 && recipe instanceof SmokingRecipe)
                     {
                         SmokingRecipe castRecipe = (SmokingRecipe) recipe;
                         smokingInputs.add(castRecipe.getInput().getType());
@@ -151,13 +152,13 @@ public final class RecipeUtil
                         });
                         shapelessResults.add(castRecipe.getResult().getType());
                     }
-                    else if(recipe instanceof SmithingRecipe)
+                    else if(version >= 16 && recipe instanceof SmithingRecipe)
                     {
                         SmithingRecipe castRecipe = (SmithingRecipe) recipe;
                         smithingInputs.add(castRecipe.getBase().getItemStack().getType());
                         smithingResults.add(castRecipe.getResult().getType());
                     }
-                    else if(recipe instanceof StonecuttingRecipe)
+                    else if(version >= 14 && recipe instanceof StonecuttingRecipe)
                     {
                         StonecuttingRecipe castRecipe = (StonecuttingRecipe) recipe;
                         stonecuttingInputs.add(castRecipe.getInput().getType());
