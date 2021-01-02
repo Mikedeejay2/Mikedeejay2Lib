@@ -1,5 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util.item;
 
+import com.mikedeejay2.mikedeejay2lib.util.recipe.RecipeUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryType;
@@ -7,7 +8,9 @@ import org.bukkit.inventory.FurnaceRecipe;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.Recipe;
 
+import java.util.AbstractMap;
 import java.util.Iterator;
+import java.util.Map;
 
 public final class InventoryIdentifiers
 {
@@ -142,7 +145,7 @@ public final class InventoryIdentifiers
         return slot <= HELMET_SLOT && slot >= BOOTS_SLOT;
     }
 
-    public static boolean applicableForSlot(int rawSlot, InventoryView invView, Material material)
+    public static Map.Entry<Boolean, Boolean> applicableForSlot(int rawSlot, InventoryView invView, Material material)
     {
         InventoryType.SlotType slotType = invView.getSlotType(rawSlot);
         InventoryType          invType  = invView.getType();
@@ -155,11 +158,11 @@ public final class InventoryIdentifiers
                 switch(rawSlot)
                 {
                     case 0:
-                        return isBanner(material);
+                        return new AbstractMap.SimpleEntry<>(isBanner(material), false);
                     case 1:
-                        return isDye(material);
+                        return new AbstractMap.SimpleEntry<>(isDye(material), false);
                     case 2:
-                        return isPattern(material);
+                        return new AbstractMap.SimpleEntry<>(isPattern(material), false);
                 }
             } break;
             case BREWING:
@@ -169,11 +172,11 @@ public final class InventoryIdentifiers
                     case 0:
                     case 1:
                     case 2:
-                        return isBottle(material);
+                        return new AbstractMap.SimpleEntry<>(isBottle(material), false);
                     case 4:
-                        return material == Material.BLAZE_POWDER;
+                        return new AbstractMap.SimpleEntry<>(material == Material.BLAZE_POWDER, false);
                     case 3:
-                        return isApplicableForBrewing(material);
+                        return new AbstractMap.SimpleEntry<>(isApplicableForBrewing(material), false);
                 }
             } break;
             case CARTOGRAPHY:
@@ -181,48 +184,69 @@ public final class InventoryIdentifiers
                 switch(rawSlot)
                 {
                     case 0:
-                        return material == Material.FILLED_MAP;
+                        return new AbstractMap.SimpleEntry<>(material == Material.FILLED_MAP, false);
                     case 1:
-                        return material == Material.PAPER;
+                        return new AbstractMap.SimpleEntry<>(material == Material.PAPER, false);
                 }
             } break;
             case ENCHANTING:
             {
-                return rawSlot == 1 && material == Material.LAPIS_LAZULI;
+                return new AbstractMap.SimpleEntry<>(rawSlot == 1 && material == Material.LAPIS_LAZULI, false);
             }
             case GRINDSTONE:
             {
-                return (rawSlot == 0 || rawSlot == 1) && isTool(material);
+                return new AbstractMap.SimpleEntry<>((rawSlot == 0 || rawSlot == 1) && isTool(material), false);
             }
             case SHULKER_BOX:
             {
-                return !isShulkerBox(material);
+                return new AbstractMap.SimpleEntry<>(!isShulkerBox(material), false);
+            }
+            case FURNACE:
+            {
+                if(rawSlot == 0)
+                {
+                    return new AbstractMap.SimpleEntry<>(RecipeUtil.isFurnaceInput(material), true);
+                }
+            }
+            case BLAST_FURNACE:
+            {
+                if(rawSlot == 0)
+                {
+                    return new AbstractMap.SimpleEntry<>(RecipeUtil.isBlastingInput(material), true);
+                }
+            }
+            case SMOKER:
+            {
+                if(rawSlot == 0)
+                {
+                    return new AbstractMap.SimpleEntry<>(RecipeUtil.isSmokingInput(material), true);
+                }
             }
         }
 
         switch(slotType)
         {
             case RESULT:
-                return false;
+                return new AbstractMap.SimpleEntry<>(false, false);
             case ARMOR:
             {
-                if(slot == BOOTS_SLOT && !isBoots(material)) return true;
-                if(slot == LEGGINGS_SLOT && !isLeggings(material)) return true;
-                if(slot == CHESTPLATE_SLOT && !isChestplate(material)) return true;
-                if(slot == HELMET_SLOT && !isHelmet(material)) return true;
-                return false;
+                if(slot == BOOTS_SLOT && !isBoots(material)) return new AbstractMap.SimpleEntry<>(true, false);
+                if(slot == LEGGINGS_SLOT && !isLeggings(material)) return new AbstractMap.SimpleEntry<>(true, false);
+                if(slot == CHESTPLATE_SLOT && !isChestplate(material)) return new AbstractMap.SimpleEntry<>(true, false);
+                if(slot == HELMET_SLOT && !isHelmet(material)) return new AbstractMap.SimpleEntry<>(true, false);
+                return new AbstractMap.SimpleEntry<>(false, false);
             }
             case FUEL:
             {
-                return material.isFuel();
+                return new AbstractMap.SimpleEntry<>(material.isFuel(), true);
             }
             case QUICKBAR:
             case CONTAINER:
             case OUTSIDE:
             case CRAFTING:
-                return true;
+                return new AbstractMap.SimpleEntry<>(true, false);
         }
-        return false;
+        return new AbstractMap.SimpleEntry<>(false, false);
     }
 
     public static boolean isBanner(Material material)
