@@ -2,7 +2,6 @@
   "command.errors.invalid_subcommand": "Error: Invalid subcommand",
   "command.errors.general": "An error has occurred",
   "command.errors.invalid_arguments": "Error: The arguments provided are incorrect. Please input valid arguments.",
-  "errors.permission.nopermission": "You don't have permission to run this command!",
   "generic.success": "Success!",
   "generic.enabled": "Enabled",
   "generic.disabled": "Disabled",
@@ -14,6 +13,7 @@
   "errors.not_a_number": "Error: The data entered is not a number. Please enter a number.",
   "errors.invalid_item_held": "The item that is being held is invalid. Please hold a valid item.",
   "errors.version_not_valid": "The server's Minecraft version ({VERSION}) is not a valid version for this plugin. Errors may occur.",
+  "errors.permission.nopermission": "You don't have permission to run this command!",
   "gui.modules.list.search": "Search list...",
   "gui.modules.list.search_off": "Turn off search mode",
   "gui.modules.list.page": "Page {PAGE}",
@@ -29,5 +29,8 @@
   "update_checker.update_available": "An update for {PLUGIN} is available!",
   "update_checker.new_version": "{PLUGIN} has a new version {VERSION} available for download.",
   "update_checker.release_time": "The update was released at {TIME}",
-  "update_checker.download_link": "Direct download link: {LINK}"
+  "update_checker.download_link": "Direct download link: {LINK}",
+  "sql.errors.unable_to_connect": "Unable to connect to MySQL Database \"{NAME}\"! Please check your configuration settings.",
+  "sql.errors.unable_to_disconnect": "Unable to disconnect from MySQL Database \"{NAME}\"!",
+  "sql.success": "MySQL Database \"{NAME}\" successfully connected on port {PORT}"
 }
