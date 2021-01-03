@@ -41,7 +41,7 @@ public class MySQLConnection implements SQLConnection
                     username, password);
 
             plugin.chat().sendMessage("&a" + plugin.langManager().getTextLib(
-                    "sql.success",
+                    "sql.mysql.success",
                     new String[]{"NAME", "PORT"},
                     new String[]{database, String.valueOf(port)}));
             return true;
@@ -49,7 +49,7 @@ public class MySQLConnection implements SQLConnection
         catch(Exception e)
         {
             plugin.getLogger().severe(plugin.langManager().getTextLib(
-                    "sql.errors.unable_to_connect",
+                    "sql.mysql.errors.unable_to_connect",
                     new String[]{"NAME"},
                     new String[]{database}));
         }
@@ -69,7 +69,7 @@ public class MySQLConnection implements SQLConnection
         catch(Exception e)
         {
             plugin.getLogger().severe(plugin.langManager().getTextLib(
-                    "sql.errors.unable_to_disconnect",
+                    "sql.mysql.errors.unable_to_disconnect",
                     new String[]{"NAME"},
                     new String[]{database}));
             e.printStackTrace();

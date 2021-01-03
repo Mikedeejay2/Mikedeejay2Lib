@@ -4,6 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.data.sql.SQLType;
 import com.mikedeejay2.mikedeejay2lib.data.sql.connector.MySQLConnection;
 import com.mikedeejay2.mikedeejay2lib.data.sql.connector.SQLConnection;
+import com.mikedeejay2.mikedeejay2lib.data.sql.connector.SQLiteConnection;
 
 public class SQLAccessor
 {
@@ -33,6 +34,11 @@ public class SQLAccessor
         this.database = database;
     }
 
+    public void setInfo(String database)
+    {
+        this.database = database;
+    }
+
     public void connect()
     {
         switch(type)
@@ -43,6 +49,9 @@ public class SQLAccessor
                 this.connected = true;
                 break;
             case SQLITE:
+                this.connection = new SQLiteConnection(database, plugin);
+                connection.connect();
+                this.connected = true;
                 break;
         }
     }
