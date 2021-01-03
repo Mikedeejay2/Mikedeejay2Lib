@@ -17,7 +17,6 @@ public class SQLAccessor
     protected String username;
     protected String password;
     protected String database;
-    protected boolean connected;
 
     public SQLAccessor(PluginBase plugin, SQLType type)
     {
@@ -41,23 +40,28 @@ public class SQLAccessor
 
     public void connect()
     {
+        if(isConnected()) return;
         switch(type)
         {
             case MYSQL:
-                this.connection = new MySQLConnection(host, port, username, password, database, plugin);
+                if(connection == null) this.connection = new MySQLConnection(host, port, username, password, database, plugin);
                 connection.connect();
-                this.connected = true;
                 break;
             case SQLITE:
-                this.connection = new SQLiteConnection(database, plugin);
+                if(connection == null) this.connection = new SQLiteConnection(database, plugin);
                 connection.connect();
-                this.connected = true;
                 break;
         }
     }
 
     public void disconnect()
     {
+        if(!isConnected()) return;
+        connection.disconnect();
+    }
 
+    public boolean isConnected()
+    {
+        return connection != null && connection.isConnected();
     }
 }

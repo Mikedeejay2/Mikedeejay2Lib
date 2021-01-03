@@ -42,9 +42,9 @@ public class SQLiteConnection implements SQLConnection
         try
         {
             Class.forName("org.sqlite.JDBC");
-            connection = DriverManager.getConnection("jdbc:sqlite" + dbFile);
+            connection = DriverManager.getConnection("jdbc:sqlite:" + dbFile);
 
-            plugin.getLogger().severe(plugin.langManager().getTextLib(
+            plugin.chat().sendMessage("&a" + plugin.langManager().getTextLib(
                     "sql.sqlite.success",
                     new String[]{"NAME"},
                     new String[]{database}));
@@ -56,6 +56,7 @@ public class SQLiteConnection implements SQLConnection
                     "sql.sqlite.errors.unable_to_connect",
                     new String[]{"NAME"},
                     new String[]{database}));
+            e.printStackTrace();
         }
         return false;
     }
