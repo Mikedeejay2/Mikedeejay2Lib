@@ -30,7 +30,7 @@ public class SQLAccessor
         this.port = port;
         this.username = username;
         this.password = password;
-        this.database = database;
+        this.database = database;//
     }
 
     public void setInfo(String database)
