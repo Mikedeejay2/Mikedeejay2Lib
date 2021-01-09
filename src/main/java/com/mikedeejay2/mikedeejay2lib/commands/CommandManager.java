@@ -18,7 +18,7 @@ import java.util.Collections;
 public class CommandManager implements CommandExecutor
 {
     protected final PluginBase plugin;
-    protected ArrayList<AbstractSubCommand> commands = new ArrayList<>();
+    protected ArrayList<SubCommand> commands = new ArrayList<>();
     private CustomTabCompleter completer;
     protected String defaultSubCommand;
 
@@ -62,7 +62,7 @@ public class CommandManager implements CommandExecutor
                 args[0] = defaultSubCommand;
             }
 
-            AbstractSubCommand target = this.getSubcommand(args[0]);
+            SubCommand target = this.getSubcommand(args[0]);
 
             if(target == null)
             {
@@ -105,9 +105,9 @@ public class CommandManager implements CommandExecutor
      * @param name Name of subcommand to get
      * @return The subcommand that corresponds to the name
      */
-    public AbstractSubCommand getSubcommand(String name)
+    public SubCommand getSubcommand(String name)
     {
-        for(AbstractSubCommand subcommand : this.commands)
+        for(SubCommand subcommand : this.commands)
         {
             if(subcommand.name().equalsIgnoreCase(name))
             {
@@ -139,7 +139,7 @@ public class CommandManager implements CommandExecutor
     public String[] getAllCommandStrings(boolean aliases)
     {
         ArrayList<String> strings = new ArrayList<>();
-        for(AbstractSubCommand command : commands)
+        for(SubCommand command : commands)
         {
             strings.add(command.name());
             if(aliases) Collections.addAll(strings, command.aliases());
@@ -152,7 +152,7 @@ public class CommandManager implements CommandExecutor
      *
      * @param subCommand The subcommand to add
      */
-    public void addSubcommand(AbstractSubCommand subCommand)
+    public void addSubcommand(SubCommand subCommand)
     {
         this.commands.add(subCommand);
     }
@@ -172,7 +172,7 @@ public class CommandManager implements CommandExecutor
      *
      * @param subCommand The subcommand to remove
      */
-    public void removeSubCommand(AbstractSubCommand subCommand)
+    public void removeSubCommand(SubCommand subCommand)
     {
         commands.remove(subCommand);
     }

@@ -7,7 +7,7 @@ import org.bukkit.command.CommandSender;
  *
  * @author Mikedeejay2
  */
-public abstract class AbstractSubCommand
+public interface SubCommand
 {
     /**
      * When this subcommand is run, onCommand is run
