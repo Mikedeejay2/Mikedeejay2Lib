@@ -136,9 +136,9 @@ public class SQLDatabase implements DataObject
     public SQLTable createTable(String tableName, SQLColumnInfo... info)
     {
         StringBuilder builder = new StringBuilder();
-        builder.append("CREATE TABLE ")
+        builder.append("CREATE TABLE `")
                .append(tableName)
-               .append(" (");
+               .append("` (");
 
         List<Map.Entry<SQLConstraint, SQLColumnInfo>> endConstraints = new ArrayList<>();
 
@@ -150,8 +150,9 @@ public class SQLDatabase implements DataObject
             int[] sizes = curInfo.getSizes();
             SQLDataType type = curInfo.getType();
 
-            builder.append(name)
-                   .append(" ")
+            builder.append("`")
+                   .append(name)
+                   .append("` ")
                    .append(type.getName());
 
             if(sizes.length > 0)
@@ -185,7 +186,7 @@ public class SQLDatabase implements DataObject
         {
             SQLConstraint constraint = entry.getKey();
             SQLColumnInfo curInfo = entry.getValue();
-            String data = constraint.useExtra() ? curInfo.getExtra() : curInfo.getName();
+            String data = constraint.useExtra() ? curInfo.getExtra() : "`" + curInfo.getName() + "`";
             String name = constraint.get();
             builder.append(", ")
                    .append(name)
