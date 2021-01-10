@@ -21,14 +21,22 @@ public class SQLTable
         return new SQLColumn[0];
     }
 
-    public void renameTable(String newName)
+    public boolean renameTable(String newName)
     {
-
+        String command = "ALTER TABLE `" + name + "` RENAME TO `" + newName + "`";
+        System.out.println(command);
+        int code = database.executeUpdate(command);
+        this.name = newName;
+        return code != -1;
     }
 
-    public void removeTable()
+    public boolean removeTable()
     {
 
+        String command = "DROP TABLE `" + name + "`";
+        System.out.println(command);
+        int code = database.executeUpdate(command);
+        return code != -1;
     }
 
     public SQLColumn getColumn(String columnName)

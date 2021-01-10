@@ -122,15 +122,18 @@ public class SQLDatabase implements DataObject
         try
         {
             ResultSet result = getMetaData().getTables(null, null, tableName, null);
-            SQLTableType type = SQLTableType.valueOf(result.getString(SQLTableMeta.TABLE_TYPE.toString()));
-            SQLTable table = new SQLTable(this, tableName, type);
-            return table;
+            if(result.next())
+            {
+                SQLTableType type  = SQLTableType.valueOf(result.getString(SQLTableMeta.TABLE_TYPE.toString()));
+                SQLTable     table = new SQLTable(this, tableName, type);
+                return table;
+            }
         }
         catch(SQLException throwables)
         {
             throwables.printStackTrace();
-            return null;
         }
+        return null;
     }
 
     public SQLTable createTable(String tableName, SQLColumnInfo... info)
@@ -201,7 +204,9 @@ public class SQLDatabase implements DataObject
 
         System.out.println(command);
 
-        executeUpdate(command);
+        int code = executeUpdate(command);
+        if(code == -1) return null;
+
         SQLTable table = new SQLTable(this, tableName, SQLTableType.TABLE);
         return table;
     }
