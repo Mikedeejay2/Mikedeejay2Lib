@@ -211,6 +211,15 @@ public class SQLDatabase implements DataObject
         return table;
     }
 
+    public boolean removeTable(String tableName)
+    {
+
+        String command = "DROP TABLE `" + tableName + "`";
+        System.out.println(command);
+        int code = executeUpdate(command);
+        return code != -1;
+    }
+
     public int executeUpdate(String command)
     {
         try

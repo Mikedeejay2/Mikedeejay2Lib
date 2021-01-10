@@ -30,15 +30,6 @@ public class SQLTable
         return code != -1;
     }
 
-    public boolean removeTable()
-    {
-
-        String command = "DROP TABLE `" + name + "`";
-        System.out.println(command);
-        int code = database.executeUpdate(command);
-        return code != -1;
-    }
-
     public SQLColumn getColumn(String columnName)
     {
         return null;
