@@ -1,40 +1,58 @@
 package com.mikedeejay2.mikedeejay2lib.data.sql.table;
 
-import com.mikedeejay2.mikedeejay2lib.data.sql.column.SQLIColumn;
+import com.mikedeejay2.mikedeejay2lib.data.sql.column.SQLColumn;
 import com.mikedeejay2.mikedeejay2lib.data.sql.database.SQLDatabase;
 
-public class SQLTable implements SQLITable
+public class SQLTable
 {
     protected final SQLDatabase database;
     protected String name;
+    protected SQLTableType type;
 
-    public SQLTable(SQLDatabase database, String name)
+    public SQLTable(SQLDatabase database, String name, SQLTableType type)
     {
         this.database = database;
         this.name = name;
+        this.type = type;
     }
 
-    @Override
-    public SQLIColumn[] getColumns()
+    public SQLColumn[] getColumns()
     {
-        return new SQLIColumn[0];
+        return new SQLColumn[0];
     }
 
-    @Override
     public void renameTable(String newName)
     {
 
     }
 
-    @Override
-    public SQLIColumn getColumn(String columnName)
+    public void removeTable()
+    {
+
+    }
+
+    public SQLColumn getColumn(String columnName)
     {
         return null;
     }
 
-    @Override
-    public SQLIColumn getColumn(int index)
+    public SQLColumn getColumn(int index)
     {
         return null;
+    }
+
+    public SQLDatabase getDatabase()
+    {
+        return database;
+    }
+
+    public String getName()
+    {
+        return name;
+    }
+
+    public SQLTableType getType()
+    {
+        return type;
     }
 }

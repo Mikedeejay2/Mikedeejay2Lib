@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.data.sql.misc;
+package com.mikedeejay2.mikedeejay2lib.data.sql.column;
 
 public enum SQLColumnMeta
 {

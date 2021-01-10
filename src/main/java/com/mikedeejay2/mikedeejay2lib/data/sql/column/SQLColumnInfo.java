@@ -2,33 +2,22 @@ package com.mikedeejay2.mikedeejay2lib.data.sql.column;
 
 import com.mikedeejay2.mikedeejay2lib.data.sql.misc.SQLConstraint;
 import com.mikedeejay2.mikedeejay2lib.data.sql.misc.SQLDataType;
-import com.mikedeejay2.mikedeejay2lib.data.sql.table.SQLTable;
 
-public class SQLColumn
+public class SQLColumnInfo
 {
-    protected SQLTable table;
-    protected SQLDataType type;
-    protected String name;
-    protected int[] sizes;
-    protected SQLConstraint[] constraints;
+    protected final SQLDataType type;
+    protected final String name;
+    protected final int[] sizes;
+    protected final SQLConstraint[] constraints;
+    protected final String extra;
 
-    public SQLColumn(SQLTable parentTable, SQLDataType type, String name, int[] sizes, SQLConstraint[] constraints)
+    public SQLColumnInfo(SQLDataType type, String name, int[] sizes, SQLConstraint[] constraints, String extra)
     {
-        this.table = parentTable;
         this.type = type;
         this.name = name;
         this.sizes = sizes;
         this.constraints = constraints;
-    }
-
-    public SQLTable getParentTable()
-    {
-        return table;
-    }
-
-    public SQLTable getTable()
-    {
-        return table;
+        this.extra = extra;
     }
 
     public SQLDataType getType()
@@ -49,5 +38,10 @@ public class SQLColumn
     public SQLConstraint[] getConstraints()
     {
         return constraints;
+    }
+
+    public String getExtra()
+    {
+        return extra;
     }
 }
