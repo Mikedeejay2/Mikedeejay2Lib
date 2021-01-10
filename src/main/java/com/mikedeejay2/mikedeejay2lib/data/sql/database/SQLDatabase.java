@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.data.sql.database;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.data.DataObject;
 import com.mikedeejay2.mikedeejay2lib.data.sql.column.SQLColumnInfo;
 import com.mikedeejay2.mikedeejay2lib.data.sql.misc.SQLConstraint;
 import com.mikedeejay2.mikedeejay2lib.data.sql.misc.SQLDataType;
@@ -18,7 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class SQLDatabase
+public class SQLDatabase implements DataObject
 {
     protected final PluginBase plugin;
     protected final SQLType type;
@@ -271,8 +272,6 @@ public class SQLDatabase
             return null;
         }
     }
-
-
 
     public DatabaseMetaData getMetaData()
     {
