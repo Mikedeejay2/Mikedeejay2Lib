@@ -41,29 +41,29 @@
                     <target>${java.version}</target>
                 </configuration>
             </plugin>
-            <plugin>
+            <plugin> <!-- Deploy to internal repository -->
                 <artifactId>maven-deploy-plugin</artifactId>
                 <version>2.7</version>
                 <configuration>
                     <altDeploymentRepository>internal.repo::default::file://${project.build.directory}/mvn-repo</altDeploymentRepository>
-                </configuration>
+                </configuration> <!-- Deploy to the internal repo, internal repo uses "mvn-repo" instead of master -->
             </plugin>
-            <plugin>
+            <plugin> <!-- Deploy to Github repository -->
                 <groupId>com.github.github</groupId>
                 <artifactId>site-maven-plugin</artifactId>
-                <version>0.11</version>
+                <version>0.12</version>
                 <configuration>
-                    <message>Add ${project.name} ${project.version}</message>
+                    <message>Add ${project.name} ${project.version}</message> <!-- Commit Message -->
                     <noJekyll>true</noJekyll>
-                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
-                    <branch>refs/heads/master</branch>
-                    <includes><include>**/*</include></includes>
-                    <repositoryName>Mikedeejay2-Maven-Repo</repositoryName>
-                    <repositoryOwner>Mikedeejay2</repositoryOwner>
-                    <merge>true</merge>
+                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory> <!-- Same internal directory as above -->
+                    <branch>refs/heads/master</branch> <!-- The remote branch, in this case it's using master for Mikedeejay2-Maven-Repo -->
+                    <includes><include>**/*</include></includes> <!-- Include everything -->
+                    <repositoryName>Mikedeejay2-Maven-Repo</repositoryName> <!-- Name of the repository being used -->
+                    <repositoryOwner>Mikedeejay2</repositoryOwner> <!-- Username that owns the repository -->
+                    <merge>true</merge> <!-- Forgetting this will wipe everything that's currently in the repository. IMPORTANT -->
                 </configuration>
                 <executions>
-                    <!-- run site-maven-plugin's 'site' target as part of the build's normal 'deploy' phase -->
+                    <!-- Set this to run in the deploy phase -->
                     <execution>
                         <goals>
                             <goal>site</goal>
