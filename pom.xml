@@ -6,7 +6,7 @@
 
     <groupId>com.mikedeejay2</groupId>
     <artifactId>mikedeejay2lib</artifactId>
-    <version>1.0.0</version>
+    <version>1.16.4-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Mikedeejay2Lib</name>
@@ -23,6 +23,11 @@
             <name>Temporary Staging Repository</name>
             <url>file://${project.build.directory}/mvn-repo</url>
         </repository>
+        <snapshotRepository>
+            <id>internal.repo</id>
+            <name>Temporary Staging Repository</name>
+            <url>file://${project.build.directory}/mvn-repo</url>
+        </snapshotRepository>
     </distributionManagement>
 
     <build>
@@ -48,13 +53,13 @@
                 <artifactId>site-maven-plugin</artifactId>
                 <version>0.11</version>
                 <configuration>
-                    <message>Maven artifacts for ${project.version}</message>  <!-- git commit message -->
-                    <noJekyll>true</noJekyll>                                  <!-- disable webpage processing -->
-                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory> <!-- matches distribution management repository url above -->
-                    <branch>refs/heads/mvn-repo</branch>                       <!-- remote branch name -->
+                    <message>Add ${project.name} ${project.version}</message>
+                    <noJekyll>true</noJekyll>
+                    <outputDirectory>${project.build.directory}/mvn-repo</outputDirectory>
+                    <branch>refs/heads/master</branch>
                     <includes><include>**/*</include></includes>
-                    <repositoryName>Mikedeejay2Lib</repositoryName>      <!-- github repo name -->
-                    <repositoryOwner>Mikedeejay2</repositoryOwner>      <!-- github username  -->
+                    <repositoryName>Mikedeejay2-Maven-Repo</repositoryName>
+                    <repositoryOwner>Mikedeejay2</repositoryOwner>
                 </configuration>
                 <executions>
                     <!-- run site-maven-plugin's 'site' target as part of the build's normal 'deploy' phase -->
