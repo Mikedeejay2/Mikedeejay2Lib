@@ -10,17 +10,17 @@ import java.util.Map;
  *
  * @author Mikedeejay2
  */
-public class DataManager<T extends DataObject & SQLObject>
+public class DataManager
 {
     // The hashmap of file paths to DataFiles
-    protected Map<String, T> data;
+    protected Map<String, Object> data;
 
     public DataManager()
     {
         this.data = new HashMap<>();
     }
 
-    public boolean containsData(T object)
+    public boolean containsData(Object object)
     {
         return data.containsValue(object);
     }
@@ -30,23 +30,23 @@ public class DataManager<T extends DataObject & SQLObject>
         return data.containsKey(identifier);
     }
 
-    public void addData(T object, String identifier)
+    public void addData(Object object, String identifier)
     {
         data.put(identifier, object);
     }
 
     public void addFile(DataFile file)
     {
-        data.put(file.getFilePath(), (T) file);
+        data.put(file.getFilePath(), file);
     }
 
-    public void removeData(T object)
+    public void removeData(Object object)
     {
         String identifier = null;
-        for(Map.Entry<String, T> entry : data.entrySet())
+        for(Map.Entry<String, Object> entry : data.entrySet())
         {
             String curIdentifier = entry.getKey();
-            T curObj = entry.getValue();
+            Object curObj = entry.getValue();
             if(!object.equals(curObj)) continue;
             identifier = curIdentifier;
             break;
@@ -64,14 +64,14 @@ public class DataManager<T extends DataObject & SQLObject>
         data.remove(file.getFilePath());
     }
 
-    public T getData(String identifier)
+    public Object getData(String identifier)
     {
         return data.get(identifier);
     }
 
-    public <E extends T> E getData(String identifer, Class<E> dataClass)
+    public <T> T getData(String identifer, Class<T> dataClass)
     {
-        return (E) data.get(identifer);
+        return (T) data.get(identifer);
     }
 
     public DataFile getFile(String path)
