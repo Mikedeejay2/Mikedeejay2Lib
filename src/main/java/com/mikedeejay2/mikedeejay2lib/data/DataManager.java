@@ -1,5 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.data;
 
+import com.mikedeejay2.oosql.SQLObject;
+
 import java.util.HashMap;
 import java.util.Map;
 
@@ -8,17 +10,17 @@ import java.util.Map;
  *
  * @author Mikedeejay2
  */
-public class DataManager
+public class DataManager<T extends DataObject & SQLObject>
 {
     // The hashmap of file paths to DataFiles
-    protected Map<String, DataObject> data;
+    protected Map<String, T> data;
 
     public DataManager()
     {
         this.data = new HashMap<>();
     }
 
-    public boolean containsData(DataObject object)
+    public boolean containsData(T object)
     {
         return data.containsValue(object);
     }
@@ -28,23 +30,23 @@ public class DataManager
         return data.containsKey(identifier);
     }
 
-    public void addData(DataObject object, String identifier)
+    public void addData(T object, String identifier)
     {
         data.put(identifier, object);
     }
 
     public void addFile(DataFile file)
     {
-        data.put(file.getFilePath(), file);
+        data.put(file.getFilePath(), (T) file);
     }
 
-    public void removeData(DataObject object)
+    public void removeData(T object)
     {
         String identifier = null;
-        for(Map.Entry<String, DataObject> entry : data.entrySet())
+        for(Map.Entry<String, T> entry : data.entrySet())
         {
             String curIdentifier = entry.getKey();
-            DataObject curObj = entry.getValue();
+            T curObj = entry.getValue();
             if(!object.equals(curObj)) continue;
             identifier = curIdentifier;
             break;
@@ -62,14 +64,14 @@ public class DataManager
         data.remove(file.getFilePath());
     }
 
-    public DataObject getData(String identifier)
+    public T getData(String identifier)
     {
         return data.get(identifier);
     }
 
-    public <T extends DataObject> T getData(String identifer, Class<T> dataClass)
+    public <E extends T> E getData(String identifer, Class<E> dataClass)
     {
-        return (T) data.get(identifer);
+        return (E) data.get(identifer);
     }
 
     public DataFile getFile(String path)
