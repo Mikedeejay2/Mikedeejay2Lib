@@ -143,12 +143,13 @@
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
             <version>1.7</version>
-            <scope>compile</scope>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.mikedeejay2</groupId>
             <artifactId>oosql</artifactId>
             <version>0.1.0-SNAPSHOT</version>
+            <scope>provided</scope>
         </dependency>
 
 
