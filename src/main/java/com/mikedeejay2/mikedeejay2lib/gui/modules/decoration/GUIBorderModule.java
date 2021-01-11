@@ -3,7 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules.decoration;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
-import com.mikedeejay2.mikedeejay2lib.util.head.Base64Heads;
+import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -21,7 +21,7 @@ public class GUIBorderModule implements GUIModule
 
     public GUIBorderModule()
     {
-        this.borderItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.WHITE, 1, GUIContainer.EMPTY_NAME));
+        this.borderItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.WHITE.get(), 1, GUIContainer.EMPTY_NAME));
     }
 
     /**

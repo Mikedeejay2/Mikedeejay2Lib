@@ -8,7 +8,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchOffEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUISwitchListPageEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
-import com.mikedeejay2.mikedeejay2lib.util.head.Base64Heads;
+import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import com.mikedeejay2.mikedeejay2lib.util.search.SearchUtil;
@@ -65,8 +65,8 @@ public class GUIListModule implements GUIModule
 
         curPage = 1;
         endItems = new ArrayList<>();
-        this.backItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_BACKWARD_WHITE, 1, GUIContainer.EMPTY_NAME));
-        this.forwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Heads.ARROW_FORWARD_WHITE, 1, GUIContainer.EMPTY_NAME));
+        this.backItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_BACKWARD_WHITE.get(), 1, GUIContainer.EMPTY_NAME));
+        this.forwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_FORWARD_WHITE.get(), 1, GUIContainer.EMPTY_NAME));
         backItem.addEvent(new GUISwitchListPageEvent());
         forwardItem.addEvent(new GUISwitchListPageEvent());
 
