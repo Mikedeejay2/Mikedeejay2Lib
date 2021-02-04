@@ -19,11 +19,11 @@ public class BlockIterator
      * @param xWidth   The width of the iteration in the X direction
      * @param yWidth   The width of the iteration in the Y direction
      * @param zWidth   The width of the iteration in the Z direction
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockRunnable runnable, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -36,7 +36,7 @@ public class BlockIterator
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
-                    runnable.run(location, location.getBlock());
+                    consumer.accept(location, location.getBlock());
                 }
             }
         };
@@ -50,12 +50,12 @@ public class BlockIterator
      * @param xWidth   The width of the iteration in the X direction
      * @param yWidth   The width of the iteration in the Y direction
      * @param zWidth   The width of the iteration in the Z direction
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockRunnable runnable, PluginBase plugin)
+    public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, PluginBase plugin)
     {
-        iterateBlocks(loc, xWidth, yWidth, zWidth, runnable, plugin, null);
+        iterateBlocks(loc, xWidth, yWidth, zWidth, consumer, plugin, null);
     }
 
     /**
@@ -63,11 +63,11 @@ public class BlockIterator
      *
      * @param loc1     The first location of the cube
      * @param loc2     The second location of the cube
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocksHollow(Location loc1, Location loc2, BlockRunnable runnable, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocksHollow(Location loc1, Location loc2, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -80,7 +80,7 @@ public class BlockIterator
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
-                    runnable.run(location, location.getBlock());
+                    consumer.accept(location, location.getBlock());
                 }
             }
         };
@@ -92,12 +92,12 @@ public class BlockIterator
      *
      * @param loc1     The first location of the cube
      * @param loc2     The second location of the cube
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksHollow(Location loc1, Location loc2, BlockRunnable runnable, PluginBase plugin)
+    public static void iterateBlocksHollow(Location loc1, Location loc2, BlockConsumer consumer, PluginBase plugin)
     {
-        iterateBlocksHollow(loc1, loc2, runnable, plugin, null);
+        iterateBlocksHollow(loc1, loc2, consumer, plugin, null);
     }
 
     /**
@@ -105,11 +105,11 @@ public class BlockIterator
      *
      * @param loc1     The first location of the cube
      * @param loc2     The second location of the cube
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocks(Location loc1, Location loc2, BlockRunnable runnable, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocks(Location loc1, Location loc2, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -122,7 +122,7 @@ public class BlockIterator
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
-                    runnable.run(location, location.getBlock());
+                    consumer.accept(location, location.getBlock());
                 }
             }
         };
@@ -134,12 +134,12 @@ public class BlockIterator
      *
      * @param loc1     The first location of the cube
      * @param loc2     The second location of the cube
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocks(Location loc1, Location loc2, BlockRunnable runnable, PluginBase plugin)
+    public static void iterateBlocks(Location loc1, Location loc2, BlockConsumer consumer, PluginBase plugin)
     {
-        iterateBlocks(loc1, loc2, runnable, plugin, null);
+        iterateBlocks(loc1, loc2, consumer, plugin, null);
     }
 
     /**
@@ -149,11 +149,11 @@ public class BlockIterator
      * @param xWidth   The width of the iteration in the X direction
      * @param yWidth   The width of the iteration in the Y direction
      * @param zWidth   The width of the iteration in the Z direction
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockRunnable runnable, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -166,7 +166,7 @@ public class BlockIterator
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
-                    runnable.run(location, location.getBlock());
+                    consumer.accept(location, location.getBlock());
                 }
             }
         };
@@ -180,12 +180,12 @@ public class BlockIterator
      * @param xWidth   The width of the iteration in the X direction
      * @param yWidth   The width of the iteration in the Y direction
      * @param zWidth   The width of the iteration in the Z direction
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockRunnable runnable, PluginBase plugin)
+    public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, PluginBase plugin)
     {
-        iterateBlocksHollow(loc, xWidth, yWidth, zWidth, runnable, plugin, null);
+        iterateBlocksHollow(loc, xWidth, yWidth, zWidth, consumer, plugin, null);
     }
 
     /**
@@ -195,11 +195,11 @@ public class BlockIterator
      * @param xWidth   The width of the iteration in the X direction
      * @param yWidth   The width of the iteration in the Y direction
      * @param zWidth   The width of the iteration in the Z direction
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockRunnable runnable, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -212,7 +212,7 @@ public class BlockIterator
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
-                    runnable.run(location, location.getBlock());
+                    consumer.accept(location, location.getBlock());
                 }
             }
         };
@@ -226,12 +226,12 @@ public class BlockIterator
      * @param xWidth   The width of the iteration in the X direction
      * @param yWidth   The width of the iteration in the Y direction
      * @param zWidth   The width of the iteration in the Z direction
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockRunnable runnable, PluginBase plugin)
+    public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, PluginBase plugin)
     {
-        iterateBlocksOutline(loc, xWidth, yWidth, zWidth, runnable, plugin, null);
+        iterateBlocksOutline(loc, xWidth, yWidth, zWidth, consumer, plugin, null);
     }
 
 
@@ -240,11 +240,11 @@ public class BlockIterator
      *
      * @param loc1     The first location of the cube
      * @param loc2     The second location of the cube
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocksOutline(Location loc1, Location loc2, BlockRunnable runnable, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocksOutline(Location loc1, Location loc2, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -257,7 +257,7 @@ public class BlockIterator
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
-                    runnable.run(location, location.getBlock());
+                    consumer.accept(location, location.getBlock());
                 }
             }
         };
@@ -269,12 +269,12 @@ public class BlockIterator
      *
      * @param loc1     The first location of the cube
      * @param loc2     The second location of the cube
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksOutline(Location loc1, Location loc2, BlockRunnable runnable, PluginBase plugin)
+    public static void iterateBlocksOutline(Location loc1, Location loc2, BlockConsumer consumer, PluginBase plugin)
     {
-        iterateBlocksOutline(loc1, loc2, runnable, plugin, null);
+        iterateBlocksOutline(loc1, loc2, consumer, plugin, null);
     }
 
     /**
@@ -282,11 +282,11 @@ public class BlockIterator
      *
      * @param loc      The location in which to iterate blocks around
      * @param radius   The radius of the sphere to iterate through
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocksSphere(Location loc, double radius, BlockRunnable runnable, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocksSphere(Location loc, double radius, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -299,7 +299,7 @@ public class BlockIterator
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
-                    runnable.run(location, location.getBlock());
+                    consumer.accept(location, location.getBlock());
                 }
             }
         };
@@ -311,12 +311,12 @@ public class BlockIterator
      *
      * @param loc      The location in which to iterate blocks around
      * @param radius   The radius of the sphere to iterate through
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksSphere(Location loc, double radius, BlockRunnable runnable, PluginBase plugin)
+    public static void iterateBlocksSphere(Location loc, double radius, BlockConsumer consumer, PluginBase plugin)
     {
-        iterateBlocksSphere(loc, radius, runnable, plugin, null);
+        iterateBlocksSphere(loc, radius, consumer, plugin, null);
     }
 
     /**
@@ -324,11 +324,11 @@ public class BlockIterator
      *
      * @param loc      The location in which to iterate blocks around
      * @param radius   The radius of the sphere to iterate through
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocksSphereHollow(Location loc, double radius, BlockRunnable runnable, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocksSphereHollow(Location loc, double radius, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -341,7 +341,7 @@ public class BlockIterator
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
-                    runnable.run(location, location.getBlock());
+                    consumer.accept(location, location.getBlock());
                 }
             }
         };
@@ -353,23 +353,23 @@ public class BlockIterator
      *
      * @param loc      The location in which to iterate blocks around
      * @param radius   The radius of the sphere to iterate through
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksSphereHollow(Location loc, double radius, BlockRunnable runnable, PluginBase plugin)
+    public static void iterateBlocksSphereHollow(Location loc, double radius, BlockConsumer consumer, PluginBase plugin)
     {
-        iterateBlocksSphereHollow(loc, radius, runnable, plugin, null);
+        iterateBlocksSphereHollow(loc, radius, consumer, plugin, null);
     }
 
     /**
      * Iterate through all blocks of a list of Locations.
      *
      * @param locs The List of Locations to iterate through
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocks(List<Location> locs, BlockRunnable runnable, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocks(List<Location> locs, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -381,7 +381,7 @@ public class BlockIterator
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
-                    runnable.run(location, location.getBlock());
+                    consumer.accept(location, location.getBlock());
                 }
             }
         };
@@ -392,11 +392,11 @@ public class BlockIterator
      * Iterate through all blocks of a list of Locations.
      *
      * @param locs The List of Locations to iterate through
-     * @param runnable The <tt>BlockRunnable</tt> that will be ran at each block
+     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocks(List<Location> locs, BlockRunnable runnable, PluginBase plugin)
+    public static void iterateBlocks(List<Location> locs, BlockConsumer consumer, PluginBase plugin)
     {
-        iterateBlocks(locs, runnable, plugin, null);
+        iterateBlocks(locs, consumer, plugin, null);
     }
 }
