@@ -24,7 +24,6 @@ public final class InventoryIterator
      * @param consumer The <tt>InventorySlotConsumer</tt> to accept on a slot
      * @param storageOnly Whether only storage slots of the inventory be iterated through
      * @param predicate The <tt>Predicate</tt> that is checked before accepting the slot
-     * @param orders The array of <tt>InventoryOrders</tt> that will be used
      * @param startIndex The starting index of the iteration
      * @param endIndex The ending index of the iteration
      * @param increment Whether to increment of decrement the operation
