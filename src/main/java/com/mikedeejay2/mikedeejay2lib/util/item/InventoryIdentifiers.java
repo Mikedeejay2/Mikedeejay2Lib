@@ -207,7 +207,7 @@ public final class InventoryIdentifiers
      * @return A <tt>Map.Entry</tt> containing two booleans:
      * <ol>
      *     <li>Boolean (Key) - Whether the material should be in that slot</li>
-     *     <li>Boolean (Value) - Whether the item has the ability to be in that slot, regardless of whether is should be</li>
+     *     <li>Boolean (Value) - Whether the item has the ability to be in that slot, regardless of whether it should be</li>
      * </ol>
      */
     public static Map.Entry<Boolean, Boolean> applicableForSlot(int rawSlot, InventoryView invView, Material material)
@@ -262,7 +262,7 @@ public final class InventoryIdentifiers
                 switch(rawSlot)
                 {
                     case 1: return new AbstractMap.SimpleEntry<>(material == Material.LAPIS_LAZULI, false);
-                    case 0:return new AbstractMap.SimpleEntry<>(material != Material.LAPIS_LAZULI, false);
+                    case 0:return new AbstractMap.SimpleEntry<>(material != Material.LAPIS_LAZULI, true);
                 }
             }
             break;
