@@ -259,9 +259,10 @@ public final class InventoryIdentifiers
             break;
             case ENCHANTING:
             {
-                if(rawSlot == 1)
+                switch(rawSlot)
                 {
-                    return new AbstractMap.SimpleEntry<>(material == Material.LAPIS_LAZULI, false);
+                    case 1: return new AbstractMap.SimpleEntry<>(material == Material.LAPIS_LAZULI, false);
+                    case 0:return new AbstractMap.SimpleEntry<>(material != Material.LAPIS_LAZULI, false);
                 }
             }
             break;
