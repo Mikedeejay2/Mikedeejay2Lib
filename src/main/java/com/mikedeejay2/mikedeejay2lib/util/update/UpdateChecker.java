@@ -57,6 +57,10 @@ public class UpdateChecker
     {
         this.userName = userName;
         this.repoName = repoName;
+        if(plugin.getDescription().getVersion().endsWith("-SNAPSHOT"))
+        {
+            return;
+        }
         new BukkitRunnable()
         {
             @Override
