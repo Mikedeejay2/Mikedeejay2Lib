@@ -143,6 +143,6 @@ public class UpdateChecker
                         new String[]{"LINK"},
                         new String[]{"&f" + downloadUrl}));
             }
-        }.runTaskLaterAsynchronously(plugin, delay * 20);
+        }.runTaskLaterAsynchronously(plugin, delay * 20L);
     }
 }
