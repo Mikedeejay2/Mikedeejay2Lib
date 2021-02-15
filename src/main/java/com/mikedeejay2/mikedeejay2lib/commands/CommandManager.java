@@ -13,7 +13,7 @@ import java.util.Collections;
 /**
  * Manages a command with subcommands
  *
- * @author Mikedeejay2 (Originally from a tutorial)
+ * @author Mikedeejay2
  */
 public class CommandManager implements CommandExecutor
 {
