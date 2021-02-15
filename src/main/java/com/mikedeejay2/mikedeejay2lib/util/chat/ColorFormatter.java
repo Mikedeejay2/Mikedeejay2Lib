@@ -7,8 +7,11 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A 1.16 version of color formatting which also formats hex codes to colors.
- * <p>
+ * A more advanced form of {@link Chat#chat(String)} that does the following:
+ * <ul>
+ *     <li>Convert alternate color codes to their respective colors</li>
+ *     <li>Convert hex codes to their respective colors if the version if 1.16 or above</li>
+ * </ul>
  *
  * @author Mikedeejay2
  */
@@ -22,11 +25,34 @@ public final class ColorFormatter
         this.plugin = plugin;
     }
 
+    /**
+     * Format all alternative color codes in the message.
+     * <p>
+     * For example, <tt>&c</tt> will become a red color, <tt>&1</tt> will become a blue color.
+     * <p>
+     * Color codes are converted using {@link ChatColor#translateAlternateColorCodes(char, String)}
+     * 
+     * @param message The message to have alternate (&) color codes translated to their respective colors
+     * @return The formatted message
+     */
     public String formatAltColorCodes(String message)
     {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
+    /**
+     * Format all hex color codes in the message.
+     * <p>
+     * For example, <tt>#ff0000</tt> will become a red color, <tt>#0000ff</tt> will become a blue color.
+     * <p>
+     * Color codes are converted using {@link ChatColor#of(String)}
+     * <p>
+     * If the Minecraft version is less than 1.16 (aka unsupported), hex colors will only be removed but formatting
+     * will not be applied, as there was no alternative below 1.16.
+     * 
+     * @param message The message to have hex codes translated into their respective colors
+     * @return The formatted message
+     */
     public String formatHexCodes(String message)
     {
         boolean hexSupported = plugin.getMCVersion().getVersionShort() >= 16;
@@ -39,6 +65,18 @@ public final class ColorFormatter
         return message;
     }
 
+    /**
+     * Format both hex and alternate color codes in the message.
+     * <p>
+     * For example, <tt>&c</tt> would be an alternate color code that would translate to red,
+     * while <tt>#0000ff</tt> would be a hex code that would translate to a blue color.
+     * <p>
+     * If the Minecraft version is less than 1.16 (aka unsupported), hex colors will only be removed but formatting
+     * will not be applied, as there was no alternative below 1.16.
+     *
+     * @param message The message to have all color codes translated into their respective colors
+     * @return The formatted message
+     */
     public String formatAll(String message)
     {
         message = formatHexCodes(message);
