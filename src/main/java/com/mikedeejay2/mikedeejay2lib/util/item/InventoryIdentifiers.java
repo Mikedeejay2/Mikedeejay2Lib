@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.util.item;
 
 import com.mikedeejay2.mikedeejay2lib.util.recipe.RecipeUtil;
 import org.bukkit.Material;
+import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryType;
 import org.bukkit.inventory.*;
 
@@ -801,6 +802,27 @@ public final class InventoryIdentifiers
             case GREEN_CARPET:
             case RED_CARPET:
             case BLACK_CARPET:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /**
+     * Returns whether the <tt>InventoryAction</tt> will take the item in a result slot or not
+     *
+     * @param action The action to check
+     * @return Whether the item will be taken or not
+     */
+    public static boolean takeResult(InventoryAction action)
+    {
+        switch(action)
+        {
+            case PICKUP_ALL:
+            case PICKUP_HALF:
+            case PICKUP_ONE:
+            case PICKUP_SOME:
+            case MOVE_TO_OTHER_INVENTORY:
                 return true;
             default:
                 return false;
