@@ -281,10 +281,14 @@ public final class InventoryIdentifiers
             }
             case FURNACE:
             {
-                if(rawSlot == 0)
+                switch(rawSlot)
                 {
-                    return new AbstractMap.SimpleEntry<>(RecipeUtil.isFurnaceInput(material), true);
+                    case 0:
+                        return new AbstractMap.SimpleEntry<>(RecipeUtil.isFurnaceInput(material), true);
+                    case 1:
+                        return new AbstractMap.SimpleEntry<>(material.isFuel(), false);
                 }
+
             }
             case BLAST_FURNACE:
             {
