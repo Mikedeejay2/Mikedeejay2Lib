@@ -10,7 +10,7 @@ Library classes for my plugins.
 :warning: Mikedeejay2Lib is an internal library. Therefore, this code in itself is not a plugin by itself but instead 
 the backbone for whichever plugin it pilots. This is done by shading the library into an uber-jar by shading the required
 classes into the `groupid.artifactid.internal.mikedeejay2lib` package to be used interally by the plugin. For usage cases,
-please refer to the [Using Mikedeejay2Lib](#Using Mikedeejay2Lib) section.
+please refer to the [Using Mikedeejay2Lib](#Using-Mikedeejay2Lib) section.
 
 ### Features
 
