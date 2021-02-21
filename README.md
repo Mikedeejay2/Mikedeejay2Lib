@@ -7,7 +7,10 @@
 
 Library classes for my plugins.
 
-:warning: You do not need to install this! My plugins already come with the required classes from this library.
+:warning: Mikedeejay2Lib is an internal library. Therefore, this code in itself is not a plugin by itself but instead 
+the backbone for whichever plugin it pilots. This is done by shading the library into an uber-jar by shading the required
+classes into the `groupid.artifactid.internal.mikedeejay2lib` package to be used interally by the plugin. For usage cases,
+please refer to the [Using Mikedeejay2Lib](#Using Mikedeejay2Lib) section.
 
 ### Features
 
@@ -75,6 +78,8 @@ Library classes for my plugins.
   * Search meta exact
 * Formatted Time Utilities
 * Minecraft Version getter
+
+**And much, much more. This list is very outdated**
 
 ### Using Mikedeejay2Lib
 To use this library, you should import Mikedeejay2Lib using Maven.
