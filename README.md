@@ -88,12 +88,8 @@ Add the repository for Mikedeejay2Lib:
 ```
     <repositories>
         <repository>
-            <id>Mikedeejay2Lib-mvn-repo</id>
-            <url>https://github.com/Mikedeejay2/Mikedeejay2Lib/raw/mvn-repo/</url>
-            <snapshots>
-                <enabled>true</enabled>
-                <updatePolicy>always</updatePolicy>
-            </snapshots>
+            <id>Mikedeejay2-Maven-Repo</id>
+            <url>https://github.com/Mikedeejay2/Mikedeejay2-Maven-Repo/raw/master/</url>
         </repository>
     </repositories>
 ```
@@ -104,7 +100,7 @@ Then, add the dependency for Mikedeejay2Lib:
         <dependency>
             <groupId>com.mikedeejay2</groupId>
             <artifactId>mikedeejay2lib</artifactId>
-            <version>1.0.0</version>
+            <version>1.16.5-SNAPSHOT</version>
         </dependency>
     </dependencies>
 ```
