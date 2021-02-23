@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.nms;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.nms.xpcalc.*;
 import com.mikedeejay2.mikedeejay2lib.util.version.VersionEnum;
 
 /**
@@ -13,6 +14,8 @@ public class NMSHandler
     protected final PluginBase plugin;
     // The NMS version in an enum
     protected VersionEnum version;
+
+    protected NMS_XP xp;
 
     public NMSHandler(PluginBase plugin)
     {
@@ -30,32 +33,37 @@ public class NMSHandler
         {
             case v1_16_R3:
             {
-
+                xp = new NMS_XP_v1_16_R3();
             } break;
             case v1_16_R2:
             {
-
+                xp = new NMS_XP_v1_16_R2();
             } break;
             case v1_16_R1:
             {
-
+                xp = new NMS_XP_v1_16_R1();
             } break;
             case v1_15_R1:
             {
-
+                xp = new NMS_XP_v1_15_R1();
             } break;
             case v1_14_R1:
             {
-
+                xp = new NMS_XP_v1_14_R1();
             } break;
             case v1_13_R2:
             {
-
+                xp = null;
             } break;
             default:
             {
                 plugin.getLogger().severe(plugin.langManager().getText("errors.version_not_valid"));
             }
         }
+    }
+
+    public NMS_XP getXP()
+    {
+        return xp;
     }
 }
