@@ -6,6 +6,6 @@ import org.bukkit.inventory.ItemStack;
 
 public interface NMS_XP
 {
-    int calculateXP(ItemStack item, World world);
+    int calculateXP(World world, ItemStack... items);
     void spawnXP(int amount, Location location);
 }

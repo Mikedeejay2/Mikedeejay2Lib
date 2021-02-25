@@ -53,7 +53,7 @@ public class NMSHandler
             } break;
             case v1_13_R2:
             {
-                xp = null;
+                xp = new NMS_XP_v1_13_R2();
             } break;
             default:
             {

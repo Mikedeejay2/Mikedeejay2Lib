@@ -1,12 +1,12 @@
 package com.mikedeejay2.mikedeejay2lib.nms.xpcalc;
 
-import net.minecraft.server.v1_16_R3.*;
-import org.bukkit.craftbukkit.v1_16_R3.CraftWorld;
-import org.bukkit.craftbukkit.v1_16_R3.inventory.CraftItemStack;
+import net.minecraft.server.v1_13_R2.*;
+import org.bukkit.craftbukkit.v1_13_R2.CraftWorld;
+import org.bukkit.craftbukkit.v1_13_R2.inventory.CraftItemStack;
 
 import java.util.Map;
 
-public final class NMS_XP_v1_16_R3 implements NMS_XP
+public final class NMS_XP_v1_13_R2 implements NMS_XP
 {
     @Override
     public int calculateXP(org.bukkit.World world, org.bukkit.inventory.ItemStack... items)

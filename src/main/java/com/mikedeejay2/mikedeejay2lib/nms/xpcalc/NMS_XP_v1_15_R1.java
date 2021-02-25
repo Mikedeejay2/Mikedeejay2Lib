@@ -9,18 +9,27 @@ import java.util.Map;
 public final class NMS_XP_v1_15_R1 implements NMS_XP
 {
     @Override
-    public int calculateXP(org.bukkit.inventory.ItemStack item, org.bukkit.World world)
+    public int calculateXP(org.bukkit.World world, org.bukkit.inventory.ItemStack... items)
     {
         CraftWorld craftWorld = (CraftWorld) world;
         World nmsWorld = craftWorld.getHandle();
-        ItemStack nmsItem = CraftItemStack.asNMSCopy(item);
-        return this.internalCalc(nmsItem, nmsWorld);
+        ItemStack[] nmsItems = new ItemStack[items.length];
+        for(int i = 0; i < nmsItems.length; ++i)
+        {
+            org.bukkit.inventory.ItemStack curItem = items[i];
+            ItemStack converted = CraftItemStack.asNMSCopy(curItem);
+            nmsItems[i] = converted;
+        }
+        return this.internalCalc(nmsWorld, nmsItems);
     }
 
-    private int internalCalc(ItemStack item, World world)
+    private int internalCalc(World world, ItemStack... items)
     {
-        byte init = 0;
-        int xpAmt = init + this.calcItem(item);
+        int xpAmt = 0;
+        for(ItemStack item : items)
+        {
+            xpAmt += this.calcItem(item);
+        }
         if (xpAmt > 0) {
             int xpAmt2 = (int)Math.ceil((double)xpAmt / 2.0D);
             return xpAmt2 + world.random.nextInt(xpAmt2);
@@ -56,6 +65,11 @@ public final class NMS_XP_v1_15_R1 implements NMS_XP
         double x = location.getX();
         double y = location.getY();
         double z = location.getZ();
+        internalSpawnXP(amount, world, x, y, z);
+    }
+
+    private void internalSpawnXP(int amount, World world, double x, double y, double z)
+    {
         while(amount > 0) {
             int k = EntityExperienceOrb.getOrbValue(amount);
             amount -= k;
