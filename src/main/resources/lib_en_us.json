@@ -29,11 +29,5 @@
   "update_checker.update_available": "An update for {PLUGIN} is available!",
   "update_checker.new_version": "{PLUGIN} has a new version {VERSION} available for download.",
   "update_checker.release_time": "The update was released at {TIME}",
-  "update_checker.download_link": "Direct download link: {LINK}",
-  "sql.mysql.errors.unable_to_connect": "Unable to connect to MySQL Database \"{NAME}\"! Please check your configuration settings.",
-  "sql.mysql.errors.unable_to_disconnect": "Unable to disconnect from MySQL Database \"{NAME}\"!",
-  "sql.mysql.success": "MySQL Database \"{NAME}\" successfully connected on port {PORT}",
-  "sql.sqlite.errors.unable_to_connect": "Unable to connect to SQLite Database \"{NAME}\"!",
-  "sql.sqlite.errors.unable_to_disconnect": "Unable to disconnect from SQLite Database \"{NAME}\"!",
-  "sql.sqlite.success": "SQLite Database \"{NAME}\" successfully connected."
+  "update_checker.download_link": "Direct download link: {LINK}"
 }
