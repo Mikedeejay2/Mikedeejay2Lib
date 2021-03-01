@@ -1,6 +1,8 @@
 package com.mikedeejay2.mikedeejay2lib.nms;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.nms.merchant.NMS_Merchant;
+import com.mikedeejay2.mikedeejay2lib.nms.merchant.NMS_Merchant_v1_16_R3;
 import com.mikedeejay2.mikedeejay2lib.nms.xpcalc.*;
 import com.mikedeejay2.mikedeejay2lib.util.version.VersionEnum;
 
@@ -16,6 +18,7 @@ public class NMSHandler
     protected VersionEnum version;
 
     protected NMS_XP xp;
+    protected NMS_Merchant merchant;
 
     public NMSHandler(PluginBase plugin)
     {
@@ -34,6 +37,7 @@ public class NMSHandler
             case v1_16_R3:
             {
                 xp = new NMS_XP_v1_16_R3();
+                merchant = new NMS_Merchant_v1_16_R3();
             } break;
             case v1_16_R2:
             {
@@ -65,5 +69,10 @@ public class NMSHandler
     public NMS_XP getXP()
     {
         return xp;
+    }
+
+    public NMS_Merchant getMerchant()
+    {
+        return merchant;
     }
 }

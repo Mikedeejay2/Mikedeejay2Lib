@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.nms.xpcalc;
 import net.minecraft.server.v1_16_R1.*;
 import org.bukkit.craftbukkit.v1_16_R1.CraftWorld;
 import org.bukkit.craftbukkit.v1_16_R1.inventory.CraftItemStack;
+import org.bukkit.entity.AbstractVillager;
 
 import java.util.Map;
 
@@ -75,5 +76,11 @@ public final class NMS_XP_v1_16_R1 implements NMS_XP
             amount -= k;
             world.addEntity(new EntityExperienceOrb(world, x, y, z, k));
         }
+    }
+
+    @Override
+    public int calculateXP(AbstractVillager villager)
+    {
+        return 0;
     }
 }
