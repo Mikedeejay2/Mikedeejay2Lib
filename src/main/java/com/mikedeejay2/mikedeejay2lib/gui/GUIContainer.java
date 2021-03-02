@@ -6,6 +6,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefault;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
+import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
@@ -120,7 +121,12 @@ public class GUIContainer
     }
 
     /**
-     * Method to open this GUI for a player
+     * Method to open this GUI for a player.
+     * <p>
+     * <b>NOTE: THIS DOES NOT OPEN THE GUI THE PROPER WAY!</b>
+     * <p>
+     * To open the GUI, use {@link PlayerGUI#setGUI(GUIContainer)}
+     * like <tt>plugin.guiManager().getPlayer(player).setGUI(gui)</tt>
      *
      * @param player The player that this GUI will open to
      */
@@ -135,6 +141,11 @@ public class GUIContainer
     /**
      * Calls the close for all modules of this GUI, does not close the
      * player's GUI however.
+     * <p>
+     * <b>NOTE: THIS DOES NOT CLOSE THE GUI THE PROPER WAY!</b>
+     * <p>
+     * To close the GUI, use {@link PlayerGUI#onClose()}
+     * like <tt>plugin.guiManager().getPlayer(player).onClose()</tt>
      *
      * @param player The player that was viewing the GUI
      */
