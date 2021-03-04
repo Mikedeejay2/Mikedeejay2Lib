@@ -42,6 +42,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
 
     public JsonArray getArray(String name)
     {
+        if(name == null || name.isEmpty()) return json.getAsJsonArray();
         if(!contains(name))
         {
             json.add(name, new JsonArray());
