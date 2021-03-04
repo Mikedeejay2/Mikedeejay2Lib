@@ -18,7 +18,7 @@ public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
     // The JsonFileIO that this DataFile uses
     private JsonFileIO jsonFileIO;
     // The root JsonAccessor that this JsonFile uses
-    private JsonAccessor accessor;
+    protected JsonAccessor accessor;
 
     public JsonFile(PluginBase plugin, String filePath)
     {
