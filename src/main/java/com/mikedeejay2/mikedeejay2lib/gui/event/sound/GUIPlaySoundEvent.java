@@ -41,6 +41,11 @@ public class GUIPlaySoundEvent implements GUIEvent
         this(sound, null, volume, pitch, null);
     }
 
+    public GUIPlaySoundEvent(Sound sound, float volume, float pitch, ClickType clickType)
+    {
+        this(sound, null, volume, pitch, clickType);
+    }
+
     @Override
     public void execute(InventoryClickEvent event, GUIContainer gui)
     {
