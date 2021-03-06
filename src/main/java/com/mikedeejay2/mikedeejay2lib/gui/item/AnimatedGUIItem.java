@@ -386,4 +386,15 @@ public class AnimatedGUIItem extends GUIItem
     {
         this.startingIndex = startingIndex;
     }
+
+    public AnimatedGUIItem clone()
+    {
+        AnimatedGUIItem clone = (AnimatedGUIItem) super.clone();
+        clone.frames = frames;
+        clone.loop = loop;
+        clone.delay = delay;
+        clone.resetOnClick = resetOnClick;
+        clone.startingIndex = startingIndex;
+        return clone;
+    }
 }

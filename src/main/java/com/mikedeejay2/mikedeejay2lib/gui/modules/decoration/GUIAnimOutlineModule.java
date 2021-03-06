@@ -1,12 +1,9 @@
 package com.mikedeejay2.mikedeejay2lib.gui.modules.decoration;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
-import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
+import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
-import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
-import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.inventory.ItemStack;
 
 /**
  * Module that adds an outline of an item type to the sides of a GUI.
@@ -14,12 +11,12 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author Mikedeejay2
  */
-public class GUIOutlineModule implements GUIModule
+public class GUIAnimOutlineModule implements GUIModule
 {
     // The GUI item that will be used for the border
-    private GUIItem outlineItem;
+    private AnimatedGUIItem outlineItem;
 
-    public GUIOutlineModule(GUIItem outlineItem)
+    public GUIAnimOutlineModule(AnimatedGUIItem outlineItem)
     {
         this.outlineItem = outlineItem;
     }
@@ -29,7 +26,7 @@ public class GUIOutlineModule implements GUIModule
      *
      * @return The <tt>GUIItem</tt> that will be used
      */
-    public GUIItem getOutlineItem()
+    public AnimatedGUIItem getOutlineItem()
     {
         return outlineItem;
     }
@@ -39,19 +36,9 @@ public class GUIOutlineModule implements GUIModule
      *
      * @param outlineItem GUIItem for the outline to use
      */
-    public void setOutlineItem(GUIItem outlineItem)
+    public void setOutlineItem(AnimatedGUIItem outlineItem)
     {
         this.outlineItem = outlineItem;
-    }
-
-    /**
-     * Set the <tt>GUIItem</tt> that the outline will use
-     *
-     * @param outlineItem ItemStack for the outline to use
-     */
-    public void setOutlineItem(ItemStack outlineItem)
-    {
-        this.outlineItem = new GUIItem(outlineItem);
     }
 
     /**
@@ -63,14 +50,23 @@ public class GUIOutlineModule implements GUIModule
     @Override
     public void onOpenHead(Player player, GUIContainer gui)
     {
+        AnimatedGUIItem cloned;
         for(int i = 1; i <= gui.getCols(); i++)
         {
-            gui.setItem(1, i, outlineItem);
-            gui.setItem(gui.getRows(), i, outlineItem);
+            cloned = outlineItem.clone();
+            cloned.setDelay(1 + i);
+            gui.setItem(1, i, cloned);
+            cloned = outlineItem.clone();
+            cloned.setDelay(gui.getRows() + i);
+            gui.setItem(gui.getRows(), i, cloned);
         }
         for(int i = 1; i <= gui.getRows() - 1; i++)
         {
+            cloned = outlineItem.clone();
+            cloned.setDelay(i + 1);
             gui.setItem(i, 1, outlineItem);
+            cloned = outlineItem.clone();
+            cloned.setDelay(i + gui.getCols());
             gui.setItem(i, gui.getCols(), outlineItem);
         }
     }

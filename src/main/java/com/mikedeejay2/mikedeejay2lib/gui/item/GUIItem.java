@@ -507,11 +507,21 @@ public class GUIItem implements Cloneable
         catch(CloneNotSupportedException e)
         {
             e.printStackTrace();
+            return null;
         }
-        newItem.setBaseItem(newItem.getItemBase().clone());
-        newItem.setViewItem(newItem.getItemView().clone());
+        if(baseItem != null)
+        {
+            newItem.setBaseItem(this.getItemBase().clone());
+        }
+        if(viewItem != null)
+        {
+            newItem.setViewItem(this.getItemView().clone());
+        }
 
-        newItem.setEvents(newItem.getEvents().clone());
+        if(events != null)
+        {
+            newItem.setEvents(this.getEvents().clone());
+        }
         return newItem;
     }
 }

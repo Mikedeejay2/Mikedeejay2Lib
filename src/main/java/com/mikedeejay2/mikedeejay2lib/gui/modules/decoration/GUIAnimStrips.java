@@ -6,6 +6,11 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import org.bukkit.entity.Player;
 
+/**
+ * Adds animated strips along the sides of a GUI.
+ *
+ * @author Mikedeejay2
+ */
 public class GUIAnimStrips implements GUIModule
 {
     protected AnimatedGUIItem item;

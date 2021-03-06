@@ -19,9 +19,9 @@ public class GUIBorderModule implements GUIModule
     // The GUI item that will be used for the border
     private GUIItem borderItem;
 
-    public GUIBorderModule()
+    public GUIBorderModule(GUIItem borderItem)
     {
-        this.borderItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.WHITE.get(), 1, GUIContainer.EMPTY_NAME));
+        this.borderItem = borderItem;
     }
 
     /**
