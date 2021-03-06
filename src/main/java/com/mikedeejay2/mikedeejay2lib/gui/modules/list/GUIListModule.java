@@ -17,7 +17,10 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.*;
+import java.util.AbstractMap;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 
 /**
  * GUI Module that turns the GUI into a list that shows a list of different
@@ -55,20 +58,44 @@ public class GUIListModule implements GUIModule
     // Whether this list has been changed since its last update
     protected boolean changed;
 
+    // The current view mode of the list
     protected ListViewMode viewMode;
 
+    // The top left location of the list
     protected Map.Entry<Integer, Integer> topLeft;
+    // The bottom right location of the list
     protected Map.Entry<Integer, Integer> bottomRight;
+    // The location of the search button (if visible)
     protected Map.Entry<Integer, Integer> search;
-
+    // The locations of the forwards buttons
     protected List<Map.Entry<Integer, Integer>> forwards;
+    // The locations of the forwards buttons
     protected List<Map.Entry<Integer, Integer>> backs;
 
+    // The list layer's name, used for getting the layer that the list is located on
     protected String layerName;
 
+    // The prefix of the page change name. This can be used to change the color of text or add text
     protected String pageChangePreName;
+    // The prefix of the scroll change name. This can be used to change the color of text or add text
     protected String scrollChangePreName;
+    // The prefix of the search name. This can be used to change the color of text or add text
+    protected String searchPreName;
+    // The prefix of the search off name. This can be used to change the color of text or add text
+    protected String searchOffPreName;
 
+    /**
+     * Construct a new GUI List module
+     *
+     * @param plugin    Reference to the <tt>PluginBase</tt> of the plugin
+     * @param viewMode  The {@link ListViewMode} to used
+     * @param topRow    The top row of the list's bounding box
+     * @param bottomRow The bottom row of the list's bounding box
+     * @param leftCol   The left column of the list's bounding box
+     * @param rightCol  The right column of the list's bounding box
+     * @param layerName The name of the <tt>GUILayer</tt> that will be used,
+     *                  useful for if there are multiple lists in one GUI
+     */
     public GUIListModule(PluginBase plugin, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol, String layerName)
     {
         this.plugin = plugin;
@@ -108,29 +135,56 @@ public class GUIListModule implements GUIModule
         this.backs = new ArrayList<>();
         this.pageChangePreName = "&f";
         this.scrollChangePreName = "&f";
+        this.searchPreName = "&f&o";
+        this.searchOffPreName = "&f&o";
     }
 
+    /**
+     * Construct a new GUI List module
+     *
+     * @param plugin    Reference to the <tt>PluginBase</tt> of the plugin
+     * @param viewMode  The {@link ListViewMode} to used
+     * @param topRow    The top row of the list's bounding box
+     * @param bottomRow The bottom row of the list's bounding box
+     * @param leftCol   The left column of the list's bounding box
+     * @param rightCol  The right column of the list's bounding box
+     */
     public GUIListModule(PluginBase plugin, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol)
     {
         this(plugin, viewMode, topRow, bottomRow, leftCol, rightCol, "list");
     }
 
+    /**
+     * Construct a new GUI List module
+     *
+     * @param plugin    Reference to the <tt>PluginBase</tt> of the plugin
+     * @param topRow    The top row of the list's bounding box
+     * @param bottomRow The bottom row of the list's bounding box
+     * @param leftCol   The left column of the list's bounding box
+     * @param rightCol  The right column of the list's bounding box
+     */
     public GUIListModule(PluginBase plugin, int topRow, int bottomRow, int leftCol, int rightCol)
     {
         this(plugin, ListViewMode.PAGED, topRow, bottomRow, leftCol, rightCol, "list");
     }
 
+    /**
+     * Method called on the opening of a GUI
+     *
+     * @param player The player that is viewing the GUI
+     * @param gui    The GUI
+     */
     @Override
     public void onOpenHead(Player player, GUIContainer gui)
     {
         if(searchItem == null)
         {
-            this.searchItem = new GUIItem(ItemCreator.createItem(Material.COMPASS, 1, "&f&o" + plugin.langManager().getTextLib(player, "gui.modules.list.search")));
+            this.searchItem = new GUIItem(ItemCreator.createItem(Material.COMPASS, 1, searchPreName + plugin.langManager().getTextLib(player, "gui.modules.list.search")));
             searchItem.addEvent(new GUIListSearchEvent(plugin));
         }
         if(searchOffItem == null)
         {
-            this.searchOffItem = new GUIItem(ItemCreator.createItem(Material.BOOK, 1, "&f&o" + plugin.langManager().getTextLib(player, "gui.modules.list.search_off")));
+            this.searchOffItem = new GUIItem(ItemCreator.createItem(Material.BOOK, 1, searchOffPreName + plugin.langManager().getTextLib(player, "gui.modules.list.search_off")));
             searchOffItem.addEvent(new GUIListSearchOffEvent());
         }
     }
@@ -205,15 +259,15 @@ public class GUIListModule implements GUIModule
     private void updatePage(GUILayer layer)
     {
         int topRow = topLeft.getKey();
-        int bottomRow = bottomRight.getKey();
+        // int bottomRow = bottomRight.getKey(); // unused
         int leftCol = topLeft.getValue();
-        int rightCol = bottomRight.getValue();
-        int rowDif = getSlotsPerRow();
+        // int rightCol = bottomRight.getValue(); // unused
+        // int rowDif = getSlotsPerRow(); // unused
         int colDif = getSlotsPerCol();
 
-        int pageSize = getPageSize();
+        int pageSize = getViewSize();
         int listSize = getCurSize();
-        int pageOffset = getPageOffset();
+        int pageOffset = getViewOffset();
         for(int i = 0; i < pageSize; i++)
         {
             // This algorithm calculates the normalized slot index based off of the bounding box of the list
@@ -250,8 +304,7 @@ public class GUIListModule implements GUIModule
      */
     private void updateListControls(GUILayer layer, Player player)
     {
-        int listSize = getCurSize();
-        int amountOfPages = getPagesAmount(layer);
+        int amountOfPages = getMaxViews(layer);
 
         // Remove previous forward items
         for(Map.Entry<Integer, Integer> entry : forwards)
@@ -356,7 +409,7 @@ public class GUIListModule implements GUIModule
      */
     public void changeGUIItem(GUIItem item, int row, int col, GUIContainer gui)
     {
-        int pageOffset = getPageOffset();
+        int pageOffset = getViewOffset();
         int index = gui.getSlotFromRowCol(row-2, col-1) + pageOffset;
         list.set(index, item);
         changed = true;
@@ -406,7 +459,7 @@ public class GUIListModule implements GUIModule
      */
     public int getListItemIndex(int row, int col, GUIContainer gui)
     {
-        int pageOffset = getPageOffset();
+        int pageOffset = getViewOffset();
         int index = gui.getSlotFromRowCol(row-2, col-1) + pageOffset;
         if(searchMode)
         {
@@ -699,12 +752,27 @@ public class GUIListModule implements GUIModule
         return false;
     }
 
-    public int getPageSize()
+    /**
+     * Get the current viewing size of the list.
+     * <p>
+     * This method is based off of the area of the list's slots.
+     * This method calls {@link GUIListModule#getSlotsPerRow()} * {@link GUIListModule#getSlotsPerCol()}
+     * to calculate the area of the current view.
+     *
+     * @return The current view size (area)
+     */
+    public int getViewSize()
     {
         return getSlotsPerRow() * getSlotsPerCol();
     }
 
-    public int getPageOffset()
+    /**
+     * Get current view offset of the list. This is based off of the
+     * current location in the list and the view mode of the list.
+     *
+     * @return The view offset
+     */
+    public int getViewOffset()
     {
         switch(viewMode)
         {
@@ -712,28 +780,50 @@ public class GUIListModule implements GUIModule
                 return ((curLoc-1) * getSlotsPerCol());
             case PAGED:
             default:
-                int pageSize = getPageSize();
+                int pageSize = getViewSize();
                 return ((curLoc-1) * pageSize);
         }
     }
 
-    public int getPagesAmount(GUILayer layer)
+    /**
+     * Get the maximum amount of views for this list.
+     * <p>
+     * For page view mode, this means the maximum amount of pages of this list.
+     * <p>
+     * For scroll view mode, this means the maximum amount of scrolls of this list.
+     *
+     * @param layer The <tt>GUILayer</tt> that this list is on for accurate calculations
+     * @return The maximum views
+     */
+    public int getMaxViews(GUILayer layer)
     {
         switch(viewMode)
         {
             case SCROLL:
-                return (int)Math.ceil((double)(getCurSize() + endItems.size()) / (double)(getPageSize() / layer.getCols()));
+                return (int)Math.ceil((double)(getCurSize() + endItems.size()) / (double)(getViewSize() / layer.getCols()));
             case PAGED:
             default:
-                return (int)Math.ceil((double)(getCurSize() + endItems.size()) / (double)getPageSize());
+                return (int)Math.ceil((double)(getCurSize() + endItems.size()) / (double) getViewSize());
         }
     }
 
+    /**
+     * Get the current size of the list being viewed.
+     *
+     * @return The size of the currently selected list
+     */
     public int getCurSize()
     {
         return (searchMode ? searchList.size() : list.size());
     }
 
+    /**
+     * Get the amount of slots per row of this list.
+     * <p>
+     * This is calculated from the bounding box of this list.
+     *
+     * @return The amount of slots per row
+     */
     public int getSlotsPerRow()
     {
         int topRow = topLeft.getKey();
@@ -741,6 +831,13 @@ public class GUIListModule implements GUIModule
         return (bottomRow - topRow) + 1;
     }
 
+    /**
+     * Get the amount of slots per column of this list.
+     * <p>
+     * This is calculated from the bounding box of this list.
+     *
+     * @return The amount of slots per column
+     */
     public int getSlotsPerCol()
     {
         int leftCol = topLeft.getValue();
@@ -748,117 +845,252 @@ public class GUIListModule implements GUIModule
         return (rightCol - leftCol) + 1;
     }
 
+    /**
+     * Set the top left corner of this list's view.
+     *
+     * @param row The row of the top left corner
+     * @param col The column of the top left corner
+     * @return A reference to this <tt>GUIListModule</tt>
+     */
     public GUIListModule setTopLeft(int row, int col)
     {
         this.topLeft = new AbstractMap.SimpleEntry<>(row, col);
         return this;
     }
 
+    /**
+     * Set the bottom right corner of this list's view.
+     *
+     * @param row The row of the bottom right corner
+     * @param col The column of the bottom right corner
+     * @return A reference to this <tt>GUIListModule</tt>
+     */
     public GUIListModule setBottomRight(int row, int col)
     {
         this.bottomRight = new AbstractMap.SimpleEntry<>(row, col);
         return this;
     }
 
+    /**
+     * Set the location of this list's search button
+     *
+     * @param row The row
+     * @param col The column
+     * @return A reference to this <tt>GUIListModule</tt>
+     */
     public GUIListModule setSearch(int row, int col)
     {
         this.search = new AbstractMap.SimpleEntry<>(row, col);
         return this;
     }
 
+    /**
+     * Add a location for a forward button to be placed.
+     * Forward buttons increase per index. That means that a forward button of index 0
+     * will move the current view by 1, but a forward index of 4 will move the view
+     * by 5.
+     *
+     * @param row The row of the button
+     * @param col The column of the button
+     * @return A reference to this <tt>GUIListModule</tt>
+     */
     public GUIListModule addForward(int row, int col)
     {
         this.forwards.add(new AbstractMap.SimpleEntry<>(row, col));
         return this;
     }
 
+    /**
+     * Add a location for a forward button to be placed.
+     * Forward buttons increase per index. That means that a forward button of index 0
+     * will move the current view by 1, but a forward index of 4 will move the view
+     * by 5.
+     *
+     * @param index The index to add the new location at
+     * @param row The row of the button
+     * @param col The column of the button
+     * @return A reference to this <tt>GUIListModule</tt>
+     */
     public GUIListModule addForward(int index, int row, int col)
     {
         this.forwards.add(index, new AbstractMap.SimpleEntry<>(row, col));
         return this;
     }
 
+    /**
+     * Add a location for a back button to be placed.
+     * Back buttons increase per index. That means that a back button of index 0
+     * will move the current view by 1, but a back index of 4 will move the view
+     * by 5.
+     *
+     * @param row The row of the button
+     * @param col The column of the button
+     * @return A reference to this <tt>GUIListModule</tt>
+     */
     public GUIListModule addBack(int row, int col)
     {
         this.backs.add(new AbstractMap.SimpleEntry<>(row, col));
         return this;
     }
 
+    /**
+     * Add a location for a back button to be placed.
+     * Back buttons increase per index. That means that a back button of index 0
+     * will move the current view by 1, but a back index of 4 will move the view
+     * by 5.
+     *
+     * @param index The index to add the new location at
+     * @param row The row of the button
+     * @param col The column of the button
+     * @return A reference to this <tt>GUIListModule</tt>
+     */
     public GUIListModule addBack(int index, int row, int col)
     {
         this.backs.add(index, new AbstractMap.SimpleEntry<>(row, col));
         return this;
     }
 
+    /**
+     * Clear the locations of all forward buttons.
+     *
+     * @return A reference to this <tt>GUIListModule</tt>
+     */
     public GUIListModule clearForwards()
     {
         this.forwards.clear();
         return this;
     }
 
+    /**
+     * Clear the locations of all back buttons.
+     *
+     * @return A reference to this <tt>GUIListModule</tt>
+     */
     public GUIListModule clearBacks()
     {
         this.backs.clear();
         return this;
     }
 
+    /**
+     * Remove a forward button via the button's index
+     *
+     * @param index The index to remove
+     * @return A reference to this <tt>GUIListModule</tt>
+     */
     public GUIListModule removeForward(int index)
     {
         this.forwards.remove(index);
         return this;
     }
 
+    /**
+     * Remove a back button via the button's index
+     *
+     * @param index The index to remove
+     * @return A reference to this <tt>GUIListModule</tt>
+     */
     public GUIListModule removeBack(int index)
     {
         this.backs.remove(index);
         return this;
     }
 
+    /**
+     * Get the top left location of this list's view
+     *
+     * @return An <tt>Entry</tt> holding the row in the key and column in the value
+     */
     public Map.Entry<Integer, Integer> getTopLeft()
     {
         return topLeft;
     }
 
+    /**
+     * Get the bottom right location of this list's view
+     *
+     * @return An <tt>Entry</tt> holding the row in the key and column in the value
+     */
     public Map.Entry<Integer, Integer> getBottomRight()
     {
         return bottomRight;
     }
 
+    /**
+     * Get the search location of this list's view
+     *
+     * @return An <tt>Entry</tt> holding the row in the key and column in the value
+     */
     public Map.Entry<Integer, Integer> getSearch()
     {
         return search;
     }
 
+    /**
+     * Get the top left location of this list's view
+     *
+     * @return An <tt>Entry</tt> holding the row in the key and column in the value
+     */
     public List<Map.Entry<Integer, Integer>> getForwards()
     {
         return forwards;
     }
 
+    /**
+     * Get the back locations of this list
+     *
+     * @return A list of entries containing the row in the key and column in the value
+     */
     public List<Map.Entry<Integer, Integer>> getBacks()
     {
         return backs;
     }
 
+    /**
+     * Get the name of the layer that this list is located on in the GUI
+     *
+     * @return The layer name
+     */
     public String getLayerName()
     {
         return layerName;
     }
 
+    /**
+     * Get the prefix of the page change name. This can be used to change the color of text or add text
+     *
+     * @return Page change prefix
+     */
     public String getPageChangePreName()
     {
         return pageChangePreName;
     }
 
+    /**
+     * Set the prefix of the page change name. This can be used to change the color of text or add text
+     *
+     * @return The new page change prefix
+     */
     public void setPageChangePreName(String pageChangePreName)
     {
         this.pageChangePreName = pageChangePreName;
     }
 
+    /**
+     * Get the prefix of the scroll change name. This can be used to change the color of text or add text
+     *
+     * @return Scroll change prefix
+     */
     public String getScrollChangePreName()
     {
         return scrollChangePreName;
     }
 
+    /**
+     * Set the prefix of the page change name. This can be used to change the color of text or add text
+     *
+     * @return The new scroll change prefix
+     */
     public void setScrollChangePreName(String scrollChangePreName)
     {
         this.scrollChangePreName = scrollChangePreName;
