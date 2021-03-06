@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.gui.modules;
+package com.mikedeejay2.mikedeejay2lib.gui.modules.list;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
@@ -7,6 +7,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchOffEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUISwitchListPageEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
+import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
@@ -16,10 +17,7 @@ import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.AbstractMap;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * GUI Module that turns the GUI into a list that shows a list of different
@@ -34,44 +32,92 @@ public class GUIListModule implements GUIModule
     // The list of items that this list holds
     protected List<GUIItem> list;
     // The search list of the items if search is enabled
-    private List<Map.Entry<Integer, GUIItem>> searchList;
+    protected List<Map.Entry<GUIItem, Integer>> searchList;
     // Whether search mode is enabled or not
-    private boolean searchMode;
+    protected boolean searchMode;
     // The search term that has previously been used
-    private String searchTerm;
+    protected String searchTerm;
     // The current page that the player is on
-    private int curPage;
+    protected int curLoc;
     // Items that will be appended to the very end of the list
-    private List<GUIItem> endItems;
+    protected List<GUIItem> endItems;
 
     // The back item that will be used
-    private GUIItem backItem;
+    protected GUIItem backItem;
     // The forward item that will be used
-    private GUIItem forwardItem;
+    protected GUIItem forwardItem;
     // The search item that will be used
-    private GUIItem searchItem;
+    protected GUIItem searchItem;
     // The turn search off item that will be used
-    private GUIItem searchOffItem;
+    protected GUIItem searchOffItem;
     // Whether search is allowed or not
-    private boolean searchEnabled;
+    protected boolean searchEnabled;
     // Whether this list has been changed since its last update
-    private boolean changed;
+    protected boolean changed;
 
-    public GUIListModule(PluginBase plugin)
+    protected ListViewMode viewMode;
+
+    protected Map.Entry<Integer, Integer> topLeft;
+    protected Map.Entry<Integer, Integer> bottomRight;
+    protected Map.Entry<Integer, Integer> search;
+
+    protected List<Map.Entry<Integer, Integer>> forwards;
+    protected List<Map.Entry<Integer, Integer>> backs;
+
+    protected String layerName;
+
+    protected String pageChangePreName;
+    protected String scrollChangePreName;
+
+    public GUIListModule(PluginBase plugin, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol, String layerName)
     {
         this.plugin = plugin;
         this.list = new ArrayList<>();
         this.searchList = new ArrayList<>();
+        this.layerName = layerName;
 
-        curPage = 1;
+        curLoc = 1;
         endItems = new ArrayList<>();
-        this.backItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_BACKWARD_WHITE.get(), 1, GUIContainer.EMPTY_NAME));
-        this.forwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_FORWARD_WHITE.get(), 1, GUIContainer.EMPTY_NAME));
-        backItem.addEvent(new GUISwitchListPageEvent());
-        forwardItem.addEvent(new GUISwitchListPageEvent());
+        switch(viewMode)
+        {
+            case SCROLL:
+            {
+                this.backItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_UP_WHITE.get(), 1, GUIContainer.EMPTY_NAME));
+                this.forwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_DOWN_WHITE.get(), 1, GUIContainer.EMPTY_NAME));
+                backItem.addEvent(new GUISwitchListPageEvent());
+                forwardItem.addEvent(new GUISwitchListPageEvent());
+            } break;
+            case PAGED:
+            default:
+            {
+                this.backItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_BACKWARD_WHITE.get(), 1, GUIContainer.EMPTY_NAME));
+                this.forwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_FORWARD_WHITE.get(), 1, GUIContainer.EMPTY_NAME));
+                backItem.addEvent(new GUISwitchListPageEvent());
+                forwardItem.addEvent(new GUISwitchListPageEvent());
+            } break;
+        }
 
         this.searchEnabled = false;
         this.changed = false;
+
+        this.viewMode = viewMode;
+
+        this.topLeft = new AbstractMap.SimpleEntry<>(topRow, leftCol);
+        this.bottomRight = new AbstractMap.SimpleEntry<>(bottomRow, rightCol);
+        this.forwards = new ArrayList<>();
+        this.backs = new ArrayList<>();
+        this.pageChangePreName = "&f";
+        this.scrollChangePreName = "&f";
+    }
+
+    public GUIListModule(PluginBase plugin, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol)
+    {
+        this(plugin, viewMode, topRow, bottomRow, leftCol, rightCol, "list");
+    }
+
+    public GUIListModule(PluginBase plugin, int topRow, int bottomRow, int leftCol, int rightCol)
+    {
+        this(plugin, ListViewMode.PAGED, topRow, bottomRow, leftCol, rightCol, "list");
     }
 
     @Override
@@ -98,13 +144,13 @@ public class GUIListModule implements GUIModule
     @Override
     public void onUpdateHead(Player player, GUIContainer gui)
     {
-        GUILayer layer = gui.getLayer("list", false);
+        GUILayer layer = gui.getLayer(layerName, false);
         if(searchMode)
         {
             searchThroughList();
         }
-        updateListControls(searchMode, layer, player);
-        updatePage(searchMode, layer);
+        updateListControls(layer, player);
+        updatePage(layer);
     }
 
     /**
@@ -154,25 +200,36 @@ public class GUIListModule implements GUIModule
     /**
      * Updates the current page, called on {@link GUIListModule#onUpdateHead(Player player, GUIContainer gui)}
      *
-     * @param search Whether search mode is enabled or not
      * @param layer  The layer to update the page on
      */
-    private void updatePage(boolean search, GUILayer layer)
+    private void updatePage(GUILayer layer)
     {
-        int pageSize = ((layer.getRows() - 2) * layer.getCols());
-        int listSize = search ? searchList.size() : list.size();
+        int topRow = topLeft.getKey();
+        int bottomRow = bottomRight.getKey();
+        int leftCol = topLeft.getValue();
+        int rightCol = bottomRight.getValue();
+        int rowDif = getSlotsPerRow();
+        int colDif = getSlotsPerCol();
+
+        int pageSize = getPageSize();
+        int listSize = getCurSize();
+        int pageOffset = getPageOffset();
         for(int i = 0; i < pageSize; i++)
         {
-            int pageOffset = ((curPage-1) * pageSize);
-            int row = layer.getRowFromSlot(i + layer.getCols()), col = layer.getColFromSlot(i);
+            // This algorithm calculates the normalized slot index based off of the bounding box of the list
+            int slotIndex = ((topRow-1) * (layer.getCols() * ((int)(i / colDif)+1))) + (leftCol) + (i % colDif);
+            --slotIndex;
+            int row = layer.getRowFromSlot(slotIndex);
+            int col = layer.getColFromSlot(slotIndex);
+            // If a change has occurred all previous items have to be removed from the view first
             if(changed) layer.removeItem(row, col);
 
-            if(listSize >= (i+1) + pageOffset)
+            if(listSize >= (i+1) + pageOffset) // List items
             {
-                GUIItem item = search ? searchList.get(i + pageOffset).getValue() : list.get(i + pageOffset);
-                layer.setItem(layer.getRowFromSlot(i + layer.getCols()), layer.getColFromSlot(i), item);
+                GUIItem item = searchMode ? searchList.get(i + pageOffset).getKey() : list.get(i + pageOffset);
+                layer.setItem(row, col, item);
             }
-            else if((i + 1) + pageOffset > listSize && !search)
+            else if((i + 1) + pageOffset > listSize && !searchMode) // End items
             {
                 int index = (i + pageOffset) - listSize;
 
@@ -189,56 +246,90 @@ public class GUIListModule implements GUIModule
     /**
      * Update the controls for the list, called on {@link GUIListModule#onUpdateHead(Player player, GUIContainer gui)}
      *
-     * @param search Whether search mode is enabled or not
      * @param layer  The layer to update the controls on
      */
-    private void updateListControls(boolean search, GUILayer layer, Player player)
+    private void updateListControls(GUILayer layer, Player player)
     {
-        List<GUIItem> pageList = (List<GUIItem>) (search ? searchList : list);
+        int listSize = getCurSize();
+        int amountOfPages = getPagesAmount(layer);
 
-        int amountOfPages = (int)Math.ceil((pageList.size() + endItems.size()) / ((layer.getRows() - 2.0f) * layer.getCols()));
-
-        for(int i = 2; i <= 8; i++)
+        // Remove previous forward items
+        for(Map.Entry<Integer, Integer> entry : forwards)
         {
-            layer.removeItem(layer.getRows(), i);
+            int row = entry.getKey();
+            int col = entry.getValue();
+            layer.removeItem(row, col);
         }
 
-        for(int i = 1; i <= amountOfPages; i++)
+        // Remove previous back items
+        for(Map.Entry<Integer, Integer> entry : backs)
         {
-            if(i == curPage || i > curPage + 3 || i < curPage - 3) continue;
-            if(i < curPage && i + 3 >= curPage)
+            int row = entry.getKey();
+            int col = entry.getValue();
+            layer.removeItem(row, col);
+        }
+
+        int forwardSize = forwards.size();
+        int backwardSize = backs.size();
+
+        for(int i = curLoc + 1; i <= curLoc + forwardSize; ++i)
+        {
+            if(i > amountOfPages || i <= 0) continue;
+            int index = Math.abs(i - curLoc) - 1;
+            Map.Entry<Integer, Integer> entry = forwards.get(index);
+            int row = entry.getKey();
+            int col = entry.getValue();
+            GUIItem curItem = forwardItem.clone();
+            switch(viewMode)
             {
-                int col = (i - curPage) + 5;
-                GUIItem curItem = backItem.clone();
-                curItem.setNameView(Chat.chat("&f" + plugin.langManager().getTextLib
-                (
-                    player, "gui.modules.list.page",
-                    new String[]{"PAGE"},
-                    new String[]{String.valueOf(i)}
-                )));
-                layer.setItem(layer.getRows(), col, curItem);
+                case SCROLL:
+                    curItem.setNameView(Chat.chat(scrollChangePreName + plugin.langManager().getTextLib(
+                            player, "gui.modules.list.scroll_forward")));
+                    break;
+                case PAGED:
+                default:
+                    curItem.setNameView(Chat.chat(pageChangePreName + plugin.langManager().getTextLib(
+                            player, "gui.modules.list.page",
+                            new String[]{"PAGE"},
+                            new String[]{String.valueOf(i)}
+                            )));
+                    break;
             }
-            else if(i > curPage && i - 3 <= curPage)
+            layer.setItem(row, col, curItem);
+        }
+        for(int i = curLoc - 1; i >= curLoc - backwardSize; --i)
+        {
+            if(i > amountOfPages || i <= 0) continue;
+            int index = Math.abs(i - curLoc) - 1;
+            Map.Entry<Integer, Integer> entry = backs.get(index);
+            int row = entry.getKey();
+            int col = entry.getValue();
+            GUIItem curItem = backItem.clone();
+            switch(viewMode)
             {
-                int col = (i - curPage) + 5;
-                GUIItem curItem = forwardItem.clone();
-                curItem.setNameView(Chat.chat("&f" + plugin.langManager().getTextLib
-                (
-                    player, "gui.modules.list.page",
-                    new String[]{"PAGE"},
-                    new String[]{String.valueOf(i)}
-                )));
-                layer.setItem(layer.getRows(), col, curItem);
+                case SCROLL:
+                    curItem.setNameView(Chat.chat(scrollChangePreName + plugin.langManager().getTextLib(
+                            player, "gui.modules.list.scroll_back")));
+                    break;
+                case PAGED:
+                default:
+                    curItem.setNameView(Chat.chat(pageChangePreName + plugin.langManager().getTextLib(
+                            player, "gui.modules.list.page",
+                            new String[]{"PAGE"},
+                            new String[]{String.valueOf(i)}
+                            )));
+                    break;
             }
+            layer.setItem(row, col, curItem);
         }
 
         if(searchEnabled)
         {
-            layer.setItem(layer.getRows(), 1, searchItem);
+            layer.setItem(search.getKey(), search.getValue(), searchItem);
 
             if(searchMode)
             {
-                layer.setItem(layer.getRows(), 9, searchOffItem);
+                layer.setItem(search.getKey(), search.getValue(), searchOffItem);
             }
         }
     }
@@ -265,8 +356,7 @@ public class GUIListModule implements GUIModule
      */
     public void changeGUIItem(GUIItem item, int row, int col, GUIContainer gui)
     {
-        int pageSize = ((gui.getRows() - 2) * 9);
-        int pageOffset = ((curPage-1) * pageSize);
+        int pageOffset = getPageOffset();
         int index = gui.getSlotFromRowCol(row-2, col-1) + pageOffset;
         list.set(index, item);
         changed = true;
@@ -316,12 +406,11 @@ public class GUIListModule implements GUIModule
      */
     public int getListItemIndex(int row, int col, GUIContainer gui)
     {
-        int pageSize = ((gui.getRows() - 2) * 9);
-        int pageOffset = ((curPage-1) * pageSize);
+        int pageOffset = getPageOffset();
         int index = gui.getSlotFromRowCol(row-2, col-1) + pageOffset;
         if(searchMode)
         {
-            index = searchList.get(index).getKey();
+            index = searchList.get(index).getValue();
         }
         return index;
     }
@@ -387,13 +476,11 @@ public class GUIListModule implements GUIModule
     /**
      * Change the page to a new page
      *
-     * @param page   The page number
-     * @param player The player that is viewing the GUI
-     * @param gui    The GUI
+     * @param page The page number
      */
-    public void toListPage(int page, Player player, GUIContainer gui)
+    public void setListLoc(int page)
     {
-        curPage = page;
+        curLoc = page;
         changed = true;
     }
 
@@ -431,7 +518,7 @@ public class GUIListModule implements GUIModule
         {
             GUIItem item = list.get(i);
             if(!SearchUtil.searchMetaFuzzy(item.getMetaView(), searchTerm)) continue;
-            searchList.add(new AbstractMap.SimpleEntry<>(i, item));
+            searchList.add(new AbstractMap.SimpleEntry<>(item, i));
         }
     }
 
@@ -445,6 +532,11 @@ public class GUIListModule implements GUIModule
         return backItem;
     }
 
+    public void setBackItem(GUIItem backItem)
+    {
+        this.backItem = backItem;
+    }
+
     /**
      * Get the item that represents the forward button
      *
@@ -453,6 +545,11 @@ public class GUIListModule implements GUIModule
     public GUIItem getForwardItem()
     {
         return forwardItem;
+    }
+
+    public void setForwardItem(GUIItem forwardItem)
+    {
+        this.forwardItem = forwardItem;
     }
 
     /**
@@ -495,6 +592,11 @@ public class GUIListModule implements GUIModule
         return searchItem;
     }
 
+    public void setSearchItem(GUIItem searchItem)
+    {
+        this.searchItem = searchItem;
+    }
+
     /**
      * Get the item that represents the turn off search button
      *
@@ -503,6 +605,11 @@ public class GUIListModule implements GUIModule
     public GUIItem getSearchOffItem()
     {
         return searchOffItem;
+    }
+
+    public void setSearchOffItem(GUIItem searchOffItem)
+    {
+        this.searchOffItem = searchOffItem;
     }
 
     /**
@@ -521,7 +628,7 @@ public class GUIListModule implements GUIModule
      *
      * @return All items that are in the search list
      */
-    public List<Map.Entry<Integer, GUIItem>> getSearchMap()
+    public List<Map.Entry<GUIItem, Integer>> getSearchMap()
     {
         return searchList;
     }
@@ -531,9 +638,9 @@ public class GUIListModule implements GUIModule
      *
      * @return The current page
      */
-    public int getCurPage()
+    public int getCurLoc()
     {
-        return curPage;
+        return curLoc;
     }
 
     /**
@@ -590,5 +697,170 @@ public class GUIListModule implements GUIModule
             return true;
         }
         return false;
+    }
+
+    public int getPageSize()
+    {
+        return getSlotsPerRow() * getSlotsPerCol();
+    }
+
+    public int getPageOffset()
+    {
+        switch(viewMode)
+        {
+            case SCROLL:
+                return ((curLoc-1) * getSlotsPerCol());
+            case PAGED:
+            default:
+                int pageSize = getPageSize();
+                return ((curLoc-1) * pageSize);
+        }
+    }
+
+    public int getPagesAmount(GUILayer layer)
+    {
+        switch(viewMode)
+        {
+            case SCROLL:
+                return (int)Math.ceil((double)(getCurSize() + endItems.size()) / (double)(getPageSize() / layer.getCols()));
+            case PAGED:
+            default:
+                return (int)Math.ceil((double)(getCurSize() + endItems.size()) / (double)getPageSize());
+        }
+    }
+
+    public int getCurSize()
+    {
+        return (searchMode ? searchList.size() : list.size());
+    }
+
+    public int getSlotsPerRow()
+    {
+        int topRow = topLeft.getKey();
+        int bottomRow = bottomRight.getKey();
+        return (bottomRow - topRow) + 1;
+    }
+
+    public int getSlotsPerCol()
+    {
+        int leftCol = topLeft.getValue();
+        int rightCol = bottomRight.getValue();
+        return (rightCol - leftCol) + 1;
+    }
+
+    public GUIListModule setTopLeft(int row, int col)
+    {
+        this.topLeft = new AbstractMap.SimpleEntry<>(row, col);
+        return this;
+    }
+
+    public GUIListModule setBottomRight(int row, int col)
+    {
+        this.bottomRight = new AbstractMap.SimpleEntry<>(row, col);
+        return this;
+    }
+
+    public GUIListModule setSearch(int row, int col)
+    {
+        this.search = new AbstractMap.SimpleEntry<>(row, col);
+        return this;
+    }
+
+    public GUIListModule addForward(int row, int col)
+    {
+        this.forwards.add(new AbstractMap.SimpleEntry<>(row, col));
+        return this;
+    }
+
+    public GUIListModule addForward(int index, int row, int col)
+    {
+        this.forwards.add(index, new AbstractMap.SimpleEntry<>(row, col));
+        return this;
+    }
+
+    public GUIListModule addBack(int row, int col)
+    {
+        this.backs.add(new AbstractMap.SimpleEntry<>(row, col));
+        return this;
+    }
+
+    public GUIListModule addBack(int index, int row, int col)
+    {
+        this.backs.add(index, new AbstractMap.SimpleEntry<>(row, col));
+        return this;
+    }
+
+    public GUIListModule clearForwards()
+    {
+        this.forwards.clear();
+        return this;
+    }
+
+    public GUIListModule clearBacks()
+    {
+        this.backs.clear();
+        return this;
+    }
+
+    public GUIListModule removeForward(int index)
+    {
+        this.forwards.remove(index);
+        return this;
+    }
+
+    public GUIListModule removeBack(int index)
+    {
+        this.backs.remove(index);
+        return this;
+    }
+
+    public Map.Entry<Integer, Integer> getTopLeft()
+    {
+        return topLeft;
+    }
+
+    public Map.Entry<Integer, Integer> getBottomRight()
+    {
+        return bottomRight;
+    }
+
+    public Map.Entry<Integer, Integer> getSearch()
+    {
+        return search;
+    }
+
+    public List<Map.Entry<Integer, Integer>> getForwards()
+    {
+        return forwards;
+    }
+
+    public List<Map.Entry<Integer, Integer>> getBacks()
+    {
+        return backs;
+    }
+
+    public String getLayerName()
+    {
+        return layerName;
+    }
+
+    public String getPageChangePreName()
+    {
+        return pageChangePreName;
+    }
+
+    public void setPageChangePreName(String pageChangePreName)
+    {
+        this.pageChangePreName = pageChangePreName;
+    }
+
+    public String getScrollChangePreName()
+    {
+        return scrollChangePreName;
+    }
+
+    public void setScrollChangePreName(String scrollChangePreName)
+    {
+        this.scrollChangePreName = scrollChangePreName;
     }
 }

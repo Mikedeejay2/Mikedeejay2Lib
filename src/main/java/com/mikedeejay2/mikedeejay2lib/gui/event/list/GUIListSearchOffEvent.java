@@ -2,7 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.event.list;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIListModule;
+import com.mikedeejay2.mikedeejay2lib.gui.modules.list.GUIListModule;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 

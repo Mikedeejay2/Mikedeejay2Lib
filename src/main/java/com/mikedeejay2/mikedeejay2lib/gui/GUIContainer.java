@@ -867,14 +867,13 @@ public class GUIContainer
      */
     public GUILayer getTopLayer(int row, int col)
     {
-        for(int i = layers.size() - 1; i <= 0; --i)
+        for(int i = 0; i < layers.size(); ++i)
         {
             GUILayer layer = layers.get(i);
             GUIItem item = layer.getItem(row, col);
-            if(item == null) continue;
-            return layer;
+            if(item != null) return layer;
         }
-        return layers.get(0);
+        return null;
     }
 
     /**

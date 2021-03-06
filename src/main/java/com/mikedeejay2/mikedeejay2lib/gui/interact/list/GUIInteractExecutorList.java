@@ -5,7 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractExecutor;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractType;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
-import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIListModule;
+import com.mikedeejay2.mikedeejay2lib.gui.modules.list.GUIListModule;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import org.bukkit.Location;
 import org.bukkit.Material;

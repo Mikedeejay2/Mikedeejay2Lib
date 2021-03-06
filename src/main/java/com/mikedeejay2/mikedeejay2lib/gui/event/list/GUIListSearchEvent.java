@@ -3,7 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.event.list;
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIListModule;
+import com.mikedeejay2.mikedeejay2lib.gui.modules.list.GUIListModule;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -30,8 +30,7 @@ public class GUIListSearchEvent implements GUIEvent
         if(clickType != ClickType.LEFT) return;
         plugin.guiManager().getPlayer(player).onClose();
         player.closeInventory();
-        // TODO: Open a book and quill here for the player to type in their search
-        // After that,
+        // TODO: Use chat event in GUIListener to capture search result
         GUIListModule list = gui.getModule(GUIListModule.class);
         list.enableSearchMode("search term");
     }
