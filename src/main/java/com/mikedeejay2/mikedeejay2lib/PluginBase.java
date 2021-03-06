@@ -9,6 +9,7 @@ import com.mikedeejay2.mikedeejay2lib.text.language.LangManager;
 import com.mikedeejay2.mikedeejay2lib.nms.NMSHandler;
 import com.mikedeejay2.mikedeejay2lib.util.bstats.BStats;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.enchant.GlowEnchantment;
 import com.mikedeejay2.mikedeejay2lib.util.update.UpdateChecker;
 import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
 import org.bukkit.plugin.java.JavaPlugin;
@@ -55,6 +56,8 @@ public class PluginBase extends JavaPlugin
         this.updateChecker = new UpdateChecker(this);
 
         this.getServer().getPluginManager().registerEvents(new GUIListener(this), this);
+
+        GlowEnchantment.registerGlow(this);
 
         chat.sendMessage("&a" + langManager.getTextLib("generic.on_enable_message", new String[]{"PLUGIN"}, new String[]{this.getDescription().getName()}));
     }
