@@ -79,9 +79,9 @@ public final class GlowEnchantment extends Enchantment
     {
         try
         {
-            Field f = Enchantment.class.getDeclaredField("acceptingNew");
-            f.setAccessible(true);
-            f.set(null, true);
+            Field acceptingNew = Enchantment.class.getDeclaredField("acceptingNew");
+            acceptingNew.setAccessible(true);
+            acceptingNew.set(null, true);
         }
         catch(IllegalAccessException | NoSuchFieldException exception)
         {
