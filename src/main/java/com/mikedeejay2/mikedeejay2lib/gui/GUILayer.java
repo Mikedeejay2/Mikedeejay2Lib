@@ -531,4 +531,17 @@ public class GUILayer
         return false;
     }
 
+    /**
+     * Clears all items from this layer
+     */
+    public void clearLayer()
+    {
+        for(int row = 1; row <= inventoryRows; ++row)
+        {
+            for(int col = 1; col <= inventoryCols; ++col)
+            {
+                removeItem(row, col);
+            }
+        }
+    }
 }

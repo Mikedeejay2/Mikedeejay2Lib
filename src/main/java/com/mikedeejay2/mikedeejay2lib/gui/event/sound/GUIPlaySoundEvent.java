@@ -6,6 +6,7 @@ import org.bukkit.Location;
 import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
@@ -19,23 +20,31 @@ public class GUIPlaySoundEvent implements GUIEvent
     protected SoundCategory category;
     protected float volume;
     protected float pitch;
+    protected ClickType clickType;
 
-    public GUIPlaySoundEvent(Sound sound, float volume, float pitch)
-    {
-        this(sound, null, volume, pitch);
-    }
-
-    public GUIPlaySoundEvent(Sound sound, SoundCategory category, float volume, float pitch)
+    public GUIPlaySoundEvent(Sound sound, SoundCategory category, float volume, float pitch, ClickType clickType)
     {
         this.sound = sound;
         this.category = category;
         this.volume = volume;
         this.pitch = pitch;
+        this.clickType = clickType;
+    }
+
+    public GUIPlaySoundEvent(Sound sound, SoundCategory category, float volume, float pitch)
+    {
+        this(sound, category, volume, pitch, null);
+    }
+
+    public GUIPlaySoundEvent(Sound sound, float volume, float pitch)
+    {
+        this(sound, null, volume, pitch, null);
     }
 
     @Override
     public void execute(InventoryClickEvent event, GUIContainer gui)
     {
+        if(clickType != null && event.getClick() != clickType) return;
         Player player = (Player) event.getWhoClicked();
         Location location = player.getLocation();
         if(category != null)
