@@ -59,7 +59,7 @@ public class PluginBase extends JavaPlugin
 
         GlowEnchantment.registerGlow(this);
 
-        chat.sendMessage("&a" + langManager.getTextLib("generic.on_enable_message", new String[]{"PLUGIN"}, new String[]{this.getDescription().getName()}));
+        chat.sendMessage(String.format("&a%s is powered by Mikedeejay2Lib, a collection of open source resources for developers to use.", this.getDescription().getName()));
     }
 
     @Override
