@@ -15,7 +15,7 @@ import java.lang.reflect.Field;
  *
  * @author Mikedeejay2 (Original idea from Spigot/Bukkit forums)
  */
-public class GlowEnchantment extends Enchantment
+public final class GlowEnchantment extends Enchantment
 {
     public GlowEnchantment(PluginBase plugin)
     {
