@@ -1,9 +1,11 @@
 package com.mikedeejay2.mikedeejay2lib.gui.item;
 
+import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.enchant.GlowEnchantment;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -581,6 +583,42 @@ public class GUIItem implements Cloneable
     {
         removeItemFlagsBase(flags);
         removeItemFlagsView(flags);
+        return this;
+    }
+
+    public GUIItem addGlowBase(PluginBase plugin)
+    {
+        addEnchantBase(new GlowEnchantment(plugin), 0);
+        return this;
+    }
+
+    public GUIItem removeGlowBase(PluginBase plugin)
+    {
+        removeEnchantBase(new GlowEnchantment(plugin));
+        return this;
+    }
+
+    public GUIItem addGlowView(PluginBase plugin)
+    {
+        addEnchantView(new GlowEnchantment(plugin), 0);
+        return this;
+    }
+
+    public GUIItem removeGlowView(PluginBase plugin)
+    {
+        removeEnchantView(new GlowEnchantment(plugin));
+        return this;
+    }
+
+    public GUIItem addGlow(PluginBase plugin)
+    {
+        addEnchant(new GlowEnchantment(plugin), 0);
+        return this;
+    }
+
+    public GUIItem removeGlow(PluginBase plugin)
+    {
+        removeEnchant(new GlowEnchantment(plugin));
         return this;
     }
 
