@@ -11,12 +11,12 @@ import org.bukkit.entity.Player;
  *
  * @author Mikedeejay2
  */
-public class GUIAnimBackground implements GUIModule
+public class GUIAnimBackgroundModule implements GUIModule
 {
     // The GUI item that will be used for the border
     private AnimatedGUIItem backgroundItem;
 
-    public GUIAnimBackground(AnimatedGUIItem backgroundItem)
+    public GUIAnimBackgroundModule(AnimatedGUIItem backgroundItem)
     {
         this.backgroundItem = backgroundItem;
     }

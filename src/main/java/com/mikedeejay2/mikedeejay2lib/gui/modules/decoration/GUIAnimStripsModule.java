@@ -11,11 +11,11 @@ import org.bukkit.entity.Player;
  *
  * @author Mikedeejay2
  */
-public class GUIAnimStrips implements GUIModule
+public class GUIAnimStripsModule implements GUIModule
 {
     protected AnimatedGUIItem item;
 
-    public GUIAnimStrips(AnimatedGUIItem item)
+    public GUIAnimStripsModule(AnimatedGUIItem item)
     {
         this.item = item;
     }
