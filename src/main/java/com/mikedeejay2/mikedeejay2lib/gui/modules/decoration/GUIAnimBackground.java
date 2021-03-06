@@ -59,7 +59,6 @@ public class GUIAnimBackground implements GUIModule
                 cloned = backgroundItem.clone();
                 cloned.setDelay(row + col);
                 gui.setItem(row, col, cloned);
-                System.out.println("Row: " + row + ", Col: " + col);
             }
         }
     }
