@@ -10,20 +10,25 @@ public class GUIClearLayerEvent implements GUIEvent
 {
     protected String layerName;
     protected int index;
-    protected boolean useIndex;
+    protected GUILayer layer;
+    int mode;
 
     public GUIClearLayerEvent(String layerName)
     {
         this.layerName = layerName;
-        this.index = -1;
-        this.useIndex = false;
+        this.mode = 1;
     }
 
     public GUIClearLayerEvent(int index)
     {
-        this.index = index;
-        this.layerName = null;
-        this.useIndex = true;
+        this.index =  index;
+        this.mode = 2;
+    }
+
+    public GUIClearLayerEvent(GUILayer layer)
+    {
+        this.layer = layer;
+        this.mode = 3;
     }
 
     @Override
@@ -32,15 +37,19 @@ public class GUIClearLayerEvent implements GUIEvent
         ClickType clickType = event.getClick();
         if(clickType != ClickType.LEFT) return;
         GUILayer layer = null;
-        if(useIndex)
+        switch(mode)
         {
-            layer = gui.getLayer(index);
-        }
-        else
-        {
-            layer = gui.getLayer(layerName);
+            case 1:
+                layer = gui.getLayer(layerName);
+                break;
+            case 2:
+                layer = gui.getLayer(index);
+                break;
+            case 3:
+                layer = this.layer;
+                break;
         }
 
-        layer.clearLayer();
+        if(layer != null) layer.clearLayer();
     }
 }
