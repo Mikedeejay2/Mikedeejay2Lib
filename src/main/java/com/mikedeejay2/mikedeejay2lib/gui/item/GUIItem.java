@@ -7,6 +7,7 @@ import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
@@ -534,6 +535,52 @@ public class GUIItem implements Cloneable
     {
         addEnchantView(enchantment, level);
         addEnchantBase(enchantment, level);
+        return this;
+    }
+
+    public GUIItem addItemFlagsBase(ItemFlag... flags)
+    {
+        ItemMeta meta = getMetaBase();
+        meta.addItemFlags(flags);
+        setMetaBase(meta);
+        return this;
+    }
+
+    public GUIItem addItemFlagsView(ItemFlag... flags)
+    {
+        ItemMeta meta = getMetaView();
+        meta.addItemFlags(flags);
+        setMetaView(meta);
+        return this;
+    }
+
+    public GUIItem addItemFlags(ItemFlag... flags)
+    {
+        addItemFlagsBase(flags);
+        addItemFlagsView(flags);
+        return this;
+    }
+
+    public GUIItem removeItemFlagsBase(ItemFlag... flags)
+    {
+        ItemMeta meta = getMetaBase();
+        meta.removeItemFlags(flags);
+        setMetaBase(meta);
+        return this;
+    }
+
+    public GUIItem removeItemFlagsView(ItemFlag... flags)
+    {
+        ItemMeta meta = getMetaView();
+        meta.removeItemFlags(flags);
+        setMetaView(meta);
+        return this;
+    }
+
+    public GUIItem removeItemFlags(ItemFlag... flags)
+    {
+        removeItemFlagsBase(flags);
+        removeItemFlagsView(flags);
         return this;
     }
 
