@@ -586,39 +586,39 @@ public class GUIItem implements Cloneable
         return this;
     }
 
-    public GUIItem addGlowBase(PluginBase plugin)
+    public GUIItem addGlowBase()
     {
-        addEnchantBase(new GlowEnchantment(plugin), 0);
+        addEnchantBase(new GlowEnchantment(), 0);
         return this;
     }
 
-    public GUIItem removeGlowBase(PluginBase plugin)
+    public GUIItem removeGlowBase()
     {
-        removeEnchantBase(new GlowEnchantment(plugin));
+        removeEnchantBase(new GlowEnchantment());
         return this;
     }
 
-    public GUIItem addGlowView(PluginBase plugin)
+    public GUIItem addGlowView()
     {
-        addEnchantView(new GlowEnchantment(plugin), 0);
+        addEnchantView(new GlowEnchantment(), 0);
         return this;
     }
 
-    public GUIItem removeGlowView(PluginBase plugin)
+    public GUIItem removeGlowView()
     {
-        removeEnchantView(new GlowEnchantment(plugin));
+        removeEnchantView(new GlowEnchantment());
         return this;
     }
 
-    public GUIItem addGlow(PluginBase plugin)
+    public GUIItem addGlow()
     {
-        addEnchant(new GlowEnchantment(plugin), 0);
+        addEnchant(new GlowEnchantment(), 0);
         return this;
     }
 
-    public GUIItem removeGlow(PluginBase plugin)
+    public GUIItem removeGlow()
     {
-        removeEnchant(new GlowEnchantment(plugin));
+        removeEnchant(new GlowEnchantment());
         return this;
     }
 

@@ -17,9 +17,9 @@ import java.lang.reflect.Field;
  */
 public final class GlowEnchantment extends Enchantment
 {
-    public GlowEnchantment(PluginBase plugin)
+    public GlowEnchantment()
     {
-        super(new NamespacedKey(plugin, "mdlglow"));
+        super(new NamespacedKey("mikedeejay2lib", "glow"));
     }
 
     @Override
@@ -90,7 +90,7 @@ public final class GlowEnchantment extends Enchantment
 
         try
         {
-            GlowEnchantment glow = new GlowEnchantment(plugin);
+            GlowEnchantment glow = new GlowEnchantment();
             Enchantment.registerEnchantment(glow);
         }
         catch(IllegalArgumentException exception)
