@@ -80,21 +80,25 @@ public class GUIItem implements Cloneable
      * both the base item and the view item)
      *
      * @param item The item to set
+     * @return A reference to this <tt>GUIItem</tt>
      */
-    public void setItem(ItemStack item)
+    public GUIItem setItem(ItemStack item)
     {
         this.baseItem = item;
         this.viewItem = item;
+        return this;
     }
 
     /**
      * Set the <tt>ItemStack</tt> for the base item of this <tt>GUIItem</tt>
      *
      * @param baseItem Item that will be set to the base item
+     * @return A reference to this <tt>GUIItem</tt>
      */
-    public void setBaseItem(ItemStack baseItem)
+    public GUIItem setBaseItem(ItemStack baseItem)
     {
         this.baseItem = baseItem;
+        return this;
     }
 
     /**
@@ -111,18 +115,21 @@ public class GUIItem implements Cloneable
      * Set the <tt>ItemStack</tt> for the view item of this <tt>GUIItem</tt>
      *
      * @param viewItem Item that will be set to the view item
+     * @return A reference to this <tt>GUIItem</tt>
      */
-    public void setViewItem(ItemStack viewItem)
+    public GUIItem setViewItem(ItemStack viewItem)
     {
         this.viewItem = viewItem;
+        return this;
     }
 
     /**
      * Reset the view item to the base item
      */
-    public void resetViewItem()
+    public GUIItem resetViewItem()
     {
         this.viewItem = baseItem;
+        return this;
     }
 
     /**
@@ -139,10 +146,12 @@ public class GUIItem implements Cloneable
      * Set whether this <tt>GUIItem</tt> is movable or not
      *
      * @param movable Move state to set this item to
+     * @return A reference to this <tt>GUIItem</tt>
      */
-    public void setMovable(boolean movable)
+    public GUIItem setMovable(boolean movable)
     {
         this.movable = movable;
+        return this;
     }
 
     /**
@@ -182,40 +191,48 @@ public class GUIItem implements Cloneable
      * Set the <tt>GUIEventHandler</tt> for this item
      *
      * @param events Events to set this item to use
+     * @return A reference to this <tt>GUIItem</tt>
      */
-    public void setEvents(GUIEventHandler events)
+    public GUIItem setEvents(GUIEventHandler events)
     {
         this.events = events;
+        return this;
     }
 
     /**
      * Add an event to this <tt>GUIItem</tt>
      *
      * @param event Event to add
+     * @return A reference to this <tt>GUIItem</tt>
      */
-    public void addEvent(GUIEvent event)
+    public GUIItem addEvent(GUIEvent event)
     {
         events.addEvent(event);
+        return this;
     }
 
     /**
      * Remove an event via instance
      *
      * @param event Event to remove
+     * @return A reference to this <tt>GUIItem</tt>
      */
-    public void removeEvent(GUIEvent event)
+    public GUIItem removeEvent(GUIEvent event)
     {
         events.removeEvent(event);
+        return this;
     }
 
     /**
      * Remove an event via the event's class
      *
      * @param eventClass The class of the event to remove
+     * @return A reference to this <tt>GUIItem</tt>
      */
-    public void removeEvent(Class<? extends GUIEvent> eventClass)
+    public GUIItem removeEvent(Class<? extends GUIEvent> eventClass)
     {
         events.removeEvent(eventClass);
+        return this;
     }
 
     /**
@@ -242,10 +259,13 @@ public class GUIItem implements Cloneable
 
     /**
      * Reset the GUI Events for this item
+     *
+     * @return A reference to this <tt>GUIItem</tt>
      */
-    public void resetEvents()
+    public GUIItem resetEvents()
     {
         this.events = new GUIEventHandler();
+        return this;
     }
 
     public ItemMeta getMetaView()
@@ -253,9 +273,10 @@ public class GUIItem implements Cloneable
         return viewItem.getItemMeta();
     }
 
-    public void setMetaView(ItemMeta meta)
+    public GUIItem setMetaView(ItemMeta meta)
     {
         viewItem.setItemMeta(meta);
+        return this;
     }
 
     public ItemMeta getMetaBase()
@@ -263,9 +284,10 @@ public class GUIItem implements Cloneable
         return baseItem.getItemMeta();
     }
 
-    public void setMetaBase(ItemMeta meta)
+    public GUIItem setMetaBase(ItemMeta meta)
     {
         baseItem.setItemMeta(meta);
+        return this;
     }
 
     public ItemMeta getMeta()
@@ -273,10 +295,11 @@ public class GUIItem implements Cloneable
         return getMetaView();
     }
 
-    public void setMeta(ItemMeta meta)
+    public GUIItem setMeta(ItemMeta meta)
     {
         setMetaView(meta);
         setMetaBase(meta);
+        return this;
     }
 
     public String getNameView()
@@ -284,11 +307,12 @@ public class GUIItem implements Cloneable
         return getMetaView().getDisplayName();
     }
 
-    public void setNameView(String name)
+    public GUIItem setNameView(String name)
     {
         ItemMeta meta = getMetaView();
         meta.setDisplayName(Chat.chat(name));
         setMetaView(meta);
+        return this;
     }
 
     public String getNameBase()
@@ -296,11 +320,12 @@ public class GUIItem implements Cloneable
         return baseItem.getItemMeta().getDisplayName();
     }
 
-    public void setNameBase(String name)
+    public GUIItem setNameBase(String name)
     {
         ItemMeta meta = getMetaBase();
         meta.setDisplayName(Chat.chat(name));
         setMetaBase(meta);
+        return this;
     }
 
     public String getName()
@@ -308,10 +333,11 @@ public class GUIItem implements Cloneable
         return getNameView();
     }
 
-    public void setName(String name)
+    public GUIItem setName(String name)
     {
         setNameView(name);
         setNameBase(name);
+        return this;
     }
 
     public int getAmountView()
@@ -319,9 +345,10 @@ public class GUIItem implements Cloneable
         return viewItem.getAmount();
     }
 
-    public void setAmountView(int amount)
+    public GUIItem setAmountView(int amount)
     {
         viewItem.setAmount(amount);
+        return this;
     }
 
     public int getAmountBase()
@@ -329,9 +356,10 @@ public class GUIItem implements Cloneable
         return baseItem.getAmount();
     }
 
-    public void setAmountBase(int amount)
+    public GUIItem setAmountBase(int amount)
     {
         baseItem.setAmount(amount);
+        return this;
     }
 
     public int getAmount()
@@ -339,10 +367,11 @@ public class GUIItem implements Cloneable
         return getAmountView();
     }
 
-    public void setAmount(int amount)
+    public GUIItem setAmount(int amount)
     {
         setAmountView(amount);
         setAmountBase(amount);
+        return this;
     }
 
     public Material getMatView()
@@ -350,9 +379,10 @@ public class GUIItem implements Cloneable
         return viewItem.getType();
     }
 
-    public void setMatView(Material material)
+    public GUIItem setMatView(Material material)
     {
         viewItem.setType(material);
+        return this;
     }
 
     public Material getMatBase()
@@ -360,9 +390,10 @@ public class GUIItem implements Cloneable
         return baseItem.getType();
     }
 
-    public void setMatBase(Material material)
+    public GUIItem setMatBase(Material material)
     {
         baseItem.setType(material);
+        return this;
     }
 
     public Material getMat()
@@ -370,10 +401,11 @@ public class GUIItem implements Cloneable
         return getMatView();
     }
 
-    public void setMat(Material material)
+    public GUIItem setMat(Material material)
     {
         setMatView(material);
         setMatBase(material);
+        return this;
     }
 
     public List<String> getLoreView()
@@ -381,11 +413,12 @@ public class GUIItem implements Cloneable
         return getMetaView().getLore();
     }
 
-    public void setLoreView(List<String> lore)
+    public GUIItem setLoreView(List<String> lore)
     {
         ItemMeta meta = getMetaView();
         meta.setLore(lore);
         setMetaView(meta);
+        return this;
     }
 
     public List<String> getLoreBase()
@@ -393,11 +426,12 @@ public class GUIItem implements Cloneable
         return getMetaBase().getLore();
     }
 
-    public void setLoreBase(List<String> lore)
+    public GUIItem setLoreBase(List<String> lore)
     {
         ItemMeta meta = getMetaBase();
         meta.setLore(lore);
         setMetaBase(meta);
+        return this;
     }
 
     public List<String> getLore()
@@ -405,10 +439,11 @@ public class GUIItem implements Cloneable
         return getLoreView();
     }
 
-    public void setLore(List<String> lore)
+    public GUIItem setLore(List<String> lore)
     {
         setLoreView(lore);
         setLoreBase(lore);
+        return this;
     }
 
     public Map<Enchantment, Integer> getEnchantsView()
@@ -456,44 +491,50 @@ public class GUIItem implements Cloneable
         return getEnchantView(enchantment);
     }
 
-    public void removeEnchantView(Enchantment enchantment)
+    public GUIItem removeEnchantView(Enchantment enchantment)
     {
         ItemMeta meta = getMetaView();
         meta.removeEnchant(enchantment);
         setMetaView(meta);
+        return this;
     }
 
-    public void removeEnchantBase(Enchantment enchantment)
+    public GUIItem removeEnchantBase(Enchantment enchantment)
     {
         ItemMeta meta = getMetaBase();
         meta.removeEnchant(enchantment);
         setMetaBase(meta);
+        return this;
     }
 
-    public void removeEnchant(Enchantment enchantment)
+    public GUIItem removeEnchant(Enchantment enchantment)
     {
         removeEnchantView(enchantment);
         removeEnchantBase(enchantment);
+        return this;
     }
 
-    public void addEnchantView(Enchantment enchantment, int level)
+    public GUIItem addEnchantView(Enchantment enchantment, int level)
     {
         ItemMeta meta = getMetaView();
         meta.addEnchant(enchantment, level, true);
         setMetaView(meta);
+        return this;
     }
 
-    public void addEnchantBase(Enchantment enchantment, int level)
+    public GUIItem addEnchantBase(Enchantment enchantment, int level)
     {
         ItemMeta meta = getMetaBase();
         meta.addEnchant(enchantment, level, true);
         setMetaBase(meta);
+        return this;
     }
 
-    public void addEnchant(Enchantment enchantment, int level)
+    public GUIItem addEnchant(Enchantment enchantment, int level)
     {
         addEnchantView(enchantment, level);
         addEnchantBase(enchantment, level);
+        return this;
     }
 
     public GUIItem clone()

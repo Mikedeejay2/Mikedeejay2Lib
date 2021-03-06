@@ -242,10 +242,12 @@ public class AnimatedGUIItem extends GUIItem
      *
      * @param item   The item to add to the frame
      * @param period The time to wait between this frame and the frame after it
+     * @return Reference to this <tt>AnimatedGUIItem</tt>
      */
-    public void addFrame(ItemStack item, long period)
+    public AnimatedGUIItem addFrame(ItemStack item, long period)
     {
         frames.add(new AnimationFrame(item, period));
+        return this;
     }
 
     /**
@@ -256,10 +258,12 @@ public class AnimatedGUIItem extends GUIItem
      * @param movementType     The type of movement that will be performed when the item is moved
      * @param relativeMovement Whether or not the movement should move relatively (locally)
      * @param period           The time to wait between this frame and the frame after it
+     * @return Reference to this <tt>AnimatedGUIItem</tt>
      */
-    public void addFrame(int row, int col, MovementType movementType, boolean relativeMovement, long period)
+    public AnimatedGUIItem addFrame(int row, int col, MovementType movementType, boolean relativeMovement, long period)
     {
         frames.add(new AnimationFrame(row, col, movementType, relativeMovement, period));
+        return this;
     }
 
     /**
@@ -271,10 +275,12 @@ public class AnimatedGUIItem extends GUIItem
      * @param movementType     The type of movement that will be performed when the item is moved
      * @param relativeMovement Whether or not the movement should move relatively (locally)
      * @param period           The time to wait between this frame and the frame after it
+     * @return Reference to this <tt>AnimatedGUIItem</tt>
      */
-    public void addFrame(ItemStack item, int row, int col, MovementType movementType, boolean relativeMovement, long period)
+    public AnimatedGUIItem addFrame(ItemStack item, int row, int col, MovementType movementType, boolean relativeMovement, long period)
     {
         frames.add(new AnimationFrame(item, row, col, movementType, relativeMovement, period));
+        return this;
     }
 
     /**
@@ -307,10 +313,12 @@ public class AnimatedGUIItem extends GUIItem
      * Set whether this animation should loop or not
      *
      * @param loop New loop state
+     * @return Reference to this <tt>AnimatedGUIItem</tt>
      */
-    public void setLoop(boolean loop)
+    public AnimatedGUIItem setLoop(boolean loop)
     {
         this.loop = loop;
+        return this;
     }
 
     /**
@@ -327,10 +335,12 @@ public class AnimatedGUIItem extends GUIItem
      * Set the delay of this animation
      *
      * @param delay The new delay
+     * @return Reference to this <tt>AnimatedGUIItem</tt>
      */
-    public void setDelay(long delay)
+    public AnimatedGUIItem setDelay(long delay)
     {
         this.delay = delay;
+        return this;
     }
 
     /**
@@ -347,10 +357,12 @@ public class AnimatedGUIItem extends GUIItem
      * Set the reset on click of this item
      *
      * @param resetOnClick The new reset on click state
+     * @return Reference to this <tt>AnimatedGUIItem</tt>
      */
-    public void setResetOnClick(boolean resetOnClick)
+    public AnimatedGUIItem setResetOnClick(boolean resetOnClick)
     {
         this.resetOnClick = resetOnClick;
+        return this;
     }
 
     @Override
@@ -381,10 +393,12 @@ public class AnimatedGUIItem extends GUIItem
      * Set the starting index for this <tt>AnimatedGUIItem</tt>
      *
      * @param startingIndex The new starting index
+     * @return Reference to this <tt>AnimatedGUIItem</tt>
      */
-    public void setStartingIndex(int startingIndex)
+    public AnimatedGUIItem setStartingIndex(int startingIndex)
     {
         this.startingIndex = startingIndex;
+        return this;
     }
 
     public AnimatedGUIItem clone()
