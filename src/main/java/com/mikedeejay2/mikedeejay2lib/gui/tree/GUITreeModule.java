@@ -1,8 +1,9 @@
-package com.mikedeejay2.mikedeejay2lib.gui.modules;
+package com.mikedeejay2.mikedeejay2lib.gui.tree;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
+import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.gui.tree.GUITreeNode;
 import org.bukkit.entity.Player;
 
