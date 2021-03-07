@@ -7,6 +7,13 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+/**
+ * Open a player's GUI to a NEW specified GUI.
+ * Instead opening an already constructed GUI, this event
+ * creates a new GUI upon request.
+ *
+ * @author Mikedeejay2
+ */
 public class GUIOpenNewEvent implements GUIEvent
 {
     protected final PluginBase plugin;
