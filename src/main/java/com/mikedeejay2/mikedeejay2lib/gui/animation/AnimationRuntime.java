@@ -16,8 +16,8 @@ import java.util.Map;
  */
 public class AnimationRuntime extends EnhancedRunnable
 {
-    // The list of items to be executed
-    protected List<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> items;
+    // The map of items to be executed
+    protected Map<AnimatedGUIItem, AnimatedGUIItemProperties> items;
     // The GUIContainer that this AnimationRuntime is a child of
     protected GUIContainer gui;
     // The player that has opened the GUI
@@ -31,7 +31,7 @@ public class AnimationRuntime extends EnhancedRunnable
      *
      * @param items The list of AnimatedGUIItems that this runtime will iterate through
      */
-    public void setItems(List<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> items)
+    public void setItems(Map<AnimatedGUIItem, AnimatedGUIItemProperties> items)
     {
         this.items = items;
     }
@@ -70,9 +70,8 @@ public class AnimationRuntime extends EnhancedRunnable
     public void onRun()
     {
         boolean shouldUpdate = false;
-        for(int i = 0 ; i < items.size(); ++i)
+        for(Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry : items.entrySet())
         {
-            Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry = items.get(i);
             AnimatedGUIItem item = entry.getKey();
             AnimatedGUIItemProperties properties = entry.getValue();
             if(item.tick(period, properties)) shouldUpdate = true;
@@ -81,11 +80,11 @@ public class AnimationRuntime extends EnhancedRunnable
     }
 
     /**
-     * Get the list <tt>AnimatedGUIItems</tt> that this runtime holds
+     * Get the map <tt>AnimatedGUIItems</tt> that this runtime holds
      *
-     * @return The list of items
+     * @return The map of items
      */
-    public List<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> getItems()
+    public Map<AnimatedGUIItem, AnimatedGUIItemProperties> getItems()
     {
         return items;
     }
