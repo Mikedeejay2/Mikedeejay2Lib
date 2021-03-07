@@ -16,6 +16,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 /**
  * A util class for anything to do with text in Minecraft
@@ -42,6 +43,22 @@ public final class Chat
     public static String chat(String message)
     {
         return ChatColor.translateAlternateColorCodes('&', message);
+    }
+
+    /**
+     * Format a list of messages using Minecraft's legacy color codes
+     *
+     * @param messages The input list of strings to be formatted
+     * @return The string list formatted with Minecraft color codes
+     */
+    public static List<String> chat(List<String> messages)
+    {
+        List<String> formatted = new ArrayList<>();
+        for(String message : messages)
+        {
+            formatted.add(Chat.chat(message));
+        }
+        return formatted;
     }
 
     /**
