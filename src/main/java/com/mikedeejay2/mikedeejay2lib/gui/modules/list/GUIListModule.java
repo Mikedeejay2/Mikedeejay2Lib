@@ -304,7 +304,7 @@ public class GUIListModule implements GUIModule
      */
     private void updateListControls(GUILayer layer, Player player)
     {
-        int maxViews = getMaxViews(layer);
+        int maxViews = getMaxViews();
 
         // Remove previous forward items
         for(Map.Entry<Integer, Integer> entry : forwards)
@@ -804,10 +804,9 @@ public class GUIListModule implements GUIModule
      * <p>
      * For scroll view mode, this means the maximum amount of scrolls of this list.
      *
-     * @param layer The <tt>GUILayer</tt> that this list is on for accurate calculations
      * @return The maximum views
      */
-    public int getMaxViews(GUILayer layer)
+    public int getMaxViews()
     {
         switch(viewMode)
         {
