@@ -1,6 +1,5 @@
 package com.mikedeejay2.mikedeejay2lib.gui.item;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
@@ -44,6 +43,11 @@ public class GUIItem implements Cloneable
         this.viewItem = item;
         this.movable = false;
         this.events = new GUIEventHandler();
+    }
+
+    public GUIItem()
+    {
+        this(new ItemStack(Material.STONE));
     }
 
     /**
@@ -377,37 +381,37 @@ public class GUIItem implements Cloneable
         return this;
     }
 
-    public Material getMatView()
+    public Material getTypeView()
     {
         return viewItem.getType();
     }
 
-    public GUIItem setMatView(Material material)
+    public GUIItem setTypeView(Material material)
     {
         viewItem.setType(material);
         return this;
     }
 
-    public Material getMatBase()
+    public Material getTypeBase()
     {
         return baseItem.getType();
     }
 
-    public GUIItem setMatBase(Material material)
+    public GUIItem setTypeBase(Material material)
     {
         baseItem.setType(material);
         return this;
     }
 
-    public Material getMat()
+    public Material getType()
     {
-        return getMatView();
+        return getTypeView();
     }
 
-    public GUIItem setMat(Material material)
+    public GUIItem setType(Material material)
     {
-        setMatView(material);
-        setMatBase(material);
+        setTypeView(material);
+        setTypeBase(material);
         return this;
     }
 
