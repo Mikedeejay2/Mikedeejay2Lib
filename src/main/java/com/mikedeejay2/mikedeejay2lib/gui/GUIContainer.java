@@ -6,10 +6,8 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefault;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
-import com.mikedeejay2.mikedeejay2lib.gui.manager.NavigationSystem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
-import com.mikedeejay2.mikedeejay2lib.gui.modules.navigation.GUINavigatorModule;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Bukkit;
@@ -149,7 +147,6 @@ public class GUIContainer
     public void open(Player player)
     {
         PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
-        navigationCheck(playerGUI);
         playerGUI.setGUI(this);
         onOpen(player);
         player.openInventory(inventory);
@@ -159,28 +156,6 @@ public class GUIContainer
     {
         onClose(player);
         player.closeInventory();
-    }
-
-    /**
-     * Checks whether the GUI is using a navigation system and if so calculate the forward
-     * and back navigations.
-     *
-     * @param playerGUI The <tt>PlayerGUI</tt> of the player viewing the GUI
-     */
-    private void navigationCheck(PlayerGUI playerGUI)
-    {
-        GUIContainer curGUI = playerGUI.getGUI();
-        if(!(this.containsModule(GUINavigatorModule.class) && curGUI.containsModule(GUINavigatorModule.class))) return;
-        GUINavigatorModule curModule = curGUI.getModule(GUINavigatorModule.class);
-        GUINavigatorModule openModule = this.getModule(GUINavigatorModule.class);
-        String curID = curModule.getNavigationID();
-        String openID = openModule.getNavigationID();
-        if(!curID.equals(openID)) return;
-        NavigationSystem system = playerGUI.getNaviSystem(curID);
-        if(system.hasBack() && system.getBack().equals(curGUI)) return;
-        system.addBack(curGUI);
-        if(!system.hasForward()) return;
-        system.resetForward();
     }
 
     /**
@@ -1031,5 +1006,15 @@ public class GUIContainer
             if(layer.containsMaterial(material)) return true;
         }
         return false;
+    }
+
+    /**
+     * Method to get all <tt>GUIModules</tt> in this <tt>GUIContainer</tt>
+     *
+     * @return A list of all <tt>GUIModules</tt>
+     */
+    protected List<GUIModule> getModules()
+    {
+        return modules;
     }
 }

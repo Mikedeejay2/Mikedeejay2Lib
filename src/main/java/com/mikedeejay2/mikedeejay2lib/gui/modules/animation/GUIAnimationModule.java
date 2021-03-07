@@ -2,9 +2,11 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules.animation;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.animation.AnimationRuntime;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItemProperties;
+import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import org.bukkit.entity.Player;
 
@@ -104,6 +106,28 @@ public class GUIAnimationModule implements GUIModule
             return entry.getValue();
         }
         return null;
+    }
+
+    @Override
+    public void onItemSet(GUIContainer gui, GUILayer layer, int row, int col, GUIItem item)
+    {
+        if(item == null) return;
+        if(item instanceof AnimatedGUIItem)
+        {
+            AnimatedGUIItem animItem = (AnimatedGUIItem) item;
+            gui.getModule(GUIAnimationModule.class).addItem(animItem, new AnimatedGUIItemProperties(0, row, col, layer));
+        }
+    }
+
+    @Override
+    public void onItemRemove(GUIContainer gui, GUILayer layer, int row, int col, GUIItem item)
+    {
+        if(item == null) return;
+        if(item instanceof AnimatedGUIItem)
+        {
+            AnimatedGUIItem animItem = (AnimatedGUIItem) item;
+            gui.getModule(GUIAnimationModule.class).removeItem(animItem);
+        }
     }
 }
 

@@ -7,6 +7,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.navigator.GUINavBackEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.navigator.GUINavForwardEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.NavigationSystem;
+import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
@@ -42,6 +43,7 @@ public class GUINavigatorModule implements GUIModule
     @Override
     public void onOpenHead(Player player, GUIContainer gui)
     {
+        navigationCheck(player, gui);
         if(validBackItem == null)
         {
             String backward = plugin.langManager().getTextLib(player, "gui.modules.navigator.backward");
@@ -64,6 +66,29 @@ public class GUINavigatorModule implements GUIModule
             String forward = plugin.langManager().getTextLib(player, "gui.modules.navigator.forward");
             this.invalidForwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_RIGHT_LIGHT_GRAY.get(), 1, "&7" + forward));
         }
+    }
+
+
+
+    /**
+     * Checks whether the GUI is using a navigation system and if so calculate the forward
+     * and back navigations.
+     */
+    private void navigationCheck(Player player, GUIContainer gui)
+    {
+        PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
+        GUIContainer curGUI = playerGUI.getGUI();
+        if(!(gui.containsModule(GUINavigatorModule.class) && curGUI.containsModule(GUINavigatorModule.class))) return;
+        GUINavigatorModule curModule = curGUI.getModule(GUINavigatorModule.class);
+        GUINavigatorModule openModule = gui.getModule(GUINavigatorModule.class);
+        String curID = curModule.getNavigationID();
+        String openID = openModule.getNavigationID();
+        if(!curID.equals(openID)) return;
+        NavigationSystem system = playerGUI.getNaviSystem(curID);
+        if(system.hasBack() && system.getBack().equals(curGUI)) return;
+        system.addBack(curGUI);
+        if(!system.hasForward()) return;
+        system.resetForward();
     }
 
     /**

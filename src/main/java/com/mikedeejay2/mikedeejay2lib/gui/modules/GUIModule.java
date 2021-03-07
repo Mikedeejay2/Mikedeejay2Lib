@@ -1,6 +1,8 @@
 package com.mikedeejay2.mikedeejay2lib.gui.modules;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
+import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -84,4 +86,26 @@ public interface GUIModule
      * @param gui   The GUI
      */
     default void onPlayerInteractTail(InventoryClickEvent event, GUIContainer gui) {}
+
+    /**
+     * Called when {@link GUILayer#setItem(int, int, GUIItem)} is used
+     *
+     * @param gui   The GUI
+     * @param layer The <tt>GUILayer</tt> that the item was set on
+     * @param row   The row that the item was set on
+     * @param col   The column that the item was set on
+     * @param item  The <tt>GUIItem</tt> that is being set
+     */
+    default void onItemSet(GUIContainer gui, GUILayer layer, int row, int col, GUIItem item) {}
+
+    /**
+     * Called when {@link GUILayer#removeItem(int, int)} is used
+     *
+     * @param gui   The GUI
+     * @param layer The <tt>GUILayer</tt> that the item was removed on
+     * @param row   The row that the item was set on
+     * @param col   The column that the item was set on
+     * @param item  The <tt>GUIItem</tt> that is being removed
+     */
+    default void onItemRemove(GUIContainer gui, GUILayer layer, int row, int col, GUIItem item) {}
 }

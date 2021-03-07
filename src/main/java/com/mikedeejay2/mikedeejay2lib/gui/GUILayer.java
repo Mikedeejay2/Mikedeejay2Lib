@@ -2,10 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui;
 
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
-import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
-import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItemProperties;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
-import com.mikedeejay2.mikedeejay2lib.gui.modules.animation.GUIAnimationModule;
 import com.mikedeejay2.mikedeejay2lib.util.array.ArrayUtil;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
@@ -100,15 +97,7 @@ public class GUILayer
     {
         GUIItem item = getItem(row, col);
         setItem(row, col, (GUIItem)null);
-        if(item == null) return;
-        if(item instanceof AnimatedGUIItem)
-        {
-            AnimatedGUIItem animItem = (AnimatedGUIItem) item;
-            if(gui.containsModule(GUIAnimationModule.class))
-            {
-                gui.getModule(GUIAnimationModule.class).removeItem(animItem);
-            }
-        }
+        gui.getModules().forEach(module -> module.onItemRemove(gui, this, row, col, item));
     }
 
     /**
@@ -169,15 +158,7 @@ public class GUILayer
     {
         if(items[row - 1][col - 1] == item) return;
         items[row - 1][col - 1] = item;
-        if(item == null) return;
-        if(item instanceof AnimatedGUIItem)
-        {
-            AnimatedGUIItem animItem = (AnimatedGUIItem) item;
-            if(gui.containsModule(GUIAnimationModule.class))
-            {
-                gui.getModule(GUIAnimationModule.class).addItem(animItem, new AnimatedGUIItemProperties(0, row, col, this));
-            }
-        }
+        gui.getModules().forEach(module -> module.onItemSet(gui, this, row, col, item));
     }
 
     /**
