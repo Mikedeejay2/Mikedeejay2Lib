@@ -4,6 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIConstructor;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class GUIOpenNewEvent implements GUIEvent
@@ -24,6 +25,8 @@ public class GUIOpenNewEvent implements GUIEvent
     @Override
     public void execute(InventoryClickEvent event, GUIContainer gui)
     {
+        ClickType clickType = event.getClick();
+        if(clickType != ClickType.LEFT) return;
         if(this.event == null)
         {
             this.gui = constructor.get();
