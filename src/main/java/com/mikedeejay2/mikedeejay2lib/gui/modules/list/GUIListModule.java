@@ -399,6 +399,33 @@ public class GUIListModule implements GUIModule
     }
 
     /**
+     * Add a list item to the list based off of the <tt>GUIContainer</tt> that the list is located in
+     *
+     * @param row  The row to add the item to
+     * @param col  The column to add the item to
+     * @param gui  The <tt>GUIContainer</tt> that this list is located in
+     * @param item The <tt>GUIItem</tt> to be added
+     */
+    public void addListItem(int row, int col, GUIContainer gui, GUIItem item)
+    {
+        int index = getListItemIndex(row, col, gui);
+        list.add(index, item);
+        changed = true;
+    }
+
+    /**
+     * Add an item to the list at a specified index
+     *
+     * @param index The index to add the item at
+     * @param item The item that will be added to the list
+     */
+    public void addListItem(int index, GUIItem item)
+    {
+        list.add(index, item);
+        changed = true;
+    }
+
+    /**
      * Change a GUI item based off of a row and column.
      * Not recommended for usage but still included just in case.
      *
@@ -508,33 +535,6 @@ public class GUIListModule implements GUIModule
         int index = getListItemIndex(row, col, gui);
         List<GUIItem> list = this.list;
         list.remove(index);
-        changed = true;
-    }
-
-    /**
-     * Add a list item to the list based off of the <tt>GUIContainer</tt> that the list is located in
-     *
-     * @param row  The row to add the item to
-     * @param col  The column to add the item to
-     * @param gui  The <tt>GUIContainer</tt> that this list is located in
-     * @param item The <tt>GUIItem</tt> to be added
-     */
-    public void addListItem(int row, int col, GUIContainer gui, GUIItem item)
-    {
-        int index = getListItemIndex(row, col, gui);
-        list.add(index, item);
-        changed = true;
-    }
-
-    /**
-     * Add an item to the list at a specified index
-     *
-     * @param index The index to add the item at
-     * @param item The item that will be added to the list
-     */
-    public void addListItem(int index, GUIItem item)
-    {
-        list.add(index, item);
         changed = true;
     }
 
