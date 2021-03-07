@@ -304,8 +304,8 @@ public class GUIItem implements Cloneable
 
     public GUIItem setMeta(ItemMeta meta)
     {
-        setMetaView(meta);
-        setMetaBase(meta);
+        viewItem.setItemMeta(meta);
+        baseItem.setItemMeta(meta);
         return this;
     }
 
@@ -342,8 +342,13 @@ public class GUIItem implements Cloneable
 
     public GUIItem setName(String name)
     {
-        setNameView(name);
-        setNameBase(name);
+        name = Chat.chat(name);
+        ItemMeta view = getMetaView();
+        view.setDisplayName(Chat.chat(name));
+        setMetaView(view);
+        ItemMeta base = getMetaBase();
+        base.setDisplayName(Chat.chat(name));
+        setMetaBase(base);
         return this;
     }
 
@@ -376,8 +381,8 @@ public class GUIItem implements Cloneable
 
     public GUIItem setAmount(int amount)
     {
-        setAmountView(amount);
-        setAmountBase(amount);
+        viewItem.setAmount(amount);
+        baseItem.setAmount(amount);
         return this;
     }
 
@@ -410,8 +415,8 @@ public class GUIItem implements Cloneable
 
     public GUIItem setType(Material material)
     {
-        setTypeView(material);
-        setTypeBase(material);
+        viewItem.setType(material);
+        baseItem.setType(material);
         return this;
     }
 
@@ -448,8 +453,14 @@ public class GUIItem implements Cloneable
 
     public GUIItem setLore(List<String> lore)
     {
-        setLoreView(lore);
+        lore = Chat.chat(lore);
+        ItemMeta view = getMetaView();
+        view.setLore(lore);
+        setMetaView(view);
         setLoreBase(lore);
+        ItemMeta base = getMetaBase();
+        base.setLore(lore);
+        setMetaBase(base);
         return this;
     }
 
@@ -516,8 +527,12 @@ public class GUIItem implements Cloneable
 
     public GUIItem removeEnchant(Enchantment enchantment)
     {
-        removeEnchantView(enchantment);
-        removeEnchantBase(enchantment);
+        ItemMeta view = getMetaView();
+        view.removeEnchant(enchantment);
+        setMetaView(view);
+        ItemMeta base = getMetaBase();
+        base.removeEnchant(enchantment);
+        setMetaBase(base);
         return this;
     }
 
@@ -539,16 +554,12 @@ public class GUIItem implements Cloneable
 
     public GUIItem addEnchant(Enchantment enchantment, int level)
     {
-        addEnchantView(enchantment, level);
-        addEnchantBase(enchantment, level);
-        return this;
-    }
-
-    public GUIItem addItemFlagsBase(ItemFlag... flags)
-    {
-        ItemMeta meta = getMetaBase();
-        meta.addItemFlags(flags);
-        setMetaBase(meta);
+        ItemMeta view = getMetaView();
+        view.addEnchant(enchantment, level, true);
+        setMetaView(view);
+        ItemMeta base = getMetaBase();
+        base.addEnchant(enchantment, level, true);
+        setMetaBase(base);
         return this;
     }
 
@@ -560,18 +571,22 @@ public class GUIItem implements Cloneable
         return this;
     }
 
-    public GUIItem addItemFlags(ItemFlag... flags)
+    public GUIItem addItemFlagsBase(ItemFlag... flags)
     {
-        addItemFlagsBase(flags);
-        addItemFlagsView(flags);
+        ItemMeta meta = getMetaBase();
+        meta.addItemFlags(flags);
+        setMetaBase(meta);
         return this;
     }
 
-    public GUIItem removeItemFlagsBase(ItemFlag... flags)
+    public GUIItem addItemFlags(ItemFlag... flags)
     {
-        ItemMeta meta = getMetaBase();
-        meta.removeItemFlags(flags);
-        setMetaBase(meta);
+        ItemMeta view = getMetaView();
+        view.addItemFlags(flags);
+        setMetaView(view);
+        ItemMeta base = getMetaBase();
+        base.addItemFlags(flags);
+        setMetaBase(base);
         return this;
     }
 
@@ -583,22 +598,22 @@ public class GUIItem implements Cloneable
         return this;
     }
 
+    public GUIItem removeItemFlagsBase(ItemFlag... flags)
+    {
+        ItemMeta meta = getMetaBase();
+        meta.removeItemFlags(flags);
+        setMetaBase(meta);
+        return this;
+    }
+
     public GUIItem removeItemFlags(ItemFlag... flags)
     {
-        removeItemFlagsBase(flags);
-        removeItemFlagsView(flags);
-        return this;
-    }
-
-    public GUIItem addGlowBase()
-    {
-        addEnchantBase(new GlowEnchantment(), 0);
-        return this;
-    }
-
-    public GUIItem removeGlowBase()
-    {
-        removeEnchantBase(new GlowEnchantment());
+        ItemMeta view = getMetaView();
+        view.removeItemFlags(flags);
+        setMetaView(view);
+        ItemMeta base = getMetaBase();
+        base.removeItemFlags(flags);
+        setMetaBase(base);
         return this;
     }
 
@@ -611,6 +626,18 @@ public class GUIItem implements Cloneable
     public GUIItem removeGlowView()
     {
         removeEnchantView(new GlowEnchantment());
+        return this;
+    }
+
+    public GUIItem addGlowBase()
+    {
+        addEnchantBase(new GlowEnchantment(), 0);
+        return this;
+    }
+
+    public GUIItem removeGlowBase()
+    {
+        removeEnchantBase(new GlowEnchantment());
         return this;
     }
 
