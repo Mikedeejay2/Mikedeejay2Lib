@@ -63,21 +63,20 @@ public class PlayerGUI
             onClose();
         }
         this.gui = gui;
-        openGUI();
     }
 
     /**
      * Open this player's currently selected GUI
      */
-    public void openGUI()
+    private void openGUI()
     {
-        gui.open(player);
+        gui.onOpen(player);
     }
 
     /**
      * Close this player's currently opened GUI
      */
-    public void onClose()
+    private void onClose()
     {
         gui.onClose(player);
     }

@@ -6,8 +6,10 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefault;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
+import com.mikedeejay2.mikedeejay2lib.gui.manager.NavigationSystem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
+import com.mikedeejay2.mikedeejay2lib.gui.modules.navigation.GUINavigatorModule;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Bukkit;
@@ -121,37 +123,64 @@ public class GUIContainer
     }
 
     /**
-     * Method to open this GUI for a player.
-     * <p>
-     * <b>NOTE: THIS DOES NOT OPEN THE GUI THE PROPER WAY!</b>
-     * <p>
-     * To open the GUI, use {@link PlayerGUI#setGUI(GUIContainer)}
-     * like <tt>plugin.guiManager().getPlayer(player).setGUI(gui)</tt>
+     * Calls the open for all modules of this GUI, does not close the
+     * player's GUI however.
      *
      * @param player The player that this GUI will open to
      */
-    public void open(Player player)
+    public void onOpen(Player player)
     {
         modules.forEach(module -> module.onOpenHead(player, this));
         update(player);
-        player.openInventory(inventory);
         modules.forEach(module -> module.onOpenTail(player, this));
     }
 
     /**
      * Calls the close for all modules of this GUI, does not close the
      * player's GUI however.
-     * <p>
-     * <b>NOTE: THIS DOES NOT CLOSE THE GUI THE PROPER WAY!</b>
-     * <p>
-     * To close the GUI, use {@link PlayerGUI#onClose()}
-     * like <tt>plugin.guiManager().getPlayer(player).onClose()</tt>
      *
      * @param player The player that was viewing the GUI
      */
     public void onClose(Player player)
     {
         modules.forEach(module -> module.onClose(player, this));
+    }
+
+    public void open(Player player)
+    {
+        PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
+        navigationCheck(playerGUI);
+        playerGUI.setGUI(this);
+        onOpen(player);
+        player.openInventory(inventory);
+    }
+
+    public void close(Player player)
+    {
+        onClose(player);
+        player.closeInventory();
+    }
+
+    /**
+     * Checks whether the GUI is using a navigation system and if so calculate the forward
+     * and back navigations.
+     *
+     * @param playerGUI The <tt>PlayerGUI</tt> of the player viewing the GUI
+     */
+    private void navigationCheck(PlayerGUI playerGUI)
+    {
+        GUIContainer curGUI = playerGUI.getGUI();
+        if(!(this.containsModule(GUINavigatorModule.class) && curGUI.containsModule(GUINavigatorModule.class))) return;
+        GUINavigatorModule curModule = curGUI.getModule(GUINavigatorModule.class);
+        GUINavigatorModule openModule = this.getModule(GUINavigatorModule.class);
+        String curID = curModule.getNavigationID();
+        String openID = openModule.getNavigationID();
+        if(!curID.equals(openID)) return;
+        NavigationSystem system = playerGUI.getNaviSystem(curID);
+        if(system.hasBack() && system.getBack().equals(curGUI)) return;
+        system.addBack(curGUI);
+        if(!system.hasForward()) return;
+        system.resetForward();
     }
 
     /**

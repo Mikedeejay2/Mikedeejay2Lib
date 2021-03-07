@@ -59,7 +59,7 @@ public class GUIManager
     {
         if(!containsPlayer(player)) return;
         PlayerGUI gui = playerGUIs.get(player);
-        gui.onClose();
+        gui.getGUI().close(player);
         playerGUIs.remove(player);
     }
 

@@ -35,9 +35,7 @@ public class GUIOpenEvent implements GUIEvent
         ClickType clickType = event.getClick();
         if(clickType != ClickType.LEFT) return;
         if(gui.equals(guiToOpen)) return;
-        PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
-        navigationCheck(gui, playerGUI);
-        playerGUI.setGUI(guiToOpen);
+        guiToOpen.open(player);
     }
 
     /**

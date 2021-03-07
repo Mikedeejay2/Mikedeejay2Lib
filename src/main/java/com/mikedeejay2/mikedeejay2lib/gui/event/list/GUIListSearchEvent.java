@@ -28,7 +28,7 @@ public class GUIListSearchEvent implements GUIEvent
         Player player = (Player) event.getWhoClicked();
         ClickType clickType = event.getClick();
         if(clickType != ClickType.LEFT) return;
-        plugin.guiManager().getPlayer(player).onClose();
+        gui.close(player);
         player.closeInventory();
         // TODO: Use chat event in GUIListener to capture search result
         GUIListModule list = gui.getModule(GUIListModule.class);

@@ -87,7 +87,7 @@ public class GUIListener implements Listener
             playerGUI.setGuiChange(false);
             return;
         }
-        playerGUI.onClose();
+        curGUI.onClose(player);
         playerGUI.setGUIState(false);
     }
 
