@@ -105,7 +105,7 @@ public final class MathUtil
     public static List<Vector> getCircleVectors(Location loc, double radius, double density)
     {
         List<Vector> list = new ArrayList<>();
-        for(double i = 0; i < 360; i += density)
+        for(double i = 0; i < 360; i += 1.0 / density)
         {
             Vector vector = getVectorAroundCircle(loc, radius, Math.toRadians(i));
             list.add(vector);
