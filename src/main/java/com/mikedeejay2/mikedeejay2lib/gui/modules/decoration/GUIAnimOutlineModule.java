@@ -45,7 +45,7 @@ public class GUIAnimOutlineModule implements GUIModule
      * Method injected into the head of the GUI that adds an outline to the GUI
      *
      * @param player Player that is viewing the GUI
-     * @param gui    The GUi
+     * @param gui    The GUI
      */
     @Override
     public void onOpenHead(Player player, GUIContainer gui)
@@ -56,6 +56,7 @@ public class GUIAnimOutlineModule implements GUIModule
             cloned = outlineItem.clone();
             cloned.setDelay(1 + i);
             gui.setItem(1, i, cloned);
+
             cloned = outlineItem.clone();
             cloned.setDelay(gui.getRows() + i);
             gui.setItem(gui.getRows(), i, cloned);
@@ -64,10 +65,11 @@ public class GUIAnimOutlineModule implements GUIModule
         {
             cloned = outlineItem.clone();
             cloned.setDelay(i + 1);
-            gui.setItem(i, 1, outlineItem);
+            gui.setItem(i, 1, cloned);
+
             cloned = outlineItem.clone();
             cloned.setDelay(i + gui.getCols());
-            gui.setItem(i, gui.getCols(), outlineItem);
+            gui.setItem(i, gui.getCols(), cloned);
         }
     }
 }
