@@ -15,7 +15,7 @@ import java.util.Map;
  *
  * @author Mikedeejay2
  */
-public class GUISwitchListPageEvent implements GUIEvent
+public class GUISwitchListLocEvent implements GUIEvent
 {
     @Override
     public void execute(InventoryClickEvent event, GUIContainer gui)

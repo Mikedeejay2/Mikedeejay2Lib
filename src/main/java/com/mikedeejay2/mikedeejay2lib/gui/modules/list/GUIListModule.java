@@ -5,7 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchOffEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUISwitchListPageEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUISwitchListLocEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
@@ -24,7 +24,7 @@ import java.util.Map;
 
 /**
  * GUI Module that turns the GUI into a list that shows a list of different
- * <tt>GUIItems</tt>. A list can also have multiple pages and can be searched
+ * <tt>GUIItems</tt>. A list can also have multiple pages (or scroll!) and can be searched
  * if the feature is enabled.
  *
  * @author Mikedeejay2
@@ -40,7 +40,7 @@ public class GUIListModule implements GUIModule
     protected boolean searchMode;
     // The search term that has previously been used
     protected String searchTerm;
-    // The current page that the player is on
+    // The current location that the player is on
     protected int curLoc;
     // Items that will be appended to the very end of the list
     protected List<GUIItem> endItems;
@@ -111,16 +111,16 @@ public class GUIListModule implements GUIModule
             {
                 this.backItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_UP_WHITE.get(), 1, GUIContainer.EMPTY_NAME));
                 this.forwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_DOWN_WHITE.get(), 1, GUIContainer.EMPTY_NAME));
-                backItem.addEvent(new GUISwitchListPageEvent());
-                forwardItem.addEvent(new GUISwitchListPageEvent());
+                backItem.addEvent(new GUISwitchListLocEvent());
+                forwardItem.addEvent(new GUISwitchListLocEvent());
             } break;
             case PAGED:
             default:
             {
                 this.backItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_BACKWARD_WHITE.get(), 1, GUIContainer.EMPTY_NAME));
                 this.forwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_FORWARD_WHITE.get(), 1, GUIContainer.EMPTY_NAME));
-                backItem.addEvent(new GUISwitchListPageEvent());
-                forwardItem.addEvent(new GUISwitchListPageEvent());
+                backItem.addEvent(new GUISwitchListLocEvent());
+                forwardItem.addEvent(new GUISwitchListLocEvent());
             } break;
         }
 
@@ -204,7 +204,7 @@ public class GUIListModule implements GUIModule
             searchThroughList();
         }
         updateListControls(layer, player);
-        updatePage(layer);
+        updateView(layer);
     }
 
     /**
@@ -252,11 +252,11 @@ public class GUIListModule implements GUIModule
     }
 
     /**
-     * Updates the current page, called on {@link GUIListModule#onUpdateHead(Player player, GUIContainer gui)}
+     * Updates the current list view, called on {@link GUIListModule#onUpdateHead(Player player, GUIContainer gui)}
      *
-     * @param layer  The layer to update the page on
+     * @param layer  The layer to update the view on
      */
-    private void updatePage(GUILayer layer)
+    private void updateView(GUILayer layer)
     {
         int topRow = topLeft.getKey();
         // int bottomRow = bottomRight.getKey(); // unused
@@ -265,10 +265,10 @@ public class GUIListModule implements GUIModule
         // int rowDif = getSlotsPerRow(); // unused
         int colDif = getSlotsPerCol();
 
-        int pageSize = getViewSize();
+        int viewSize = getViewSize();
         int listSize = getCurSize();
-        int pageOffset = getViewOffset();
-        for(int i = 0; i < pageSize; i++)
+        int viewOffset = getViewOffset();
+        for(int i = 0; i < viewSize; i++)
         {
             // This algorithm calculates the normalized slot index based off of the bounding box of the list
             int slotIndex = ((topRow-1) * (layer.getCols() * ((int)(i / colDif)+1))) + (leftCol) + (i % colDif);
@@ -278,14 +278,14 @@ public class GUIListModule implements GUIModule
             // If a change has occurred all previous items have to be removed from the view first
             if(changed) layer.removeItem(row, col);
 
-            if(listSize >= (i+1) + pageOffset) // List items
+            if(listSize >= (i+1) + viewOffset) // List items
             {
-                GUIItem item = searchMode ? searchList.get(i + pageOffset).getKey() : list.get(i + pageOffset);
+                GUIItem item = searchMode ? searchList.get(i + viewOffset).getKey() : list.get(i + viewOffset);
                 layer.setItem(row, col, item);
             }
-            else if((i + 1) + pageOffset > listSize && !searchMode) // End items
+            else if((i + 1) + viewOffset > listSize && !searchMode) // End items
             {
-                int index = (i + pageOffset) - listSize;
+                int index = (i + viewOffset) - listSize;
 
                 if(endItems.size() > index)
                 {
@@ -304,7 +304,7 @@ public class GUIListModule implements GUIModule
      */
     private void updateListControls(GUILayer layer, Player player)
     {
-        int amountOfPages = getMaxViews(layer);
+        int maxViews = getMaxViews(layer);
 
         // Remove previous forward items
         for(Map.Entry<Integer, Integer> entry : forwards)
@@ -327,7 +327,7 @@ public class GUIListModule implements GUIModule
 
         for(int i = curLoc + 1; i <= curLoc + forwardSize; ++i)
         {
-            if(i > amountOfPages || i <= 0) continue;
+            if(i > maxViews || i <= 0) continue;
             int index = Math.abs(i - curLoc) - 1;
             Map.Entry<Integer, Integer> entry = forwards.get(index);
             int row = entry.getKey();
@@ -352,7 +352,7 @@ public class GUIListModule implements GUIModule
         }
         for(int i = curLoc - 1; i >= curLoc - backwardSize; --i)
         {
-            if(i > amountOfPages || i <= 0) continue;
+            if(i > maxViews || i <= 0) continue;
             int index = Math.abs(i - curLoc) - 1;
             Map.Entry<Integer, Integer> entry = backs.get(index);
             int row = entry.getKey();
@@ -409,8 +409,8 @@ public class GUIListModule implements GUIModule
      */
     public void changeGUIItem(GUIItem item, int row, int col, GUIContainer gui)
     {
-        int pageOffset = getViewOffset();
-        int index = gui.getSlotFromRowCol(row-2, col-1) + pageOffset;
+        int viewOffset = getViewOffset();
+        int index = gui.getSlotFromRowCol(row-2, col-1) + viewOffset;
         list.set(index, item);
         changed = true;
     }
@@ -459,8 +459,8 @@ public class GUIListModule implements GUIModule
      */
     public int getListItemIndex(int row, int col, GUIContainer gui)
     {
-        int pageOffset = getViewOffset();
-        int index = gui.getSlotFromRowCol(row-2, col-1) + pageOffset;
+        int viewOffset = getViewOffset();
+        int index = gui.getSlotFromRowCol(row-2, col-1) + viewOffset;
         if(searchMode)
         {
             index = searchList.get(index).getValue();
@@ -527,13 +527,25 @@ public class GUIListModule implements GUIModule
     }
 
     /**
-     * Change the page to a new page
+     * Add an item to the list at a specified index
      *
-     * @param page The page number
+     * @param index The index to add the item at
+     * @param item The item that will be added to the list
      */
-    public void setListLoc(int page)
+    public void addListItem(int index, GUIItem item)
     {
-        curLoc = page;
+        list.add(index, item);
+        changed = true;
+    }
+
+    /**
+     * Change the list view to a new location
+     *
+     * @param location The new location
+     */
+    public void setListLoc(int location)
+    {
+        curLoc = location;
         changed = true;
     }
 
@@ -687,9 +699,9 @@ public class GUIListModule implements GUIModule
     }
 
     /**
-     * Get the current page that this list is displaying
+     * Get the current view location that this list is displaying
      *
-     * @return The current page
+     * @return The current view location
      */
     public int getCurLoc()
     {
@@ -1068,8 +1080,6 @@ public class GUIListModule implements GUIModule
 
     /**
      * Set the prefix of the page change name. This can be used to change the color of text or add text
-     *
-     * @return The new page change prefix
      */
     public void setPageChangePreName(String pageChangePreName)
     {
@@ -1088,8 +1098,6 @@ public class GUIListModule implements GUIModule
 
     /**
      * Set the prefix of the page change name. This can be used to change the color of text or add text
-     *
-     * @return The new scroll change prefix
      */
     public void setScrollChangePreName(String scrollChangePreName)
     {
