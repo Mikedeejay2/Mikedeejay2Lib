@@ -14,20 +14,20 @@ import java.util.*;
 public final class DebugTimer
 {
     // The time that the debug timer was started
-    private long startTime;
+    protected long startTime;
     // The list of entries that this timer holds
-    private List<TimerEntry> entries;
+    protected List<TimerEntry> entries;
     // The name of this timer
-    private String name;
+    protected String name;
     // The overall difference from internal processing
-    long overallDifference;
+    protected long overallDifference;
 
     public DebugTimer(String name)
     {
         this.name = name;
         this.entries = new ArrayList<>();
+        this.overallDifference = 0;
         this.startTime = System.nanoTime();
-        overallDifference = 0;
     }
 
     /**
@@ -78,6 +78,21 @@ public final class DebugTimer
                     perTick + " times a tick, " +
                     perSecond + " times a second.");
         }
+    }
+
+    /**
+     * Get the end time in milliseconds of the timer. Using this method will break the print method, as
+     * it prematurely ends the timer to return the accurate time.
+     *
+     * @param decimalPlaces The decimal places to return
+     * @return The end time of the timer
+     */
+    public double getEndTime(int decimalPlaces)
+    {
+        long endTime = System.nanoTime();
+        double overallNonRounded = ((endTime - startTime) / 1000000.0);
+        double multiplier = Math.pow(10.0, decimalPlaces);
+        return Math.round(overallNonRounded * multiplier) / multiplier;
     }
 
     /**
