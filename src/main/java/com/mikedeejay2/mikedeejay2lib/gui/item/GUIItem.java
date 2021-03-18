@@ -619,37 +619,37 @@ public class GUIItem implements Cloneable
 
     public GUIItem addGlowView()
     {
-        addEnchantView(new GlowEnchantment(), 0);
+        addEnchantView(GlowEnchantment.get(), 0);
         return this;
     }
 
     public GUIItem removeGlowView()
     {
-        removeEnchantView(new GlowEnchantment());
+        removeEnchantView(GlowEnchantment.get());
         return this;
     }
 
     public GUIItem addGlowBase()
     {
-        addEnchantBase(new GlowEnchantment(), 0);
+        addEnchantBase(GlowEnchantment.get(), 0);
         return this;
     }
 
     public GUIItem removeGlowBase()
     {
-        removeEnchantBase(new GlowEnchantment());
+        removeEnchantBase(GlowEnchantment.get());
         return this;
     }
 
     public GUIItem addGlow()
     {
-        addEnchant(new GlowEnchantment(), 0);
+        addEnchant(GlowEnchantment.get(), 0);
         return this;
     }
 
     public GUIItem removeGlow()
     {
-        removeEnchant(new GlowEnchantment());
+        removeEnchant(GlowEnchantment.get());
         return this;
     }
 

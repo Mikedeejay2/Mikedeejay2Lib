@@ -17,7 +17,9 @@ import java.lang.reflect.Field;
  */
 public final class GlowEnchantment extends Enchantment
 {
-    public GlowEnchantment()
+    private static GlowEnchantment enchant;
+
+    private GlowEnchantment()
     {
         super(new NamespacedKey("mikedeejay2lib", "glow"));
     }
@@ -91,6 +93,7 @@ public final class GlowEnchantment extends Enchantment
         try
         {
             GlowEnchantment glow = new GlowEnchantment();
+            enchant = glow;
             Enchantment.registerEnchantment(glow);
         }
         catch(IllegalArgumentException exception)
@@ -102,5 +105,10 @@ public final class GlowEnchantment extends Enchantment
             plugin.getLogger().severe("Unable to register glow enchantment: Unknown exception occurred, stack trace below:");
             exception.printStackTrace();
         }
+    }
+
+    public static GlowEnchantment get()
+    {
+        return enchant;
     }
 }
