@@ -28,6 +28,8 @@ public class LangManager
     /**
      * Create a LangManager and load the default language (if any) and
      * the english language (en_us)
+     *
+     * @param plugin A reference to the plugin
      */
     public LangManager(PluginBase plugin)
     {

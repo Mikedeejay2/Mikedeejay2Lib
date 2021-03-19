@@ -132,6 +132,8 @@ public class GUIItem implements Cloneable
 
     /**
      * Reset the view item to the base item
+     *
+     * @return A reference to this <tt>GUIItem</tt>
      */
     public GUIItem resetViewItem()
     {

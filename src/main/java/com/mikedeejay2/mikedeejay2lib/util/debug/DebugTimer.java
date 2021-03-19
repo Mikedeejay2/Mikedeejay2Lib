@@ -49,6 +49,8 @@ public final class DebugTimer
 
     /**
      * Print the report for this debug timer
+     *
+     * @param decimalPlaces The amount of decimal places to print
      */
     public void printReport(int decimalPlaces)
     {

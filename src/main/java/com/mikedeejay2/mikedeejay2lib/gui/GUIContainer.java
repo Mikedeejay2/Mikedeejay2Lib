@@ -772,6 +772,7 @@ public class GUIContainer
      * Get a <tt>GUILayer</tt> from this GUI
      *
      * @param layerName The name of the new layer
+     * @param overlay Whether the layer should be of an overlay type or not
      * @return The requested layer
      */
     public GUILayer getLayer(String layerName, boolean overlay)

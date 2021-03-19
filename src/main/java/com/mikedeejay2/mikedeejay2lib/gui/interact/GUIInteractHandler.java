@@ -119,6 +119,7 @@ public abstract class GUIInteractHandler
      * Get a <tt>GUIInteractExecutor</tt> from this handlers executor list
      *
      * @param executorClass The <tt>GUIInteractExecutor</tt> class to find and get from the list
+     * @param <T> The type of <tt>GUIInteractExecutor</tt>, specified from the given class
      * @return The requested <tt>GUIInteractExecutor</tt>
      */
     public <T extends GUIInteractExecutor> T getExecutor(Class<T> executorClass)

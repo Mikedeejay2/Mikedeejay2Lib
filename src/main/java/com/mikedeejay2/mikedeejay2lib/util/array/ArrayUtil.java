@@ -62,6 +62,7 @@ public final class ArrayUtil
      * Trim an array down to a specific start and end index
      *
      * @param arr        The array to trim
+     * @param clazz      The class type to return the array in
      * @param startIndex The starting index to keep
      * @param <T>        The type of the array
      * @return The trimmed array
@@ -75,8 +76,9 @@ public final class ArrayUtil
      * Trim an array down to a specific start and end index
      *
      * @param arr        The array to trim
+     * @param clazz      The class type to return
      * @param startIndex The starting index to keep
-     * @param endIndex   The ending index to keep (<tt>i < endIndex</tt>)
+     * @param endIndex   The ending index to keep (<tt>i less than endIndex</tt>)
      * @param <T>        The type of the array
      * @return The trimmed array
      */

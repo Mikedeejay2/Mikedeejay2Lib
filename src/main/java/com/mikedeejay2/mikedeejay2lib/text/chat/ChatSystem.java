@@ -69,6 +69,7 @@ public class ChatSystem
     /**
      * Add a new <tt>ChatSlide</tt> to this <tt>ChatSystem</tt> at a specific index
      *
+     * @param index The index to add the <tt>ChatSlide</tt> to
      * @return The newly created <tt>ChatSlide</tt>
      */
     public ChatSlide createSlide(int index)

@@ -29,6 +29,7 @@ public final class ParticleUtil
      * @param offsetX  The offset in the X direction of the particle
      * @param offsetY  The offset in the Y direction of the particle
      * @param offsetZ  The offset in the Z direction of the particle
+     * @param density  The density of the particles
      * @param force    Force the particles to be rendered even when outside of view distance
      */
     public static void particleLine(Location start, Location end, Particle particle, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
@@ -50,6 +51,7 @@ public final class ParticleUtil
      * @param particle The particle that should be used
      * @param count    The count of particles per 0.5 blocks
      * @param speed    The speed of the particles
+     * @param density  The density of the particles
      * @param force    Force the particles to be rendered even when outside of view distance
      */
     public static void particleLine(Location start, Location end, Particle particle, int count, float speed, double density, boolean force)
@@ -65,6 +67,7 @@ public final class ParticleUtil
      * @param particle The particle that should be used
      * @param count    The count of particles per 0.5 blocks
      * @param speed    The speed of the particles
+     * @param density  The density of the particles
      */
     public static void particleLine(Location start, Location end, Particle particle, int count, float speed, double density)
     {
@@ -74,6 +77,7 @@ public final class ParticleUtil
     /**
      * Add a particle to an entity that will track the entity for the lifetime of the entity or the lifetime of the server
      *
+     * @param plugin        A reference to the plugin for creating the runnable
      * @param entity        Entity to add the particle to
      * @param particle      The particle type to add
      * @param timeToLive    The time for the particle to exist on the entity

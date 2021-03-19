@@ -32,6 +32,8 @@ public class CommandManager implements CommandExecutor
 
     /**
      * Setup the command manager by initializing all subcommands
+     *
+     * @param commandName The name of the base command
      */
     public void setup(String commandName)
     {

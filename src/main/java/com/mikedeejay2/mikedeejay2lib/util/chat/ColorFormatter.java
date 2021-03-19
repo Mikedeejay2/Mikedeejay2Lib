@@ -28,11 +28,11 @@ public final class ColorFormatter
     /**
      * Format all alternative color codes in the message.
      * <p>
-     * For example, <tt>&c</tt> will become a red color, <tt>&1</tt> will become a blue color.
+     * For example, <tt>"*AND*c"</tt> will become a red color, <tt>"*AND*1"</tt> will become a blue color.
      * <p>
      * Color codes are converted using {@link ChatColor#translateAlternateColorCodes(char, String)}
      * 
-     * @param message The message to have alternate (&) color codes translated to their respective colors
+     * @param message The message to have alternate (The AND symbol) color codes translated to their respective colors
      * @return The formatted message
      */
     public String formatAltColorCodes(String message)
@@ -68,7 +68,7 @@ public final class ColorFormatter
     /**
      * Format both hex and alternate color codes in the message.
      * <p>
-     * For example, <tt>&c</tt> would be an alternate color code that would translate to red,
+     * For example, <code>"*AND*c"</code> would be an alternate color code that would translate to red,
      * while <tt>#0000ff</tt> would be a hex code that would translate to a blue color.
      * <p>
      * If the Minecraft version is less than 1.16 (aka unsupported), hex colors will only be removed but formatting

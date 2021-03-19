@@ -140,6 +140,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     /**
      * Schedules this to run after the specified number of server ticks.
      *
+     * @param plugin the reference to the plugin scheduling task
      * @return a BukkitTask that contains the id number
      */
     public synchronized BukkitTask runTaskLater(Plugin plugin)
@@ -166,6 +167,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     /**
      * Schedules this to run asynchronously after the specified number of server ticks.
      *
+     * @param plugin the reference to the plugin scheduling task
      * @return a BukkitTask that contains the id number
      */
     public synchronized BukkitTask runTaskLaterAsynchronously(Plugin plugin)
@@ -194,6 +196,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     /**
      * Schedules this to repeatedly run until cancelled, starting after the specified number of server ticks.
      *
+     * @param plugin the reference to the plugin scheduling task
      * @return a BukkitTask that contains the id number
      */
     public synchronized BukkitTask runTaskTimer(Plugin plugin)
@@ -205,6 +208,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     /**
      * Schedules this to repeatedly run until cancelled, starting after the specified number of server ticks.
      *
+     * @param plugin the reference to the plugin scheduling task
      * @param period the ticks to wait between runs
      * @return a BukkitTask that contains the id number
      */
@@ -234,6 +238,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     /**
      * Schedules this to repeatedly run asynchronously until cancelled, starting after the specified number of server ticks.
      *
+     * @param plugin the reference to the plugin scheduling task
      * @return a BukkitTask that contains the id number
      */
     public synchronized BukkitTask runTaskTimerAsynchronously(Plugin plugin)
@@ -245,6 +250,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     /**
      * Schedules this to repeatedly run asynchronously until cancelled, starting after the specified number of server ticks.
      *
+     * @param plugin the reference to the plugin scheduling task
      * @param period the ticks to wait between runs
      * @return a BukkitTask that contains the id number
      */
@@ -277,6 +283,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * Schedules this to repeatedly run until cancelled, starting after the specified number of server ticks.
      * Stops when the runnable has been run for count times
      *
+     * @param plugin the reference to the plugin scheduling task
      * @return a BukkitTask that contains the id number
      */
     public synchronized BukkitTask runTaskTimerCounted(Plugin plugin)
@@ -289,6 +296,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * Schedules this to repeatedly run until cancelled, starting after the specified number of server ticks.
      * Stops when the runnable has been run for count times
      *
+     * @param plugin the reference to the plugin scheduling task
      * @param count the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
      */
@@ -302,6 +310,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * Schedules this to repeatedly run until cancelled, starting after the specified number of server ticks.
      * Stops when the runnable has been run for count times
      *
+     * @param plugin the reference to the plugin scheduling task
      * @param period the ticks to wait between runs
      * @param count  the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
@@ -335,6 +344,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * Schedules this to repeatedly run asynchronously until cancelled, starting after the specified number of server ticks.
      * Stops when the runnable has been run for count times
      *
+     * @param plugin the reference to the plugin scheduling task
      * @return a BukkitTask that contains the id number
      */
     public synchronized BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin)
@@ -347,6 +357,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * Schedules this to repeatedly run asynchronously until cancelled, starting after the specified number of server ticks.
      * Stops when the runnable has been run for count times
      *
+     * @param plugin the reference to the plugin scheduling task
      * @param count the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
      */
@@ -360,6 +371,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * Schedules this to repeatedly run asynchronously until cancelled, starting after the specified number of server ticks.
      * Stops when the runnable has been run for count times
      *
+     * @param plugin the reference to the plugin scheduling task
      * @param period the ticks to wait between runs
      * @param count  the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number

@@ -177,6 +177,7 @@ public abstract class DataFile implements DataObject
      * This is useful for configs, especially when a config is updated so that the
      * user does not have to manually add new keys to the config.
      *
+     * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
      */
     public abstract boolean updateFromJar(boolean throwErrors);

@@ -70,6 +70,7 @@ public class GUIAnimationModule implements GUIModule
      * Add an item to the runtime
      *
      * @param item Item to add
+     * @param properties The <tt>AnimatedGUIItemProperties</tt> of the item
      */
     public void addItem(AnimatedGUIItem item, AnimatedGUIItemProperties properties)
     {

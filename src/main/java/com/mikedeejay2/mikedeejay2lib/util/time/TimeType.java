@@ -32,7 +32,7 @@ public enum TimeType
     /**
      * For cycling time types get the next type in the list
      *
-     * @return The next shortest TimeType (TICK->SECOND->MINUTE...etc)
+     * @return The next shortest TimeType (<code>TICK to SECOND to MINUTE</code>...etc)
      */
     public TimeType getNextType()
     {

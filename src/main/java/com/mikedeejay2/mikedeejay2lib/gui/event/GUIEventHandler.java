@@ -121,6 +121,7 @@ public class GUIEventHandler implements Cloneable
      * Attempts to get a <tt>GUIEvent</tt> of the specified class
      *
      * @param eventClass The event class to search for
+     * @param <T> The <tt>GUIEvent</tt> type, from given class
      * @return The <tt>GUIEvent</tt> of the class type if it exists, null if it doesn't
      */
     public <T extends GUIEvent> T getEvent(Class<T> eventClass)

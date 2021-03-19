@@ -1079,6 +1079,8 @@ public class GUIListModule implements GUIModule
 
     /**
      * Set the prefix of the page change name. This can be used to change the color of text or add text
+     *
+     * @param pageChangePreName The new page change prefix
      */
     public void setPageChangePreName(String pageChangePreName)
     {
@@ -1097,6 +1099,8 @@ public class GUIListModule implements GUIModule
 
     /**
      * Set the prefix of the page change name. This can be used to change the color of text or add text
+     *
+     * @param scrollChangePreName The new scroll change prefix
      */
     public void setScrollChangePreName(String scrollChangePreName)
     {

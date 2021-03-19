@@ -9,10 +9,10 @@ import java.util.regex.Pattern;
 /**
  * A more advanced form of {@link Chat#chat(String)} that does the following:
  * <ul>
- *     <li>Convert alternate color codes to their respective colors (&c -> red, &1 -> blue)</li>
- *     <li>Convert hex codes to their respective colors if the version if 1.16 or above (<tt>#ff0000</tt> -> red, <tt>#0000ff</tt> -> blue)</li>
- *     <li>Convert color shortcuts (see {@link ColorShortcut}) to their respective colors (<tt>%red%</tt> -> red, <tt>%blue%</tt> -> blue)</li>
- *     <li>Ability to use placeholder formatting for hex codes and color shortcuts (<tt>%ff0000%</tt> -> red, <tt>%b%</tt> -> blue)</li>
+ *     <li>Convert alternate color codes to their respective colors (<tt>"*AND*c"</tt> = red, <tt>"*AND*1"</tt> = blue)</li>
+ *     <li>Convert hex codes to their respective colors if the version if 1.16 or above (<tt>#ff0000</tt> = red, <tt>#0000ff</tt> = blue)</li>
+ *     <li>Convert color shortcuts (see {@link ColorShortcut}) to their respective colors (<tt>%red%</tt> = red, <tt>%blue%</tt> = blue)</li>
+ *     <li>Ability to use placeholder formatting for hex codes and color shortcuts (<tt>%ff0000%</tt> = red, <tt>%b%</tt> = blue)</li>
  * </ul>
  *
  * @author Mikedeejay2
@@ -36,11 +36,11 @@ public final class ColorFormatterAdvanced
     /**
      * Format all alternative color codes in the message.
      * <p>
-     * For example, <tt>&c</tt> will become a red color, <tt>&1</tt> will become a blue color.
+     * For example, <tt>"*AND*c"</tt> will become a red color, <tt>"*AND*1"</tt> will become a blue color.
      * <p>
      * Color codes are converted using {@link ChatColor#translateAlternateColorCodes(char, String)}
      * 
-     * @param message The message to have alternate (&) color codes translated to their respective colors
+     * @param message The message to have alternate (The AND symbol) color codes translated to their respective colors
      * @return The formatted message
      */
     public String formatAltColorCodes(String message)
@@ -112,7 +112,7 @@ public final class ColorFormatterAdvanced
     /**
      * Format hex, alternate color codes, AND color shortcuts.
      * <p>
-     * For example, <tt>&c</tt> would be an alternate color code that would translate to red,
+     * For example, <tt>"*AND*c"</tt> would be an alternate color code that would translate to red,
      * while <tt>#0000ff</tt> would be a hex code that would translate to a blue color.
      * Placeholders can also be used for hex and color shortcuts, such as <tt>%ff0000%</tt> would
      * translate to red while <tt>%blue%</tt> would translate to blue.
