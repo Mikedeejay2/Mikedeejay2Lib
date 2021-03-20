@@ -37,9 +37,9 @@ public class GUIListener implements Listener
     public void onClick(InventoryClickEvent event)
     {
         Player player = (Player) event.getWhoClicked();
-        GUIManager guiManager = plugin.guiManager();
+        GUIManager guiManager = plugin.getGUIManager();
         if(!guiManager.containsPlayer(player)) return;
-        PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
+        PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
         if(!playerGUI.isGuiOpened()) return;
 
         GUIContainer curGUI           = playerGUI.getGUI();
@@ -77,7 +77,7 @@ public class GUIListener implements Listener
     public void onClose(InventoryCloseEvent event)
     {
         Player player = (Player) event.getPlayer();
-        GUIManager manager = plugin.guiManager();
+        GUIManager manager = plugin.getGUIManager();
         if(!manager.containsPlayer(player)) return;
         PlayerGUI playerGUI = manager.getPlayer(player);
         GUIContainer curGUI = playerGUI.getGUI();
@@ -101,7 +101,7 @@ public class GUIListener implements Listener
     public void onOpen(InventoryOpenEvent event)
     {
         Player     player    = (Player) event.getPlayer();
-        GUIManager manager   = plugin.guiManager();
+        GUIManager manager   = plugin.getGUIManager();
         if(!manager.containsPlayer(player)) return;
         PlayerGUI  playerGUI = manager.getPlayer(player);
         Inventory  guiInv    = playerGUI.getGUI().getInventory();
@@ -119,8 +119,8 @@ public class GUIListener implements Listener
     public void onDrag(InventoryDragEvent event)
     {
         Player player = (Player) event.getWhoClicked();
-        if(!plugin.guiManager().containsPlayer(player)) return;
-        GUIContainer curGUI = plugin.guiManager().getPlayer(player).getGUI();
+        if(!plugin.getGUIManager().containsPlayer(player)) return;
+        GUIContainer curGUI = plugin.getGUIManager().getPlayer(player).getGUI();
         if(curGUI == null) return;
         Inventory inventory = event.getInventory();
         Inventory guiInventory = curGUI.getInventory();
@@ -137,6 +137,6 @@ public class GUIListener implements Listener
     public void onPlayerQuit(PlayerQuitEvent event)
     {
         Player player = event.getPlayer();
-        plugin.guiManager().removePlayer(player);
+        plugin.getGUIManager().removePlayer(player);
     }
 }

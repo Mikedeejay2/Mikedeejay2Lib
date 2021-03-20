@@ -61,7 +61,7 @@ public class NMSHandler
             } break;
             default:
             {
-                plugin.getLogger().severe(plugin.langManager().getText("errors.version_not_valid"));
+                plugin.getLogger().severe(plugin.getLibLangManager().getText("errors.version_not_valid"));
             }
         }
     }

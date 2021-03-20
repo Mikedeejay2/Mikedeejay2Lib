@@ -46,24 +46,24 @@ public class GUINavigatorModule implements GUIModule
         navigationCheck(player, gui);
         if(validBackItem == null)
         {
-            String backward = plugin.langManager().getTextLib(player, "gui.modules.navigator.backward");
+            String backward = plugin.getLibLangManager().getText(player, "gui.modules.navigator.backward");
             this.validBackItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_LEFT_WHITE.get(), 1, "&f" + backward));
             validBackItem.addEvent(new GUINavBackEvent(plugin));
         }
         if(validForwardItem == null)
         {
-            String forward = plugin.langManager().getTextLib(player, "gui.modules.navigator.forward");
+            String forward = plugin.getLibLangManager().getText(player, "gui.modules.navigator.forward");
             this.validForwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_RIGHT_WHITE.get(), 1, "&f" + forward));
             validForwardItem.addEvent(new GUINavForwardEvent(plugin));
         }
         if(invalidBackItem == null)
         {
-            String backward = plugin.langManager().getTextLib(player, "gui.modules.navigator.backward");
+            String backward = plugin.getLibLangManager().getText(player, "gui.modules.navigator.backward");
             this.invalidBackItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_LEFT_LIGHT_GRAY.get(), 1, "&7" + backward));
         }
         if(invalidForwardItem == null)
         {
-            String forward = plugin.langManager().getTextLib(player, "gui.modules.navigator.forward");
+            String forward = plugin.getLibLangManager().getText(player, "gui.modules.navigator.forward");
             this.invalidForwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_RIGHT_LIGHT_GRAY.get(), 1, "&7" + forward));
         }
     }
@@ -76,7 +76,7 @@ public class GUINavigatorModule implements GUIModule
      */
     private void navigationCheck(Player player, GUIContainer gui)
     {
-        PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
+        PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
         GUIContainer curGUI = playerGUI.getGUI();
         if(!(gui.containsModule(GUINavigatorModule.class) && curGUI.containsModule(GUINavigatorModule.class))) return;
         GUINavigatorModule curModule = curGUI.getModule(GUINavigatorModule.class);
@@ -100,7 +100,7 @@ public class GUINavigatorModule implements GUIModule
     @Override
     public void onUpdateHead(Player player, GUIContainer gui)
     {
-        NavigationSystem system = plugin.guiManager().getPlayer(player).getNaviSystem(navigationID);
+        NavigationSystem system = plugin.getGUIManager().getPlayer(player).getNaviSystem(navigationID);
         GUILayer layer = gui.getLayer("overlay", true);
 
         if(system.hasBack())

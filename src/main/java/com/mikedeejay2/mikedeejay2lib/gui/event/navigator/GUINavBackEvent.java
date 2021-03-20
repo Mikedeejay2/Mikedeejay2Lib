@@ -31,7 +31,7 @@ public class GUINavBackEvent implements GUIEvent
         ClickType clickType = event.getClick();
         if(clickType != ClickType.LEFT) return;
         GUINavigatorModule module = gui.getModule(GUINavigatorModule.class);
-        PlayerGUI playerGUI = plugin.guiManager().getPlayer(player);
+        PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
         NavigationSystem system = playerGUI.getNaviSystem(module.getNavigationID());
         GUIContainer backGUI = system.getBack();
         system.removeBack();

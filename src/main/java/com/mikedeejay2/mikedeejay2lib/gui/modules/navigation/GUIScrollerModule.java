@@ -30,7 +30,7 @@ public class GUIScrollerModule implements GUIModule
     {
         if(upItem == null)
         {
-            String name = plugin.langManager().getTextLib(player, "gui.modules.scroller.up");
+            String name = plugin.getLibLangManager().getText(player, "gui.modules.scroller.up");
             this.upItem = new AnimatedGUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_UP_WHITE.get(), 1, "&f" + name), false, 1, true);
             upItem.addEvent(new GUIScrollEvent(-1, 0));
             AnimatedGUIItem upItemAnim = (AnimatedGUIItem) upItem;
@@ -41,7 +41,7 @@ public class GUIScrollerModule implements GUIModule
 
         if(downItem == null)
         {
-            String name = plugin.langManager().getTextLib(player, "gui.modules.scroller.down");
+            String name = plugin.getLibLangManager().getText(player, "gui.modules.scroller.down");
             this.downItem = new AnimatedGUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_DOWN_WHITE.get(), 1, "&f" + name), false, 1, true);
             downItem.addEvent(new GUIScrollEvent(1, 0));
             AnimatedGUIItem downItemAnim = (AnimatedGUIItem) downItem;
@@ -52,7 +52,7 @@ public class GUIScrollerModule implements GUIModule
 
         if(leftItem == null)
         {
-            String name = plugin.langManager().getTextLib(player, "gui.modules.scroller.left");
+            String name = plugin.getLibLangManager().getText(player, "gui.modules.scroller.left");
             this.leftItem = new AnimatedGUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_LEFT_WHITE.get(), 1, "&f" + name), false, 1, true);
             leftItem.addEvent(new GUIScrollEvent(0, -1));
             AnimatedGUIItem leftItemAnim = (AnimatedGUIItem) leftItem;
@@ -63,7 +63,7 @@ public class GUIScrollerModule implements GUIModule
 
         if(rightItem == null)
         {
-            String name = plugin.langManager().getTextLib(player, "gui.modules.scroller.right");
+            String name = plugin.getLibLangManager().getText(player, "gui.modules.scroller.right");
             this.rightItem = new AnimatedGUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_RIGHT_WHITE.get(), 1, "&f" + name), false, 1, true);
             rightItem.addEvent(new GUIScrollEvent(0, 1));
             AnimatedGUIItem rightItemAnim = (AnimatedGUIItem) rightItem;

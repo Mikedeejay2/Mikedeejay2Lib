@@ -179,12 +179,12 @@ public class GUIListModule implements GUIModule
     {
         if(searchItem == null)
         {
-            this.searchItem = new GUIItem(ItemCreator.createItem(Material.COMPASS, 1, searchPreName + plugin.langManager().getTextLib(player, "gui.modules.list.search")));
+            this.searchItem = new GUIItem(ItemCreator.createItem(Material.COMPASS, 1, searchPreName + plugin.getLibLangManager().getText(player, "gui.modules.list.search")));
             searchItem.addEvent(new GUIListSearchEvent(plugin));
         }
         if(searchOffItem == null)
         {
-            this.searchOffItem = new GUIItem(ItemCreator.createItem(Material.BOOK, 1, searchOffPreName + plugin.langManager().getTextLib(player, "gui.modules.list.search_off")));
+            this.searchOffItem = new GUIItem(ItemCreator.createItem(Material.BOOK, 1, searchOffPreName + plugin.getLibLangManager().getText(player, "gui.modules.list.search_off")));
             searchOffItem.addEvent(new GUIListSearchOffEvent());
         }
     }
@@ -336,12 +336,12 @@ public class GUIListModule implements GUIModule
             switch(viewMode)
             {
                 case SCROLL:
-                    curItem.setNameView(Colors.format(scrollChangePreName + plugin.langManager().getTextLib(
+                    curItem.setNameView(Colors.format(scrollChangePreName + plugin.getLibLangManager().getText(
                             player, "gui.modules.list.scroll_forward")));
                     break;
                 case PAGED:
                 default:
-                    curItem.setNameView(Colors.format(pageChangePreName + plugin.langManager().getTextLib(
+                    curItem.setNameView(Colors.format(pageChangePreName + plugin.getLibLangManager().getText(
                             player, "gui.modules.list.page",
                             new String[]{"PAGE"},
                             new String[]{String.valueOf(i)}
@@ -361,12 +361,12 @@ public class GUIListModule implements GUIModule
             switch(viewMode)
             {
                 case SCROLL:
-                    curItem.setNameView(Colors.format(scrollChangePreName + plugin.langManager().getTextLib(
+                    curItem.setNameView(Colors.format(scrollChangePreName + plugin.getLibLangManager().getText(
                             player, "gui.modules.list.scroll_back")));
                     break;
                 case PAGED:
                 default:
-                    curItem.setNameView(Colors.format(pageChangePreName + plugin.langManager().getTextLib(
+                    curItem.setNameView(Colors.format(pageChangePreName + plugin.getLibLangManager().getText(
                             player, "gui.modules.list.page",
                             new String[]{"PAGE"},
                             new String[]{String.valueOf(i)}

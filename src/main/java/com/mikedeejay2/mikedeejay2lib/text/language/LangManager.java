@@ -25,15 +25,20 @@ public class LangManager
     protected HashMap<String, JsonFile> langFiles = new HashMap<>();
     protected ArrayList<String> doNotLoad = new ArrayList<>();
 
+    // Path to the language files
+    protected String filePath;
+
     /**
-     * Create a LangManager and load the default language (if any) and
-     * the english language (en_us)
+     * Create a <tt>LangManager</tt> and load the default language (if any) and
+     * the english language (<tt>en_us</tt>)
      *
      * @param plugin A reference to the plugin
+     * @param filePath The path to where the language files are stored in the plugin's jar
      */
-    public LangManager(PluginBase plugin)
+    public LangManager(PluginBase plugin, String filePath)
     {
         this.plugin = plugin;
+        this.filePath = filePath;
         loadLangFile(englishLang);
     }
 
@@ -59,7 +64,7 @@ public class LangManager
     public boolean loadLangFile(String locale)
     {
         if(locale == null || doNotLoad.contains(locale)) return true;
-        JsonFile file = new JsonFile(plugin, locale + ".json");
+        JsonFile file = new JsonFile(plugin, filePath + "/" + locale + ".json");
 
         doNotLoad.add(locale);
         if(file.loadFromJar(false))
@@ -72,7 +77,7 @@ public class LangManager
 
     /**
      * Attempt to load a lang file based off of a locale.
-     * Only to be used with the locale specified in config.yml
+     * Only to be used with the locale specified in <tt>config.yml</tt>
      *
      * @param locale The language that will attempt to be loaded
      * @return If loading was successful or not
@@ -131,7 +136,7 @@ public class LangManager
             file = langFiles.get(englishLang);
             if(file == null)
             {
-                file = new JsonFile(plugin, "en_us.json");
+                file = new JsonFile(plugin, filePath + "/" + "en_us.json");
             }
         }
         return file;
@@ -215,7 +220,7 @@ public class LangManager
     }
 
     /**
-     * Gets text based off of a CommandSender and a path
+     * Gets text based off of a <tt>CommandSender</tt> and a path
      *
      * @param sender CommandSender that will be used to get language locale
      * @param path   The path to be used to find the text
@@ -258,7 +263,8 @@ public class LangManager
      * Gets text based off of a path and processes the string replacing the
      * strings in toReplace with the strings in replacements. Uses the default
      * language locale.
-     * It's important that toReplace must be the same length as replacements
+     * <p>
+     * It's important that <tt>toReplace</tt> must be the same length as <tt>replacements</tt>
      *
      * @param path         The path to find the text from
      * @param toReplace    The array of Strings that should be replaced
@@ -277,8 +283,9 @@ public class LangManager
 
     /**
      * Gets text based off of the CommandSender and a path and processes the string replacing the
-     * strings in toReplace with the strings in replacements.
-     * It's important that toReplace must be the same length as replacements
+     * strings in <tt>toReplace</tt> with the strings in replacements.
+     * <p>
+     * It's important that <tt>toReplace</tt> must be the same length as <tt>replacements</tt>
      *
      * @param sender       The CommandSender to base the language Locale off of
      * @param path         The path to find the text from
@@ -297,8 +304,9 @@ public class LangManager
 
     /**
      * Gets text based off of a player and a path and processes the string replacing the
-     * strings in toReplace with the strings in replacements.
-     * It's important that toReplace must be the same length as replacements
+     * strings in <tt>toReplace</tt> with the strings in replacements.
+     * <p>
+     * It's important that <tt>toReplace</tt> must be the same length as <tt>replacements</tt>
      *
      * @param player       The player to base the language Locale off of
      * @param path         The path to find the text from
@@ -312,133 +320,6 @@ public class LangManager
     }
 
     /**
-     * Gets the text based only off a path, uses the default lang locale
-     * Gets text from Mikedeejay2Lib
-     *
-     * @param path The path to be used to find the text
-     * @return The wanted text, null if the text doesn't exist
-     */
-    public String getTextLib(String path)
-    {
-        String text = getText("lib_" + defaultLang, path);
-        if(text == null)
-        {
-            text = getText("lib_" + englishLang, path);
-        }
-        return text;
-    }
-
-    /**
-     * Gets text based off of a Player and a path
-     * Gets the text from Mikedeejay2Lib
-     *
-     * @param player Player that will be used to get the language locale
-     * @param path   The path to be used to find the text
-     * @return The wanted text, null if text doesn't exist.
-     */
-    public String getTextLib(Player player, String path)
-    {
-        String text = getText("lib_" + player.getLocale().toLowerCase(), path);
-        if(text == null)
-        {
-            text = getText("lib_" + englishLang, path);
-        }
-        return text;
-    }
-
-    /**
-     * Gets text based off of a CommandSender and a path
-     * Gets the text from Mikedeejay2Lib
-     *
-     * @param sender CommandSender that will be used to get language locale
-     * @param path   The path to be used to find the text
-     * @return The wanted text, null if text doesn't exist.
-     */
-    public String getTextLib(CommandSender sender, String path)
-    {
-        if(sender instanceof Player)
-        {
-            String text = getText("lib_" + ((Player)sender).getLocale().toLowerCase(), path);
-            if(text == null)
-            {
-                text = getText("lib_" + englishLang, path);
-            }
-            return text;
-        }
-        return getTextLib(path);
-    }
-
-    /**
-     * Gets text based off of a path and processes the string replacing the
-     * strings in toReplace with the strings in replacements. Uses the default
-     * language locale.
-     * It's important that toReplace must be the same length as replacements
-     * Gets the text from Mikedeejay2Lib
-     *
-     * @param path         The path to find the text from
-     * @param toReplace    The array of Strings that should be replaced
-     * @param replacements The array of Strings that will replace the Strings in toReplace
-     * @return The wanted text, processed, null if text doesn't exist
-     */
-    public String getTextLib(String path, String[] toReplace, String[] replacements)
-    {
-        String text = getText("lib_" + defaultLang, path, toReplace, replacements);
-        if(text == null)
-        {
-            text = getText("lib_" + englishLang, path, toReplace, replacements);
-        }
-        return text;
-    }
-
-    /**
-     * Gets text based off of the CommandSender and a path and processes the string replacing the
-     * strings in toReplace with the strings in replacements.
-     * It's important that toReplace must be the same length as replacements
-     * Gets the text from Mikedeejay2Lib
-     *
-     * @param sender       The CommandSender to base the language Locale off of
-     * @param path         The path to find the text from
-     * @param toReplace    The array of Strings that should be replaced
-     * @param replacements The array of Strings that will replace the Strings in toReplace
-     * @return The wanted text, processed, null if text doesn't exist
-     */
-    public String getTextLib(CommandSender sender, String path, String[] toReplace, String[] replacements)
-    {
-        if(sender instanceof Player)
-        {
-            String text = getText("lib_" + ((Player)sender).getLocale().toLowerCase(), path, toReplace, replacements);
-            if(text == null)
-            {
-                text = getText("lib_" + englishLang, path);
-            }
-            return text;
-        }
-        return getTextLib(path, toReplace, replacements);
-    }
-
-    /**
-     * Gets text based off of a player and a path and processes the string replacing the
-     * strings in toReplace with the strings in replacements.
-     * It's important that toReplace must be the same length as replacements
-     * Gets the text from Mikedeejay2Lib
-     *
-     * @param player       The player to base the language Locale off of
-     * @param path         The path to find the text from
-     * @param toReplace    The array of Strings that should be replaced
-     * @param replacements The array of Strings that will replace the Strings in toReplace
-     * @return The wanted text, processed, null if text doesn't exist
-     */
-    public String getTextLib(Player player, String path, String[] toReplace, String[] replacements)
-    {
-        String text = getText("lib_" + player.getLocale().toLowerCase(), path, toReplace, replacements);
-        if(text == null)
-        {
-            text = getText("lib_" + englishLang, path);
-        }
-        return text;
-    }
-
-    /**
      * Get the default lang locale of this lang manager
      *
      * @return The lang locale (i.e en_us)
@@ -446,5 +327,25 @@ public class LangManager
     public String getDefaultLang()
     {
         return defaultLang;
+    }
+
+    /**
+     * Get the file paths to the language files for this <tt>LangManager</tt>
+     *
+     * @return The file path towards the language files
+     */
+    public String getFilePath()
+    {
+        return filePath;
+    }
+
+    /**
+     * Get the new file path to the language files for this <tt>LanguageManager</tt>
+     *
+     * @param filePath The new file path towards the language files
+     */
+    public void setFilePath(String filePath)
+    {
+        this.filePath = filePath;
     }
 }

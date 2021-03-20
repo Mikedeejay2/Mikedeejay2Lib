@@ -72,7 +72,7 @@ public class UpdateChecker
                 }
                 catch(Exception e)
                 {
-                    plugin.getLogger().severe(plugin.langManager().getTextLib("update_checker.error.invalid_url"));
+                    plugin.getLogger().severe(plugin.getLibLangManager().getText("update_checker.error.invalid_url"));
                     return;
                 }
                 GsonBuilder builder = new GsonBuilder();
@@ -85,7 +85,7 @@ public class UpdateChecker
                 }
                 catch(Exception e)
                 {
-                    plugin.getLogger().severe(plugin.langManager().getTextLib("update_checker.error.cant_open"));
+                    plugin.getLogger().severe(plugin.getLibLangManager().getText("update_checker.error.cant_open"));
                     return;
                 }
                 Reader reader = new InputStreamReader(stream);
@@ -96,7 +96,7 @@ public class UpdateChecker
                 }
                 catch(IOException e)
                 {
-                    plugin.getLogger().severe(plugin.langManager().getTextLib("update_checker.error.cant_close"));
+                    plugin.getLogger().severe(plugin.getLibLangManager().getText("update_checker.error.cant_close"));
                     return;
                 }
 
@@ -130,16 +130,16 @@ public class UpdateChecker
                 String currentVersion = description.getVersion();
                 String pluginName = description.getName();
                 if(currentVersion.equals(version)) return;
-                plugin.sendMessage("&a" + plugin.langManager().getTextLib("update_checker.update_available",
+                plugin.sendMessage("&a" + plugin.getLibLangManager().getText("update_checker.update_available",
                         new String[]{"PLUGIN"},
                         new String[]{"&b" + pluginName + "&a"}));
-                plugin.sendMessage("&e" + plugin.langManager().getTextLib("update_checker.new_version",
+                plugin.sendMessage("&e" + plugin.getLibLangManager().getText("update_checker.new_version",
                         new String[]{"PLUGIN", "VERSION"},
                         new String[]{"&b" + pluginName + "&e", "&c&l" + version + "&r&e"}));
-                plugin.sendMessage("&e" + plugin.langManager().getTextLib("update_checker.release_time",
+                plugin.sendMessage("&e" + plugin.getLibLangManager().getText("update_checker.release_time",
                         new String[]{"TIME"},
                         new String[]{"&a" + releasedTime + "&e"}));
-                plugin.sendMessage("&e" + plugin.langManager().getTextLib("update_checker.download_link",
+                plugin.sendMessage("&e" + plugin.getLibLangManager().getText("update_checker.download_link",
                         new String[]{"LINK"},
                         new String[]{"&f" + downloadUrl}));
             }
