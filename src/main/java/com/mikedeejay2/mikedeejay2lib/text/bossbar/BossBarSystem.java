@@ -2,7 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.text.bossbar;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.text.bossbar.modules.BossBarModule;
-import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import org.bukkit.Bukkit;
 import org.bukkit.boss.BarColor;
 import org.bukkit.boss.BarFlag;
@@ -56,7 +56,7 @@ public class BossBarSystem
     {
         this.plugin = plugin;
         this.players = new HashSet<>();
-        this.title = Chat.chat(title);
+        this.title = Colors.format(title);
         this.color = color;
         this.style = style;
         this.progress = progress;
@@ -235,7 +235,7 @@ public class BossBarSystem
      */
     public void setTitle(String title)
     {
-        this.title = Chat.chat(title);
+        this.title = Colors.format(title);
         bar.setTitle(this.title);
     }
 

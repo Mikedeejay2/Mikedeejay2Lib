@@ -68,7 +68,7 @@ public class CommandManager implements CommandExecutor
 
             if(target == null)
             {
-                plugin.chat().sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "command.errors.invalid_subcommand"));
+                plugin.sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "command.errors.invalid_subcommand"));
                 return false;
             }
 
@@ -78,12 +78,12 @@ public class CommandManager implements CommandExecutor
 
             if(target.permission() != null && !sender.hasPermission(target.permission()))
             {
-                plugin.chat().sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "errors.permission.nopermission"));
+                plugin.sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "errors.permission.nopermission"));
                 return false;
             }
             if(!(sender instanceof Player) && target.playerRequired())
             {
-                plugin.chat().sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "errors.player_required"));
+                plugin.sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "errors.player_required"));
                 return false;
             }
 
@@ -93,7 +93,7 @@ public class CommandManager implements CommandExecutor
             }
             catch(Exception exception)
             {
-                plugin.chat().sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "command.errors.general"));
+                plugin.sendMessage(sender, "&c" + plugin.langManager().getTextLib(sender, "command.errors.general"));
                 exception.printStackTrace();
             }
         }

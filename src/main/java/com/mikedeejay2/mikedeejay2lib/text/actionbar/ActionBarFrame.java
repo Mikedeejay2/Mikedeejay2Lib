@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.text.actionbar;
 
-import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import net.md_5.bungee.api.ChatMessageType;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.TextComponent;
@@ -23,7 +23,7 @@ public class ActionBarFrame
 
     public ActionBarFrame(String text, long period)
     {
-        this.text = Chat.chat(text);
+        this.text = Colors.format(text);
         this.period = Math.max(1, period);
     }
 
@@ -58,7 +58,7 @@ public class ActionBarFrame
      */
     public void setText(String text)
     {
-        this.text = Chat.chat(text);
+        this.text = Colors.format(text);
     }
 
     /**

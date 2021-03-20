@@ -2,7 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.text.chat;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.text.chat.modules.ChatModule;
-import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.command.CommandSender;
 
@@ -153,7 +153,7 @@ public class ChatSection
      */
     public ChatSection addText(String text)
     {
-        this.text += Chat.chat(text);
+        this.text += Colors.format(text);
         baked = false;
         return this;
     }
@@ -188,7 +188,7 @@ public class ChatSection
      */
     protected void bake()
     {
-        components = plugin.chat().getBaseComponentArray(text);
+        components = plugin.getBaseComponentArray(text);
         modules.forEach(module -> module.onBake(this, components));
         baked = true;
     }

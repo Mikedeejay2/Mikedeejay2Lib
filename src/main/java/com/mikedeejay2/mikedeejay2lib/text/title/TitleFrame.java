@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.text.title;
 
-import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import org.bukkit.entity.Player;
 
 /**
@@ -33,8 +33,8 @@ public class TitleFrame
      */
     public TitleFrame(String title, String subtitle, int fadeIn, int stay, int fadeOut, long period)
     {
-        this.title = Chat.chat(title);
-        this.subtitle = Chat.chat(subtitle);
+        this.title = Colors.format(title);
+        this.subtitle = Colors.format(subtitle);
         this.fadeIn = fadeIn;
         this.stay = stay;
         this.fadeOut = fadeOut;

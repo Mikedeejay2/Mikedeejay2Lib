@@ -2,7 +2,6 @@ package com.mikedeejay2.mikedeejay2lib.text.chat.modules;
 
 import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import com.mikedeejay2.mikedeejay2lib.text.chat.ChatSection;
-import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
 import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 
@@ -35,8 +34,7 @@ public class ChatHoverModule implements ChatModule
     @Override
     public void onBake(ChatSection section, BaseComponent[] components)
     {
-        Chat chat = plugin.chat();
-        HoverEvent hoverEvent = chat.getHoverEvent(action, hoverText);
-        chat.setHoverEvent(components, hoverEvent);
+        HoverEvent hoverEvent = plugin.getHoverEvent(action, hoverText);
+        plugin.setHoverEvent(components, hoverEvent);
     }
 }

@@ -30,6 +30,6 @@ public class GUIPrintMessageEvent implements GUIEvent
         Player player = (Player) event.getWhoClicked();
         ClickType clickType = event.getClick();
         if(clickType != ClickType.LEFT) return;
-        plugin.chat().sendMessage(player, message);
+        plugin.sendMessage(player, message);
     }
 }

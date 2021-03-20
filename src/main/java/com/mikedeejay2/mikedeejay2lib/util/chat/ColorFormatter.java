@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A more advanced form of {@link Chat#chat(String)} that does the following:
+ * A more advanced form of {@link Colors} that does the following:
  * <ul>
  *     <li>Convert alternate color codes to their respective colors</li>
  *     <li>Convert hex codes to their respective colors if the version if 1.16 or above</li>
@@ -15,7 +15,7 @@ import java.util.regex.Pattern;
  *
  * @author Mikedeejay2
  */
-public final class ColorFormatter
+public final class ColorFormatter implements IColorFormatter
 {
     private final PluginBase plugin;
     private final Pattern pattern = Pattern.compile("#[a-fA-f0-9]{6}");

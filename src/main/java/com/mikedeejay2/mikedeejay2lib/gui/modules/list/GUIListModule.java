@@ -8,7 +8,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchOffEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUISwitchListLocEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
-import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
@@ -336,12 +336,12 @@ public class GUIListModule implements GUIModule
             switch(viewMode)
             {
                 case SCROLL:
-                    curItem.setNameView(Chat.chat(scrollChangePreName + plugin.langManager().getTextLib(
+                    curItem.setNameView(Colors.format(scrollChangePreName + plugin.langManager().getTextLib(
                             player, "gui.modules.list.scroll_forward")));
                     break;
                 case PAGED:
                 default:
-                    curItem.setNameView(Chat.chat(pageChangePreName + plugin.langManager().getTextLib(
+                    curItem.setNameView(Colors.format(pageChangePreName + plugin.langManager().getTextLib(
                             player, "gui.modules.list.page",
                             new String[]{"PAGE"},
                             new String[]{String.valueOf(i)}
@@ -361,12 +361,12 @@ public class GUIListModule implements GUIModule
             switch(viewMode)
             {
                 case SCROLL:
-                    curItem.setNameView(Chat.chat(scrollChangePreName + plugin.langManager().getTextLib(
+                    curItem.setNameView(Colors.format(scrollChangePreName + plugin.langManager().getTextLib(
                             player, "gui.modules.list.scroll_back")));
                     break;
                 case PAGED:
                 default:
-                    curItem.setNameView(Chat.chat(pageChangePreName + plugin.langManager().getTextLib(
+                    curItem.setNameView(Colors.format(pageChangePreName + plugin.langManager().getTextLib(
                             player, "gui.modules.list.page",
                             new String[]{"PAGE"},
                             new String[]{String.valueOf(i)}

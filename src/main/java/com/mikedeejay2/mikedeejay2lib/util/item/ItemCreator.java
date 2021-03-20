@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util.item;
 
-import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.Material;
@@ -35,10 +35,10 @@ public final class ItemCreator
         List<String> lore = new ArrayList();
         item = new ItemStack(material, amount);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(Chat.chat(displayName));
+        meta.setDisplayName(Colors.format(displayName));
         for(String s : loreString)
         {
-            lore.add(Chat.chat(s));
+            lore.add(Colors.format(s));
         }
         meta.setLore(lore);
         item.setItemMeta(meta);
@@ -57,7 +57,7 @@ public final class ItemCreator
     public static ItemStack createHeadItem(String base64Head, int amount, String displayName, String... loreString)
     {
         ItemStack item;
-        List<String> lore = new ArrayList();
+        List<String> lore = new ArrayList<>();
         item = new ItemStack(Material.PLAYER_HEAD, amount);
         SkullMeta skullMeta = (SkullMeta)item.getItemMeta();
         GameProfile profile = new GameProfile(UUID.randomUUID(), "");
@@ -75,11 +75,11 @@ public final class ItemCreator
         }
         for(String s : loreString)
         {
-            lore.add(Chat.chat(s));
+            lore.add(Colors.format(s));
         }
         item.setItemMeta(skullMeta);
         ItemMeta meta = item.getItemMeta();
-        meta.setDisplayName(Chat.chat(displayName));
+        meta.setDisplayName(Colors.format(displayName));
         meta.setLore(lore);
         item.setItemMeta(meta);
         return item;

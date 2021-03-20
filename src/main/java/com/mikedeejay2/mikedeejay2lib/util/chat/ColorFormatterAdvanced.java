@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * A more advanced form of {@link Chat#chat(String)} that does the following:
+ * A more advanced form of {@link Colors} that does the following:
  * <ul>
  *     <li>Convert alternate color codes to their respective colors (<tt>"*AND*c"</tt> = red, <tt>"*AND*1"</tt> = blue)</li>
  *     <li>Convert hex codes to their respective colors if the version if 1.16 or above (<tt>#ff0000</tt> = red, <tt>#0000ff</tt> = blue)</li>
@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  *
  * @author Mikedeejay2
  */
-public final class ColorFormatterAdvanced
+public final class ColorFormatterAdvanced implements IColorFormatter
 {
     private final PluginBase plugin;
 

@@ -8,7 +8,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefa
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
-import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -75,7 +75,7 @@ public class GUIContainer
     {
         this.plugin = plugin;
         this.backgroundItem = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1 , EMPTY_NAME);
-        this.inventoryName = Chat.chat(inventoryName);
+        this.inventoryName = Colors.format(inventoryName);
         if(inventoryRows > MAX_INVENTORY_ROWS) inventoryRows = MAX_INVENTORY_ROWS;
         this.inventorySlots = inventoryRows * MAX_INVENTORY_COLS;
         this.inventoryRows = inventoryRows;
@@ -104,7 +104,7 @@ public class GUIContainer
     {
         this.plugin = plugin;
         this.backgroundItem = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1 , EMPTY_NAME);
-        this.inventoryName = Chat.chat(inventoryName);
+        this.inventoryName = Colors.format(inventoryName);
         this.inventorySlots = Math.min(inventoryRows * MAX_INVENTORY_COLS, MAX_INVENTORY_ROWS * MAX_INVENTORY_COLS);
         this.inventoryRows = inventoryRows;
         this.inventoryCols = inventoryCols;
@@ -528,7 +528,7 @@ public class GUIContainer
      */
     public void setInventoryName(String newName)
     {
-        this.inventoryName = Chat.chat(newName);
+        this.inventoryName = Colors.format(newName);
         this.inventory = Bukkit.createInventory(null, inventorySlots, inventoryName);
     }
 

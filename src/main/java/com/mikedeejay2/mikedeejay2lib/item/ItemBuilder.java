@@ -2,7 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.item;
 
 import com.google.common.collect.Lists;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
-import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mikedeejay2.mikedeejay2lib.util.enchant.GlowEnchantment;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -122,7 +122,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
     @Override
     public ItemBuilder setName(String name)
     {
-        this.meta.setDisplayName(Chat.chat(name));
+        this.meta.setDisplayName(Colors.format(name));
         this.changed = true;
         return this;
     }
@@ -167,7 +167,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
     @Override
     public ItemBuilder setLore(List<String> lore)
     {
-        this.meta.setLore(Chat.chat(lore));
+        this.meta.setLore(Colors.format(lore));
         this.changed = true;
         return this;
     }
@@ -175,7 +175,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
     @Override
     public ItemBuilder setLore(String... lore)
     {
-        this.meta.setLore(Chat.chat(Arrays.asList(lore)));
+        this.meta.setLore(Colors.format(Arrays.asList(lore)));
         this.changed = true;
         return this;
     }

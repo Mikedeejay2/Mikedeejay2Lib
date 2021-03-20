@@ -3,7 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.item;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
-import com.mikedeejay2.mikedeejay2lib.util.chat.Chat;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mikedeejay2.mikedeejay2lib.util.enchant.GlowEnchantment;
 import org.bukkit.Material;
 import org.bukkit.enchantments.Enchantment;
@@ -319,7 +319,7 @@ public class GUIItem implements Cloneable
     public GUIItem setNameView(String name)
     {
         ItemMeta meta = getMetaView();
-        meta.setDisplayName(Chat.chat(name));
+        meta.setDisplayName(Colors.format(name));
         setMetaView(meta);
         return this;
     }
@@ -332,7 +332,7 @@ public class GUIItem implements Cloneable
     public GUIItem setNameBase(String name)
     {
         ItemMeta meta = getMetaBase();
-        meta.setDisplayName(Chat.chat(name));
+        meta.setDisplayName(Colors.format(name));
         setMetaBase(meta);
         return this;
     }
@@ -344,12 +344,12 @@ public class GUIItem implements Cloneable
 
     public GUIItem setName(String name)
     {
-        name = Chat.chat(name);
+        name = Colors.format(name);
         ItemMeta view = getMetaView();
-        view.setDisplayName(Chat.chat(name));
+        view.setDisplayName(Colors.format(name));
         setMetaView(view);
         ItemMeta base = getMetaBase();
-        base.setDisplayName(Chat.chat(name));
+        base.setDisplayName(Colors.format(name));
         setMetaBase(base);
         return this;
     }
@@ -455,7 +455,7 @@ public class GUIItem implements Cloneable
 
     public GUIItem setLore(List<String> lore)
     {
-        lore = Chat.chat(lore);
+        lore = Colors.format(lore);
         ItemMeta view = getMetaView();
         view.setLore(lore);
         setMetaView(view);

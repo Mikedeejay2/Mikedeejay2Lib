@@ -130,16 +130,16 @@ public class UpdateChecker
                 String currentVersion = description.getVersion();
                 String pluginName = description.getName();
                 if(currentVersion.equals(version)) return;
-                plugin.chat().sendMessage("&a" + plugin.langManager().getTextLib("update_checker.update_available",
+                plugin.sendMessage("&a" + plugin.langManager().getTextLib("update_checker.update_available",
                         new String[]{"PLUGIN"},
                         new String[]{"&b" + pluginName + "&a"}));
-                plugin.chat().sendMessage("&e" + plugin.langManager().getTextLib("update_checker.new_version",
+                plugin.sendMessage("&e" + plugin.langManager().getTextLib("update_checker.new_version",
                         new String[]{"PLUGIN", "VERSION"},
                         new String[]{"&b" + pluginName + "&e", "&c&l" + version + "&r&e"}));
-                plugin.chat().sendMessage("&e" + plugin.langManager().getTextLib("update_checker.release_time",
+                plugin.sendMessage("&e" + plugin.langManager().getTextLib("update_checker.release_time",
                         new String[]{"TIME"},
                         new String[]{"&a" + releasedTime + "&e"}));
-                plugin.chat().sendMessage("&e" + plugin.langManager().getTextLib("update_checker.download_link",
+                plugin.sendMessage("&e" + plugin.langManager().getTextLib("update_checker.download_link",
                         new String[]{"LINK"},
                         new String[]{"&f" + downloadUrl}));
             }
