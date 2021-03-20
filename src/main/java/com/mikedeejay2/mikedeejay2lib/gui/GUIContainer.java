@@ -8,8 +8,8 @@ import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefa
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
+import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
-import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -74,7 +74,7 @@ public class GUIContainer
     public GUIContainer(PluginBase plugin, String inventoryName, int inventoryRows)
     {
         this.plugin = plugin;
-        this.backgroundItem = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1 , EMPTY_NAME);
+        this.backgroundItem = ItemBuilder.of(Material.LIGHT_GRAY_STAINED_GLASS_PANE).setEmptyName().get();
         this.inventoryName = Colors.format(inventoryName);
         if(inventoryRows > MAX_INVENTORY_ROWS) inventoryRows = MAX_INVENTORY_ROWS;
         this.inventorySlots = inventoryRows * MAX_INVENTORY_COLS;
@@ -103,7 +103,7 @@ public class GUIContainer
     public GUIContainer(PluginBase plugin, String inventoryName, int inventoryRows, int inventoryCols)
     {
         this.plugin = plugin;
-        this.backgroundItem = ItemCreator.createItem(Material.LIGHT_GRAY_STAINED_GLASS_PANE, 1 , EMPTY_NAME);
+        this.backgroundItem = ItemBuilder.of(Material.LIGHT_GRAY_STAINED_GLASS_PANE).setEmptyName().get();
         this.inventoryName = Colors.format(inventoryName);
         this.inventorySlots = Math.min(inventoryRows * MAX_INVENTORY_COLS, MAX_INVENTORY_ROWS * MAX_INVENTORY_COLS);
         this.inventoryRows = inventoryRows;

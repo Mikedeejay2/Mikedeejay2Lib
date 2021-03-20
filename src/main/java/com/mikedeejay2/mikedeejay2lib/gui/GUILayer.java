@@ -3,9 +3,9 @@ package com.mikedeejay2.mikedeejay2lib.gui;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
+import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.util.array.ArrayUtil;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
-import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.Material;
 import org.bukkit.inventory.ItemStack;
 
@@ -67,7 +67,11 @@ public class GUILayer
      */
     public void setItem(int row, int col, Material material, int amount, String displayName, String... loreString)
     {
-        setItem(row, col, ItemCreator.createItem(material, amount, displayName, loreString));
+        setItem(row, col, ItemBuilder.of(material)
+                .setAmount(amount)
+                .setName(displayName)
+                .setLore(loreString)
+                .get());
     }
 
     /**
@@ -130,7 +134,7 @@ public class GUILayer
      */
     public void setItem(int row, int col, String headStr, int amount, String displayName, String... loreString)
     {
-        setItem(row, col, ItemCreator.createHeadItem(headStr, amount, displayName, loreString));
+        setItem(row, col, ItemBuilder.of(headStr).setAmount(amount).setName(displayName).setLore(loreString).get());
     }
 
     /**

@@ -3,8 +3,6 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules.decoration;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
-import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
-import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 

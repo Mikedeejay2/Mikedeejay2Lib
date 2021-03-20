@@ -8,10 +8,10 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchOffEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUISwitchListLocEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
+import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
-import com.mikedeejay2.mikedeejay2lib.util.item.ItemCreator;
 import com.mikedeejay2.mikedeejay2lib.util.search.SearchUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -109,16 +109,16 @@ public class GUIListModule implements GUIModule
         {
             case SCROLL:
             {
-                this.backItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_UP_WHITE.get(), 1, GUIContainer.EMPTY_NAME));
-                this.forwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_DOWN_WHITE.get(), 1, GUIContainer.EMPTY_NAME));
+                this.backItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_UP_WHITE.get()).setEmptyName().get());
+                this.forwardItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_DOWN_WHITE.get()).setEmptyName().get());
                 backItem.addEvent(new GUISwitchListLocEvent());
                 forwardItem.addEvent(new GUISwitchListLocEvent());
             } break;
             case PAGED:
             default:
             {
-                this.backItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_BACKWARD_WHITE.get(), 1, GUIContainer.EMPTY_NAME));
-                this.forwardItem = new GUIItem(ItemCreator.createHeadItem(Base64Head.ARROW_FORWARD_WHITE.get(), 1, GUIContainer.EMPTY_NAME));
+                this.backItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_BACKWARD_WHITE.get()).setEmptyName().get());
+                this.forwardItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_FORWARD_WHITE.get()).setEmptyName().get());
                 backItem.addEvent(new GUISwitchListLocEvent());
                 forwardItem.addEvent(new GUISwitchListLocEvent());
             } break;
@@ -179,12 +179,16 @@ public class GUIListModule implements GUIModule
     {
         if(searchItem == null)
         {
-            this.searchItem = new GUIItem(ItemCreator.createItem(Material.COMPASS, 1, searchPreName + plugin.getLibLangManager().getText(player, "gui.modules.list.search")));
+            this.searchItem = new GUIItem(ItemBuilder.of(Material.COMPASS)
+                                                  .setName(searchPreName + plugin.getLibLangManager().getText(player, "gui.modules.list.search"))
+                                                  .get());
             searchItem.addEvent(new GUIListSearchEvent(plugin));
         }
         if(searchOffItem == null)
         {
-            this.searchOffItem = new GUIItem(ItemCreator.createItem(Material.BOOK, 1, searchOffPreName + plugin.getLibLangManager().getText(player, "gui.modules.list.search_off")));
+            this.searchOffItem = new GUIItem(ItemBuilder.of(Material.BOOK)
+                                                     .setName(searchOffPreName + plugin.getLibLangManager().getText(player, "gui.modules.list.search_off"))
+                                                     .get());
             searchOffItem.addEvent(new GUIListSearchOffEvent());
         }
     }

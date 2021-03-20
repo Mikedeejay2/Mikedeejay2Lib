@@ -1,5 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util.item;
 
+import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -14,10 +15,20 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * A util class for creating items
+ * A util class for creating items.
+ * <p>
+ * This is not recommended for use and is deprecated. Instead of using <tt>ItemCreator</tt>,
+ * please instead use {@link ItemBuilder}, as it's much more flexible and thought out.
+ * <p>
+ * This is only being kept here for legacy plugins or if for some reason this class is preferred
+ * over <tt>ItemBuilder</tt>
+ *
+ * @deprecated Use {@link ItemBuilder} instead, see note above.
+ * @see ItemBuilder
  *
  * @author Mikedeejay2
  */
+@Deprecated
 public final class ItemCreator
 {
     /**
@@ -29,10 +40,11 @@ public final class ItemCreator
      * @param loreString  Any lore that the item might have
      * @return The new ItemStack
      */
+    @Deprecated
     public static ItemStack createItem(Material material, int amount, String displayName, String... loreString)
     {
         ItemStack item;
-        List<String> lore = new ArrayList();
+        List<String> lore = new ArrayList<>();
         item = new ItemStack(material, amount);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(Colors.format(displayName));
@@ -54,6 +66,7 @@ public final class ItemCreator
      * @param loreString  Any lore that the head might have
      * @return The new head ItemStack
      */
+    @Deprecated
     public static ItemStack createHeadItem(String base64Head, int amount, String displayName, String... loreString)
     {
         ItemStack item;
