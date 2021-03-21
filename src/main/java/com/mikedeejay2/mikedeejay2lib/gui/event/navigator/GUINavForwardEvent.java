@@ -36,6 +36,7 @@ public class GUINavForwardEvent implements GUIEvent
         GUIContainer forwardGUI = system.getForward();
         system.removeForward();
         system.addBack(gui);
-        playerGUI.setGUI(forwardGUI);
+        system.setFlag(true);
+        forwardGUI.open(player);
     }
 }

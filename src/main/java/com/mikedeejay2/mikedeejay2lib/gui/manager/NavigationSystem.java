@@ -23,6 +23,8 @@ public class NavigationSystem
     // The navigation ID of this system
     protected String navigationID;
 
+    protected boolean flag;
+
     public NavigationSystem(Player player, String navigationID)
     {
         this.player = player;
@@ -30,6 +32,7 @@ public class NavigationSystem
 
         this.back = new ArrayList<>();
         this.forward = new ArrayList<>();
+        this.flag = false;
     }
 
     /**
@@ -173,7 +176,7 @@ public class NavigationSystem
      */
     public void addBack(GUIContainer gui)
     {
-        if(hasBack() && getBack().equals(gui)) return;
+        if(hasBack() && getBack() == gui) return;
         back.add(0, gui);
     }
 
@@ -184,7 +187,17 @@ public class NavigationSystem
      */
     public void addForward(GUIContainer gui)
     {
-        if(hasForward() && getForward().equals(gui)) return;
+        if(hasForward() && getForward() == gui) return;
         forward.add(0, gui);
+    }
+
+    public boolean getFlag()
+    {
+        return flag;
+    }
+
+    public void setFlag(boolean flag)
+    {
+        this.flag = flag;
     }
 }

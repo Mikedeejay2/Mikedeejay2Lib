@@ -147,8 +147,8 @@ public class GUIContainer
     public void open(Player player)
     {
         PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
-        playerGUI.setGUI(this);
         onOpen(player);
+        playerGUI.setGUI(this);
         player.openInventory(inventory);
     }
 
