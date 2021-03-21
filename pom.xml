@@ -62,6 +62,7 @@
                         <goals>
                             <goal>jar</goal>
                         </goals>
+                        <phase>deploy</phase>
                     </execution>
                 </executions>
             </plugin>
