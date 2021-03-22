@@ -9,6 +9,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
+@FunctionalInterface
 public interface ParticleShape
 {
     /**

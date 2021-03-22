@@ -5,7 +5,8 @@ package com.mikedeejay2.mikedeejay2lib.gui;
  *
  * @author Mikedeejay2
  */
+@FunctionalInterface
 public interface GUIConstructor
 {
-    public GUIContainer get();
+    GUIContainer get();
 }

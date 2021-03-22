@@ -17,6 +17,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  *
  * @author Mikedeejay2
  */
+@FunctionalInterface
 public interface GUIEvent
 {
     /**
@@ -25,5 +26,5 @@ public interface GUIEvent
      * @param event The event of the click
      * @param gui   The GUI that the event took place in
      */
-    public void execute(InventoryClickEvent event, GUIContainer gui);
+    void execute(InventoryClickEvent event, GUIContainer gui);
 }

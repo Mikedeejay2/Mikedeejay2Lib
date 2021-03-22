@@ -9,6 +9,7 @@ import org.bukkit.block.Block;
  *
  * @author Mikedeejay2
  */
+@FunctionalInterface
 public interface BlockConsumer
 {
     void accept(Location location, Block block);

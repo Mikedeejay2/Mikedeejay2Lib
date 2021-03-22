@@ -10,6 +10,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author Mikedeejay2
  */
+@FunctionalInterface
 public interface InventorySlotConsumer
 {
     void accept(Inventory inventory, ItemStack itemStack, int slot);
