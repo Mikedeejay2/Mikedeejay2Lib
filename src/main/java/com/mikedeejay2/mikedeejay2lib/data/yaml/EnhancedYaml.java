@@ -94,9 +94,9 @@ public class EnhancedYaml extends YamlConfiguration
         int length = 0;
         if(!lines.isEmpty())
         {
-            for(int i = 0; i < lines.size(); i++)
+            for(String s : lines)
             {
-                String line = lines.get(i).trim();
+                String line = s.trim();
                 length += line.length();
                 if(!line.startsWith("#") && line.contains(":"))
                 {
