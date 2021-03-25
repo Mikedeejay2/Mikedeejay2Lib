@@ -1,14 +1,18 @@
 package com.mikedeejay2.mikedeejay2lib.util.math;
 
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
+import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 import com.mikedeejay2.mikedeejay2lib.util.array.ArrayUtil;
+import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
+import java.util.concurrent.TimeUnit;
 
 /**
  * A util class for anything that manipulates vectors.
@@ -17,10 +21,23 @@ import java.util.Map;
  */
 public final class MathUtil
 {
-    private static Map<Double, Vector> circleRefs = new HashMap<>();
-    private static Map<Double, List<Vector>> circleFilledRefs = new HashMap<>();
-    private static Map<Double, List<Vector>> sphereHollowRefs = new HashMap<>();
-    private static Map<Double, List<Vector>> sphereFilledRefs = new HashMap<>();
+    private static final long CACHE_TIME = 10;
+    private static final long CACHE_SIZE = 1000;
+    private static final Cache<Double, Vector> circleCache;
+    private static final Cache<Double, List<Vector>> circleFilledCache;
+    private static final Cache<Double, List<Vector>> sphereHollowCache;
+    private static final Cache<Double, List<Vector>> sphereFilledCache;
+
+    static
+    {
+        CacheBuilder<Object, Object> loader = CacheBuilder.newBuilder()
+                .maximumSize(CACHE_SIZE)
+                .expireAfterWrite(CACHE_TIME, TimeUnit.MINUTES);
+        circleCache       = loader.build();
+        circleFilledCache = loader.build();
+        sphereHollowCache = loader.build();
+        sphereFilledCache = loader.build();
+    }
 
     /**
      * Internal loop that iterates through x y z blocks, adding the vectors to the list as it goes
@@ -81,16 +98,17 @@ public final class MathUtil
     {
         angleInRadian = angleInRadian % (Math.PI * 2);
 
-        if(circleRefs.containsKey(angleInRadian))
+        Vector cached = circleCache.getIfPresent(angleInRadian);
+        if(cached != null)
         {
-            return circleRefs.get(angleInRadian).clone().multiply(radius).add(center.toVector());
+            return cached.clone().multiply(radius).add(center.toVector());
         }
 
         double sin = Math.sin(angleInRadian);
         double cos = Math.cos(angleInRadian);
 
         Vector vector = new Vector(sin, 0, cos);
-        circleRefs.put(angleInRadian, vector);
+        circleCache.put(angleInRadian, vector);
         return vector.clone().multiply(radius).add(center.toVector());
     }
 
@@ -139,11 +157,11 @@ public final class MathUtil
     public static List<Vector> getCircleFilledVectors(Location loc, double radius, double density)
     {
         density = density * radius;
-        if(circleFilledRefs.containsKey(density))
+        List<Vector> cached = circleFilledCache.getIfPresent(density);
+        if(cached != null)
         {
-            List<Vector> list = circleFilledRefs.get(density);
             List<Vector> translatedList = new ArrayList<>();
-            list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
+            cached.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
             return offsetVectors(translatedList, loc);
         }
         List<Vector> list = new ArrayList<>();
@@ -156,7 +174,7 @@ public final class MathUtil
             }
         }
 
-        circleFilledRefs.put(density, list);
+        circleFilledCache.put(density, list);
         List<Vector> translatedList = new ArrayList<>();
         list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
         return offsetVectors(translatedList, loc);
@@ -237,11 +255,11 @@ public final class MathUtil
     public static List<Vector> getSphereHollowVectors(Location loc, double radius, double density)
     {
         density = (density * Math.PI) * radius;
-        if(sphereHollowRefs.containsKey(density))
+        List<Vector> cached = sphereHollowCache.getIfPresent(density);
+        if(cached != null)
         {
-            List<Vector> list = sphereHollowRefs.get(density);
             List<Vector> translatedList = new ArrayList<>();
-            list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
+            cached.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
             return offsetVectors(translatedList, loc);
         }
 
@@ -261,7 +279,7 @@ public final class MathUtil
             }
         }
 
-        sphereHollowRefs.put(density, list);
+        sphereHollowCache.put(density, list);
         List<Vector> translatedList = new ArrayList<>();
         list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
         return offsetVectors(translatedList, loc);
@@ -293,11 +311,11 @@ public final class MathUtil
     public static List<Vector> getSphereFilledVectors(Location loc, double radius, double density)
     {
         density = density * radius;
-        if(sphereFilledRefs.containsKey(density))
+        List<Vector> cached = sphereFilledCache.getIfPresent(density);
+        if(cached != null)
         {
-            List<Vector> list = sphereFilledRefs.get(density);
             List<Vector> translatedList = new ArrayList<>();
-            list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
+            cached.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
             return offsetVectors(translatedList, loc);
         }
         List<Vector> list = new ArrayList<>();
@@ -313,7 +331,7 @@ public final class MathUtil
             }
         }
 
-        sphereFilledRefs.put(density, list);
+        sphereFilledCache.put(density, list);
         List<Vector> translatedList = new ArrayList<>();
         list.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
         return offsetVectors(translatedList, loc);
