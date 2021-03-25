@@ -27,7 +27,7 @@ public class EnhancedYaml extends YamlConfiguration
 
     public EnhancedYaml(YamlFileIO yamlFileIO)
     {
-        comments = new HashMap<>();
+        comments = new LinkedHashMap<>();
         this.yamlFileIO = yamlFileIO;
     }
 
