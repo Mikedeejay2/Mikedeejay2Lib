@@ -88,27 +88,21 @@ public class GUINavigatorModule implements GUIModule
         GUIContainer oldGUI = playerGUI.getGUI();
         String curID = getNavigationID();
         NavigationSystem system = playerGUI.getNaviSystem(curID);
+        if(system.hasNavigated() || !playerGUI.isGuiOpened())
+        {
+            system.setNavigated(false);
+            return;
+        }
         if(oldGUI != null)
         {
             if(!oldGUI.containsModule(GUINavigatorModule.class)) return;
             String oldID = oldGUI.getModule(GUINavigatorModule.class).getNavigationID();
             if(!curID.equals(oldID)) return;
+            if(system.hasBack() && system.getBack() == oldGUI) return;
+            system.addBack(oldGUI);
+            if(!system.hasForward()) return;
+            system.resetForward();
         }
-//        PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
-//        GUIContainer oldGUI = playerGUI.getGUI();
-//        if(gui == oldGUI) System.out.println("BRUH");
-//        if(oldGUI == null) return;
-//        if(!(gui.containsModule(GUINavigatorModule.class) && oldGUI.containsModule(GUINavigatorModule.class))) return;
-//        GUINavigatorModule oldModule = oldGUI.getModule(GUINavigatorModule.class);
-//        GUINavigatorModule openModule = gui.getModule(GUINavigatorModule.class);
-//        String curID = oldModule.getNavigationID();
-//        String openID = openModule.getNavigationID();
-//        if(!curID.equals(openID)) return;
-//        NavigationSystem system = playerGUI.getNaviSystem(curID);
-//        if(system.hasBack() && system.getBack() == oldGUI) return;
-//        system.addBack(oldGUI);
-//        if(!system.hasForward()) return;
-//        system.resetForward();
     }
 
     /**

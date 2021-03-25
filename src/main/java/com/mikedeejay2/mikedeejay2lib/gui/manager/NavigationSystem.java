@@ -191,12 +191,12 @@ public class NavigationSystem
         forward.add(0, gui);
     }
 
-    public boolean getFlag()
+    public boolean hasNavigated()
     {
         return flag;
     }
 
-    public void setFlag(boolean flag)
+    public void setNavigated(boolean flag)
     {
         this.flag = flag;
     }

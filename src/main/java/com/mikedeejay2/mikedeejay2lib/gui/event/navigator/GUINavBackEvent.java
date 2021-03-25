@@ -36,7 +36,7 @@ public class GUINavBackEvent implements GUIEvent
         GUIContainer backGUI = system.getBack();
         system.removeBack();
         system.addForward(gui);
-        system.setFlag(true);
+        system.setNavigated(true);
         backGUI.open(player);
     }
 }
