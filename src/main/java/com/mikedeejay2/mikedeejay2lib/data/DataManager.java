@@ -1,8 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.data;
 
-import com.mikedeejay2.oosql.SQLObject;
-
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
@@ -17,7 +15,7 @@ public class DataManager
 
     public DataManager()
     {
-        this.data = new HashMap<>();
+        this.data = new LinkedHashMap<>();
     }
 
     public boolean containsData(Object object)

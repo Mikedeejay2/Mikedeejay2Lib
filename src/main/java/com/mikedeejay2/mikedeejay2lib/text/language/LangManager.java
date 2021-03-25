@@ -7,6 +7,8 @@ import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Manages lang files(json).
@@ -18,12 +20,12 @@ public class LangManager
 {
     protected final PluginBase plugin;
     // The default language locale
-    protected final String englishLang = "en_us";
+    protected static final String ENGLISH = "en_us";
     private String defaultLang;
 
     // Hash map of lang locales to lang files
-    protected HashMap<String, JsonFile> langFiles = new HashMap<>();
-    protected ArrayList<String> doNotLoad = new ArrayList<>();
+    protected Map<String, JsonFile> langFiles;
+    protected List<String> doNotLoad;
 
     // Path to the language files
     protected String filePath;
@@ -38,8 +40,10 @@ public class LangManager
     public LangManager(PluginBase plugin, String filePath)
     {
         this.plugin = plugin;
+        this.langFiles = new HashMap<>();
+        this.doNotLoad = new ArrayList<>();
         this.filePath = filePath;
-        loadLangFile(englishLang);
+        loadLangFile(ENGLISH);
     }
 
     /**
@@ -87,7 +91,7 @@ public class LangManager
         boolean loaded = loadLangFile(locale);
         if(!loaded && !locale.equals("en_us"))
         {
-            defaultLang = englishLang;
+            defaultLang = ENGLISH;
             plugin.getLogger().warning("The default language specified in config.yml is not currently supported by this plugin. English will be used instead.");
         }
         return loaded;
@@ -117,7 +121,7 @@ public class LangManager
         }
         if(file == null)
         {
-            file = langFiles.get(englishLang);
+            file = langFiles.get(ENGLISH);
         }
         return file;
     }
@@ -133,7 +137,7 @@ public class LangManager
         JsonFile file = langFiles.get(defaultLang);
         if(file == null)
         {
-            file = langFiles.get(englishLang);
+            file = langFiles.get(ENGLISH);
             if(file == null)
             {
                 file = new JsonFile(plugin, filePath + "/" + "en_us.json");
@@ -202,7 +206,7 @@ public class LangManager
         String text = getText(defaultLang, path);
         if(text == null)
         {
-            text = getText(englishLang, path);
+            text = getText(ENGLISH, path);
         }
         return text;
     }
@@ -276,7 +280,7 @@ public class LangManager
         String text = getText(defaultLang, path, toReplace, replacements);
         if(text == null)
         {
-            text = getText(englishLang, path, toReplace, replacements);
+            text = getText(ENGLISH, path, toReplace, replacements);
         }
         return text;
     }

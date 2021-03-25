@@ -4,6 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.PluginBase;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Map;
 
 /**
  * A manager for managing players' GUIs. Needed for getting the GUI
@@ -15,7 +16,7 @@ public class GUIManager
 {
     protected final PluginBase plugin;
     // The HashMap that stores the Player's GUIs
-    protected HashMap<Player, PlayerGUI> playerGUIs;
+    protected Map<Player, PlayerGUI> playerGUIs;
 
     public GUIManager(PluginBase plugin)
     {

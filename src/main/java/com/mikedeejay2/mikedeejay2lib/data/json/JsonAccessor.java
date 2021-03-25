@@ -128,7 +128,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     @Override
     public Map<String, JsonElement> getKeyValuePairs(boolean deep)
     {
-        Map<String, JsonElement> set = new HashMap<>();
+        Map<String, JsonElement> set = new LinkedHashMap<>();
         Set<Map.Entry<String, JsonElement>> entrySet = json.entrySet();
         getKeyValuePairsRecursive(set, entrySet, deep);
         return set;
