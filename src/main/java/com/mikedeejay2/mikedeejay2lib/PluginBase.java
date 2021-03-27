@@ -1,7 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib;
 
 import com.mikedeejay2.mikedeejay2lib.commands.CommandManager;
-import com.mikedeejay2.mikedeejay2lib.event.ListenerManager;
 import com.mikedeejay2.mikedeejay2lib.data.DataManager;
 import com.mikedeejay2.mikedeejay2lib.gui.listeners.GUIListener;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.GUIManager;
@@ -26,14 +25,13 @@ import org.bukkit.plugin.java.JavaPlugin;
  *
  * @author Mikedeejay2
  */
-public class PluginBase extends JavaPlugin
+public abstract class PluginBase extends JavaPlugin
 {
     protected String prefix;
     protected MinecraftVersion minecraftVersion;
     protected DataManager dataManager;
     protected LangManager libLangManager;
     protected CommandManager commandManager;
-    protected ListenerManager listenerManager;
     protected GUIManager guiManager;
     protected NMSHandler nms;
 
@@ -49,7 +47,6 @@ public class PluginBase extends JavaPlugin
         this.nms = new NMSHandler(this);
         this.commandManager = new CommandManager(this);
         this.dataManager = new DataManager();
-        this.listenerManager = new ListenerManager(this);
         this.guiManager = new GUIManager(this);
 
         this.getServer().getPluginManager().registerEvents(new GUIListener(this), this);
