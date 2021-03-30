@@ -57,16 +57,16 @@ public class CommandManager implements TabExecutor
                 return false;
             }
 
-            ArrayList<String> arrayList = new ArrayList<String>(Arrays.asList(args));
+            ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(args));
 
             arrayList.remove(0);
 
-            if(target.permission() != null && !sender.hasPermission(target.permission()))
+            if(target.getPermission() != null && !sender.hasPermission(target.getPermission()))
             {
                 plugin.sendMessage(sender, "&c" + plugin.getLibLangManager().getText(sender, "errors.permission.nopermission"));
                 return false;
             }
-            if(!(sender instanceof Player) && target.playerRequired())
+            if(!(sender instanceof Player) && target.isPlayerRequired())
             {
                 plugin.sendMessage(sender, "&c" + plugin.getLibLangManager().getText(sender, "errors.player_required"));
                 return false;
@@ -96,18 +96,15 @@ public class CommandManager implements TabExecutor
     {
         for(SubCommand subcommand : this.commands)
         {
-            if(subcommand.name().equalsIgnoreCase(name))
+            if(subcommand.getName().equalsIgnoreCase(name))
             {
                 return subcommand;
             }
 
-            String[] aliases;
-            int length = (aliases = subcommand.aliases()).length;
+            List<String> aliases = subcommand.getAliases();
 
-            for(int i = 0; i < length; ++i)
+            for(String alias : aliases)
             {
-                String alias = aliases[i];
-
                 if(name.equalsIgnoreCase(alias))
                 {
                     return subcommand;
@@ -128,8 +125,8 @@ public class CommandManager implements TabExecutor
         ArrayList<String> strings = new ArrayList<>();
         for(SubCommand command : commands)
         {
-            strings.add(command.name());
-            if(aliases) Collections.addAll(strings, command.aliases());
+            strings.add(command.getName());
+            if(aliases) Collections.addAll(strings, command.getAliases().toArray(new String[0]));
         }
         return strings.toArray(new String[0]);
     }

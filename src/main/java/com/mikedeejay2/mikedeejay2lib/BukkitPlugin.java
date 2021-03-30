@@ -27,9 +27,6 @@ public abstract class BukkitPlugin extends JavaPluginPlus
     private GUIManager guiManager;
     private NMSHandler nms;
 
-    public BukkitPlugin()
-    {}
-
     @Override
     public void onEnable()
     {

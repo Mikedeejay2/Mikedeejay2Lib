@@ -1,15 +1,33 @@
 package com.mikedeejay2.mikedeejay2lib;
 
+import com.mikedeejay2.mikedeejay2lib.commands.CommandBase;
+import com.mikedeejay2.mikedeejay2lib.commands.TabBase;
+import com.mikedeejay2.mikedeejay2lib.commands.TabCommandBase;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import org.bukkit.Bukkit;
+import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabCompleter;
 import org.bukkit.entity.Player;
+import org.bukkit.event.Event;
+import org.bukkit.event.Listener;
+import org.bukkit.permissions.Permission;
+import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginLogger;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Field;
 
-public abstract class JavaPluginPlus extends JavaPlugin
+/**
+ * An extended form of {@link JavaPlugin} which adds more features and helper methods
+ * to quickly develop plugin code.
+ * <p>
+ * This class <strong>is not</strong> the base of Mikedeejay2Lib, for full functionality
+ * {@link BukkitPlugin} should be used instead.
+ *
+ * @author Mikedeejay2
+ */
+public abstract class JavaPluginPlus extends JavaPlugin implements PluginPlus
 {
     private String prefix;
 
@@ -18,7 +36,7 @@ public abstract class JavaPluginPlus extends JavaPlugin
     {
         super.onEnable();
         String prefix = this.getDescription().getPrefix();
-        this.prefix = prefix != null ? "[" + prefix + "] " : "[" + this.getDescription().getName() + "] ";
+        setPrefix(prefix != null ? "[" + prefix + "] " : "[" + this.getDescription().getName() + "] ");
     }
 
     @Override
@@ -27,11 +45,27 @@ public abstract class JavaPluginPlus extends JavaPlugin
         super.onDisable();
     }
 
+    /**
+     * Get the prefix name of this plugin. This CAN include color formatting,
+     * custom names, or really anything since there are no restraints placed
+     * on changing the prefix name using {@link JavaPluginPlus#setPrefix(String) setPrefix()}
+     *
+     * @return The prefix name of this plugin
+     */
+    @Override
     public String getPrefix()
     {
         return prefix;
     }
 
+    /**
+     * Set the prefix name of this plugin. Color codes are automatically formatted.
+     * All messages logged by this plugin will use this prefix. Brackets are not
+     * automatically applied to this prefix.
+     *
+     * @param prefix The new prefix name of this plugin
+     */
+    @Override
     public void setPrefix(String prefix)
     {
         this.prefix = Colors.format(prefix);
@@ -54,6 +88,7 @@ public abstract class JavaPluginPlus extends JavaPlugin
      *
      * @param message The input string
      */
+    @Override
     public void sendMessage(String message)
     {
         Bukkit.getConsoleSender().sendMessage(Colors.format(getPrefix() + message));
@@ -65,6 +100,7 @@ public abstract class JavaPluginPlus extends JavaPlugin
      * @param player  Input player that will receive the message
      * @param message The message to be printed (will be formatted with colors)
      */
+    @Override
     public void sendMessage(Player player, String message)
     {
         player.sendMessage(Colors.format(getPrefix() + message));
@@ -76,6 +112,7 @@ public abstract class JavaPluginPlus extends JavaPlugin
      * @param sender  Input <tt>CommandSender</tt> that will receive the message
      * @param message The message to be printed (will be formatted with colors)
      */
+    @Override
     public void sendMessage(CommandSender sender, String message)
     {
         sender.sendMessage(Colors.format(getPrefix() + message));
@@ -86,23 +123,110 @@ public abstract class JavaPluginPlus extends JavaPlugin
      *
      * @param message The message to broadcast to players
      */
+    @Override
     public void broadcastMessage(String message)
     {
         Bukkit.broadcastMessage(Colors.format(getPrefix() + message));
     }
 
-    /**
-     * Send a title to a player
-     *
-     * @param player   The player to send the title to
-     * @param title    The title to send the player
-     * @param subtitle The subtitle to send the player
-     * @param fadeIn   The fade in rate of the title
-     * @param stay     The stay length of the title
-     * @param fadeOut  The fade out rate of the title
-     */
-    public void sendTitle(Player player, String title, String subtitle, int fadeIn, int stay, int fadeOut)
+    @Override
+    public void registerEvent(Listener listener)
     {
-        player.sendTitle(Colors.format(title), Colors.format(subtitle), fadeIn, stay, fadeOut);
+        this.getServer().getPluginManager().registerEvents(listener, this);
+    }
+
+    @Override
+    public void registerEvents(Listener... listeners)
+    {
+        for(Listener listener : listeners)
+        {
+            registerEvent(listener);
+        }
+    }
+
+    @Override
+    public void registerCommand(String name, CommandExecutor executor, TabCompleter completer)
+    {
+        this.getCommand(name).setExecutor(executor);
+        this.getCommand(name).setTabCompleter(completer);
+    }
+
+    @Override
+    public void registerCommand(String name, CommandExecutor executor)
+    {
+        this.getCommand(name).setExecutor(executor);
+    }
+
+    @Override
+    public void registerTabCompleter(String name, TabCompleter completer)
+    {
+        this.getCommand(name).setTabCompleter(completer);
+    }
+
+    @Override
+    public void registerCommand(TabCommandBase command)
+    {
+        this.getCommand(command.getName()).setExecutor(command);
+        this.getCommand(command.getName()).setTabCompleter(command);
+    }
+
+    @Override
+    public void registerCommand(CommandBase command)
+    {
+        this.getCommand(command.getName()).setExecutor(command);
+    }
+
+    @Override
+    public void registerTabCompleter(TabBase completer)
+    {
+        this.getCommand(completer.getName()).setTabCompleter(completer);
+    }
+
+    @Override
+    public void enablePlugin(Plugin plugin)
+    {
+        this.getServer().getPluginManager().enablePlugin(plugin);
+    }
+
+    @Override
+    public void disablePlugin(Plugin plugin)
+    {
+        this.getServer().getPluginManager().disablePlugin(plugin);
+    }
+
+    @Override
+    public Plugin getPlugin(String name)
+    {
+        return this.getServer().getPluginManager().getPlugin(name);
+    }
+
+    @Override
+    public Permission getPermission(String name)
+    {
+        return this.getServer().getPluginManager().getPermission(name);
+    }
+
+    @Override
+    public void addPermission(Permission permission)
+    {
+        this.getServer().getPluginManager().addPermission(permission);
+    }
+
+    @Override
+    public void removePermission(Permission permission)
+    {
+        this.getServer().getPluginManager().removePermission(permission);
+    }
+
+    @Override
+    public void removePermission(String name)
+    {
+        this.getServer().getPluginManager().removePermission(name);
+    }
+
+    @Override
+    public void callEvent(Event event)
+    {
+        this.getServer().getPluginManager().callEvent(event);
     }
 }
