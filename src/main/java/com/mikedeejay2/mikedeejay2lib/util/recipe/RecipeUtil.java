@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util.recipe;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.*;
@@ -64,7 +64,7 @@ public final class RecipeUtil
      *               A delay may want to be specified to wait for other plugins to register their
      *               recipes.
      */
-    public static void preload(PluginBase plugin, long delay)
+    public static void preload(BukkitPlugin plugin, long delay)
     {
         new BukkitRunnable()
         {

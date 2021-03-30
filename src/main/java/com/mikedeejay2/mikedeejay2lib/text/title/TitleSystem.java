@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.text.title;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import org.bukkit.entity.Player;
 
 import java.util.ArrayList;
@@ -13,13 +13,13 @@ import java.util.List;
  */
 public class TitleSystem
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // The list of title frames
     protected List<TitleFrame> frames;
     // The title frame, will be null if hasn't been displayed yet
     protected TitleRuntime runtime;
 
-    public TitleSystem(PluginBase plugin)
+    public TitleSystem(BukkitPlugin plugin)
     {
         this.plugin = plugin;
         this.frames = new ArrayList<>();

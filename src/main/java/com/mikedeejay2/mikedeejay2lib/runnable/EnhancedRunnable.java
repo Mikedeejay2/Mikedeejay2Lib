@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.runnable;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
@@ -30,7 +30,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     // A reference to the delay of this runnable
     protected long delay;
     // A reference to the plugin being used
-    protected PluginBase plugin;
+    protected BukkitPlugin plugin;
 
     public EnhancedRunnable()
     {
@@ -105,7 +105,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     @Override
     public synchronized BukkitTask runTask(Plugin plugin)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         return super.runTask(plugin);
     }
 
@@ -118,7 +118,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     @Override
     public synchronized BukkitTask runTaskAsynchronously(Plugin plugin)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         return super.runTaskAsynchronously(plugin);
     }
 
@@ -132,7 +132,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     @Override
     public synchronized BukkitTask runTaskLater(Plugin plugin, long delay)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         this.delay = delay;
         return super.runTaskLater(plugin, delay);
     }
@@ -145,7 +145,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     public synchronized BukkitTask runTaskLater(Plugin plugin)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         return this.runTaskLater(plugin, 0);
     }
 
@@ -159,7 +159,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     @Override
     public synchronized BukkitTask runTaskLaterAsynchronously(Plugin plugin, long delay)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         this.delay = delay;
         return super.runTaskLaterAsynchronously(plugin, delay);
     }
@@ -172,7 +172,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     public synchronized BukkitTask runTaskLaterAsynchronously(Plugin plugin)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         return this.runTaskLaterAsynchronously(plugin, 0);
     }
 
@@ -187,7 +187,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     @Override
     public synchronized BukkitTask runTaskTimer(Plugin plugin, long delay, long period)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         this.delay = delay;
         this.period = period;
         return super.runTaskTimer(plugin, delay, period);
@@ -201,7 +201,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     public synchronized BukkitTask runTaskTimer(Plugin plugin)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimer(plugin, 0, 0);
     }
 
@@ -214,7 +214,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     public synchronized BukkitTask runTaskTimer(Plugin plugin, long period)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimer(plugin, 0, period);
     }
 
@@ -229,7 +229,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     @Override
     public synchronized BukkitTask runTaskTimerAsynchronously(Plugin plugin, long delay, long period)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         this.delay = delay;
         this.period = period;
         return super.runTaskTimerAsynchronously(plugin, delay, period);
@@ -243,7 +243,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     public synchronized BukkitTask runTaskTimerAsynchronously(Plugin plugin)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimerAsynchronously(plugin, 0, 0);
     }
 
@@ -256,7 +256,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     public synchronized BukkitTask runTaskTimerAsynchronously(Plugin plugin, long period)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimerAsynchronously(plugin, 0, period);
     }
 
@@ -272,7 +272,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     public synchronized BukkitTask runTaskTimerCounted(Plugin plugin, long delay, long period, long count)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         this.delay = delay;
         this.period = period;
         this.endCount = count;
@@ -288,7 +288,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     public synchronized BukkitTask runTaskTimerCounted(Plugin plugin)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimerCounted(plugin, 0, 0, 0);
     }
 
@@ -302,7 +302,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     public synchronized BukkitTask runTaskTimerCounted(Plugin plugin, long count)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimerCounted(plugin, 0, 0, count);
     }
 
@@ -317,7 +317,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     public synchronized BukkitTask runTaskTimerCounted(Plugin plugin, long period, long count)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimerCounted(plugin, 0, period, count);
     }
 
@@ -333,7 +333,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     public synchronized BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin, long delay, long period, long count)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         this.delay = delay;
         this.period = period;
         this.endCount = count;
@@ -349,7 +349,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     public synchronized BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimerCountedAsynchronously(plugin, 0, 0, 0);
     }
 
@@ -363,7 +363,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     public synchronized BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin, long count)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimerCountedAsynchronously(plugin, 0, 0, count);
     }
 
@@ -378,7 +378,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     public synchronized BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin, long period, long count)
     {
-        this.plugin = (PluginBase) plugin;
+        this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimerCountedAsynchronously(plugin, 0, period, count);
     }
 
@@ -422,7 +422,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
         return delay;
     }
 
-    public PluginBase getPlugin()
+    public BukkitPlugin getPlugin()
     {
         return plugin;
     }

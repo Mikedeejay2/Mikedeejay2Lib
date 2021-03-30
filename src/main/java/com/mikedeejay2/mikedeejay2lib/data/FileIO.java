@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.data;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
@@ -13,9 +13,9 @@ import java.util.logging.Level;
  */
 public class FileIO
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
 
-    public FileIO(PluginBase plugin)
+    public FileIO(BukkitPlugin plugin)
     {
         this.plugin = plugin;
     }

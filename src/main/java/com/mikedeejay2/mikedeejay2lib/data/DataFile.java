@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.data;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 
 import java.io.File;
 
@@ -13,7 +13,7 @@ import java.io.File;
  */
 public abstract class DataFile implements DataObject
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // Path from the plugins folder to the file. (This DOES NOT include plugin.getDataFolder())
     protected String filePath;
     // The file to to this file on the disk (This does not ensure that the file is on the disk)
@@ -23,7 +23,7 @@ public abstract class DataFile implements DataObject
 
     protected final FileIO fileIO;
 
-    public DataFile(PluginBase plugin, String filePath)
+    public DataFile(BukkitPlugin plugin, String filePath)
     {
         this.plugin = plugin;
         this.fileIO = new FileIO(plugin);

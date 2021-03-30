@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.manager;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -14,11 +14,11 @@ import java.util.Map;
  */
 public class GUIManager
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // The HashMap that stores the Player's GUIs
     protected Map<Player, PlayerGUI> playerGUIs;
 
-    public GUIManager(PluginBase plugin)
+    public GUIManager(BukkitPlugin plugin)
     {
         this.plugin = plugin;
         this.playerGUIs = new HashMap<>();

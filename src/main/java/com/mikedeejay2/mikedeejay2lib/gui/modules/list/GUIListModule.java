@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.modules.list;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchEvent;
@@ -31,7 +31,7 @@ import java.util.Map;
  */
 public class GUIListModule implements GUIModule
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // The list of items that this list holds
     protected List<GUIItem> list;
     // The search list of the items if search is enabled
@@ -96,7 +96,7 @@ public class GUIListModule implements GUIModule
      * @param layerName The name of the <tt>GUILayer</tt> that will be used,
      *                  useful for if there are multiple lists in one GUI
      */
-    public GUIListModule(PluginBase plugin, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol, String layerName)
+    public GUIListModule(BukkitPlugin plugin, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol, String layerName)
     {
         this.plugin = plugin;
         this.list = new ArrayList<>();
@@ -149,7 +149,7 @@ public class GUIListModule implements GUIModule
      * @param leftCol   The left column of the list's bounding box
      * @param rightCol  The right column of the list's bounding box
      */
-    public GUIListModule(PluginBase plugin, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol)
+    public GUIListModule(BukkitPlugin plugin, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol)
     {
         this(plugin, viewMode, topRow, bottomRow, leftCol, rightCol, "list");
     }
@@ -163,7 +163,7 @@ public class GUIListModule implements GUIModule
      * @param leftCol   The left column of the list's bounding box
      * @param rightCol  The right column of the list's bounding box
      */
-    public GUIListModule(PluginBase plugin, int topRow, int bottomRow, int leftCol, int rightCol)
+    public GUIListModule(BukkitPlugin plugin, int topRow, int bottomRow, int leftCol, int rightCol)
     {
         this(plugin, ListViewMode.PAGED, topRow, bottomRow, leftCol, rightCol, "list");
     }

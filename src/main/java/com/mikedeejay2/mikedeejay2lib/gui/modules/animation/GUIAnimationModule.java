@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.modules.animation;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.animation.AnimationRuntime;
@@ -22,7 +22,7 @@ import java.util.*;
  */
 public class GUIAnimationModule implements GUIModule
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // The list of Animated GUI Items to be animated
     protected Map<AnimatedGUIItem, AnimatedGUIItemProperties> animatedItems;
     // The AnimationRuntime for this module
@@ -30,7 +30,7 @@ public class GUIAnimationModule implements GUIModule
     // The period of time between each update
     protected long period;
 
-    public GUIAnimationModule(PluginBase plugin, long period)
+    public GUIAnimationModule(BukkitPlugin plugin, long period)
     {
         this.plugin = plugin;
         this.period = period == 0 ? 1 : period;

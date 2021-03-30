@@ -1,11 +1,8 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.navigation;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.manager.NavigationSystem;
-import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
-import com.mikedeejay2.mikedeejay2lib.gui.modules.navigation.GUINavigatorModule;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -17,12 +14,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class GUIOpenEvent implements GUIEvent
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
 
     // The GUI that will be opened
     private GUIContainer guiToOpen;
 
-    public GUIOpenEvent(PluginBase plugin, GUIContainer gui)
+    public GUIOpenEvent(BukkitPlugin plugin, GUIContainer gui)
     {
         this.plugin = plugin;
         this.guiToOpen = gui;

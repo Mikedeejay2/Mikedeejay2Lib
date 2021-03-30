@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.list;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.list.GUIListModule;
@@ -15,9 +15,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class GUIListSearchEvent implements GUIEvent
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
 
-    public GUIListSearchEvent(PluginBase plugin)
+    public GUIListSearchEvent(BukkitPlugin plugin)
     {
         this.plugin = plugin;
     }

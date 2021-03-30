@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.modules.navigation;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.navigator.GUINavBackEvent;
@@ -21,7 +21,7 @@ import org.bukkit.entity.Player;
  */
 public class GUINavigatorModule implements GUIModule
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // The ID of the Navigator
     protected String navigationID;
 
@@ -34,7 +34,7 @@ public class GUINavigatorModule implements GUIModule
     // The invalid forward item
     protected GUIItem invalidForwardItem;
 
-    public GUINavigatorModule(PluginBase plugin, String navigationID)
+    public GUINavigatorModule(BukkitPlugin plugin, String navigationID)
     {
         this.plugin = plugin;
         this.navigationID = navigationID;

@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.text.chat.modules;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.text.chat.ChatSection;
 import com.mikedeejay2.mikedeejay2lib.util.chat.ChatConverter;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -13,13 +13,13 @@ import net.md_5.bungee.api.chat.HoverEvent;
  */
 public class ChatHoverModule implements ChatModule
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // The text that the hover event will use
     protected String hoverText;
     // The action of the hover event
     protected HoverEvent.Action action;
 
-    public ChatHoverModule(String hoverText, HoverEvent.Action action, PluginBase plugin)
+    public ChatHoverModule(String hoverText, HoverEvent.Action action, BukkitPlugin plugin)
     {
         this.hoverText = hoverText;
         this.action = action;

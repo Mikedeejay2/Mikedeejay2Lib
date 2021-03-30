@@ -4,7 +4,7 @@ import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -30,7 +30,7 @@ import java.net.URL;
  */
 public class UpdateChecker
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
 
     protected String userName;
     protected String repoName;
@@ -41,7 +41,7 @@ public class UpdateChecker
     protected String downloadUrl;
     protected JsonObject json;
 
-    public UpdateChecker(PluginBase plugin)
+    public UpdateChecker(BukkitPlugin plugin)
     {
         this.plugin = plugin;
     }

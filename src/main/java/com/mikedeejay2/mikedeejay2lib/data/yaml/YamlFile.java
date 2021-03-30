@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.data.yaml;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.data.DataFile;
 import com.mikedeejay2.mikedeejay2lib.data.section.SectionInstancer;
 
@@ -18,7 +18,7 @@ public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor>
     protected YamlAccessor accessor;
     private YamlFileIO yamlFileIO;
 
-    public YamlFile(PluginBase plugin, String filePath)
+    public YamlFile(BukkitPlugin plugin, String filePath)
     {
         super(plugin, filePath);
         this.yamlFileIO = new YamlFileIO(plugin);

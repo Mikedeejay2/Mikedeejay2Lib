@@ -2,7 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.data.json;
 
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.data.DataFile;
 import com.mikedeejay2.mikedeejay2lib.data.section.SectionInstancer;
 
@@ -20,7 +20,7 @@ public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
     // The root JsonAccessor that this JsonFile uses
     protected JsonAccessor accessor;
 
-    public JsonFile(PluginBase plugin, String filePath)
+    public JsonFile(BukkitPlugin plugin, String filePath)
     {
         super(plugin, filePath);
         jsonObject = new JsonObject();

@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.listeners;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.GUIManager;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
@@ -21,9 +21,9 @@ import org.bukkit.inventory.Inventory;
  */
 public class GUIListener implements Listener
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
 
-    public GUIListener(PluginBase plugin)
+    public GUIListener(BukkitPlugin plugin)
     {
         this.plugin = plugin;
     }

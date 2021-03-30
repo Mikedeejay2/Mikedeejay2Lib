@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util.block;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
 import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 import org.bukkit.Location;
@@ -23,7 +23,7 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -53,7 +53,7 @@ public class BlockIterator
      * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, PluginBase plugin)
+    public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin)
     {
         iterateBlocks(loc, xWidth, yWidth, zWidth, consumer, plugin, null);
     }
@@ -67,7 +67,7 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocksHollow(Location loc1, Location loc2, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocksHollow(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -95,7 +95,7 @@ public class BlockIterator
      * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksHollow(Location loc1, Location loc2, BlockConsumer consumer, PluginBase plugin)
+    public static void iterateBlocksHollow(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin)
     {
         iterateBlocksHollow(loc1, loc2, consumer, plugin, null);
     }
@@ -109,7 +109,7 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocks(Location loc1, Location loc2, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocks(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -137,7 +137,7 @@ public class BlockIterator
      * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocks(Location loc1, Location loc2, BlockConsumer consumer, PluginBase plugin)
+    public static void iterateBlocks(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin)
     {
         iterateBlocks(loc1, loc2, consumer, plugin, null);
     }
@@ -153,7 +153,7 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -183,7 +183,7 @@ public class BlockIterator
      * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, PluginBase plugin)
+    public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin)
     {
         iterateBlocksHollow(loc, xWidth, yWidth, zWidth, consumer, plugin, null);
     }
@@ -199,7 +199,7 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -229,7 +229,7 @@ public class BlockIterator
      * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, PluginBase plugin)
+    public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin)
     {
         iterateBlocksOutline(loc, xWidth, yWidth, zWidth, consumer, plugin, null);
     }
@@ -244,7 +244,7 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocksOutline(Location loc1, Location loc2, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocksOutline(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -272,7 +272,7 @@ public class BlockIterator
      * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksOutline(Location loc1, Location loc2, BlockConsumer consumer, PluginBase plugin)
+    public static void iterateBlocksOutline(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin)
     {
         iterateBlocksOutline(loc1, loc2, consumer, plugin, null);
     }
@@ -286,7 +286,7 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocksSphere(Location loc, double radius, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocksSphere(Location loc, double radius, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -314,7 +314,7 @@ public class BlockIterator
      * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksSphere(Location loc, double radius, BlockConsumer consumer, PluginBase plugin)
+    public static void iterateBlocksSphere(Location loc, double radius, BlockConsumer consumer, BukkitPlugin plugin)
     {
         iterateBlocksSphere(loc, radius, consumer, plugin, null);
     }
@@ -328,7 +328,7 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocksSphereHollow(Location loc, double radius, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocksSphereHollow(Location loc, double radius, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -356,7 +356,7 @@ public class BlockIterator
      * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksSphereHollow(Location loc, double radius, BlockConsumer consumer, PluginBase plugin)
+    public static void iterateBlocksSphereHollow(Location loc, double radius, BlockConsumer consumer, BukkitPlugin plugin)
     {
         iterateBlocksSphereHollow(loc, radius, consumer, plugin, null);
     }
@@ -369,7 +369,7 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <tt>Predicate</tt> condition
      */
-    public static void iterateBlocks(List<Location> locs, BlockConsumer consumer, PluginBase plugin, Predicate<Material> typePredicate)
+    public static void iterateBlocks(List<Location> locs, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
         EnhancedRunnable iteration = new EnhancedRunnable()
         {
@@ -395,7 +395,7 @@ public class BlockIterator
      * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocks(List<Location> locs, BlockConsumer consumer, PluginBase plugin)
+    public static void iterateBlocks(List<Location> locs, BlockConsumer consumer, BukkitPlugin plugin)
     {
         iterateBlocks(locs, consumer, plugin, null);
     }

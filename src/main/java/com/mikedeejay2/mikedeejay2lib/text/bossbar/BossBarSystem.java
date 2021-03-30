@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.text.bossbar;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.text.bossbar.modules.BossBarModule;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import org.bukkit.Bukkit;
@@ -22,7 +22,7 @@ import java.util.*;
  */
 public class BossBarSystem
 {
-    protected PluginBase plugin;
+    protected BukkitPlugin plugin;
     // The title text of the boss bar
     protected String title;
     // The boss bar itself
@@ -52,7 +52,7 @@ public class BossBarSystem
      * @param progress The progress (0.0 - 1.0) of the boss bar
      * @param flags    The <tt>BarFlags</tt> of the boss bar
      */
-    public BossBarSystem(PluginBase plugin, String title, BarColor color, BarStyle style, double progress, BarFlag... flags)
+    public BossBarSystem(BukkitPlugin plugin, String title, BarColor color, BarStyle style, double progress, BarFlag... flags)
     {
         this.plugin = plugin;
         this.players = new HashSet<>();
@@ -70,7 +70,7 @@ public class BossBarSystem
     /**
      * @param plugin A reference to the plugin
      */
-    public BossBarSystem(PluginBase plugin)
+    public BossBarSystem(BukkitPlugin plugin)
     {
         this(plugin, "", BarColor.WHITE, BarStyle.SOLID, 1.0);
     }

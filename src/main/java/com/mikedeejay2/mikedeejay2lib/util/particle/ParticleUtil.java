@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util.particle;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
 import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 import org.bukkit.Location;
@@ -88,7 +88,7 @@ public final class ParticleUtil
      * @param offsetZ       The offset in the Z direction of the particle
      * @param force         Force the particles to be rendered even when outside of view distance
      */
-    public static void addParticleToEntity(PluginBase plugin, Entity entity, Particle particle, long timeToLive, int particleCount, float speed, double offsetX, double offsetY, double offsetZ, boolean force)
+    public static void addParticleToEntity(BukkitPlugin plugin, Entity entity, Particle particle, long timeToLive, int particleCount, float speed, double offsetX, double offsetY, double offsetZ, boolean force)
     {
         if(particle == null) return;
         new EnhancedRunnable()

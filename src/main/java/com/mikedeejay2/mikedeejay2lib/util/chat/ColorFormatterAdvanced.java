@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util.chat;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import net.md_5.bungee.api.ChatColor;
 
 import java.util.regex.Matcher;
@@ -19,7 +19,7 @@ import java.util.regex.Pattern;
  */
 public final class ColorFormatterAdvanced implements IColorFormatter
 {
-    private final PluginBase plugin;
+    private final BukkitPlugin plugin;
 
     // Pattern to find hex codes in a message
     private static final Pattern pattern1 = Pattern.compile("#[a-fA-f0-9]{6}");
@@ -28,7 +28,7 @@ public final class ColorFormatterAdvanced implements IColorFormatter
     // Pattern to find any text between a placeholder in a message (for getting ColorShortcuts)
     private static final Pattern pattern3 = Pattern.compile("%(.*?)%");
 
-    public ColorFormatterAdvanced(PluginBase plugin)
+    public ColorFormatterAdvanced(BukkitPlugin plugin)
     {
         this.plugin = plugin;
     }

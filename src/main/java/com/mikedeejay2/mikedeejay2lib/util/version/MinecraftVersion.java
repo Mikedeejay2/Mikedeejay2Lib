@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util.version;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -24,7 +24,7 @@ public final class MinecraftVersion
     // Enum version of the NMS identifier
     private final VersionEnum versionEnum;
 
-    public MinecraftVersion(PluginBase plugin)
+    public MinecraftVersion(BukkitPlugin plugin)
     {
         this.versionString = calcVersionString(plugin);
         this.versionLong = calcLongVersion();
@@ -39,7 +39,7 @@ public final class MinecraftVersion
      * @param plugin A reference to the plugin
      * @return The calculated version String
      */
-    private String calcVersionString(PluginBase plugin)
+    private String calcVersionString(BukkitPlugin plugin)
     {
         String version = plugin.getServer().getVersion();
         Pattern pattern = Pattern.compile("(\\(MC: )([\\d\\.]+)(\\))");
@@ -93,7 +93,7 @@ public final class MinecraftVersion
      * @param plugin A reference to the plugin
      * @return The calculated version enum
      */
-    private VersionEnum calcVersionEnum(PluginBase plugin)
+    private VersionEnum calcVersionEnum(BukkitPlugin plugin)
     {
         String ver = calcVersionNMS(plugin);
         return VersionEnum.valueOf(ver);
@@ -105,7 +105,7 @@ public final class MinecraftVersion
      * @param plugin A reference to the plugin
      * @return The calculated NMS version String
      */
-    private String calcVersionNMS(PluginBase plugin)
+    private String calcVersionNMS(BukkitPlugin plugin)
     {
         String raw = plugin.getServer().getClass().getPackage().getName();
         String[] split = raw.split("\\.");

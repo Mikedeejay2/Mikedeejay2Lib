@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.manager;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import org.bukkit.entity.Player;
 
@@ -16,7 +16,7 @@ import java.util.Map;
  */
 public class PlayerGUI
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // The map of NavigationSystems of this player
     protected Map<String, NavigationSystem> naviSystems;
     // The player's current GUIContainer
@@ -27,7 +27,7 @@ public class PlayerGUI
     protected boolean guiOpened;
     protected boolean guiChange;
 
-    public PlayerGUI(PluginBase plugin, Player player)
+    public PlayerGUI(BukkitPlugin plugin, Player player)
     {
         this.plugin = plugin;
         this.player = player;

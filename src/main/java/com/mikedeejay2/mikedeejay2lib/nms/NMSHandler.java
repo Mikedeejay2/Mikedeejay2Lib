@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.nms;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.nms.merchant.NMS_Merchant;
 import com.mikedeejay2.mikedeejay2lib.nms.merchant.NMS_Merchant_v1_16_R3;
 import com.mikedeejay2.mikedeejay2lib.nms.xpcalc.*;
@@ -13,14 +13,14 @@ import com.mikedeejay2.mikedeejay2lib.util.version.VersionEnum;
  */
 public class NMSHandler
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // The NMS version in an enum
     protected VersionEnum version;
 
     protected NMS_XP xp;
     protected NMS_Merchant merchant;
 
-    public NMSHandler(PluginBase plugin)
+    public NMSHandler(BukkitPlugin plugin)
     {
         this.plugin = plugin;
         this.version = plugin.getMCVersion().getVersionEnum();

@@ -5,7 +5,7 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonWriter;
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.data.FileIO;
 
 import java.io.*;
@@ -19,10 +19,10 @@ import java.util.Set;
  */
 public final class JsonFileIO
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     private final FileIO fileIO;
 
-    public JsonFileIO(PluginBase plugin)
+    public JsonFileIO(BukkitPlugin plugin)
     {
         this.plugin = plugin;
         this.fileIO = new FileIO(plugin);

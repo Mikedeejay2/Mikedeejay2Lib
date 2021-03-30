@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.modules.navigation;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.navigator.GUIScrollEvent;
@@ -13,14 +13,14 @@ import org.bukkit.entity.Player;
 
 public class GUIScrollerModule implements GUIModule
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
 
     protected GUIItem upItem;
     protected GUIItem downItem;
     protected GUIItem leftItem;
     protected GUIItem rightItem;
 
-    public GUIScrollerModule(PluginBase plugin)
+    public GUIScrollerModule(BukkitPlugin plugin)
     {
         this.plugin = plugin;
     }

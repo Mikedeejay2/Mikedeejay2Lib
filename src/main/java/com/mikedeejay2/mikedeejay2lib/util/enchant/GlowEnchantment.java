@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util.enchant;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import org.bukkit.NamespacedKey;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.enchantments.EnchantmentTarget;
@@ -77,7 +77,7 @@ public final class GlowEnchantment extends Enchantment
      *
      * @param plugin A reference to the <tt>PluginBase</tt> instance
      */
-    public static void registerGlow(PluginBase plugin)
+    public static void registerGlow(BukkitPlugin plugin)
     {
         try
         {

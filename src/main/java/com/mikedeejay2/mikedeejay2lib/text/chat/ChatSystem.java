@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.text.chat;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.text.chat.animation.ChatAnimRuntime;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -17,13 +17,13 @@ import java.util.List;
  */
 public class ChatSystem
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // The chat slides that this system contains
     protected List<ChatSlide> slides;
     // The animation runtime for this system. Nullable.
     protected ChatAnimRuntime runtime;
 
-    public ChatSystem(PluginBase plugin)
+    public ChatSystem(BukkitPlugin plugin)
     {
         this.plugin = plugin;
         this.slides = new ArrayList<>();

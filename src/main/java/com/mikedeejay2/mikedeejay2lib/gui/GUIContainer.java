@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractHandler;
@@ -29,7 +29,7 @@ import java.util.List;
  */
 public class GUIContainer
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // The default (Minecraft) amount of inventory rows
     public static final int MAX_INVENTORY_ROWS = 6;
     // The default (Minecraft) amount of inventory columns
@@ -71,7 +71,7 @@ public class GUIContainer
      * @param inventoryName The name of this GUI
      * @param inventoryRows The amount of inventory rows of this GUI. Max amount: 6
      */
-    public GUIContainer(PluginBase plugin, String inventoryName, int inventoryRows)
+    public GUIContainer(BukkitPlugin plugin, String inventoryName, int inventoryRows)
     {
         this.plugin = plugin;
         this.backgroundItem = ItemBuilder.of(Material.LIGHT_GRAY_STAINED_GLASS_PANE).setEmptyName().get();
@@ -100,7 +100,7 @@ public class GUIContainer
      * @param inventoryRows The amount of inventory rows of this GUI
      * @param inventoryCols The amount of inventory columns of this GUI
      */
-    public GUIContainer(PluginBase plugin, String inventoryName, int inventoryRows, int inventoryCols)
+    public GUIContainer(BukkitPlugin plugin, String inventoryName, int inventoryRows, int inventoryCols)
     {
         this.plugin = plugin;
         this.backgroundItem = ItemBuilder.of(Material.LIGHT_GRAY_STAINED_GLASS_PANE).setEmptyName().get();

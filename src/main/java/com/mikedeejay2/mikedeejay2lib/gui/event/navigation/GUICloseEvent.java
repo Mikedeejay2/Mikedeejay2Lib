@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.navigation;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import org.bukkit.entity.Player;
@@ -14,9 +14,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class GUICloseEvent implements GUIEvent
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
 
-    public GUICloseEvent(PluginBase plugin)
+    public GUICloseEvent(BukkitPlugin plugin)
     {
         this.plugin = plugin;
     }

@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.text.chat.modules;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.text.chat.ChatSection;
 import com.mikedeejay2.mikedeejay2lib.util.chat.ChatConverter;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -13,13 +13,13 @@ import net.md_5.bungee.api.chat.ClickEvent;
  */
 public class ChatClickModule implements ChatModule
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // The text that the click event will use
     protected String clickText;
     // The action of the click event
     protected ClickEvent.Action action;
 
-    public ChatClickModule(String clickText, ClickEvent.Action action, PluginBase plugin)
+    public ChatClickModule(String clickText, ClickEvent.Action action, BukkitPlugin plugin)
     {
         this.clickText = clickText;
         this.action = action;

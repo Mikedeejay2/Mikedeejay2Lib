@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.particle;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.particle.module.system.ParticleSModule;
 import com.mikedeejay2.mikedeejay2lib.particle.runtime.ParticleRuntime;
 import org.bukkit.Location;
@@ -24,7 +24,7 @@ import java.util.List;
  */
 public class ParticleSystem
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // The list of particle effects
     protected List<ParticleEffect> effects;
     // The global scale vector for this system
@@ -50,7 +50,7 @@ public class ParticleSystem
     // Whether the transformations are up to date on the display
     protected boolean updated;
 
-    public ParticleSystem(PluginBase plugin, Location origin, long playTicks, long tickRate, long updateRate)
+    public ParticleSystem(BukkitPlugin plugin, Location origin, long playTicks, long tickRate, long updateRate)
     {
         this.plugin = plugin;
         this.effects = new ArrayList<>();
@@ -65,12 +65,12 @@ public class ParticleSystem
         this.updated = true;
     }
 
-    public ParticleSystem(PluginBase plugin, Location origin, long playTicks, long tickRate)
+    public ParticleSystem(BukkitPlugin plugin, Location origin, long playTicks, long tickRate)
     {
         this(plugin, origin, playTicks, tickRate, 0);
     }
 
-    public ParticleSystem(PluginBase plugin, Location origin, long playTicks)
+    public ParticleSystem(BukkitPlugin plugin, Location origin, long playTicks)
     {
         this(plugin, origin, playTicks, 0, 0);
     }

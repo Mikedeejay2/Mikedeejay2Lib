@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.text.chat;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.text.chat.modules.ChatModule;
 import com.mikedeejay2.mikedeejay2lib.util.chat.ChatConverter;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
@@ -20,7 +20,7 @@ import java.util.List;
  */
 public class ChatSection
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // The list of Chat Modules for this section
     protected List<ChatModule> modules;
     // The String of text for this section
@@ -30,7 +30,7 @@ public class ChatSection
     // The baked array of components for this section
     protected BaseComponent[] components;
 
-    public ChatSection(PluginBase plugin)
+    public ChatSection(BukkitPlugin plugin)
     {
         this.plugin = plugin;
         this.modules = new ArrayList<>();

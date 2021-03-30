@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.text.actionbar;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.text.actionbar.animation.ActionBarRuntime;
 import com.mikedeejay2.mikedeejay2lib.text.actionbar.modules.ActionBarModule;
 import org.bukkit.entity.Player;
@@ -15,7 +15,7 @@ import java.util.List;
  */
 public class ActionBar
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // Whether the frames of the action bar will loop or not
     protected boolean loop;
     // The list of frames of the action bar
@@ -25,14 +25,14 @@ public class ActionBar
     // The list of action bar modules of the action bar
     protected List<ActionBarModule> modules;
 
-    public ActionBar(PluginBase plugin)
+    public ActionBar(BukkitPlugin plugin)
     {
         this.plugin = plugin;
         this.frames = new ArrayList<>();
         this.modules = new ArrayList<>();
     }
 
-    public ActionBar(PluginBase plugin, boolean loop)
+    public ActionBar(BukkitPlugin plugin, boolean loop)
     {
         this.plugin = plugin;
         this.loop = loop;

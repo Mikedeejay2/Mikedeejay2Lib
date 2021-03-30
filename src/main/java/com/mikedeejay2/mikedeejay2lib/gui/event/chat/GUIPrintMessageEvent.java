@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.chat;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import org.bukkit.entity.Player;
@@ -14,11 +14,11 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class GUIPrintMessageEvent implements GUIEvent
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // The message to be printed
     private String message;
 
-    public GUIPrintMessageEvent(PluginBase plugin, String message)
+    public GUIPrintMessageEvent(BukkitPlugin plugin, String message)
     {
         this.plugin = plugin;
         this.message = message;

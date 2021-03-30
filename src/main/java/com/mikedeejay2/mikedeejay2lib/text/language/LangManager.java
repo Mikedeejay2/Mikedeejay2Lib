@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.text.language;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.data.json.JsonFile;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -18,7 +18,7 @@ import java.util.Map;
  */
 public class LangManager
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // The default language locale
     protected static final String ENGLISH = "en_us";
     private String defaultLang;
@@ -37,7 +37,7 @@ public class LangManager
      * @param plugin A reference to the plugin
      * @param filePath The path to where the language files are stored in the plugin's jar
      */
-    public LangManager(PluginBase plugin, String filePath)
+    public LangManager(BukkitPlugin plugin, String filePath)
     {
         this.plugin = plugin;
         this.langFiles = new HashMap<>();

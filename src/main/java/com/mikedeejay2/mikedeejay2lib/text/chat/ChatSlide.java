@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.text.chat;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
@@ -15,19 +15,19 @@ import java.util.List;
  */
 public class ChatSlide
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     // The length of time between this slide and the next slide
     protected long period;
     // A list of chat sections
     protected List<ChatSection> sections;
 
-    public ChatSlide(PluginBase plugin)
+    public ChatSlide(BukkitPlugin plugin)
     {
         this.plugin = plugin;
         this.sections = new ArrayList<>();
     }
 
-    public ChatSlide(PluginBase plugin, long period)
+    public ChatSlide(BukkitPlugin plugin, long period)
     {
         this(plugin);
         this.period = period;

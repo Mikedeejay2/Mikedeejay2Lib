@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util.bstats;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import org.bstats.bukkit.Metrics;
 
 /**
@@ -10,11 +10,11 @@ import org.bstats.bukkit.Metrics;
  */
 public class BStats
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     protected int id;
     protected Metrics bStats;
 
-    public BStats(PluginBase plugin)
+    public BStats(BukkitPlugin plugin)
     {
         this.plugin = plugin;
         this.id = -1;

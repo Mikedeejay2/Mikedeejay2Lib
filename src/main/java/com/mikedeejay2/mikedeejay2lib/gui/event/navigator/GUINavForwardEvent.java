@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.navigator;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.NavigationSystem;
@@ -17,9 +17,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class GUINavForwardEvent implements GUIEvent
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
 
-    public GUINavForwardEvent(PluginBase plugin)
+    public GUINavForwardEvent(BukkitPlugin plugin)
     {
         this.plugin = plugin;
     }

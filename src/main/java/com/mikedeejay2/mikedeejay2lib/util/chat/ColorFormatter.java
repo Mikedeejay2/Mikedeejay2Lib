@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.util.chat;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import net.md_5.bungee.api.ChatColor;
 
 import java.util.regex.Matcher;
@@ -17,10 +17,10 @@ import java.util.regex.Pattern;
  */
 public final class ColorFormatter implements IColorFormatter
 {
-    private final PluginBase plugin;
+    private final BukkitPlugin plugin;
     private final Pattern pattern = Pattern.compile("#[a-fA-f0-9]{6}");
 
-    public ColorFormatter(PluginBase plugin)
+    public ColorFormatter(BukkitPlugin plugin)
     {
         this.plugin = plugin;
     }

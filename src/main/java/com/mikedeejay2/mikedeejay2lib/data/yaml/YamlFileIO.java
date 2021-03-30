@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.data.yaml;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.data.FileIO;
 
 import java.io.File;
@@ -13,10 +13,10 @@ import java.io.Reader;
  */
 public final class YamlFileIO
 {
-    protected final PluginBase plugin;
+    protected final BukkitPlugin plugin;
     private final FileIO fileIO;
 
-    public YamlFileIO(PluginBase plugin)
+    public YamlFileIO(BukkitPlugin plugin)
     {
         this.plugin = plugin;
         this.fileIO = new FileIO(plugin);
