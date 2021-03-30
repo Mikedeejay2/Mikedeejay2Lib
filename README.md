@@ -88,7 +88,7 @@ After Maven is setup and Mikedeejay2Lib is imported, make your plugin's main cla
 ### How to Use
 
 Currently, the only way to figure out how this library works is by looking through source code. Usage examples and a wiki 
-will be posted eventually. Currently, Javadocs for most methods exist. It will help for utilizing this library, but it probably
+will be posted eventually. Currently, Javadocs for most methods and classes exist. It will help for utilizing this library, but it probably
 won't be enough. If you want to use this library but don't know where to start, contact me through Discord.
 
 ### Maven Repository Updates
