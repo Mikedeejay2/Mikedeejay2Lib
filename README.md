@@ -87,10 +87,16 @@ After Maven is setup and Mikedeejay2Lib is imported, make your plugin's main cla
 
 ### How to Use
 
-Currently, the only way to figure out how this library works is by looking through source code. Usage examples and a wiki will be posted eventually.
+Currently, the only way to figure out how this library works is by looking through source code. Usage examples and a wiki 
+will be posted eventually. Currently, Javadocs for most methods exist. It will help for utilizing this library, but it probably
+won't be enough. If you want to use this library but don't know where to start, contact me through Discord.
 
 ### Maven Repository Updates
 
-Maven updates are provided as snapshots of the Minecraft version that Mikedeejay2Lib is natively supporting. In the case of 1.16.5, the Mikedeejay2Lib version to fetch from the maven repository would be `1.16.5-SNAPSHOT`. There are no "versioned" updates. Updates are automatically fetched by Maven from the repository because of the `SNAPSHOT` keyword in the version.
+Maven updates are provided as snapshots of the Minecraft version that Mikedeejay2Lib is natively supporting. In the case 
+of 1.16.5, the Mikedeejay2Lib version to fetch from the maven repository would be `1.16.5-SNAPSHOT`. There are no "versioned" 
+updates. Updates are automatically fetched by Maven from the repository because of the `SNAPSHOT` keyword in the version.
 
-:warning: Mikedeejay2Lib snapshot updates can easily break or move existing code without warning. To avoid this, disable snapshot auto-updating or manually update code as updates are pushed. This purposely occurs because Mikedeejay2Lib is still in heavy development. When using Mikedeejay2Lib, you should be prepared to update your plugin's code as needed to stay updated.
+:warning: Mikedeejay2Lib snapshot updates can easily break or move existing code without warning. To avoid this, disable snapshot
+auto-updating or manually update code as updates are pushed. This purposely occurs because Mikedeejay2Lib is still in heavy 
+development. When using Mikedeejay2Lib, you should be prepared to update your plugin's code as needed to stay updated.
