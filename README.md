@@ -14,72 +14,9 @@ please refer to the [Using Mikedeejay2Lib](#Using-Mikedeejay2Lib) section.
 
 ### Features
 
-* Command Management
-* Subcommand System
-* Automatic Tab Completion for added commands
-* Listener Manager
-* File Management
-* Several supported file types and databases
-  * YAML (Supports comments above keys)
-  * JSON
-* File Section Accessors (For key-value structured hierarchical file types)
-* Robust GUI System
-  * Animation System
-  * GUI Layers
-  * Automatically Managed
-  * Navigation Systems
-  * Custom Item Interactions
-  * Appendable Click Events
-    * Navigation Events
-    * Open / Close Events
-    * List Events
-    * Chat Events
-  * Customizable GUI Modules
-    * List Module
-    * Tree Module
-    * Confirmation Module
-    * Navigator Module
-    * Large GUI Scroller Module
-    * Border Module
-    * Animation Module
-  * Ability to have GUIs larger than 6x9 (Double chest size)
-* Language Localization Manager
-  * Reads from JSON Files
-* Enhanced Runnable
-  * New Counted Task (Stops after a specified amount of runs)
-* Array Utilities
-* Block Iterators
-* Falling Block Utilities
-* Chat Printing Utilities
-* Debugging Utilities
-  * Debug Timer for printing time between code
-* List of Base 64 Heads
-* Item Comparison Utilities
-* Item Creation Utilities
-* Math Utilities
-  * Getting a vector around a circle
-  * Rotating a vector around an origin point
-  * Get a vector facing towards another vector
-  * Get a hollow sphere
-  * Get a filled sphere
-  * Get a hollow cube
-  * Get an outline of a cube
-  * Get a filled cube
-* Particle Utilities
-  * Create a line of particles
-  * Add a particle to an entity
-* Ray Tracing Utilities
-  * Ray trace to a location base off of where an entity is looking
-  * Ray traces can hit entities
-  * Large amount of customizability (Water states, entity predicates)
-* Item Meta Search Utilities
-  * Search meta fuzzy
-  * Search meta non-fuzzy
-  * Search meta exact
-* Formatted Time Utilities
-* Minecraft Version getter
-
-**And much, much more. This list is very outdated**
+There used to be a list of features here. Now there isn't, it simply got too long. Check source for a list of features. 
+Check issues for a list of planned features. If you have a question open an issue or contact me on Discord through 
+`Mikedeejay2#3606`.
 
 ### Using Mikedeejay2Lib
 To use this library, you should import Mikedeejay2Lib using Maven.
