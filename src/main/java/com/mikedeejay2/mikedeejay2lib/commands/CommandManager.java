@@ -1,47 +1,32 @@
 package com.mikedeejay2.mikedeejay2lib.commands;
 
-import com.mikedeejay2.mikedeejay2lib.PluginBase;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import org.bukkit.command.Command;
-import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
+import java.util.*;
 
 /**
  * Manages a command with subcommands
  *
  * @author Mikedeejay2
  */
-public class CommandManager implements CommandExecutor
+public class CommandManager implements TabExecutor
 {
-    protected final PluginBase plugin;
-    protected ArrayList<SubCommand> commands = new ArrayList<>();
-    private CustomTabCompleter completer;
+    protected final BukkitPlugin plugin;
+    protected List<SubCommand> commands;
     protected String defaultSubCommand;
 
-    public String main;
+    private String commandName;
 
-    public CommandManager(PluginBase plugin)
+    public CommandManager(BukkitPlugin plugin, String commandName)
     {
         this.plugin = plugin;
+        this.commandName = commandName;
+        this.commands = new ArrayList<>();
         this.defaultSubCommand = "";
-    }
-
-    /**
-     * Setup the command manager by initializing all subcommands
-     *
-     * @param commandName The name of the base command
-     */
-    public void setup(String commandName)
-    {
-        main = commandName;
-        plugin.getCommand(main).setExecutor(this);
-
-        completer = new CustomTabCompleter(plugin);
-        plugin.getCommand(main).setTabCompleter(completer);
     }
 
     /**
@@ -56,7 +41,7 @@ public class CommandManager implements CommandExecutor
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
     {
-        if(command.getName().equalsIgnoreCase(main))
+        if(command.getName().equalsIgnoreCase(commandName))
         {
             if(args.length == 0)
             {
@@ -181,7 +166,7 @@ public class CommandManager implements CommandExecutor
 
     public String getBaseCommand()
     {
-        return main;
+        return commandName;
     }
 
     public String getDefaultSubCommand()
@@ -192,5 +177,29 @@ public class CommandManager implements CommandExecutor
     public void setDefaultSubCommand(String defaultSubCommand)
     {
         this.defaultSubCommand = defaultSubCommand;
+    }
+
+    /**
+     * Automatically fill out the first argument of the command
+     *
+     * @param sender  The CommandSender that sent the command
+     * @param command The command that was sent
+     * @param alias   The alias of the command
+     * @param args    The command's arguments (subcommands)
+     * @return Return a list of autocomplete strings
+     */
+    @Override
+    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args)
+    {
+        if(!command.getName().equalsIgnoreCase(this.commandName)) return null;
+        ArrayList<String> commands = new ArrayList<>();
+        switch(args.length)
+        {
+            case 1:
+                String[] arg1Strings = this.getAllCommandStrings(true);
+                Collections.addAll(commands, arg1Strings);
+                break;
+        }
+        return commands;
     }
 }
