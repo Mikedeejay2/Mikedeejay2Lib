@@ -119,7 +119,7 @@ Finally, shade Mikedeejay2Lib into your plugin like so:
                             <goal>shade</goal>
                         </goals>
                         <configuration>
-                            <finalName>${project.artifactId}-${project.version}</finalName>
+                            <finalName>${project.name}-${project.version}</finalName>
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
@@ -138,6 +138,7 @@ Finally, shade Mikedeejay2Lib into your plugin like so:
                                 </relocation>
                             </relocations>
                             <minimizeJar>true</minimizeJar>
+                            <outputFile>${serverDirectory}</outputFile>
                         </configuration>
                     </execution>
                 </executions>
