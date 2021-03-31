@@ -32,7 +32,7 @@ public interface CommandInfo
      * @param sender The CommandSender that requested the info. If null, use default lang.
      * @return Any info that the command has
      */
-    default String info(CommandSender sender) { return null; }
+    default String getInfo(CommandSender sender) { return null; }
 
     /**
      * Get the permission that is required to run this command
