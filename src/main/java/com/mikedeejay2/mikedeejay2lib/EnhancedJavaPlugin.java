@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib;
 
 import com.mikedeejay2.mikedeejay2lib.commands.CommandBase;
+import com.mikedeejay2.mikedeejay2lib.commands.CommandInfo;
 import com.mikedeejay2.mikedeejay2lib.commands.TabBase;
 import com.mikedeejay2.mikedeejay2lib.commands.TabCommandBase;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
@@ -27,7 +28,7 @@ import java.lang.reflect.Field;
  *
  * @author Mikedeejay2
  */
-public abstract class JavaPluginPlus extends JavaPlugin implements PluginPlus
+public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedPlugin
 {
     private String prefix;
 
@@ -48,7 +49,7 @@ public abstract class JavaPluginPlus extends JavaPlugin implements PluginPlus
     /**
      * Get the prefix name of this plugin. This CAN include color formatting,
      * custom names, or really anything since there are no restraints placed
-     * on changing the prefix name using {@link JavaPluginPlus#setPrefix(String) setPrefix()}
+     * on changing the prefix name using {@link EnhancedJavaPlugin#setPrefix(String) setPrefix()}
      *
      * @return The prefix name of this plugin
      */
@@ -129,12 +130,22 @@ public abstract class JavaPluginPlus extends JavaPlugin implements PluginPlus
         Bukkit.broadcastMessage(Colors.format(getPrefix() + message));
     }
 
+    /**
+     * Register an event listener to the server
+     *
+     * @param listener The listener to register
+     */
     @Override
     public void registerEvent(Listener listener)
     {
         this.getServer().getPluginManager().registerEvents(listener, this);
     }
 
+    /**
+     * Register multiple event listeners to the server
+     *
+     * @param listeners The variable amount of event listeners to register
+     */
     @Override
     public void registerEvents(Listener... listeners)
     {
@@ -144,6 +155,14 @@ public abstract class JavaPluginPlus extends JavaPlugin implements PluginPlus
         }
     }
 
+    /**
+     * Register a command and a tab completer to the server. The executor and
+     * tab completer will be applied to the name of the command specified.
+     *
+     * @param name      The name of the command to register
+     * @param executor  The <tt>CommandExecutor</tt> to register to the command
+     * @param completer The <tt>TabCompleter</tt> to register to the command
+     */
     @Override
     public void registerCommand(String name, CommandExecutor executor, TabCompleter completer)
     {
@@ -151,18 +170,38 @@ public abstract class JavaPluginPlus extends JavaPlugin implements PluginPlus
         this.getCommand(name).setTabCompleter(completer);
     }
 
+    /**
+     * Register a command to the server. The executor will be applied to the name
+     * of the command specified.
+     *
+     * @param name     The name of the command to register
+     * @param executor The <tt>CommandExecutor</tt> to register to the command
+     */
     @Override
     public void registerCommand(String name, CommandExecutor executor)
     {
         this.getCommand(name).setExecutor(executor);
     }
 
+    /**
+     * Register a tab completer to the server. The tab completer will be applied to
+     * the name of the command specified.
+     *
+     * @param name      The name of the command to register
+     * @param completer The <tt>TabCompleter</tt> to register to the command
+     */
     @Override
     public void registerTabCompleter(String name, TabCompleter completer)
     {
         this.getCommand(name).setTabCompleter(completer);
     }
 
+    /**
+     * Register a {@link TabCommandBase} to the server. Information contained in
+     * {@link CommandInfo} will be used to register the command.
+     *
+     * @param command The <tt>TabCommandBase</tt> to register to the command
+     */
     @Override
     public void registerCommand(TabCommandBase command)
     {
@@ -170,60 +209,114 @@ public abstract class JavaPluginPlus extends JavaPlugin implements PluginPlus
         this.getCommand(command.getName()).setTabCompleter(command);
     }
 
+    /**
+     * Register a {@link CommandBase} to the server. Information contained in
+     * {@link CommandInfo} will be used to register the command.
+     *
+     * @param command The <tt>CommandBase</tt> to register to the command
+     */
     @Override
     public void registerCommand(CommandBase command)
     {
         this.getCommand(command.getName()).setExecutor(command);
     }
 
+    /**
+     * Register a {@link TabBase} to the server. Information contained in
+     * {@link CommandInfo} will be used to register to the command.
+     *
+     * @param completer The <tt>TabBase</tt> to register to the command
+     */
     @Override
     public void registerTabCompleter(TabBase completer)
     {
         this.getCommand(completer.getName()).setTabCompleter(completer);
     }
 
+    /**
+     * Enable a plugin on the server
+     *
+     * @param plugin The plugin to enable
+     */
     @Override
     public void enablePlugin(Plugin plugin)
     {
         this.getServer().getPluginManager().enablePlugin(plugin);
     }
 
+    /**
+     * Disable a plugin on the server
+     *
+     * @param plugin The plugin to disable
+     */
     @Override
     public void disablePlugin(Plugin plugin)
     {
         this.getServer().getPluginManager().disablePlugin(plugin);
     }
 
+    /**
+     * Get a plugin on the server via name
+     *
+     * @param name The name of the plugin to get
+     * @return The plugin's instance, null if no plugin was found
+     */
     @Override
     public Plugin getPlugin(String name)
     {
         return this.getServer().getPluginManager().getPlugin(name);
     }
 
+    /**
+     * Get a permission from the server via name
+     *
+     * @param name The name of the permission to get
+     * @return The requested permission, null if no permission was found
+     */
     @Override
     public Permission getPermission(String name)
     {
         return this.getServer().getPluginManager().getPermission(name);
     }
 
+    /**
+     * Add a permission to the server
+     *
+     * @param permission The permission to add
+     */
     @Override
     public void addPermission(Permission permission)
     {
         this.getServer().getPluginManager().addPermission(permission);
     }
 
+    /**
+     * Remove a permission from the server
+     *
+     * @param permission The permission to remove
+     */
     @Override
     public void removePermission(Permission permission)
     {
         this.getServer().getPluginManager().removePermission(permission);
     }
 
+    /**
+     * Remove a permission from the server via name
+     *
+     * @param name The name of the permission to remove
+     */
     @Override
     public void removePermission(String name)
     {
         this.getServer().getPluginManager().removePermission(name);
     }
 
+    /**
+     * Call an event on the server
+     *
+     * @param event The event to be called
+     */
     @Override
     public void callEvent(Event event)
     {

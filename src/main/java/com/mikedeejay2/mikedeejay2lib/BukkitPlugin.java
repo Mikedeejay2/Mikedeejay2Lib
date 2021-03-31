@@ -11,7 +11,7 @@ import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
 /**
  * Main class for Mikedeejay2Lib.
  * <p>
- * <tt>BukkitPlugin</tt> is a robust plugin class that extends {@link JavaPluginPlus} to
+ * <tt>BukkitPlugin</tt> is a robust plugin class that extends {@link EnhancedJavaPlugin} to
  * add new functions. Check source code on Github to find all features, planned additions,
  * bugs, etc.
  * <p>
@@ -19,7 +19,7 @@ import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
  *
  * @author Mikedeejay2
  */
-public abstract class BukkitPlugin extends JavaPluginPlus
+public abstract class BukkitPlugin extends EnhancedJavaPlugin
 {
     private MinecraftVersion minecraftVersion;
     private DataManager dataManager;
