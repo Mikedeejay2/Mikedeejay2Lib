@@ -18,6 +18,7 @@ import org.bukkit.plugin.PluginLogger;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Field;
+import java.util.logging.Logger;
 
 /**
  * An extended form of {@link JavaPlugin} which adds more features and helper methods
@@ -31,6 +32,35 @@ import java.lang.reflect.Field;
 public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedPlugin
 {
     private String prefix;
+
+    public EnhancedJavaPlugin()
+    {
+        forceColorfulLogger();
+    }
+
+    /**
+     * Force Paper server types to allow this plugin to have a colored logger
+     * prefix. This is done by replacing the logger in {@link JavaPlugin} with
+     * the legacy Bukkit {@link PluginLogger}. The name of the logger must also
+     * be set to an empty String in order to remove the class prefix.
+     */
+    private void forceColorfulLogger()
+    {
+        try
+        {
+            Field logField = JavaPlugin.class.getDeclaredField("logger");
+            logField.setAccessible(true);
+            Logger logger = new PluginLogger(this);
+            logField.set(this, logger);
+            Field nameField = Logger.class.getDeclaredField("name");
+            nameField.setAccessible(true);
+            nameField.set(logger, "");
+        }
+        catch(IllegalAccessException | NoSuchFieldException e)
+        {
+            e.printStackTrace();
+        }
+    }
 
     @Override
     public void onEnable()
@@ -70,17 +100,20 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     public void setPrefix(String prefix)
     {
         this.prefix = Colors.format(prefix);
-        PluginLogger logger = (PluginLogger) this.getLogger();
-        try
+        Logger logger = this.getLogger();
+        if(logger instanceof PluginLogger)
         {
-            Field field = logger.getClass().getDeclaredField("pluginName");
-            field.setAccessible(true);
-            field.set(logger, this.prefix);
-        }
-        catch(NoSuchFieldException | IllegalAccessException e)
-        {
-            logger.warning("Could not change PluginLogger prefix to " + this.prefix);
-            e.printStackTrace();
+            try
+            {
+                Field field = logger.getClass().getDeclaredField("pluginName");
+                field.setAccessible(true);
+                field.set(logger, this.prefix);
+            }
+            catch(NoSuchFieldException | IllegalAccessException e)
+            {
+                logger.warning("Could not change PluginLogger prefix to " + this.prefix);
+                e.printStackTrace();
+            }
         }
     }
 
