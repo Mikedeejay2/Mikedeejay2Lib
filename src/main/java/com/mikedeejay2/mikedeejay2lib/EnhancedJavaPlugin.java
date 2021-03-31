@@ -58,6 +58,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
         }
         catch(IllegalAccessException | NoSuchFieldException e)
         {
+            getLogger().warning("Could not create a new plugin logger for " + this.getDescription().getName());
             e.printStackTrace();
         }
     }
