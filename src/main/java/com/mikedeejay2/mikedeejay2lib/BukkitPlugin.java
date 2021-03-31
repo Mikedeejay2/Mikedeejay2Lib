@@ -61,11 +61,11 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin
     }
 
     /**
-     * Get this plugin's file manager
+     * Get this plugin's {@link DataManager}
      *
-     * @return The file manager
+     * @return The data manager
      */
-    public DataManager fileManager()
+    public DataManager getDataManager()
     {
         return dataManager;
     }
