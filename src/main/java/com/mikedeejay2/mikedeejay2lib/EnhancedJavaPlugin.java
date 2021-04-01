@@ -68,7 +68,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     {
         super.onEnable();
         String prefix = this.getDescription().getPrefix();
-        setPrefix(prefix != null ? "[" + prefix + "] " : "[" + this.getDescription().getName() + "] ");
+        setPrefix(prefix != null ? "[" + prefix + "]" : "[" + this.getDescription().getName() + "]");
     }
 
     @Override
