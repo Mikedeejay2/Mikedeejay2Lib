@@ -125,7 +125,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void sendMessage(String message)
     {
-        Bukkit.getConsoleSender().sendMessage(Colors.format(getPrefix() + " " + message));
+        Bukkit.getConsoleSender().sendMessage(Colors.format(getPrefix() + message));
     }
 
     /**
