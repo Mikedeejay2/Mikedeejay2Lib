@@ -71,6 +71,27 @@ public interface EnhancedPlugin extends Plugin
     void broadcastMessage(String message);
 
     /**
+     * Send an info message from this plugin's logger
+     *
+     * @param message The message to be logged
+     */
+    void sendInfo(String message);
+
+    /**
+     * Send a warning message from this plugin's logger
+     *
+     * @param message The message to be logged
+     */
+    void sendWarning(String message);
+
+    /**
+     * Send a severe message from this plugin's logger
+     *
+     * @param message The message to be logged
+     */
+    void sendSevere(String message);
+
+    /**
      * Register an event listener to the server
      *
      * @param listener The listener to register

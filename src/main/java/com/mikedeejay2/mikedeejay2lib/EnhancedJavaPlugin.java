@@ -126,7 +126,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void sendMessage(String message)
     {
-        Bukkit.getConsoleSender().sendMessage(Colors.format(getPrefix() + message));
+        Bukkit.getConsoleSender().sendMessage(Colors.format(getPrefix() + " " + message));
     }
 
     /**
@@ -138,7 +138,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void sendMessage(Player player, String message)
     {
-        player.sendMessage(Colors.format(getPrefix() + message));
+        player.sendMessage(Colors.format(getPrefix() + " " + message));
     }
 
     /**
@@ -150,7 +150,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void sendMessage(CommandSender sender, String message)
     {
-        sender.sendMessage(Colors.format(getPrefix() + message));
+        sender.sendMessage(Colors.format(getPrefix() + " " + message));
     }
 
     /**
@@ -161,7 +161,40 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void broadcastMessage(String message)
     {
-        Bukkit.broadcastMessage(Colors.format(getPrefix() + message));
+        Bukkit.broadcastMessage(Colors.format(getPrefix() + " " + message));
+    }
+
+    /**
+     * Send an info message from this plugin's logger
+     *
+     * @param message The message to be logged
+     */
+    @Override
+    public void sendInfo(String message)
+    {
+        this.getLogger().info(Colors.format(message));
+    }
+
+    /**
+     * Send a warning message from this plugin's logger
+     *
+     * @param message The message to be logged
+     */
+    @Override
+    public void sendWarning(String message)
+    {
+        this.getLogger().warning(Colors.format(message));
+    }
+
+    /**
+     * Send a severe message from this plugin's logger
+     *
+     * @param message The message to be logged
+     */
+    @Override
+    public void sendSevere(String message)
+    {
+        this.getLogger().severe(Colors.format(message));
     }
 
     /**
