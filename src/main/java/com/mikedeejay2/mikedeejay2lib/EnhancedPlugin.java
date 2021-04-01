@@ -7,6 +7,7 @@ import com.mikedeejay2.mikedeejay2lib.commands.TabCommandBase;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
+import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
@@ -114,6 +115,15 @@ public interface EnhancedPlugin extends Plugin
      * @param completer The <tt>TabCompleter</tt> to register to the command
      */
     void registerCommand(String name, CommandExecutor executor, TabCompleter completer);
+
+    /**
+     * Register a tab executor command to the server. The executor will be
+     * applied to the name of the command specified.
+     *
+     * @param name      The name of the command to register
+     * @param executor  The <tt>TabExecutor</tt> to register to the command
+     */
+    void registerCommand(String name, TabExecutor executor);
 
     /**
      * Register a command to the server. The executor will be applied to the name

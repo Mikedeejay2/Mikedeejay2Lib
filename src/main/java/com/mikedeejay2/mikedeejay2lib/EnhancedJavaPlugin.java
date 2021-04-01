@@ -5,10 +5,9 @@ import com.mikedeejay2.mikedeejay2lib.commands.CommandInfo;
 import com.mikedeejay2.mikedeejay2lib.commands.TabBase;
 import com.mikedeejay2.mikedeejay2lib.commands.TabCommandBase;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
+import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
-import org.bukkit.command.CommandExecutor;
-import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabCompleter;
+import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.Listener;
@@ -233,8 +232,26 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void registerCommand(String name, CommandExecutor executor, TabCompleter completer)
     {
-        this.getCommand(name).setExecutor(executor);
-        this.getCommand(name).setTabCompleter(completer);
+        PluginCommand cmd = this.getCommand(name);
+        Validate.notNull(cmd, String.format("Plugin with name %s could not be found", name));
+        cmd.setExecutor(executor);
+        cmd.setTabCompleter(completer);
+    }
+
+    /**
+     * Register a tab executor command to the server. The executor will be
+     * applied to the name of the command specified.
+     *
+     * @param name      The name of the command to register
+     * @param executor  The <tt>TabExecutor</tt> to register to the command
+     */
+    @Override
+    public void registerCommand(String name, TabExecutor executor)
+    {
+        PluginCommand cmd = this.getCommand(name);
+        Validate.notNull(cmd, String.format("Plugin with name %s could not be found", name));
+        cmd.setExecutor(executor);
+        cmd.setTabCompleter(executor);
     }
 
     /**
@@ -247,7 +264,9 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void registerCommand(String name, CommandExecutor executor)
     {
-        this.getCommand(name).setExecutor(executor);
+        PluginCommand cmd = this.getCommand(name);
+        Validate.notNull(cmd, String.format("Plugin with name %s could not be found", name));
+        cmd.setExecutor(executor);
     }
 
     /**
@@ -260,7 +279,9 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void registerTabCompleter(String name, TabCompleter completer)
     {
-        this.getCommand(name).setTabCompleter(completer);
+        PluginCommand cmd = this.getCommand(name);
+        Validate.notNull(cmd, String.format("Plugin with name %s could not be found", name));
+        cmd.setTabCompleter(completer);
     }
 
     /**
@@ -272,8 +293,11 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void registerCommand(TabCommandBase command)
     {
-        this.getCommand(command.getName()).setExecutor(command);
-        this.getCommand(command.getName()).setTabCompleter(command);
+        String name = command.getName();
+        PluginCommand cmd = this.getCommand(name);
+        Validate.notNull(cmd, String.format("Plugin with name %s could not be found", name));
+        cmd.setExecutor(command);
+        cmd.setTabCompleter(command);
     }
 
     /**
@@ -285,7 +309,10 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void registerCommand(CommandBase command)
     {
-        this.getCommand(command.getName()).setExecutor(command);
+        String name = command.getName();
+        PluginCommand cmd = this.getCommand(name);
+        Validate.notNull(cmd, String.format("Plugin with name %s could not be found", name));
+        cmd.setExecutor(command);
     }
 
     /**
@@ -297,7 +324,10 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void registerTabCompleter(TabBase completer)
     {
-        this.getCommand(completer.getName()).setTabCompleter(completer);
+        String name = completer.getName();
+        PluginCommand cmd = this.getCommand(name);
+        Validate.notNull(cmd, String.format("Plugin with name %s could not be found", name));
+        cmd.setTabCompleter(completer);
     }
 
     /**
