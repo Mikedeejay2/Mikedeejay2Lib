@@ -99,7 +99,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void setPrefix(String prefix)
     {
-        this.prefix = Colors.format(prefix);
+        this.prefix = Colors.format(prefix) + " ";
         Logger logger = this.getLogger();
         if(logger instanceof PluginLogger)
         {
@@ -137,7 +137,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void sendMessage(Player player, String message)
     {
-        player.sendMessage(Colors.format(getPrefix() + " " + message));
+        player.sendMessage(Colors.format(getPrefix() + message));
     }
 
     /**
@@ -149,7 +149,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void sendMessage(CommandSender sender, String message)
     {
-        sender.sendMessage(Colors.format(getPrefix() + " " + message));
+        sender.sendMessage(Colors.format(getPrefix() + message));
     }
 
     /**
@@ -160,7 +160,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void broadcastMessage(String message)
     {
-        Bukkit.broadcastMessage(Colors.format(getPrefix() + " " + message));
+        Bukkit.broadcastMessage(Colors.format(getPrefix() + message));
     }
 
     /**
