@@ -13,7 +13,7 @@ import java.util.*;
  *
  * @author Mikedeejay2
  */
-public class CommandManager implements TabExecutor
+public class CommandManager implements TabCommandBase
 {
     protected final BukkitPlugin plugin;
     protected List<SubCommand> commands;
@@ -198,5 +198,11 @@ public class CommandManager implements TabExecutor
                 break;
         }
         return commands;
+    }
+
+    @Override
+    public String getName()
+    {
+        return commandName;
     }
 }
