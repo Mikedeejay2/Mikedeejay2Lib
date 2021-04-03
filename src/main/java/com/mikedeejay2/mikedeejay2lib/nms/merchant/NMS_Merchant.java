@@ -7,5 +7,9 @@ import org.bukkit.inventory.MerchantRecipe;
 public interface NMS_Merchant
 {
     AbstractVillager getVillager(Merchant merchant);
-    void forceTradeUpdate(AbstractVillager villager, MerchantRecipe recipe);
+    void forceTrade(
+            org.bukkit.entity.AbstractVillager villager,
+            org.bukkit.inventory.MerchantRecipe recipe,
+            org.bukkit.entity.Player player,
+            org.bukkit.inventory.Inventory inventory);
 }
