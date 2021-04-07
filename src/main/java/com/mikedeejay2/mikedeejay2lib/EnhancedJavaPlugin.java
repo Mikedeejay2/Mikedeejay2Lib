@@ -233,7 +233,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     public void registerCommand(String name, CommandExecutor executor, TabCompleter completer)
     {
         PluginCommand cmd = this.getCommand(name);
-        Validate.notNull(cmd, String.format("Plugin with name %s could not be found", name));
+        Validate.notNull(cmd, String.format("Command with name %s could not be found", name));
         cmd.setExecutor(executor);
         cmd.setTabCompleter(completer);
     }
@@ -249,7 +249,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     public void registerCommand(String name, TabExecutor executor)
     {
         PluginCommand cmd = this.getCommand(name);
-        Validate.notNull(cmd, String.format("Plugin with name %s could not be found", name));
+        Validate.notNull(cmd, String.format("Command with name %s could not be found", name));
         cmd.setExecutor(executor);
         cmd.setTabCompleter(executor);
     }
@@ -265,7 +265,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     public void registerCommand(String name, CommandExecutor executor)
     {
         PluginCommand cmd = this.getCommand(name);
-        Validate.notNull(cmd, String.format("Plugin with name %s could not be found", name));
+        Validate.notNull(cmd, String.format("Command with name %s could not be found", name));
         cmd.setExecutor(executor);
     }
 
@@ -280,7 +280,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     public void registerTabCompleter(String name, TabCompleter completer)
     {
         PluginCommand cmd = this.getCommand(name);
-        Validate.notNull(cmd, String.format("Plugin with name %s could not be found", name));
+        Validate.notNull(cmd, String.format("Command with name %s could not be found", name));
         cmd.setTabCompleter(completer);
     }
 
@@ -295,7 +295,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     {
         String name = command.getName();
         PluginCommand cmd = this.getCommand(name);
-        Validate.notNull(cmd, String.format("Plugin with name %s could not be found", name));
+        Validate.notNull(cmd, String.format("Command with name %s could not be found", name));
         cmd.setExecutor(command);
         cmd.setTabCompleter(command);
     }
@@ -311,7 +311,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     {
         String name = command.getName();
         PluginCommand cmd = this.getCommand(name);
-        Validate.notNull(cmd, String.format("Plugin with name %s could not be found", name));
+        Validate.notNull(cmd, String.format("Command with name %s could not be found", name));
         cmd.setExecutor(command);
     }
 
@@ -326,7 +326,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     {
         String name = completer.getName();
         PluginCommand cmd = this.getCommand(name);
-        Validate.notNull(cmd, String.format("Plugin with name %s could not be found", name));
+        Validate.notNull(cmd, String.format("Command with name %s could not be found", name));
         cmd.setTabCompleter(completer);
     }
 
