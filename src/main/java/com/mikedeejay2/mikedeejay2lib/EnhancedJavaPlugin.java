@@ -5,6 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.commands.CommandInfo;
 import com.mikedeejay2.mikedeejay2lib.commands.TabBase;
 import com.mikedeejay2.mikedeejay2lib.commands.TabCommandBase;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
+import com.mikedeejay2.mikedeejay2lib.util.logging.EnhancedPluginLogger;
 import org.apache.commons.lang.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
@@ -45,15 +46,12 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      */
     private void forceColorfulLogger()
     {
+        Logger logger = new EnhancedPluginLogger(this);
         try
         {
             Field logField = JavaPlugin.class.getDeclaredField("logger");
             logField.setAccessible(true);
-            Logger logger = new PluginLogger(this);
             logField.set(this, logger);
-            Field nameField = Logger.class.getDeclaredField("name");
-            nameField.setAccessible(true);
-            nameField.set(logger, "");
         }
         catch(IllegalAccessException | NoSuchFieldException e)
         {
@@ -100,21 +98,8 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     public void setPrefix(String prefix)
     {
         this.prefix = Colors.format(prefix) + " ";
-        Logger logger = this.getLogger();
-        if(logger instanceof PluginLogger)
-        {
-            try
-            {
-                Field field = logger.getClass().getDeclaredField("pluginName");
-                field.setAccessible(true);
-                field.set(logger, this.prefix);
-            }
-            catch(NoSuchFieldException | IllegalAccessException e)
-            {
-                logger.warning("Could not change PluginLogger prefix to " + this.prefix);
-                e.printStackTrace();
-            }
-        }
+        EnhancedPluginLogger logger = (EnhancedPluginLogger) this.getLogger();
+        logger.setPrefix(this.prefix);
     }
 
     /**
