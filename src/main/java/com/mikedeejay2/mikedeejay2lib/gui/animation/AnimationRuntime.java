@@ -6,8 +6,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItemProperties;
 import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
 import org.bukkit.entity.Player;
 
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Runtime that times and executed <tt>AnimatedGUIItems</tt>
@@ -70,7 +69,10 @@ public class AnimationRuntime extends EnhancedRunnable
     public void onRun()
     {
         boolean shouldUpdate = false;
-        for(Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry : items.entrySet())
+
+        Set<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> copy = new HashSet<>(items.entrySet());
+
+        for(Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry : copy)
         {
             AnimatedGUIItem item = entry.getKey();
             AnimatedGUIItemProperties properties = entry.getValue();
