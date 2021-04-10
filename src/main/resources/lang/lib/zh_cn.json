@@ -1,8 +1,6 @@
 {
   "command.errors.invalid_subcommand": "错误：子命令不合法",
   "command.errors.general": "发生了一个错误",
-  "command.errors.invalid_arguments": "Error: The arguments provided are incorrect. Please input valid arguments.",
-  "errors.permission.nopermission": "You don't have permission to run this command!",
   "generic.success": "成功！",
   "generic.enabled": "已启用",
   "generic.disabled": "未启用",
