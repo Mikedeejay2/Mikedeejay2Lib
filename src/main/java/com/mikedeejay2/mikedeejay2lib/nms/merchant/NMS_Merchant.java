@@ -8,4 +8,6 @@ public interface NMS_Merchant
 {
     AbstractVillager getVillager(Merchant merchant);
     void postProcess(org.bukkit.entity.Villager villager, org.bukkit.inventory.MerchantRecipe recipe);
+    org.bukkit.inventory.ItemStack getBuyItem1(org.bukkit.inventory.MerchantRecipe recipe);
+    org.bukkit.inventory.ItemStack getBuyItem2(org.bukkit.inventory.MerchantRecipe recipe);
 }
