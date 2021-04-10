@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.util.version;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 
+import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -75,16 +76,7 @@ public final class MinecraftVersion
     private int calcShortVersion()
     {
         String[] splitStr = versionString.split("\\.");
-        int ver;
-        if(splitStr.length == 2)
-        {
-            ver = Integer.parseInt(splitStr[1].substring(0, splitStr[1].length() - 1));
-        }
-        else
-        {
-            ver = Integer.parseInt(splitStr[1]);
-        }
-        return ver;
+        return Integer.parseInt(splitStr[1]);
     }
 
     /**
