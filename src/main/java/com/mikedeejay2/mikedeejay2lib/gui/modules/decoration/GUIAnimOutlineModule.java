@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.gui.modules.decoration;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.gui.animation.GUIAnimPattern;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import org.bukkit.entity.Player;
@@ -13,12 +14,43 @@ import org.bukkit.entity.Player;
  */
 public class GUIAnimOutlineModule implements GUIModule
 {
+    // The animation pattern to use
+    private GUIAnimPattern pattern;
     // The GUI item that will be used for the border
     private AnimatedGUIItem outlineItem;
 
+    public GUIAnimOutlineModule(AnimatedGUIItem outlineItem, GUIAnimPattern pattern)
+    {
+        this.pattern = pattern;
+        this.outlineItem = outlineItem;
+    }
+
     public GUIAnimOutlineModule(AnimatedGUIItem outlineItem)
     {
-        this.outlineItem = outlineItem;
+        this(outlineItem, GUIAnimPattern.TOP_LEFT_DIAGONAL);
+    }
+
+    /**
+     * Method injected into the head of the GUI that adds an outline to the GUI
+     *
+     * @param player Player that is viewing the GUI
+     * @param gui    The GUI
+     */
+    @Override
+    public void onOpenHead(Player player, GUIContainer gui)
+    {
+        int maxRow = gui.getRows();
+        int maxCol = gui.getCols();
+        for(int i = 1; i <= gui.getCols(); i++)
+        {
+            gui.setItem(1, i, pattern.getItemFor(outlineItem, 1, i, maxRow, maxCol));
+            gui.setItem(gui.getRows(), i, pattern.getItemFor(outlineItem, gui.getRows(), i, maxRow, maxCol));
+        }
+        for(int i = 1; i <= gui.getRows() - 1; i++)
+        {
+            gui.setItem(i, 1,  pattern.getItemFor(outlineItem, i, 1, maxRow, maxCol));
+            gui.setItem(i, gui.getCols(),  pattern.getItemFor(outlineItem, i, gui.getCols(), maxRow, maxCol));
+        }
     }
 
     /**
@@ -42,34 +74,22 @@ public class GUIAnimOutlineModule implements GUIModule
     }
 
     /**
-     * Method injected into the head of the GUI that adds an outline to the GUI
+     * Get the {@link GUIAnimPattern} used for animating the items
      *
-     * @param player Player that is viewing the GUI
-     * @param gui    The GUI
+     * @return The current animation pattern
      */
-    @Override
-    public void onOpenHead(Player player, GUIContainer gui)
+    public GUIAnimPattern getPattern()
     {
-        AnimatedGUIItem cloned;
-        for(int i = 1; i <= gui.getCols(); i++)
-        {
-            cloned = outlineItem.clone();
-            cloned.setDelay(1 + i);
-            gui.setItem(1, i, cloned);
+        return pattern;
+    }
 
-            cloned = outlineItem.clone();
-            cloned.setDelay(gui.getRows() + i);
-            gui.setItem(gui.getRows(), i, cloned);
-        }
-        for(int i = 1; i <= gui.getRows() - 1; i++)
-        {
-            cloned = outlineItem.clone();
-            cloned.setDelay(i + 1);
-            gui.setItem(i, 1, cloned);
-
-            cloned = outlineItem.clone();
-            cloned.setDelay(i + gui.getCols());
-            gui.setItem(i, gui.getCols(), cloned);
-        }
+    /**
+     * Set the {@link GUIAnimPattern} used for animating the items
+     *
+     * @param pattern The new animation pattern
+     */
+    public void setPattern(GUIAnimPattern pattern)
+    {
+        this.pattern = pattern;
     }
 }

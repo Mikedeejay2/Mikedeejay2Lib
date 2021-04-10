@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.gui.modules.decoration;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.gui.animation.GUIAnimPattern;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import org.bukkit.entity.Player;
@@ -13,12 +14,40 @@ import org.bukkit.entity.Player;
  */
 public class GUIAnimBackgroundModule implements GUIModule
 {
+    // The animation pattern to use
+    private GUIAnimPattern pattern;
     // The GUI item that will be used for the border
     private AnimatedGUIItem backgroundItem;
 
+    public GUIAnimBackgroundModule(AnimatedGUIItem backgroundItem, GUIAnimPattern pattern)
+    {
+        this.pattern = pattern;
+        this.backgroundItem = backgroundItem;
+    }
+
     public GUIAnimBackgroundModule(AnimatedGUIItem backgroundItem)
     {
-        this.backgroundItem = backgroundItem;
+        this(backgroundItem, GUIAnimPattern.TOP_LEFT_DIAGONAL);
+    }
+
+    /**
+     * Method injected into the head of the GUI that adds an background to the GUI
+     *
+     * @param player Player that is viewing the GUI
+     * @param gui    The GUI
+     */
+    @Override
+    public void onOpenHead(Player player, GUIContainer gui)
+    {
+        int maxRow = gui.getRows();
+        int maxCol = gui.getCols();
+        for(int row = 1; row <= gui.getRows(); row++)
+        {
+            for(int col = 1; col <= gui.getCols(); col++)
+            {
+                gui.setItem(row, col,  pattern.getItemFor(backgroundItem, row, col, maxRow, maxCol));
+            }
+        }
     }
 
     /**
@@ -42,24 +71,22 @@ public class GUIAnimBackgroundModule implements GUIModule
     }
 
     /**
-     * Method injected into the head of the GUI that adds an background to the GUI
+     * Get the {@link GUIAnimPattern} used for animating the items
      *
-     * @param player Player that is viewing the GUI
-     * @param gui    The GUi
+     * @return The current animation pattern
      */
-    @Override
-    public void onOpenHead(Player player, GUIContainer gui)
+    public GUIAnimPattern getPattern()
     {
-        AnimatedGUIItem cloned;
+        return pattern;
+    }
 
-        for(int row = 1; row <= gui.getRows(); row++)
-        {
-            for(int col = 1; col <= gui.getCols(); col++)
-            {
-                cloned = backgroundItem.clone();
-                cloned.setDelay(row + col);
-                gui.setItem(row, col, cloned);
-            }
-        }
+    /**
+     * Set the {@link GUIAnimPattern} used for animating the items
+     *
+     * @param pattern The new animation pattern
+     */
+    public void setPattern(GUIAnimPattern pattern)
+    {
+        this.pattern = pattern;
     }
 }
