@@ -9,6 +9,5 @@ import org.bukkit.inventory.MerchantRecipe;
 public interface NMS_XP
 {
     int calculateXP(World world, ItemStack... items);
-    int calculateXP(AbstractVillager villager);
     void spawnXP(int amount, Location location);
 }

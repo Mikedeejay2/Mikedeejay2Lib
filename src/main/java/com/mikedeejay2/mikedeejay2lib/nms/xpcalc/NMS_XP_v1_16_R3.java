@@ -80,31 +80,4 @@ public final class NMS_XP_v1_16_R3 implements NMS_XP
             world.addEntity(new EntityExperienceOrb(world, x, y, z, k));
         }
     }
-
-    @Override
-    public int calculateXP(org.bukkit.entity.AbstractVillager villager)
-    {
-        CraftAbstractVillager craftVillager = (CraftAbstractVillager) villager;
-        EntityVillagerAbstract nmsVillager = craftVillager.getHandle();
-        int i = 3 + nmsVillager.getRandom().nextInt(4);
-        boolean isVillager = nmsVillager instanceof EntityVillager;
-
-        if(isVillager)
-        {
-            EntityVillager villager1 = (EntityVillager) nmsVillager;
-            if(this.isLevel(villager1))
-            {
-                i += 5;
-            }
-        }
-
-        return i;
-    }
-
-    private boolean isLevel(EntityVillager villager)
-    {
-        int level = villager.getVillagerData().getLevel();
-
-        return VillagerData.d(level) && villager.getExperience() >= VillagerData.c(level);
-    }
 }

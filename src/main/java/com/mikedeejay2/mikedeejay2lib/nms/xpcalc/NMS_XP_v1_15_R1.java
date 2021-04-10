@@ -77,10 +77,4 @@ public final class NMS_XP_v1_15_R1 implements NMS_XP
             world.addEntity(new EntityExperienceOrb(world, x, y, z, k));
         }
     }
-
-    @Override
-    public int calculateXP(AbstractVillager villager)
-    {
-        return 0;
-    }
 }
