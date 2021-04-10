@@ -96,7 +96,15 @@ public final class MinecraftVersion
     private VersionEnum calcVersionEnum(BukkitPlugin plugin)
     {
         String ver = calcVersionNMS(plugin);
-        return VersionEnum.valueOf(ver);
+        try
+        {
+            return VersionEnum.valueOf(ver);
+        }
+        catch(Exception e)
+        {
+            plugin.sendWarning(String.format("Could not find NMS version for version %s, errors may occur.", versionString));
+            return null;
+        }
     }
 
     /**

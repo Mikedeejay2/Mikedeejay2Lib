@@ -64,7 +64,7 @@ public class NMSHandler
             } break;
             default:
             {
-                plugin.getLogger().severe(plugin.getLibLangManager().getText("errors.version_not_valid"));
+                plugin.getLogger().severe(String.format("The server's Minecraft version (%s) is not a valid version for this plugin. Errors may occur.", plugin.getMCVersion().getVersionString()));
             }
         }
     }
