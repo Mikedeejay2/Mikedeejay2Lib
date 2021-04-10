@@ -296,6 +296,20 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
     }
 
     @Override
+    public ItemBuilder setUnbreakable(boolean unbreakable)
+    {
+        this.meta.setUnbreakable(unbreakable);
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public boolean isUnbreakable()
+    {
+        return this.meta.isUnbreakable();
+    }
+
+    @Override
     public OfflinePlayer getHeadOwner()
     {
         SkullMeta skullMeta = (SkullMeta) meta;

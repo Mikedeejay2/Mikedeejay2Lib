@@ -231,6 +231,19 @@ public interface IItemBuilder<I, T>
     T setEmptyName();
 
     /**
+     * Set whether the item is unbreakable or not
+     *
+     * @param unbreakable The new unbreakable state of the item
+     * @return A reference to this object
+     */
+    T setUnbreakable(boolean unbreakable);
+
+    /**
+     * Get whether this item is unbreakable or not
+     */
+    boolean isUnbreakable();
+
+    /**
      * Get the head owner of the head item
      * <p>
      * Note: The item must be of type <tt>PLAYER_HEAD</tt> and must have a head owner
