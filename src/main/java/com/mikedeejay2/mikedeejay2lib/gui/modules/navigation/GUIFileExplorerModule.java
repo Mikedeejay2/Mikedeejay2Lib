@@ -18,8 +18,16 @@ import java.util.Queue;
 import java.util.function.BiFunction;
 import java.util.stream.Collectors;
 
+/**
+ * A file explorer to browse real files.
+ * File icons are based off of their respective extension name. See {@link GUIFileExplorerModule#getHeadFromFileExtension(String)}
+ * for all supported file extensions.
+ *
+ * @author Mikedeejay2
+ */
 public class GUIFileExplorerModule extends GUIListModule
 {
+    // Function that creates a subfolder open event
     private final BiFunction<File, GUIContainer, GUIOpenNewEvent> guiFolderConstructor = (file, gui) -> new GUIOpenNewEvent(plugin, () -> {
         GUIContainer folderGUI = new GUIContainer(plugin, "Folder Navigator", gui.getRows());
         GUIFileExplorerModule explorerModule = new GUIFileExplorerModule(
@@ -37,6 +45,7 @@ public class GUIFileExplorerModule extends GUIListModule
         return folderGUI;
     });
 
+    // The file of this GUI
     protected File folder;
 
     public GUIFileExplorerModule(BukkitPlugin plugin, File folder, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol, String layerName)
@@ -63,6 +72,12 @@ public class GUIFileExplorerModule extends GUIListModule
         this.folder = folder;
     }
 
+    /**
+     * Overridden <tt>onOpenHead</tt> that fills the file explorer with items
+     *
+     * @param player The player that is viewing the GUI
+     * @param gui    The GUI
+     */
     @Override
     public void onOpenHead(Player player, GUIContainer gui)
     {
@@ -72,6 +87,12 @@ public class GUIFileExplorerModule extends GUIListModule
         fillList(player, gui);
     }
 
+    /**
+     * Fill the GUI list with all files in the current folder
+     *
+     * @param player The player that is viewing the GUI
+     * @param gui    The GUI
+     */
     private void fillList(Player player, GUIContainer gui)
     {
         File[] files = folder.listFiles();
@@ -112,16 +133,33 @@ public class GUIFileExplorerModule extends GUIListModule
         fileQueue.forEach(this::addListItem);
     }
 
+    /**
+     * Get the current folder of this GUI
+     *
+     * @return The folder
+     */
     public File getFolder()
     {
         return folder;
     }
 
+    /**
+     * Set the current folder of this GUI
+     *
+     * @param folder The new folder to use
+     */
     public void setFolder(File folder)
     {
         this.folder = folder;
     }
 
+    /**
+     * Get a {@link Base64Head} from a file extension. This is based off of
+     * many different types of file types in a large switch statement.
+     *
+     * @param fileType The file type to search for
+     * @return The <tt>Base64Head</tt> that was found
+     */
     private Base64Head getHeadFromFileExtension(String fileType)
     {
         switch(fileType.toLowerCase())
