@@ -591,7 +591,7 @@ public class GUIContainer
     {
         for(GUIModule module : modules)
         {
-            if(moduleClass != module.getClass()) continue;
+            if(!moduleClass.isAssignableFrom(module.getClass())) continue;
             modules.remove(module);
             break;
         }
@@ -618,7 +618,7 @@ public class GUIContainer
     {
         for(GUIModule module : modules)
         {
-            if(moduleClass != module.getClass()) continue;
+            if(!moduleClass.isAssignableFrom(module.getClass())) continue;
             return true;
         }
         return false;
@@ -635,8 +635,8 @@ public class GUIContainer
     {
         for(GUIModule module : modules)
         {
-            if(moduleClass != module.getClass()) continue;
-            return (T) module;
+            if(!moduleClass.isAssignableFrom(module.getClass())) continue;
+            return moduleClass.cast(module);
         }
         return null;
     }

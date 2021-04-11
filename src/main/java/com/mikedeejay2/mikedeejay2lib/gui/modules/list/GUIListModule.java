@@ -815,7 +815,7 @@ public class GUIListModule implements GUIModule
         switch(viewMode)
         {
             case SCROLL:
-                return (int)Math.ceil((double)((getCurSize() + endItems.size()) - getViewSize()) / (double)(getViewSize() / getSlotsPerCol())) + 1;
+                return (int)Math.ceil((double)((getCurSize() + endItems.size()) - getViewSize()) / ((double)getSlotsPerCol())) + 1;
             case PAGED:
             default:
                 return (int)Math.ceil((double)(getCurSize() + endItems.size()) / (double) getViewSize());
