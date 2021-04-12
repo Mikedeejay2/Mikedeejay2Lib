@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.manager;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.util.structure.NavigationHolder;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -18,7 +19,7 @@ public class PlayerGUI
 {
     protected final BukkitPlugin plugin;
     // The map of NavigationSystems of this player
-    protected Map<String, NavigationSystem> naviSystems;
+    protected Map<String, NavigationHolder<GUIContainer>> naviSystems;
     // The player's current GUIContainer
     protected GUIContainer gui;
     // The player of this PlayerGUI
@@ -119,7 +120,7 @@ public class PlayerGUI
      * @param navigationID The ID of the <tt>NavigationSystem</tt> to get
      * @return The requested <tt>NavigationSystem</tt>
      */
-    public NavigationSystem getNaviSystem(String navigationID)
+    public NavigationHolder<GUIContainer> getNaviSystem(String navigationID)
     {
         naviCheck(navigationID);
         return naviSystems.get(navigationID);
@@ -136,7 +137,7 @@ public class PlayerGUI
     public void naviCheck(String navigationID)
     {
         if(naviSystems.containsKey(navigationID)) return;
-        naviSystems.put(navigationID, new NavigationSystem(player, navigationID));
+        naviSystems.put(navigationID, new NavigationHolder<>(navigationID));
     }
 
     /**
@@ -144,7 +145,7 @@ public class PlayerGUI
      *
      * @return The map of systems
      */
-    public Map<String, NavigationSystem> getNaviSystems()
+    public Map<String, NavigationHolder<GUIContainer>> getNaviSystems()
     {
         return naviSystems;
     }

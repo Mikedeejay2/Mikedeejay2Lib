@@ -3,9 +3,9 @@ package com.mikedeejay2.mikedeejay2lib.gui.event.navigator;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.manager.NavigationSystem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.navigation.GUINavigatorModule;
+import com.mikedeejay2.mikedeejay2lib.util.structure.NavigationHolder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -32,11 +32,10 @@ public class GUINavForwardEvent implements GUIEvent
         if(clickType != ClickType.LEFT) return;
         GUINavigatorModule module = gui.getModule(GUINavigatorModule.class);
         PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
-        NavigationSystem system = playerGUI.getNaviSystem(module.getNavigationID());
-        GUIContainer forwardGUI = system.getForward();
-        system.removeForward();
-        system.addBack(gui);
-        system.setNavigated(true);
+        NavigationHolder<GUIContainer> system = playerGUI.getNaviSystem(module.getNavigationID());
+        GUIContainer forwardGUI = system.popForward();
+        system.pushBack(gui);
+        system.setNavigationFlag(true);
         forwardGUI.open(player);
     }
 }

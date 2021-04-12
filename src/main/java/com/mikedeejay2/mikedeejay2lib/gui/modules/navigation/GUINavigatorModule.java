@@ -6,11 +6,11 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.navigator.GUINavBackEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.navigator.GUINavForwardEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
-import com.mikedeejay2.mikedeejay2lib.gui.manager.NavigationSystem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
+import com.mikedeejay2.mikedeejay2lib.util.structure.NavigationHolder;
 import org.bukkit.entity.Player;
 
 /**
@@ -43,7 +43,7 @@ public class GUINavigatorModule implements GUIModule
     @Override
     public void onOpenHead(Player player, GUIContainer gui)
     {
-        navigationCheck(player, gui);
+        navigationCheck(player);
         if(validBackItem == null)
         {
             String backward = plugin.getLibLangManager().getText(player, "gui.modules.navigator.backward");
@@ -82,15 +82,15 @@ public class GUINavigatorModule implements GUIModule
      * Checks whether the GUI is using a navigation system and if so calculate the forward
      * and back navigations.
      */
-    private void navigationCheck(Player player, GUIContainer gui)
+    private void navigationCheck(Player player)
     {
         PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
         GUIContainer oldGUI = playerGUI.getGUI();
         String curID = getNavigationID();
-        NavigationSystem system = playerGUI.getNaviSystem(curID);
-        if(system.hasNavigated() || !playerGUI.isGuiOpened())
+        NavigationHolder<GUIContainer> system = playerGUI.getNaviSystem(curID);
+        if(system.isNavigationFlagged() || !playerGUI.isGuiOpened())
         {
-            system.setNavigated(false);
+            system.setNavigationFlag(false);
             return;
         }
         if(oldGUI != null)
@@ -98,10 +98,10 @@ public class GUINavigatorModule implements GUIModule
             if(!oldGUI.containsModule(GUINavigatorModule.class)) return;
             String oldID = oldGUI.getModule(GUINavigatorModule.class).getNavigationID();
             if(!curID.equals(oldID)) return;
-            if(system.hasBack() && system.getBack() == oldGUI) return;
-            system.addBack(oldGUI);
+            if(system.hasBack() && system.peekBack() == oldGUI) return;
+            system.pushBack(oldGUI);
             if(!system.hasForward()) return;
-            system.resetForward();
+            system.clearForward();
         }
     }
 
@@ -114,12 +114,12 @@ public class GUINavigatorModule implements GUIModule
     @Override
     public void onUpdateHead(Player player, GUIContainer gui)
     {
-        NavigationSystem system = plugin.getGUIManager().getPlayer(player).getNaviSystem(navigationID);
+        NavigationHolder<GUIContainer> system = plugin.getGUIManager().getPlayer(player).getNaviSystem(navigationID);
         GUILayer layer = gui.getLayer("overlay", true);
 
         if(system.hasBack())
         {
-            int backAmount = (int) system.getAmountBack();
+            int backAmount = (int) system.backSize();
             if(backAmount == 0) { backAmount = 1; }
             else if(backAmount > 64) { backAmount = 64; }
             validBackItem.setAmountView(backAmount);
@@ -131,7 +131,7 @@ public class GUINavigatorModule implements GUIModule
         }
         if(system.hasForward())
         {
-            int forwardAmount = (int) system.getAmountForward();
+            int forwardAmount = (int) system.forwardSize();
             if(forwardAmount == 0) { forwardAmount = 1; }
             else if(forwardAmount > 64) { forwardAmount = 64; }
             validForwardItem.setAmountView(forwardAmount);
