@@ -20,9 +20,10 @@ public final class ArrayUtil
      * Get an array as a String, each index separated by a space.
      *
      * @param arr The array to convert
+     * @param <T> The type of array being passed
      * @return The array converted to a String
      */
-    public static String getAsString(String[] arr)
+    public static <T> String getAsString(T[] arr)
     {
         return getAsString(arr, 0, arr.length);
     }
@@ -32,9 +33,10 @@ public final class ArrayUtil
      *
      * @param arr        The array to convert
      * @param startIndex The index to start at
+     * @param <T> The type of array being passed
      * @return The array converted to a String
      */
-    public static String getAsString(String[] arr, int startIndex)
+    public static <T> String getAsString(T[] arr, int startIndex)
     {
         return getAsString(arr, startIndex, arr.length);
     }
@@ -45,9 +47,10 @@ public final class ArrayUtil
      * @param arr        The array to convert
      * @param startIndex The index to start at
      * @param endIndex   The index to end at
+     * @param <T> The type of array being passed
      * @return The array converted to a String
      */
-    public static String getAsString(String[] arr, int startIndex, int endIndex)
+    public static <T> String getAsString(T[] arr, int startIndex, int endIndex)
     {
         StringBuilder stringBuilder = new StringBuilder();
         for(int i = startIndex; i < endIndex; i++)
