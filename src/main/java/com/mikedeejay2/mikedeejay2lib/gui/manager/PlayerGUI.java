@@ -18,7 +18,7 @@ import java.util.Map;
 public class PlayerGUI
 {
     protected final BukkitPlugin plugin;
-    // The map of NavigationSystems of this player
+    // The map of NavigationHolders of this player
     protected Map<String, NavigationHolder<GUIContainer>> naviSystems;
     // The player's current GUIContainer
     protected GUIContainer gui;
@@ -113,14 +113,14 @@ public class PlayerGUI
     }
 
     /**
-     * Get a <tt>NavigationSystem</tt> for this player. This
-     * method will never return null, if the <tt>NavigationSystem</tt>
+     * Get a <tt>NavigationHolder</tt> for this player. This
+     * method will never return null, if the <tt>NavigationHolder</tt>
      * doesn't exist it will be made
      *
-     * @param navigationID The ID of the <tt>NavigationSystem</tt> to get
-     * @return The requested <tt>NavigationSystem</tt>
+     * @param navigationID The ID of the <tt>NavigationHolder</tt> to get
+     * @return The requested <tt>NavigationHolder</tt>
      */
-    public NavigationHolder<GUIContainer> getNaviSystem(String navigationID)
+    public NavigationHolder<GUIContainer> getNavigation(String navigationID)
     {
         naviCheck(navigationID);
         return naviSystems.get(navigationID);
@@ -129,7 +129,7 @@ public class PlayerGUI
     /**
      * Check whether a navigation system exists for this player.
      * If a system doesn't exist with the requested ID, a system will be
-     * created with that ID. {@link PlayerGUI#getNaviSystem(String)} already
+     * created with that ID. {@link PlayerGUI#getNavigation(String)} already
      * calls this method.
      *
      * @param navigationID The navigation ID to check for
@@ -141,7 +141,7 @@ public class PlayerGUI
     }
 
     /**
-     * Get a list a map of String (Navigation System name) to <tt>NavigationSystem</tt>
+     * Get a list a map of String (Navigation Holder name) to <tt>NavigationHolder</tt>
      *
      * @return The map of systems
      */

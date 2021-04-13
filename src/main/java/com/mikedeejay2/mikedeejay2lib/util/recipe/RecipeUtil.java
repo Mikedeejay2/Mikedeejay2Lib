@@ -59,7 +59,7 @@ public final class RecipeUtil
      * <p>
      * Preload takes an average of 6ms, but runs asynchronously.
      *
-     * @param plugin A reference to a <tt>PluginBase</tt>
+     * @param plugin A reference to a <tt>BukkitPlugin</tt>
      * @param delay  The delay (in ticks) between running this method and the preload occurring.
      *               A delay may want to be specified to wait for other plugins to register their
      *               recipes.

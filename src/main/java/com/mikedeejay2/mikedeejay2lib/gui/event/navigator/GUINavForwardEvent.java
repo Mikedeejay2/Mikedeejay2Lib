@@ -32,7 +32,7 @@ public class GUINavForwardEvent implements GUIEvent
         if(clickType != ClickType.LEFT) return;
         GUINavigatorModule module = gui.getModule(GUINavigatorModule.class);
         PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
-        NavigationHolder<GUIContainer> system = playerGUI.getNaviSystem(module.getNavigationID());
+        NavigationHolder<GUIContainer> system = playerGUI.getNavigation(module.getNavigationID());
         GUIContainer forwardGUI = system.popForward();
         system.pushBack(gui);
         system.setNavigationFlag(true);

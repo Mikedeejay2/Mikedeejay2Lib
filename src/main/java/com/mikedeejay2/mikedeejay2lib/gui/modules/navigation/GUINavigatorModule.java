@@ -87,7 +87,7 @@ public class GUINavigatorModule implements GUIModule
         PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
         GUIContainer oldGUI = playerGUI.getGUI();
         String curID = getNavigationID();
-        NavigationHolder<GUIContainer> system = playerGUI.getNaviSystem(curID);
+        NavigationHolder<GUIContainer> system = playerGUI.getNavigation(curID);
         if(system.isNavigationFlagged() || !playerGUI.isGuiOpened())
         {
             system.setNavigationFlag(false);
@@ -114,7 +114,7 @@ public class GUINavigatorModule implements GUIModule
     @Override
     public void onUpdateHead(Player player, GUIContainer gui)
     {
-        NavigationHolder<GUIContainer> system = plugin.getGUIManager().getPlayer(player).getNaviSystem(navigationID);
+        NavigationHolder<GUIContainer> system = plugin.getGUIManager().getPlayer(player).getNavigation(navigationID);
         GUILayer layer = gui.getLayer("overlay", true);
 
         if(system.hasBack())

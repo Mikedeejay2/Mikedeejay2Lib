@@ -83,7 +83,7 @@ Finally, shade Mikedeejay2Lib into your plugin like so:
         </plugins>
 ```
 
-After Maven is setup and Mikedeejay2Lib is imported, make your plugin's main class extend Mikedeejay2Lib's `PluginBase`.
+After Maven is setup and Mikedeejay2Lib is imported, make your plugin's main class extend Mikedeejay2Lib's `BukkitPlugin`.
 
 ### How to Use
 

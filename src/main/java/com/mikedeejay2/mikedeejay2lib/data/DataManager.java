@@ -4,7 +4,7 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- * A data manager that is stored in PluginBase to manage all of the plugin's data objects (Files, databases, etc).
+ * A data manager to manage data objects (Files, databases, etc).
  *
  * @author Mikedeejay2
  */

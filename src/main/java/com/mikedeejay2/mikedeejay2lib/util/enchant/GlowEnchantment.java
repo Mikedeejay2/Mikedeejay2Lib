@@ -75,7 +75,7 @@ public final class GlowEnchantment extends Enchantment
     /**
      * Register the <tt>GlowEnchantment</tt> to the server
      *
-     * @param plugin A reference to the <tt>PluginBase</tt> instance
+     * @param plugin A reference to the <tt>BukkitPlugin</tt> instance
      */
     public static void registerGlow(BukkitPlugin plugin)
     {

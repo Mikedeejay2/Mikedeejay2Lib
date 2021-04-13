@@ -87,7 +87,7 @@ public class GUIListModule implements GUIModule
     /**
      * Construct a new GUI List module
      *
-     * @param plugin    Reference to the <tt>PluginBase</tt> of the plugin
+     * @param plugin    Reference to the <tt>BukkitPlugin</tt> of the plugin
      * @param viewMode  The {@link ListViewMode} to used
      * @param topRow    The top row of the list's bounding box
      * @param bottomRow The bottom row of the list's bounding box
@@ -142,7 +142,7 @@ public class GUIListModule implements GUIModule
     /**
      * Construct a new GUI List module
      *
-     * @param plugin    Reference to the <tt>PluginBase</tt> of the plugin
+     * @param plugin    Reference to the <tt>BukkitPlugin</tt> of the plugin
      * @param viewMode  The {@link ListViewMode} to used
      * @param topRow    The top row of the list's bounding box
      * @param bottomRow The bottom row of the list's bounding box
@@ -157,7 +157,7 @@ public class GUIListModule implements GUIModule
     /**
      * Construct a new GUI List module
      *
-     * @param plugin    Reference to the <tt>PluginBase</tt> of the plugin
+     * @param plugin    Reference to the <tt>BukkitPlugin</tt> of the plugin
      * @param topRow    The top row of the list's bounding box
      * @param bottomRow The bottom row of the list's bounding box
      * @param leftCol   The left column of the list's bounding box
