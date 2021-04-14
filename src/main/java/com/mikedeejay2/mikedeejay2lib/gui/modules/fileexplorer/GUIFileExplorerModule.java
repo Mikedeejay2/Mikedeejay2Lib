@@ -28,6 +28,7 @@ import java.util.stream.Collectors;
  */
 public class GUIFileExplorerModule extends GUIListModule
 {
+    private static final String separator = File.separatorChar == '\\' ? "\\\\" : String.valueOf(File.separatorChar);
     // The file of this GUI
     protected File file;
 
@@ -93,7 +94,7 @@ public class GUIFileExplorerModule extends GUIListModule
         {
             ItemBuilder fileBuilder = ItemBuilder.of(Base64Head.STACK_OF_PAPER.get())
                     .setName("&f" + curFile.getName())
-                    .setLore(Arrays.stream(curFile.getPath().split(String.valueOf(File.separatorChar)))
+                    .setLore(Arrays.stream(curFile.getPath().split(separator))
                                      .map(s -> "&7" + s)
                                      .collect(Collectors.toList()));
 
@@ -106,7 +107,9 @@ public class GUIFileExplorerModule extends GUIListModule
                 {
                     fileItem.addEvent((event, gui1) -> {
                         setFile(curFile);
-                        fillList(player, gui);
+                        gui.setInventoryName(curFile.getName());
+                        gui.onClose(player);
+                        gui.open(player);
                     });
                 }
                 folderQueue.add(fileItem);
