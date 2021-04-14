@@ -185,7 +185,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
     {
         List<String> curLore = this.meta.getLore();
         if(curLore == null) curLore = new ArrayList<>();
-        curLore.addAll(lore);
+        curLore.addAll(Colors.format(lore));
         this.meta.setLore(curLore);
         return this;
     }
@@ -195,7 +195,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
     {
         List<String> curLore = this.meta.getLore();
         if(curLore == null) curLore = new ArrayList<>();
-        curLore.addAll(Arrays.asList(lore));
+        curLore.addAll(Arrays.asList(Colors.format(lore)));
         this.meta.setLore(curLore);
         return this;
     }
@@ -205,7 +205,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
     {
         List<String> curLore = this.meta.getLore();
         if(curLore == null) curLore = new ArrayList<>();
-        curLore.addAll(index, lore);
+        curLore.addAll(index, Colors.format(lore));
         this.meta.setLore(curLore);
         return this;
     }
@@ -215,7 +215,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
     {
         List<String> curLore = this.meta.getLore();
         if(curLore == null) curLore = new ArrayList<>();
-        curLore.addAll(index, Arrays.asList(lore));
+        curLore.addAll(index, Arrays.asList(Colors.format(lore)));
         this.meta.setLore(curLore);
         return this;
     }
