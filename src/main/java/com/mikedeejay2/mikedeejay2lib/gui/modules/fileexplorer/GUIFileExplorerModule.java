@@ -2,10 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules.fileexplorer;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.fileexplorer.GUISwitchFolderEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.util.GUIRefreshEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.util.GUISetNameEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.list.GUIListModule;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.list.ListViewMode;
@@ -16,7 +13,6 @@ import com.mikedeejay2.mikedeejay2lib.util.head.HeadUtil;
 import com.mikedeejay2.mikedeejay2lib.util.structure.HistoryHolder;
 import org.apache.commons.lang.Validate;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.io.File;
 import java.util.Arrays;
@@ -99,10 +95,15 @@ public class GUIFileExplorerModule extends GUIListModule
         for(File curFile : files)
         {
             ItemBuilder fileBuilder = ItemBuilder.of(Base64Head.STACK_OF_PAPER.get())
-                    .setName("&f" + curFile.getName())
-                    .setLore(Arrays.stream(curFile.getPath().split(separator))
-                                     .map(s -> "&7" + s)
-                                     .collect(Collectors.toList()));
+                    .setName("&f" + curFile.getName());
+
+            String[] lore = curFile.getPath().split(separator);
+            String[] newLore = new String[lore.length];
+            for(int i = 0; i < lore.length; ++i)
+            {
+                newLore[i] = "&7" + lore[i];
+            }
+            fileBuilder.setLore(newLore);
 
             GUIItem fileItem = new GUIItem(null);
             if(curFile.isDirectory())
@@ -146,5 +147,6 @@ public class GUIFileExplorerModule extends GUIListModule
     public void setFile(File file)
     {
         this.file = file;
+        history.pushBack(file);
     }
 }
