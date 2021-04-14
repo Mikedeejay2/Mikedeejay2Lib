@@ -2,6 +2,10 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules.fileexplorer;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.fileexplorer.GUISwitchFolderEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.util.GUIRefreshEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.util.GUISetNameEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.list.GUIListModule;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.list.ListViewMode;
@@ -12,6 +16,7 @@ import com.mikedeejay2.mikedeejay2lib.util.head.HeadUtil;
 import com.mikedeejay2.mikedeejay2lib.util.structure.HistoryHolder;
 import org.apache.commons.lang.Validate;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.io.File;
 import java.util.Arrays;
@@ -29,6 +34,7 @@ import java.util.stream.Collectors;
 public class GUIFileExplorerModule extends GUIListModule
 {
     private static final String separator = File.separatorChar == '\\' ? "\\\\" : String.valueOf(File.separatorChar);
+
     // The file of this GUI
     protected File file;
 
@@ -105,18 +111,13 @@ public class GUIFileExplorerModule extends GUIListModule
                 fileItem.setItem(fileBuilder.get());
                 if(allowSubFolders)
                 {
-                    fileItem.addEvent((event, gui1) -> {
-                        setFile(curFile);
-                        gui.setInventoryName(curFile.getName());
-                        gui.onClose(player);
-                        gui.open(player);
-                    });
+                    fileItem.addEvent(new GUISwitchFolderEvent(curFile));
                 }
                 folderQueue.add(fileItem);
             }
             else
             {
-                String extension = FileUtil.getFileExtension(file);
+                String extension = FileUtil.getFileExtension(curFile);
                 Base64Head head = HeadUtil.getHeadFromFileExtension(extension);
                 fileBuilder.setHeadBase64(head.get());
                 fileItem.setItem(fileBuilder.get());

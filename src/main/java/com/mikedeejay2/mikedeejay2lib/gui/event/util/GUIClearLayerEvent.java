@@ -6,6 +6,11 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+/**
+ * Event for clearing an entire layer of all items in a GUI
+ *
+ * @author Mikedeejay2
+ */
 public class GUIClearLayerEvent implements GUIEvent
 {
     protected String layerName;

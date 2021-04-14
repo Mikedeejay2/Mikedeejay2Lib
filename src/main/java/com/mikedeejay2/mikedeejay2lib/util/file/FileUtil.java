@@ -22,7 +22,6 @@ public final class FileUtil
     {
         String name = file.getName();
         String rawExtension = FilenameUtils.getExtension(name);
-        String finalExtension = rawExtension.replaceFirst(".", "");
-        return finalExtension;
+        return rawExtension.isEmpty() ? "" : rawExtension.charAt(0) == '.' ? rawExtension.substring(1) : rawExtension;
     }
 }
