@@ -80,6 +80,7 @@ public class GUIFileExplorerModule extends GUIListModule
      */
     private void fillList(Player player, GUIContainer gui)
     {
+        this.resetList();
         File[] files = file.listFiles();
         if(files == null)
         {
@@ -92,8 +93,7 @@ public class GUIFileExplorerModule extends GUIListModule
         {
             ItemBuilder fileBuilder = ItemBuilder.of(Base64Head.STACK_OF_PAPER.get())
                     .setName("&f" + curFile.getName())
-                    .setLore(Arrays.stream(curFile.getPath().split("\\\\"))
-                                     .flatMap(s -> Arrays.stream(s.split("/")))
+                    .setLore(Arrays.stream(curFile.getPath().split(String.valueOf(File.separatorChar)))
                                      .map(s -> "&7" + s)
                                      .collect(Collectors.toList()));
 
@@ -104,7 +104,10 @@ public class GUIFileExplorerModule extends GUIListModule
                 fileItem.setItem(fileBuilder.get());
                 if(allowSubFolders)
                 {
-                    fileItem.addEvent((event, gui1) -> setFile(file));
+                    fileItem.addEvent((event, gui1) -> {
+                        setFile(curFile);
+                        fillList(player, gui);
+                    });
                 }
                 folderQueue.add(fileItem);
             }
