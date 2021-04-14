@@ -2,7 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules.fileexplorer;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
-import com.mikedeejay2.mikedeejay2lib.gui.event.fileexplorer.GUISwitchFolderEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.list.GUIListModule;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.list.ListViewMode;
@@ -13,12 +13,11 @@ import com.mikedeejay2.mikedeejay2lib.util.head.HeadUtil;
 import com.mikedeejay2.mikedeejay2lib.util.structure.HistoryHolder;
 import org.apache.commons.lang.Validate;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.io.File;
-import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.Queue;
-import java.util.stream.Collectors;
 
 /**
  * A file explorer to browse real files.
@@ -148,5 +147,31 @@ public class GUIFileExplorerModule extends GUIListModule
     {
         this.file = file;
         history.pushBack(file);
+    }
+
+    /**
+     * Event to switch a folder in a {@link GUIFileExplorerModule} GUI
+     *
+     * @author Mikedeejay2
+     */
+    public static class GUISwitchFolderEvent implements GUIEvent
+    {
+        private final File file;
+
+        public GUISwitchFolderEvent(File file)
+        {
+            this.file = file;
+        }
+
+        @Override
+        public void execute(InventoryClickEvent event, GUIContainer gui)
+        {
+            Player player = (Player) event.getWhoClicked();
+            GUIFileExplorerModule module = gui.getModule(GUIFileExplorerModule.class);
+            module.setFile(file);
+            gui.setInventoryName(file.getName());
+            gui.onClose(player);
+            gui.open(player);
+        }
     }
 }

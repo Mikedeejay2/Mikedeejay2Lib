@@ -3,8 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules.navigation;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
-import com.mikedeejay2.mikedeejay2lib.gui.event.navigator.GUINavBackEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.navigator.GUINavForwardEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
@@ -12,6 +11,8 @@ import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import com.mikedeejay2.mikedeejay2lib.util.structure.NavigationHolder;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
  * A module that adds a web browser style navigator to the GUI that
@@ -231,5 +232,66 @@ public class GUINavigatorModule implements GUIModule
     public void setInvalidForwardItem(GUIItem invalidForwardItem)
     {
         this.invalidForwardItem = invalidForwardItem;
+    }
+
+
+    /**
+     * Navigate the GUI back one GUI.
+     *
+     * @author Mikedeejay2
+     */
+    public static class GUINavBackEvent implements GUIEvent
+    {
+        protected final BukkitPlugin plugin;
+
+        public GUINavBackEvent(BukkitPlugin plugin)
+        {
+            this.plugin = plugin;
+        }
+
+        @Override
+        public void execute(InventoryClickEvent event, GUIContainer gui)
+        {
+            Player player = (Player) event.getWhoClicked();
+            ClickType clickType = event.getClick();
+            if(clickType != ClickType.LEFT) return;
+            GUINavigatorModule module = gui.getModule(GUINavigatorModule.class);
+            PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
+            NavigationHolder<GUIContainer> system = playerGUI.getNavigation(module.getNavigationID());
+            GUIContainer backGUI = system.popBack();
+            system.pushForward(gui);
+            system.setNavigationFlag(true);
+            backGUI.open(player);
+        }
+    }
+
+    /**
+     * Navigate the GUI forward one GUI.
+     *
+     * @author Mikedeejay2
+     */
+    public static class GUINavForwardEvent implements GUIEvent
+    {
+        protected final BukkitPlugin plugin;
+
+        public GUINavForwardEvent(BukkitPlugin plugin)
+        {
+            this.plugin = plugin;
+        }
+
+        @Override
+        public void execute(InventoryClickEvent event, GUIContainer gui)
+        {
+            Player player = (Player) event.getWhoClicked();
+            ClickType clickType = event.getClick();
+            if(clickType != ClickType.LEFT) return;
+            GUINavigatorModule module = gui.getModule(GUINavigatorModule.class);
+            PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
+            NavigationHolder<GUIContainer> system = playerGUI.getNavigation(module.getNavigationID());
+            GUIContainer forwardGUI = system.popForward();
+            system.pushBack(gui);
+            system.setNavigationFlag(true);
+            forwardGUI.open(player);
+        }
     }
 }

@@ -3,9 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules.list;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
-import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUIListSearchOffEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.list.GUISwitchListLocEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
@@ -15,6 +13,8 @@ import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import com.mikedeejay2.mikedeejay2lib.util.search.SearchUtil;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.AbstractMap;
@@ -1109,5 +1109,104 @@ public class GUIListModule implements GUIModule
     public void setScrollChangePreName(String scrollChangePreName)
     {
         this.scrollChangePreName = scrollChangePreName;
+    }
+
+
+    /**
+     * An event that prompts the user to search for something in a list GUI
+     *
+     * @author Mikedeejay2
+     */
+    public static class GUIListSearchEvent implements GUIEvent
+    {
+        protected final BukkitPlugin plugin;
+
+        public GUIListSearchEvent(BukkitPlugin plugin)
+        {
+            this.plugin = plugin;
+        }
+
+        @Override
+        public void execute(InventoryClickEvent event, GUIContainer gui)
+        {
+            Player player = (Player) event.getWhoClicked();
+            ClickType clickType = event.getClick();
+            if(clickType != ClickType.LEFT) return;
+            gui.close(player);
+            player.closeInventory();
+            // TODO: Use chat event in GUIListener to capture search result
+            GUIListModule list = gui.getModule(GUIListModule.class);
+            list.enableSearchMode("search term");
+        }
+    }
+
+    /**
+     * Event that disables search mode on the player's current GUI
+     *
+     * @author Mikedeejay2
+     */
+    public static class GUIListSearchOffEvent implements GUIEvent
+    {
+        @Override
+        public void execute(InventoryClickEvent event, GUIContainer gui)
+        {
+            ClickType clickType = event.getClick();
+            if(clickType != ClickType.LEFT) return;
+            gui.getModule(GUIListModule.class).disableSearchMode();
+        }
+    }
+
+    /**
+     * An event that changes the current page of a list
+     *
+     * @author Mikedeejay2
+     */
+    public static class GUISwitchListLocEvent implements GUIEvent
+    {
+        @Override
+        public void execute(InventoryClickEvent event, GUIContainer gui)
+        {
+            ClickType clickType = event.getClick();
+            int slot = event.getSlot();
+            GUIListModule module = gui.getModule(GUIListModule.class);
+            String listLayerName = module.getLayerName();
+            GUILayer listLayer = gui.getLayer(listLayerName);
+            int row = listLayer.getRowFromSlot(slot);
+            int col = listLayer.getColFromSlot(slot);
+            if(!gui.getTopLayer(row, col).getName().equals(listLayerName)) return;
+            if(clickType != ClickType.LEFT) return;
+
+            List<Map.Entry<Integer, Integer>> forwards = module.getForwards();
+            List<Map.Entry<Integer, Integer>> backs = module.getBacks();
+
+            int relative = 0;
+
+            for(int i = 0; i < forwards.size(); ++i)
+            {
+                Map.Entry<Integer, Integer> entry = forwards.get(i);
+                if(entry.getKey() != row || entry.getValue() != col) continue;
+                relative = i + 1;
+                break;
+            }
+
+            if(relative != 0)
+            {
+                module.setListLoc(module.getCurLoc() + relative);
+                return;
+            }
+
+            for(int i = 0; i < backs.size(); ++i)
+            {
+                Map.Entry<Integer, Integer> entry = backs.get(i);
+                if(entry.getKey() != row || entry.getValue() != col) continue;
+                relative = -(i + 1);
+                break;
+            }
+
+            if(relative != 0)
+            {
+                module.setListLoc(module.getCurLoc() + relative);
+            }
+        }
     }
 }
