@@ -57,7 +57,7 @@ public class UpdateChecker
     {
         this.userName = userName;
         this.repoName = repoName;
-        if(plugin.getDescription().getVersion().endsWith("-SNAPSHOT"))
+        if(plugin.getDescription().getVersion().contains("-SNAPSHOT"))
         {
             return;
         }
