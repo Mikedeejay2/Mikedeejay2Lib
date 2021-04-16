@@ -5,7 +5,6 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.list.GUIListModule;
-import com.mikedeejay2.mikedeejay2lib.gui.modules.list.ListViewMode;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.util.file.FileUtil;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;

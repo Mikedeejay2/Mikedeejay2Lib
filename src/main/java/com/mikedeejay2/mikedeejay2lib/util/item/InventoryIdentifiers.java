@@ -1,6 +1,8 @@
 package com.mikedeejay2.mikedeejay2lib.util.item;
 
 import com.mikedeejay2.mikedeejay2lib.util.recipe.RecipeUtil;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryType;
@@ -205,13 +207,13 @@ public final class InventoryIdentifiers
      * @param rawSlot  The raw slot to test
      * @param invView  The <tt>InventoryView</tt> to use as a reference
      * @param material The material to test
-     * @return A <tt>Map.Entry</tt> containing two booleans:
+     * @return A <tt>Pair</tt> containing two booleans:
      * <ol>
-     *     <li>Boolean (Key) - Whether the material should be in that slot</li>
-     *     <li>Boolean (Value) - Whether the item has the ability to be in that slot, regardless of whether it should be</li>
+     *     <li>Boolean (Left) - Whether the material should be in that slot</li>
+     *     <li>Boolean (Right) - Whether the item has the ability to be in that slot, regardless of whether it should be</li>
      * </ol>
      */
-    public static Map.Entry<Boolean, Boolean> applicableForSlot(int rawSlot, InventoryView invView, Material material)
+    public static Pair<Boolean, Boolean> applicableForSlot(int rawSlot, InventoryView invView, Material material)
     {
         InventoryType.SlotType slotType = invView.getSlotType(rawSlot);
         InventoryType          invType  = invView.getType();
@@ -224,11 +226,11 @@ public final class InventoryIdentifiers
                 switch(rawSlot)
                 {
                     case 0:
-                        return new AbstractMap.SimpleEntry<>(isBanner(material), false);
+                        return new MutablePair<>(isBanner(material), false);
                     case 1:
-                        return new AbstractMap.SimpleEntry<>(isDye(material), false);
+                        return new MutablePair<>(isDye(material), false);
                     case 2:
-                        return new AbstractMap.SimpleEntry<>(isPattern(material), false);
+                        return new MutablePair<>(isPattern(material), false);
                 }
             }
             break;
@@ -239,11 +241,11 @@ public final class InventoryIdentifiers
                     case 0:
                     case 1:
                     case 2:
-                        return new AbstractMap.SimpleEntry<>(isBottle(material), false);
+                        return new MutablePair<>(isBottle(material), false);
                     case 4:
-                        return new AbstractMap.SimpleEntry<>(material == Material.BLAZE_POWDER, false);
+                        return new MutablePair<>(material == Material.BLAZE_POWDER, false);
                     case 3:
-                        return new AbstractMap.SimpleEntry<>(isApplicableForBrewing(material), false);
+                        return new MutablePair<>(isApplicableForBrewing(material), false);
                 }
             }
             break;
@@ -252,9 +254,9 @@ public final class InventoryIdentifiers
                 switch(rawSlot)
                 {
                     case 0:
-                        return new AbstractMap.SimpleEntry<>(material == Material.FILLED_MAP, false);
+                        return new MutablePair<>(material == Material.FILLED_MAP, false);
                     case 1:
-                        return new AbstractMap.SimpleEntry<>(material == Material.PAPER, false);
+                        return new MutablePair<>(material == Material.PAPER, false);
                 }
             }
             break;
@@ -262,8 +264,8 @@ public final class InventoryIdentifiers
             {
                 switch(rawSlot)
                 {
-                    case 1: return new AbstractMap.SimpleEntry<>(material == Material.LAPIS_LAZULI, false);
-                    case 0:return new AbstractMap.SimpleEntry<>(material != Material.LAPIS_LAZULI, true);
+                    case 1: return new MutablePair<>(material == Material.LAPIS_LAZULI, false);
+                    case 0:return new MutablePair<>(material != Material.LAPIS_LAZULI, true);
                 }
             }
             break;
@@ -271,22 +273,22 @@ public final class InventoryIdentifiers
             {
                 if(rawSlot == 0 || rawSlot == 1)
                 {
-                    return new AbstractMap.SimpleEntry<>(isTool(material), false);
+                    return new MutablePair<>(isTool(material), false);
                 }
             }
             break;
             case SHULKER_BOX:
             {
-                return new AbstractMap.SimpleEntry<>(!isShulkerBox(material), false);
+                return new MutablePair<>(!isShulkerBox(material), false);
             }
             case FURNACE:
             {
                 switch(rawSlot)
                 {
                     case 0:
-                        return new AbstractMap.SimpleEntry<>(RecipeUtil.isFurnaceInput(material), true);
+                        return new MutablePair<>(RecipeUtil.isFurnaceInput(material), true);
                     case 1:
-                        return new AbstractMap.SimpleEntry<>(material.isFuel(), false);
+                        return new MutablePair<>(material.isFuel(), false);
                 }
 
             }
@@ -294,21 +296,21 @@ public final class InventoryIdentifiers
             {
                 if(rawSlot == 0)
                 {
-                    return new AbstractMap.SimpleEntry<>(RecipeUtil.isBlastingInput(material), true);
+                    return new MutablePair<>(RecipeUtil.isBlastingInput(material), true);
                 }
             }
             case SMOKER:
             {
                 if(rawSlot == 0)
                 {
-                    return new AbstractMap.SimpleEntry<>(RecipeUtil.isSmokingInput(material), true);
+                    return new MutablePair<>(RecipeUtil.isSmokingInput(material), true);
                 }
             }
             case BEACON:
             {
                 if(rawSlot == 0)
                 {
-                    return new AbstractMap.SimpleEntry<>(isApplicableForBeacon(material), false);
+                    return new MutablePair<>(isApplicableForBeacon(material), false);
                 }
             }
         }
@@ -319,9 +321,9 @@ public final class InventoryIdentifiers
             switch(rawSlot)
             {
                 case 0:
-                    return new AbstractMap.SimpleEntry<>(material == Material.SADDLE, false);
+                    return new MutablePair<>(material == Material.SADDLE, false);
                 case 1:
-                    return new AbstractMap.SimpleEntry<>(isHorseArmor(material), false);
+                    return new MutablePair<>(isHorseArmor(material), false);
             }
         }
         else if(topInv instanceof LlamaInventory)
@@ -329,9 +331,9 @@ public final class InventoryIdentifiers
             switch(rawSlot)
             {
                 case 0:
-                    return new AbstractMap.SimpleEntry<>(false, false);
+                    return new MutablePair<>(false, false);
                 case 1:
-                    return new AbstractMap.SimpleEntry<>(isCarpet(material), false);
+                    return new MutablePair<>(isCarpet(material), false);
             }
         }
         else if(topInv instanceof AbstractHorseInventory)
@@ -339,35 +341,35 @@ public final class InventoryIdentifiers
             switch(rawSlot)
             {
                 case 0:
-                    return new AbstractMap.SimpleEntry<>(material == Material.SADDLE, false);
+                    return new MutablePair<>(material == Material.SADDLE, false);
                 case 1:
-                    return new AbstractMap.SimpleEntry<>(false, false);
+                    return new MutablePair<>(false, false);
             }
         }
 
         switch(slotType)
         {
             case RESULT:
-                return new AbstractMap.SimpleEntry<>(false, false);
+                return new MutablePair<>(false, false);
             case ARMOR:
             {
-                if(slot == BOOTS_SLOT && !isBoots(material)) return new AbstractMap.SimpleEntry<>(true, false);
-                if(slot == LEGGINGS_SLOT && !isLeggings(material)) return new AbstractMap.SimpleEntry<>(true, false);
-                if(slot == CHESTPLATE_SLOT && !isChestplate(material)) return new AbstractMap.SimpleEntry<>(true, false);
-                if(slot == HELMET_SLOT && !isHelmet(material)) return new AbstractMap.SimpleEntry<>(true, false);
-                return new AbstractMap.SimpleEntry<>(false, false);
+                if(slot == BOOTS_SLOT && !isBoots(material)) return new MutablePair<>(true, false);
+                if(slot == LEGGINGS_SLOT && !isLeggings(material)) return new MutablePair<>(true, false);
+                if(slot == CHESTPLATE_SLOT && !isChestplate(material)) return new MutablePair<>(true, false);
+                if(slot == HELMET_SLOT && !isHelmet(material)) return new MutablePair<>(true, false);
+                return new MutablePair<>(false, false);
             }
             case FUEL:
             {
-                return new AbstractMap.SimpleEntry<>(material.isFuel(), true);
+                return new MutablePair<>(material.isFuel(), true);
             }
             case QUICKBAR:
             case CONTAINER:
             case OUTSIDE:
             case CRAFTING:
-                return new AbstractMap.SimpleEntry<>(true, true);
+                return new MutablePair<>(true, true);
         }
-        return new AbstractMap.SimpleEntry<>(false, false);
+        return new MutablePair<>(false, false);
     }
 
     /**
@@ -379,9 +381,7 @@ public final class InventoryIdentifiers
      */
     public static boolean singletonSlot(int rawSlot, InventoryView invView)
     {
-        InventoryType.SlotType slotType = invView.getSlotType(rawSlot);
-        InventoryType          invType  = invView.getType();
-        int                    slot     = invView.convertSlot(rawSlot);
+        InventoryType invType = invView.getType();
 
         switch(invType)
         {
@@ -419,14 +419,11 @@ public final class InventoryIdentifiers
                 }
             }
             break;
-            case ENCHANTING:
-            {
-                return rawSlot == 0;
-            }
             case GRINDSTONE:
             {
                 return rawSlot == 0 || rawSlot == 1;
             }
+            case ENCHANTING:
             case BEACON:
             {
                 return rawSlot == 0;

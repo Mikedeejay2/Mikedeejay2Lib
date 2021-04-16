@@ -11,16 +11,16 @@ import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import com.mikedeejay2.mikedeejay2lib.util.search.SearchUtil;
+import org.apache.commons.lang3.tuple.MutablePair;
+import org.apache.commons.lang3.tuple.Pair;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.AbstractMap;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * GUI Module that turns the GUI into a list that shows a list of different
@@ -35,7 +35,7 @@ public class GUIListModule implements GUIModule
     // The list of items that this list holds
     protected List<GUIItem> list;
     // The search list of the items if search is enabled
-    protected List<Map.Entry<GUIItem, Integer>> searchList;
+    protected List<Pair<GUIItem, Integer>> searchList;
     // Whether search mode is enabled or not
     protected boolean searchMode;
     // The search term that has previously been used
@@ -62,15 +62,15 @@ public class GUIListModule implements GUIModule
     protected ListViewMode viewMode;
 
     // The top left location of the list
-    protected Map.Entry<Integer, Integer> topLeft;
+    protected Pair<Integer, Integer> topLeft;
     // The bottom right location of the list
-    protected Map.Entry<Integer, Integer> bottomRight;
+    protected Pair<Integer, Integer> bottomRight;
     // The location of the search button (if visible)
-    protected Map.Entry<Integer, Integer> search;
+    protected Pair<Integer, Integer> search;
     // The locations of the forwards buttons
-    protected List<Map.Entry<Integer, Integer>> forwards;
+    protected List<Pair<Integer, Integer>> forwards;
     // The locations of the forwards buttons
-    protected List<Map.Entry<Integer, Integer>> backs;
+    protected List<Pair<Integer, Integer>> backs;
 
     // The list layer's name, used for getting the layer that the list is located on
     protected String layerName;
@@ -129,8 +129,8 @@ public class GUIListModule implements GUIModule
 
         this.viewMode = viewMode;
 
-        this.topLeft = new AbstractMap.SimpleEntry<>(topRow, leftCol);
-        this.bottomRight = new AbstractMap.SimpleEntry<>(bottomRow, rightCol);
+        this.topLeft = new MutablePair<>(topRow, leftCol);
+        this.bottomRight = new MutablePair<>(bottomRow, rightCol);
         this.forwards = new ArrayList<>();
         this.backs = new ArrayList<>();
         this.pageChangePreName = "&f";
@@ -311,7 +311,7 @@ public class GUIListModule implements GUIModule
         int maxViews = getMaxViews();
 
         // Remove previous forward items
-        for(Map.Entry<Integer, Integer> entry : forwards)
+        for(Pair<Integer, Integer> entry : forwards)
         {
             int row = entry.getKey();
             int col = entry.getValue();
@@ -319,7 +319,7 @@ public class GUIListModule implements GUIModule
         }
 
         // Remove previous back items
-        for(Map.Entry<Integer, Integer> entry : backs)
+        for(Pair<Integer, Integer> entry : backs)
         {
             int row = entry.getKey();
             int col = entry.getValue();
@@ -333,7 +333,7 @@ public class GUIListModule implements GUIModule
         {
             if(i > maxViews || i <= 0) continue;
             int index = Math.abs(i - curLoc) - 1;
-            Map.Entry<Integer, Integer> entry = forwards.get(index);
+            Pair<Integer, Integer> entry = forwards.get(index);
             int row = entry.getKey();
             int col = entry.getValue();
             GUIItem curItem = forwardItem.clone();
@@ -358,7 +358,7 @@ public class GUIListModule implements GUIModule
         {
             if(i > maxViews || i <= 0) continue;
             int index = Math.abs(i - curLoc) - 1;
-            Map.Entry<Integer, Integer> entry = backs.get(index);
+            Pair<Integer, Integer> entry = backs.get(index);
             int row = entry.getKey();
             int col = entry.getValue();
             GUIItem curItem = backItem.clone();
@@ -587,7 +587,7 @@ public class GUIListModule implements GUIModule
         {
             GUIItem item = list.get(i);
             if(!SearchUtil.searchMetaFuzzy(item.getMetaView(), searchTerm)) continue;
-            searchList.add(new AbstractMap.SimpleEntry<>(item, i));
+            searchList.add(new MutablePair<>(item, i));
         }
     }
 
@@ -697,7 +697,7 @@ public class GUIListModule implements GUIModule
      *
      * @return All items that are in the search list
      */
-    public List<Map.Entry<GUIItem, Integer>> getSearchMap()
+    public List<Pair<GUIItem, Integer>> getSearchMap()
     {
         return searchList;
     }
@@ -869,7 +869,7 @@ public class GUIListModule implements GUIModule
      */
     public GUIListModule setTopLeft(int row, int col)
     {
-        this.topLeft = new AbstractMap.SimpleEntry<>(row, col);
+        this.topLeft = new MutablePair<>(row, col);
         return this;
     }
 
@@ -882,7 +882,7 @@ public class GUIListModule implements GUIModule
      */
     public GUIListModule setBottomRight(int row, int col)
     {
-        this.bottomRight = new AbstractMap.SimpleEntry<>(row, col);
+        this.bottomRight = new MutablePair<>(row, col);
         return this;
     }
 
@@ -895,7 +895,7 @@ public class GUIListModule implements GUIModule
      */
     public GUIListModule setSearch(int row, int col)
     {
-        this.search = new AbstractMap.SimpleEntry<>(row, col);
+        this.search = new MutablePair<>(row, col);
         return this;
     }
 
@@ -911,7 +911,7 @@ public class GUIListModule implements GUIModule
      */
     public GUIListModule addForward(int row, int col)
     {
-        this.forwards.add(new AbstractMap.SimpleEntry<>(row, col));
+        this.forwards.add(new MutablePair<>(row, col));
         return this;
     }
 
@@ -928,7 +928,7 @@ public class GUIListModule implements GUIModule
      */
     public GUIListModule addForward(int index, int row, int col)
     {
-        this.forwards.add(index, new AbstractMap.SimpleEntry<>(row, col));
+        this.forwards.add(index, new MutablePair<>(row, col));
         return this;
     }
 
@@ -944,7 +944,7 @@ public class GUIListModule implements GUIModule
      */
     public GUIListModule addBack(int row, int col)
     {
-        this.backs.add(new AbstractMap.SimpleEntry<>(row, col));
+        this.backs.add(new MutablePair<>(row, col));
         return this;
     }
 
@@ -961,7 +961,7 @@ public class GUIListModule implements GUIModule
      */
     public GUIListModule addBack(int index, int row, int col)
     {
-        this.backs.add(index, new AbstractMap.SimpleEntry<>(row, col));
+        this.backs.add(index, new MutablePair<>(row, col));
         return this;
     }
 
@@ -1016,7 +1016,7 @@ public class GUIListModule implements GUIModule
      *
      * @return An <tt>Entry</tt> holding the row in the key and column in the value
      */
-    public Map.Entry<Integer, Integer> getTopLeft()
+    public Pair<Integer, Integer> getTopLeft()
     {
         return topLeft;
     }
@@ -1026,7 +1026,7 @@ public class GUIListModule implements GUIModule
      *
      * @return An <tt>Entry</tt> holding the row in the key and column in the value
      */
-    public Map.Entry<Integer, Integer> getBottomRight()
+    public Pair<Integer, Integer> getBottomRight()
     {
         return bottomRight;
     }
@@ -1036,7 +1036,7 @@ public class GUIListModule implements GUIModule
      *
      * @return An <tt>Entry</tt> holding the row in the key and column in the value
      */
-    public Map.Entry<Integer, Integer> getSearch()
+    public Pair<Integer, Integer> getSearch()
     {
         return search;
     }
@@ -1046,7 +1046,7 @@ public class GUIListModule implements GUIModule
      *
      * @return An <tt>Entry</tt> holding the row in the key and column in the value
      */
-    public List<Map.Entry<Integer, Integer>> getForwards()
+    public List<Pair<Integer, Integer>> getForwards()
     {
         return forwards;
     }
@@ -1056,7 +1056,7 @@ public class GUIListModule implements GUIModule
      *
      * @return A list of entries containing the row in the key and column in the value
      */
-    public List<Map.Entry<Integer, Integer>> getBacks()
+    public List<Pair<Integer, Integer>> getBacks()
     {
         return backs;
     }
@@ -1176,14 +1176,14 @@ public class GUIListModule implements GUIModule
             if(!gui.getTopLayer(row, col).getName().equals(listLayerName)) return;
             if(clickType != ClickType.LEFT) return;
 
-            List<Map.Entry<Integer, Integer>> forwards = module.getForwards();
-            List<Map.Entry<Integer, Integer>> backs = module.getBacks();
+            List<Pair<Integer, Integer>> forwards = module.getForwards();
+            List<Pair<Integer, Integer>> backs = module.getBacks();
 
             int relative = 0;
 
             for(int i = 0; i < forwards.size(); ++i)
             {
-                Map.Entry<Integer, Integer> entry = forwards.get(i);
+                Pair<Integer, Integer> entry = forwards.get(i);
                 if(entry.getKey() != row || entry.getValue() != col) continue;
                 relative = i + 1;
                 break;
@@ -1197,7 +1197,7 @@ public class GUIListModule implements GUIModule
 
             for(int i = 0; i < backs.size(); ++i)
             {
-                Map.Entry<Integer, Integer> entry = backs.get(i);
+                Pair<Integer, Integer> entry = backs.get(i);
                 if(entry.getKey() != row || entry.getValue() != col) continue;
                 relative = -(i + 1);
                 break;
@@ -1208,5 +1208,19 @@ public class GUIListModule implements GUIModule
                 module.setListLoc(module.getCurLoc() + relative);
             }
         }
+    }
+
+    /**
+     * Simple Enum for specifying the viewing mode of a {@link GUIListModule}
+     *
+     * @author Mikedeejay2
+     */
+    public enum ListViewMode
+    {
+        // Paged mode, the view of the list acts as pages, showing an entirely new page each time
+        PAGED,
+        // Scroll mode, the view of the list acts as a scroll bar, moving one at a time
+        SCROLL
+        ;
     }
 }
