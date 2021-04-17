@@ -20,7 +20,6 @@ public class ModuleRegistry implements ModuleRegister<Module>
 
     public ModuleRegistry(@Nullable Predicate<Module> enablePredicate, BukkitPlugin plugin)
     {
-        Predicate<Module> enablePredicate1;
         this.plugin = plugin;
         this.modules = new LinkedHashSet<>();
 
