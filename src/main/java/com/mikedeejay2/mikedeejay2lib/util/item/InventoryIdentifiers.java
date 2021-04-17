@@ -1,8 +1,8 @@
 package com.mikedeejay2.mikedeejay2lib.util.item;
 
 import com.mikedeejay2.mikedeejay2lib.util.recipe.RecipeUtil;
-import org.apache.commons.lang3.tuple.MutablePair;
-import org.apache.commons.lang3.tuple.Pair;
+import com.mikedeejay2.mikedeejay2lib.util.structure.tuple.MutablePair;
+import com.mikedeejay2.mikedeejay2lib.util.structure.tuple.Pair;
 import org.bukkit.Material;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryType;
