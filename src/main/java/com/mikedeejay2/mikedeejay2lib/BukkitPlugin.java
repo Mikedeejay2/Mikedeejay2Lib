@@ -25,7 +25,6 @@ import java.lang.reflect.Field;
 public abstract class BukkitPlugin extends EnhancedJavaPlugin
 {
     private MinecraftVersion minecraftVersion;
-    private DataManager dataManager;
     private LangManager libLangManager;
     private GUIManager guiManager;
     private NMSHandler nms;
@@ -37,7 +36,6 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin
         this.minecraftVersion = new MinecraftVersion(this);
         this.libLangManager = new LangManager(this, "lang/lib");
         this.nms = new NMSHandler(this);
-        this.dataManager = new DataManager();
         this.guiManager = new GUIManager(this);
 
         this.getServer().getPluginManager().registerEvents(new GUIListener(this), this);
@@ -61,16 +59,6 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin
     public MinecraftVersion getMCVersion()
     {
         return minecraftVersion;
-    }
-
-    /**
-     * Get this plugin's {@link DataManager}
-     *
-     * @return The data manager
-     */
-    public DataManager getDataManager()
-    {
-        return dataManager;
     }
 
     /**
