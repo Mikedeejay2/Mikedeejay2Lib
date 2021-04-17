@@ -21,6 +21,7 @@ public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor>
     public YamlFile(BukkitPlugin plugin, String filePath)
     {
         super(plugin, filePath);
+        yamlFile = new EnhancedYaml();
         accessor = new YamlAccessor(this, yamlFile);
     }
 

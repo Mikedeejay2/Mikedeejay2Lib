@@ -7,7 +7,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.stream.JsonWriter;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.data.json.JsonFile;
-import com.mikedeejay2.mikedeejay2lib.util.file.FileIO;
 
 import java.io.*;
 import java.util.Map;
