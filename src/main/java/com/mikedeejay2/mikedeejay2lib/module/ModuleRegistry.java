@@ -2,7 +2,6 @@ package com.mikedeejay2.mikedeejay2lib.module;
 
 import com.google.common.collect.ImmutableSet;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
-import com.mikedeejay2.mikedeejay2lib.data.section.SectionAccessor;
 import org.apache.commons.lang.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
@@ -11,7 +10,6 @@ import java.lang.reflect.Method;
 import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Set;
-import java.util.function.Consumer;
 import java.util.function.Predicate;
 
 public class ModuleRegistry implements ModuleRegister<Module>
@@ -20,23 +18,17 @@ public class ModuleRegistry implements ModuleRegister<Module>
     private final Set<Module> modules;
     private final Predicate<Module> enablePredicate;
 
-    public ModuleRegistry(@NotNull SectionAccessor<?, ?> config, @Nullable Consumer<Boolean> modified, BukkitPlugin plugin)
+    public ModuleRegistry(@Nullable Predicate<Module> enablePredicate, BukkitPlugin plugin)
     {
+        Predicate<Module> enablePredicate1;
         this.plugin = plugin;
         this.modules = new LinkedHashSet<>();
 
-        this.enablePredicate = module -> {
-            final String name = module.getName();
-            if(!config.contains(name))
-            {
-                config.setBoolean(name, true);
-                if(modified != null)
-                {
-                    modified.accept(true);
-                }
-            }
-            return config.getBoolean(name);
-        };
+        if(enablePredicate == null)
+        {
+            enablePredicate = (module) -> true;
+        }
+        this.enablePredicate = enablePredicate;
     }
 
     @Override
