@@ -3,15 +3,19 @@ package com.mikedeejay2.mikedeejay2lib.gui.item;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
+import com.mikedeejay2.mikedeejay2lib.item.IItemBuilder;
+import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
-import com.mikedeejay2.mikedeejay2lib.util.enchant.GlowEnchantment;
 import org.bukkit.Material;
+import org.bukkit.OfflinePlayer;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
@@ -26,12 +30,12 @@ import java.util.Map;
  *
  * @author Mikedeejay2
  */
-public class GUIItem implements Cloneable
+public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
 {
-    // The base item
-    protected ItemStack baseItem;
-    // The view item
-    protected ItemStack viewItem;
+    // The base item builder
+    protected ItemBuilder baseItem;
+    // The view item builder
+    protected ItemBuilder viewItem;
     // Whether or not this item can be moved
     protected boolean movable;
     // GUI Events for this item
@@ -39,8 +43,8 @@ public class GUIItem implements Cloneable
 
     public GUIItem(ItemStack item)
     {
-        this.baseItem = item;
-        this.viewItem = item;
+        this.baseItem = ItemBuilder.of(item);
+        this.viewItem = ItemBuilder.of(item);
         this.movable = false;
         this.events = new GUIEventHandler();
     }
@@ -60,85 +64,6 @@ public class GUIItem implements Cloneable
     {
         if(events == null) return;
         events.execute(event, gui);
-    }
-
-    /**
-     * Get the base <tt>ItemStack</tt> of this <tt>GUIItem</tt>
-     *
-     * @return The base item
-     */
-    public ItemStack getItemBase()
-    {
-        return baseItem;
-    }
-
-    /**
-     * Get the <tt>ItemStack</tt> of this <tt>GUIItem</tt> (view item)
-     *
-     * @return The requested <tt>ItemStack</tt>
-     */
-    public ItemStack getItem()
-    {
-        return viewItem;
-    }
-
-    /**
-     * Set the <tt>ItemStack</tt> that this <tt>GUIItem</tt> stores (modifies
-     * both the base item and the view item)
-     *
-     * @param item The item to set
-     * @return A reference to this <tt>GUIItem</tt>
-     */
-    public GUIItem setItem(ItemStack item)
-    {
-        this.baseItem = item;
-        this.viewItem = item;
-        return this;
-    }
-
-    /**
-     * Set the <tt>ItemStack</tt> for the base item of this <tt>GUIItem</tt>
-     *
-     * @param baseItem Item that will be set to the base item
-     * @return A reference to this <tt>GUIItem</tt>
-     */
-    public GUIItem setBaseItem(ItemStack baseItem)
-    {
-        this.baseItem = baseItem;
-        return this;
-    }
-
-    /**
-     * Get the view item of this <tt>GUIItem</tt>
-     *
-     * @return The view item
-     */
-    public ItemStack getItemView()
-    {
-        return viewItem;
-    }
-
-    /**
-     * Set the <tt>ItemStack</tt> for the view item of this <tt>GUIItem</tt>
-     *
-     * @param viewItem Item that will be set to the view item
-     * @return A reference to this <tt>GUIItem</tt>
-     */
-    public GUIItem setViewItem(ItemStack viewItem)
-    {
-        this.viewItem = viewItem;
-        return this;
-    }
-
-    /**
-     * Reset the view item to the base item
-     *
-     * @return A reference to this <tt>GUIItem</tt>
-     */
-    public GUIItem resetViewItem()
-    {
-        this.viewItem = baseItem;
-        return this;
     }
 
     /**
@@ -277,81 +202,178 @@ public class GUIItem implements Cloneable
         return this;
     }
 
-    public ItemMeta getMetaView()
+    /**
+     * Reset the view item to the base item
+     *
+     * @return A reference to this <tt>GUIItem</tt>
+     */
+    public GUIItem resetViewItem()
     {
-        return viewItem.getItemMeta();
-    }
-
-    public GUIItem setMetaView(ItemMeta meta)
-    {
-        viewItem.setItemMeta(meta);
+        this.viewItem = ItemBuilder.of(baseItem);
         return this;
     }
 
-    public ItemMeta getMetaBase()
+    @Override
+    public ItemStack get()
     {
-        return baseItem.getItemMeta();
+        return getItem();
     }
 
-    public GUIItem setMetaBase(ItemMeta meta)
+    /**
+     * Get the <tt>ItemStack</tt> of this <tt>GUIItem</tt> (view item)
+     *
+     * @return The requested <tt>ItemStack</tt>
+     */
+    public ItemStack getItem()
     {
-        baseItem.setItemMeta(meta);
+        return viewItem.get();
+    }
+
+    /**
+     * Get the base <tt>ItemStack</tt> of this <tt>GUIItem</tt>
+     *
+     * @return The base item
+     */
+    public ItemStack getItemBase()
+    {
+        return baseItem.get();
+    }
+
+    /**
+     * Get the view item of this <tt>GUIItem</tt>
+     *
+     * @return The view item
+     */
+    public ItemStack getItemView()
+    {
+        return viewItem.get();
+    }
+
+    @Override
+    public GUIItem set(ItemStack item)
+    {
+        return setItem(item);
+    }
+
+    /**
+     * Set the <tt>ItemStack</tt> that this <tt>GUIItem</tt> stores (modifies
+     * both the base item and the view item)
+     *
+     * @param item The item to set
+     * @return A reference to this <tt>GUIItem</tt>
+     */
+    public GUIItem setItem(ItemStack item)
+    {
+        setBaseItem(item);
+        setViewItem(item);
         return this;
     }
 
+    /**
+     * Set the <tt>ItemStack</tt> for the base item of this <tt>GUIItem</tt>
+     *
+     * @param baseItem Item that will be set to the base item
+     * @return A reference to this <tt>GUIItem</tt>
+     */
+    public GUIItem setBaseItem(ItemStack baseItem)
+    {
+        this.baseItem.set(baseItem);
+        return this;
+    }
+
+    /**
+     * Set the <tt>ItemStack</tt> for the view item of this <tt>GUIItem</tt>
+     *
+     * @param viewItem Item that will be set to the view item
+     * @return A reference to this <tt>GUIItem</tt>
+     */
+    public GUIItem setViewItem(ItemStack viewItem)
+    {
+        this.viewItem.set(viewItem);
+        return this;
+    }
+
+    @Override
     public ItemMeta getMeta()
     {
         return getMetaView();
     }
 
+    public ItemMeta getMetaBase()
+    {
+        return baseItem.getMeta();
+    }
+
+    public ItemMeta getMetaView()
+    {
+        return viewItem.getMeta();
+    }
+
+    @Override
     public GUIItem setMeta(ItemMeta meta)
     {
-        viewItem.setItemMeta(meta);
-        baseItem.setItemMeta(meta);
-        return this;
-    }
-
-    public String getNameView()
-    {
-        return getMetaView().getDisplayName();
-    }
-
-    public GUIItem setNameView(String name)
-    {
-        ItemMeta meta = getMetaView();
-        meta.setDisplayName(Colors.format(name));
+        setMetaBase(meta);
         setMetaView(meta);
         return this;
     }
 
-    public String getNameBase()
+    public GUIItem setMetaBase(ItemMeta meta)
     {
-        return baseItem.getItemMeta().getDisplayName();
-    }
-
-    public GUIItem setNameBase(String name)
-    {
-        ItemMeta meta = getMetaBase();
-        meta.setDisplayName(Colors.format(name));
-        setMetaBase(meta);
+        this.baseItem.setMeta(meta);
         return this;
     }
 
+    public GUIItem setMetaView(ItemMeta meta)
+    {
+        this.viewItem.setMeta(meta);
+        return this;
+    }
+
+    @Override
     public String getName()
     {
         return getNameView();
     }
 
+    public String getNameBase()
+    {
+        return baseItem.getName();
+    }
+
+    public String getNameView()
+    {
+        return viewItem.getName();
+    }
+
+    @Override
     public GUIItem setName(String name)
     {
-        name = Colors.format(name);
-        ItemMeta view = getMetaView();
-        view.setDisplayName(Colors.format(name));
-        setMetaView(view);
-        ItemMeta base = getMetaBase();
-        base.setDisplayName(Colors.format(name));
-        setMetaBase(base);
+        setNameBase(name);
+        setNameView(name);
         return this;
+    }
+
+    public GUIItem setNameBase(String name)
+    {
+        baseItem.setName(name);
+        return this;
+    }
+
+    public GUIItem setNameView(String name)
+    {
+        viewItem.setName(name);
+        return this;
+    }
+
+    @Override
+    public int getAmount()
+    {
+        return getAmountView();
+    }
+
+    public int getAmountBase()
+    {
+        return baseItem.getAmount();
     }
 
     public int getAmountView()
@@ -359,15 +381,12 @@ public class GUIItem implements Cloneable
         return viewItem.getAmount();
     }
 
-    public GUIItem setAmountView(int amount)
+    @Override
+    public GUIItem setAmount(int amount)
     {
-        viewItem.setAmount(amount);
+        setAmountBase(amount);
+        setAmountView(amount);
         return this;
-    }
-
-    public int getAmountBase()
-    {
-        return baseItem.getAmount();
     }
 
     public GUIItem setAmountBase(int amount)
@@ -376,16 +395,21 @@ public class GUIItem implements Cloneable
         return this;
     }
 
-    public int getAmount()
-    {
-        return getAmountView();
-    }
-
-    public GUIItem setAmount(int amount)
+    public GUIItem setAmountView(int amount)
     {
         viewItem.setAmount(amount);
-        baseItem.setAmount(amount);
         return this;
+    }
+
+    @Override
+    public Material getType()
+    {
+        return getTypeBase();
+    }
+
+    public Material getTypeBase()
+    {
+        return baseItem.getType();
     }
 
     public Material getTypeView()
@@ -393,15 +417,12 @@ public class GUIItem implements Cloneable
         return viewItem.getType();
     }
 
-    public GUIItem setTypeView(Material material)
+    @Override
+    public GUIItem setType(Material material)
     {
-        viewItem.setType(material);
+        setTypeBase(material);
+        setTypeView(material);
         return this;
-    }
-
-    public Material getTypeBase()
-    {
-        return baseItem.getType();
     }
 
     public GUIItem setTypeBase(Material material)
@@ -410,250 +431,445 @@ public class GUIItem implements Cloneable
         return this;
     }
 
-    public Material getType()
-    {
-        return getTypeView();
-    }
-
-    public GUIItem setType(Material material)
+    public GUIItem setTypeView(Material material)
     {
         viewItem.setType(material);
-        baseItem.setType(material);
         return this;
     }
 
-    public List<String> getLoreView()
-    {
-        return getMetaView().getLore();
-    }
-
-    public GUIItem setLoreView(List<String> lore)
-    {
-        ItemMeta meta = getMetaView();
-        meta.setLore(lore);
-        setMetaView(meta);
-        return this;
-    }
-
-    public List<String> getLoreBase()
-    {
-        return getMetaBase().getLore();
-    }
-
-    public GUIItem setLoreBase(List<String> lore)
-    {
-        ItemMeta meta = getMetaBase();
-        meta.setLore(lore);
-        setMetaBase(meta);
-        return this;
-    }
-
+    @Override
     public List<String> getLore()
     {
         return getLoreView();
     }
 
+    public List<String> getLoreBase()
+    {
+        return baseItem.getLore();
+    }
+
+    public List<String> getLoreView()
+    {
+        return viewItem.getLore();
+    }
+
+    @Override
     public GUIItem setLore(List<String> lore)
     {
-        lore = Colors.format(lore);
-        ItemMeta view = getMetaView();
-        view.setLore(lore);
-        setMetaView(view);
         setLoreBase(lore);
-        ItemMeta base = getMetaBase();
-        base.setLore(lore);
-        setMetaBase(base);
+        setLoreView(lore);
         return this;
     }
 
-    public Map<Enchantment, Integer> getEnchantsView()
+    public GUIItem setLoreBase(List<String> lore)
     {
-        return viewItem.getEnchantments();
+        baseItem.setLore(lore);
+        return this;
     }
 
-    public Map<Enchantment, Integer> getEnchantsBase()
+    public GUIItem setLoreView(List<String> lore)
     {
-        return baseItem.getEnchantments();
+        viewItem.setLore(lore);
+        return this;
     }
 
+    @Override
+    public GUIItem setLore(String... lore)
+    {
+        setLoreBase(lore);
+        setLoreView(lore);
+        return this;
+    }
+
+    public GUIItem setLoreBase(String... lore)
+    {
+        baseItem.setLore(lore);
+        return this;
+    }
+
+    public GUIItem setLoreView(String... lore)
+    {
+        viewItem.setLore(lore);
+        return this;
+    }
+
+    @Override
+    public GUIItem addLore(List<String> lore)
+    {
+        addLoreBase(lore);
+        addLoreView(lore);
+        return this;
+    }
+
+    public GUIItem addLoreBase(List<String> lore)
+    {
+        baseItem.addLore(lore);
+        return this;
+    }
+
+    public GUIItem addLoreView(List<String> lore)
+    {
+        viewItem.addLore(lore);
+        return this;
+    }
+
+    @Override
+    public GUIItem addLore(String... lore)
+    {
+        addLoreBase(lore);
+        addLoreView(lore);
+        return this;
+    }
+
+    public GUIItem addLoreBase(String... lore)
+    {
+        baseItem.addLore(lore);
+        return this;
+    }
+
+    public GUIItem addLoreView(String... lore)
+    {
+        viewItem.addLore(lore);
+        return this;
+    }
+
+    @Override
+    public GUIItem addLore(int index, List<String> lore)
+    {
+        addLoreBase(index, lore);
+        addLoreView(index, lore);
+        return this;
+    }
+
+    public GUIItem addLoreBase(int index, List<String> lore)
+    {
+        baseItem.addLore(index, lore);
+        return this;
+    }
+
+    public GUIItem addLoreView(int index, List<String> lore)
+    {
+        viewItem.addLore(index, lore);
+        return this;
+    }
+
+    @Override
+    public GUIItem addLore(int index, String... lore)
+    {
+        addLoreBase(index, lore);
+        addLoreView(index, lore);
+        return this;
+    }
+
+    public GUIItem addLoreBase(int index, String... lore)
+    {
+        baseItem.addLore(index, lore);
+        return this;
+    }
+
+    public GUIItem addLoreView(int index, String... lore)
+    {
+        viewItem.addLore(index, lore);
+        return this;
+    }
+
+    @Override
     public Map<Enchantment, Integer> getEnchants()
     {
         return getEnchantsView();
     }
 
-    public boolean hasEnchantView(Enchantment enchantment)
+    public Map<Enchantment, Integer> getEnchantsBase()
     {
-        return getMetaView().hasEnchant(enchantment);
+        return baseItem.getEnchants();
+    }
+
+    public Map<Enchantment, Integer> getEnchantsView()
+    {
+        return viewItem.getEnchants();
+    }
+
+    @Override
+    public boolean hasEnchant(Enchantment enchantment)
+    {
+        return hasEnchantBase(enchantment);
     }
 
     public boolean hasEnchantBase(Enchantment enchantment)
     {
-        return getMetaBase().hasEnchant(enchantment);
+        return baseItem.hasEnchant(enchantment);
     }
 
-    public boolean hasEnchant(Enchantment enchantment)
+    public boolean hasEnchantView(Enchantment enchantment)
     {
-        return hasEnchantView(enchantment);
+        return viewItem.hasEnchant(enchantment);
     }
 
-    public int getEnchantView(Enchantment enchantment)
-    {
-        return getMetaView().getEnchantLevel(enchantment);
-    }
-
-    public int getEnchantBase(Enchantment enchantment)
-    {
-        return getMetaBase().getEnchantLevel(enchantment);
-    }
-
+    @Override
     public int getEnchant(Enchantment enchantment)
     {
         return getEnchantView(enchantment);
     }
 
-    public GUIItem removeEnchantView(Enchantment enchantment)
+    public int getEnchantBase(Enchantment enchantment)
     {
-        ItemMeta meta = getMetaView();
-        meta.removeEnchant(enchantment);
-        setMetaView(meta);
+        return baseItem.getEnchant(enchantment);
+    }
+
+    public int getEnchantView(Enchantment enchantment)
+    {
+        return viewItem.getEnchant(enchantment);
+    }
+
+    @Override
+    public GUIItem removeEnchant(Enchantment enchantment)
+    {
+        removeEnchantBase(enchantment);
+        removeEnchantView(enchantment);
         return this;
     }
 
     public GUIItem removeEnchantBase(Enchantment enchantment)
     {
-        ItemMeta meta = getMetaBase();
-        meta.removeEnchant(enchantment);
-        setMetaBase(meta);
+        baseItem.removeEnchant(enchantment);
         return this;
     }
 
-    public GUIItem removeEnchant(Enchantment enchantment)
+    public GUIItem removeEnchantView(Enchantment enchantment)
     {
-        ItemMeta view = getMetaView();
-        view.removeEnchant(enchantment);
-        setMetaView(view);
-        ItemMeta base = getMetaBase();
-        base.removeEnchant(enchantment);
-        setMetaBase(base);
+        viewItem.removeEnchant(enchantment);
         return this;
     }
 
-    public GUIItem addEnchantView(Enchantment enchantment, int level)
+    @Override
+    public GUIItem addEnchant(Enchantment enchantment, int level)
     {
-        ItemMeta meta = getMetaView();
-        meta.addEnchant(enchantment, level, true);
-        setMetaView(meta);
+        addEnchantBase(enchantment, level);
+        addEnchantView(enchantment, level);
         return this;
     }
 
     public GUIItem addEnchantBase(Enchantment enchantment, int level)
     {
-        ItemMeta meta = getMetaBase();
-        meta.addEnchant(enchantment, level, true);
-        setMetaBase(meta);
+        baseItem.addEnchant(enchantment, level);
         return this;
     }
 
-    public GUIItem addEnchant(Enchantment enchantment, int level)
+    public GUIItem addEnchantView(Enchantment enchantment, int level)
     {
-        ItemMeta view = getMetaView();
-        view.addEnchant(enchantment, level, true);
-        setMetaView(view);
-        ItemMeta base = getMetaBase();
-        base.addEnchant(enchantment, level, true);
-        setMetaBase(base);
+        viewItem.addEnchant(enchantment, level);
         return this;
     }
 
-    public GUIItem addItemFlagsView(ItemFlag... flags)
+    @Override
+    public GUIItem addItemFlags(ItemFlag... flags)
     {
-        ItemMeta meta = getMetaView();
-        meta.addItemFlags(flags);
-        setMetaView(meta);
+        addItemFlagsBase(flags);
+        addItemFlagsView(flags);
         return this;
     }
 
     public GUIItem addItemFlagsBase(ItemFlag... flags)
     {
-        ItemMeta meta = getMetaBase();
-        meta.addItemFlags(flags);
-        setMetaBase(meta);
+        baseItem.addItemFlags(flags);
         return this;
     }
 
-    public GUIItem addItemFlags(ItemFlag... flags)
+    public GUIItem addItemFlagsView(ItemFlag... flags)
     {
-        ItemMeta view = getMetaView();
-        view.addItemFlags(flags);
-        setMetaView(view);
-        ItemMeta base = getMetaBase();
-        base.addItemFlags(flags);
-        setMetaBase(base);
+        viewItem.addItemFlags(flags);
         return this;
     }
 
-    public GUIItem removeItemFlagsView(ItemFlag... flags)
+    @Override
+    public GUIItem removeItemFlags(ItemFlag... flags)
     {
-        ItemMeta meta = getMetaView();
-        meta.removeItemFlags(flags);
-        setMetaView(meta);
+        removeItemFlagsBase(flags);
+        removeItemFlagsView(flags);
         return this;
     }
 
     public GUIItem removeItemFlagsBase(ItemFlag... flags)
     {
-        ItemMeta meta = getMetaBase();
-        meta.removeItemFlags(flags);
-        setMetaBase(meta);
+        baseItem.removeItemFlags(flags);
         return this;
     }
 
-    public GUIItem removeItemFlags(ItemFlag... flags)
+    public GUIItem removeItemFlagsView(ItemFlag... flags)
     {
-        ItemMeta view = getMetaView();
-        view.removeItemFlags(flags);
-        setMetaView(view);
-        ItemMeta base = getMetaBase();
-        base.removeItemFlags(flags);
-        setMetaBase(base);
+        viewItem.removeItemFlags(flags);
         return this;
     }
 
-    public GUIItem addGlowView()
+    @Override
+    public GUIItem addGlow()
     {
-        addEnchantView(GlowEnchantment.get(), 0);
-        return this;
-    }
-
-    public GUIItem removeGlowView()
-    {
-        removeEnchantView(GlowEnchantment.get());
+        addGlowBase();
+        addGlowView();
         return this;
     }
 
     public GUIItem addGlowBase()
     {
-        addEnchantBase(GlowEnchantment.get(), 0);
+        baseItem.addGlow();
+        return this;
+    }
+
+    public GUIItem addGlowView()
+    {
+        viewItem.addGlow();
+        return this;
+    }
+
+    @Override
+    public GUIItem removeGlow()
+    {
+        removeGlowBase();
+        removeGlowView();
         return this;
     }
 
     public GUIItem removeGlowBase()
     {
-        removeEnchantBase(GlowEnchantment.get());
+        baseItem.removeGlow();
         return this;
     }
 
-    public GUIItem addGlow()
+    public GUIItem removeGlowView()
     {
-        addEnchant(GlowEnchantment.get(), 0);
+        viewItem.removeGlow();
         return this;
     }
 
-    public GUIItem removeGlow()
+    @Override
+    public GUIItem setEmptyName()
     {
-        removeEnchant(GlowEnchantment.get());
+        setEmptyNameBase();
+        setEmptyNameView();
         return this;
     }
+
+    public GUIItem setEmptyNameBase()
+    {
+        baseItem.setEmptyName();
+        return this;
+    }
+
+    public GUIItem setEmptyNameView()
+    {
+        viewItem.setEmptyName();
+        return this;
+    }
+
+    @Override
+    public GUIItem setUnbreakable(boolean unbreakable)
+    {
+        setUnbreakableBase(unbreakable);
+        setUnbreakableView(unbreakable);
+        return this;
+    }
+
+    public GUIItem setUnbreakableBase(boolean unbreakable)
+    {
+        baseItem.setUnbreakable(unbreakable);
+        return this;
+    }
+
+    public GUIItem setUnbreakableView(boolean unbreakable)
+    {
+        viewItem.setUnbreakable(unbreakable);
+        return this;
+    }
+
+    @Override
+    public boolean isUnbreakable()
+    {
+        return isUnbreakableView();
+    }
+
+    public boolean isUnbreakableBase()
+    {
+        return baseItem.isUnbreakable();
+    }
+
+    public boolean isUnbreakableView()
+    {
+        return viewItem.isUnbreakable();
+    }
+
+    @Override
+    public OfflinePlayer getHeadOwner()
+    {
+        return getHeadOwnerView();
+    }
+
+    public OfflinePlayer getHeadOwnerBase()
+    {
+        return baseItem.getHeadOwner();
+    }
+
+    public OfflinePlayer getHeadOwnerView()
+    {
+        return viewItem.getHeadOwner();
+    }
+
+    @Override
+    public GUIItem setHeadOwner(OfflinePlayer player)
+    {
+        setHeadOwnerBase(player);
+        setHeadOwnerView(player);
+        return this;
+    }
+
+    public GUIItem setHeadOwnerBase(OfflinePlayer player)
+    {
+        baseItem.setHeadOwner(player);
+        return this;
+    }
+
+    public GUIItem setHeadOwnerView(OfflinePlayer player)
+    {
+        viewItem.setHeadOwner(player);
+        return this;
+    }
+
+    @Override
+    public String getHeadBase64()
+    {
+        return getHeadBase64View();
+    }
+
+    public String getHeadBase64Base()
+    {
+        return baseItem.getHeadBase64();
+    }
+
+    public String getHeadBase64View()
+    {
+        return viewItem.getHeadBase64();
+    }
+
+    @Override
+    public GUIItem setHeadBase64(String base64)
+    {
+        setHeadBase64Base(base64);
+        setHeadBase64View(base64);
+        return this;
+    }
+
+    public GUIItem setHeadBase64Base(String base64)
+    {
+        baseItem.setHeadBase64(base64);
+        return this;
+    }
+
+    public GUIItem setHeadBase64View(String base64)
+    {
+        viewItem.setHeadBase64(base64);
+        return this;
+    }
+
+
 
     public GUIItem clone()
     {
@@ -670,16 +886,16 @@ public class GUIItem implements Cloneable
         }
         if(baseItem != null)
         {
-            newItem.setBaseItem(this.getItemBase().clone());
+            newItem.baseItem = ItemBuilder.of(baseItem);
         }
         if(viewItem != null)
         {
-            newItem.setViewItem(this.getItemView().clone());
+            newItem.viewItem = ItemBuilder.of(viewItem);
         }
 
         if(events != null)
         {
-            newItem.setEvents(this.getEvents().clone());
+            newItem.events = events.clone();
         }
         return newItem;
     }

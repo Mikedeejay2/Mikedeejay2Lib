@@ -18,6 +18,11 @@ import org.bukkit.inventory.meta.SkullMeta;
 import java.lang.reflect.Field;
 import java.util.*;
 
+/**
+ * A class for building items dynamically. See {@link ItemBuilder#of()} to get started.
+ *
+ * @author Mikedeejay2
+ */
 public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
 {
     private Material type;
@@ -28,13 +33,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
 
     private ItemBuilder(ItemStack item)
     {
-        this.type = item.getType();
-        this.amount = item.getAmount();
-        this.meta = null;
-        if(item.hasItemMeta())
-        {
-            internalSetMeta(item.getItemMeta());
-        }
+        set(item);
         this.item = null;
         this.changed = true;
     }
@@ -80,6 +79,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
     @Override
     public ItemStack get()
     {
+        if(type == null) return null;
         if(changed || item == null)
         {
             this.item = new ItemStack(type, amount);
@@ -92,9 +92,13 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
     @Override
     public ItemBuilder set(ItemStack item)
     {
-        this.type = item.getType();
-        this.amount = item.getAmount();
-        this.meta = item.getItemMeta();
+        this.type = item != null ? item.getType() : null;
+        this.amount = item != null ? item.getAmount() : 0;
+        this.meta = null;
+        if(item != null && item.hasItemMeta())
+        {
+            internalSetMeta(item.getItemMeta());
+        }
         this.changed = true;
         return this;
     }
@@ -421,5 +425,16 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
     public static ItemBuilder of(OfflinePlayer player)
     {
         return new ItemBuilder(player);
+    }
+
+    public static ItemBuilder of(ItemBuilder builder)
+    {
+        ItemBuilder newBuilder = new ItemBuilder();
+        newBuilder.type = builder.type;
+        newBuilder.amount = builder.amount;
+        newBuilder.meta = builder.meta != null ? builder.meta.clone() : null;
+        newBuilder.item = builder.item != null ? builder.item.clone() : null;
+        newBuilder.changed = builder.changed;
+        return newBuilder;
     }
 }
