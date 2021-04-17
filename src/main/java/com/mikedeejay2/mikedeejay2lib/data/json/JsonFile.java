@@ -5,6 +5,8 @@ import com.google.gson.JsonObject;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.data.DataFile;
 import com.mikedeejay2.mikedeejay2lib.data.section.SectionInstancer;
+import com.mikedeejay2.mikedeejay2lib.util.file.FileIO;
+import com.mikedeejay2.mikedeejay2lib.util.file.JsonFileIO;
 
 /**
  * Wrapper class for a DataFile of type Json
@@ -15,8 +17,6 @@ public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
 {
     // The root JsonObject that this DataFile holds
     protected JsonObject jsonObject;
-    // The JsonFileIO that this DataFile uses
-    private JsonFileIO jsonFileIO;
     // The root JsonAccessor that this JsonFile uses
     protected JsonAccessor accessor;
 
@@ -24,34 +24,33 @@ public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
     {
         super(plugin, filePath);
         jsonObject = new JsonObject();
-        this.jsonFileIO = new JsonFileIO(plugin);
         this.accessor = new JsonAccessor(this, jsonObject);
     }
 
     @Override
     public boolean loadFromDisk(boolean throwErrors)
     {
-        jsonFileIO.loadJsonObjectFromDisk(file, jsonObject, throwErrors);
+        JsonFileIO.loadJsonObjectFromDisk(file, jsonObject, throwErrors);
         return file.exists();
     }
 
     @Override
     public boolean loadFromJar(boolean throwErrors)
     {
-        jsonFileIO.loadJsonObjectFromJar(filePath, jsonObject, throwErrors);
-        return fileIO.getInputStreamFromJar(filePath) != null;
+        JsonFileIO.loadJsonObjectFromJar(filePath, jsonObject, plugin.classLoader(), throwErrors);
+        return FileIO.getInputStreamFromJar(filePath, plugin.classLoader()) != null;
     }
 
     @Override
     public boolean saveToDisk(boolean throwErrors)
     {
-        return jsonFileIO.saveJsonFile(file, jsonObject, throwErrors);
+        return JsonFileIO.saveJsonFile(file, jsonObject, throwErrors);
     }
 
     @Override
     public boolean updateFromJar(boolean throwErrors)
     {
-        jsonFileIO.updateFromJar(filePath, jsonObject, throwErrors);
+        JsonFileIO.updateFromJar(plugin, filePath, jsonObject, throwErrors);
         return true;
     }
 

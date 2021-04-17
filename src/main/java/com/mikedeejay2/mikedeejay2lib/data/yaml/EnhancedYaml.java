@@ -1,5 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.data.yaml;
 
+import com.mikedeejay2.mikedeejay2lib.util.file.YamlFileIO;
 import org.bukkit.configuration.InvalidConfigurationException;
 import org.bukkit.configuration.file.YamlConfiguration;
 
@@ -23,12 +24,10 @@ public class EnhancedYaml extends YamlConfiguration
 {
     // Map that stores paths to comments and the comments themselves, used when saving comments to disk
     private Map<String, String> comments;
-    private YamlFileIO yamlFileIO;
 
-    public EnhancedYaml(YamlFileIO yamlFileIO)
+    public EnhancedYaml()
     {
         comments = new LinkedHashMap<>();
-        this.yamlFileIO = yamlFileIO;
     }
 
     /**
@@ -136,12 +135,13 @@ public class EnhancedYaml extends YamlConfiguration
      * have wasted a small amount of processing power on doing nothing.
      *
      * @param filePath The path to the file in the jar to update with.
+     * @param classLoader The <tt>ClassLoader</tt> to get the resource from
      * @return Whether the update and loading of the file from the jar was successful.
      */
-    public boolean updateFromJar(String filePath)
+    public boolean updateFromJar(String filePath, ClassLoader classLoader)
     {
-        EnhancedYaml yaml = new EnhancedYaml(yamlFileIO);
-        boolean loadSuccess = yamlFileIO.loadYamlConfigFromJar(yaml, filePath, false);
+        EnhancedYaml yaml = new EnhancedYaml();
+        boolean loadSuccess = YamlFileIO.loadYamlConfigFromJar(yaml, filePath, classLoader, false);
         if(!loadSuccess) return false;
         String contents = yaml.saveToString();
         List<String> lines = new ArrayList<>(Arrays.asList(contents.split("\n")));

@@ -1,8 +1,11 @@
-package com.mikedeejay2.mikedeejay2lib.data;
+package com.mikedeejay2.mikedeejay2lib.util.file;
 
-import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
+import org.apache.commons.lang.Validate;
+import org.bukkit.Bukkit;
 
 import java.io.*;
+import java.net.URL;
+import java.net.URLConnection;
 import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 
@@ -11,63 +14,76 @@ import java.util.logging.Level;
  *
  * @author Mikedeejay2
  */
-public class FileIO
+public final class FileIO
 {
-    protected final BukkitPlugin plugin;
-
-    public FileIO(BukkitPlugin plugin)
-    {
-        this.plugin = plugin;
-    }
-
     /**
      * Get an input stream to an internal file inside of the plugin's jar
      *
      * @param filePath Path to file
+     * @param classLoader The <tt>ClassLoader</tt> to get the resource from
      * @return The requested InputStream
      */
-    public InputStream getInputStreamFromJar(String filePath)
+    public static InputStream getInputStreamFromJar(String filePath, ClassLoader classLoader)
     {
-        return plugin.getResource(filePath);
+        Validate.notNull(filePath, "Filename cannot be null");
+
+        try
+        {
+            URL url = classLoader.getResource(filePath);
+
+            if (url == null) return null;
+
+            URLConnection connection = url.openConnection();
+            connection.setUseCaches(false);
+            return connection.getInputStream();
+        }
+        catch (IOException exception)
+        {
+            // Ignored
+        }
+        return null;
     }
 
     /**
      * Get an input stream from a file path on the disk
      *
+     * @param folder      The root folder of the file path
      * @param filePath    Path to get InputStream from
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested InputStream
      */
-    public InputStream getInputStreamFromDisk(String filePath, boolean throwErrors)
+    public static InputStream getInputStreamFromDisk(File folder, String filePath, boolean throwErrors)
     {
-        return getInputStreamFromDisk(new File(plugin.getDataFolder(), filePath), throwErrors);
+        return getInputStreamFromDisk(new File(folder, filePath), throwErrors);
     }
 
     /**
      * Get a Reader from a file path on the disk
      *
+     * @param folder      The root folder of the file path
      * @param filePath    The path to get the reader from
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested Reader
      */
-    public Reader getReaderFromDisk(String filePath, boolean throwErrors)
+    public static Reader getReaderFromDisk(File folder, String filePath, boolean throwErrors)
     {
-        return getReaderFromDisk(new File(plugin.getDataFolder(), filePath), throwErrors);
+        return getReaderFromDisk(new File(folder, filePath), throwErrors);
     }
 
     /**
      * Get a Reader from this plugin's jar from a path
      *
      * @param filePath    Path to get the Reader from
+     * @param classLoader The <tt>ClassLoader</tt> to get the resource from
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested Reader
      */
-    public Reader getReaderFromJar(String filePath, boolean throwErrors)
+    public static Reader getReaderFromJar(String filePath, ClassLoader classLoader, boolean throwErrors)
     {
         InputStreamReader reader = null;
         try
         {
-            reader = new InputStreamReader(getInputStreamFromJar(filePath), StandardCharsets.UTF_8);
+            reader = new InputStreamReader(getInputStreamFromJar(filePath, classLoader), StandardCharsets.UTF_8);
         }
         catch(Exception e)
         {
@@ -83,7 +99,7 @@ public class FileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested reader
      */
-    public Reader getReaderFromDisk(File file, boolean throwErrors)
+    public static Reader getReaderFromDisk(File file, boolean throwErrors)
     {
         InputStreamReader reader = null;
         try
@@ -104,7 +120,7 @@ public class FileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested InputStream
      */
-    public InputStream getInputStreamFromDisk(File file, boolean throwErrors)
+    public static InputStream getInputStreamFromDisk(File file, boolean throwErrors)
     {
         FileInputStream inputStream = null;
         try
@@ -122,30 +138,33 @@ public class FileIO
     /**
      * Gets an InputStream from the jar and saves it to the file path
      *
+     * @param folder      The root folder of the file path
      * @param filePath    Path to save the file to
      * @param replace     Replace existing file or not
+     * @param classLoader The <tt>ClassLoader</tt> to get the resource from
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return If save was successful or not
      */
-    public boolean saveFileFromJar(String filePath, boolean replace, boolean throwErrors)
+    public static boolean saveFileFromJar(File folder, String filePath, ClassLoader classLoader, boolean replace, boolean throwErrors)
     {
-        InputStream inputStream = getInputStreamFromJar(filePath);
-        File file = new File(plugin.getDataFolder(), filePath);
+        InputStream inputStream = getInputStreamFromJar(filePath, classLoader);
+        File file = new File(folder, filePath);
         return saveFile(file, inputStream, replace, throwErrors);
     }
 
     /**
      * Save the file to the requested file path using the requested InputStream
      *
+     * @param folder      The root folder of the file path
      * @param filePath    Path to the file. This should NOT include plugin.getDataFolder()
      * @param input       The InputStream to use when saving the file
      * @param replace     Replace the existing file or not
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return If save was successful or not
      */
-    public boolean saveFile(String filePath, InputStream input, boolean replace, boolean throwErrors)
+    public static boolean saveFile(File folder, String filePath, InputStream input, boolean replace, boolean throwErrors)
     {
-        return saveFile(new File(plugin.getDataFolder(), filePath), input, replace, throwErrors);
+        return saveFile(new File(folder, filePath), input, replace, throwErrors);
     }
 
     /**
@@ -157,7 +176,7 @@ public class FileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return If the save was successful or not
      */
-    public boolean saveFile(File file, InputStream input, boolean replace, boolean throwErrors)
+    public static boolean saveFile(File file, InputStream input, boolean replace, boolean throwErrors)
     {
         if (!file.exists()) file.getParentFile().mkdirs();
 
@@ -191,25 +210,26 @@ public class FileIO
      * @param filePath  Path to print
      * @param exception The exception that was thrown
      */
-    public void logFileCouldNotBeLoaded(String filePath, Exception exception)
+    public static void logFileCouldNotBeLoaded(String filePath, Exception exception)
     {
-        plugin.getLogger().log(Level.SEVERE, "The file \"" + filePath + "\" could not be loaded!", exception);
+        Bukkit.getLogger().log(Level.SEVERE, "The file \"" + filePath + "\" could not be loaded!", exception);
     }
 
-    public void logFileCouldNotBeSaved(String filePath, Exception exception)
+    public static void logFileCouldNotBeSaved(String filePath, Exception exception)
     {
-        plugin.getLogger().log(Level.SEVERE, "The file \"" + filePath + "\" could not be saved!", exception);
+        Bukkit.getLogger().log(Level.SEVERE, "The file \"" + filePath + "\" could not be saved!", exception);
     }
 
     /**
      * Delete a file based off of a file path.
      *
+     * @param folder      The root folder of the file path
      * @param filePath Path to the file. This should NOT include plugin.getDataFolder()
      * @return Whether deletion was successful or not
      */
-    public boolean deleteFile(String filePath)
+    public static boolean deleteFile(File folder, String filePath)
     {
-        return deleteFile(new File(plugin.getDataFolder(), filePath));
+        return deleteFile(new File(folder, filePath));
     }
 
     /**
@@ -218,7 +238,7 @@ public class FileIO
      * @param file File to delete
      * @return Whether deletion was successful or not
      */
-    public boolean deleteFile(File file)
+    public static boolean deleteFile(File file)
     {
         return file.delete();
     }

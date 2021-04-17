@@ -1,7 +1,9 @@
-package com.mikedeejay2.mikedeejay2lib.data.yaml;
+package com.mikedeejay2.mikedeejay2lib.util.file;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
-import com.mikedeejay2.mikedeejay2lib.data.FileIO;
+import com.mikedeejay2.mikedeejay2lib.data.yaml.EnhancedYaml;
+import com.mikedeejay2.mikedeejay2lib.util.file.FileIO;
+import com.mikedeejay2.mikedeejay2lib.util.file.FileUtil;
 
 import java.io.File;
 import java.io.Reader;
@@ -13,15 +15,6 @@ import java.io.Reader;
  */
 public final class YamlFileIO
 {
-    protected final BukkitPlugin plugin;
-    private final FileIO fileIO;
-
-    public YamlFileIO(BukkitPlugin plugin)
-    {
-        this.plugin = plugin;
-        this.fileIO = new FileIO(plugin);
-    }
-
     /**
      * Load a File into a YamlConfiguration
      *
@@ -30,7 +23,7 @@ public final class YamlFileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return Whether load was successful or not
      */
-    public boolean loadIntoYamlConfig(EnhancedYaml config, File file, boolean throwErrors)
+    public static boolean loadIntoYamlConfig(EnhancedYaml config, File file, boolean throwErrors)
     {
         try
         {
@@ -38,7 +31,7 @@ public final class YamlFileIO
         }
         catch(Exception e)
         {
-            if(throwErrors) fileIO.logFileCouldNotBeLoaded(file.getPath(), e);
+            if(throwErrors) FileIO.logFileCouldNotBeLoaded(file.getPath(), e);
             return false;
         }
         return true;
@@ -49,19 +42,20 @@ public final class YamlFileIO
      *
      * @param config      YamlConfiguration that will be loaded into
      * @param filePath    Path to the file. This should NOT include plugin.getDataFolder()
+     * @param classLoader The <tt>ClassLoader</tt> to get the resource from
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return Whether load was successful or not
      */
-    public boolean loadYamlConfigFromJar(EnhancedYaml config, String filePath, boolean throwErrors)
+    public static boolean loadYamlConfigFromJar(EnhancedYaml config, String filePath, ClassLoader classLoader, boolean throwErrors)
     {
-        Reader reader = fileIO.getReaderFromJar(filePath, throwErrors);
+        Reader reader = FileIO.getReaderFromJar(filePath, classLoader, throwErrors);
         try
         {
             config.load(reader);
         }
         catch(Exception e)
         {
-            if(throwErrors) fileIO.logFileCouldNotBeLoaded(filePath, e);
+            if(throwErrors) FileIO.logFileCouldNotBeLoaded(filePath, e);
             return false;
         }
         return true;
@@ -75,7 +69,7 @@ public final class YamlFileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return Whether load was successful or not
      */
-    public boolean saveYamlConfig(EnhancedYaml config, File file, boolean throwErrors)
+    public static boolean saveYamlConfig(EnhancedYaml config, File file, boolean throwErrors)
     {
         try
         {
@@ -83,7 +77,7 @@ public final class YamlFileIO
         }
         catch(Exception e)
         {
-            if(throwErrors) fileIO.logFileCouldNotBeSaved(file.getPath(), e);
+            if(throwErrors) FileIO.logFileCouldNotBeSaved(file.getPath(), e);
             return false;
         }
         return true;

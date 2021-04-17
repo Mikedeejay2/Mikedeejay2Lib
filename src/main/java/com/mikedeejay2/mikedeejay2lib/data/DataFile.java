@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.data;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
+import com.mikedeejay2.mikedeejay2lib.util.file.FileIO;
 
 import java.io.File;
 
@@ -21,12 +22,9 @@ public abstract class DataFile implements DataObject
     // If the file is loaded
     protected boolean isLoaded;
 
-    protected final FileIO fileIO;
-
     public DataFile(BukkitPlugin plugin, String filePath)
     {
         this.plugin = plugin;
-        this.fileIO = new FileIO(plugin);
         this.filePath = filePath;
         this.file = new File(plugin.getDataFolder(), filePath);
         this.isLoaded = false;
@@ -165,7 +163,7 @@ public abstract class DataFile implements DataObject
      */
     public boolean delete(boolean throwErrors)
     {
-        isLoaded = !fileIO.deleteFile(file);
+        isLoaded = !FileIO.deleteFile(file);
         return !isLoaded;
     }
 

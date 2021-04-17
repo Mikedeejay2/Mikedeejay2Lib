@@ -7,6 +7,9 @@ import com.mikedeejay2.mikedeejay2lib.nms.NMSHandler;
 import com.mikedeejay2.mikedeejay2lib.text.language.LangManager;
 import com.mikedeejay2.mikedeejay2lib.util.enchant.GlowEnchantment;
 import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
+import org.bukkit.plugin.java.JavaPlugin;
+
+import java.lang.reflect.Field;
 
 /**
  * Main class for Mikedeejay2Lib.

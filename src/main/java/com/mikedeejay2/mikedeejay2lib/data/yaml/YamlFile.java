@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.data.yaml;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.data.DataFile;
 import com.mikedeejay2.mikedeejay2lib.data.section.SectionInstancer;
+import com.mikedeejay2.mikedeejay2lib.util.file.YamlFileIO;
 
 /**
  * A YamlFile is inherited from DataFile and it actually makes working with Yaml files slightly
@@ -16,15 +17,11 @@ public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor>
     protected EnhancedYaml yamlFile;
     // The root EnhancedYamlSection for the yamlFile
     protected YamlAccessor accessor;
-    private YamlFileIO yamlFileIO;
 
     public YamlFile(BukkitPlugin plugin, String filePath)
     {
         super(plugin, filePath);
-        this.yamlFileIO = new YamlFileIO(plugin);
-        yamlFile = new EnhancedYaml(yamlFileIO);
         accessor = new YamlAccessor(this, yamlFile);
-        yamlFileIO = new YamlFileIO(plugin);
     }
 
     /**
@@ -40,27 +37,27 @@ public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor>
     @Override
     public boolean loadFromDisk(boolean throwErrors)
     {
-        isLoaded = yamlFileIO.loadIntoYamlConfig(yamlFile, file, throwErrors);
+        isLoaded = YamlFileIO.loadIntoYamlConfig(yamlFile, file, throwErrors);
         return isLoaded;
     }
 
     @Override
     public boolean loadFromJar(boolean throwErrors)
     {
-        isLoaded = yamlFileIO.loadYamlConfigFromJar(yamlFile, filePath, throwErrors);
+        isLoaded = YamlFileIO.loadYamlConfigFromJar(yamlFile, filePath, plugin.classLoader(), throwErrors);
         return isLoaded;
     }
 
     @Override
     public boolean saveToDisk(boolean throwErrors)
     {
-        return yamlFileIO.saveYamlConfig(yamlFile, file, throwErrors);
+        return YamlFileIO.saveYamlConfig(yamlFile, file, throwErrors);
     }
 
     @Override
     public boolean updateFromJar(boolean throwErrors)
     {
-        return yamlFile.updateFromJar(filePath);
+        return yamlFile.updateFromJar(filePath, plugin.classLoader());
     }
 
     @Override

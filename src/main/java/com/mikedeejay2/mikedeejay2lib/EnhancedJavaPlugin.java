@@ -32,10 +32,12 @@ import java.util.logging.Logger;
 public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedPlugin
 {
     private String prefix;
+    private ClassLoader classLoader;
 
     public EnhancedJavaPlugin()
     {
         forceColorfulLogger();
+        this.classLoader =  retrieveClassLoader();
     }
 
     /**
@@ -403,5 +405,35 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     public void callEvent(Event event)
     {
         this.getServer().getPluginManager().callEvent(event);
+    }
+
+    /**
+     * Method to retrieve the class loader from the original <tt>JavaPlugin</tt>.
+     *
+     * @return The retrieved class loader
+     */
+    private ClassLoader retrieveClassLoader()
+    {
+        try
+        {
+            Field field = JavaPlugin.class.getDeclaredField("classLoader");
+            field.setAccessible(true);
+            return (ClassLoader) field.get(this);
+        }
+        catch(NoSuchFieldException | IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
+    /**
+     * Get the <tt>ClassLoader</tt> for this plugin
+     *
+     * @return The <tt>ClassLoader</tt> for this plugin
+     */
+    public ClassLoader classLoader()
+    {
+        return classLoader;
     }
 }
