@@ -12,12 +12,30 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 import java.util.function.Predicate;
 
+/**
+ * Registry class for {@link Module}s and other module related systems.
+ * <p>
+ * To get started, see {@link ModuleRegistry#register(Module)}
+ *
+ * @author Mikedeejay2
+ */
 public class ModuleRegistry implements ModuleRegister<Module>
 {
+    // Reference to the plugin
     private final BukkitPlugin plugin;
+    // The set of active modules
     private final Set<Module> modules;
+    // The enable predicate
     private final Predicate<Module> enablePredicate;
 
+    /**
+     * Construct a new module registry
+     *
+     * @param enablePredicate The predicate checked before enabling a module. Could be linked
+     *                        to a config file or similar to only enable a module if the module
+     *                        was found in a list or something similar.
+     * @param plugin          A reference to the plugin
+     */
     public ModuleRegistry(@Nullable Predicate<Module> enablePredicate, BukkitPlugin plugin)
     {
         this.plugin = plugin;
@@ -30,6 +48,13 @@ public class ModuleRegistry implements ModuleRegister<Module>
         this.enablePredicate = enablePredicate;
     }
 
+    /**
+     * Register a new {@link Module} to the registry
+     *
+     * @param module The module to register
+     * @param <T>    The module's data type
+     * @return The registered module, null if not registered
+     */
     @Override
     public <T extends Module> T register(@NotNull T module)
     {
@@ -49,6 +74,13 @@ public class ModuleRegistry implements ModuleRegister<Module>
         return registeredModule;
     }
 
+    /**
+     * Unregister a <tt>Module</tt> from the registry by the name of the module
+     * <p>
+     * The module must be registered and enabled to be unregistered.
+     *
+     * @param name The name of module to unregister
+     */
     @Override
     public void unregister(@NotNull final String name)
     {
@@ -59,6 +91,15 @@ public class ModuleRegistry implements ModuleRegister<Module>
         unregister(module);
     }
 
+    /**
+     * Unregister a <tt>Module</tt> based off of the module's <tt>Class</tt>.
+     * <p>
+     * It must be known that a module of that class exists in the registry, an exception will be thrown if not.
+     * <p>
+     * The module must be registered and enabled to be unregistered.
+     *
+     * @param moduleClass The class of the module to be unregistered
+     */
     @Override
     public void unregister(@NotNull Class<Module> moduleClass)
     {
@@ -69,6 +110,13 @@ public class ModuleRegistry implements ModuleRegister<Module>
         unregister(module);
     }
 
+    /**
+     * Unregister a <tt>Module</tt> based off of the module's instance.
+     * <p>
+     * The module must be registered and enabled to be unregistered.
+     *
+     * @param module The module instance ot remove
+     */
     @Override
     public void unregister(@NotNull Module module)
     {
@@ -78,6 +126,15 @@ public class ModuleRegistry implements ModuleRegister<Module>
         removeModule(module);
     }
 
+    /**
+     * Enable a <tt>Module</tt>. {@link ModuleRegistry#register(Module)} already does this.
+     * <p>
+     * {@link ModuleRegistry#register(Module)} already does this
+     *
+     * @param module The module to enable
+     * @param <T>    The data type of the module
+     * @return The enabled module, null if enable failed
+     */
     @Override
     public <T extends Module> T enableModule(@NotNull T module)
     {
@@ -98,6 +155,15 @@ public class ModuleRegistry implements ModuleRegister<Module>
         return module;
     }
 
+    /**
+     * Disable a <tt>Module</tt>.
+     * <p>
+     * The module must be registered and enabled to be disabled.
+     * <p>
+     * {@link ModuleRegistry#unregister(Module)} already does this
+     *
+     * @param module The module to disable
+     */
     @Override
     public void disableModule(@NotNull Module module)
     {
@@ -116,6 +182,14 @@ public class ModuleRegistry implements ModuleRegister<Module>
         plugin.sendInfo(String.format("&aSuccessfully disabled %s module", module.getName()));
     }
 
+    /**
+     * Get a <tt>Module</tt> based off of the module's name and class type
+     *
+     * @param name        The name of the module to get
+     * @param moduleClass The module's <tt>Class</tt> to find
+     * @param <T>         The data type of the module
+     * @return The requested module
+     */
     @Override
     public <T extends Module> T getModule(@NotNull final String name, @NotNull Class<T> moduleClass)
     {
@@ -133,6 +207,12 @@ public class ModuleRegistry implements ModuleRegister<Module>
         return moduleClass.cast(module);
     }
 
+    /**
+     * Get a <tt>Module</tt> based off of the module's name
+     *
+     * @param name The name of the module to get
+     * @return The requested module
+     */
     @Override
     public Module getModule(@NotNull final String name)
     {
@@ -150,6 +230,13 @@ public class ModuleRegistry implements ModuleRegister<Module>
         return null;
     }
 
+    /**
+     * Get a <tt>Module</tt> based off of the module's class
+     *
+     * @param moduleClass The <tt>Class</tt> of the module to get
+     * @param <T>         The data type of the module
+     * @return The requested module
+     */
     @Override
     public <T extends Module> T getModule(@NotNull Class<T> moduleClass)
     {
@@ -164,6 +251,12 @@ public class ModuleRegistry implements ModuleRegister<Module>
         return null;
     }
 
+    /**
+     * Get whether this registry contains a <tt>Module</tt> with a specified name
+     *
+     * @param name The name to attempt to find
+     * @return Whether this registry contains a module of the specified name or not
+     */
     @Override
     public boolean containsModule(@NotNull final String name)
     {
@@ -174,6 +267,12 @@ public class ModuleRegistry implements ModuleRegister<Module>
         return false;
     }
 
+    /**
+     * Get whether this registry contains a <tt>Module</tt> with a specified class
+     *
+     * @param moduleClass The <tt>Class</tt> of the module to find
+     * @return Whether this registry contains a module of the specified class or not
+     */
     @Override
     public boolean containsModule(@NotNull Class<?> moduleClass)
     {
@@ -187,6 +286,13 @@ public class ModuleRegistry implements ModuleRegister<Module>
         return false;
     }
 
+    /**
+     * Get whether this registry contains a <tt>Module</tt> with a specified name and class
+     *
+     * @param name        The name to attempt to find
+     * @param moduleClass The <tt>Class</tt> of the module to find
+     * @return Whether this registry contains a module of the specified name and class or not
+     */
     @Override
     public boolean containsModule(@NotNull final String name, @NotNull Class<?> moduleClass) {
         for(Module module : modules)
@@ -199,16 +305,31 @@ public class ModuleRegistry implements ModuleRegister<Module>
         return false;
     }
 
+    /**
+     * Add a <tt>Module</tt> to the modules Set
+     *
+     * @param module The module to add
+     * @param <T>    The data type of the module
+     */
     private <T extends Module> void addModule(@NotNull T module)
     {
         modules.add(module);
     }
 
+    /**
+     * Remove a <tt>Module</tt> from the modules Set
+     *
+     * @param module The module to remove
+     */
     private void removeModule(@NotNull Module module)
     {
         modules.remove(module);
     }
 
+    /**
+     * Unregister all <tt>Modules</tt> from this registry. This calls {@link Module#onDisable()} for all modules
+     * as well.
+     */
     @Override
     public void unregisterAll() {
         for(Iterator<Module> iterator = modules.iterator(); iterator.hasNext();)
@@ -221,12 +342,22 @@ public class ModuleRegistry implements ModuleRegister<Module>
         }
     }
 
+    /**
+     * Get an {@link ImmutableSet} of all of the <tt>Modules</tt> in this registry
+     *
+     * @return A set of all modules
+     */
     @Override
     public Set<Module> getModules()
     {
         return ImmutableSet.copyOf(modules);
     }
 
+    /**
+     * Get the current size of the modules set in this registry
+     *
+     * @return The registry size
+     */
     @Override
     public int registrySize()
     {
