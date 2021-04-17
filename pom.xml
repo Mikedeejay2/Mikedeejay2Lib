@@ -166,6 +166,10 @@
             <id>Mikedeejay2-Maven-Repo</id>
             <url>https://github.com/Mikedeejay2/Mikedeejay2-Maven-Repo/raw/master/</url>
         </repository>
+        <repository>
+            <id>jetbrains-annotations</id>
+            <url>https://mvnrepository.com/artifact/org.jetbrains/annotations</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -192,6 +196,11 @@
             <artifactId>oosql</artifactId>
             <version>0.1.0-SNAPSHOT</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>20.1.0</version>
         </dependency>
 
 
