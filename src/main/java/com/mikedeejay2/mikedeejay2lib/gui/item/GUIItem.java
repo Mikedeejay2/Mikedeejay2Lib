@@ -1,23 +1,27 @@
 package com.mikedeejay2.mikedeejay2lib.gui.item;
 
+import com.google.common.collect.Multimap;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
 import com.mikedeejay2.mikedeejay2lib.item.IItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
-import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Represents an item in a GUI. Holds a few useful things such as:
@@ -209,7 +213,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
      */
     public GUIItem resetViewItem()
     {
-        this.viewItem = ItemBuilder.of(baseItem);
+        this.viewItem = baseItem.clone();
         return this;
     }
 
@@ -662,6 +666,22 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     @Override
+    public boolean hasConflictingEnchant(Enchantment enchantment)
+    {
+        return hasConflictingEnchantView(enchantment);
+    }
+
+    public boolean hasConflictingEnchantBase(Enchantment enchantment)
+    {
+        return baseItem.hasConflictingEnchant(enchantment);
+    }
+
+    public boolean hasConflictingEnchantView(Enchantment enchantment)
+    {
+        return viewItem.hasConflictingEnchant(enchantment);
+    }
+
+    @Override
     public GUIItem addItemFlags(ItemFlag... flags)
     {
         addItemFlagsBase(flags);
@@ -698,6 +718,56 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     public GUIItem removeItemFlagsView(ItemFlag... flags)
     {
         viewItem.removeItemFlags(flags);
+        return this;
+    }
+
+    @Override
+    public boolean hasItemFlag(ItemFlag flag)
+    {
+        return hasItemFlagView(flag);
+    }
+
+    public boolean hasItemFlagBase(ItemFlag flag)
+    {
+        return baseItem.hasItemFlag(flag);
+    }
+
+    public boolean hasItemFlagView(ItemFlag flag)
+    {
+        return viewItem.hasItemFlag(flag);
+    }
+
+    @Override
+    public Set<ItemFlag> getItemFlags()
+    {
+        return getItemFlagsView();
+    }
+
+    public Set<ItemFlag> getItemFlagsBase()
+    {
+        return baseItem.getItemFlags();
+    }
+
+    public Set<ItemFlag> getItemFlagsView()
+    {
+        return viewItem.getItemFlags();
+    }
+
+    @Override
+    public GUIItem addItemFlag(ItemFlag flag)
+    {
+        return addItemFlagView(flag);
+    }
+
+    public GUIItem addItemFlagBase(ItemFlag flag)
+    {
+        baseItem.addItemFlag(flag);
+        return this;
+    }
+
+    public GUIItem addItemFlagView(ItemFlag flag)
+    {
+        viewItem.addItemFlag(flag);
         return this;
     }
 
@@ -869,11 +939,727 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
         return this;
     }
 
+    @Override
+    public boolean hasAttributeModifiers()
+    {
+        return hasAttributeModifiersView();
+    }
+
+    public boolean hasAttributeModifiersBase()
+    {
+        return baseItem.hasAttributeModifiers();
+    }
+
+    public boolean hasAttributeModifiersView()
+    {
+        return viewItem.hasAttributeModifiers();
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers()
+    {
+        return getAttributeModifiersView();
+    }
+
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiersBase()
+    {
+        return baseItem.getAttributeModifiers();
+    }
+
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiersView()
+    {
+        return viewItem.getAttributeModifiers();
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot)
+    {
+        return getAttributeModifiersView(slot);
+    }
+
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiersBase(EquipmentSlot slot)
+    {
+        return baseItem.getAttributeModifiers(slot);
+    }
+
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiersView(EquipmentSlot slot)
+    {
+        return viewItem.getAttributeModifiers(slot);
+    }
+
+    @Override
+    public Collection<AttributeModifier> getAttributeModifiers(Attribute attribute)
+    {
+        return getAttributeModifiersView(attribute);
+    }
+
+    public Collection<AttributeModifier> getAttributeModifiersBase(Attribute attribute)
+    {
+        return baseItem.getAttributeModifiers(attribute);
+    }
+
+    public Collection<AttributeModifier> getAttributeModifiersView(Attribute attribute)
+    {
+        return viewItem.getAttributeModifiers(attribute);
+    }
+
+    @Override
+    public GUIItem addAttributeModifier(Attribute attribute, AttributeModifier modifier)
+    {
+        addAttributeModifierBase(attribute, modifier);
+        addAttributeModifierView(attribute, modifier);
+        return this;
+    }
+
+    public GUIItem addAttributeModifierBase(Attribute attribute, AttributeModifier modifier)
+    {
+        baseItem.addAttributeModifier(attribute, modifier);
+        return this;
+    }
+
+    public GUIItem addAttributeModifierView(Attribute attribute, AttributeModifier modifier)
+    {
+        viewItem.addAttributeModifier(attribute, modifier);
+        return this;
+    }
+
+    @Override
+    public GUIItem addAttributeModifiers(Attribute attribute, AttributeModifier... modifiers)
+    {
+        addAttributeModifiersBase(attribute, modifiers);
+        addAttributeModifiersView(attribute, modifiers);
+        return this;
+    }
+
+    public GUIItem addAttributeModifiersBase(Attribute attribute, AttributeModifier... modifiers)
+    {
+        baseItem.addAttributeModifiers(attribute, modifiers);
+        return this;
+    }
+
+    public GUIItem addAttributeModifiersView(Attribute attribute, AttributeModifier... modifiers)
+    {
+        viewItem.addAttributeModifiers(attribute, modifiers);
+        return this;
+    }
+
+    @Override
+    public GUIItem setAttributeModifiers(Multimap<Attribute, AttributeModifier> attributeModifiers)
+    {
+        setAttributeModifiersBase(attributeModifiers);
+        setAttributeModifiersView(attributeModifiers);
+        return this;
+    }
+
+    public GUIItem setAttributeModifiersBase(Multimap<Attribute, AttributeModifier> attributeModifiers)
+    {
+        baseItem.setAttributeModifiers(attributeModifiers);
+        return this;
+    }
+
+    public GUIItem setAttributeModifiersView(Multimap<Attribute, AttributeModifier> attributeModifiers)
+    {
+        viewItem.setAttributeModifiers(attributeModifiers);
+        return this;
+    }
+
+    @Override
+    public GUIItem removeAttributeModifier(Attribute attribute)
+    {
+        removeAttributeModifierBase(attribute);
+        removeAttributeModifierView(attribute);
+        return this;
+    }
+
+    public GUIItem removeAttributeModifierBase(Attribute attribute)
+    {
+        baseItem.removeAttributeModifier(attribute);
+        return this;
+    }
+
+    public GUIItem removeAttributeModifierView(Attribute attribute)
+    {
+        viewItem.removeAttributeModifier(attribute);
+        return this;
+    }
+
+    @Override
+    public GUIItem removeAttributeModifiers(Attribute... attributes)
+    {
+        removeAttributeModifiersBase(attributes);
+        removeAttributeModifiersView(attributes);
+        return this;
+    }
+
+    public GUIItem removeAttributeModifiersBase(Attribute... attributes)
+    {
+        baseItem.removeAttributeModifiers(attributes);
+        return this;
+    }
+
+    public GUIItem removeAttributeModifiersView(Attribute... attributes)
+    {
+        viewItem.removeAttributeModifiers(attributes);
+        return this;
+    }
+
+    @Override
+    public GUIItem removeAttributeModifier(EquipmentSlot slot)
+    {
+        removeAttributeModifierBase(slot);
+        removeAttributeModifierView(slot);
+        return this;
+    }
+
+    public GUIItem removeAttributeModifierBase(EquipmentSlot slot)
+    {
+        baseItem.removeAttributeModifiers(slot);
+        return this;
+    }
+
+    public GUIItem removeAttributeModifierView(EquipmentSlot slot)
+    {
+        viewItem.removeAttributeModifiers(slot);
+        return this;
+    }
+
+    @Override
+    public GUIItem removeAttributeModifiers(EquipmentSlot... slots)
+    {
+        removeAttributeModifiersBase(slots);
+        removeAttributeModifiersView(slots);
+        return this;
+    }
+
+    public GUIItem removeAttributeModifiersBase(EquipmentSlot... slots)
+    {
+        baseItem.removeAttributeModifiers(slots);
+        return this;
+    }
+
+    public GUIItem removeAttributeModifiersView(EquipmentSlot... slots)
+    {
+        viewItem.removeAttributeModifiers(slots);
+        return this;
+    }
+
+    @Override
+    public GUIItem removeAttributeModifier(Attribute attribute, AttributeModifier modifier)
+    {
+        removeAttributeModifierBase(attribute, modifier);
+        removeAttributeModifierView(attribute, modifier);
+        return this;
+    }
+
+    public GUIItem removeAttributeModifierBase(Attribute attribute, AttributeModifier modifier)
+    {
+        baseItem.removeAttributeModifier(attribute, modifier);
+        return this;
+    }
+
+    public GUIItem removeAttributeModifierView(Attribute attribute, AttributeModifier modifier)
+    {
+        viewItem.removeAttributeModifier(attribute, modifier);
+        return this;
+    }
+
+    @Override
+    public GUIItem removeAttributeModifiers(Attribute attribute, AttributeModifier... modifiers)
+    {
+        removeAttributeModifiersBase(attribute, modifiers);
+        removeAttributeModifiersView(attribute, modifiers);
+        return this;
+    }
+
+    public GUIItem removeAttributeModifiersBase(Attribute attribute, AttributeModifier... modifiers)
+    {
+        baseItem.removeAttributeModifiers(attribute, modifiers);
+        return this;
+    }
+
+    public GUIItem removeAttributeModifiersView(Attribute attribute, AttributeModifier... modifiers)
+    {
+        viewItem.removeAttributeModifiers(attribute, modifiers);
+        return this;
+    }
+
+    @Override
+    public PersistentDataContainer getPersistentDataContainer()
+    {
+        return getPersistentDataContainerView();
+    }
+
+    public PersistentDataContainer getPersistentDataContainerBase()
+    {
+        return baseItem.getPersistentDataContainer();
+    }
+
+    public PersistentDataContainer getPersistentDataContainerView()
+    {
+        return viewItem.getPersistentDataContainer();
+    }
+
+    @Override
+    public GUIItem setCustomModelData(Integer data)
+    {
+        setCustomModelDataBase(data);
+        setCustomModelDataView(data);
+        return this;
+    }
+
+    public GUIItem setCustomModelDataBase(Integer data)
+    {
+        baseItem.setCustomModelData(data);
+        return this;
+    }
+
+    public GUIItem setCustomModelDataView(Integer data)
+    {
+        viewItem.setCustomModelData(data);
+        return this;
+    }
+
+    @Override
+    public int getCustomModelData()
+    {
+        return getCustomModelDataView();
+    }
+
+    public int getCustomModelDataBase()
+    {
+        return baseItem.getCustomModelData();
+    }
+
+    public int getCustomModelDataView()
+    {
+        return viewItem.getCustomModelData();
+    }
+
+    @Override
+    public boolean hasCustomModelData()
+    {
+        return hasCustomModelDataView();
+    }
+
+    public boolean hasCustomModelDataBase()
+    {
+        return baseItem.hasCustomModelData();
+    }
+
+    public boolean hasCustomModelDataView()
+    {
+        return viewItem.hasCustomModelData();
+    }
+
+    @Override
+    public GUIItem setLocalizedName(String name)
+    {
+        setLocalizedNameBase(name);
+        setLocalizedNameView(name);
+        return this;
+    }
+
+    public GUIItem setLocalizedNameBase(String name)
+    {
+        baseItem.setLocalizedName(name);
+        return this;
+    }
+
+    public GUIItem setLocalizedNameView(String name)
+    {
+        viewItem.setLocalizedName(name);
+        return this;
+    }
+
+    @Override
+    public String getLocalizedName()
+    {
+        return getLocalizedNameView();
+    }
+
+    public String getLocalizedNameBase()
+    {
+        return baseItem.getLocalizedName();
+    }
+
+    public String getLocalizedNameView()
+    {
+        return viewItem.getLocalizedName();
+    }
+
+    @Override
+    public boolean hasLocalizedName()
+    {
+        return hasLocalizedNameView();
+    }
+
+    public boolean hasLocalizedNameBase()
+    {
+        return baseItem.hasLocalizedName();
+    }
+
+    public boolean hasLocalizedNameView()
+    {
+        return viewItem.hasLocalizedName();
+    }
+
+    @Override
+    public String getDisplayName()
+    {
+        return getDisplayNameView();
+    }
+
+    public String getDisplayNameBase()
+    {
+        return baseItem.getDisplayName();
+    }
+
+    public String getDisplayNameView()
+    {
+        return viewItem.getDisplayName();
+    }
+
+    @Override
+    public GUIItem setDisplayName(String name)
+    {
+        setDisplayNameBase(name);
+        setDisplayNameView(name);
+        return this;
+    }
+
+    public GUIItem setDisplayNameBase(String name)
+    {
+        baseItem.setDisplayName(name);
+        return this;
+    }
+
+    public GUIItem setDisplayNameView(String name)
+    {
+        viewItem.setDisplayName(name);
+        return this;
+    }
+
+    @Override
+    public boolean hasDisplayName()
+    {
+        return hasDisplayNameView();
+    }
+
+    public boolean hasDisplayNameBase()
+    {
+        return baseItem.hasDisplayName();
+    }
+
+    public boolean hasDisplayNameView()
+    {
+        return viewItem.hasDisplayName();
+    }
+
+    @Override
+    public int getDurability()
+    {
+        return getDurabilityView();
+    }
+
+    public int getDurabilityBase()
+    {
+        return baseItem.getDurability();
+    }
+
+    public int getDurabilityView()
+    {
+        return viewItem.getDurability();
+    }
+
+    @Override
+    public GUIItem setDurability(int durability)
+    {
+        setDurabilityBase(durability);
+        setDurabilityView(durability);
+        return this;
+    }
+
+    public GUIItem setDurabilityBase(int durability)
+    {
+        baseItem.setDurability(durability);
+        return this;
+    }
+
+    public GUIItem setDurabilityView(int durability)
+    {
+        viewItem.setDurability(durability);
+        return this;
+    }
+
+    @Override
+    public int getMaxStackSize()
+    {
+        return getMaxStackSizeView();
+    }
+
+    public int getMaxStackSizeBase()
+    {
+        return baseItem.getMaxStackSize();
+    }
+
+    public int getMaxStackSizeView()
+    {
+        return viewItem.getMaxStackSize();
+    }
+
+    @Override
+    public boolean hasDurability()
+    {
+        return hasDurabilityView();
+    }
+
+    public boolean hasDurabilityBase()
+    {
+        return baseItem.hasDurability();
+    }
+
+    public boolean hasDurabilityView()
+    {
+        return viewItem.hasDurability();
+    }
+
+    @Override
+    public <Y, Z> GUIItem setData(NamespacedKey key, PersistentDataType<Y, Z> type, Z value)
+    {
+        setDataBase(key, type, value);
+        setDataView(key, type, value);
+        return this;
+    }
+
+    public <Y, Z> GUIItem setDataBase(NamespacedKey key, PersistentDataType<Y, Z> type, Z value)
+    {
+        baseItem.setData(key, type, value);
+        return this;
+    }
+
+    public <Y, Z> GUIItem setDataView(NamespacedKey key, PersistentDataType<Y, Z> type, Z value)
+    {
+        viewItem.setData(key, type, value);
+        return this;
+    }
+
+    @Override
+    public <Y, Z> GUIItem setData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z value)
+    {
+        setDataBase(plugin, key, type, value);
+        setDataView(plugin, key, type, value);
+        return this;
+    }
+
+    public <Y, Z> GUIItem setDataBase(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z value)
+    {
+        baseItem.setData(plugin, key, type, value);
+        return this;
+    }
+
+    public <Y, Z> GUIItem setDataView(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z value)
+    {
+        viewItem.setData(plugin, key, type, value);
+        return this;
+    }
+
+    @Override
+    public <Y, Z> boolean hasData(NamespacedKey key, PersistentDataType<Y, Z> type)
+    {
+        return hasDataView(key, type);
+    }
+
+    public <Y, Z> boolean hasDataBase(NamespacedKey key, PersistentDataType<Y, Z> type)
+    {
+        return baseItem.hasData(key, type);
+    }
+
+    public <Y, Z> boolean hasDataView(NamespacedKey key, PersistentDataType<Y, Z> type)
+    {
+        return viewItem.hasData(key, type);
+    }
+
+    @Override
+    public <Y, Z> boolean hasData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type)
+    {
+        return hasDataView(plugin, key, type);
+    }
+
+    public <Y, Z> boolean hasDataBase(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type)
+    {
+        return baseItem.hasData(plugin, key, type);
+    }
+
+    public <Y, Z> boolean hasDataView(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type)
+    {
+        return viewItem.hasData(plugin, key, type);
+    }
+
+    @Override
+    public <Y, Z> Z getData(NamespacedKey key, PersistentDataType<Y, Z> type)
+    {
+        return getDataView(key, type);
+    }
+
+    public <Y, Z> Z getDataBase(NamespacedKey key, PersistentDataType<Y, Z> type)
+    {
+        return baseItem.getData(key, type);
+    }
+
+    public <Y, Z> Z getDataView(NamespacedKey key, PersistentDataType<Y, Z> type)
+    {
+        return viewItem.getData(key, type);
+    }
+
+    @Override
+    public <Y, Z> Z getData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type)
+    {
+        return getDataView(plugin, key, type);
+    }
+
+    public <Y, Z> Z getDataBase(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type)
+    {
+        return baseItem.getData(plugin, key, type);
+    }
+
+    public <Y, Z> Z getDataView(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type)
+    {
+        return viewItem.getData(plugin, key, type);
+    }
+
+    @Override
+    public <Y, Z> Z getOrDefaultData(NamespacedKey key, PersistentDataType<Y, Z> type, Z defaultValue)
+    {
+        return getOrDefaultDataView(key, type, defaultValue);
+    }
+
+    public <Y, Z> Z getOrDefaultDataBase(NamespacedKey key, PersistentDataType<Y, Z> type, Z defaultValue)
+    {
+        return baseItem.getOrDefaultData(key, type, defaultValue);
+    }
+
+    public <Y, Z> Z getOrDefaultDataView(NamespacedKey key, PersistentDataType<Y, Z> type, Z defaultValue)
+    {
+        return viewItem.getOrDefaultData(key, type, defaultValue);
+    }
+
+    @Override
+    public <Y, Z> Z getOrDefaultData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z defaultValue)
+    {
+        return null;
+    }
+
+    public <Y, Z> Z getOrDefaultDataBase(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z defaultValue)
+    {
+        return baseItem.getOrDefaultData(plugin, key, type, defaultValue);
+    }
+
+    public <Y, Z> Z getOrDefaultDataView(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z defaultValue)
+    {
+        return viewItem.getOrDefaultData(plugin, key, type, defaultValue);
+    }
+
+    @Override
+    public GUIItem removeData(NamespacedKey key)
+    {
+        removeDataBase(key);
+        removeDataView(key);
+        return this;
+    }
+
+    public GUIItem removeDataBase(NamespacedKey key)
+    {
+        baseItem.removeData(key);
+        return this;
+    }
+
+    public GUIItem removeDataView(NamespacedKey key)
+    {
+        viewItem.removeData(key);
+        return this;
+    }
+
+    @Override
+    public GUIItem removeData(BukkitPlugin plugin, String key)
+    {
+        removeDataBase(plugin, key);
+        removeDataView(plugin, key);
+        return this;
+    }
+
+    public GUIItem removeDataBase(BukkitPlugin plugin, String key)
+    {
+        baseItem.removeData(plugin, key);
+        return this;
+    }
+
+    public GUIItem removeDataView(BukkitPlugin plugin, String key)
+    {
+        viewItem.removeData(plugin, key);
+        return this;
+    }
+
+    @Override
+    public GUIItem removeData(NamespacedKey... keys)
+    {
+        removeDataBase(keys);
+        removeDataView(keys);
+        return this;
+    }
+
+    public GUIItem removeDataBase(NamespacedKey... keys)
+    {
+        baseItem.removeData(keys);
+        return this;
+    }
+
+    public GUIItem removeDataView(NamespacedKey... keys)
+    {
+        viewItem.removeData(keys);
+        return this;
+    }
+
+    @Override
+    public GUIItem removeData(BukkitPlugin plugin, String... keys)
+    {
+        removeDataBase(plugin, keys);
+        removeDataView(plugin, keys);
+        return this;
+    }
+
+    public GUIItem removeDataBase(BukkitPlugin plugin, String... keys)
+    {
+        baseItem.removeData(plugin, keys);
+        return this;
+    }
+
+    public GUIItem removeDataView(BukkitPlugin plugin, String... keys)
+    {
+        viewItem.removeData(plugin, keys);
+        return this;
+    }
+
+    @Override
+    public boolean isDataEmpty()
+    {
+        return isDataEmptyView();
+    }
+
+    public boolean isDataEmptyBase()
+    {
+        return baseItem.isDataEmpty();
+    }
+
+    public boolean isDataEmptyView()
+    {
+        return viewItem.isDataEmpty();
+    }
 
 
+    @Override
     public GUIItem clone()
     {
-        GUIItem newItem = null;
+        GUIItem newItem;
 
         try
         {
@@ -884,13 +1670,14 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
             e.printStackTrace();
             return null;
         }
+
         if(baseItem != null)
         {
-            newItem.baseItem = ItemBuilder.of(baseItem);
+            newItem.baseItem = baseItem.clone();
         }
         if(viewItem != null)
         {
-            newItem.viewItem = ItemBuilder.of(viewItem);
+            newItem.viewItem = viewItem.clone();
         }
 
         if(events != null)

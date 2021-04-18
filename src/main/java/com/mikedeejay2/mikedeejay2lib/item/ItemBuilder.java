@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.item;
 
-import com.google.common.collect.Lists;
+import com.google.common.collect.Multimap;
+import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mikedeejay2.mikedeejay2lib.util.enchant.GlowEnchantment;
@@ -8,12 +9,19 @@ import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.Damageable;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.inventory.meta.SkullMeta;
+import org.bukkit.persistence.PersistentDataContainer;
+import org.bukkit.persistence.PersistentDataType;
 
 import java.lang.reflect.Field;
 import java.util.*;
@@ -23,7 +31,7 @@ import java.util.*;
  *
  * @author Mikedeejay2
  */
-public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
+public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Cloneable
 {
     private Material type;
     private int amount;
@@ -259,6 +267,12 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
     }
 
     @Override
+    public boolean hasConflictingEnchant(Enchantment enchantment)
+    {
+        return this.meta.hasConflictingEnchant(enchantment);
+    }
+
+    @Override
     public ItemBuilder addItemFlags(ItemFlag... flags)
     {
         this.meta.addItemFlags(flags);
@@ -270,6 +284,26 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
     public ItemBuilder removeItemFlags(ItemFlag... flags)
     {
         this.meta.removeItemFlags(flags);
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public boolean hasItemFlag(ItemFlag flag)
+    {
+        return this.meta.hasItemFlag(flag);
+    }
+
+    @Override
+    public Set<ItemFlag> getItemFlags()
+    {
+        return this.meta.getItemFlags();
+    }
+
+    @Override
+    public ItemBuilder addItemFlag(ItemFlag flag)
+    {
+        this.meta.addItemFlags(flag);
         this.changed = true;
         return this;
     }
@@ -378,6 +412,304 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
         return this;
     }
 
+    @Override
+    public boolean hasAttributeModifiers()
+    {
+        return this.meta.hasAttributeModifiers();
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers()
+    {
+        return this.meta.getAttributeModifiers();
+    }
+
+    @Override
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot)
+    {
+        return this.meta.getAttributeModifiers(slot);
+    }
+
+    @Override
+    public Collection<AttributeModifier> getAttributeModifiers(Attribute attribute)
+    {
+        return this.meta.getAttributeModifiers(attribute);
+    }
+
+    @Override
+    public ItemBuilder addAttributeModifier(Attribute attribute, AttributeModifier modifier)
+    {
+        this.meta.addAttributeModifier(attribute, modifier);
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public ItemBuilder addAttributeModifiers(Attribute attribute, AttributeModifier... modifiers)
+    {
+        for(AttributeModifier modifier : modifiers)
+        {
+            this.meta.addAttributeModifier(attribute, modifier);
+        }
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public ItemBuilder setAttributeModifiers(Multimap<Attribute, AttributeModifier> attributeModifiers)
+    {
+        this.meta.setAttributeModifiers(attributeModifiers);
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public ItemBuilder removeAttributeModifier(Attribute attribute)
+    {
+        this.meta.removeAttributeModifier(attribute);
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public ItemBuilder removeAttributeModifiers(Attribute... attributes)
+    {
+        for(Attribute attribute : attributes)
+        {
+            this.meta.removeAttributeModifier(attribute);
+        }
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public ItemBuilder removeAttributeModifier(EquipmentSlot slot)
+    {
+        this.meta.removeAttributeModifier(slot);
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public ItemBuilder removeAttributeModifiers(EquipmentSlot... slots)
+    {
+        for(EquipmentSlot slot : slots)
+        {
+            this.meta.removeAttributeModifier(slot);
+        }
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public ItemBuilder removeAttributeModifier(Attribute attribute, AttributeModifier modifier)
+    {
+        this.meta.removeAttributeModifier(attribute, modifier);
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public ItemBuilder removeAttributeModifiers(Attribute attribute, AttributeModifier... modifiers)
+    {
+        for(AttributeModifier modifier : modifiers)
+        {
+            this.meta.removeAttributeModifier(attribute, modifier);
+        }
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public PersistentDataContainer getPersistentDataContainer()
+    {
+        return this.meta.getPersistentDataContainer();
+    }
+
+    @Override
+    public ItemBuilder setCustomModelData(Integer data)
+    {
+        this.meta.setCustomModelData(data);
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public int getCustomModelData()
+    {
+        return this.meta.getCustomModelData();
+    }
+
+    @Override
+    public boolean hasCustomModelData()
+    {
+        return this.meta.hasCustomModelData();
+    }
+
+    @Override
+    public ItemBuilder setLocalizedName(String name)
+    {
+        this.meta.setLocalizedName(Colors.format(name));
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public String getLocalizedName()
+    {
+        return this.meta.getLocalizedName();
+    }
+
+    @Override
+    public boolean hasLocalizedName()
+    {
+        return this.meta.hasLocalizedName();
+    }
+
+    @Override
+    public String getDisplayName()
+    {
+        return this.meta.getDisplayName();
+    }
+
+    @Override
+    public ItemBuilder setDisplayName(String name)
+    {
+        this.setName(name);
+        return this;
+    }
+
+    @Override
+    public boolean hasDisplayName()
+    {
+        return this.meta.hasDisplayName();
+    }
+
+    @Override
+    public int getDurability()
+    {
+        return ((Damageable) this.meta).getDamage();
+    }
+
+    @Override
+    public ItemBuilder setDurability(int durability)
+    {
+        ((Damageable) this.meta).setDamage(durability);
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public int getMaxStackSize()
+    {
+        Material material = this.getType();
+        if (material != null)  return material.getMaxStackSize();
+        return -1;
+    }
+
+    @Override
+    public boolean hasDurability()
+    {
+        return this.meta instanceof Damageable;
+    }
+
+    @Override
+    public <Y, Z> ItemBuilder setData(NamespacedKey key, PersistentDataType<Y, Z> type, Z value)
+    {
+        this.getPersistentDataContainer().set(key, type, value);
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public <Y, Z> ItemBuilder setData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z value)
+    {
+        this.setData(new NamespacedKey(plugin, key), type, value);
+        return this;
+    }
+
+    @Override
+    public <Y, Z> boolean hasData(NamespacedKey key, PersistentDataType<Y, Z> type)
+    {
+        return this.getPersistentDataContainer().has(key, type);
+    }
+
+    @Override
+    public <Y, Z> boolean hasData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type)
+    {
+        return this.hasData(new NamespacedKey(plugin, key), type);
+    }
+
+    @Override
+    public <Y, Z> Z getData(NamespacedKey key, PersistentDataType<Y, Z> type)
+    {
+        return this.getPersistentDataContainer().get(key, type);
+    }
+
+    @Override
+    public <Y, Z> Z getData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type)
+    {
+        return this.getData(new NamespacedKey(plugin, key), type);
+    }
+
+    @Override
+    public <Y, Z> Z getOrDefaultData(NamespacedKey key, PersistentDataType<Y, Z> type, Z defaultValue)
+    {
+        return this.getPersistentDataContainer().getOrDefault(key, type, defaultValue);
+    }
+
+    @Override
+    public <Y, Z> Z getOrDefaultData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z defaultValue)
+    {
+        return this.getOrDefaultData(new NamespacedKey(plugin, key), type, defaultValue);
+    }
+
+    @Override
+    public ItemBuilder removeData(NamespacedKey key)
+    {
+        this.getPersistentDataContainer().remove(key);
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public ItemBuilder removeData(BukkitPlugin plugin, String key)
+    {
+        this.getPersistentDataContainer().remove(new NamespacedKey(plugin, key));
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public ItemBuilder removeData(NamespacedKey... keys)
+    {
+        PersistentDataContainer container = this.getPersistentDataContainer();
+        for(NamespacedKey key : keys)
+        {
+            container.remove(key);
+        }
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public ItemBuilder removeData(BukkitPlugin plugin, String... keys)
+    {
+        PersistentDataContainer container = this.getPersistentDataContainer();
+        for(String key : keys)
+        {
+            container.remove(new NamespacedKey(plugin, key));
+        }
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public boolean isDataEmpty()
+    {
+        return this.getPersistentDataContainer().isEmpty();
+    }
+
     private void internalSetMeta(ItemMeta meta) {
         if (meta == null)
         {
@@ -427,14 +759,21 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>
         return new ItemBuilder(player);
     }
 
-    public static ItemBuilder of(ItemBuilder builder)
+    @Override
+    public ItemBuilder clone()
     {
-        ItemBuilder newBuilder = new ItemBuilder();
-        newBuilder.type = builder.type;
-        newBuilder.amount = builder.amount;
-        newBuilder.meta = builder.meta != null ? builder.meta.clone() : null;
-        newBuilder.item = builder.item != null ? builder.item.clone() : null;
-        newBuilder.changed = builder.changed;
-        return newBuilder;
+        ItemBuilder cloned = null;
+        try
+        {
+            cloned = (ItemBuilder) super.clone();
+        }
+        catch(CloneNotSupportedException e)
+        {
+            e.printStackTrace();
+            return null;
+        }
+        cloned.meta = this.meta != null ? this.meta.clone() : null;
+        cloned.item = this.item != null ? this.item.clone() : null;
+        return cloned;
     }
 }
