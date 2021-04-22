@@ -238,6 +238,7 @@ public interface IItemBuilder<I, T>
      * Add a single <tt>ItemFlag</tt> to the item
      *
      * @param flag The <tt>ItemFlag</tt> to add to the item
+     * @return A reference to this object
      */
     T addItemFlag(ItemFlag flag);
 
@@ -274,6 +275,8 @@ public interface IItemBuilder<I, T>
 
     /**
      * Get whether the item is unbreakable or not
+     *
+     * @return Whether the item is unbreakable or not
      */
     boolean isUnbreakable();
 
@@ -519,6 +522,7 @@ public interface IItemBuilder<I, T>
      * It must be ensured that the item has a durability with <tt>hasDurability()</tt>
      *
      * @param durability The new durability of the item
+     * @return A reference to this object
      */
     T setDurability(int durability);
 
