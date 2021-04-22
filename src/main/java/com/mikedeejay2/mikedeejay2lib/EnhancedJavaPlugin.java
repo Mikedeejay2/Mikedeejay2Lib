@@ -11,13 +11,23 @@ import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
+import org.bukkit.event.EventPriority;
+import org.bukkit.event.HandlerList;
 import org.bukkit.event.Listener;
 import org.bukkit.permissions.Permission;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginLogger;
+import org.bukkit.plugin.RegisteredListener;
+import org.bukkit.plugin.SimplePluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.lang.reflect.Field;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.ArrayList;
+import java.util.EnumMap;
+import java.util.Map;
+import java.util.Set;
 import java.util.logging.Logger;
 
 /**
@@ -206,6 +216,104 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
         {
             registerEvent(listener);
         }
+    }
+
+    /**
+     * Register an event listener to the server at a specific index in the listeners list
+     *
+     * @param index The index to register the listeners in
+     * @param listener The listener to register
+     */
+    @Override
+    public void registerEvent(int index, Listener listener)
+    {
+        try
+        {
+            SimplePluginManager pluginManager = (SimplePluginManager) this.getServer().getPluginManager();
+            Method getRegistrationClass = SimplePluginManager.class.getDeclaredMethod("getRegistrationClass", Class.class);
+            getRegistrationClass.setAccessible(true);
+            Method getEventListeners = SimplePluginManager.class.getDeclaredMethod("getEventListeners", Class.class);
+            getEventListeners.setAccessible(true);
+            Field handlers = HandlerList.class.getDeclaredField("handlers");
+            handlers.setAccessible(true);
+            Field handlerSlotsField = HandlerList.class.getDeclaredField("handlerslots");
+            handlerSlotsField.setAccessible(true);
+
+            for (Map.Entry<Class<? extends Event>, Set<RegisteredListener>> entry : this.getPluginLoader().createRegisteredListeners(listener, this).entrySet())
+            {
+                Class<? extends Event> registrationClass = (Class<? extends Event>) getRegistrationClass.invoke(pluginManager, entry.getKey());
+                HandlerList handlerList = (HandlerList) getEventListeners.invoke(pluginManager, registrationClass);
+                handlers.set(handlerList, null);
+                EnumMap<EventPriority, ArrayList<RegisteredListener>> handlerSlots = (EnumMap<EventPriority, ArrayList<RegisteredListener>>) handlerSlotsField.get(handlerList);
+                for(RegisteredListener registeredListener : entry.getValue())
+                {
+                    handlerSlots.get(registeredListener.getPriority()).add(index, registeredListener);
+                }
+            }
+        }
+        catch(NoSuchMethodException | InvocationTargetException | IllegalAccessException | NoSuchFieldException e)
+        {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Register multiple event listeners to the server at a specific index in the listeners list
+     *
+     * @param index The index to register the listeners in
+     * @param listeners The variable amount of event listeners to register
+     */
+    @Override
+    public void registerEvents(int index, Listener... listeners)
+    {
+        for(Listener listener : listeners)
+        {
+            registerEvent(index, listener);
+        }
+    }
+
+    /**
+     * Register an event listener to the server at the first index of the listeners list
+     *
+     * @param listener The listener to register
+     */
+    @Override
+    public void registerEventFirst(Listener listener)
+    {
+        registerEvent(0, listener);
+    }
+
+    /**
+     * Register multiple event listeners to the server at the first index of the listeners list
+     *
+     * @param listeners The variable amount of event listeners to register
+     */
+    @Override
+    public void registerEventsFirst(Listener... listeners)
+    {
+        registerEvents(0, listeners);
+    }
+
+    /**
+     * Register an event listener to the server in roughly the end of the listeners list
+     *
+     * @param listener The listener to register
+     */
+    @Override
+    public void registerEventLast(Listener listener)
+    {
+        Bukkit.getScheduler().runTaskLater(this, () -> registerEvent(listener), 1);
+    }
+
+    /**
+     * Register multiple event listeners to the server in roughly the end of the listeners list
+     *
+     * @param listeners The variable amount of event listeners to register
+     */
+    @Override
+    public void registerEventsLast(Listener... listeners)
+    {
+        Bukkit.getScheduler().runTaskLater(this, () -> registerEventsLast(listeners), 1);
     }
 
     /**

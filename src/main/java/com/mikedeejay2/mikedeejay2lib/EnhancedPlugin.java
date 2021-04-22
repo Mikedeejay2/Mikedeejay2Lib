@@ -107,6 +107,50 @@ public interface EnhancedPlugin extends Plugin
     void registerEvents(Listener... listeners);
 
     /**
+     * Register an event listener to the server at a specific index in the listeners list
+     *
+     * @param index The index to register the listeners in
+     * @param listener The listener to register
+     */
+    void registerEvent(int index, Listener listener);
+
+    /**
+     * Register multiple event listeners to the server at a specific index in the listeners list
+     *
+     * @param index The index to register the listeners in
+     * @param listeners The variable amount of event listeners to register
+     */
+    void registerEvents(int index, Listener... listeners);
+
+    /**
+     * Register an event listener to the server at the first index of the listeners list
+     *
+     * @param listener The listener to register
+     */
+    void registerEventFirst(Listener listener);
+
+    /**
+     * Register multiple event listeners to the server at the first index of the listeners list
+     *
+     * @param listeners The variable amount of event listeners to register
+     */
+    void registerEventsFirst(Listener... listeners);
+
+    /**
+     * Register an event listener to the server in roughly the end of the listeners list
+     *
+     * @param listener The listener to register
+     */
+    void registerEventLast(Listener listener);
+
+    /**
+     * Register multiple event listeners to the server in roughly the end of the listeners list
+     *
+     * @param listeners The variable amount of event listeners to register
+     */
+    void registerEventsLast(Listener... listeners);
+
+    /**
      * Register a command and a tab completer to the server. The executor and
      * tab completer will be applied to the name of the command specified.
      *
