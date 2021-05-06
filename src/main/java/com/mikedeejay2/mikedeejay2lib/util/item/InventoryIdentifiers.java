@@ -829,4 +829,24 @@ public final class InventoryIdentifiers
                 return false;
         }
     }
+
+    /**
+     * Returns whether the material is a soup or stew or not
+     *
+     * @param material The material to check
+     * @return Whether the material is a type of soup or stew
+     */
+    public static boolean isSoup(Material material)
+    {
+        switch(material)
+        {
+            case BEETROOT_SOUP:
+            case SUSPICIOUS_STEW:
+            case MUSHROOM_STEW:
+            case RABBIT_STEW:
+                return true;
+            default:
+                return false;
+        }
+    }
 }
