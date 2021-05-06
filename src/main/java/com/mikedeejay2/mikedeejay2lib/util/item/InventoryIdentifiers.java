@@ -849,4 +849,28 @@ public final class InventoryIdentifiers
                 return false;
         }
     }
+
+    /**
+     * Returns whether the material is a type of bucket or not
+     *
+     * @param material The material to check
+     * @return Whether the material is a type of bucket or not
+     */
+    public static boolean isBucket(Material material)
+    {
+        switch(material)
+        {
+            case BUCKET:
+            case COD_BUCKET:
+            case LAVA_BUCKET:
+            case MILK_BUCKET:
+            case PUFFERFISH_BUCKET:
+            case SALMON_BUCKET:
+            case TROPICAL_FISH_BUCKET:
+            case WATER_BUCKET:
+                return true;
+            default:
+                return false;
+        }
+    }
 }
