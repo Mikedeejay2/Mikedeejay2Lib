@@ -70,10 +70,9 @@ public class AnimationRuntime extends EnhancedRunnable
     {
         boolean shouldUpdate = false;
 
-        Set<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> copy = new HashSet<>(items.entrySet());
-
-        for(Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry : copy)
+        for(Iterator<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> iterator = items.entrySet().iterator(); iterator.hasNext();)
         {
+            Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry = iterator.next();
             AnimatedGUIItem item = entry.getKey();
             AnimatedGUIItemProperties properties = entry.getValue();
             if(item.tick(period, properties)) shouldUpdate = true;
