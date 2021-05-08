@@ -24,7 +24,7 @@ public class GUIAnimationModule implements GUIModule
 {
     protected final BukkitPlugin plugin;
     // The list of Animated GUI Items to be animated
-    protected Map<AnimatedGUIItem, AnimatedGUIItemProperties> animatedItems;
+    protected final Map<AnimatedGUIItem, AnimatedGUIItemProperties> animatedItems;
     // The AnimationRuntime for this module
     protected AnimationRuntime runtime;
     // The period of time between each update
@@ -99,8 +99,7 @@ public class GUIAnimationModule implements GUIModule
         if(item == null) return;
         if(item instanceof AnimatedGUIItem)
         {
-            AnimatedGUIItem animItem = (AnimatedGUIItem) item;
-            gui.getModule(GUIAnimationModule.class).addItem(animItem, new AnimatedGUIItemProperties(0, row, col, layer));
+            addItem((AnimatedGUIItem) item, new AnimatedGUIItemProperties(0, row, col, layer));
         }
     }
 
@@ -110,8 +109,7 @@ public class GUIAnimationModule implements GUIModule
         if(item == null) return;
         if(item instanceof AnimatedGUIItem)
         {
-            AnimatedGUIItem animItem = (AnimatedGUIItem) item;
-            gui.getModule(GUIAnimationModule.class).removeItem(animItem);
+            removeItem((AnimatedGUIItem) item);
         }
     }
 }
