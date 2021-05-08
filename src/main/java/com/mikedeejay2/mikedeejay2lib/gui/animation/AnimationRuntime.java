@@ -7,6 +7,7 @@ import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
 import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * Runtime that times and executed <tt>AnimatedGUIItems</tt>
@@ -16,7 +17,7 @@ import java.util.*;
 public class AnimationRuntime extends EnhancedRunnable
 {
     // The map of items to be executed
-    protected Map<AnimatedGUIItem, AnimatedGUIItemProperties> items;
+    protected ConcurrentMap<AnimatedGUIItem, AnimatedGUIItemProperties> items;
     // The GUIContainer that this AnimationRuntime is a child of
     protected GUIContainer gui;
     // The player that has opened the GUI
@@ -30,7 +31,7 @@ public class AnimationRuntime extends EnhancedRunnable
      *
      * @param items The list of AnimatedGUIItems that this runtime will iterate through
      */
-    public void setItems(Map<AnimatedGUIItem, AnimatedGUIItemProperties> items)
+    public void setItems(ConcurrentMap<AnimatedGUIItem, AnimatedGUIItemProperties> items)
     {
         this.items = items;
     }
@@ -70,9 +71,8 @@ public class AnimationRuntime extends EnhancedRunnable
     {
         boolean shouldUpdate = false;
 
-        for(Iterator<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> iterator = items.entrySet().iterator(); iterator.hasNext();)
+        for(Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry : items.entrySet())
         {
-            Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry = iterator.next();
             AnimatedGUIItem item = entry.getKey();
             AnimatedGUIItemProperties properties = entry.getValue();
             if(item.tick(period, properties)) shouldUpdate = true;
@@ -85,7 +85,7 @@ public class AnimationRuntime extends EnhancedRunnable
      *
      * @return The map of items
      */
-    public Map<AnimatedGUIItem, AnimatedGUIItemProperties> getItems()
+    public ConcurrentMap<AnimatedGUIItem, AnimatedGUIItemProperties> getItems()
     {
         return items;
     }

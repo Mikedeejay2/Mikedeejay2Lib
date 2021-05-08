@@ -11,6 +11,8 @@ import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import org.bukkit.entity.Player;
 
 import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
+import java.util.concurrent.ConcurrentMap;
 
 /**
  * A module that processes <tt>AnimatedGUIItems</tt>.
@@ -24,7 +26,7 @@ public class GUIAnimationModule implements GUIModule
 {
     protected final BukkitPlugin plugin;
     // The list of Animated GUI Items to be animated
-    protected final Map<AnimatedGUIItem, AnimatedGUIItemProperties> animatedItems;
+    protected final ConcurrentMap<AnimatedGUIItem, AnimatedGUIItemProperties> animatedItems;
     // The AnimationRuntime for this module
     protected AnimationRuntime runtime;
     // The period of time between each update
@@ -34,7 +36,7 @@ public class GUIAnimationModule implements GUIModule
     {
         this.plugin = plugin;
         this.period = period == 0 ? 1 : period;
-        this.animatedItems = new HashMap<>();
+        this.animatedItems = new ConcurrentHashMap<>();
     }
 
     /**
