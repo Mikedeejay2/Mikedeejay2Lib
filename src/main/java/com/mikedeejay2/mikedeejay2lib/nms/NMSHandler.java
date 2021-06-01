@@ -86,4 +86,9 @@ public class NMSHandler
     {
         return merchant;
     }
+
+    public NMS_Time getTime()
+    {
+        return time;
+    }
 }
