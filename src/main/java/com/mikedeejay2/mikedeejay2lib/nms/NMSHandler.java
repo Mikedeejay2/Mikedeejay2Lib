@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.nms;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.nms.merchant.*;
+import com.mikedeejay2.mikedeejay2lib.nms.time.*;
 import com.mikedeejay2.mikedeejay2lib.nms.xpcalc.*;
 import com.mikedeejay2.mikedeejay2lib.util.version.VersionEnum;
 
@@ -18,6 +19,7 @@ public class NMSHandler
 
     protected NMS_XP xp;
     protected NMS_Merchant merchant;
+    protected NMS_Time time;
 
     public NMSHandler(BukkitPlugin plugin)
     {
@@ -37,30 +39,36 @@ public class NMSHandler
             {
                 xp = new NMS_XP_v1_16_R3();
                 merchant = new NMS_Merchant_v1_16_R3();
+                time = new NMS_Time_v1_16_R3();
             } break;
             case v1_16_R2:
             {
                 xp = new NMS_XP_v1_16_R2();
                 merchant = new NMS_Merchant_v1_16_R2();
+                time = new NMS_Time_v1_16_R2();
             } break;
             case v1_16_R1:
             {
                 xp = new NMS_XP_v1_16_R1();
                 merchant = new NMS_Merchant_v1_16_R1();
+                time = new NMS_Time_v1_16_R1();
             } break;
             case v1_15_R1:
             {
                 xp = new NMS_XP_v1_15_R1();
                 merchant = new NMS_Merchant_v1_15_R1();
+                time = new NMS_Time_v1_15_R1();
             } break;
             case v1_14_R1:
             {
                 xp = new NMS_XP_v1_14_R1();
                 merchant = new NMS_Merchant_v1_14_R1();
+                time = new NMS_Time_v1_14_R1();
             } break;
             case v1_13_R2:
             {
                 xp = new NMS_XP_v1_13_R2();
+                time = new NMS_Time_v1_13_R2();
             } break;
             default:
             {
