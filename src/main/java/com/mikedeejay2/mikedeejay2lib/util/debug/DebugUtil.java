@@ -1,5 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.util.debug;
 
+import java.util.logging.Logger;
+
 /**
  * Util methods for debugging code
  *
@@ -15,5 +17,17 @@ public final class DebugUtil
     public static int getLineNumber()
     {
         return new Throwable().getStackTrace()[1].getLineNumber();
+    }
+
+    /**
+     * Log the current line number
+     */
+    public static void printLineNumber()
+    {
+        Logger.getLogger("Mikedeejay2Lib Debugger")
+            .warning(String.valueOf(
+                new Throwable()
+                    .getStackTrace()[1]
+                    .getLineNumber()));
     }
 }
