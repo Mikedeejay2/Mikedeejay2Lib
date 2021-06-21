@@ -5,6 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.nms.merchant.*;
 import com.mikedeejay2.mikedeejay2lib.nms.time.*;
 import com.mikedeejay2.mikedeejay2lib.nms.xpcalc.*;
 import com.mikedeejay2.mikedeejay2lib.util.version.VersionEnum;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Handles all Net Minecraft Server classes and code.
@@ -17,9 +18,9 @@ public class NMSHandler
     // The NMS version in an enum
     protected VersionEnum version;
 
-    protected NMS_XP xp;
-    protected NMS_Merchant merchant;
-    protected NMS_Time time;
+    protected @Nullable NMS_XP xp;
+    protected @Nullable NMS_Merchant merchant;
+    protected @Nullable NMS_Time time;
 
     public NMSHandler(BukkitPlugin plugin)
     {
@@ -33,6 +34,11 @@ public class NMSHandler
      */
     private void constructClasses()
     {
+        if(version == null)
+        {
+            plugin.getLogger().severe(String.format("The server's Minecraft version (%s) is not a valid version for this plugin. Errors may occur.", plugin.getMCVersion().getVersionString()));
+            return;
+        }
         switch(version)
         {
             case v1_16_R3:
@@ -77,17 +83,17 @@ public class NMSHandler
         }
     }
 
-    public NMS_XP getXP()
+    public @Nullable NMS_XP getXP()
     {
         return xp;
     }
 
-    public NMS_Merchant getMerchant()
+    public @Nullable NMS_Merchant getMerchant()
     {
         return merchant;
     }
 
-    public NMS_Time getTime()
+    public @Nullable NMS_Time getTime()
     {
         return time;
     }
