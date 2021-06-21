@@ -16,7 +16,7 @@ public class NMSHandler
 {
     protected final BukkitPlugin plugin;
     // The NMS version in an enum
-    protected VersionEnum version;
+    protected @Nullable VersionEnum version;
 
     protected @Nullable NMS_XP xp;
     protected @Nullable NMS_Merchant merchant;
@@ -36,7 +36,9 @@ public class NMSHandler
     {
         if(version == null)
         {
-            plugin.getLogger().severe(String.format("The server's Minecraft version (%s) is not a valid version for this plugin. Errors may occur.", plugin.getMCVersion().getVersionString()));
+            plugin.sendSevere(
+                String.format("The server's Minecraft version (%s) is not a valid version for this plugin. Errors may occur.",
+                              plugin.getMCVersion().getVersionString()));
             return;
         }
         switch(version)
@@ -78,7 +80,9 @@ public class NMSHandler
             } break;
             default:
             {
-                plugin.getLogger().severe(String.format("The server's Minecraft version (%s) is not a valid version for this plugin. Errors may occur.", plugin.getMCVersion().getVersionString()));
+                plugin.sendSevere(
+                    String.format("The server's Minecraft version (%s) is not a valid version for this plugin. Errors may occur.",
+                                  plugin.getMCVersion().getVersionString()));
             }
         }
     }
