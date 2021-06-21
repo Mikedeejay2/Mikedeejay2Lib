@@ -1,0 +1,96 @@
+package com.mikedeejay2.mikedeejay2lib.nms.merchant;
+
+import net.minecraft.world.entity.EntityExperienceOrb;
+import net.minecraft.world.entity.npc.EntityVillager;
+import net.minecraft.world.entity.npc.VillagerData;
+import net.minecraft.world.item.ItemStack;
+import net.minecraft.world.item.trading.IMerchant;
+import net.minecraft.world.entity.npc.EntityVillagerAbstract;
+import net.minecraft.world.item.trading.MerchantRecipe;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftAbstractVillager;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftEntity;
+import org.bukkit.craftbukkit.v1_17_R1.entity.CraftVillager;
+import org.bukkit.craftbukkit.v1_17_R1.inventory.CraftItemStack;
+import org.bukkit.craftbukkit.v1_17_R1.inventory.CraftMerchant;
+import org.bukkit.craftbukkit.v1_17_R1.inventory.CraftMerchantRecipe;
+
+import java.lang.reflect.Field;
+
+public class NMS_Merchant_v1_17_R1 implements NMS_Merchant
+{
+    @Override
+    public org.bukkit.entity.AbstractVillager getVillager(org.bukkit.inventory.Merchant merchant)
+    {
+        CraftMerchant cMerchant = (CraftMerchant) merchant;
+        IMerchant nmsMerchant = cMerchant.getMerchant();
+        if(!(nmsMerchant instanceof EntityVillagerAbstract)) return null;
+        EntityVillagerAbstract nmsAVillager = (EntityVillagerAbstract) nmsMerchant;
+        CraftAbstractVillager cVillager = (CraftAbstractVillager) CraftEntity.getEntity(nmsMerchant.getWorld().getCraftServer(), nmsAVillager);
+        return cVillager;
+    }
+
+    @Override
+    public void postProcess(org.bukkit.entity.Villager villager, org.bukkit.inventory.MerchantRecipe recipe)
+    {
+        EntityVillager nmsVillager = ((CraftVillager) villager).getHandle();
+        int i = 3 + nmsVillager.getRandom().nextInt(4);
+
+        villager.setVillagerExperience(villager.getVillagerExperience() + recipe.getVillagerExperience());
+        try
+        {
+            Field lastTraded = EntityVillager.class.getDeclaredField("bv");
+            lastTraded.setAccessible(true);
+            lastTraded.set(nmsVillager, nmsVillager.getTrader());
+        }
+        catch(NoSuchFieldException | IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        if (shouldLevelUp(villager)) {
+            try
+            {
+                // nmsVillager.bt = 40;
+                // nmsVillager.bu = true;
+                Field villagerField1 = EntityVillager.class.getDeclaredField("bt");
+                villagerField1.setAccessible(true);
+                villagerField1.set(nmsVillager, 40);
+                Field villagerField2 = EntityVillager.class.getDeclaredField("bu");
+                villagerField2.setAccessible(true);
+                villagerField2.set(nmsVillager, true);
+            }
+            catch(NoSuchFieldException | IllegalAccessException e)
+            {
+                e.printStackTrace();
+            }
+            i += 5;
+        }
+
+        if (recipe.hasExperienceReward()) {
+            nmsVillager.getWorld().addEntity(new EntityExperienceOrb(nmsVillager.getWorld(), nmsVillager.locX(), nmsVillager.locY() + 0.5D, nmsVillager.locZ(), i));
+        }
+    }
+
+    private boolean shouldLevelUp(org.bukkit.entity.Villager villager)
+    {
+        EntityVillager nmsVillager = ((CraftVillager) villager).getHandle();
+        int level = nmsVillager.getVillagerData().getLevel();
+
+        return VillagerData.d(level) && nmsVillager.getExperience() >= VillagerData.c(level);
+    }
+
+    @Override
+    public org.bukkit.inventory.ItemStack getBuyItem1(org.bukkit.inventory.MerchantRecipe recipe)
+    {
+        MerchantRecipe nmsRecipe = ((CraftMerchantRecipe) recipe).toMinecraft();
+        ItemStack item = nmsRecipe.getBuyItem1();
+        return CraftItemStack.asBukkitCopy(item);
+    }
+
+    @Override
+    public org.bukkit.inventory.ItemStack getBuyItem2(org.bukkit.inventory.MerchantRecipe recipe)
+    {
+        MerchantRecipe nmsRecipe = ((CraftMerchantRecipe) recipe).toMinecraft();
+        ItemStack item = nmsRecipe.getBuyItem2();
+        return CraftItemStack.asBukkitCopy(item);
+    }
+}

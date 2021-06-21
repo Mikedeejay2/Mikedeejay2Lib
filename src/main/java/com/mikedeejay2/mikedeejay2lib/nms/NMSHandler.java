@@ -43,6 +43,12 @@ public class NMSHandler
         }
         switch(version)
         {
+            case v1_17_R1:
+            {
+                xp = new NMS_XP_v1_17_R1();
+                merchant = new NMS_Merchant_v1_17_R1();
+                time = new NMS_Time_v1_17_R1();
+            } break;
             case v1_16_R3:
             {
                 xp = new NMS_XP_v1_16_R3();
@@ -77,6 +83,7 @@ public class NMSHandler
             {
                 xp = new NMS_XP_v1_13_R2();
                 time = new NMS_Time_v1_13_R2();
+                merchant = null; // Merchant is different in pre-1.14
             } break;
             default:
             {
