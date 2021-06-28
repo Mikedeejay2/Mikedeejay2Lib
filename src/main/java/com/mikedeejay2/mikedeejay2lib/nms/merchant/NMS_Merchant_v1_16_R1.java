@@ -32,7 +32,7 @@ public class NMS_Merchant_v1_16_R1 implements NMS_Merchant
         villager.setVillagerExperience(villager.getVillagerExperience() + recipe.getVillagerExperience());
         try
         {
-            Field lastTraded = EntityVillager.class.getDeclaredField("bv");
+            Field lastTraded = EntityVillager.class.getDeclaredField("bC");
             lastTraded.setAccessible(true);
             lastTraded.set(nmsVillager, nmsVillager.getTrader());
         }
@@ -45,10 +45,10 @@ public class NMS_Merchant_v1_16_R1 implements NMS_Merchant
             {
                 // nmsVillager.bt = 40;
                 // nmsVillager.bu = true;
-                Field villagerField1 = EntityVillager.class.getDeclaredField("bt");
+                Field villagerField1 = EntityVillager.class.getDeclaredField("bA");
                 villagerField1.setAccessible(true);
                 villagerField1.set(nmsVillager, 40);
-                Field villagerField2 = EntityVillager.class.getDeclaredField("bu");
+                Field villagerField2 = EntityVillager.class.getDeclaredField("bB");
                 villagerField2.setAccessible(true);
                 villagerField2.set(nmsVillager, true);
             }
