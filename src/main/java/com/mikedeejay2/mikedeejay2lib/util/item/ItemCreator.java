@@ -17,11 +17,11 @@ import java.util.UUID;
 /**
  * A util class for creating items.
  * <p>
- * This is not recommended for use and is deprecated. Instead of using <tt>ItemCreator</tt>,
+ * This is not recommended for use and is deprecated. Instead of using <code>ItemCreator</code>,
  * please instead use {@link ItemBuilder}, as it's much more flexible and thought out.
  * <p>
  * This is only being kept here for legacy plugins or if for some reason this class is preferred
- * over <tt>ItemBuilder</tt>
+ * over <code>ItemBuilder</code>
  *
  * @deprecated Use {@link ItemBuilder} instead, see note above.
  * @see ItemBuilder

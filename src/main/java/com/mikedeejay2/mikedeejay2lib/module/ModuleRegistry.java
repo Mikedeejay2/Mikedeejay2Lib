@@ -75,7 +75,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
     }
 
     /**
-     * Unregister a <tt>Module</tt> from the registry by the name of the module
+     * Unregister a <code>Module</code> from the registry by the name of the module
      * <p>
      * The module must be registered and enabled to be unregistered.
      *
@@ -92,7 +92,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
     }
 
     /**
-     * Unregister a <tt>Module</tt> based off of the module's <tt>Class</tt>.
+     * Unregister a <code>Module</code> based off of the module's <code>Class</code>.
      * <p>
      * It must be known that a module of that class exists in the registry, an exception will be thrown if not.
      * <p>
@@ -111,7 +111,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
     }
 
     /**
-     * Unregister a <tt>Module</tt> based off of the module's instance.
+     * Unregister a <code>Module</code> based off of the module's instance.
      * <p>
      * The module must be registered and enabled to be unregistered.
      *
@@ -127,7 +127,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
     }
 
     /**
-     * Enable a <tt>Module</tt>. {@link ModuleRegistry#register(Module)} already does this.
+     * Enable a <code>Module</code>. {@link ModuleRegistry#register(Module)} already does this.
      * <p>
      * {@link ModuleRegistry#register(Module)} already does this
      *
@@ -156,7 +156,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
     }
 
     /**
-     * Disable a <tt>Module</tt>.
+     * Disable a <code>Module</code>.
      * <p>
      * The module must be registered and enabled to be disabled.
      * <p>
@@ -183,10 +183,10 @@ public class ModuleRegistry implements ModuleRegister<Module>
     }
 
     /**
-     * Get a <tt>Module</tt> based off of the module's name and class type
+     * Get a <code>Module</code> based off of the module's name and class type
      *
      * @param name        The name of the module to get
-     * @param moduleClass The module's <tt>Class</tt> to find
+     * @param moduleClass The module's <code>Class</code> to find
      * @param <T>         The data type of the module
      * @return The requested module
      */
@@ -208,7 +208,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
     }
 
     /**
-     * Get a <tt>Module</tt> based off of the module's name
+     * Get a <code>Module</code> based off of the module's name
      *
      * @param name The name of the module to get
      * @return The requested module
@@ -231,9 +231,9 @@ public class ModuleRegistry implements ModuleRegister<Module>
     }
 
     /**
-     * Get a <tt>Module</tt> based off of the module's class
+     * Get a <code>Module</code> based off of the module's class
      *
-     * @param moduleClass The <tt>Class</tt> of the module to get
+     * @param moduleClass The <code>Class</code> of the module to get
      * @param <T>         The data type of the module
      * @return The requested module
      */
@@ -252,7 +252,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
     }
 
     /**
-     * Get whether this registry contains a <tt>Module</tt> with a specified name
+     * Get whether this registry contains a <code>Module</code> with a specified name
      *
      * @param name The name to attempt to find
      * @return Whether this registry contains a module of the specified name or not
@@ -268,9 +268,9 @@ public class ModuleRegistry implements ModuleRegister<Module>
     }
 
     /**
-     * Get whether this registry contains a <tt>Module</tt> with a specified class
+     * Get whether this registry contains a <code>Module</code> with a specified class
      *
-     * @param moduleClass The <tt>Class</tt> of the module to find
+     * @param moduleClass The <code>Class</code> of the module to find
      * @return Whether this registry contains a module of the specified class or not
      */
     @Override
@@ -287,10 +287,10 @@ public class ModuleRegistry implements ModuleRegister<Module>
     }
 
     /**
-     * Get whether this registry contains a <tt>Module</tt> with a specified name and class
+     * Get whether this registry contains a <code>Module</code> with a specified name and class
      *
      * @param name        The name to attempt to find
-     * @param moduleClass The <tt>Class</tt> of the module to find
+     * @param moduleClass The <code>Class</code> of the module to find
      * @return Whether this registry contains a module of the specified name and class or not
      */
     @Override
@@ -306,7 +306,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
     }
 
     /**
-     * Add a <tt>Module</tt> to the modules Set
+     * Add a <code>Module</code> to the modules Set
      *
      * @param module The module to add
      * @param <T>    The data type of the module
@@ -317,7 +317,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
     }
 
     /**
-     * Remove a <tt>Module</tt> from the modules Set
+     * Remove a <code>Module</code> from the modules Set
      *
      * @param module The module to remove
      */
@@ -327,7 +327,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
     }
 
     /**
-     * Unregister all <tt>Modules</tt> from this registry. This calls {@link Module#onDisable()} for all modules
+     * Unregister all <code>Modules</code> from this registry. This calls {@link Module#onDisable()} for all modules
      * as well.
      */
     @Override
@@ -343,7 +343,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
     }
 
     /**
-     * Get an {@link ImmutableSet} of all of the <tt>Modules</tt> in this registry
+     * Get an {@link ImmutableSet} of all of the <code>Modules</code> in this registry
      *
      * @return A set of all modules
      */

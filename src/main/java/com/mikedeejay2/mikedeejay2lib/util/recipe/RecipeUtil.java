@@ -51,7 +51,7 @@ public final class RecipeUtil
     }
 
     /**
-     * Preload this <tt>RecipeUtil</tt>.
+     * Preload this <code>RecipeUtil</code>.
      * <p>
      * Preloading is the act of prematurely organizing all crafting recipes for much more efficient
      * access later on. The downside to preloading is that any recipes added after the preload won't
@@ -59,7 +59,7 @@ public final class RecipeUtil
      * <p>
      * Preload takes an average of 6ms, but runs asynchronously.
      *
-     * @param plugin A reference to a <tt>BukkitPlugin</tt>
+     * @param plugin A reference to a <code>BukkitPlugin</code>
      * @param delay  The delay (in ticks) between running this method and the preload occurring.
      *               A delay may want to be specified to wait for other plugins to register their
      *               recipes.

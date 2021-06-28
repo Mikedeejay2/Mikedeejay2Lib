@@ -10,7 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * <tt>ChatSystem</tt> is a container of objects that help to make printing and
+ * <code>ChatSystem</code> is a container of objects that help to make printing and
  * animating text easier
  *
  * @author Mikedeejay2
@@ -30,10 +30,10 @@ public class ChatSystem
     }
 
     /**
-     * Add an existing <tt>ChatSlide</tt> to this <tt>ChatSystem</tt>
+     * Add an existing <code>ChatSlide</code> to this <code>ChatSystem</code>
      *
      * @param slide The slide to add
-     * @return The current <tt>ChatSystem</tt>
+     * @return The current <code>ChatSystem</code>
      */
     public ChatSystem addSlide(ChatSlide slide)
     {
@@ -42,11 +42,11 @@ public class ChatSystem
     }
 
     /**
-     * Add an existing <tt>ChatSlide</tt> to this <tt>ChatSystem</tt> at a specific index
+     * Add an existing <code>ChatSlide</code> to this <code>ChatSystem</code> at a specific index
      *
      * @param slide The slide to add
-     * @param index the index to add the <tt>ChatSlide</tt> at
-     * @return The current <tt>ChatSystem</tt>
+     * @param index the index to add the <code>ChatSlide</code> at
+     * @return The current <code>ChatSystem</code>
      */
     public ChatSystem addSlide(ChatSlide slide, int index)
     {
@@ -55,9 +55,9 @@ public class ChatSystem
     }
 
     /**
-     * Add a new <tt>ChatSlide</tt> to this <tt>ChatSystem</tt>
+     * Add a new <code>ChatSlide</code> to this <code>ChatSystem</code>
      *
-     * @return The newly created <tt>ChatSlide</tt>
+     * @return The newly created <code>ChatSlide</code>
      */
     public ChatSlide createSlide()
     {
@@ -67,10 +67,10 @@ public class ChatSystem
     }
 
     /**
-     * Add a new <tt>ChatSlide</tt> to this <tt>ChatSystem</tt> at a specific index
+     * Add a new <code>ChatSlide</code> to this <code>ChatSystem</code> at a specific index
      *
-     * @param index The index to add the <tt>ChatSlide</tt> to
-     * @return The newly created <tt>ChatSlide</tt>
+     * @param index The index to add the <code>ChatSlide</code> to
+     * @return The newly created <code>ChatSlide</code>
      */
     public ChatSlide createSlide(int index)
     {
@@ -80,10 +80,10 @@ public class ChatSystem
     }
 
     /**
-     * Remove a <tt>ChatSlide</tt> at a specified index
+     * Remove a <code>ChatSlide</code> at a specified index
      *
-     * @param index The index to remove from this <tt>ChatSystem</tt>
-     * @return The current <tt>ChatSystem</tt>
+     * @param index The index to remove from this <code>ChatSystem</code>
+     * @return The current <code>ChatSystem</code>
      */
     public ChatSystem removeSlide(int index)
     {
@@ -92,10 +92,10 @@ public class ChatSystem
     }
 
     /**
-     * Remove a <tt>ChatSlide</tt> based off of an instance of the slide
+     * Remove a <code>ChatSlide</code> based off of an instance of the slide
      *
-     * @param slide A reference to the <tt>ChatSlide</tt> to remove
-     * @return The current <tt>ChatSystem</tt>
+     * @param slide A reference to the <code>ChatSlide</code> to remove
+     * @return The current <code>ChatSystem</code>
      */
     public ChatSystem removeSlide(ChatSlide slide)
     {
@@ -104,9 +104,9 @@ public class ChatSystem
     }
 
     /**
-     * See whether this <tt>ChatSystem</tt> contains a specified <tt>ChatSlide</tt> instance
+     * See whether this <code>ChatSystem</code> contains a specified <code>ChatSlide</code> instance
      *
-     * @param slide The <tt>ChatSlide</tt> instance to search for
+     * @param slide The <code>ChatSlide</code> instance to search for
      * @return Whether the instance was found or not
      */
     public boolean containsSlide(ChatSlide slide)
@@ -115,10 +115,10 @@ public class ChatSystem
     }
 
     /**
-     * Get a <tt>ChatSlide</tt> based off of a list index
+     * Get a <code>ChatSlide</code> based off of a list index
      *
      * @param index The index to get
-     * @return The <tt>ChatSlide</tt> at the specified index
+     * @return The <code>ChatSlide</code> at the specified index
      */
     public ChatSlide getSlide(int index)
     {
@@ -126,9 +126,9 @@ public class ChatSystem
     }
 
     /**
-     * Reset the slides list in this <tt>ChatSystem</tt>
+     * Reset the slides list in this <code>ChatSystem</code>
      *
-     * @return The current <tt>ChatSystem</tt>
+     * @return The current <code>ChatSystem</code>
      */
     public ChatSystem resetSlides()
     {
@@ -137,10 +137,10 @@ public class ChatSystem
     }
 
     /**
-     * Print this <tt>ChatSystem</tt> to one or more <tt>CommandSenders</tt>
+     * Print this <code>ChatSystem</code> to one or more <code>CommandSenders</code>
      *
-     * @param receivers The <tt>CommandSenders</tt> that this <tt>ChatSystem</tt> should be printed to
-     * @return The current <tt>ChatSystem</tt>
+     * @param receivers The <code>CommandSenders</code> that this <code>ChatSystem</code> should be printed to
+     * @return The current <code>ChatSystem</code>
      */
     public ChatSystem print(CommandSender... receivers)
     {
@@ -150,9 +150,9 @@ public class ChatSystem
     }
 
     /**
-     * Print this <tt>ChatSystem</tt> to console
+     * Print this <code>ChatSystem</code> to console
      *
-     * @return The current <tt>ChatSystem</tt>
+     * @return The current <code>ChatSystem</code>
      */
     public ChatSystem printToConsole()
     {
@@ -160,9 +160,9 @@ public class ChatSystem
     }
 
     /**
-     * Print this <tt>ChatSystem</tt> to all players on the server
+     * Print this <code>ChatSystem</code> to all players on the server
      *
-     * @return The current <tt>ChatSystem</tt>
+     * @return The current <code>ChatSystem</code>
      */
     public ChatSystem broadcast()
     {
@@ -170,9 +170,9 @@ public class ChatSystem
     }
 
     /**
-     * Get all of the <tt>ChatSlides</tt> that are added to this <tt>ChatSystem</tt>
+     * Get all of the <code>ChatSlides</code> that are added to this <code>ChatSystem</code>
      *
-     * @return A list of <tt>ChatSlides</tt>
+     * @return A list of <code>ChatSlides</code>
      */
     public List<ChatSlide> getSlides()
     {
@@ -180,9 +180,9 @@ public class ChatSystem
     }
 
     /**
-     * See whether this <tt>ChatSystem</tt> is currently printing or not
+     * See whether this <code>ChatSystem</code> is currently printing or not
      *
-     * @return Whether this <tt>ChatSystem</tt> is currently printing
+     * @return Whether this <code>ChatSystem</code> is currently printing
      */
     public boolean isPrinting()
     {
@@ -193,7 +193,7 @@ public class ChatSystem
     /**
      * Cancel the current print if a print is in progress
      *
-     * @return Whether this <tt>ChatSystem</tt> is currently printing
+     * @return Whether this <code>ChatSystem</code> is currently printing
      */
     public ChatSystem cancelPrint()
     {

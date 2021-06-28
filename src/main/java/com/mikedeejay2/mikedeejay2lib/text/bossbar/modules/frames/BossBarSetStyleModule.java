@@ -4,7 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.text.bossbar.BossBarSystem;
 import org.bukkit.boss.BarStyle;
 
 /**
- * <tt>BossBarModule</tt> for setting the style of a boss bar through frames.
+ * <code>BossBarModule</code> for setting the style of a boss bar through frames.
  *
  * @author Mikedeejay2
  */

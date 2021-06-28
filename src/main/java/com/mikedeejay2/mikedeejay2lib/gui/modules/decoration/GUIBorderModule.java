@@ -25,7 +25,7 @@ public class GUIBorderModule implements GUIModule
     /**
      * Get the item that will be used for the border item
      *
-     * @return The <tt>GUIItem</tt> that will be used
+     * @return The <code>GUIItem</code> that will be used
      */
     public GUIItem getBorderItem()
     {
@@ -33,7 +33,7 @@ public class GUIBorderModule implements GUIModule
     }
 
     /**
-     * Set the <tt>GUIItem</tt> that the border will use
+     * Set the <code>GUIItem</code> that the border will use
      *
      * @param borderItem GUIItem for the border to use
      */
@@ -43,7 +43,7 @@ public class GUIBorderModule implements GUIModule
     }
 
     /**
-     * Set the <tt>GUIItem</tt> that the border will use
+     * Set the <code>GUIItem</code> that the border will use
      *
      * @param borderItem ItemStack for the border to use
      */

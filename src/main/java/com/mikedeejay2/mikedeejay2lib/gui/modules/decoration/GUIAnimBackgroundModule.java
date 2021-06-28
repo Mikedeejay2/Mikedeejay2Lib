@@ -53,7 +53,7 @@ public class GUIAnimBackgroundModule implements GUIModule
     /**
      * Get the item that will be used for the background item
      *
-     * @return The <tt>GUIItem</tt> that will be used
+     * @return The <code>GUIItem</code> that will be used
      */
     public AnimatedGUIItem getBackgroundItem()
     {
@@ -61,7 +61,7 @@ public class GUIAnimBackgroundModule implements GUIModule
     }
 
     /**
-     * Set the <tt>GUIItem</tt> that the background will use
+     * Set the <code>GUIItem</code> that the background will use
      *
      * @param backgroundItem GUIItem for the background to use
      */

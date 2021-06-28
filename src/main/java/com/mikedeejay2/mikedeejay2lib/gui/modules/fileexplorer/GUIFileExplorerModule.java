@@ -76,7 +76,7 @@ public class GUIFileExplorerModule extends GUIListModule
     }
 
     /**
-     * Overridden <tt>onOpenHead</tt> that fills the file explorer with items
+     * Overridden <code>onOpenHead</code> that fills the file explorer with items
      *
      * @param player The player that is viewing the GUI
      * @param gui    The GUI

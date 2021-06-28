@@ -43,7 +43,7 @@ public class PlayerGUI
      * but it's not confirmed that this GUI is currently open. Use {@link PlayerGUI#isGuiOpened()}
      * to get the opened status of the GUI.
      *
-     * @return This player's current <tt>GUIContainer</tt>
+     * @return This player's current <code>GUIContainer</code>
      */
     public GUIContainer getGUI()
     {
@@ -93,7 +93,7 @@ public class PlayerGUI
     }
 
     /**
-     * Get the player that this <tt>PlayerGUI</tt> belongs to
+     * Get the player that this <code>PlayerGUI</code> belongs to
      *
      * @return The player of this player GUI
      */
@@ -113,12 +113,12 @@ public class PlayerGUI
     }
 
     /**
-     * Get a <tt>NavigationHolder</tt> for this player. This
-     * method will never return null, if the <tt>NavigationHolder</tt>
+     * Get a <code>NavigationHolder</code> for this player. This
+     * method will never return null, if the <code>NavigationHolder</code>
      * doesn't exist it will be made
      *
-     * @param navigationID The ID of the <tt>NavigationHolder</tt> to get
-     * @return The requested <tt>NavigationHolder</tt>
+     * @param navigationID The ID of the <code>NavigationHolder</code> to get
+     * @return The requested <code>NavigationHolder</code>
      */
     public NavigationHolder<GUIContainer> getNavigation(String navigationID)
     {
@@ -141,7 +141,7 @@ public class PlayerGUI
     }
 
     /**
-     * Get a list a map of String (Navigation Holder name) to <tt>NavigationHolder</tt>
+     * Get a list a map of String (Navigation Holder name) to <code>NavigationHolder</code>
      *
      * @return The map of systems
      */

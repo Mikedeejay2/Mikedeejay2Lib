@@ -3,7 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.item;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 
 /**
- * Stores the location of a <tt>GUIItem</tt> inside of a <tt>GUIContainer</tt>.
+ * Stores the location of a <code>GUIItem</code> inside of a <code>GUIContainer</code>.
  *
  * @author Mikedeejay2
  */
@@ -24,7 +24,7 @@ public class GUIItemLocation
     }
 
     /**
-     * Get the <tt>GUILayer</tt> of this item
+     * Get the <code>GUILayer</code> of this item
      *
      * @return The layer of this item
      */
@@ -34,7 +34,7 @@ public class GUIItemLocation
     }
 
     /**
-     * Set the <tt>GUILayer</tt> of this item
+     * Set the <code>GUILayer</code> of this item
      *
      * @param layer The new layer of this item
      */

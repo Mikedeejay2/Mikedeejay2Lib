@@ -12,7 +12,7 @@ public final class HeadUtil
      * many different types of file types in a large switch statement.
      *
      * @param fileType The file type to search for
-     * @return The <tt>Base64Head</tt> that was found
+     * @return The <code>Base64Head</code> that was found
      */
     public static Base64Head getHeadFromFileExtension(String fileType)
     {

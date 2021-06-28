@@ -14,7 +14,7 @@ import java.lang.reflect.Field;
 /**
  * Main class for Mikedeejay2Lib.
  * <p>
- * <tt>BukkitPlugin</tt> is a robust plugin class that extends {@link EnhancedJavaPlugin} to
+ * <code>BukkitPlugin</code> is a robust plugin class that extends {@link EnhancedJavaPlugin} to
  * add new functions. Check source code on Github to find all features, planned additions,
  * bugs, etc.
  * <p>

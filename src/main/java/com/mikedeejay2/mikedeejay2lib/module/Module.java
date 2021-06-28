@@ -38,7 +38,7 @@ public abstract class Module implements ModuleInterface
     }
 
     /**
-     * Get whether this <tt>Module</tt> is enabled or not
+     * Get whether this <code>Module</code> is enabled or not
      *
      * @return The current enabled state
      */

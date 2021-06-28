@@ -29,7 +29,7 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Handle an interaction between a <tt>Player</tt> and a <tt>GUIContainer</tt> to properly move an item
+     * Handle an interaction between a <code>Player</code> and a <code>GUIContainer</code> to properly move an item
      *
      * @param event The event of the interaction
      * @param gui   The GUI that the player interacted with
@@ -37,9 +37,9 @@ public abstract class GUIInteractHandler
     public abstract void handleInteraction(InventoryClickEvent event, GUIContainer gui);
 
     /**
-     * Add a <tt>GUIInteractExecutor</tt> that will be executed upon the handling of an interaction
+     * Add a <code>GUIInteractExecutor</code> that will be executed upon the handling of an interaction
      *
-     * @param executor The <tt>GUIInteractExecutor</tt> to add
+     * @param executor The <code>GUIInteractExecutor</code> to add
      */
     public void addExecutor(GUIInteractExecutor executor)
     {
@@ -47,9 +47,9 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Returns whether this handler executes a <tt>GUIInteractExecutor</tt> of a class's type
+     * Returns whether this handler executes a <code>GUIInteractExecutor</code> of a class's type
      *
-     * @param executorClass The class of the <tt>GUIInteractExecutor</tt> to search for
+     * @param executorClass The class of the <code>GUIInteractExecutor</code> to search for
      * @return Whether an executor of the specified class was found or not
      */
     public boolean containsExecutor(Class<? extends GUIInteractExecutor> executorClass)
@@ -62,7 +62,7 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Returns whether this handler executes a <tt>GUIInteractExecutor</tt> of an executor's instance
+     * Returns whether this handler executes a <code>GUIInteractExecutor</code> of an executor's instance
      *
      * @param executor The executor to search for
      * @return Whether an executor of the specified instance was found or not
@@ -73,9 +73,9 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Remove a <tt>GUIInteractExecutor</tt> from this handler's executor list
+     * Remove a <code>GUIInteractExecutor</code> from this handler's executor list
      *
-     * @param executorClass The <tt>GUIInteractExecutor</tt> class to find and remove from the list
+     * @param executorClass The <code>GUIInteractExecutor</code> class to find and remove from the list
      */
     public void removeExecutor(Class<? extends GUIInteractExecutor> executorClass)
     {
@@ -88,9 +88,9 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Remove a <tt>GUIInteractExecutor</tt> from this handler's executor list
+     * Remove a <code>GUIInteractExecutor</code> from this handler's executor list
      *
-     * @param executor The <tt>GUIInteractExecutor</tt> object instance to find and remove from the list
+     * @param executor The <code>GUIInteractExecutor</code> object instance to find and remove from the list
      */
     public void removeExecutor(GUIInteractExecutor executor)
     {
@@ -98,7 +98,7 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Clear all <tt>GUIInteractExecutors</tt> from this handler's executor list
+     * Clear all <code>GUIInteractExecutors</code> from this handler's executor list
      */
     public void resetExecutors()
     {
@@ -106,9 +106,9 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Get the list of <tt>GUIInteractExecutors</tt> that this handler executes
+     * Get the list of <code>GUIInteractExecutors</code> that this handler executes
      *
-     * @return The list of <tt>GUIInteractExecutors</tt>
+     * @return The list of <code>GUIInteractExecutors</code>
      */
     public List<GUIInteractExecutor> getExecutors()
     {
@@ -116,11 +116,11 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Get a <tt>GUIInteractExecutor</tt> from this handlers executor list
+     * Get a <code>GUIInteractExecutor</code> from this handlers executor list
      *
-     * @param executorClass The <tt>GUIInteractExecutor</tt> class to find and get from the list
-     * @param <T> The type of <tt>GUIInteractExecutor</tt>, specified from the given class
-     * @return The requested <tt>GUIInteractExecutor</tt>
+     * @param executorClass The <code>GUIInteractExecutor</code> class to find and get from the list
+     * @param <T> The type of <code>GUIInteractExecutor</code>, specified from the given class
+     * @return The requested <code>GUIInteractExecutor</code>
      */
     public <T extends GUIInteractExecutor> T getExecutor(Class<T> executorClass)
     {
@@ -132,15 +132,15 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Executes a specific <tt>InventoryAction</tt> and sends the action to <tt>GUIInteractExecutor</tt>
+     * Executes a specific <code>InventoryAction</code> and sends the action to <code>GUIInteractExecutor</code>
      *
-     * @param player The <tt>Player</tt> performing the action
-     * @param inventory The <tt>Inventory</tt> that the action is being performed in
+     * @param player The <code>Player</code> performing the action
+     * @param inventory The <code>Inventory</code> that the action is being performed in
      * @param slot The slot that the action is being performed on
-     * @param action The <tt>InventoryAction</tt> that is being executed
-     * @param event The original <tt>InventoryClickEvent</tt>
+     * @param action The <code>InventoryAction</code> that is being executed
+     * @param event The original <code>InventoryClickEvent</code>
      * @param gui The GUI that the action is being performed in
-     * @param layer The <tt>GUILayer</tt> that the action should be performed on
+     * @param layer The <code>GUILayer</code> that the action should be performed on
      */
     public void executeAction(Player player, Inventory inventory, int slot, InventoryAction action, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {

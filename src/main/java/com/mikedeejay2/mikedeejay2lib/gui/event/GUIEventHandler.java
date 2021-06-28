@@ -7,9 +7,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Holds all <tt>GUIEvents</tt> in a <tt>GUIItem</tt>. This class only serves the purpose
- * of holding multiple <tt>GUIEvents</tt> in a <tt>GUIItem</tt> and activating the events
- * when a player clicks on the <tt>GUIItem</tt>.
+ * Holds all <code>GUIEvents</code> in a <code>GUIItem</code>. This class only serves the purpose
+ * of holding multiple <code>GUIEvents</code> in a <code>GUIItem</code> and activating the events
+ * when a player clicks on the <code>GUIItem</code>.
  *
  * @author Mikedeejay2
  */
@@ -24,9 +24,9 @@ public class GUIEventHandler implements Cloneable
     }
 
     /**
-     * Called when a player clicks on the parent <tt>GUIItem</tt>. This method iterates
-     * through all of the <tt>GUIEvents</tt> that are held in the <tt>events</tt> list
-     * and runs their <tt>execute()</tt> method.
+     * Called when a player clicks on the parent <code>GUIItem</code>. This method iterates
+     * through all of the <code>GUIEvents</code> that are held in the <code>events</code> list
+     * and runs their <code>execute()</code> method.
      *
      * @param event The event of the click
      * @param gui   The GUI that this event took place in
@@ -56,7 +56,7 @@ public class GUIEventHandler implements Cloneable
     }
 
     /**
-     * Add a <tt>GUIEvent</tt> to this object that will be activated upon click
+     * Add a <code>GUIEvent</code> to this object that will be activated upon click
      *
      * @param event The event to add
      */
@@ -76,7 +76,7 @@ public class GUIEventHandler implements Cloneable
     }
 
     /**
-     * Returns whether this object holds the <tt>GUIEvent</tt>
+     * Returns whether this object holds the <code>GUIEvent</code>
      *
      * @param event The event to check for
      * @return Whether this object holds the event
@@ -102,7 +102,7 @@ public class GUIEventHandler implements Cloneable
     }
 
     /**
-     * Returns whether this object holds a <tt>GUIEvent</tt> of the specified class
+     * Returns whether this object holds a <code>GUIEvent</code> of the specified class
      *
      * @param eventClass The event class to search for
      * @return Whether this object holds the event
@@ -118,11 +118,11 @@ public class GUIEventHandler implements Cloneable
     }
 
     /**
-     * Attempts to get a <tt>GUIEvent</tt> of the specified class
+     * Attempts to get a <code>GUIEvent</code> of the specified class
      *
      * @param eventClass The event class to search for
-     * @param <T> The <tt>GUIEvent</tt> type, from given class
-     * @return The <tt>GUIEvent</tt> of the class type if it exists, null if it doesn't
+     * @param <T> The <code>GUIEvent</code> type, from given class
+     * @return The <code>GUIEvent</code> of the class type if it exists, null if it doesn't
      */
     public <T extends GUIEvent> T getEvent(Class<T> eventClass)
     {
@@ -135,10 +135,10 @@ public class GUIEventHandler implements Cloneable
     }
 
     /**
-     * Get a <tt>GUIEvent</tt> based on the index that it's located in
+     * Get a <code>GUIEvent</code> based on the index that it's located in
      *
      * @param index The index of the event to get
-     * @return The <tt>GUIEvent</tt> contained within the index
+     * @return The <code>GUIEvent</code> contained within the index
      */
     public GUIEvent getEvent(int index)
     {

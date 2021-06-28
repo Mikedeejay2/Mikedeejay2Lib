@@ -140,7 +140,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     /**
      * Sends the command sender (player or console) a formatted message
      *
-     * @param sender  Input <tt>CommandSender</tt> that will receive the message
+     * @param sender  Input <code>CommandSender</code> that will receive the message
      * @param message The message to be printed (will be formatted with colors)
      */
     @Override
@@ -321,8 +321,8 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * tab completer will be applied to the name of the command specified.
      *
      * @param name      The name of the command to register
-     * @param executor  The <tt>CommandExecutor</tt> to register to the command
-     * @param completer The <tt>TabCompleter</tt> to register to the command
+     * @param executor  The <code>CommandExecutor</code> to register to the command
+     * @param completer The <code>TabCompleter</code> to register to the command
      */
     @Override
     public void registerCommand(String name, CommandExecutor executor, TabCompleter completer)
@@ -338,7 +338,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * applied to the name of the command specified.
      *
      * @param name      The name of the command to register
-     * @param executor  The <tt>TabExecutor</tt> to register to the command
+     * @param executor  The <code>TabExecutor</code> to register to the command
      */
     @Override
     public void registerCommand(String name, TabExecutor executor)
@@ -354,7 +354,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * of the command specified.
      *
      * @param name     The name of the command to register
-     * @param executor The <tt>CommandExecutor</tt> to register to the command
+     * @param executor The <code>CommandExecutor</code> to register to the command
      */
     @Override
     public void registerCommand(String name, CommandExecutor executor)
@@ -369,7 +369,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * the name of the command specified.
      *
      * @param name      The name of the command to register
-     * @param completer The <tt>TabCompleter</tt> to register to the command
+     * @param completer The <code>TabCompleter</code> to register to the command
      */
     @Override
     public void registerTabCompleter(String name, TabCompleter completer)
@@ -383,7 +383,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * Register a {@link TabCommandBase} to the server. Information contained in
      * {@link CommandInfo} will be used to register the command.
      *
-     * @param command The <tt>TabCommandBase</tt> to register to the command
+     * @param command The <code>TabCommandBase</code> to register to the command
      */
     @Override
     public void registerCommand(TabCommandBase command)
@@ -399,7 +399,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * Register a {@link CommandBase} to the server. Information contained in
      * {@link CommandInfo} will be used to register the command.
      *
-     * @param command The <tt>CommandBase</tt> to register to the command
+     * @param command The <code>CommandBase</code> to register to the command
      */
     @Override
     public void registerCommand(CommandBase command)
@@ -414,7 +414,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * Register a {@link TabBase} to the server. Information contained in
      * {@link CommandInfo} will be used to register to the command.
      *
-     * @param completer The <tt>TabBase</tt> to register to the command
+     * @param completer The <code>TabBase</code> to register to the command
      */
     @Override
     public void registerTabCompleter(TabBase completer)
@@ -516,7 +516,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     }
 
     /**
-     * Method to retrieve the class loader from the original <tt>JavaPlugin</tt>.
+     * Method to retrieve the class loader from the original <code>JavaPlugin</code>.
      *
      * @return The retrieved class loader
      */
@@ -536,9 +536,9 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     }
 
     /**
-     * Get the <tt>ClassLoader</tt> for this plugin
+     * Get the <code>ClassLoader</code> for this plugin
      *
-     * @return The <tt>ClassLoader</tt> for this plugin
+     * @return The <code>ClassLoader</code> for this plugin
      */
     public ClassLoader classLoader()
     {

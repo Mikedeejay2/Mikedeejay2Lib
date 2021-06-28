@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A class that acts as a container for a single "slide" for a <tt>ChatSystem</tt>
+ * A class that acts as a container for a single "slide" for a <code>ChatSystem</code>
  *
  * @author Mikedeejay2
  */
@@ -34,10 +34,10 @@ public class ChatSlide
     }
 
     /**
-     * Add an existing <tt>ChatSection</tt> to this <tt>ChatSlide</tt>
+     * Add an existing <code>ChatSection</code> to this <code>ChatSlide</code>
      *
-     * @param section The <tt>ChatSection</tt> to add
-     * @return The current <tt>ChatSlide</tt>
+     * @param section The <code>ChatSection</code> to add
+     * @return The current <code>ChatSlide</code>
      */
     public ChatSlide addSection(ChatSection section)
     {
@@ -46,11 +46,11 @@ public class ChatSlide
     }
 
     /**
-     * Add an existing <tt>ChatSection</tt> to this <tt>ChatSlide</tt> at a specified index
+     * Add an existing <code>ChatSection</code> to this <code>ChatSlide</code> at a specified index
      *
-     * @param section The <tt>ChatSection</tt> to add
+     * @param section The <code>ChatSection</code> to add
      * @param index   The index to add to
-     * @return The current <tt>ChatSlide</tt>
+     * @return The current <code>ChatSlide</code>
      */
     public ChatSlide addSection(ChatSection section, int index)
     {
@@ -59,9 +59,9 @@ public class ChatSlide
     }
 
     /**
-     * Create a new <tt>ChatSection</tt> and add it to this <tt>ChatSlide</tt>
+     * Create a new <code>ChatSection</code> and add it to this <code>ChatSlide</code>
      *
-     * @return The newly created <tt>ChatSection</tt>
+     * @return The newly created <code>ChatSection</code>
      */
     public ChatSection createSection()
     {
@@ -71,7 +71,7 @@ public class ChatSlide
     }
 
     /**
-     * Get a <tt>ChatSection</tt> based off of the index of the section
+     * Get a <code>ChatSection</code> based off of the index of the section
      *
      * @param index The index of the section to get
      * @return The requested section
@@ -82,10 +82,10 @@ public class ChatSlide
     }
 
     /**
-     * Create a new <tt>ChatSection</tt> and add it to this <tt>ChatSlide</tt> at a specified index
+     * Create a new <code>ChatSection</code> and add it to this <code>ChatSlide</code> at a specified index
      *
-     * @param index The index to add the new <tt>ChatSection</tt> to
-     * @return The newly created <tt>ChatSection</tt>
+     * @param index The index to add the new <code>ChatSection</code> to
+     * @return The newly created <code>ChatSection</code>
      */
     public ChatSection createSection(int index)
     {
@@ -95,10 +95,10 @@ public class ChatSlide
     }
 
     /**
-     * Get the period of this <tt>ChatSlide</tt>. <p>
+     * Get the period of this <code>ChatSlide</code>. <p>
      * Period is the amount of time between this slide and the next slide.
      *
-     * @return The period of this <tt>ChatSlide</tt>
+     * @return The period of this <code>ChatSlide</code>
      */
     public long getPeriod()
     {
@@ -106,11 +106,11 @@ public class ChatSlide
     }
 
     /**
-     * Set the period of this <tt>ChatSlide</tt>. <p>
+     * Set the period of this <code>ChatSlide</code>. <p>
      * Period is the amount of time between this slide and the next slide.
      *
      * @param period The new period to use
-     * @return The current <tt>ChatSlide</tt>
+     * @return The current <code>ChatSlide</code>
      */
     public ChatSlide setPeriod(long period)
     {
@@ -119,10 +119,10 @@ public class ChatSlide
     }
 
     /**
-     * Print this <tt>ChatSlide</tt> to one or more <tt>CommandSenders</tt>
+     * Print this <code>ChatSlide</code> to one or more <code>CommandSenders</code>
      *
-     * @param receivers The array of <tt>CommandSenders</tt> that will receive this message
-     * @return The current <tt>ChatSlide</tt>
+     * @param receivers The array of <code>CommandSenders</code> that will receive this message
+     * @return The current <code>ChatSlide</code>
      */
     public ChatSlide print(CommandSender... receivers)
     {
@@ -134,9 +134,9 @@ public class ChatSlide
     }
 
     /**
-     * Broadcast this <tt>ChatSlide</tt> to all players on the server
+     * Broadcast this <code>ChatSlide</code> to all players on the server
      *
-     * @return The current <tt>ChatSlide</tt>
+     * @return The current <code>ChatSlide</code>
      */
     public ChatSlide broadcast()
     {
@@ -145,9 +145,9 @@ public class ChatSlide
     }
 
     /**
-     * Print this <tt>ChatSlide</tt> to the console
+     * Print this <code>ChatSlide</code> to the console
      *
-     * @return The current <tt>ChatSlide</tt>
+     * @return The current <code>ChatSlide</code>
      */
     public ChatSlide printToConsole()
     {

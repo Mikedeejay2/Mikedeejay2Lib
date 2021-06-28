@@ -15,7 +15,7 @@ import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.inventory.Inventory;
 
 /**
- * A listener class that listens for GUI interactions with a <tt>GUIContainer</tt>
+ * A listener class that listens for GUI interactions with a <code>GUIContainer</code>
  *
  * @author Mikedeejay2
  */
@@ -129,7 +129,7 @@ public class GUIListener implements Listener
     }
 
     /**
-     * Removes the <tt>Player</tt> from the <tt>GUIManager</tt> when they leave to prevent memory leaks
+     * Removes the <code>Player</code> from the <code>GUIManager</code> when they leave to prevent memory leaks
      *
      * @param event The event to be processed
      */

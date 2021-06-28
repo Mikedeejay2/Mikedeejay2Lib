@@ -7,7 +7,7 @@ import org.bukkit.boss.BossBar;
 import java.util.List;
 
 /**
- * Runtime for the <tt>BossBarSystem</tt>. This runtime should only be
+ * Runtime for the <code>BossBarSystem</code>. This runtime should only be
  * initialized through {@link BossBarSystem#display()} or similar.
  *
  * @see BossBarSystem
@@ -31,7 +31,7 @@ public class BossBarRuntime extends EnhancedRunnable
     }
 
     /**
-     * Run the onTick for all of the <tt>BossBarModules</tt>
+     * Run the onTick for all of the <code>BossBarModules</code>
      */
     @Override
     public void onRun()

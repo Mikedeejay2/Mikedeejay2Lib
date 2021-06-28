@@ -205,9 +205,9 @@ public final class InventoryIdentifiers
      * See whether a specified material is applicable to be in a specific raw slot in an inventory
      *
      * @param rawSlot  The raw slot to test
-     * @param invView  The <tt>InventoryView</tt> to use as a reference
+     * @param invView  The <code>InventoryView</code> to use as a reference
      * @param material The material to test
-     * @return A <tt>Pair</tt> containing two booleans:
+     * @return A <code>Pair</code> containing two booleans:
      * <ol>
      *     <li>Boolean (Left) - Whether the material should be in that slot</li>
      *     <li>Boolean (Right) - Whether the item has the ability to be in that slot, regardless of whether it should be</li>
@@ -376,7 +376,7 @@ public final class InventoryIdentifiers
      * See whether a raw slot is a singleton slot wherein it can only hold a single item
      *
      * @param rawSlot  The raw slot to test
-     * @param invView  The <tt>InventoryView</tt> to use as a reference
+     * @param invView  The <code>InventoryView</code> to use as a reference
      * @return A boolean representing whether the slot is or is not a singleton slot
      */
     public static boolean singletonSlot(int rawSlot, InventoryView invView)
@@ -810,7 +810,7 @@ public final class InventoryIdentifiers
     }
 
     /**
-     * Returns whether the <tt>InventoryAction</tt> will take the item in a result slot or not
+     * Returns whether the <code>InventoryAction</code> will take the item in a result slot or not
      *
      * @param action The action to check
      * @return Whether the item will be taken or not

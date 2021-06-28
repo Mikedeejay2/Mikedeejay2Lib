@@ -56,7 +56,7 @@ public class GUIAnimOutlineModule implements GUIModule
     /**
      * Get the item that will be used for the outline item
      *
-     * @return The <tt>GUIItem</tt> that will be used
+     * @return The <code>GUIItem</code> that will be used
      */
     public AnimatedGUIItem getOutlineItem()
     {
@@ -64,7 +64,7 @@ public class GUIAnimOutlineModule implements GUIModule
     }
 
     /**
-     * Set the <tt>GUIItem</tt> that the outline will use
+     * Set the <code>GUIItem</code> that the outline will use
      *
      * @param outlineItem GUIItem for the outline to use
      */

@@ -93,7 +93,7 @@ public class GUIContainer
     }
 
     /**
-     * Create a GUI of a large size. Note that to travel the GUI you must use a <tt>GUIScrollerModule</tt>
+     * Create a GUI of a large size. Note that to travel the GUI you must use a <code>GUIScrollerModule</code>
      *
      * @param plugin        The plugin that this GUI is created by
      * @param inventoryName The name of this GUI
@@ -224,7 +224,7 @@ public class GUIContainer
     }
 
     /**
-     * Called when a <tt>Player</tt> interacts (adds or removes an item) with the GUI.
+     * Called when a <code>Player</code> interacts (adds or removes an item) with the GUI.
      *
      * @param event The event of the click
      */
@@ -274,7 +274,7 @@ public class GUIContainer
     }
 
     /**
-     * Set an item from a <tt>GUIItem</tt>
+     * Set an item from a <code>GUIItem</code>
      *
      * @param row  The row that should be set
      * @param col  The column that should be set
@@ -308,7 +308,7 @@ public class GUIContainer
     }
 
     /**
-     * Get the <tt>GUIEventHandler</tt> from a slot
+     * Get the <code>GUIEventHandler</code> from a slot
      *
      * @param row The row to get
      * @param col The column to get
@@ -326,7 +326,7 @@ public class GUIContainer
     }
 
     /**
-     * Set the <tt>GUIEventHandler</tt> for a slot
+     * Set the <code>GUIEventHandler</code> for a slot
      *
      * @param row    The row to set
      * @param col    The column to set
@@ -347,7 +347,7 @@ public class GUIContainer
     }
 
     /**
-     * Add a <tt>GUIEvent</tt> to a slot
+     * Add a <code>GUIEvent</code> to a slot
      *
      * @param row   The row to set
      * @param col   The column to set
@@ -368,7 +368,7 @@ public class GUIContainer
     }
 
     /**
-     * Remove a <tt>GUIEvent</tt> from a slot based off of instance
+     * Remove a <code>GUIEvent</code> from a slot based off of instance
      *
      * @param row   The row to remove
      * @param col   The column to remove
@@ -389,7 +389,7 @@ public class GUIContainer
     }
 
     /**
-     * Remove a <tt>GUIEvent</tt> from a slot based off of the event's class
+     * Remove a <code>GUIEvent</code> from a slot based off of the event's class
      *
      * @param row        The row to remove
      * @param col        The column to remove
@@ -410,7 +410,7 @@ public class GUIContainer
     }
 
     /**
-     * Returns whether a row and a column contains a <tt>GUIEvent</tt> based off of instance
+     * Returns whether a row and a column contains a <code>GUIEvent</code> based off of instance
      *
      * @param row   The row to search in
      * @param col   The column to search in
@@ -429,7 +429,7 @@ public class GUIContainer
     }
 
     /**
-     * Returns whether a row and a column contains a <tt>GUIEvent</tt> based off of the class of that event
+     * Returns whether a row and a column contains a <code>GUIEvent</code> based off of the class of that event
      *
      * @param row        The row to search in
      * @param col        The column to search in
@@ -448,7 +448,7 @@ public class GUIContainer
     }
 
     /**
-     * Remove all <tt>GUIEvents</tt> from a slot
+     * Remove all <code>GUIEvents</code> from a slot
      *
      * @param row Row to remove events from
      * @param col Column to remove events from
@@ -508,7 +508,7 @@ public class GUIContainer
      *
      * @param row The row to get
      * @param col The column to get
-     * @return The <tt>GUIItem</tt> that is contained in that slot
+     * @return The <code>GUIItem</code> that is contained in that slot
      */
     public GUIItem getItem(int row, int col)
     {
@@ -563,7 +563,7 @@ public class GUIContainer
     }
 
     /**
-     * Add a <tt>GUIModule</tt> to this GUI
+     * Add a <code>GUIModule</code> to this GUI
      *
      * @param module Module that will be added to this GUI
      */
@@ -573,7 +573,7 @@ public class GUIContainer
     }
 
     /**
-     * Remove a <tt>GUIModule</tt> based off of an instance
+     * Remove a <code>GUIModule</code> based off of an instance
      *
      * @param module The module to remove from this GUI
      */
@@ -583,7 +583,7 @@ public class GUIContainer
     }
 
     /**
-     * Remove a <tt>GUIModule</tt> based off of the class type of the module
+     * Remove a <code>GUIModule</code> based off of the class type of the module
      *
      * @param moduleClass The module class to remove from this GUI
      */
@@ -598,7 +598,7 @@ public class GUIContainer
     }
 
     /**
-     * Returns whether this GUI contains a certain <tt>GUIModule</tt> via instance of that module
+     * Returns whether this GUI contains a certain <code>GUIModule</code> via instance of that module
      *
      * @param module The module to search for
      * @return Whether this GUI contains the module
@@ -609,7 +609,7 @@ public class GUIContainer
     }
 
     /**
-     * Returns whether this GUI contains a certain <tt>GUIModule</tt> via instance of that module
+     * Returns whether this GUI contains a certain <code>GUIModule</code> via instance of that module
      *
      * @param moduleClass The module class to search for
      * @return Whether this GUI contains the module
@@ -625,7 +625,7 @@ public class GUIContainer
     }
 
     /**
-     * Get a <tt>GUIModule</tt> based off of the module's class
+     * Get a <code>GUIModule</code> based off of the module's class
      *
      * @param moduleClass The class of the module to get
      * @param <T> The module type that will be returned
@@ -769,7 +769,7 @@ public class GUIContainer
     }
 
     /**
-     * Get a <tt>GUILayer</tt> from this GUI
+     * Get a <code>GUILayer</code> from this GUI
      *
      * @param layerName The name of the new layer
      * @param overlay Whether the layer should be of an overlay type or not
@@ -786,7 +786,7 @@ public class GUIContainer
     }
 
     /**
-     * Remove a <tt>GUILayer</tt> from this GUI based off of its name
+     * Remove a <code>GUILayer</code> from this GUI based off of its name
      *
      * @param layerName The name of the layer to remove
      */
@@ -796,7 +796,7 @@ public class GUIContainer
     }
 
     /**
-     * Remove a <tt>GUILayer</tt> from the layer's instance
+     * Remove a <code>GUILayer</code> from the layer's instance
      *
      * @param layer The layer to remove
      */
@@ -806,7 +806,7 @@ public class GUIContainer
     }
 
     /**
-     * See if this GUI contains a <tt>GUILayer</tt> based off of an instance
+     * See if this GUI contains a <code>GUILayer</code> based off of an instance
      *
      * @param layer The layer to search for
      * @return Whether this GUI contains the layer or not
@@ -817,7 +817,7 @@ public class GUIContainer
     }
 
     /**
-     * See if this GUI contains a <tt>GUILayer</tt> based off of the name of the layer
+     * See if this GUI contains a <code>GUILayer</code> based off of the name of the layer
      *
      * @param layerName The name of the layer to search for
      * @return Whether this GUI contains the layer or not
@@ -832,10 +832,10 @@ public class GUIContainer
     }
 
     /**
-     * Get a <tt>GUILayer</tt> based off of the GUILayer's name
+     * Get a <code>GUILayer</code> based off of the GUILayer's name
      *
      * @param layerName The name of the layer to get
-     * @return The <tt>GUILayer</tt>, null if not found
+     * @return The <code>GUILayer</code>, null if not found
      */
     public GUILayer getLayer(String layerName)
     {
@@ -853,10 +853,10 @@ public class GUIContainer
     }
 
     /**
-     * Get a <tt>GUILayer</tt> based off of the GUILayer's index
+     * Get a <code>GUILayer</code> based off of the GUILayer's index
      *
      * @param index The index of the layer to get
-     * @return The <tt>GUILayer</tt>
+     * @return The <code>GUILayer</code>
      */
     public GUILayer getLayer(int index)
     {
@@ -864,11 +864,11 @@ public class GUIContainer
     }
 
     /**
-     * Get the top <tt>GUILayer</tt> of a specific slot based off of the top visible item in that slot
+     * Get the top <code>GUILayer</code> of a specific slot based off of the top visible item in that slot
      *
      * @param row The row to get from
      * @param col The column to get from
-     * @return The highest level visible <tt>GUILayer</tt>
+     * @return The highest level visible <code>GUILayer</code>
      */
     public GUILayer getTopLayer(int row, int col)
     {
@@ -898,7 +898,7 @@ public class GUIContainer
     }
 
     /**
-     * Gets a list of all layers in this <tt>GUIContainer</tt>
+     * Gets a list of all layers in this <code>GUIContainer</code>
      *
      * @return The list of layers
      */
@@ -908,7 +908,7 @@ public class GUIContainer
     }
 
     /**
-     * Get the amount of slots of the viewable <tt>Inventory</tt>.
+     * Get the amount of slots of the viewable <code>Inventory</code>.
      * This does not account for large GUIs.
      *
      * @return The total amount of slots of the viewable inventory
@@ -919,9 +919,9 @@ public class GUIContainer
     }
 
     /**
-     * Get this GUIs <tt>GUIInteractHandler</tt>
+     * Get this GUIs <code>GUIInteractHandler</code>
      *
-     * @return The <tt>GUIInteractHandler</tt> for this GUI
+     * @return The <code>GUIInteractHandler</code> for this GUI
      */
     public GUIInteractHandler getInteractionHandler()
     {
@@ -929,9 +929,9 @@ public class GUIContainer
     }
 
     /**
-     * Set this GUIs <tt>GUIInteractHandler</tt>
+     * Set this GUIs <code>GUIInteractHandler</code>
      *
-     * @param interactionHandler The new <tt>GUIInteractHandler</tt> for this GUI
+     * @param interactionHandler The new <code>GUIInteractHandler</code> for this GUI
      */
     public void setInteractionHandler(GUIInteractHandler interactionHandler)
     {
@@ -980,7 +980,7 @@ public class GUIContainer
     }
 
     /**
-     * See whether this GUI contains an item matching an <tt>ItemStack</tt>
+     * See whether this GUI contains an item matching an <code>ItemStack</code>
      *
      * @param item The item to search for
      * @return Whether the item was found in the GUI or not
@@ -1010,9 +1010,9 @@ public class GUIContainer
     }
 
     /**
-     * Method to get all <tt>GUIModules</tt> in this <tt>GUIContainer</tt>
+     * Method to get all <code>GUIModules</code> in this <code>GUIContainer</code>
      *
-     * @return A list of all <tt>GUIModules</tt>
+     * @return A list of all <code>GUIModules</code>
      */
     protected List<GUIModule> getModules()
     {

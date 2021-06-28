@@ -4,7 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.text.actionbar.ActionBar;
 import com.mikedeejay2.mikedeejay2lib.text.actionbar.ActionBarFrame;
 
 /**
- * <tt>ActionBarModule</tt> for allowing custom setting of text for the current
+ * <code>ActionBarModule</code> for allowing custom setting of text for the current
  * frame of an action bar.
  *
  * @author Mikedeejay2

@@ -5,26 +5,26 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import org.bukkit.command.CommandSender;
 
 /**
- * <tt>ChatModule</tt> is a module that allows the implementation of extra data and features into
- * a <tt>ChatSection</tt>. Any or all methods in this can be implemented.
+ * <code>ChatModule</code> is a module that allows the implementation of extra data and features into
+ * a <code>ChatSection</code>. Any or all methods in this can be implemented.
  *
  * @author Mikedeejay2
  */
 public interface ChatModule
 {
     /**
-     * Method that is called when the <tt>ChatSection</tt> is printed to a <tt>CommandSender</tt>
+     * Method that is called when the <code>ChatSection</code> is printed to a <code>CommandSender</code>
      *
-     * @param section  The <tt>ChatSection</tt> that is being printed
-     * @param receiver The <tt>CommandSender</tt> that is receiving the message
+     * @param section  The <code>ChatSection</code> that is being printed
+     * @param receiver The <code>CommandSender</code> that is receiving the message
      */
     default void onPrint(ChatSection section, CommandSender receiver) {}
 
     /**
-     * Method that is called when the <tt>ChatSection</tt> is baked
+     * Method that is called when the <code>ChatSection</code> is baked
      *
-     * @param section    The <tt>ChatSection</tt> that is being baked
-     * @param components The current array of <tt>BaseComonents</tt> that have been baked
+     * @param section    The <code>ChatSection</code> that is being baked
+     * @param components The current array of <code>BaseComonents</code> that have been baked
      */
     default void onBake(ChatSection section, BaseComponent[] components) {}
 }

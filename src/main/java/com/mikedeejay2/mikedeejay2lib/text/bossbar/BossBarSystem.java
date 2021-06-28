@@ -47,10 +47,10 @@ public class BossBarSystem
     /**
      * @param plugin   A reference to the plugin
      * @param title    The title String of the boss bar
-     * @param color    The <tt>BarColor</tt> of the boss bar
-     * @param style    The <tt>BarStyle</tt> of the boss bar
+     * @param color    The <code>BarColor</code> of the boss bar
+     * @param style    The <code>BarStyle</code> of the boss bar
      * @param progress The progress (0.0 - 1.0) of the boss bar
-     * @param flags    The <tt>BarFlags</tt> of the boss bar
+     * @param flags    The <code>BarFlags</code> of the boss bar
      */
     public BossBarSystem(BukkitPlugin plugin, String title, BarColor color, BarStyle style, double progress, BarFlag... flags)
     {
@@ -76,7 +76,7 @@ public class BossBarSystem
     }
 
     /**
-     * Display this <tt>BossBarSystem</tt> to the players added to the system
+     * Display this <code>BossBarSystem</code> to the players added to the system
      *
      * @param delay  The delay before the boss bar should be displayed
      * @param period The period between tick updates of the boss bar
@@ -89,7 +89,7 @@ public class BossBarSystem
     }
 
     /**
-     * Display this <tt>BossBarSystem</tt> to the players added to the system
+     * Display this <code>BossBarSystem</code> to the players added to the system
      *
      * @param period The period between tick updates of the boss bar
      */
@@ -99,7 +99,7 @@ public class BossBarSystem
     }
 
     /**
-     * Display this <tt>BossBarSystem</tt> to the players added to the system
+     * Display this <code>BossBarSystem</code> to the players added to the system
      */
     public void display()
     {
@@ -118,10 +118,10 @@ public class BossBarSystem
     }
 
     /**
-     * Add a variable amount of players to this <tt>BossBarSystem</tt>
+     * Add a variable amount of players to this <code>BossBarSystem</code>
      *
      * @param players The players to add to the system
-     * @return The current <tt>BossBarSystem</tt>
+     * @return The current <code>BossBarSystem</code>
      */
     public BossBarSystem addPlayers(Player... players)
     {
@@ -134,10 +134,10 @@ public class BossBarSystem
     }
 
     /**
-     * Remove a variable amount of players from this <tt>BossBarSystem</tt>
+     * Remove a variable amount of players from this <code>BossBarSystem</code>
      *
      * @param players The players to remove from this system
-     * @return The current <tt>BossBarSystem</tt>
+     * @return The current <code>BossBarSystem</code>
      */
     public BossBarSystem removePlayers(Player... players)
     {
@@ -150,10 +150,10 @@ public class BossBarSystem
     }
 
     /**
-     * Add a collection of players to this <tt>BossBarSystem</tt>
+     * Add a collection of players to this <code>BossBarSystem</code>
      *
      * @param players The collection of players to add to this system
-     * @return The current <tt>BossBarSystem</tt>
+     * @return The current <code>BossBarSystem</code>
      */
     public BossBarSystem addPlayers(Collection<? extends Player> players)
     {
@@ -166,10 +166,10 @@ public class BossBarSystem
     }
 
     /**
-     * Remove a collection of players from this <tt>BossBarSystem</tt>
+     * Remove a collection of players from this <code>BossBarSystem</code>
      *
      * @param players The collection of players to remove from this system
-     * @return The current <tt>BossBarSystem</tt>
+     * @return The current <code>BossBarSystem</code>
      */
     public BossBarSystem removePlayers(Collection<? extends Player> players)
     {
@@ -182,10 +182,10 @@ public class BossBarSystem
     }
 
     /**
-     * Add a player to this <tt>BossBarSystem</tt>
+     * Add a player to this <code>BossBarSystem</code>
      *
      * @param player The player to add to this system
-     * @return The current <tt>BossBarSystem</tt>
+     * @return The current <code>BossBarSystem</code>
      */
     public BossBarSystem addPlayer(Player player)
     {
@@ -195,10 +195,10 @@ public class BossBarSystem
     }
 
     /**
-     * Remove a player from this <tt>BossBarSystem</tt>
+     * Remove a player from this <code>BossBarSystem</code>
      *
      * @param player The player to remove from this system
-     * @return The current <tt>BossBarSystem</tt>
+     * @return The current <code>BossBarSystem</code>
      */
     public BossBarSystem removePlayer(Player player)
     {
@@ -208,7 +208,7 @@ public class BossBarSystem
     }
 
     /**
-     * See whether this <tt>BossBarSystem</tt> contains a specified player
+     * See whether this <code>BossBarSystem</code> contains a specified player
      *
      * @param player The player to search for
      * @return Whether the player was found in this system or not
@@ -242,7 +242,7 @@ public class BossBarSystem
     /**
      * Get the color of the boss bar
      *
-     * @return The <tt>BarColor</tt> the boss bar
+     * @return The <code>BarColor</code> the boss bar
      */
     public BarColor getColor()
     {
@@ -252,7 +252,7 @@ public class BossBarSystem
     /**
      * Set the color of the boss bar
      *
-     * @param color The new <tt>BarColor</tt> of the boss bar
+     * @param color The new <code>BarColor</code> of the boss bar
      */
     public void setColor(BarColor color)
     {
@@ -263,7 +263,7 @@ public class BossBarSystem
     /**
      * Get the style of the boss bar
      *
-     * @return The <tt>BarStyle</tt> of the boss bar
+     * @return The <code>BarStyle</code> of the boss bar
      */
     public BarStyle getStyle()
     {
@@ -273,7 +273,7 @@ public class BossBarSystem
     /**
      * Set the style of the boss bar
      *
-     * @param style The new <tt>BarStyle</tt> of the boss bar
+     * @param style The new <code>BarStyle</code> of the boss bar
      */
     public void setStyle(BarStyle style)
     {
@@ -282,9 +282,9 @@ public class BossBarSystem
     }
 
     /**
-     * Get the list of <tt>BarFlags</tt> of the boss bar
+     * Get the list of <code>BarFlags</code> of the boss bar
      *
-     * @return The <tt>BarFlags</tt> of the boss bar
+     * @return The <code>BarFlags</code> of the boss bar
      */
     public List<BarFlag> getFlags()
     {
@@ -292,10 +292,10 @@ public class BossBarSystem
     }
 
     /**
-     * Add a <tt>BarFlag</tt> to this boss bar
+     * Add a <code>BarFlag</code> to this boss bar
      *
-     * @param flag The <tt>BarFlag</tt> to add
-     * @return The current <tt>BossBarSystem</tt>
+     * @param flag The <code>BarFlag</code> to add
+     * @return The current <code>BossBarSystem</code>
      */
     public BossBarSystem addFlag(BarFlag flag)
     {
@@ -305,10 +305,10 @@ public class BossBarSystem
     }
 
     /**
-     * Remove a <tt>BarFlag</tt> from this boss bar
+     * Remove a <code>BarFlag</code> from this boss bar
      *
-     * @param flag The <tt>BarFlag</tt> to remove
-     * @return The current <tt>BossBarSystem</tt>
+     * @param flag The <code>BarFlag</code> to remove
+     * @return The current <code>BossBarSystem</code>
      */
     public BossBarSystem removeFlag(BarFlag flag)
     {
@@ -351,7 +351,7 @@ public class BossBarSystem
     /**
      * Reset (remove all) all player in this boss bar
      *
-     * @return The current <tt>BossBarSystem</tt>
+     * @return The current <code>BossBarSystem</code>
      */
     public BossBarSystem resetPlayers()
     {
@@ -382,9 +382,9 @@ public class BossBarSystem
     }
 
     /**
-     * Get the <tt>BossBar</tt> of this system
+     * Get the <code>BossBar</code> of this system
      *
-     * @return The <tt>BossBar</tt>
+     * @return The <code>BossBar</code>
      */
     public BossBar getBar()
     {
@@ -392,10 +392,10 @@ public class BossBarSystem
     }
 
     /**
-     * Add a <tt>BossBarModule</tt> to this system
+     * Add a <code>BossBarModule</code> to this system
      *
-     * @param module The <tt>BossBarModule</tt> to add to this system
-     * @return The current <tt>BossBarSystem</tt>
+     * @param module The <code>BossBarModule</code> to add to this system
+     * @return The current <code>BossBarSystem</code>
      */
     public BossBarSystem addModule(BossBarModule module)
     {
@@ -404,10 +404,10 @@ public class BossBarSystem
     }
 
     /**
-     * Remove a <tt>BossBarModule</tt> from this system based off of a reference to the module
+     * Remove a <code>BossBarModule</code> from this system based off of a reference to the module
      *
-     * @param module The <tt>BossBarModule</tt> to remove from this system
-     * @return The current <tt>BossBarSystem</tt>
+     * @param module The <code>BossBarModule</code> to remove from this system
+     * @return The current <code>BossBarSystem</code>
      */
     public BossBarSystem removeModule(BossBarModule module)
     {
@@ -416,10 +416,10 @@ public class BossBarSystem
     }
 
     /**
-     * Remove a <tt>BossBarModule</tt> from this system based off of the index of the module
+     * Remove a <code>BossBarModule</code> from this system based off of the index of the module
      *
      * @param index The index to remove the module at
-     * @return The current <tt>BossBarSystem</tt>
+     * @return The current <code>BossBarSystem</code>
      */
     public BossBarSystem removeModule(int index)
     {
@@ -428,10 +428,10 @@ public class BossBarSystem
     }
 
     /**
-     * Remove a <tt>BossBarModule</tt> based off of the class of the module
+     * Remove a <code>BossBarModule</code> based off of the class of the module
      *
      * @param moduleClass The class of the module to remove
-     * @return The current <tt>BossBarSystem</tt>
+     * @return The current <code>BossBarSystem</code>
      */
     public BossBarSystem removeModule(Class<? extends BossBarModule> moduleClass)
     {
@@ -445,9 +445,9 @@ public class BossBarSystem
     }
 
     /**
-     * See whether this system contains a specific <tt>BossBarModule</tt>
+     * See whether this system contains a specific <code>BossBarModule</code>
      *
-     * @param module The <tt>BossBarModule</tt> to search for
+     * @param module The <code>BossBarModule</code> to search for
      * @return Whether the module was found or not
      */
     public boolean containsModule(BossBarModule module)
@@ -456,7 +456,7 @@ public class BossBarSystem
     }
 
     /**
-     * See whether this system contains a <tt>BossBarModule</tt> of the specified class type
+     * See whether this system contains a <code>BossBarModule</code> of the specified class type
      *
      * @param moduleClass The class of the module to search for
      * @return Whether a module of the class was found or not
@@ -471,10 +471,10 @@ public class BossBarSystem
     }
 
     /**
-     * Get a <tt>BossBarModule</tt> based off of the index of the module
+     * Get a <code>BossBarModule</code> based off of the index of the module
      *
      * @param index The index of the module to get
-     * @return The requested <tt>BossBarModule</tt>
+     * @return The requested <code>BossBarModule</code>
      */
     public BossBarModule getModule(int index)
     {
@@ -482,11 +482,11 @@ public class BossBarSystem
     }
 
     /**
-     * Get a <tt>BossBarModule</tt> based off of the class of the module
+     * Get a <code>BossBarModule</code> based off of the class of the module
      *
-     * @param moduleClass The class of the <tt>BossBarModule</tt>
+     * @param moduleClass The class of the <code>BossBarModule</code>
      * @param <T>         The class type of the module
-     * @return The requested <tt>BossBarModule</tt>, null if not found
+     * @return The requested <code>BossBarModule</code>, null if not found
      */
     public <T extends BossBarModule> T getModule(Class<T> moduleClass)
     {
@@ -498,9 +498,9 @@ public class BossBarSystem
     }
 
     /**
-     * Reset (clear) all modules from this <tt>BossBarSystem</tt>
+     * Reset (clear) all modules from this <code>BossBarSystem</code>
      *
-     * @return The current <tt>BossBarSystem</tt>
+     * @return The current <code>BossBarSystem</code>
      */
     public BossBarSystem resetModules()
     {
@@ -509,9 +509,9 @@ public class BossBarSystem
     }
 
     /**
-     * Get the list of <tt>BossBarModules</tt> that are in this system
+     * Get the list of <code>BossBarModules</code> that are in this system
      *
-     * @return The list of <tt>BossBarModules</tt>
+     * @return The list of <code>BossBarModules</code>
      */
     public List<BossBarModule> getModules()
     {

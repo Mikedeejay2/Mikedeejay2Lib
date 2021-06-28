@@ -16,7 +16,7 @@ public final class SearchUtil
      * changing all the text to lower case on both the ItemMeta and the search term.
      * AKA a "fuzzy" search.
      * <p>
-     * Uses <tt>.contains()</tt> to compare strings
+     * Uses <code>.contains()</code> to compare strings
      *
      * @param meta       ItemMeta to search through
      * @param searchTerm The search term to use
@@ -50,7 +50,7 @@ public final class SearchUtil
      * This method searches the ItemMeta without generalizing the Strings.
      * That means that capitalization, spacing, etc counts towards the search.
      * <p>
-     * Uses <tt>.contains()</tt> to compare strings
+     * Uses <code>.contains()</code> to compare strings
      *
      * @param meta       ItemMeta to search through
      * @param searchTerm The search term to use
@@ -81,7 +81,7 @@ public final class SearchUtil
      * This method makes sure that the item's display name or a single lore string
      * matches the search term exactly.
      * <p>
-     * Uses <tt>.equals()</tt> to compare strings
+     * Uses <code>.equals()</code> to compare strings
      *
      * @param meta       ItemMeta to search through
      * @param searchTerm The search term to use

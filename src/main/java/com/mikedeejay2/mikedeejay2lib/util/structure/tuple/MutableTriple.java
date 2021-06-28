@@ -22,7 +22,7 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R>
     protected R right;
 
     /**
-     * Construct a new <tt>MutableTriple</tt>
+     * Construct a new <code>MutableTriple</code>
      *
      * @param left The left value
      * @param middle The middle value

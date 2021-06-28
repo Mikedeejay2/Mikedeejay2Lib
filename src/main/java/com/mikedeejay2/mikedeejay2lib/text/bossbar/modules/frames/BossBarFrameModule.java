@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Map;
 
 /**
- * Special <tt>BossBarModule</tt> that adds frame like capabilities to modules.
+ * Special <code>BossBarModule</code> that adds frame like capabilities to modules.
  * <p>
  * Frames can be added through {@link BossBarFrameModule#addFrame(long, Object)} or similar.
  *
@@ -41,7 +41,7 @@ public abstract class BossBarFrameModule<T> implements BossBarModule
      * This method should not be overridden, use {@link BossBarFrameModule#onFrame(BossBarSystem, long, Object)} instead.
      *
      * @see BossBarFrameModule#onFrame(BossBarSystem, long, Object)
-     * @param system The <tt>BossBarSystem</tt> being ticked
+     * @param system The <code>BossBarSystem</code> being ticked
      */
     @Override
     public final void onTick(BossBarSystem system)
@@ -68,7 +68,7 @@ public abstract class BossBarFrameModule<T> implements BossBarModule
     /**
      * Method that is called when a frame should be processed
      *
-     * @param system The <tt>BossBarSystem</tt> that should be modified
+     * @param system The <code>BossBarSystem</code> that should be modified
      * @param period The period of the current frame
      * @param value  The value of the frame
      */
@@ -80,7 +80,7 @@ public abstract class BossBarFrameModule<T> implements BossBarModule
      * @param period The period (Time this frame and the next frame)
      * @param value  The value of the frame (Different depending on the module)
      * @param index  The index to add the module to
-     * @return The current <tt>BossBarFrameModule</tt>
+     * @return The current <code>BossBarFrameModule</code>
      */
     public BossBarFrameModule<T> addFrame(long period, T value, int index)
     {
@@ -93,7 +93,7 @@ public abstract class BossBarFrameModule<T> implements BossBarModule
      *
      * @param period The period (Time this frame and the next frame)
      * @param value The value of the frame (Different depending on the module)
-     * @return The current <tt>BossBarFrameModule</tt>
+     * @return The current <code>BossBarFrameModule</code>
      */
     public BossBarFrameModule<T> addFrame(long period, T value)
     {
@@ -105,7 +105,7 @@ public abstract class BossBarFrameModule<T> implements BossBarModule
      * Remove a frame based off of the index of the frame
      *
      * @param index The index to remove the frame at
-     * @return The current <tt>BossBarFrameModule</tt>
+     * @return The current <code>BossBarFrameModule</code>
      */
     public BossBarFrameModule<T> removeFrame(int index)
     {
@@ -117,7 +117,7 @@ public abstract class BossBarFrameModule<T> implements BossBarModule
      * Remove a frame based off of a reference of the value of the frame
      *
      * @param value The value of the frame to remove
-     * @return The current <tt>BossBarFrameModule</tt>
+     * @return The current <code>BossBarFrameModule</code>
      */
     public BossBarFrameModule<T> removeFrame(T value)
     {
@@ -132,7 +132,7 @@ public abstract class BossBarFrameModule<T> implements BossBarModule
     }
 
     /**
-     * Get the list of <tt>Map.Entry</tt> for all frames
+     * Get the list of <code>Map.Entry</code> for all frames
      *
      * @return The list of frames
      */

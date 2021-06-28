@@ -10,7 +10,7 @@ import java.util.*;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * Runtime that times and executed <tt>AnimatedGUIItems</tt>
+ * Runtime that times and executed <code>AnimatedGUIItems</code>
  *
  * @author Mikedeejay2
  */
@@ -26,7 +26,7 @@ public class AnimationRuntime extends EnhancedRunnable
     /**
      * Set the items of the AnimationRuntime
      * <p>
-     * <b>This method MUST be run before the runtime is started, a <tt>NullPointerException</tt>
+     * <b>This method MUST be run before the runtime is started, a <code>NullPointerException</code>
      * will be thrown otherwise.</b>
      *
      * @param items The list of AnimatedGUIItems that this runtime will iterate through
@@ -39,7 +39,7 @@ public class AnimationRuntime extends EnhancedRunnable
     /**
      * Set the player that has opened the GUI
      * <p>
-     * <b>This method MUST be run before the runtime is started, a <tt>NullPointerException</tt>
+     * <b>This method MUST be run before the runtime is started, a <code>NullPointerException</code>
      * will be thrown otherwise.</b>
      *
      * @param player The player that opened up the GUI
@@ -50,9 +50,9 @@ public class AnimationRuntime extends EnhancedRunnable
     }
 
     /**
-     * Set the <tt>GUIContainer</tt> that this <tt>AnimationRuntime</tt> is a child of
+     * Set the <code>GUIContainer</code> that this <code>AnimationRuntime</code> is a child of
      * <p>
-     * <b>This method MUST be run before the runtime is started, a <tt>NullPointerException</tt>
+     * <b>This method MUST be run before the runtime is started, a <code>NullPointerException</code>
      * will be thrown otherwise.</b>
      *
      * @param gui The player that opened up the GUI
@@ -63,8 +63,8 @@ public class AnimationRuntime extends EnhancedRunnable
     }
 
     /**
-     * Overridden <tt>onRun()</tt> method. This method iterates through all items in the items list and runs their
-     * <tt>tick()</tt> method, if the tick method returns true the GUI is updated at the end of the run.
+     * Overridden <code>onRun()</code> method. This method iterates through all items in the items list and runs their
+     * <code>tick()</code> method, if the tick method returns true the GUI is updated at the end of the run.
      */
     @Override
     public void onRun()
@@ -81,7 +81,7 @@ public class AnimationRuntime extends EnhancedRunnable
     }
 
     /**
-     * Get the map <tt>AnimatedGUIItems</tt> that this runtime holds
+     * Get the map <code>AnimatedGUIItems</code> that this runtime holds
      *
      * @return The map of items
      */

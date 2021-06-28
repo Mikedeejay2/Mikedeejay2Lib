@@ -31,9 +31,9 @@ public class EnhancedPluginLogger extends Logger
     }
 
     /**
-     * Log a <tt>LogRecord</tt> to console
+     * Log a <code>LogRecord</code> to console
      *
-     * @param logRecord The <tt>LogRecord</tt> to log
+     * @param logRecord The <code>LogRecord</code> to log
      */
     @Override
     public void log(LogRecord logRecord)

@@ -164,7 +164,7 @@ public class ParticleData
     }
 
     /**
-     * Get the <tt>Particle</tt> (enum)
+     * Get the <code>Particle</code> (enum)
      *
      * @return The particle
      */

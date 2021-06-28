@@ -22,7 +22,7 @@ public final class RayTracer
      * as a vector
      * <p>
      * Uses default max distance: 256 <br>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      * Uses default ignore passable blocks: false <br>
      *
      * @param entity Entity's view that will be raytraced
@@ -37,7 +37,7 @@ public final class RayTracer
      * Ray trace from an entity's point of view to what they are looking and get that position
      * as a vector
      * <p>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      * Uses default ignore passable blocks: false <br>
      *
      * @param entity      Entity's view that will be raytraced
@@ -53,7 +53,7 @@ public final class RayTracer
      * Ray trace from an entity's point of view to what they are looking and get that position
      * as a vector
      * <p>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      *
      * @param entity               Entity's view that will be raytraced
      * @param maxDistance          The maximum distance that should be raytraced before it stops trying
@@ -107,7 +107,7 @@ public final class RayTracer
      * as a location
      * <p>
      * Uses default max distance: 256 <br>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      * Uses default ignore passable blocks: false <br>
      *
      * @param entity Entity's view that will be raytraced
@@ -122,7 +122,7 @@ public final class RayTracer
      * Ray trace from an entity's point of view to what they are looking and get that position
      * as a Location
      * <p>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      * Uses default ignore passable blocks: false <br>
      *
      * @param entity      Entity's view that will be raytraced
@@ -138,7 +138,7 @@ public final class RayTracer
      * Ray trace from an entity's point of view to what they are looking and get that position
      * as a Location
      * <p>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      *
      * @param entity               Entity's view that will be raytraced
      * @param maxDistance          The maximum distance that should be raytraced before it stops trying
@@ -193,7 +193,7 @@ public final class RayTracer
      * as a Location
      * <p>
      * Uses default max distance: 256 <br>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      * Uses default ignore passable blocks: false <br>
      *
      * @param location The location that will be raytraced
@@ -208,7 +208,7 @@ public final class RayTracer
      * Ray trace from a location to see if the direction of the location hits something
      * as a Location
      * <p>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      * Uses default ignore passable blocks: false <br>
      *
      * @param location    The location that will be raytraced
@@ -240,7 +240,7 @@ public final class RayTracer
      * Ray trace from a location to see if the direction of the location hits something
      * as a Location
      * <p>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      *
      * @param location             The location that will be raytraced
      * @param maxDistance          The maximum distance that should be raytraced before it stops trying
@@ -276,7 +276,7 @@ public final class RayTracer
      * as a Location
      * <p>
      * Uses default max distance: 256 <br>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      * Uses default ignore passable blocks: false <br>
      *
      * @param location The location that will be raytraced
@@ -291,7 +291,7 @@ public final class RayTracer
      * Ray trace from a location to see if the direction of the location hits something
      * as a Location
      * <p>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      * Uses default ignore passable blocks: false <br>
      *
      * @param location    The location that will be raytraced
@@ -323,7 +323,7 @@ public final class RayTracer
      * Ray trace from a location to see if the direction of the location hits something
      * as a Location
      * <p>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      *
      * @param location             The location that will be raytraced
      * @param maxDistance          The maximum distance that should be raytraced before it stops trying
@@ -361,7 +361,7 @@ public final class RayTracer
      * as a Location
      * <p>
      * Uses default max distance: 256 <br>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      * Uses default ignore passable blocks: false <br>
      *
      * @param location The location that will be raytraced
@@ -377,7 +377,7 @@ public final class RayTracer
      * Ray trace from a location to see if the direction of the location hits something
      * as a Location
      * <p>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      * Uses default ignore passable blocks: false <br>
      *
      * @param location    The location that will be raytraced
@@ -411,7 +411,7 @@ public final class RayTracer
      * Ray trace from a location to see if the direction of the location hits something
      * as a Location
      * <p>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      *
      * @param location             The location that will be raytraced
      * @param maxDistance          The maximum distance that should be raytraced before it stops trying
@@ -449,7 +449,7 @@ public final class RayTracer
      * as a Location
      * <p>
      * Uses default max distance: 256 <br>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      * Uses default ignore passable blocks: false <br>
      *
      * @param location The location that will be raytraced
@@ -465,7 +465,7 @@ public final class RayTracer
      * Ray trace from a location to see if the direction of the location hits something
      * as a Location
      * <p>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      * Uses default ignore passable blocks: false <br>
      *
      * @param location    The location that will be raytraced
@@ -499,7 +499,7 @@ public final class RayTracer
      * Ray trace from a location to see if the direction of the location hits something
      * as a Location
      * <p>
-     * Uses default <tt>FluidCollisionMode</tt>: Never <br>
+     * Uses default <code>FluidCollisionMode</code>: Never <br>
      *
      * @param location             The location that will be raytraced
      * @param maxDistance          The maximum distance that should be raytraced before it stops trying

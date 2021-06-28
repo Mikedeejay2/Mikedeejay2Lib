@@ -81,7 +81,7 @@ public final class ArrayUtil
      * @param arr        The array to trim
      * @param clazz      The class type to return
      * @param startIndex The starting index to keep
-     * @param endIndex   The ending index to keep (<tt>i less than endIndex</tt>)
+     * @param endIndex   The ending index to keep (<code>i less than endIndex</code>)
      * @param <T>        The type of the array
      * @return The trimmed array
      */
@@ -313,7 +313,7 @@ public final class ArrayUtil
     }
 
     /**
-     * Clone all <tt>Locations</tt> in a list and add them to another list of <tt>Locations</tt>
+     * Clone all <code>Locations</code> in a list and add them to another list of <code>Locations</code>
      *
      * @param senderList   The list which objects will be cloned
      * @param receiverList The list which will receiver the new objects
@@ -324,7 +324,7 @@ public final class ArrayUtil
     }
 
     /**
-     * Clone all <tt>Vectors</tt> in a list and add them to another list of <tt>Vectors</tt>
+     * Clone all <code>Vectors</code> in a list and add them to another list of <code>Vectors</code>
      *
      * @param senderList   The list which objects will be cloned
      * @param receiverList The list which will receiver the new objects

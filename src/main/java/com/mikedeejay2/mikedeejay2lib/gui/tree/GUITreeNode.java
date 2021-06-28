@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A single node of a tree in a <tt>GUITreeModule</tt>
+ * A single node of a tree in a <code>GUITreeModule</code>
  *
  * @author Mikedeejay2
  */

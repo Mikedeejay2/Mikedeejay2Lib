@@ -15,28 +15,28 @@ public interface ParticleSModule
     /**
      * Called on the head of display of particles in {@link ParticleRuntime#onRun()}
      *
-     * @param system The <tt>ParticleSystem</tt>
+     * @param system The <code>ParticleSystem</code>
      */
     default void onDisplayHead(ParticleSystem system) {}
 
     /**
      * Called on the tail of display of particles in {@link ParticleRuntime#onRun()}
      *
-     * @param system The <tt>ParticleSystem</tt>
+     * @param system The <code>ParticleSystem</code>
      */
     default void onDisplayTail(ParticleSystem system) {}
 
     /**
      * Called on the head of update in {@link ParticleRuntime#onRun()}
      *
-     * @param system The <tt>ParticleSystem</tt>
+     * @param system The <code>ParticleSystem</code>
      */
     default void onUpdateHead(ParticleSystem system) {}
 
     /**
      * Called on the tail of update in {@link ParticleRuntime#onRun()}
      *
-     * @param system The <tt>ParticleSystem</tt>
+     * @param system The <code>ParticleSystem</code>
      */
     default void onUpdateTail(ParticleSystem system) {}
 }

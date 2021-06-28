@@ -19,7 +19,7 @@ import java.util.Map;
 import java.util.Set;
 
 /**
- * A Yaml accessor that overrides <tt>SectionAccessor</tt> for accessing YAML files easily
+ * A Yaml accessor that overrides <code>SectionAccessor</code> for accessing YAML files easily
  *
  * @author Mikedeejay2
  */

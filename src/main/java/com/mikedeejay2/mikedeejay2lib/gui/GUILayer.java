@@ -79,7 +79,7 @@ public class GUILayer
      *
      * @param row The row to get
      * @param col The column to get
-     * @return The <tt>GUIItem</tt> that is contained in that slot
+     * @return The <code>GUIItem</code> that is contained in that slot
      */
     public GUIItem getItem(int row, int col)
     {
@@ -138,11 +138,11 @@ public class GUILayer
     }
 
     /**
-     * Set an item from an <tt>ItemStack</tt>
+     * Set an item from an <code>ItemStack</code>
      *
      * @param row   Row that should be set
      * @param col   Column that should be set
-     * @param stack The <tt>ItemStack</tt> to set the slot to
+     * @param stack The <code>ItemStack</code> to set the slot to
      */
     public void setItem(int row, int col, ItemStack stack)
     {
@@ -152,7 +152,7 @@ public class GUILayer
     }
 
     /**
-     * Set an item from a <tt>GUIItem</tt>
+     * Set an item from a <code>GUIItem</code>
      *
      * @param row  The row that should be set
      * @param col  The column that should be set
@@ -179,7 +179,7 @@ public class GUILayer
     }
 
     /**
-     * Get the <tt>GUIEventHandler</tt> from a slot
+     * Get the <code>GUIEventHandler</code> from a slot
      *
      * @param row The row to get
      * @param col The column to get
@@ -192,7 +192,7 @@ public class GUILayer
     }
 
     /**
-     * Set the <tt>GUIEventHandler</tt> for a slot
+     * Set the <code>GUIEventHandler</code> for a slot
      *
      * @param row    The row to set
      * @param col    The column to set
@@ -205,7 +205,7 @@ public class GUILayer
     }
 
     /**
-     * Add a <tt>GUIEvent</tt> to a slot
+     * Add a <code>GUIEvent</code> to a slot
      *
      * @param row   The row to set
      * @param col   The column to set
@@ -218,7 +218,7 @@ public class GUILayer
     }
 
     /**
-     * Remove a <tt>GUIEvent</tt> from a slot based off of instance
+     * Remove a <code>GUIEvent</code> from a slot based off of instance
      *
      * @param row   The row to remove
      * @param col   The column to remove
@@ -231,7 +231,7 @@ public class GUILayer
     }
 
     /**
-     * Remove a <tt>GUIEvent</tt> from a slot based off of the event's class
+     * Remove a <code>GUIEvent</code> from a slot based off of the event's class
      *
      * @param row        The row to remove
      * @param col        The column to remove
@@ -244,7 +244,7 @@ public class GUILayer
     }
 
     /**
-     * Returns whether a row and a column contains a <tt>GUIEvent</tt> based off of instance
+     * Returns whether a row and a column contains a <code>GUIEvent</code> based off of instance
      *
      * @param row   The row to search in
      * @param col   The column to search in
@@ -258,7 +258,7 @@ public class GUILayer
     }
 
     /**
-     * Returns whether a row and a column contains a <tt>GUIEvent</tt> based off of the class of that event
+     * Returns whether a row and a column contains a <code>GUIEvent</code> based off of the class of that event
      *
      * @param row        The row to search in
      * @param col        The column to search in
@@ -272,7 +272,7 @@ public class GUILayer
     }
 
     /**
-     * Remove all <tt>GUIEvents</tt> from a slot
+     * Remove all <code>GUIEvents</code> from a slot
      *
      * @param row Row to remove events from
      * @param col Column to remove events from
@@ -365,7 +365,7 @@ public class GUILayer
     }
 
     /**
-     * Get all <tt>GUIItems</tt> in list form
+     * Get all <code>GUIItems</code> in list form
      *
      * @return A list of all GUI items
      */
@@ -375,7 +375,7 @@ public class GUILayer
     }
 
     /**
-     * Get all <tt>GUIItems</tt> as a 2D array
+     * Get all <code>GUIItems</code> as a 2D array
      *
      * @return The 2D array of GUI Items
      */
@@ -473,7 +473,7 @@ public class GUILayer
     }
 
     /**
-     * See whether this <tt>GUILayer</tt> contains an item matching an <tt>ItemStack</tt>
+     * See whether this <code>GUILayer</code> contains an item matching an <code>ItemStack</code>
      *
      * @param item The item to search for
      * @return Whether the item was found in the GUI or not
@@ -495,7 +495,7 @@ public class GUILayer
     }
 
     /**
-     * See whether this <tt>GUILayer</tt> contains a material matching another material
+     * See whether this <code>GUILayer</code> contains a material matching another material
      *
      * @param material The material to search for
      * @return Whether the material was found in the GUI or not

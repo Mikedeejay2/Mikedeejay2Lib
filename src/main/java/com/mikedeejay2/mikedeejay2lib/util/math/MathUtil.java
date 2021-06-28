@@ -306,7 +306,7 @@ public final class MathUtil
      * @param loc     The location of the origin of the sphere
      * @param radius  The radius of the sphere
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
-     * @return A new <tt>List</tt> of vectors that create a filled sphere
+     * @return A new <code>List</code> of vectors that create a filled sphere
      */
     public static List<Vector> getSphereFilledVectors(Location loc, double radius, double density)
     {
@@ -343,7 +343,7 @@ public final class MathUtil
      * @param loc     The location of the origin of the sphere
      * @param radius  The radius of the sphere
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
-     * @return A new <tt>List</tt> of locations that create a filled sphere
+     * @return A new <code>List</code> of locations that create a filled sphere
      */
     public static List<Location> getSphereFilledLocations(Location loc, double radius, double density)
     {
@@ -360,7 +360,7 @@ public final class MathUtil
      * @param yWidth  The Y width of the cube
      * @param zWidth  The Z width of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
-     * @return A new <tt>List</tt> of vectors that create a filled cube
+     * @return A new <code>List</code> of vectors that create a filled cube
      */
     public static List<Vector> getCubeFilledVectors(Location loc, double xWidth, double yWidth, double zWidth, double density)
     {
@@ -386,7 +386,7 @@ public final class MathUtil
      * @param yWidth  The Y width of the cube
      * @param zWidth  The Z width of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
-     * @return A new <tt>List</tt> of locations that create a filled cube
+     * @return A new <code>List</code> of locations that create a filled cube
      */
     public static List<Location> getCubeFilledLocations(Location loc, double xWidth, double yWidth, double zWidth, double density)
     {
@@ -403,7 +403,7 @@ public final class MathUtil
      * @param yWidth  The Y width of the cube
      * @param zWidth  The Z width of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
-     * @return A new <tt>List</tt> of vectors that create a hollow cube
+     * @return A new <code>List</code> of vectors that create a hollow cube
      */
     public static List<Vector> getCubeHollowVectors(Location loc, double xWidth, double yWidth, double zWidth, double density)
     {
@@ -443,7 +443,7 @@ public final class MathUtil
      * @param yWidth  The Y width of the cube
      * @param zWidth  The Z width of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
-     * @return A new <tt>List</tt> of locations that create a hollow cube
+     * @return A new <code>List</code> of locations that create a hollow cube
      */
     public static List<Location> getCubeHollowLocations(Location loc, double xWidth, double yWidth, double zWidth, double density)
     {
@@ -460,7 +460,7 @@ public final class MathUtil
      * @param yWidth  The Y width of the cube
      * @param zWidth  The Z width of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
-     * @return A new <tt>List</tt> of vectors that create an outline of a cube
+     * @return A new <code>List</code> of vectors that create an outline of a cube
      */
     public static List<Vector> getCubeOutlineVectors(Location loc, double xWidth, double yWidth, double zWidth, double density)
     {
@@ -511,7 +511,7 @@ public final class MathUtil
      * @param yWidth  The Y width of the cube
      * @param zWidth  The Z width of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
-     * @return A new <tt>List</tt> of locations that create an outline of a cube
+     * @return A new <code>List</code> of locations that create an outline of a cube
      */
     public static List<Location> getCubeOutlineLocations(Location loc, double xWidth, double yWidth, double zWidth, double density)
     {
@@ -526,7 +526,7 @@ public final class MathUtil
      * @param loc1    The first location of the cube
      * @param loc2    The second location of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
-     * @return A new <tt>List</tt> of vectors that create a filled cube
+     * @return A new <code>List</code> of vectors that create a filled cube
      */
     public static List<Vector> getCubeFilledVectors(Location loc1, Location loc2, double density)
     {
@@ -547,7 +547,7 @@ public final class MathUtil
      * @param loc1    The first location of the cube
      * @param loc2    The second location of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
-     * @return A new <tt>List</tt> of locations that create a filled cube
+     * @return A new <code>List</code> of locations that create a filled cube
      */
     public static List<Location> getCubeFilledLocations(Location loc1, Location loc2, double density)
     {
@@ -562,7 +562,7 @@ public final class MathUtil
      * @param loc1    The first location of the cube
      * @param loc2    The second location of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
-     * @return A new <tt>List</tt> of vectors that create a hollow cube
+     * @return A new <code>List</code> of vectors that create a hollow cube
      */
     public static List<Vector> getCubeHollowVectors(Location loc1, Location loc2, double density)
     {
@@ -591,7 +591,7 @@ public final class MathUtil
      * @param loc1    The first location of the cube
      * @param loc2    The second location of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
-     * @return A new <tt>List</tt> of locations that create a hollow cube
+     * @return A new <code>List</code> of locations that create a hollow cube
      */
     public static List<Location> getCubeHollowLocations(Location loc1, Location loc2, double density)
     {
@@ -606,7 +606,7 @@ public final class MathUtil
      * @param loc1    The first location of the cube
      * @param loc2    The second location of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
-     * @return A new <tt>List</tt> of vectors that create an outline of a cube
+     * @return A new <code>List</code> of vectors that create an outline of a cube
      */
     public static List<Vector> getCubeOutlineVectors(Location loc1, Location loc2, double density)
     {
@@ -647,7 +647,7 @@ public final class MathUtil
      * @param loc1    The first location of the cube
      * @param loc2    The second location of the cube
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
-     * @return A new <tt>List</tt> of locations that create an outline of a cube
+     * @return A new <code>List</code> of locations that create an outline of a cube
      */
     public static List<Location> getCubeOutlineLocations(Location loc1, Location loc2, double density)
     {
@@ -719,7 +719,7 @@ public final class MathUtil
      * @param size     The size of the star
      * @param density  The density between each point
      * @param points   The amount of points of the star
-     * @return A new <tt>List</tt> of locations that create a star
+     * @return A new <code>List</code> of locations that create a star
      */
     public static List<Vector> getStarVectors(Location location, double size, double density, int points)
     {
@@ -751,7 +751,7 @@ public final class MathUtil
      * @param size     The size of the star
      * @param density  The density between each point
      * @param points   The amount of points of the star
-     * @return A new <tt>List</tt> of locations that create a star
+     * @return A new <code>List</code> of locations that create a star
      */
     public static List<Location> getStarLocations(Location location, double size, double density, int points)
     {
@@ -767,7 +767,7 @@ public final class MathUtil
      * @param size     The size of the shape
      * @param density  The density between each point
      * @param edges    The amount of edges on the shape
-     * @return A new <tt>List</tt> of locations that create a shape
+     * @return A new <code>List</code> of locations that create a shape
      */
     public static List<Vector> getShapeVectors(Location location, double size, double density, int edges)
     {
@@ -798,7 +798,7 @@ public final class MathUtil
      * @param size     The size of the shape
      * @param density  The density between each point
      * @param edges    The amount of edges of the shape
-     * @return A new <tt>List</tt> of locations that create a shape
+     * @return A new <code>List</code> of locations that create a shape
      */
     public static List<Location> getShapeLocations(Location location, double size, double density, int edges)
     {
@@ -814,7 +814,7 @@ public final class MathUtil
      * @param height  The height of the cylinder
      * @param radius  The radius of the cylinder
      * @param density The density between each point
-     * @return A new <tt>List</tt> of locations that create a cylinder
+     * @return A new <code>List</code> of locations that create a cylinder
      */
     public static List<Vector> getCylinderHollowVectors(Location center, double height, double radius, double density)
     {
@@ -837,7 +837,7 @@ public final class MathUtil
      * @param height  The height of the cylinder
      * @param radius  The radius of the cylinder
      * @param density The density between each point
-     * @return A new <tt>List</tt> of locations that create a cylinder
+     * @return A new <code>List</code> of locations that create a cylinder
      */
     public static List<Location> getCylinderHollowLocations(Location center, double height, double radius, double density)
     {
@@ -853,7 +853,7 @@ public final class MathUtil
      * @param height  The height of the cylinder
      * @param radius  The radius of the cylinder
      * @param density The density between each point
-     * @return A new <tt>List</tt> of locations that create a cylinder
+     * @return A new <code>List</code> of locations that create a cylinder
      */
     public static List<Vector> getCylinderFilledVectors(Location center, double height, double radius, double density)
     {
@@ -876,7 +876,7 @@ public final class MathUtil
      * @param height  The height of the cylinder
      * @param radius  The radius of the cylinder
      * @param density The density between each point
-     * @return A new <tt>List</tt> of locations that create a cylinder
+     * @return A new <code>List</code> of locations that create a cylinder
      */
     public static List<Location> getCylinderFilledLocations(Location center, double height, double radius, double density)
     {
@@ -886,7 +886,7 @@ public final class MathUtil
     }
 
     /**
-     * Offset a <tt>List</tt> of vectors by another <tt>Vector</tt>
+     * Offset a <code>List</code> of vectors by another <code>Vector</code>
      *
      * @param vectors The list of vectors that will be offset
      * @param offset  The vector to use that will offset the list of vectors
@@ -900,7 +900,7 @@ public final class MathUtil
     }
 
     /**
-     * Offset a <tt>List</tt> of locations by another <tt>Location</tt>
+     * Offset a <code>List</code> of locations by another <code>Location</code>
      *
      * @param locations The list of locations that will be offset
      * @param offset    The location to use that will offset the list of locations
@@ -914,7 +914,7 @@ public final class MathUtil
     }
 
     /**
-     * Offset a <tt>List</tt> of vectors by another <tt>Vector</tt>
+     * Offset a <code>List</code> of vectors by another <code>Vector</code>
      *
      * @param vectors The list of vectors that will be offset
      * @param offset  The location to use that will offset the list of vectors
@@ -928,7 +928,7 @@ public final class MathUtil
     }
 
     /**
-     * Offset a <tt>List</tt> of locations by another <tt>Location</tt>
+     * Offset a <code>List</code> of locations by another <code>Location</code>
      *
      * @param locations The list of locations that will be offset
      * @param offset    The vector to use that will offset the list of locations
@@ -942,10 +942,10 @@ public final class MathUtil
     }
 
     /**
-     * Add a translation <tt>Vector</tt> to a list of <tt>Locations</tt>
+     * Add a translation <code>Vector</code> to a list of <code>Locations</code>
      *
-     * @param locations   The list of <tt>Locations</tt> to translate
-     * @param translation The translation <tt>Vector</tt> to use
+     * @param locations   The list of <code>Locations</code> to translate
+     * @param translation The translation <code>Vector</code> to use
      */
     public static void addLocations(List<Location> locations, Vector translation)
     {
@@ -953,10 +953,10 @@ public final class MathUtil
     }
 
     /**
-     * Subtract a translation <tt>Vector</tt> to a list of <tt>Locations</tt>
+     * Subtract a translation <code>Vector</code> to a list of <code>Locations</code>
      *
-     * @param locations   The list of <tt>Locations</tt> to translate
-     * @param translation The translation <tt>Vector</tt> to use
+     * @param locations   The list of <code>Locations</code> to translate
+     * @param translation The translation <code>Vector</code> to use
      */
     public static void subLocations(List<Location> locations, Vector translation)
     {
@@ -964,10 +964,10 @@ public final class MathUtil
     }
 
     /**
-     * Add a translation <tt>Location</tt> to a list of <tt>Locations</tt>
+     * Add a translation <code>Location</code> to a list of <code>Locations</code>
      *
-     * @param locations   The list of <tt>Locations</tt> to translate
-     * @param translation The translation <tt>Location</tt> to use
+     * @param locations   The list of <code>Locations</code> to translate
+     * @param translation The translation <code>Location</code> to use
      */
     public static void addLocations(List<Location> locations, Location translation)
     {
@@ -975,10 +975,10 @@ public final class MathUtil
     }
 
     /**
-     * Subtract a translation <tt>Location</tt> to a list of <tt>Locations</tt>
+     * Subtract a translation <code>Location</code> to a list of <code>Locations</code>
      *
-     * @param locations   The list of <tt>Locations</tt> to translate
-     * @param translation The translation <tt>Location</tt> to use
+     * @param locations   The list of <code>Locations</code> to translate
+     * @param translation The translation <code>Location</code> to use
      */
     public static void subLocations(List<Location> locations, Location translation)
     {
@@ -986,9 +986,9 @@ public final class MathUtil
     }
 
     /**
-     * Multiply a list of <tt>Locations</tt> by a double
+     * Multiply a list of <code>Locations</code> by a double
      *
-     * @param locations   The list of <tt>Locations</tt> to translate
+     * @param locations   The list of <code>Locations</code> to translate
      * @param translation The multiplier
      */
     public static void mulLocations(List<Location> locations, double translation)
@@ -997,10 +997,10 @@ public final class MathUtil
     }
 
     /**
-     * Add a translation <tt>Vector</tt> to a list of <tt>Vectors</tt>
+     * Add a translation <code>Vector</code> to a list of <code>Vectors</code>
      *
-     * @param vectors     The list of <tt>Vectors</tt> to translate
-     * @param translation The translation <tt>Vector</tt> to use
+     * @param vectors     The list of <code>Vectors</code> to translate
+     * @param translation The translation <code>Vector</code> to use
      */
     public static void addVectors(List<Vector> vectors, Vector translation)
     {
@@ -1008,10 +1008,10 @@ public final class MathUtil
     }
 
     /**
-     * Subtract a translation <tt>Vector</tt> to a list of <tt>Vectors</tt>
+     * Subtract a translation <code>Vector</code> to a list of <code>Vectors</code>
      *
-     * @param vectors     The list of <tt>Vectors</tt> to translate
-     * @param translation The translation <tt>Vector</tt> to use
+     * @param vectors     The list of <code>Vectors</code> to translate
+     * @param translation The translation <code>Vector</code> to use
      */
     public static void subVectors(List<Vector> vectors, Vector translation)
     {
@@ -1019,9 +1019,9 @@ public final class MathUtil
     }
 
     /**
-     * Multiply a list of <tt>Vectors</tt> by a double
+     * Multiply a list of <code>Vectors</code> by a double
      *
-     * @param vectors     The list of <tt>Vectors</tt> to translate
+     * @param vectors     The list of <code>Vectors</code> to translate
      * @param translation The multiplier
      */
     public static void mulVectors(List<Vector> vectors, double translation)
@@ -1030,9 +1030,9 @@ public final class MathUtil
     }
 
     /**
-     * Normalize an entire list of <tt>Vectors</tt>
+     * Normalize an entire list of <code>Vectors</code>
      *
-     * @param vectors The list of <tt>Vectors</tt> to normalize
+     * @param vectors The list of <code>Vectors</code> to normalize
      */
     public static void normalizeList(List<Vector> vectors)
     {

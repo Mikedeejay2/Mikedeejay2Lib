@@ -9,10 +9,10 @@ import java.util.regex.Pattern;
 /**
  * A more advanced form of {@link Colors} that does the following:
  * <ul>
- *     <li>Convert alternate color codes to their respective colors (<tt>"*AND*c"</tt> = red, <tt>"*AND*1"</tt> = blue)</li>
- *     <li>Convert hex codes to their respective colors if the version if 1.16 or above (<tt>#ff0000</tt> = red, <tt>#0000ff</tt> = blue)</li>
- *     <li>Convert color shortcuts (see {@link ColorShortcut}) to their respective colors (<tt>%red%</tt> = red, <tt>%blue%</tt> = blue)</li>
- *     <li>Ability to use placeholder formatting for hex codes and color shortcuts (<tt>%ff0000%</tt> = red, <tt>%b%</tt> = blue)</li>
+ *     <li>Convert alternate color codes to their respective colors (<code>"*AND*c"</code> = red, <code>"*AND*1"</code> = blue)</li>
+ *     <li>Convert hex codes to their respective colors if the version if 1.16 or above (<code>#ff0000</code> = red, <code>#0000ff</code> = blue)</li>
+ *     <li>Convert color shortcuts (see {@link ColorShortcut}) to their respective colors (<code>%red%</code> = red, <code>%blue%</code> = blue)</li>
+ *     <li>Ability to use placeholder formatting for hex codes and color shortcuts (<code>%ff0000%</code> = red, <code>%b%</code> = blue)</li>
  * </ul>
  *
  * @author Mikedeejay2
@@ -36,7 +36,7 @@ public final class ColorFormatterAdvanced implements IColorFormatter
     /**
      * Format all alternative color codes in the message.
      * <p>
-     * For example, <tt>"*AND*c"</tt> will become a red color, <tt>"*AND*1"</tt> will become a blue color.
+     * For example, <code>"*AND*c"</code> will become a red color, <code>"*AND*1"</code> will become a blue color.
      * <p>
      * Color codes are converted using {@link ChatColor#translateAlternateColorCodes(char, String)}
      * 
@@ -51,7 +51,7 @@ public final class ColorFormatterAdvanced implements IColorFormatter
     /**
      * Format all hex color codes in the message.
      * <p>
-     * For example, <tt>#ff0000</tt> will become a red color, <tt>#0000ff</tt> will become a blue color.
+     * For example, <code>#ff0000</code> will become a red color, <code>#0000ff</code> will become a blue color.
      * <p>
      * Color codes are converted using {@link ChatColor#of(String)}
      * <p>
@@ -85,7 +85,7 @@ public final class ColorFormatterAdvanced implements IColorFormatter
     /**
      * Format all color shortcuts in the message.
      * <p>
-     * For example, <tt>%red%</tt> will become a red color, <tt>%b%</tt> will become a blue color.
+     * For example, <code>%red%</code> will become a red color, <code>%b%</code> will become a blue color.
      * See {@link ColorShortcut} enum for all shortcuts.
      *
      * @see ColorShortcut
@@ -112,10 +112,10 @@ public final class ColorFormatterAdvanced implements IColorFormatter
     /**
      * Format hex, alternate color codes, AND color shortcuts.
      * <p>
-     * For example, <tt>"*AND*c"</tt> would be an alternate color code that would translate to red,
-     * while <tt>#0000ff</tt> would be a hex code that would translate to a blue color.
-     * Placeholders can also be used for hex and color shortcuts, such as <tt>%ff0000%</tt> would
-     * translate to red while <tt>%blue%</tt> would translate to blue.
+     * For example, <code>"*AND*c"</code> would be an alternate color code that would translate to red,
+     * while <code>#0000ff</code> would be a hex code that would translate to a blue color.
+     * Placeholders can also be used for hex and color shortcuts, such as <code>%ff0000%</code> would
+     * translate to red while <code>%blue%</code> would translate to blue.
      * <p>
      * If the Minecraft version is less than 1.16 (aka unsupported), hex colors will only be removed but formatting
      * will not be applied, as there was no alternative below 1.16.

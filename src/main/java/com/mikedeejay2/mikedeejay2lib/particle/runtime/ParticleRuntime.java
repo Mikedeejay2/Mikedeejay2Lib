@@ -8,9 +8,9 @@ import org.bukkit.Bukkit;
 import java.util.List;
 
 /**
- * The runtime which runs and manages displaying particles for <tt>ParticleSystems</tt>.
+ * The runtime which runs and manages displaying particles for <code>ParticleSystems</code>.
  * <p>
- * This runtime should not be declared outside of a <tt>ParticleSystem</tt>.
+ * This runtime should not be declared outside of a <code>ParticleSystem</code>.
  * <p>
  * To create this runtime internally {@link ParticleSystem#display()} should be called which
  * creates this runtime automatically and properly configures this runtime.
@@ -40,8 +40,8 @@ public class ParticleRuntime extends EnhancedRunnable
     }
 
     /**
-     * Overridden <tt>onRun()</tt> method that processes all of the logic for baking, updating, and
-     * displaying a <tt>ParticleSystem</tt>. This should run asynchronously.
+     * Overridden <code>onRun()</code> method that processes all of the logic for baking, updating, and
+     * displaying a <code>ParticleSystem</code>. This should run asynchronously.
      */
     @Override
     public void onRun()

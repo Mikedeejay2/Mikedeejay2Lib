@@ -1,7 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.gui.animation;
 
 /**
- * Holds the different types of movements that the movement <tt>AnimationFrame</tt> type
+ * Holds the different types of movements that the movement <code>AnimationFrame</code> type
  * can run.
  * <p>
  * The types of movement are:

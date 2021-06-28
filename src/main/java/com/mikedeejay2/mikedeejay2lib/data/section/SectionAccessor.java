@@ -22,7 +22,7 @@ import java.util.Set;
  * without a doubt the hardest class to inherit in this plugin.
  *
  * @param <D> The DataFile type that is being accessed.
- * @param <T> The default return type of the Section Accessor, see <tt>get</tt> and <tt>set</tt> methods
+ * @param <T> The default return type of the Section Accessor, see <code>get</code> and <code>set</code> methods
  * @author Mikedeejay2
  */
 public abstract class SectionAccessor<D extends DataFile, T>
@@ -70,10 +70,10 @@ public abstract class SectionAccessor<D extends DataFile, T>
     public abstract void delete(String name);
 
     /**
-     * Get a <tt>SectionAccessor</tt> in relation to this section
+     * Get a <code>SectionAccessor</code> in relation to this section
      *
-     * @param name The name of the <tt>SectionAccessor</tt> to get
-     * @return The requested <tt>SectionAccessor</tt>
+     * @param name The name of the <code>SectionAccessor</code> to get
+     * @return The requested <code>SectionAccessor</code>
      */
     public abstract SectionAccessor<D, T> getSection(String name);
 

@@ -31,8 +31,8 @@ public class LangManager
     protected String filePath;
 
     /**
-     * Create a <tt>LangManager</tt> and load the default language (if any) and
-     * the english language (<tt>en_us</tt>)
+     * Create a <code>LangManager</code> and load the default language (if any) and
+     * the english language (<code>en_us</code>)
      *
      * @param plugin A reference to the plugin
      * @param filePath The path to where the language files are stored in the plugin's jar
@@ -47,7 +47,7 @@ public class LangManager
     }
 
     /**
-     * Set the default lang of the <tt>LangManager</tt>
+     * Set the default lang of the <code>LangManager</code>
      * This only affects the console and depending on the configuration
      * of the operating system the characters won't show up properly
      *
@@ -81,7 +81,7 @@ public class LangManager
 
     /**
      * Attempt to load a lang file based off of a locale.
-     * Only to be used with the locale specified in <tt>config.yml</tt>
+     * Only to be used with the locale specified in <code>config.yml</code>
      *
      * @param locale The language that will attempt to be loaded
      * @return If loading was successful or not
@@ -224,7 +224,7 @@ public class LangManager
     }
 
     /**
-     * Gets text based off of a <tt>CommandSender</tt> and a path
+     * Gets text based off of a <code>CommandSender</code> and a path
      *
      * @param sender CommandSender that will be used to get language locale
      * @param path   The path to be used to find the text
@@ -268,7 +268,7 @@ public class LangManager
      * strings in toReplace with the strings in replacements. Uses the default
      * language locale.
      * <p>
-     * It's important that <tt>toReplace</tt> must be the same length as <tt>replacements</tt>
+     * It's important that <code>toReplace</code> must be the same length as <code>replacements</code>
      *
      * @param path         The path to find the text from
      * @param toReplace    The array of Strings that should be replaced
@@ -287,9 +287,9 @@ public class LangManager
 
     /**
      * Gets text based off of the CommandSender and a path and processes the string replacing the
-     * strings in <tt>toReplace</tt> with the strings in replacements.
+     * strings in <code>toReplace</code> with the strings in replacements.
      * <p>
-     * It's important that <tt>toReplace</tt> must be the same length as <tt>replacements</tt>
+     * It's important that <code>toReplace</code> must be the same length as <code>replacements</code>
      *
      * @param sender       The CommandSender to base the language Locale off of
      * @param path         The path to find the text from
@@ -308,9 +308,9 @@ public class LangManager
 
     /**
      * Gets text based off of a player and a path and processes the string replacing the
-     * strings in <tt>toReplace</tt> with the strings in replacements.
+     * strings in <code>toReplace</code> with the strings in replacements.
      * <p>
-     * It's important that <tt>toReplace</tt> must be the same length as <tt>replacements</tt>
+     * It's important that <code>toReplace</code> must be the same length as <code>replacements</code>
      *
      * @param player       The player to base the language Locale off of
      * @param path         The path to find the text from
@@ -334,7 +334,7 @@ public class LangManager
     }
 
     /**
-     * Get the file paths to the language files for this <tt>LangManager</tt>
+     * Get the file paths to the language files for this <code>LangManager</code>
      *
      * @return The file path towards the language files
      */
@@ -344,7 +344,7 @@ public class LangManager
     }
 
     /**
-     * Get the new file path to the language files for this <tt>LanguageManager</tt>
+     * Get the new file path to the language files for this <code>LanguageManager</code>
      *
      * @param filePath The new file path towards the language files
      */

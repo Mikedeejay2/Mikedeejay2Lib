@@ -13,12 +13,12 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A <tt>GUIItem</tt> with the added ability of having animation capabilities. <p>
+ * A <code>GUIItem</code> with the added ability of having animation capabilities. <p>
  *
- * <b>IMPORTANT: To use the animation capabilities of this class, <tt>GUIAnimationModule</tt>
- * must be a module that has been appended to the <tt>GUIContainer</tt>. This is because the
- * <tt>GUIAnimationModule</tt> adds animation functionality to the GUI while this object is
- * just some added information to a regular <tt>GUIItem</tt> that gives the information needed
+ * <b>IMPORTANT: To use the animation capabilities of this class, <code>GUIAnimationModule</code>
+ * must be a module that has been appended to the <code>GUIContainer</code>. This is because the
+ * <code>GUIAnimationModule</code> adds animation functionality to the GUI while this object is
+ * just some added information to a regular <code>GUIItem</code> that gives the information needed
  * to animate this item.</b>
  *
  * @author Mikedeejay2
@@ -242,7 +242,7 @@ public class AnimatedGUIItem extends GUIItem
      *
      * @param item   The item to add to the frame
      * @param period The time to wait between this frame and the frame after it
-     * @return Reference to this <tt>AnimatedGUIItem</tt>
+     * @return Reference to this <code>AnimatedGUIItem</code>
      */
     public AnimatedGUIItem addFrame(ItemStack item, long period)
     {
@@ -258,7 +258,7 @@ public class AnimatedGUIItem extends GUIItem
      * @param movementType     The type of movement that will be performed when the item is moved
      * @param relativeMovement Whether or not the movement should move relatively (locally)
      * @param period           The time to wait between this frame and the frame after it
-     * @return Reference to this <tt>AnimatedGUIItem</tt>
+     * @return Reference to this <code>AnimatedGUIItem</code>
      */
     public AnimatedGUIItem addFrame(int row, int col, MovementType movementType, boolean relativeMovement, long period)
     {
@@ -275,7 +275,7 @@ public class AnimatedGUIItem extends GUIItem
      * @param movementType     The type of movement that will be performed when the item is moved
      * @param relativeMovement Whether or not the movement should move relatively (locally)
      * @param period           The time to wait between this frame and the frame after it
-     * @return Reference to this <tt>AnimatedGUIItem</tt>
+     * @return Reference to this <code>AnimatedGUIItem</code>
      */
     public AnimatedGUIItem addFrame(ItemStack item, int row, int col, MovementType movementType, boolean relativeMovement, long period)
     {
@@ -287,7 +287,7 @@ public class AnimatedGUIItem extends GUIItem
      * Helper method to get the item of a frame
      *
      * @param index The frame index to get
-     * @return The <tt>ItemStack</tt> of the frame
+     * @return The <code>ItemStack</code> of the frame
      */
     public ItemStack getFrameItem(int index)
     {
@@ -313,7 +313,7 @@ public class AnimatedGUIItem extends GUIItem
      * Set whether this animation should loop or not
      *
      * @param loop New loop state
-     * @return Reference to this <tt>AnimatedGUIItem</tt>
+     * @return Reference to this <code>AnimatedGUIItem</code>
      */
     public AnimatedGUIItem setLoop(boolean loop)
     {
@@ -335,7 +335,7 @@ public class AnimatedGUIItem extends GUIItem
      * Set the delay of this animation
      *
      * @param delay The new delay
-     * @return Reference to this <tt>AnimatedGUIItem</tt>
+     * @return Reference to this <code>AnimatedGUIItem</code>
      */
     public AnimatedGUIItem setDelay(long delay)
     {
@@ -357,7 +357,7 @@ public class AnimatedGUIItem extends GUIItem
      * Set the reset on click of this item
      *
      * @param resetOnClick The new reset on click state
-     * @return Reference to this <tt>AnimatedGUIItem</tt>
+     * @return Reference to this <code>AnimatedGUIItem</code>
      */
     public AnimatedGUIItem setResetOnClick(boolean resetOnClick)
     {
@@ -380,7 +380,7 @@ public class AnimatedGUIItem extends GUIItem
     }
 
     /**
-     * Get the starting index for this <tt>AnimatedGUIItem</tt>
+     * Get the starting index for this <code>AnimatedGUIItem</code>
      *
      * @return The starting index
      */
@@ -390,10 +390,10 @@ public class AnimatedGUIItem extends GUIItem
     }
 
     /**
-     * Set the starting index for this <tt>AnimatedGUIItem</tt>
+     * Set the starting index for this <code>AnimatedGUIItem</code>
      *
      * @param startingIndex The new starting index
-     * @return Reference to this <tt>AnimatedGUIItem</tt>
+     * @return Reference to this <code>AnimatedGUIItem</code>
      */
     public AnimatedGUIItem setStartingIndex(int startingIndex)
     {

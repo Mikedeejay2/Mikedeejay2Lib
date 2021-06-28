@@ -83,7 +83,7 @@ public class EnhancedYaml extends YamlConfiguration
      * stay in their correct place.
      *
      * @param contents Original contents of the yaml file without comments.
-     * @throws InvalidConfigurationException If there is an error in the yaml file, an <tt>InvalidConfigurationException</tt> will be thrown
+     * @throws InvalidConfigurationException If there is an error in the yaml file, an <code>InvalidConfigurationException</code> will be thrown
      */
     @Override
     public void loadFromString(String contents) throws InvalidConfigurationException
@@ -135,7 +135,7 @@ public class EnhancedYaml extends YamlConfiguration
      * have wasted a small amount of processing power on doing nothing.
      *
      * @param filePath The path to the file in the jar to update with.
-     * @param classLoader The <tt>ClassLoader</tt> to get the resource from
+     * @param classLoader The <code>ClassLoader</code> to get the resource from
      * @return Whether the update and loading of the file from the jar was successful.
      */
     public boolean updateFromJar(String filePath, ClassLoader classLoader)

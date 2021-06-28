@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A section of text in a <tt>ChatSlide</tt>
+ * A section of text in a <code>ChatSlide</code>
  *
  * @see ChatSlide
  * @see ChatSystem
@@ -39,10 +39,10 @@ public class ChatSection
     }
 
     /**
-     * Add a <tt>ChatModule</tt> to this <tt>ChatSection</tt>
+     * Add a <code>ChatModule</code> to this <code>ChatSection</code>
      *
-     * @param module The <tt>ChatModule</tt> to add
-     * @return The current <tt>ChatSection</tt>
+     * @param module The <code>ChatModule</code> to add
+     * @return The current <code>ChatSection</code>
      */
     public ChatSection addModule(ChatModule module)
     {
@@ -52,10 +52,10 @@ public class ChatSection
     }
 
     /**
-     * Remove a <tt>ChatModule</tt> based off of the module's index
+     * Remove a <code>ChatModule</code> based off of the module's index
      *
      * @param index The index to remove the module at
-     * @return The current <tt>ChatSection</tt>
+     * @return The current <code>ChatSection</code>
      */
     public ChatSection removeModule(int index)
     {
@@ -64,10 +64,10 @@ public class ChatSection
     }
 
     /**
-     * Remove a <tt>ChatModule</tt> based off of the class of the module
+     * Remove a <code>ChatModule</code> based off of the class of the module
      *
      * @param moduleClass The class of the module to remove
-     * @return The current <tt>ChatSection</tt>
+     * @return The current <code>ChatSection</code>
      */
     public ChatSection removeModule(Class<? extends ChatModule> moduleClass)
     {
@@ -81,10 +81,10 @@ public class ChatSection
     }
 
     /**
-     * Remove a <tt>ChatModule</tt> based off of a reference to the module
+     * Remove a <code>ChatModule</code> based off of a reference to the module
      *
-     * @param module The <tt>ChatModule</tt> to remove
-     * @return The current <tt>ChatSection</tt>
+     * @param module The <code>ChatModule</code> to remove
+     * @return The current <code>ChatSection</code>
      */
     public ChatSection removeModule(ChatModule module)
     {
@@ -93,9 +93,9 @@ public class ChatSection
     }
 
     /**
-     * See whether this <tt>ChatSection</tt> contains a <tt>ChatModule</tt> by reference
+     * See whether this <code>ChatSection</code> contains a <code>ChatModule</code> by reference
      *
-     * @param module The <tt>ChatModule</tt> to search for
+     * @param module The <code>ChatModule</code> to search for
      * @return Whether the specified module was found or not
      */
     public boolean containsModule(ChatModule module)
@@ -104,7 +104,7 @@ public class ChatSection
     }
 
     /**
-     * See whether this<tt>ChatSection</tt> contains a <tt>ChatModule</tt> based off of the
+     * See whether this<code>ChatSection</code> contains a <code>ChatModule</code> based off of the
      * module's class
      *
      * @param moduleClass The class of the module to search for
@@ -120,11 +120,11 @@ public class ChatSection
     }
 
     /**
-     * Get a <tt>ChatModule</tt> from this <tt>ChatSection</tt> based off of the class of the module
+     * Get a <code>ChatModule</code> from this <code>ChatSection</code> based off of the class of the module
      *
-     * @param moduleClass The class of the <tt>ChatModule</tt> to get
+     * @param moduleClass The class of the <code>ChatModule</code> to get
      * @param <T>         The class type
-     * @return The requested <tt>ChatModule</tt>, null if not found
+     * @return The requested <code>ChatModule</code>, null if not found
      */
     public <T extends ChatModule> T getModule(Class<T> moduleClass)
     {
@@ -136,7 +136,7 @@ public class ChatSection
     }
 
     /**
-     * Get a <tt>ChatModule</tt> from this <tt>ChatSection</tt> based off of the index of the module
+     * Get a <code>ChatModule</code> from this <code>ChatSection</code> based off of the index of the module
      *
      * @param index The index to get the module from
      * @return The requested module
@@ -147,10 +147,10 @@ public class ChatSection
     }
 
     /**
-     * Add a String of text to this <tt>ChatSection</tt>
+     * Add a String of text to this <code>ChatSection</code>
      *
      * @param text The String of text to add
-     * @return The current <tt>ChatSection</tt>
+     * @return The current <code>ChatSection</code>
      */
     public ChatSection addText(String text)
     {
@@ -160,10 +160,10 @@ public class ChatSection
     }
 
     /**
-     * Set the String of text for this <tt>ChatSection</tt>
+     * Set the String of text for this <code>ChatSection</code>
      *
      * @param text The String of text to set
-     * @return The current <tt>ChatSection</tt>
+     * @return The current <code>ChatSection</code>
      */
     public ChatSection setText(String text)
     {
@@ -173,9 +173,9 @@ public class ChatSection
     }
 
     /**
-     * Cleaer the current text of this <tt>ChatSection</tt>
+     * Cleaer the current text of this <code>ChatSection</code>
      *
-     * @return The current <tt>ChatSection</tt>
+     * @return The current <code>ChatSection</code>
      */
     public ChatSection clearText()
     {
@@ -185,7 +185,7 @@ public class ChatSection
     }
 
     /**
-     * Bake this <tt>ChatSection</tt> into Bungee's chat API
+     * Bake this <code>ChatSection</code> into Bungee's chat API
      */
     protected void bake()
     {
@@ -195,10 +195,10 @@ public class ChatSection
     }
 
     /**
-     * Print this <tt>ChatSection</tt> to a <tt>CommandSender</tt>
+     * Print this <code>ChatSection</code> to a <code>CommandSender</code>
      *
-     * @param sender The <tt>CommandSender</tt> that will receive the text
-     * @return The current <tt>ChatSection</tt>
+     * @param sender The <code>CommandSender</code> that will receive the text
+     * @return The current <code>ChatSection</code>
      */
     public ChatSection print(CommandSender sender)
     {

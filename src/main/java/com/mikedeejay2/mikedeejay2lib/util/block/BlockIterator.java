@@ -19,9 +19,9 @@ public class BlockIterator
      * @param xWidth   The width of the iteration in the X direction
      * @param yWidth   The width of the iteration in the Y direction
      * @param zWidth   The width of the iteration in the Z direction
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
-     * @param typePredicate The <tt>Predicate</tt> condition
+     * @param typePredicate The <code>Predicate</code> condition
      */
     public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
@@ -50,7 +50,7 @@ public class BlockIterator
      * @param xWidth   The width of the iteration in the X direction
      * @param yWidth   The width of the iteration in the Y direction
      * @param zWidth   The width of the iteration in the Z direction
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
     public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin)
@@ -63,9 +63,9 @@ public class BlockIterator
      *
      * @param loc1     The first location of the cube
      * @param loc2     The second location of the cube
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
-     * @param typePredicate The <tt>Predicate</tt> condition
+     * @param typePredicate The <code>Predicate</code> condition
      */
     public static void iterateBlocksHollow(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
@@ -92,7 +92,7 @@ public class BlockIterator
      *
      * @param loc1     The first location of the cube
      * @param loc2     The second location of the cube
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
     public static void iterateBlocksHollow(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin)
@@ -105,9 +105,9 @@ public class BlockIterator
      *
      * @param loc1     The first location of the cube
      * @param loc2     The second location of the cube
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
-     * @param typePredicate The <tt>Predicate</tt> condition
+     * @param typePredicate The <code>Predicate</code> condition
      */
     public static void iterateBlocks(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
@@ -134,7 +134,7 @@ public class BlockIterator
      *
      * @param loc1     The first location of the cube
      * @param loc2     The second location of the cube
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
     public static void iterateBlocks(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin)
@@ -149,9 +149,9 @@ public class BlockIterator
      * @param xWidth   The width of the iteration in the X direction
      * @param yWidth   The width of the iteration in the Y direction
      * @param zWidth   The width of the iteration in the Z direction
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
-     * @param typePredicate The <tt>Predicate</tt> condition
+     * @param typePredicate The <code>Predicate</code> condition
      */
     public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
@@ -180,7 +180,7 @@ public class BlockIterator
      * @param xWidth   The width of the iteration in the X direction
      * @param yWidth   The width of the iteration in the Y direction
      * @param zWidth   The width of the iteration in the Z direction
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
     public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin)
@@ -195,9 +195,9 @@ public class BlockIterator
      * @param xWidth   The width of the iteration in the X direction
      * @param yWidth   The width of the iteration in the Y direction
      * @param zWidth   The width of the iteration in the Z direction
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
-     * @param typePredicate The <tt>Predicate</tt> condition
+     * @param typePredicate The <code>Predicate</code> condition
      */
     public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
@@ -226,7 +226,7 @@ public class BlockIterator
      * @param xWidth   The width of the iteration in the X direction
      * @param yWidth   The width of the iteration in the Y direction
      * @param zWidth   The width of the iteration in the Z direction
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
     public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin)
@@ -240,9 +240,9 @@ public class BlockIterator
      *
      * @param loc1     The first location of the cube
      * @param loc2     The second location of the cube
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
-     * @param typePredicate The <tt>Predicate</tt> condition
+     * @param typePredicate The <code>Predicate</code> condition
      */
     public static void iterateBlocksOutline(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
@@ -269,7 +269,7 @@ public class BlockIterator
      *
      * @param loc1     The first location of the cube
      * @param loc2     The second location of the cube
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
     public static void iterateBlocksOutline(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin)
@@ -282,9 +282,9 @@ public class BlockIterator
      *
      * @param loc      The location in which to iterate blocks around
      * @param radius   The radius of the sphere to iterate through
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
-     * @param typePredicate The <tt>Predicate</tt> condition
+     * @param typePredicate The <code>Predicate</code> condition
      */
     public static void iterateBlocksSphere(Location loc, double radius, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
@@ -311,7 +311,7 @@ public class BlockIterator
      *
      * @param loc      The location in which to iterate blocks around
      * @param radius   The radius of the sphere to iterate through
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
     public static void iterateBlocksSphere(Location loc, double radius, BlockConsumer consumer, BukkitPlugin plugin)
@@ -324,9 +324,9 @@ public class BlockIterator
      *
      * @param loc      The location in which to iterate blocks around
      * @param radius   The radius of the sphere to iterate through
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
-     * @param typePredicate The <tt>Predicate</tt> condition
+     * @param typePredicate The <code>Predicate</code> condition
      */
     public static void iterateBlocksSphereHollow(Location loc, double radius, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
@@ -353,7 +353,7 @@ public class BlockIterator
      *
      * @param loc      The location in which to iterate blocks around
      * @param radius   The radius of the sphere to iterate through
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
     public static void iterateBlocksSphereHollow(Location loc, double radius, BlockConsumer consumer, BukkitPlugin plugin)
@@ -365,9 +365,9 @@ public class BlockIterator
      * Iterate through all blocks of a list of Locations.
      *
      * @param locs The List of Locations to iterate through
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
-     * @param typePredicate The <tt>Predicate</tt> condition
+     * @param typePredicate The <code>Predicate</code> condition
      */
     public static void iterateBlocks(List<Location> locs, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
     {
@@ -392,7 +392,7 @@ public class BlockIterator
      * Iterate through all blocks of a list of Locations.
      *
      * @param locs The List of Locations to iterate through
-     * @param consumer The <tt>BlockConsumer</tt> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
     public static void iterateBlocks(List<Location> locs, BlockConsumer consumer, BukkitPlugin plugin)

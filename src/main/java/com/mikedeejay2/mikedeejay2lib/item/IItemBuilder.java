@@ -22,7 +22,7 @@ import java.util.Set;
 /**
  * Interface of an item builder, specifies parameters that should be used for building items.
  *
- * @param <I> The default item return type, the rational thing to put here is <tt>ItemStack</tt>
+ * @param <I> The default item return type, the rational thing to put here is <code>ItemStack</code>
  * @param <T> The subclass used to return this in set methods
  *
  * @author Mikedeejay2
@@ -32,7 +32,7 @@ public interface IItemBuilder<I, T>
     /**
      * Get the item
      *
-     * @return The item of type <tt>I</tt>
+     * @return The item of type <code>I</code>
      */
     I get();
 
@@ -45,16 +45,16 @@ public interface IItemBuilder<I, T>
     T set(I item);
 
     /**
-     * Get the <tt>ItemMeta</tt>
+     * Get the <code>ItemMeta</code>
      *
-     * @return The <tt>ItemMeta</tt> of the item
+     * @return The <code>ItemMeta</code> of the item
      */
     ItemMeta getMeta();
 
     /**
-     * Set the new <tt>ItemMeta</tt>
+     * Set the new <code>ItemMeta</code>
      *
-     * @param meta The new <tt>ItemMeta</tt>
+     * @param meta The new <code>ItemMeta</code>
      * @return A reference to this object
      */
     T setMeta(ItemMeta meta);
@@ -228,16 +228,16 @@ public interface IItemBuilder<I, T>
     boolean hasItemFlag(ItemFlag flag);
 
     /**
-     * Get a <tt>Set</tt> of all of the item flags for the item
+     * Get a <code>Set</code> of all of the item flags for the item
      *
-     * @return The <tt>ItemFlags</tt> set
+     * @return The <code>ItemFlags</code> set
      */
     Set<ItemFlag> getItemFlags();
 
     /**
-     * Add a single <tt>ItemFlag</tt> to the item
+     * Add a single <code>ItemFlag</code> to the item
      *
-     * @param flag The <tt>ItemFlag</tt> to add to the item
+     * @param flag The <code>ItemFlag</code> to add to the item
      * @return A reference to this object
      */
     T addItemFlag(ItemFlag flag);
@@ -283,7 +283,7 @@ public interface IItemBuilder<I, T>
     /**
      * Get the head owner of the head item
      * <p>
-     * Note: The item must be of type <tt>PLAYER_HEAD</tt> and must have a head owner
+     * Note: The item must be of type <code>PLAYER_HEAD</code> and must have a head owner
      * set from {@link IItemBuilder#setHeadOwner(OfflinePlayer)}
      *
      * @return The current head owner of the head item
@@ -293,7 +293,7 @@ public interface IItemBuilder<I, T>
     /**
      * Set the new head owner of the head item
      * <p>
-     * Note: The item must be of type <tt>PLAYER_HEAD</tt>
+     * Note: The item must be of type <code>PLAYER_HEAD</code>
      *
      * @param player The new head owner of the head item
      * @return A reference to this object
@@ -303,7 +303,7 @@ public interface IItemBuilder<I, T>
     /**
      * Get the base 64 string of the item
      * <p>
-     * Note: The item must be of type <tt>PLAYER_HEAD</tt> and must have a base 64 string
+     * Note: The item must be of type <code>PLAYER_HEAD</code> and must have a base 64 string
      * set from {@link IItemBuilder#setHeadBase64(String)}
      *
      * @return The current base 64 String of the head item
@@ -313,7 +313,7 @@ public interface IItemBuilder<I, T>
     /**
      * Set the new base 64 String of the head item.
      * <p>
-     * Note: The item must be of type <tt>PLAYER_HEAD</tt>
+     * Note: The item must be of type <code>PLAYER_HEAD</code>
      *
      * @param base64 The new base 64 String of the head item
      * @return A reference to this object
@@ -328,50 +328,50 @@ public interface IItemBuilder<I, T>
     boolean hasAttributeModifiers();
 
     /**
-     * Get a <tt>MultiMap</tt> of <tt>Attribute</tt> to <tt>AttributeModifiers</tt> for the item
+     * Get a <code>MultiMap</code> of <code>Attribute</code> to <code>AttributeModifiers</code> for the item
      *
      * @return A map of attributes for the item
      */
     Multimap<Attribute, AttributeModifier> getAttributeModifiers();
 
     /**
-     * Get a <tt>MultiMap</tt> of <tt>Attribute</tt> to <tt>AttributeModifiers</tt> for the item based off of
+     * Get a <code>MultiMap</code> of <code>Attribute</code> to <code>AttributeModifiers</code> for the item based off of
      * the equipment slot
      *
-     * @param slot The <tt>EquipmentSlot</tt> to get
+     * @param slot The <code>EquipmentSlot</code> to get
      * @return A map of attributes for the item and equipment slot
      */
     Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot);
 
     /**
-     * Get a <tt>Collection</tt> of <tt>AttributeModifiers</tt> for the item based off of the requested
-     * <tt>Attribute</tt>
+     * Get a <code>Collection</code> of <code>AttributeModifiers</code> for the item based off of the requested
+     * <code>Attribute</code>
      *
-     * @param attribute The <tt>Attribute</tt> to get
-     * @return The collection of <tt>AttributeModifiers</tt>
+     * @param attribute The <code>Attribute</code> to get
+     * @return The collection of <code>AttributeModifiers</code>
      */
     Collection<AttributeModifier> getAttributeModifiers(Attribute attribute);
 
     /**
-     * Add an <tt>Attribute</tt> to the item
+     * Add an <code>Attribute</code> to the item
      *
-     * @param attribute The <tt>Attribute</tt> to add to the item
-     * @param modifier The <tt>AttributeModifier</tt> to add
+     * @param attribute The <code>Attribute</code> to add to the item
+     * @param modifier The <code>AttributeModifier</code> to add
      * @return A reference to this object
      */
     T addAttributeModifier(Attribute attribute, AttributeModifier modifier);
 
     /**
-     * Add multiple <tt>Attribute</tt> with multiple <tt>AttributeModifiers</tt> to the item
+     * Add multiple <code>Attribute</code> with multiple <code>AttributeModifiers</code> to the item
      *
-     * @param attribute The <tt>Attribute</tt> to add to the item
-     * @param modifiers The <tt>AttributeModifiers</tt> to add
+     * @param attribute The <code>Attribute</code> to add to the item
+     * @param modifiers The <code>AttributeModifiers</code> to add
      * @return A reference to this object
      */
     T addAttributeModifiers(Attribute attribute, AttributeModifier... modifiers);
 
     /**
-     * Set a new <tt>MultiMap</tt> of <tt>Attribute</tt> <tt>AttributeModifiers</tt> to the item
+     * Set a new <code>MultiMap</code> of <code>Attribute</code> <code>AttributeModifiers</code> to the item
      *
      * @param attributeModifiers The new map of attributes
      * @return A reference to this object
@@ -379,59 +379,59 @@ public interface IItemBuilder<I, T>
     T setAttributeModifiers(Multimap<Attribute, AttributeModifier> attributeModifiers);
 
     /**
-     * Remove an <tt>Attribute</tt> from the item
+     * Remove an <code>Attribute</code> from the item
      *
-     * @param attribute The <tt>Attribute</tt> to remove
+     * @param attribute The <code>Attribute</code> to remove
      * @return A reference to this object
      */
     T removeAttributeModifier(Attribute attribute);
 
     /**
-     * Remove multiple <tt>Attributes</tt> from the item
+     * Remove multiple <code>Attributes</code> from the item
      *
-     * @param attributes The <tt>Attribute</tt> to remove
+     * @param attributes The <code>Attribute</code> to remove
      * @return A reference to this object
      */
     T removeAttributeModifiers(Attribute... attributes);
 
     /**
-     * Remove attribute modifiers of the specified <tt>EquipmentSlot</tt>
+     * Remove attribute modifiers of the specified <code>EquipmentSlot</code>
      *
-     * @param slot The <tt>EquipmentSlot</tt> to remove attributes from
+     * @param slot The <code>EquipmentSlot</code> to remove attributes from
      * @return A reference to this object
      */
     T removeAttributeModifier(EquipmentSlot slot);
 
     /**
-     * Remove multiple attribute modifiers of the specified <tt>EquipmentSlots</tt>
+     * Remove multiple attribute modifiers of the specified <code>EquipmentSlots</code>
      *
-     * @param slots The <tt>EquipmentSlots</tt> to remove attributes from
+     * @param slots The <code>EquipmentSlots</code> to remove attributes from
      * @return A reference to this object
      */
     T removeAttributeModifiers(EquipmentSlot... slots);
 
     /**
-     * Remove an <tt>Attribute's</tt> <tt>AttributeModifier</tt> from the item
+     * Remove an <code>Attribute's</code> <code>AttributeModifier</code> from the item
      *
-     * @param attribute The <tt>Attribute</tt> to remove from
-     * @param modifier The <tt>AttributeModifier</tt> to remove
+     * @param attribute The <code>Attribute</code> to remove from
+     * @param modifier The <code>AttributeModifier</code> to remove
      * @return A reference to this object
      */
     T removeAttributeModifier(Attribute attribute, AttributeModifier modifier);
 
     /**
-     * Remove an <tt>Attribute</tt> <tt>AttributeModifiers</tt> from the item
+     * Remove an <code>Attribute</code> <code>AttributeModifiers</code> from the item
      *
-     * @param attribute The <tt>Attribute</tt> to remove from
-     * @param modifiers The <tt>AttributeModifiers</tt> to remove
+     * @param attribute The <code>Attribute</code> to remove from
+     * @param modifiers The <code>AttributeModifiers</code> to remove
      * @return A reference to this object
      */
     T removeAttributeModifiers(Attribute attribute, AttributeModifier... modifiers);
 
     /**
-     * Get the {@link PersistentDataContainer} for the <tt>ItemMeta</tt>
+     * Get the {@link PersistentDataContainer} for the <code>ItemMeta</code>
      *
-     * @return The <tt>PersistentDataContainer</tt>
+     * @return The <code>PersistentDataContainer</code>
      */
     PersistentDataContainer getPersistentDataContainer();
 
@@ -446,7 +446,7 @@ public interface IItemBuilder<I, T>
     /**
      * Get the custom model data of the item
      * <p>
-     * <tt>hasCustomModelData()</tt> should first be checked before executing this method
+     * <code>hasCustomModelData()</code> should first be checked before executing this method
      *
      * @return The custom model data for the item
      */
@@ -470,7 +470,7 @@ public interface IItemBuilder<I, T>
     /**
      * Get the localized name of the item
      * <p>
-     * <tt>hasLocalizedName()</tt> should first be checked before executing this method
+     * <code>hasLocalizedName()</code> should first be checked before executing this method
      *
      * @return The localized name of the item
      */
@@ -486,7 +486,7 @@ public interface IItemBuilder<I, T>
     /**
      * Get the display name of the item
      * <p>
-     * <tt>hasDisplayName()</tt> should first be checked before executing this method
+     * <code>hasDisplayName()</code> should first be checked before executing this method
      *
      * @return The display name of the item
      */
@@ -510,7 +510,7 @@ public interface IItemBuilder<I, T>
     /**
      * Get the durability of the item.
      * <p>
-     * It must be ensured that the item has a durability with <tt>hasDurability()</tt>
+     * It must be ensured that the item has a durability with <code>hasDurability()</code>
      *
      * @return The durability of the item
      */
@@ -519,7 +519,7 @@ public interface IItemBuilder<I, T>
     /**
      * Set the durability of the item.
      * <p>
-     * It must be ensured that the item has a durability with <tt>hasDurability()</tt>
+     * It must be ensured that the item has a durability with <code>hasDurability()</code>
      *
      * @param durability The new durability of the item
      * @return A reference to this object
@@ -541,10 +541,10 @@ public interface IItemBuilder<I, T>
     boolean hasDurability();
 
     /**
-     * Set data in the item's <tt>PersistentDataContainer</tt>
+     * Set data in the item's <code>PersistentDataContainer</code>
      *
-     * @param key   The <tt>NamespacedKey</tt> to set the data in
-     * @param type  The <tt>PersistentDataContainer</tt> to use
+     * @param key   The <code>NamespacedKey</code> to set the data in
+     * @param type  The <code>PersistentDataContainer</code> to use
      * @param value The value to set
      * @param <Y>   The main object type stored by the tag
      * @param <Z>   The data type of the retrieved object
@@ -553,11 +553,11 @@ public interface IItemBuilder<I, T>
     <Y, Z> T setData(NamespacedKey key, PersistentDataType<Y, Z> type, Z value);
 
     /**
-     * Set data in the item's <tt>PersistentDataContainer</tt>
+     * Set data in the item's <code>PersistentDataContainer</code>
      *
      * @param plugin The plugin's reference for namespace
      * @param key    The String key to set the data in
-     * @param type   The <tt>PersistentDataContainer</tt> to use
+     * @param type   The <code>PersistentDataContainer</code> to use
      * @param value  The value to set
      * @param <Y>    The main object type stored by the tag
      * @param <Z>    The data type of the retrieved object
@@ -566,10 +566,10 @@ public interface IItemBuilder<I, T>
     <Y, Z> T setData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z value);
 
     /**
-     * Get whether there is specific data in the item's <tt>PersistentDataContainer</tt>
+     * Get whether there is specific data in the item's <code>PersistentDataContainer</code>
      *
-     * @param key  The <tt>NamespacedKey</tt> to check for
-     * @param type The <tt>PersistentDataContainer</tt> to use
+     * @param key  The <code>NamespacedKey</code> to check for
+     * @param type The <code>PersistentDataContainer</code> to use
      * @param <Y>  The main object type stored by the tag
      * @param <Z>  The data type of the retrieved object
      * @return A reference to this object
@@ -577,11 +577,11 @@ public interface IItemBuilder<I, T>
     <Y, Z> boolean hasData(NamespacedKey key, PersistentDataType<Y, Z> type);
 
     /**
-     * Get whether there is specific data in the item's <tt>PersistentDataContainer</tt>
+     * Get whether there is specific data in the item's <code>PersistentDataContainer</code>
      *
      * @param plugin The plugin's reference for namespace
      * @param key    The String key to check for
-     * @param type   The <tt>PersistentDataContainer</tt> to use
+     * @param type   The <code>PersistentDataContainer</code> to use
      * @param <Y>    The main object type stored by the tag
      * @param <Z>    The data type of the retrieved object
      * @return A reference to this object
@@ -589,10 +589,10 @@ public interface IItemBuilder<I, T>
     <Y, Z> boolean hasData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type);
 
     /**
-     * Get data from the item's <tt>PersistentDataContainer</tt>
+     * Get data from the item's <code>PersistentDataContainer</code>
      *
-     * @param key  The <tt>NamespacedKey</tt> to get the data from
-     * @param type The <tt>PersistentDataContainer</tt> to use
+     * @param key  The <code>NamespacedKey</code> to get the data from
+     * @param type The <code>PersistentDataContainer</code> to use
      * @param <Y>  The main object type stored by the tag
      * @param <Z>  The data type of the retrieved object
      * @return A reference to this object
@@ -600,11 +600,11 @@ public interface IItemBuilder<I, T>
     <Y, Z> Z getData(NamespacedKey key, PersistentDataType<Y, Z> type);
 
     /**
-     * Get data from the item's <tt>PersistentDataContainer</tt>
+     * Get data from the item's <code>PersistentDataContainer</code>
      *
      * @param plugin The plugin's reference for namespace
      * @param key    The String key to get
-     * @param type   The <tt>PersistentDataContainer</tt> to use
+     * @param type   The <code>PersistentDataContainer</code> to use
      * @param <Y>    The main object type stored by the tag
      * @param <Z>    The data type of the retrieved object
      * @return A reference to this object
@@ -612,11 +612,11 @@ public interface IItemBuilder<I, T>
     <Y, Z> Z getData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type);
 
     /**
-     * Get data from the item's <tt>PersistentDataContainer</tt>. If the data does not exist, get a
+     * Get data from the item's <code>PersistentDataContainer</code>. If the data does not exist, get a
      * default value instead.
      *
-     * @param key          The <tt>NamespacedKey</tt> to get the data from
-     * @param type         The <tt>PersistentDataContainer</tt> to use
+     * @param key          The <code>NamespacedKey</code> to get the data from
+     * @param type         The <code>PersistentDataContainer</code> to use
      * @param defaultValue The default value to get if no value currently exists
      * @param <Y>          The main object type stored by the tag
      * @param <Z>          The data type of the retrieved object
@@ -625,12 +625,12 @@ public interface IItemBuilder<I, T>
     <Y, Z> Z getOrDefaultData(NamespacedKey key, PersistentDataType<Y, Z> type, Z defaultValue);
 
     /**
-     * Get data from the item's <tt>PersistentDataContainer</tt>. If the data does not exist, get a
+     * Get data from the item's <code>PersistentDataContainer</code>. If the data does not exist, get a
      * default value instead.
      *
      * @param plugin       The plugin's reference for namespace
      * @param key          The String key to get
-     * @param type         The <tt>PersistentDataContainer</tt> to use
+     * @param type         The <code>PersistentDataContainer</code> to use
      * @param defaultValue The default value to get if no value currently exists
      * @param <Y>          The main object type stored by the tag
      * @param <Z>          The data type of the retrieved object
@@ -639,15 +639,15 @@ public interface IItemBuilder<I, T>
     <Y, Z> Z getOrDefaultData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z defaultValue);
 
     /**
-     * Remove data from the item's <tt>PersistentDataContainer</tt>
+     * Remove data from the item's <code>PersistentDataContainer</code>
      *
-     * @param key The <tt>NamespacedKey</tt> to remove
+     * @param key The <code>NamespacedKey</code> to remove
      * @return A reference to this object
      */
     T removeData(NamespacedKey key);
 
     /**
-     * Remove data from the item's <tt>PersistentDataContainer</tt>
+     * Remove data from the item's <code>PersistentDataContainer</code>
      *
      * @param plugin The plugin's reference for namespace
      * @param key    The String key to remove
@@ -656,15 +656,15 @@ public interface IItemBuilder<I, T>
     T removeData(BukkitPlugin plugin, String key);
 
     /**
-     * Remove data from the item's <tt>PersistentDataContainer</tt>
+     * Remove data from the item's <code>PersistentDataContainer</code>
      *
-     * @param keys The <tt>NamespacedKeys</tt> to remove
+     * @param keys The <code>NamespacedKeys</code> to remove
      * @return A reference to this object
      */
     T removeData(NamespacedKey... keys);
 
     /**
-     * Remove data from the item's <tt>PersistentDataContainer</tt>
+     * Remove data from the item's <code>PersistentDataContainer</code>
      *
      * @param plugin The plugin's reference for namespace
      * @param keys   The String keys to remove
@@ -673,7 +673,7 @@ public interface IItemBuilder<I, T>
     T removeData(BukkitPlugin plugin, String... keys);
 
     /**
-     * Get whether the item's <tt>PersistentDataContainer</tt> is empty or not
+     * Get whether the item's <code>PersistentDataContainer</code> is empty or not
      *
      * @return Whether the item's data is empty
      */

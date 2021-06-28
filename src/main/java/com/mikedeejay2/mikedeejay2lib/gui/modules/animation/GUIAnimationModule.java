@@ -15,8 +15,8 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
 
 /**
- * A module that processes <tt>AnimatedGUIItems</tt>.
- * This module is required for the animation of <tt>AnimatedGUIItems</tt>
+ * A module that processes <code>AnimatedGUIItems</code>.
+ * This module is required for the animation of <code>AnimatedGUIItems</code>
  *
  * @see AnimatedGUIItem
  *
@@ -40,7 +40,7 @@ public class GUIAnimationModule implements GUIModule
     }
 
     /**
-     * On open injection. This method creates an <tt>AnimationRuntime</tt> that
+     * On open injection. This method creates an <code>AnimationRuntime</code> that
      * animates the GUI Items.
      *
      * @param player The player that opened the GUI
@@ -57,7 +57,7 @@ public class GUIAnimationModule implements GUIModule
     }
 
     /**
-     * When the GUI is closed, stop the <tt>AnimationRuntime</tt>
+     * When the GUI is closed, stop the <code>AnimationRuntime</code>
      *
      * @param player The player that closed the GUI
      * @param gui    The GUI
@@ -72,7 +72,7 @@ public class GUIAnimationModule implements GUIModule
      * Add an item to the runtime
      *
      * @param item Item to add
-     * @param properties The <tt>AnimatedGUIItemProperties</tt> of the item
+     * @param properties The <code>AnimatedGUIItemProperties</code> of the item
      */
     public void addItem(AnimatedGUIItem item, AnimatedGUIItemProperties properties)
     {

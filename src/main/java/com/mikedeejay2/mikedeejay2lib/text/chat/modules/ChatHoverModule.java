@@ -7,7 +7,7 @@ import net.md_5.bungee.api.chat.BaseComponent;
 import net.md_5.bungee.api.chat.HoverEvent;
 
 /**
- * A <tt>ChatModule</tt> that adds hover functionality to the <tt>ChatSection</tt>
+ * A <code>ChatModule</code> that adds hover functionality to the <code>ChatSection</code>
  *
  * @author Mikedeejay2
  */
@@ -27,10 +27,10 @@ public class ChatHoverModule implements ChatModule
     }
 
     /**
-     * Overridden <tt>onBake()</tt> method that adds hover functionality to the current <tt>BaseComponents</tt>
+     * Overridden <code>onBake()</code> method that adds hover functionality to the current <code>BaseComponents</code>
      *
-     * @param section    The <tt>ChatSection</tt> that is being baked
-     * @param components The current array of <tt>BaseComponents</tt> that have been baked
+     * @param section    The <code>ChatSection</code> that is being baked
+     * @param components The current array of <code>BaseComponents</code> that have been baked
      */
     @Override
     public void onBake(ChatSection section, BaseComponent[] components)

@@ -25,7 +25,7 @@ public class AnimationFrame
     protected boolean relativeMovement;
 
     /**
-     * Constructor for constructing an <tt>ITEM</tt> frame
+     * Constructor for constructing an <code>ITEM</code> frame
      *
      * @param item   The new item that this frame will apply
      * @param period The period between this frame and the next frame
@@ -38,11 +38,11 @@ public class AnimationFrame
     }
 
     /**
-     * Constructor for constructing a <tt>MOVEMENT</tt> frame
+     * Constructor for constructing a <code>MOVEMENT</code> frame
      *
      * @param row              The row that the item will move to
      * @param col              The column that the item will move to
-     * @param movement         The <tt>MovementType</tt> of this frame
+     * @param movement         The <code>MovementType</code> of this frame
      * @param relativeMovement Whether or not to use relative (local) movement
      * @param period           The period between this frame and the next frame
      */
@@ -57,12 +57,12 @@ public class AnimationFrame
     }
 
     /**
-     * Constructor for constructing a <tt>BOTH</tt> (Item and movement) frame
+     * Constructor for constructing a <code>BOTH</code> (Item and movement) frame
      *
      * @param item             The new item that this frame will apply
      * @param row              The row that the item will move to
      * @param col              The column that the item will move to
-     * @param movement         The <tt>MovementType</tt> of this frame
+     * @param movement         The <code>MovementType</code> of this frame
      * @param relativeMovement Whether or not to use relative (local) movement
      * @param period           The period between this frame and the next frame
      */
@@ -78,7 +78,7 @@ public class AnimationFrame
     }
 
     /**
-     * Get the item of this frame, null if the <tt>FrameType</tt> is not <tt>ITEM</tt> or <tt>BOTH</tt>
+     * Get the item of this frame, null if the <code>FrameType</code> is not <code>ITEM</code> or <code>BOTH</code>
      *
      * @return The item of this frame
      */
@@ -90,7 +90,7 @@ public class AnimationFrame
     /**
      * Set the item of this frame.
      * <p>
-     * Note: The item will only be used if the <tt>FrameType</tt> for this frame is <tt>ITEM</tt> or <tt>BOTH</tt>
+     * Note: The item will only be used if the <code>FrameType</code> for this frame is <code>ITEM</code> or <code>BOTH</code>
      *
      * @param item The item to set this frame's item to
      */
@@ -100,7 +100,7 @@ public class AnimationFrame
     }
 
     /**
-     * Get the <tt>MovementType</tt> of this frame, null if the <tt>FrameType</tt> is not <tt>MOVEMENT</tt> or <tt>BOTH</tt>
+     * Get the <code>MovementType</code> of this frame, null if the <code>FrameType</code> is not <code>MOVEMENT</code> or <code>BOTH</code>
      *
      * @return The movement type of this frame
      */
@@ -110,9 +110,9 @@ public class AnimationFrame
     }
 
     /**
-     * Set the <tt>MovementType</tt> of this frame.
+     * Set the <code>MovementType</code> of this frame.
      * <p>
-     * Note: The <tt>MovementType</tt> will only be used if the <tt>FrameType</tt> for this frame is <tt>MOVEMENT</tt> or <tt>BOTH</tt>
+     * Note: The <code>MovementType</code> will only be used if the <code>FrameType</code> for this frame is <code>MOVEMENT</code> or <code>BOTH</code>
      *
      * @param movementType The movement type to set this frame to
      */
@@ -122,7 +122,7 @@ public class AnimationFrame
     }
 
     /**
-     * Get the row of this frame, null if the <tt>FrameType</tt> is not <tt>MOVEMENT</tt> or <tt>BOTH</tt>
+     * Get the row of this frame, null if the <code>FrameType</code> is not <code>MOVEMENT</code> or <code>BOTH</code>
      *
      * @return The row of this frame
      */
@@ -135,7 +135,7 @@ public class AnimationFrame
     /**
      * Set the row of this frame.
      * <p>
-     * Note: This will only be used if the <tt>FrameType</tt> for this frame is <tt>MOVEMENT</tt> or <tt>BOTH</tt>
+     * Note: This will only be used if the <code>FrameType</code> for this frame is <code>MOVEMENT</code> or <code>BOTH</code>
      *
      * @param row The row to set this frame to
      */
@@ -145,7 +145,7 @@ public class AnimationFrame
     }
 
     /**
-     * Get the column of this frame, null if the <tt>FrameType</tt> is not <tt>MOVEMENT</tt> or <tt>BOTH</tt>
+     * Get the column of this frame, null if the <code>FrameType</code> is not <code>MOVEMENT</code> or <code>BOTH</code>
      *
      * @return The column of this frame
      */
@@ -157,7 +157,7 @@ public class AnimationFrame
     /**
      * Set the column of this frame.
      * <p>
-     * Note: This will only be used if the <tt>FrameType</tt> for this frame is <tt>MOVEMENT</tt> or <tt>BOTH</tt>
+     * Note: This will only be used if the <code>FrameType</code> for this frame is <code>MOVEMENT</code> or <code>BOTH</code>
      *
      * @param col The column to set this frame to
      */
@@ -169,7 +169,7 @@ public class AnimationFrame
     /**
      * Set the row and column of this frame.
      * <p>
-     * Note: This will only be used if the <tt>FrameType</tt> for this frame is <tt>MOVEMENT</tt> or <tt>BOTH</tt>
+     * Note: This will only be used if the <code>FrameType</code> for this frame is <code>MOVEMENT</code> or <code>BOTH</code>
      *
      * @param row The row to set this frame to
      * @param col The column to set this frame to
@@ -201,7 +201,7 @@ public class AnimationFrame
     }
 
     /**
-     * Get the <tt>FrameType</tt> of this frame
+     * Get the <code>FrameType</code> of this frame
      *
      * @return This frame's type
      */
@@ -211,11 +211,11 @@ public class AnimationFrame
     }
 
     /**
-     * Set the <tt>FrameType</tt> of this frame.
+     * Set the <code>FrameType</code> of this frame.
      * <p>
      * Note: When using this method, it is important that the type of frame that you are setting
-     * has all values set in this frame. If data is missing in this frame that the <tt>FrameType</tt>
-     * requires, a <tt>NullPointerException</tt> will be thrown.
+     * has all values set in this frame. If data is missing in this frame that the <code>FrameType</code>
+     * requires, a <code>NullPointerException</code> will be thrown.
      *
      * @param type The type to set this frame to.
      */

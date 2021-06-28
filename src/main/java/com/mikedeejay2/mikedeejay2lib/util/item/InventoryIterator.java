@@ -21,9 +21,9 @@ public final class InventoryIterator
      * Iterate through slots of an inventory
      *
      * @param inventory The inventory to iterate through
-     * @param consumer The <tt>InventorySlotConsumer</tt> to accept on a slot
+     * @param consumer The <code>InventorySlotConsumer</code> to accept on a slot
      * @param storageOnly Whether only storage slots of the inventory be iterated through
-     * @param predicate The <tt>Predicate</tt> that is checked before accepting the slot
+     * @param predicate The <code>Predicate</code> that is checked before accepting the slot
      * @param startIndex The starting index of the iteration
      * @param endIndex The ending index of the iteration
      * @param increment Whether to increment of decrement the operation
@@ -57,10 +57,10 @@ public final class InventoryIterator
      * Iterate through slots of an inventory
      *
      * @param inventory The inventory to iterate through
-     * @param consumer The <tt>InventorySlotConsumer</tt> to accept on a slot
+     * @param consumer The <code>InventorySlotConsumer</code> to accept on a slot
      * @param storageOnly Whether only storage slots of the inventory be iterated through
-     * @param predicate The <tt>Predicate</tt> that is checked before accepting the slot
-     * @param orders The array of <tt>InventoryOrders</tt> that will be used
+     * @param predicate The <code>Predicate</code> that is checked before accepting the slot
+     * @param orders The array of <code>InventoryOrders</code> that will be used
      */
     public static void iterateInventory(Inventory inventory, InventorySlotConsumer consumer, boolean storageOnly, Predicate<ItemStack> predicate, InventoryOrder... orders)
     {

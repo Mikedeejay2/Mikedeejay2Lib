@@ -59,7 +59,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     /**
-     * Called when this <tt>GUIItem</tt> is clicked
+     * Called when this <code>GUIItem</code> is clicked
      *
      * @param event The event of the click
      * @param gui   The GUI that was clicked on
@@ -71,7 +71,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     /**
-     * Returns whether this <tt>GUIItem</tt> is movable or not
+     * Returns whether this <code>GUIItem</code> is movable or not
      *
      * @return Move state
      */
@@ -81,10 +81,10 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     /**
-     * Set whether this <tt>GUIItem</tt> is movable or not
+     * Set whether this <code>GUIItem</code> is movable or not
      *
      * @param movable Move state to set this item to
-     * @return A reference to this <tt>GUIItem</tt>
+     * @return A reference to this <code>GUIItem</code>
      */
     public GUIItem setMovable(boolean movable)
     {
@@ -93,7 +93,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     /**
-     * Get the <tt>GUIEventHandler</tt> of this item
+     * Get the <code>GUIEventHandler</code> of this item
      *
      * @return the item event of this item
      */
@@ -103,11 +103,11 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     /**
-     * Get a <tt>GUIEvent</tt> based off of the event's class
+     * Get a <code>GUIEvent</code> based off of the event's class
      *
-     * @param eventClass The class of the <tt>GUIEvent</tt> to get
+     * @param eventClass The class of the <code>GUIEvent</code> to get
      * @param <T>        The class type
-     * @return The requested <tt>GUIEvent</tt>
+     * @return The requested <code>GUIEvent</code>
      */
     public <T extends GUIEvent> T getEvent(Class<T> eventClass)
     {
@@ -115,9 +115,9 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     /**
-     * Get a <tt>GUIEvent</tt> based off of the index of the event
+     * Get a <code>GUIEvent</code> based off of the index of the event
      *
-     * @param index The index that the <tt>GUIEvent</tt> is located at in the list
+     * @param index The index that the <code>GUIEvent</code> is located at in the list
      * @return The requested event
      */
     public GUIEvent getEvent(int index)
@@ -126,10 +126,10 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     /**
-     * Set the <tt>GUIEventHandler</tt> for this item
+     * Set the <code>GUIEventHandler</code> for this item
      *
      * @param events Events to set this item to use
-     * @return A reference to this <tt>GUIItem</tt>
+     * @return A reference to this <code>GUIItem</code>
      */
     public GUIItem setEvents(GUIEventHandler events)
     {
@@ -138,10 +138,10 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     /**
-     * Add an event to this <tt>GUIItem</tt>
+     * Add an event to this <code>GUIItem</code>
      *
      * @param event Event to add
-     * @return A reference to this <tt>GUIItem</tt>
+     * @return A reference to this <code>GUIItem</code>
      */
     public GUIItem addEvent(GUIEvent event)
     {
@@ -153,7 +153,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
      * Remove an event via instance
      *
      * @param event Event to remove
-     * @return A reference to this <tt>GUIItem</tt>
+     * @return A reference to this <code>GUIItem</code>
      */
     public GUIItem removeEvent(GUIEvent event)
     {
@@ -165,7 +165,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
      * Remove an event via the event's class
      *
      * @param eventClass The class of the event to remove
-     * @return A reference to this <tt>GUIItem</tt>
+     * @return A reference to this <code>GUIItem</code>
      */
     public GUIItem removeEvent(Class<? extends GUIEvent> eventClass)
     {
@@ -174,7 +174,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     /**
-     * Returns whether the event instance exists in this <tt>GUIEvent</tt>
+     * Returns whether the event instance exists in this <code>GUIEvent</code>
      *
      * @param event The event to search for
      * @return Whether the event exists in this item
@@ -185,7 +185,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     /**
-     * Returns whether an event of a class exists in this <tt>GUIEvent</tt>
+     * Returns whether an event of a class exists in this <code>GUIEvent</code>
      *
      * @param eventClass The event class to search for
      * @return Whether the event exists in this item
@@ -198,7 +198,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     /**
      * Reset the GUI Events for this item
      *
-     * @return A reference to this <tt>GUIItem</tt>
+     * @return A reference to this <code>GUIItem</code>
      */
     public GUIItem resetEvents()
     {
@@ -209,7 +209,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     /**
      * Reset the view item to the base item
      *
-     * @return A reference to this <tt>GUIItem</tt>
+     * @return A reference to this <code>GUIItem</code>
      */
     public GUIItem resetViewItem()
     {
@@ -224,9 +224,9 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     /**
-     * Get the <tt>ItemStack</tt> of this <tt>GUIItem</tt> (view item)
+     * Get the <code>ItemStack</code> of this <code>GUIItem</code> (view item)
      *
-     * @return The requested <tt>ItemStack</tt>
+     * @return The requested <code>ItemStack</code>
      */
     public ItemStack getItem()
     {
@@ -234,7 +234,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     /**
-     * Get the base <tt>ItemStack</tt> of this <tt>GUIItem</tt>
+     * Get the base <code>ItemStack</code> of this <code>GUIItem</code>
      *
      * @return The base item
      */
@@ -244,7 +244,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     /**
-     * Get the view item of this <tt>GUIItem</tt>
+     * Get the view item of this <code>GUIItem</code>
      *
      * @return The view item
      */
@@ -260,11 +260,11 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     /**
-     * Set the <tt>ItemStack</tt> that this <tt>GUIItem</tt> stores (modifies
+     * Set the <code>ItemStack</code> that this <code>GUIItem</code> stores (modifies
      * both the base item and the view item)
      *
      * @param item The item to set
-     * @return A reference to this <tt>GUIItem</tt>
+     * @return A reference to this <code>GUIItem</code>
      */
     public GUIItem setItem(ItemStack item)
     {
@@ -274,10 +274,10 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     /**
-     * Set the <tt>ItemStack</tt> for the base item of this <tt>GUIItem</tt>
+     * Set the <code>ItemStack</code> for the base item of this <code>GUIItem</code>
      *
      * @param baseItem Item that will be set to the base item
-     * @return A reference to this <tt>GUIItem</tt>
+     * @return A reference to this <code>GUIItem</code>
      */
     public GUIItem setBaseItem(ItemStack baseItem)
     {
@@ -286,10 +286,10 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem>
     }
 
     /**
-     * Set the <tt>ItemStack</tt> for the view item of this <tt>GUIItem</tt>
+     * Set the <code>ItemStack</code> for the view item of this <code>GUIItem</code>
      *
      * @param viewItem Item that will be set to the view item
-     * @return A reference to this <tt>GUIItem</tt>
+     * @return A reference to this <code>GUIItem</code>
      */
     public GUIItem setViewItem(ItemStack viewItem)
     {

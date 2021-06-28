@@ -22,7 +22,7 @@ public class ImmutableTriple<L, M, R> extends Triple<L, M, R>
     protected final R right;
 
     /**
-     * Construct a new <tt>ImmutableTriple</tt>
+     * Construct a new <code>ImmutableTriple</code>
      *
      * @param left The left value
      * @param middle The middle value

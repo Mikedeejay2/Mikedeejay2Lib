@@ -82,9 +82,9 @@ public class AnimatedGUIItemProperties
     }
 
     /**
-     * Get the <tt>GUIItemLocation</tt> of this property
+     * Get the <code>GUIItemLocation</code> of this property
      *
-     * @return The <tt>GUIItemLocation</tt>
+     * @return The <code>GUIItemLocation</code>
      */
     public GUIItemLocation getLocation()
     {
@@ -92,7 +92,7 @@ public class AnimatedGUIItemProperties
     }
 
     /**
-     * Set a new <tt>GUIItemLocation</tt> of this property
+     * Set a new <code>GUIItemLocation</code> of this property
      *
      * @param location The new location to use
      */

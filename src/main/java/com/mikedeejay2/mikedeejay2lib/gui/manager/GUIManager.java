@@ -25,12 +25,12 @@ public class GUIManager
     }
 
     /**
-     * Get a player from the <tt>GUIManager</tt>.
+     * Get a player from the <code>GUIManager</code>.
      * This method will never be returned null. If this manager is not
      * storing the player, it will begin storing the player upon access.
      *
      * @param player Player to get
-     * @return The player's <tt>PlayerGUI</tt>
+     * @return The player's <code>PlayerGUI</code>
      */
     public PlayerGUI getPlayer(Player player)
     {
@@ -52,7 +52,7 @@ public class GUIManager
     }
 
     /**
-     * Remove a player from the <tt>GUIManager</tt>.
+     * Remove a player from the <code>GUIManager</code>.
      *
      * @param player The player to remove
      */

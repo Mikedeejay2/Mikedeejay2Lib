@@ -23,7 +23,7 @@ public class ListenerManager
     }
 
     /**
-     * Add a <tt>Listener</tt> to this manager
+     * Add a <code>Listener</code> to this manager
      *
      * @param listener The listener to add
      */
@@ -45,9 +45,9 @@ public class ListenerManager
     }
 
     /**
-     * Get the <tt>ArrayList</tt> of <tt>Listeners</tt>
+     * Get the <code>ArrayList</code> of <code>Listeners</code>
      *
-     * @return All <tt>Listeners</tt> that this manager holds
+     * @return All <code>Listeners</code> that this manager holds
      */
     public ArrayList<Listener> getListeners()
     {

@@ -87,11 +87,11 @@ public class ActionBar
     }
 
     /**
-     * Add a new <tt>ActionBarFrame</tt> to this <tt>ActionBar</tt>
+     * Add a new <code>ActionBarFrame</code> to this <code>ActionBar</code>
      *
      * @param text  The String of text for the frame to display
      * @param delay The delay between this frame and the next frame
-     * @return The current <tt>ActionBar</tt>
+     * @return The current <code>ActionBar</code>
      */
     public ActionBar addFrame(String text, long delay)
     {
@@ -101,10 +101,10 @@ public class ActionBar
     }
 
     /**
-     * Add an existing <tt>ActionBarFrame</tt> to this <tt>ActionBar</tt>
+     * Add an existing <code>ActionBarFrame</code> to this <code>ActionBar</code>
      *
-     * @param frame The <tt>ActionBarFrame</tt> to add
-     * @return The current <tt>ActionBar</tt>
+     * @param frame The <code>ActionBarFrame</code> to add
+     * @return The current <code>ActionBar</code>
      */
     public ActionBar addFrame(ActionBarFrame frame)
     {
@@ -113,10 +113,10 @@ public class ActionBar
     }
 
     /**
-     * Remove a <tt>ActionBarFrame</tt> from this <tt>ActionBar</tt> with the index of the frame
+     * Remove a <code>ActionBarFrame</code> from this <code>ActionBar</code> with the index of the frame
      *
      * @param index The index to remove the frame from
-     * @return The current <tt>ActionBar</tt>
+     * @return The current <code>ActionBar</code>
      */
     public ActionBar removeFrame(int index)
     {
@@ -125,10 +125,10 @@ public class ActionBar
     }
 
     /**
-     * Remove a <tt>ActionBarFrame</tt> from this <tt>ActionBar</tt> with a reference to the frame
+     * Remove a <code>ActionBarFrame</code> from this <code>ActionBar</code> with a reference to the frame
      *
-     * @param frame The <tt>ActionBarFrame</tt> to remove
-     * @return The current <tt>ActionBar</tt>
+     * @param frame The <code>ActionBarFrame</code> to remove
+     * @return The current <code>ActionBar</code>
      */
     public ActionBar removeFrame(ActionBarFrame frame)
     {
@@ -137,9 +137,9 @@ public class ActionBar
     }
 
     /**
-     * See whether this <tt>ActionBar</tt> contains a specific <tt>ActionBarFrame</tt>
+     * See whether this <code>ActionBar</code> contains a specific <code>ActionBarFrame</code>
      *
-     * @param frame The <tt>ActionBarFrame</tt> to search for
+     * @param frame The <code>ActionBarFrame</code> to search for
      * @return Whether the specified frame was found or not
      */
     public boolean containsFrame(ActionBarFrame frame)
@@ -148,9 +148,9 @@ public class ActionBar
     }
 
     /**
-     * Reset (clear) all frames in this <tt>ActionBar</tt>
+     * Reset (clear) all frames in this <code>ActionBar</code>
      *
-     * @return The current <tt>ActionBar</tt>
+     * @return The current <code>ActionBar</code>
      */
     public ActionBar resetFrames()
     {
@@ -159,7 +159,7 @@ public class ActionBar
     }
 
     /**
-     * Get a <tt>ActionBarFrame</tt> based off of its index
+     * Get a <code>ActionBarFrame</code> based off of its index
      *
      * @param index The index to get the frame from
      * @return The requested frame
@@ -170,7 +170,7 @@ public class ActionBar
     }
 
     /**
-     * Get the list of all frames in this <tt>ActionBar</tt>
+     * Get the list of all frames in this <code>ActionBar</code>
      *
      * @return The list of all frames
      */
@@ -180,7 +180,7 @@ public class ActionBar
     }
 
     /**
-     * Whether this <tt>ActionBar</tt> should loop its frames or not
+     * Whether this <code>ActionBar</code> should loop its frames or not
      *
      * @return Loop state
      */
@@ -190,7 +190,7 @@ public class ActionBar
     }
 
     /**
-     * Set whether this <tt>ActionBar</tt> should loop its frames or not
+     * Set whether this <code>ActionBar</code> should loop its frames or not
      *
      * @param loop The new loop state
      */
@@ -200,7 +200,7 @@ public class ActionBar
     }
 
     /**
-     * Cancel the displaying of this <tt>ActionBar</tt>. This will do nothing
+     * Cancel the displaying of this <code>ActionBar</code>. This will do nothing
      * if no runtime is currently running.
      */
     public void cancelDisplay()
@@ -210,10 +210,10 @@ public class ActionBar
     }
 
     /**
-     * Add an <tt>ActionBarModule</tt> to this action bar
+     * Add an <code>ActionBarModule</code> to this action bar
      *
-     * @param module The <tt>ActionBarModule</tt> to add
-     * @return The current <tt>ActionBar</tt>
+     * @param module The <code>ActionBarModule</code> to add
+     * @return The current <code>ActionBar</code>
      */
     public ActionBar addModule(ActionBarModule module)
     {
@@ -222,11 +222,11 @@ public class ActionBar
     }
 
     /**
-     * Add a <tt>ActionBarModule</tt> to this action bar at a specified index
+     * Add a <code>ActionBarModule</code> to this action bar at a specified index
      *
-     * @param module The <tt>ActionBarModule</tt> to add
+     * @param module The <code>ActionBarModule</code> to add
      * @param index  The index to add the module at
-     * @return The current <tt>ActionBar</tt>
+     * @return The current <code>ActionBar</code>
      */
     public ActionBar addModule(ActionBarModule module, int index)
     {
@@ -235,10 +235,10 @@ public class ActionBar
     }
 
     /**
-     * Remove an <tt>ActionBarModule</tt> from this action bar based off of a reference to the module
+     * Remove an <code>ActionBarModule</code> from this action bar based off of a reference to the module
      *
      * @param module The module to remove
-     * @return The current <tt>ActionBar</tt>
+     * @return The current <code>ActionBar</code>
      */
     public ActionBar removeModule(ActionBarModule module)
     {
@@ -247,10 +247,10 @@ public class ActionBar
     }
 
     /**
-     * Remove an <tt>ActionBarModule</tt> from this action bar based off of the module's index
+     * Remove an <code>ActionBarModule</code> from this action bar based off of the module's index
      *
      * @param index The index of the module to remove
-     * @return The current <tt>ActionBar</tt>
+     * @return The current <code>ActionBar</code>
      */
     public ActionBar removeModule(int index)
     {
@@ -259,10 +259,10 @@ public class ActionBar
     }
 
     /**
-     * See whether this <tt>ActionBar</tt> contains a specific <tt>ActionBarModule</tt>
+     * See whether this <code>ActionBar</code> contains a specific <code>ActionBarModule</code>
      *
-     * @param module The <tt>ActionBarModule</tt> to search for
-     * @return Whether the <tt>ActionBarModule</tt> was found or not
+     * @param module The <code>ActionBarModule</code> to search for
+     * @return Whether the <code>ActionBarModule</code> was found or not
      */
     public boolean containsModule(ActionBarModule module)
     {
@@ -270,10 +270,10 @@ public class ActionBar
     }
 
     /**
-     * See whether this <tt>ActionBar</tt> contains the class of an <tt>ActionBarModule</tt>
+     * See whether this <code>ActionBar</code> contains the class of an <code>ActionBarModule</code>
      *
      * @param moduleClass The class of the module to search for
-     * @return Whether the <tt>ActionBarModule</tt> was found or not
+     * @return Whether the <code>ActionBarModule</code> was found or not
      */
     public boolean containsModule(Class<? extends ActionBarModule> moduleClass)
     {
@@ -285,10 +285,10 @@ public class ActionBar
     }
 
     /**
-     * Get an <tt>ActionBarModule</tt> based off of the index of the module
+     * Get an <code>ActionBarModule</code> based off of the index of the module
      *
      * @param index The index to get the module from
-     * @return The requested <tt>ActionBarModule</tt>
+     * @return The requested <code>ActionBarModule</code>
      */
     public ActionBarModule getModule(int index)
     {
@@ -296,11 +296,11 @@ public class ActionBar
     }
 
     /**
-     * Get an <tt>ActionBarModule</tt> based off of the class type of the module
+     * Get an <code>ActionBarModule</code> based off of the class type of the module
      *
      * @param moduleClass The class of the module to get
      * @param <T>         The class type of the module
-     * @return The a <tt>ActionBarModule</tt> of the specified class, null if not found
+     * @return The a <code>ActionBarModule</code> of the specified class, null if not found
      */
     public <T extends ActionBarModule> T getModule(Class<? extends ActionBarModule> moduleClass)
     {
@@ -312,9 +312,9 @@ public class ActionBar
     }
 
     /**
-     * Get the list of all <tt>ActionBarModules</tt> in this action bar
+     * Get the list of all <code>ActionBarModules</code> in this action bar
      *
-     * @return The list of all <tt>ActionBarModules</tt>
+     * @return The list of all <code>ActionBarModules</code>
      */
     public List<ActionBarModule> getModules()
     {
@@ -322,9 +322,9 @@ public class ActionBar
     }
 
     /**
-     * Reset (clear) the <tt>ActionBarModules</tt> from this action bar
+     * Reset (clear) the <code>ActionBarModules</code> from this action bar
      *
-     * @return The current <tt>ActionBar</tt>
+     * @return The current <code>ActionBar</code>
      */
     public ActionBar resetModules()
     {

@@ -24,7 +24,7 @@ import java.util.List;
 
 /**
  * GUI Module that turns the GUI into a list that shows a list of different
- * <tt>GUIItems</tt>. A list can also have multiple pages (or scroll!) and can be searched
+ * <code>GUIItems</code>. A list can also have multiple pages (or scroll!) and can be searched
  * if the feature is enabled.
  *
  * @author Mikedeejay2
@@ -87,13 +87,13 @@ public class GUIListModule implements GUIModule
     /**
      * Construct a new GUI List module
      *
-     * @param plugin    Reference to the <tt>BukkitPlugin</tt> of the plugin
+     * @param plugin    Reference to the <code>BukkitPlugin</code> of the plugin
      * @param viewMode  The {@link ListViewMode} to used
      * @param topRow    The top row of the list's bounding box
      * @param bottomRow The bottom row of the list's bounding box
      * @param leftCol   The left column of the list's bounding box
      * @param rightCol  The right column of the list's bounding box
-     * @param layerName The name of the <tt>GUILayer</tt> that will be used,
+     * @param layerName The name of the <code>GUILayer</code> that will be used,
      *                  useful for if there are multiple lists in one GUI
      */
     public GUIListModule(BukkitPlugin plugin, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol, String layerName)
@@ -142,7 +142,7 @@ public class GUIListModule implements GUIModule
     /**
      * Construct a new GUI List module
      *
-     * @param plugin    Reference to the <tt>BukkitPlugin</tt> of the plugin
+     * @param plugin    Reference to the <code>BukkitPlugin</code> of the plugin
      * @param viewMode  The {@link ListViewMode} to used
      * @param topRow    The top row of the list's bounding box
      * @param bottomRow The bottom row of the list's bounding box
@@ -157,7 +157,7 @@ public class GUIListModule implements GUIModule
     /**
      * Construct a new GUI List module
      *
-     * @param plugin    Reference to the <tt>BukkitPlugin</tt> of the plugin
+     * @param plugin    Reference to the <code>BukkitPlugin</code> of the plugin
      * @param topRow    The top row of the list's bounding box
      * @param bottomRow The bottom row of the list's bounding box
      * @param leftCol   The left column of the list's bounding box
@@ -403,12 +403,12 @@ public class GUIListModule implements GUIModule
     }
 
     /**
-     * Add a list item to the list based off of the <tt>GUIContainer</tt> that the list is located in
+     * Add a list item to the list based off of the <code>GUIContainer</code> that the list is located in
      *
      * @param row  The row to add the item to
      * @param col  The column to add the item to
-     * @param gui  The <tt>GUIContainer</tt> that this list is located in
-     * @param item The <tt>GUIItem</tt> to be added
+     * @param gui  The <code>GUIContainer</code> that this list is located in
+     * @param item The <code>GUIItem</code> to be added
      */
     public void addListItem(int row, int col, GUIContainer gui, GUIItem item)
     {
@@ -447,7 +447,7 @@ public class GUIListModule implements GUIModule
     }
 
     /**
-     * Set the entire list of <tt>GUIItems</tt> to a new list
+     * Set the entire list of <code>GUIItems</code> to a new list
      *
      * @param items The list of items to set this list to
      */
@@ -458,7 +458,7 @@ public class GUIListModule implements GUIModule
     }
 
     /**
-     * Remove a <tt>GUIItem</tt> based on index
+     * Remove a <code>GUIItem</code> based on index
      *
      * @param index The index to the item that will be removed
      */
@@ -500,13 +500,13 @@ public class GUIListModule implements GUIModule
     }
 
     /**
-     * Get a list item based off of the <tt>GUIContainer</tt> that the list is located in
+     * Get a list item based off of the <code>GUIContainer</code> that the list is located in
      * and the row and column of the item.
      *
      * @param row The row to get the item from
      * @param col The column to get the item from
-     * @param gui The <tt>GUIContainer</tt> that this list is located in
-     * @return The <tt>GUIItem</tt> at the location.
+     * @param gui The <code>GUIContainer</code> that this list is located in
+     * @return The <code>GUIItem</code> at the location.
      */
     public GUIItem getItem(int row, int col, GUIContainer gui)
     {
@@ -519,7 +519,7 @@ public class GUIListModule implements GUIModule
      * Get a list item from it's slot in the list.
      *
      * @param slot The slot to get the item from
-     * @return The <tt>GUIItem</tt> of the slot
+     * @return The <code>GUIItem</code> of the slot
      */
     public GUIItem getItem(int slot)
     {
@@ -527,12 +527,12 @@ public class GUIListModule implements GUIModule
     }
 
     /**
-     * Remove a list item from the list based off of the <tt>GUIContainer</tt> that the list is located in
+     * Remove a list item from the list based off of the <code>GUIContainer</code> that the list is located in
      * and the row and column of the item.
      *
      * @param row The row to remove the item from
      * @param col The column to remove the item from
-     * @param gui The <tt>GUIContainer</tt> that this list is located in
+     * @param gui The <code>GUIContainer</code> that this list is located in
      */
     public void removeListItem(int row, int col, GUIContainer gui)
     {
@@ -682,7 +682,7 @@ public class GUIListModule implements GUIModule
     }
 
     /**
-     * Get all <tt>GUIItems</tt> in this list
+     * Get all <code>GUIItems</code> in this list
      *
      * @return All items that this list is holding
      */
@@ -692,7 +692,7 @@ public class GUIListModule implements GUIModule
     }
 
     /**
-     * Get all <tt>GUIItems</tt> that are currently in the
+     * Get all <code>GUIItems</code> that are currently in the
      * search list and the indexes that they relate to in the list
      *
      * @return All items that are in the search list
@@ -713,7 +713,7 @@ public class GUIListModule implements GUIModule
     }
 
     /**
-     * Get all <tt>GUIItems</tt> of the end items of this list
+     * Get all <code>GUIItems</code> of the end items of this list
      *
      * @return All end items of this list
      */
@@ -733,7 +733,7 @@ public class GUIListModule implements GUIModule
     }
 
     /**
-     * See whether this list contains an item matching an <tt>ItemStack</tt>
+     * See whether this list contains an item matching an <code>ItemStack</code>
      *
      * @param item The item to search for
      * @return Whether the item was found in the list or not
@@ -865,7 +865,7 @@ public class GUIListModule implements GUIModule
      *
      * @param row The row of the top left corner
      * @param col The column of the top left corner
-     * @return A reference to this <tt>GUIListModule</tt>
+     * @return A reference to this <code>GUIListModule</code>
      */
     public GUIListModule setTopLeft(int row, int col)
     {
@@ -878,7 +878,7 @@ public class GUIListModule implements GUIModule
      *
      * @param row The row of the bottom right corner
      * @param col The column of the bottom right corner
-     * @return A reference to this <tt>GUIListModule</tt>
+     * @return A reference to this <code>GUIListModule</code>
      */
     public GUIListModule setBottomRight(int row, int col)
     {
@@ -891,7 +891,7 @@ public class GUIListModule implements GUIModule
      *
      * @param row The row
      * @param col The column
-     * @return A reference to this <tt>GUIListModule</tt>
+     * @return A reference to this <code>GUIListModule</code>
      */
     public GUIListModule setSearch(int row, int col)
     {
@@ -907,7 +907,7 @@ public class GUIListModule implements GUIModule
      *
      * @param row The row of the button
      * @param col The column of the button
-     * @return A reference to this <tt>GUIListModule</tt>
+     * @return A reference to this <code>GUIListModule</code>
      */
     public GUIListModule addForward(int row, int col)
     {
@@ -924,7 +924,7 @@ public class GUIListModule implements GUIModule
      * @param index The index to add the new location at
      * @param row The row of the button
      * @param col The column of the button
-     * @return A reference to this <tt>GUIListModule</tt>
+     * @return A reference to this <code>GUIListModule</code>
      */
     public GUIListModule addForward(int index, int row, int col)
     {
@@ -940,7 +940,7 @@ public class GUIListModule implements GUIModule
      *
      * @param row The row of the button
      * @param col The column of the button
-     * @return A reference to this <tt>GUIListModule</tt>
+     * @return A reference to this <code>GUIListModule</code>
      */
     public GUIListModule addBack(int row, int col)
     {
@@ -957,7 +957,7 @@ public class GUIListModule implements GUIModule
      * @param index The index to add the new location at
      * @param row The row of the button
      * @param col The column of the button
-     * @return A reference to this <tt>GUIListModule</tt>
+     * @return A reference to this <code>GUIListModule</code>
      */
     public GUIListModule addBack(int index, int row, int col)
     {
@@ -968,7 +968,7 @@ public class GUIListModule implements GUIModule
     /**
      * Clear the locations of all forward buttons.
      *
-     * @return A reference to this <tt>GUIListModule</tt>
+     * @return A reference to this <code>GUIListModule</code>
      */
     public GUIListModule clearForwards()
     {
@@ -979,7 +979,7 @@ public class GUIListModule implements GUIModule
     /**
      * Clear the locations of all back buttons.
      *
-     * @return A reference to this <tt>GUIListModule</tt>
+     * @return A reference to this <code>GUIListModule</code>
      */
     public GUIListModule clearBacks()
     {
@@ -991,7 +991,7 @@ public class GUIListModule implements GUIModule
      * Remove a forward button via the button's index
      *
      * @param index The index to remove
-     * @return A reference to this <tt>GUIListModule</tt>
+     * @return A reference to this <code>GUIListModule</code>
      */
     public GUIListModule removeForward(int index)
     {
@@ -1003,7 +1003,7 @@ public class GUIListModule implements GUIModule
      * Remove a back button via the button's index
      *
      * @param index The index to remove
-     * @return A reference to this <tt>GUIListModule</tt>
+     * @return A reference to this <code>GUIListModule</code>
      */
     public GUIListModule removeBack(int index)
     {
@@ -1014,7 +1014,7 @@ public class GUIListModule implements GUIModule
     /**
      * Get the top left location of this list's view
      *
-     * @return An <tt>Entry</tt> holding the row in the key and column in the value
+     * @return An <code>Entry</code> holding the row in the key and column in the value
      */
     public Pair<Integer, Integer> getTopLeft()
     {
@@ -1024,7 +1024,7 @@ public class GUIListModule implements GUIModule
     /**
      * Get the bottom right location of this list's view
      *
-     * @return An <tt>Entry</tt> holding the row in the key and column in the value
+     * @return An <code>Entry</code> holding the row in the key and column in the value
      */
     public Pair<Integer, Integer> getBottomRight()
     {
@@ -1034,7 +1034,7 @@ public class GUIListModule implements GUIModule
     /**
      * Get the search location of this list's view
      *
-     * @return An <tt>Entry</tt> holding the row in the key and column in the value
+     * @return An <code>Entry</code> holding the row in the key and column in the value
      */
     public Pair<Integer, Integer> getSearch()
     {
@@ -1044,7 +1044,7 @@ public class GUIListModule implements GUIModule
     /**
      * Get the top left location of this list's view
      *
-     * @return An <tt>Entry</tt> holding the row in the key and column in the value
+     * @return An <code>Entry</code> holding the row in the key and column in the value
      */
     public List<Pair<Integer, Integer>> getForwards()
     {

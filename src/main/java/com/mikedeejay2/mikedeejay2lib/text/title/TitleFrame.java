@@ -4,7 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import org.bukkit.entity.Player;
 
 /**
- * A single frame of a <tt>TitleSystem</tt>
+ * A single frame of a <code>TitleSystem</code>
  *
  * @author Mikedeejay2
  */

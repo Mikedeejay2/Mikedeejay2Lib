@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * a <tt>GUIModule</tt> that allows the addition of tree like item structures.
+ * a <code>GUIModule</code> that allows the addition of tree like item structures.
  *
  * @author Mikedeejay2
  */

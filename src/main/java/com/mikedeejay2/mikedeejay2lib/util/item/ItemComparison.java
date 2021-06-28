@@ -15,8 +15,8 @@ public final class ItemComparison
     /**
      * Simple helper method meta2 takes 2 item metas and checks to see if they equal each other.
      *
-     * @param stack1 First <tt>ItemStack</tt> to check
-     * @param stack2 Second <tt>ItemStack</tt> to compare with
+     * @param stack1 First <code>ItemStack</code> to check
+     * @param stack2 Second <code>ItemStack</code> to compare with
      * @return If items are equal
      */
     public static boolean equalsEachOther(ItemStack stack1, ItemStack stack2)

@@ -14,7 +14,7 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * A <tt>GUIInteractExecutor</tt> that moves items with a custom limit specified on construction.
+ * A <code>GUIInteractExecutor</code> that moves items with a custom limit specified on construction.
  *
  * @author Mikedeejay2
  */

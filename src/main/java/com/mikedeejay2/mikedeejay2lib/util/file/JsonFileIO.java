@@ -25,7 +25,7 @@ public final class JsonFileIO
      * @param folder      The root folder of the file path
      * @param filePath    Path to the file. This should NOT include plugin.getDataFolder()
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
-     * @param json        The <tt>JsonObject</tt> to load the JSON into
+     * @param json        The <code>JsonObject</code> to load the JSON into
      * @return The requested JsonObject
      */
     public static JsonObject loadJsonObjectFromDisk(File folder, String filePath, JsonObject json, boolean throwErrors)
@@ -38,7 +38,7 @@ public final class JsonFileIO
      *
      * @param file        The file to be loaded
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
-     * @param json        The <tt>JsonObject</tt> to load the JSON into
+     * @param json        The <code>JsonObject</code> to load the JSON into
      * @return The requested JsonObject
      */
     public static JsonObject loadJsonObjectFromDisk(File file, JsonObject json, boolean throwErrors)
@@ -64,8 +64,8 @@ public final class JsonFileIO
      * Load a JsonObject from this plugin's Jar.
      *
      * @param filePath    The path to the json file in the jar
-     * @param json        The <tt>JsonObject</tt> to load the JSON into
-     * @param classLoader The <tt>ClassLoader</tt> to get the resource from
+     * @param json        The <code>JsonObject</code> to load the JSON into
+     * @param classLoader The <code>ClassLoader</code> to get the resource from
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested JsonObject
      */

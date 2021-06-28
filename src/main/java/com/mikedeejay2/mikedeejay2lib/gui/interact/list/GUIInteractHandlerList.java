@@ -40,7 +40,7 @@ public class GUIInteractHandlerList extends GUIInteractHandler
     }
 
     /**
-     * Handle an interaction between a <tt>Player</tt> and a <tt>GUIContainer</tt> to properly move an item
+     * Handle an interaction between a <code>Player</code> and a <code>GUIContainer</code> to properly move an item
      * <p>
      * This method override handles the default state of item movement where items move like default Minecraft.
      *
@@ -140,7 +140,7 @@ public class GUIInteractHandlerList extends GUIInteractHandler
     }
 
     /**
-     * Get the limit of this <tt>GUIInteractHandler</tt>
+     * Get the limit of this <code>GUIInteractHandler</code>
      *
      * @return The limit
      */
@@ -150,7 +150,7 @@ public class GUIInteractHandlerList extends GUIInteractHandler
     }
 
     /**
-     * Set a new limit for this <tt>GUIInteractHandler</tt>
+     * Set a new limit for this <code>GUIInteractHandler</code>
      *
      * @param limit The new limit to use
      */

@@ -68,10 +68,10 @@ public class ParticleEffect
     }
 
     /**
-     * Add a <tt>ParticleShape</tt> to this effect
+     * Add a <code>ParticleShape</code> to this effect
      *
      * @param shape The shape to add
-     * @return A reference to this <tt>ParticleEffect</tt>
+     * @return A reference to this <code>ParticleEffect</code>
      */
     public ParticleEffect addShape(ParticleShape shape)
     {
@@ -80,7 +80,7 @@ public class ParticleEffect
     }
 
     /**
-     * See whether this <tt>ParticleEffect</tt> has a specific <tt>ParticleShape</tt>
+     * See whether this <code>ParticleEffect</code> has a specific <code>ParticleShape</code>
      *
      * @param shape The shape to search for
      * @return Whether the shape was found or not
@@ -91,7 +91,7 @@ public class ParticleEffect
     }
 
     /**
-     * See whether this <tt>ParticleEffect</tt> contains a <tt>ParticleShape</tt> based off of the
+     * See whether this <code>ParticleEffect</code> contains a <code>ParticleShape</code> based off of the
      * shape's class.
      *
      * @param shapeClass The class of the shape to search for
@@ -107,10 +107,10 @@ public class ParticleEffect
     }
 
     /**
-     * Get a <tt>ParticleShape</tt> from this effect by its index in the list
+     * Get a <code>ParticleShape</code> from this effect by its index in the list
      *
      * @param index The index to get the shape from
-     * @return The requested <tt>ParticleShape</tt>
+     * @return The requested <code>ParticleShape</code>
      */
     public ParticleShape getShape(int index)
     {
@@ -118,11 +118,11 @@ public class ParticleEffect
     }
 
     /**
-     * Get a <tt>ParticleShape</tt> from this effect by the class of the shape
+     * Get a <code>ParticleShape</code> from this effect by the class of the shape
      *
      * @param shapeClass The class of the shape to get
      * @param <T>        The shape type
-     * @return The requested <tt>ParticleShape</tt>, null if not found
+     * @return The requested <code>ParticleShape</code>, null if not found
      */
     public <T extends ParticleShape> T getShape(Class<T> shapeClass)
     {
@@ -134,10 +134,10 @@ public class ParticleEffect
     }
 
     /**
-     * Remove a <tt>ParticleShape</tt> from this effect by its index in the list
+     * Remove a <code>ParticleShape</code> from this effect by its index in the list
      *
      * @param index The index to remove the shape at
-     * @return A reference to this <tt>ParticleEffect</tt>
+     * @return A reference to this <code>ParticleEffect</code>
      */
     public ParticleEffect removeShape(int index)
     {
@@ -146,10 +146,10 @@ public class ParticleEffect
     }
 
     /**
-     * Remove a <tt>ParticleShape</tt> from this effect by a reference to the shape
+     * Remove a <code>ParticleShape</code> from this effect by a reference to the shape
      *
      * @param shape The shape to remove
-     * @return A reference to this <tt>ParticleEffect</tt>
+     * @return A reference to this <code>ParticleEffect</code>
      */
     public ParticleEffect removeShape(ParticleShape shape)
     {
@@ -158,10 +158,10 @@ public class ParticleEffect
     }
 
     /**
-     * Add a <tt>ParticleEModule</tt> to this effect
+     * Add a <code>ParticleEModule</code> to this effect
      *
      * @param module The module to add
-     * @return A reference to this <tt>ParticleEffect</tt>
+     * @return A reference to this <code>ParticleEffect</code>
      */
     public ParticleEffect addModule(ParticleEModule module)
     {
@@ -170,11 +170,11 @@ public class ParticleEffect
     }
 
     /**
-     * Add a <tt>ParticleEModule</tt> to this effect at a specified index
+     * Add a <code>ParticleEModule</code> to this effect at a specified index
      *
      * @param module The module to add
      * @param index  The index to add the module at
-     * @return A reference to this <tt>ParticleEffect</tt>
+     * @return A reference to this <code>ParticleEffect</code>
      */
     public ParticleEffect addModule(ParticleEModule module, int index)
     {
@@ -183,10 +183,10 @@ public class ParticleEffect
     }
 
     /**
-     * See whether this effect contains a specific <tt>ParticleEModule</tt>
+     * See whether this effect contains a specific <code>ParticleEModule</code>
      *
      * @param module The module to search for
-     * @return Whether the <tt>ParticleEModule</tt> was found or not
+     * @return Whether the <code>ParticleEModule</code> was found or not
      */
     public boolean containsModule(ParticleEModule module)
     {
@@ -194,11 +194,11 @@ public class ParticleEffect
     }
 
     /**
-     * See whether this effect contains a <tt>ParticleEModule</tt> based off of the
+     * See whether this effect contains a <code>ParticleEModule</code> based off of the
      * module's class
      *
      * @param moduleClass The class of the module to search for
-     * @return Whether the <tt>ParticleEModule</tt> was found or not
+     * @return Whether the <code>ParticleEModule</code> was found or not
      */
     public boolean containsModule(Class<? extends ParticleEModule> moduleClass)
     {
@@ -210,10 +210,10 @@ public class ParticleEffect
     }
 
     /**
-     * Remove a <tt>ParticleEModule</tt> from this effect based off of an index
+     * Remove a <code>ParticleEModule</code> from this effect based off of an index
      *
      * @param index The index to remove the module at
-     * @return A reference to this <tt>ParticleEffect</tt>
+     * @return A reference to this <code>ParticleEffect</code>
      */
     public ParticleEffect removeModule(int index)
     {
@@ -222,10 +222,10 @@ public class ParticleEffect
     }
 
     /**
-     * Remove a <tt>ParticleEModule</tt> from this effect
+     * Remove a <code>ParticleEModule</code> from this effect
      *
      * @param module The module to remove
-     * @return A reference to this <tt>ParticleEffect</tt>
+     * @return A reference to this <code>ParticleEffect</code>
      */
     public ParticleEffect removeModule(ParticleEModule module)
     {
@@ -234,10 +234,10 @@ public class ParticleEffect
     }
 
     /**
-     * Remove a <tt>ParticleModule</tt> from this effect based off of the class of the module
+     * Remove a <code>ParticleModule</code> from this effect based off of the class of the module
      *
      * @param moduleClass The class of the module to remove
-     * @return A reference to this <tt>ParticleEffect</tt>
+     * @return A reference to this <code>ParticleEffect</code>
      */
     public ParticleEffect removeModule(Class<? extends ParticleEModule> moduleClass)
     {
@@ -251,10 +251,10 @@ public class ParticleEffect
     }
 
     /**
-     * Get a <tt>ParticleEModule</tt> from this effect based off of the index of the module
+     * Get a <code>ParticleEModule</code> from this effect based off of the index of the module
      *
      * @param index The index to get the module from
-     * @return The requested <tt>ParticleEModule</tt>
+     * @return The requested <code>ParticleEModule</code>
      */
     public ParticleEModule getModule(int index)
     {
@@ -262,11 +262,11 @@ public class ParticleEffect
     }
 
     /**
-     * Get a <tt>ParticleEModule</tt> from this effect based off of the index of the module
+     * Get a <code>ParticleEModule</code> from this effect based off of the index of the module
      *
      * @param moduleClass The class of the module to get
      * @param <T>         The type of particle module
-     * @return The requested <tt>ParticleEModule</tt>, null if not found
+     * @return The requested <code>ParticleEModule</code>, null if not found
      */
     public <T extends ParticleEModule> T getModule(Class<T> moduleClass)
     {
@@ -278,9 +278,9 @@ public class ParticleEffect
     }
 
     /**
-     * Reset (clear) all modules from this <tt>ParticleEffect</tt>
+     * Reset (clear) all modules from this <code>ParticleEffect</code>
      *
-     * @return A reference to this <tt>ParticleEffect</tt>
+     * @return A reference to this <code>ParticleEffect</code>
      */
     public ParticleEffect resetModules()
     {
@@ -289,7 +289,7 @@ public class ParticleEffect
     }
 
     /**
-     * Process all data from <tt>ParticleShapes</tt> and turn it into raw vectors
+     * Process all data from <code>ParticleShapes</code> and turn it into raw vectors
      * for use when displaying the particles.
      * <p>
      * This is the most intensive part of the particle system, only bake when absolutely
@@ -298,7 +298,7 @@ public class ParticleEffect
      * Bake time varies between density of shapes, amount of shapes, and complexity
      * of shapes. Average time can be between 0.5ms to 3ms.
      *
-     * @return A reference to this <tt>ParticleEffect</tt>
+     * @return A reference to this <code>ParticleEffect</code>
      */
     public ParticleEffect bake()
     {
@@ -316,9 +316,9 @@ public class ParticleEffect
     }
 
     /**
-     * Update this <tt>ParticleEffect</tt>. Apply transformations and run respective modules.
+     * Update this <code>ParticleEffect</code>. Apply transformations and run respective modules.
      *
-     * @return A reference to this <tt>ParticleEffect</tt>
+     * @return A reference to this <code>ParticleEffect</code>
      */
     public ParticleEffect update()
     {
@@ -355,12 +355,12 @@ public class ParticleEffect
     }
 
     /**
-     * Update this <tt>ParticleEffect</tt>'s global transformations from the parent <tt>ParticleSystem</tt> <p>
+     * Update this <code>ParticleEffect</code>'s global transformations from the parent <code>ParticleSystem</code> <p>
      * The {@link ParticleEffect#update()} method should be called before this method, as it processes base
      * transformations.
      *
-     * @param system The parent <tt>ParticleSystem</tt>
-     * @return A reference to this <tt>ParticleEffect</tt>
+     * @param system The parent <code>ParticleSystem</code>
+     * @return A reference to this <code>ParticleEffect</code>
      */
     public ParticleEffect updateSystem(ParticleSystem system)
     {
@@ -393,9 +393,9 @@ public class ParticleEffect
     }
 
     /**
-     * Display this <tt>ParticleEffect</tt> in the world
+     * Display this <code>ParticleEffect</code> in the world
      *
-     * @return A reference to this <tt>ParticleEffect</tt>
+     * @return A reference to this <code>ParticleEffect</code>
      */
     public ParticleEffect display()
     {
@@ -414,7 +414,7 @@ public class ParticleEffect
     }
 
     /**
-     * Get the list of all shapes of this <tt>ParticleEffect</tt>
+     * Get the list of all shapes of this <code>ParticleEffect</code>
      *
      * @return The list of shapes
      */
@@ -424,7 +424,7 @@ public class ParticleEffect
     }
 
     /**
-     * Get the list of all untranslated vectors of this <tt>ParticleEffect</tt>.
+     * Get the list of all untranslated vectors of this <code>ParticleEffect</code>.
      * <p>
      * Modifying this list without cloning it could result in concurrency issues if
      * the particle is currently being displayed!
@@ -437,7 +437,7 @@ public class ParticleEffect
     }
 
     /**
-     * Get the list of all translated vectors of this <tt>ParticleEffect</tt>
+     * Get the list of all translated vectors of this <code>ParticleEffect</code>
      * <p>
      * Modifying this list without cloning it could result in concurrency issues if
      * the particle is currently being displayed!
@@ -450,7 +450,7 @@ public class ParticleEffect
     }
 
     /**
-     * Get the <tt>ParticleData</tt> for this <tt>ParticleEffect</tt>
+     * Get the <code>ParticleData</code> for this <code>ParticleEffect</code>
      *
      * @return The particle data of this effect
      */
@@ -460,7 +460,7 @@ public class ParticleEffect
     }
 
     /**
-     * Get the scale vector of this <tt>ParticleEffect</tt>.
+     * Get the scale vector of this <code>ParticleEffect</code>.
      * <p>
      * If modified, {@link ParticleEffect#setScaleVec(Vector)} should also
      * be called to propagate updates.
@@ -473,7 +473,7 @@ public class ParticleEffect
     }
 
     /**
-     * Get the rotation vector of this <tt>ParticleEffect</tt>.
+     * Get the rotation vector of this <code>ParticleEffect</code>.
      * <p>
      * If modified, {@link ParticleEffect#setRotationVec(Vector)} should also
      * be called to propagate updates.
@@ -486,7 +486,7 @@ public class ParticleEffect
     }
 
     /**
-     * Get the translation vector of this <tt>ParticleEffect</tt>.
+     * Get the translation vector of this <code>ParticleEffect</code>.
      * <p>
      * If modified, {@link ParticleEffect#setScaleVec(Vector)} should also
      * be called to propagate updates.
@@ -499,7 +499,7 @@ public class ParticleEffect
     }
 
     /**
-     * Get the origin location of this <tt>ParticleEffect</tt>.
+     * Get the origin location of this <code>ParticleEffect</code>.
      * <p>
      * If modified, {@link ParticleEffect#setOrigin(Location)} should also
      * be called to propagate updates.
@@ -512,7 +512,7 @@ public class ParticleEffect
     }
 
     /**
-     * Get whether this <tt>ParticleEffect</tt> has been baked or not
+     * Get whether this <code>ParticleEffect</code> has been baked or not
      *
      * @return Whether baking has occurred or not
      */
@@ -522,7 +522,7 @@ public class ParticleEffect
     }
 
     /**
-     * Get whether this <tt>ParticleEffect</tt>'s data has been updated to
+     * Get whether this <code>ParticleEffect</code>'s data has been updated to
      * the latest information.
      *
      * @return Whether this effect is updated or not
@@ -533,9 +533,9 @@ public class ParticleEffect
     }
 
     /**
-     * Set the <tt>ParticleData</tt> of this effect
+     * Set the <code>ParticleData</code> of this effect
      *
-     * @param particleData The new <tt>ParticleData</tt> to use
+     * @param particleData The new <code>ParticleData</code> to use
      */
     public void setParticleData(ParticleData particleData)
     {
@@ -543,7 +543,7 @@ public class ParticleEffect
     }
 
     /**
-     * Set the scale vector for this <tt>ParticleEffect</tt>.
+     * Set the scale vector for this <code>ParticleEffect</code>.
      * <p>
      * This method must be called when updating the scale vector in order
      * to propagate updates.
@@ -557,7 +557,7 @@ public class ParticleEffect
     }
 
     /**
-     * Set the rotation vector for this <tt>ParticleEffect</tt>.
+     * Set the rotation vector for this <code>ParticleEffect</code>.
      * <p>
      * This method must be called when updating the rotation vector in order
      * to propagate updates.
@@ -571,7 +571,7 @@ public class ParticleEffect
     }
 
     /**
-     * Set the translation vector for this <tt>ParticleEffect</tt>.
+     * Set the translation vector for this <code>ParticleEffect</code>.
      * <p>
      * This method must be called when updating the translation vector in order
      * to propagate updates.
@@ -585,7 +585,7 @@ public class ParticleEffect
     }
 
     /**
-     * Set the origin location for this <tt>ParticleEffect</tt>
+     * Set the origin location for this <code>ParticleEffect</code>
      * <p>
      * This method must be called when updating the origin location in order
      * to propagate updates.
@@ -599,7 +599,7 @@ public class ParticleEffect
     }
 
     /**
-     * Get the delay for this <tt>ParticleEffect</tt>
+     * Get the delay for this <code>ParticleEffect</code>
      *
      * @return The delay
      */
@@ -609,7 +609,7 @@ public class ParticleEffect
     }
 
     /**
-     * Set the delay for this <tt>ParticleEffect</tt>
+     * Set the delay for this <code>ParticleEffect</code>
      *
      * @param delay The new delay
      */
@@ -619,7 +619,7 @@ public class ParticleEffect
     }
 
     /**
-     * Get the count for this <tt>ParticleEffect</tt>
+     * Get the count for this <code>ParticleEffect</code>
      *
      * @return The count
      */
@@ -629,7 +629,7 @@ public class ParticleEffect
     }
 
     /**
-     * Set the count for this <tt>ParticleEffect</tt>
+     * Set the count for this <code>ParticleEffect</code>
      *
      * @param count The new count
      */
@@ -639,7 +639,7 @@ public class ParticleEffect
     }
 
     /**
-     * Get the list of all modules of this <tt>ParticleEffect</tt>
+     * Get the list of all modules of this <code>ParticleEffect</code>
      *
      * @return The list of modules
      */

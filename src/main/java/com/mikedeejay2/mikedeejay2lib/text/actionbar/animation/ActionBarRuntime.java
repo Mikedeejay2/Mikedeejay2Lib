@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  * Runtime for the Action Bar system. This runtime animates and displays
- * the <tt>ActionBar</tt> that it belongs to.
+ * the <code>ActionBar</code> that it belongs to.
  * <p>
  * This runtime should only be created using {@link ActionBar#display(Player...)} or similar.
  *
@@ -41,7 +41,7 @@ public class ActionBarRuntime extends EnhancedRunnable
     }
 
     /**
-     * Overridden <tt>onRun()</tt> method that adds animation for the <tt>ActionBar</tt>
+     * Overridden <code>onRun()</code> method that adds animation for the <code>ActionBar</code>
      */
     @Override
     public void onRun()

@@ -17,7 +17,7 @@ import java.net.URL;
 /**
  * An update checker that checks for a plugin for updates based off of its Github repository.
  * <p>
- * This class accesses the website <tt>api.github.com</tt>, if the Github API is down this update checker
+ * This class accesses the website <code>api.github.com</code>, if the Github API is down this update checker
  * won't work.
  * <p>
  * The update checker must be initialized using the {@link UpdateChecker#init(String, String)} method.
@@ -47,7 +47,7 @@ public class UpdateChecker
     }
 
     /**
-     * Initialize <tt>UpdateChecker</tt> and specify the username and repository name of the
+     * Initialize <code>UpdateChecker</code> and specify the username and repository name of the
      * repository to check the updates for.
      *
      * @param userName The username of the Github profile to get the repository from

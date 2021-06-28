@@ -39,7 +39,7 @@ public final class YamlFileIO
      *
      * @param config      YamlConfiguration that will be loaded into
      * @param filePath    Path to the file. This should NOT include plugin.getDataFolder()
-     * @param classLoader The <tt>ClassLoader</tt> to get the resource from
+     * @param classLoader The <code>ClassLoader</code> to get the resource from
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return Whether load was successful or not
      */

@@ -19,7 +19,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 /**
- * A Json accessor that overrides <tt>SectionAccessor</tt> for accessing Json files easily
+ * A Json accessor that overrides <code>SectionAccessor</code> for accessing Json files easily
  *
  * @author Mikedeejay2
  */
@@ -695,9 +695,9 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     }
 
     /**
-     * Add a <tt>ConfigurationSerializable</tt> object to a <tt>JsonObject</tt>
+     * Add a <code>ConfigurationSerializable</code> object to a <code>JsonObject</code>
      *
-     * @param jsonObject The <tt>JsonObject</tt> to add the data to
+     * @param jsonObject The <code>JsonObject</code> to add the data to
      * @param data       The data to add to the jsonObject
      */
     private void setSerializedInternal(JsonObject jsonObject, ConfigurationSerializable data)
@@ -723,12 +723,12 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     }
 
     /**
-     * Get a <tt>ConfigurationSerializable</tt> object from a <tt>JsonObject</tt>
+     * Get a <code>ConfigurationSerializable</code> object from a <code>JsonObject</code>
      *
-     * @param jsonObject Object to get the <tt>ConfigurationSerializable</tt> from
+     * @param jsonObject Object to get the <code>ConfigurationSerializable</code> from
      * @param clazz      The class that the object should be serialized to
-     * @param <T>        The type of <tt>ConfigurationSerializable</tt>, same as class type
-     * @return The requested <tt>ConfigurationSerializable</tt>
+     * @param <T>        The type of <code>ConfigurationSerializable</code>, same as class type
+     * @return The requested <code>ConfigurationSerializable</code>
      */
     private <T extends ConfigurationSerializable> T getSerializedInternal(JsonObject jsonObject, Class<T> clazz)
     {
@@ -737,10 +737,10 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
     }
 
     /**
-     * Get a <tt>ConfigurationSerializable</tt> object from a <tt>JsonObject</tt>
+     * Get a <code>ConfigurationSerializable</code> object from a <code>JsonObject</code>
      *
-     * @param jsonObject Object to get the <tt>ConfigurationSerializable</tt> from
-     * @return The requested <tt>ConfigurationSerializable</tt>
+     * @param jsonObject Object to get the <code>ConfigurationSerializable</code> from
+     * @return The requested <code>ConfigurationSerializable</code>
      */
     private ConfigurationSerializable getSerializedInternal(JsonObject jsonObject)
     {

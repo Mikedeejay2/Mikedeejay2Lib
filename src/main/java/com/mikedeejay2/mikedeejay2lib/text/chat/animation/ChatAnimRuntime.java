@@ -9,7 +9,7 @@ import org.bukkit.command.CommandSender;
 import java.util.List;
 
 /**
- * The <tt>BukkitRunnable</tt> that acts as the animation runtime of <tt>ChatSlides</tt>
+ * The <code>BukkitRunnable</code> that acts as the animation runtime of <code>ChatSlides</code>
  *
  * @author Mikedeejay2
  */
@@ -39,7 +39,7 @@ public class ChatAnimRuntime extends EnhancedRunnable
     }
 
     /**
-     * Overridden <tt>onRun()</tt> method that animates through the slides
+     * Overridden <code>onRun()</code> method that animates through the slides
      */
     @Override
     public void onRun()

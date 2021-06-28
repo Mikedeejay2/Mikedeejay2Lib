@@ -6,7 +6,7 @@ import org.bukkit.entity.Player;
 import java.util.List;
 
 /**
- * Runtime for a <tt>TitleSystem</tt> that progresses through frames.
+ * Runtime for a <code>TitleSystem</code> that progresses through frames.
  * This shouldn't be initialized independently! Instead, {@link TitleSystem#display(Player...)} or similar
  * to use this runtime.
  *
@@ -35,7 +35,7 @@ public class TitleRuntime extends EnhancedRunnable
     }
 
     /**
-     * <tt>onRun()</tt> method that animates and displays the <tt>TitleSystem</tt>
+     * <code>onRun()</code> method that animates and displays the <code>TitleSystem</code>
      */
     @Override
     public void onRun()

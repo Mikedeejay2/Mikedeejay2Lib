@@ -1,7 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.gui.animation;
 
 /**
- * A simple enum that holds a type that an <tt>AnimationFrame can be</tt>
+ * A simple enum that holds a type that an <code>AnimationFrame can be</code>
  * <p>
  * The types of frames are:
  * <ul>

@@ -59,7 +59,7 @@ public interface EnhancedPlugin extends Plugin
     /**
      * Sends the command sender (player or console) a formatted message
      *
-     * @param sender  Input <tt>CommandSender</tt> that will receive the message
+     * @param sender  Input <code>CommandSender</code> that will receive the message
      * @param message The message to be printed (will be formatted with colors)
      */
     void sendMessage(CommandSender sender, String message);
@@ -155,8 +155,8 @@ public interface EnhancedPlugin extends Plugin
      * tab completer will be applied to the name of the command specified.
      *
      * @param name      The name of the command to register
-     * @param executor  The <tt>CommandExecutor</tt> to register to the command
-     * @param completer The <tt>TabCompleter</tt> to register to the command
+     * @param executor  The <code>CommandExecutor</code> to register to the command
+     * @param completer The <code>TabCompleter</code> to register to the command
      */
     void registerCommand(String name, CommandExecutor executor, TabCompleter completer);
 
@@ -165,7 +165,7 @@ public interface EnhancedPlugin extends Plugin
      * applied to the name of the command specified.
      *
      * @param name      The name of the command to register
-     * @param executor  The <tt>TabExecutor</tt> to register to the command
+     * @param executor  The <code>TabExecutor</code> to register to the command
      */
     void registerCommand(String name, TabExecutor executor);
 
@@ -174,7 +174,7 @@ public interface EnhancedPlugin extends Plugin
      * of the command specified.
      *
      * @param name     The name of the command to register
-     * @param executor The <tt>CommandExecutor</tt> to register to the command
+     * @param executor The <code>CommandExecutor</code> to register to the command
      */
     void registerCommand(String name, CommandExecutor executor);
 
@@ -183,7 +183,7 @@ public interface EnhancedPlugin extends Plugin
      * the name of the command specified.
      *
      * @param name      The name of the command to register
-     * @param completer The <tt>TabCompleter</tt> to register to the command
+     * @param completer The <code>TabCompleter</code> to register to the command
      */
     void registerTabCompleter(String name, TabCompleter completer);
 
@@ -191,7 +191,7 @@ public interface EnhancedPlugin extends Plugin
      * Register a {@link TabCommandBase} to the server. Information contained in
      * {@link CommandInfo} will be used to register the command.
      *
-     * @param command The <tt>TabCommandBase</tt> to register to the command
+     * @param command The <code>TabCommandBase</code> to register to the command
      */
     void registerCommand(TabCommandBase command);
 
@@ -199,7 +199,7 @@ public interface EnhancedPlugin extends Plugin
      * Register a {@link CommandBase} to the server. Information contained in
      * {@link CommandInfo} will be used to register the command.
      *
-     * @param command The <tt>CommandBase</tt> to register to the command
+     * @param command The <code>CommandBase</code> to register to the command
      */
     void registerCommand(CommandBase command);
 
@@ -207,7 +207,7 @@ public interface EnhancedPlugin extends Plugin
      * Register a {@link TabBase} to the server. Information contained in
      * {@link CommandInfo} will be used to register to the command.
      *
-     * @param completer The <tt>TabBase</tt> to register to the command
+     * @param completer The <code>TabBase</code> to register to the command
      */
     void registerTabCompleter(TabBase completer);
 

@@ -22,10 +22,10 @@ import java.util.Arrays;
 public final class ChatConverter
 {
     /**
-     * Converts strings into Bungee API <tt>BaseComponent</tt> arrays
+     * Converts strings into Bungee API <code>BaseComponent</code> arrays
      *
      * @param strings The strings that will be converted to base components
-     * @return <tt>BaseComponent</tt> array of converted strings
+     * @return <code>BaseComponent</code> array of converted strings
      */
     public static BaseComponent[] getBaseComponentArray(String... strings)
     {
@@ -38,11 +38,11 @@ public final class ChatConverter
     }
 
     /**
-     * Creates a Bungee API <tt>ClickEvent</tt> to do something with a command
+     * Creates a Bungee API <code>ClickEvent</code> to do something with a command
      *
-     * @param action  The <tt>ClickEvent</tt> Action that should happen on click
-     * @param command The command to be used on the <tt>ClickEvent</tt>
-     * @return A new <tt>ClickEvent</tt> that can be used with <tt>BaseComponents</tt>
+     * @param action  The <code>ClickEvent</code> Action that should happen on click
+     * @param command The command to be used on the <code>ClickEvent</code>
+     * @return A new <code>ClickEvent</code> that can be used with <code>BaseComponents</code>
      */
     public static ClickEvent getClickEvent(ClickEvent.Action action, String command)
     {
@@ -50,11 +50,11 @@ public final class ChatConverter
     }
 
     /**
-     * Creates a Bungee API <tt>HoverEvent</tt> to do something with a command
+     * Creates a Bungee API <code>HoverEvent</code> to do something with a command
      *
-     * @param action The <tt>HoverEvent</tt> Action to be used when cursor is hovered over applied text
+     * @param action The <code>HoverEvent</code> Action to be used when cursor is hovered over applied text
      * @param text   The string of text that will be used in the hover event
-     * @return The <tt>HoverEvent</tt> that was created
+     * @return The <code>HoverEvent</code> that was created
      */
     public static HoverEvent getHoverEvent(HoverEvent.Action action, String text)
     {
@@ -62,11 +62,11 @@ public final class ChatConverter
     }
 
     /**
-     * Creates a Bungee API <tt>HoverEvent</tt> to do something with a command
+     * Creates a Bungee API <code>HoverEvent</code> to do something with a command
      *
-     * @param action The <tt>HoverEvent</tt> Action to be used when cursor is hovered over applied text
+     * @param action The <code>HoverEvent</code> Action to be used when cursor is hovered over applied text
      * @param item   The item that will be displayed
-     * @return The <tt>HoverEvent</tt> that was created
+     * @return The <code>HoverEvent</code> that was created
      */
     public static HoverEvent getHoverEvent(HoverEvent.Action action, ItemStack item)
     {
@@ -74,7 +74,7 @@ public final class ChatConverter
     }
 
     /**
-     * Creates a Hover Item from an <tt>ItemStack</tt>
+     * Creates a Hover Item from an <code>ItemStack</code>
      *
      * @param item Item to be converted
      * @return HoverEvent Item
@@ -87,11 +87,11 @@ public final class ChatConverter
     }
 
     /**
-     * Applies a <tt>ClickEvent</tt> to an array of <tt>BaseComponents</tt>
+     * Applies a <code>ClickEvent</code> to an array of <code>BaseComponents</code>
      *
-     * @param components An array of <tt>BaseComponents</tt> that will have a <tt>ClickEvent</tt> applied to them
-     * @param event      The <tt>ClickEvent</tt> to be added to the components
-     * @return The same <tt>BaseComponents</tt> array but with the click events applied
+     * @param components An array of <code>BaseComponents</code> that will have a <code>ClickEvent</code> applied to them
+     * @param event      The <code>ClickEvent</code> to be added to the components
+     * @return The same <code>BaseComponents</code> array but with the click events applied
      */
     public static BaseComponent[] setClickEvent(BaseComponent[] components, ClickEvent event)
     {
@@ -103,11 +103,11 @@ public final class ChatConverter
     }
 
     /**
-     * Applies a <tt>HoverEvent</tt> to an array of <tt>BaseComponents</tt>
+     * Applies a <code>HoverEvent</code> to an array of <code>BaseComponents</code>
      *
-     * @param components An array of <tt>BaseComponents</tt> that will have a <tt>HoverEvent</tt> applied to them
-     * @param event      The <tt>HoverEvent</tt> to be added to the components
-     * @return The same <tt>BaseComponents</tt> array but with the hover events applied
+     * @param components An array of <code>BaseComponents</code> that will have a <code>HoverEvent</code> applied to them
+     * @param event      The <code>HoverEvent</code> to be added to the components
+     * @return The same <code>BaseComponents</code> array but with the hover events applied
      */
     public static BaseComponent[] setHoverEvent(BaseComponent[] components, HoverEvent event)
     {
@@ -119,10 +119,10 @@ public final class ChatConverter
     }
 
     /**
-     * Combines multiple <tt>BaseComponent</tt> arrays and combines them into 1 larger array
+     * Combines multiple <code>BaseComponent</code> arrays and combines them into 1 larger array
      *
-     * @param components An array of <tt>BaseComponents</tt> arrays that will be combined into one base components array
-     * @return A combined array of all <tt>BaseComponents</tt>
+     * @param components An array of <code>BaseComponents</code> arrays that will be combined into one base components array
+     * @return A combined array of all <code>BaseComponents</code>
      */
     public static BaseComponent[] combineComponents(BaseComponent[]... components)
     {
@@ -135,7 +135,7 @@ public final class ChatConverter
     }
 
     /**
-     * Print all <tt>BaseComponents</tt> to a CommandSender
+     * Print all <code>BaseComponents</code> to a CommandSender
      *
      * @param sender     The CommandSender that will receive the message
      * @param components An Array of BaseComponents arrays that will be printed, Each BaseComponent array being 1 line
@@ -146,7 +146,7 @@ public final class ChatConverter
     }
 
     /**
-     * Print all <tt>BaseComponents</tt> to a Player
+     * Print all <code>BaseComponents</code> to a Player
      *
      * @param player     The Player that will receive the message
      * @param components An Array of BaseComponents arrays that will be printed, Each BaseComponent array being 1 line
@@ -157,7 +157,7 @@ public final class ChatConverter
     }
 
     /**
-     * Print all <tt>BaseComponents</tt> to a CommandSender
+     * Print all <code>BaseComponents</code> to a CommandSender
      *
      * @param sender     The CommandSender that will receive the message
      * @param type       The ChatMessageType to display the components at
@@ -176,7 +176,7 @@ public final class ChatConverter
     }
 
     /**
-     * Print all <tt>BaseComponents</tt> to a Player
+     * Print all <code>BaseComponents</code> to a Player
      *
      * @param player     The Player that will receive the message
      * @param type       The ChatMessageType to display the components at

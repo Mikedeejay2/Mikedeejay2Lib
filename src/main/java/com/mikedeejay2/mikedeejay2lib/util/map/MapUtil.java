@@ -14,9 +14,9 @@ public final class MapUtil
     /**
      * Increment the map size of a map.
      * <p>
-     * Ex. <tt>CLOSE</tt> size goes to <tt>NORMAL</tt> and so forth.
+     * Ex. <code>CLOSE</code> size goes to <code>NORMAL</code> and so forth.
      *
-     * @param meta The input <tt>MapMeta</tt> to be incremented
+     * @param meta The input <code>MapMeta</code> to be incremented
      */
     public static void incrementMapSize(MapMeta meta)
     {

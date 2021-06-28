@@ -60,9 +60,9 @@ public class TitleSystem
     }
 
     /**
-     * Get the list of <tt>TitleFrames</tt> of this <tt>TitleSystem</tt>
+     * Get the list of <code>TitleFrames</code> of this <code>TitleSystem</code>
      *
-     * @return Get the list of <tt>TitleFrames</tt>
+     * @return Get the list of <code>TitleFrames</code>
      */
     public List<TitleFrame> getFrames()
     {
@@ -80,10 +80,10 @@ public class TitleSystem
     }
 
     /**
-     * Add a <tt>TitleFrame</tt> to this <tt>TitleSystem</tt>
+     * Add a <code>TitleFrame</code> to this <code>TitleSystem</code>
      *
-     * @param frame The <tt>TitleFrame</tt> to add
-     * @return The current <tt>TitleSystem</tt>
+     * @param frame The <code>TitleFrame</code> to add
+     * @return The current <code>TitleSystem</code>
      */
     public TitleSystem addFrame(TitleFrame frame)
     {
@@ -92,7 +92,7 @@ public class TitleSystem
     }
 
     /**
-     * Add a new <tt>TitleFrame</tt> to this <tt>TitleSystem</tt>
+     * Add a new <code>TitleFrame</code> to this <code>TitleSystem</code>
      *
      * @param title    The title String of the title
      * @param subtitle The subtitle String of the title
@@ -101,7 +101,7 @@ public class TitleSystem
      * @param fadeOut  The fadeOut length (in ticks)
      * @param period   The total period of time that the title has to display
      *                 (for full time do fadeIn + stay + fadeOut)
-     * @return The current <tt>TitleSystem</tt>
+     * @return The current <code>TitleSystem</code>
      */
     public TitleSystem addFrame(String title, String subtitle, int fadeIn, int stay, int fadeOut, long period)
     {
@@ -111,10 +111,10 @@ public class TitleSystem
     }
 
     /**
-     * See whether this <tt>TitleSystem</tt> contains a specific <tt>TitleFrame</tt>
+     * See whether this <code>TitleSystem</code> contains a specific <code>TitleFrame</code>
      *
-     * @param frame The <tt>TitleFrame</tt> to search for
-     * @return Whether the <tt>TitleFrame</tt> was found or not
+     * @param frame The <code>TitleFrame</code> to search for
+     * @return Whether the <code>TitleFrame</code> was found or not
      */
     public boolean containsFrame(TitleFrame frame)
     {
@@ -122,10 +122,10 @@ public class TitleSystem
     }
 
     /**
-     * Remove a <tt>TitleFrame</tt> from this <tt>TitleSystem</tt> based off of a reference to the frame
+     * Remove a <code>TitleFrame</code> from this <code>TitleSystem</code> based off of a reference to the frame
      *
-     * @param frame The <tt>TitleFrame</tt> to remove
-     * @return The current <tt>TitleSystem</tt>
+     * @param frame The <code>TitleFrame</code> to remove
+     * @return The current <code>TitleSystem</code>
      */
     public TitleSystem removeFrame(TitleFrame frame)
     {
@@ -134,10 +134,10 @@ public class TitleSystem
     }
 
     /**
-     * Remove a <tt>TitleFrame</tt> from this <tt>TitleSystem</tt> based off of the index of the frame
+     * Remove a <code>TitleFrame</code> from this <code>TitleSystem</code> based off of the index of the frame
      *
-     * @param index The index to remove the <tt>TitleFrame</tt> at
-     * @return The current <tt>TitleSystem</tt>
+     * @param index The index to remove the <code>TitleFrame</code> at
+     * @return The current <code>TitleSystem</code>
      */
     public TitleSystem removeFrame(int index)
     {
@@ -146,10 +146,10 @@ public class TitleSystem
     }
 
     /**
-     * Get a <tt>TitleFrame</tt> from this <tt>TitleSystem</tt> based off of the index of the frame
+     * Get a <code>TitleFrame</code> from this <code>TitleSystem</code> based off of the index of the frame
      *
-     * @param index The index to get the <tt>TitleFrame</tt> from
-     * @return The requested <tt>TitleFrame</tt>
+     * @param index The index to get the <code>TitleFrame</code> from
+     * @return The requested <code>TitleFrame</code>
      */
     public TitleFrame getFrame(int index)
     {

@@ -5,7 +5,7 @@ import org.bukkit.block.Block;
 
 /**
  * A simple interface that acts as a consumer that takes
- * a <tt>Block</tt> and a <tt>Location</tt>
+ * a <code>Block</code> and a <code>Location</code>
  *
  * @author Mikedeejay2
  */

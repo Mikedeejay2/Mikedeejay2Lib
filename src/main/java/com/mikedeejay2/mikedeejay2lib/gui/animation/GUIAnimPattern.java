@@ -29,7 +29,7 @@ public enum GUIAnimPattern
     }
 
     /**
-     * Get a clone of the <tt>original</tt> {@link AnimatedGUIItem} based off of the row and column
+     * Get a clone of the <code>original</code> {@link AnimatedGUIItem} based off of the row and column
      * of the item
      *
      * @param original The original item

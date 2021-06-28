@@ -28,7 +28,7 @@ public final class ColorFormatter implements IColorFormatter
     /**
      * Format all alternative color codes in the message.
      * <p>
-     * For example, <tt>"*AND*c"</tt> will become a red color, <tt>"*AND*1"</tt> will become a blue color.
+     * For example, <code>"*AND*c"</code> will become a red color, <code>"*AND*1"</code> will become a blue color.
      * <p>
      * Color codes are converted using {@link ChatColor#translateAlternateColorCodes(char, String)}
      * 
@@ -43,7 +43,7 @@ public final class ColorFormatter implements IColorFormatter
     /**
      * Format all hex color codes in the message.
      * <p>
-     * For example, <tt>#ff0000</tt> will become a red color, <tt>#0000ff</tt> will become a blue color.
+     * For example, <code>#ff0000</code> will become a red color, <code>#0000ff</code> will become a blue color.
      * <p>
      * Color codes are converted using {@link ChatColor#of(String)}
      * <p>
@@ -69,7 +69,7 @@ public final class ColorFormatter implements IColorFormatter
      * Format both hex and alternate color codes in the message.
      * <p>
      * For example, <code>"*AND*c"</code> would be an alternate color code that would translate to red,
-     * while <tt>#0000ff</tt> would be a hex code that would translate to a blue color.
+     * while <code>#0000ff</code> would be a hex code that would translate to a blue color.
      * <p>
      * If the Minecraft version is less than 1.16 (aka unsupported), hex colors will only be removed but formatting
      * will not be applied, as there was no alternative below 1.16.

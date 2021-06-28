@@ -20,7 +20,7 @@ public final class FileIO
      * Get an input stream to an internal file inside of the plugin's jar
      *
      * @param filePath Path to file
-     * @param classLoader The <tt>ClassLoader</tt> to get the resource from
+     * @param classLoader The <code>ClassLoader</code> to get the resource from
      * @return The requested InputStream
      */
     public static InputStream getInputStreamFromJar(String filePath, ClassLoader classLoader)
@@ -74,7 +74,7 @@ public final class FileIO
      * Get a Reader from this plugin's jar from a path
      *
      * @param filePath    Path to get the Reader from
-     * @param classLoader The <tt>ClassLoader</tt> to get the resource from
+     * @param classLoader The <code>ClassLoader</code> to get the resource from
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested Reader
      */
@@ -141,7 +141,7 @@ public final class FileIO
      * @param folder      The root folder of the file path
      * @param filePath    Path to save the file to
      * @param replace     Replace existing file or not
-     * @param classLoader The <tt>ClassLoader</tt> to get the resource from
+     * @param classLoader The <code>ClassLoader</code> to get the resource from
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return If save was successful or not
      */
