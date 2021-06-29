@@ -29,6 +29,9 @@ import java.util.List;
  */
 public class GUIContainer
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // The default (Minecraft) amount of inventory rows
     public static final int MAX_INVENTORY_ROWS = 6;

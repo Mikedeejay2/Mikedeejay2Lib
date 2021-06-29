@@ -29,7 +29,9 @@ public abstract class EnhancedRunnable extends BukkitRunnable
     protected long period;
     // A reference to the delay of this runnable
     protected long delay;
-    // A reference to the plugin being used
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected BukkitPlugin plugin;
 
     public EnhancedRunnable()

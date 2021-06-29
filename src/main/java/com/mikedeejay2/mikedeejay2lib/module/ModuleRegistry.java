@@ -22,6 +22,9 @@ import java.util.function.Predicate;
 public class ModuleRegistry implements ModuleRegister<Module>
 {
     // Reference to the plugin
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     private final BukkitPlugin plugin;
     // The set of active modules
     private final Set<Module> modules;

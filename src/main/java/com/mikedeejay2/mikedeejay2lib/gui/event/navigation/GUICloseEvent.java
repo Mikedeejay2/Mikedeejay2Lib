@@ -14,6 +14,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class GUICloseEvent implements GUIEvent
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
 
     public GUICloseEvent(BukkitPlugin plugin)

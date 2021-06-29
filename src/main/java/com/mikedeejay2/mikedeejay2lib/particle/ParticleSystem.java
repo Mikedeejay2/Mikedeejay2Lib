@@ -24,6 +24,9 @@ import java.util.List;
  */
 public class ParticleSystem
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // The list of particle effects
     protected List<ParticleEffect> effects;

@@ -14,6 +14,9 @@ import java.util.Map;
  */
 public class GUIManager
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // The HashMap that stores the Player's GUIs
     protected Map<Player, PlayerGUI> playerGUIs;

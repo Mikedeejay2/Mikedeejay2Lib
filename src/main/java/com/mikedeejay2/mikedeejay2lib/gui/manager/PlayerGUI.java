@@ -17,6 +17,9 @@ import java.util.Map;
  */
 public class PlayerGUI
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // The map of NavigationHolders of this player
     protected Map<String, NavigationHolder<GUIContainer>> naviSystems;

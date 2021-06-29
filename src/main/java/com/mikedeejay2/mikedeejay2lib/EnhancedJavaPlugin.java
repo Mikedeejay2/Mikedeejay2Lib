@@ -44,6 +44,9 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     private String prefix;
     private ClassLoader classLoader;
 
+    /**
+     * Constructor for <code>EnhancedJavaPlugin</code>
+     */
     public EnhancedJavaPlugin()
     {
         forceColorfulLogger();

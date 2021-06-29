@@ -81,6 +81,11 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin
         return nms;
     }
 
+    /**
+     * Get the <code>LangManager</code> for Mikedeejay2Lib
+     *
+     * @return Mikedeejay2Lib lang manager
+     */
     public LangManager getLibLangManager()
     {
         return libLangManager;

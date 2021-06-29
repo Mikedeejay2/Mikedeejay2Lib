@@ -14,6 +14,9 @@ import java.io.File;
  */
 public abstract class DataFile implements DataObject
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // Path from the plugins folder to the file. (This DOES NOT include plugin.getDataFolder())
     protected String filePath;

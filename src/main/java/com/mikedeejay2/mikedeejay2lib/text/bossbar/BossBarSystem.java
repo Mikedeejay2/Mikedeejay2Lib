@@ -22,7 +22,10 @@ import java.util.*;
  */
 public class BossBarSystem
 {
-    protected BukkitPlugin plugin;
+    /**
+     * The {@link BukkitPlugin} instance
+     */
+    protected final BukkitPlugin plugin;
     // The title text of the boss bar
     protected String title;
     // The boss bar itself

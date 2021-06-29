@@ -17,6 +17,9 @@ import java.util.regex.Pattern;
  */
 public final class ColorFormatter implements IColorFormatter
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     private final BukkitPlugin plugin;
     private final Pattern pattern = Pattern.compile("#[a-fA-f0-9]{6}");
 

@@ -19,6 +19,9 @@ import java.util.regex.Pattern;
  */
 public final class ColorFormatterAdvanced implements IColorFormatter
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     private final BukkitPlugin plugin;
 
     // Pattern to find hex codes in a message

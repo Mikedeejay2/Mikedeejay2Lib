@@ -31,6 +31,9 @@ import java.util.List;
  */
 public class GUIListModule implements GUIModule
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // The list of items that this list holds
     protected List<GUIItem> list;
@@ -1119,7 +1122,10 @@ public class GUIListModule implements GUIModule
      */
     public static class GUIListSearchEvent implements GUIEvent
     {
-        protected final BukkitPlugin plugin;
+        /**
+     * The {@link BukkitPlugin} instance
+     */
+    protected final BukkitPlugin plugin;
 
         public GUIListSearchEvent(BukkitPlugin plugin)
         {

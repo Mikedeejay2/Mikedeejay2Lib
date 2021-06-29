@@ -15,6 +15,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 
 public class GUIScrollerModule implements GUIModule
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
 
     protected GUIItem upItem;

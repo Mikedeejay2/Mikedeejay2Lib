@@ -30,6 +30,9 @@ import java.net.URL;
  */
 public class UpdateChecker
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
 
     protected String userName;

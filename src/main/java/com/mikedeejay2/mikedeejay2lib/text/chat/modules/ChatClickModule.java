@@ -13,6 +13,9 @@ import net.md_5.bungee.api.chat.ClickEvent;
  */
 public class ChatClickModule implements ChatModule
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // The text that the click event will use
     protected String clickText;

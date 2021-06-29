@@ -21,6 +21,9 @@ import org.bukkit.inventory.Inventory;
  */
 public class GUIListener implements Listener
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
 
     public GUIListener(BukkitPlugin plugin)

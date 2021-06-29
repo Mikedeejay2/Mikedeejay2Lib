@@ -13,6 +13,9 @@ import net.md_5.bungee.api.chat.HoverEvent;
  */
 public class ChatHoverModule implements ChatModule
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // The text that the hover event will use
     protected String hoverText;

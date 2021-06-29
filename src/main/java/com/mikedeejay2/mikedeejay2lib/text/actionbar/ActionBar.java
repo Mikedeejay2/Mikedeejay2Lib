@@ -15,6 +15,9 @@ import java.util.List;
  */
 public class ActionBar
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // Whether the frames of the action bar will loop or not
     protected boolean loop;

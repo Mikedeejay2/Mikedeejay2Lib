@@ -10,6 +10,9 @@ import org.bstats.bukkit.Metrics;
  */
 public class BStats
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     protected int id;
     protected Metrics bStats;

@@ -17,6 +17,9 @@ import java.util.List;
  */
 public class ChatSystem
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // The chat slides that this system contains
     protected List<ChatSlide> slides;

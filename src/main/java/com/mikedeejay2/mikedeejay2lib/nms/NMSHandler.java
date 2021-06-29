@@ -14,6 +14,9 @@ import org.jetbrains.annotations.Nullable;
  */
 public class NMSHandler
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // The NMS version in an enum
     protected @Nullable VersionEnum version;

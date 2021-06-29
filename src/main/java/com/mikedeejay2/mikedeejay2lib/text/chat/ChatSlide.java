@@ -15,6 +15,9 @@ import java.util.List;
  */
 public class ChatSlide
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // The length of time between this slide and the next slide
     protected long period;

@@ -18,6 +18,9 @@ import java.util.Map;
  */
 public class LangManager
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // The default language locale
     protected static final String ENGLISH = "en_us";

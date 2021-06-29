@@ -15,11 +15,21 @@ import com.mikedeejay2.mikedeejay2lib.util.file.JsonFileIO;
  */
 public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
 {
-    // The root JsonObject that this DataFile holds
+    /**
+     * The root <code>JsonObject</code> that this {@link DataFile} holds
+     */
     protected JsonObject jsonObject;
-    // The root JsonAccessor that this JsonFile uses
+    /**
+     * The root JsonAccessor that this JsonFile uses
+     */
     protected JsonAccessor accessor;
 
+    /**
+     * Constructor for <code>JsonFile</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     * @param filePath The path to the file that this <code>JsonFile</code> references
+     */
     public JsonFile(BukkitPlugin plugin, String filePath)
     {
         super(plugin, filePath);

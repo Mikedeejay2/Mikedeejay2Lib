@@ -16,6 +16,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class GUIOpenNewEvent implements GUIEvent
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     protected GUIConstructor constructor;
     protected GUIContainer gui;

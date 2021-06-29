@@ -14,6 +14,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class GUIOpenEvent implements GUIEvent
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
 
     // The GUI that will be opened

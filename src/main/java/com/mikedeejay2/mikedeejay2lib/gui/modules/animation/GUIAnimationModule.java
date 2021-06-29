@@ -24,6 +24,9 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class GUIAnimationModule implements GUIModule
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // The list of Animated GUI Items to be animated
     protected final ConcurrentMap<AnimatedGUIItem, AnimatedGUIItemProperties> animatedItems;

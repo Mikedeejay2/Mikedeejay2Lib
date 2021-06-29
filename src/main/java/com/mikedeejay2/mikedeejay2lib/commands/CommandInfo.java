@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.commands;
 
 import com.google.common.collect.ImmutableList;
 import org.bukkit.command.CommandSender;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
 
@@ -32,14 +33,14 @@ public interface CommandInfo
      * @param sender The CommandSender that requested the info. If null, use default lang.
      * @return Any info that the command has
      */
-    default String getInfo(CommandSender sender) { return null; }
+    default @Nullable String getInfo(CommandSender sender) { return null; }
 
     /**
      * Get the permission that is required to run this command
      *
      * @return The permission that is required to run this command, null if none
      */
-    default String getPermission() { return null; }
+    default @Nullable String getPermission() { return null; }
 
     /**
      * Returns whether this command requires a player or not.

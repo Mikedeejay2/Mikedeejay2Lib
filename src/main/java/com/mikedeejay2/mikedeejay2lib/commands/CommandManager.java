@@ -1,10 +1,13 @@
 package com.mikedeejay2.mikedeejay2lib.commands;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
+import org.apache.commons.lang.Validate;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -15,14 +18,36 @@ import java.util.*;
  */
 public class CommandManager implements TabCommandBase
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
-    protected List<SubCommand> commands;
-    protected String defaultSubCommand;
 
+    /**
+     * The list of {@link SubCommand}s that this <code>CommandManager</code> manages
+     */
+    protected List<SubCommand> commands;
+
+    /**
+     * The default subcommand if none is specified
+     */
+    protected @Nullable String defaultSubCommand;
+
+    /**
+     * The name of the command of this <code>CommandManager</code>
+     */
     private String commandName;
 
-    public CommandManager(BukkitPlugin plugin, String commandName)
+    /**
+     * Constructs a new <code>CommandManager</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     * @param commandName The name of the command
+     */
+    public CommandManager(@NotNull BukkitPlugin plugin, @NotNull String commandName)
     {
+        Validate.notNull(plugin, "Plugin instance cannot be null");
+        Validate.notNull(commandName, "Command name cannot be null");
         this.plugin = plugin;
         this.commandName = commandName;
         this.commands = new ArrayList<>();
@@ -39,7 +64,7 @@ public class CommandManager implements TabCommandBase
      * @return Successful or not
      */
     @Override
-    public boolean onCommand(CommandSender sender, Command command, String label, String[] args)
+    public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args)
     {
         if(command.getName().equalsIgnoreCase(commandName))
         {
@@ -57,6 +82,7 @@ public class CommandManager implements TabCommandBase
                 return false;
             }
 
+            // TODO: Unused ArrayList?
             ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(args));
 
             arrayList.remove(0);
@@ -87,12 +113,12 @@ public class CommandManager implements TabCommandBase
     }
 
     /**
-     * Get a subcommand according to its name.
+     * Get a subcommand according to its name
      *
      * @param name Name of subcommand to get
      * @return The subcommand that corresponds to the name
      */
-    public SubCommand getSubcommand(String name)
+    public SubCommand getSubcommand(final String name)
     {
         for(SubCommand subcommand : this.commands)
         {
@@ -118,11 +144,11 @@ public class CommandManager implements TabCommandBase
      * Gets all subcommand strings for tab completion
      *
      * @param aliases Specify whether aliases are wanted or not
-     * @return An arraylist of strings containing the subcommands.
+     * @return An <code>ArrayList</code> of strings containing the subcommands.
      */
     public String[] getAllCommandStrings(boolean aliases)
     {
-        ArrayList<String> strings = new ArrayList<>();
+        List<String> strings = new ArrayList<>();
         for(SubCommand command : commands)
         {
             strings.add(command.getName());
@@ -136,8 +162,9 @@ public class CommandManager implements TabCommandBase
      *
      * @param subCommand The subcommand to add
      */
-    public void addSubcommand(SubCommand subCommand)
+    public void addSubcommand(@NotNull final SubCommand subCommand)
     {
+        Validate.notNull(subCommand, "Subcommand cannot be null");
         this.commands.add(subCommand);
     }
 
@@ -146,8 +173,9 @@ public class CommandManager implements TabCommandBase
      *
      * @param name Name of the subcommand
      */
-    public void removeSubCommand(String name)
+    public void removeSubCommand(@NotNull final String name)
     {
+        Validate.notNull(name, "Cannot remove subcommand of null name");
         commands.remove(getSubcommand(name));
     }
 
@@ -158,20 +186,36 @@ public class CommandManager implements TabCommandBase
      */
     public void removeSubCommand(SubCommand subCommand)
     {
+        Validate.notNull(subCommand, "Cannot remove null subcommand");
         commands.remove(subCommand);
     }
 
+    /**
+     * Get the base command
+     *
+     * @return The base command
+     */
     public String getBaseCommand()
     {
         return commandName;
     }
 
-    public String getDefaultSubCommand()
+    /**
+     * Get the default subcommand
+     *
+     * @return The default subcommand
+     */
+    public @Nullable String getDefaultSubCommand()
     {
         return defaultSubCommand;
     }
 
-    public void setDefaultSubCommand(String defaultSubCommand)
+    /**
+     * Set the default subcommand
+     *
+     * @param defaultSubCommand The new default subcommand
+     */
+    public void setDefaultSubCommand(@Nullable String defaultSubCommand)
     {
         this.defaultSubCommand = defaultSubCommand;
     }
@@ -186,20 +230,21 @@ public class CommandManager implements TabCommandBase
      * @return Return a list of autocomplete strings
      */
     @Override
-    public List<String> onTabComplete(CommandSender sender, Command command, String alias, String[] args)
+    public List<String> onTabComplete(@NotNull CommandSender sender, Command command, @NotNull String alias, String[] args)
     {
         if(!command.getName().equalsIgnoreCase(this.commandName)) return null;
         ArrayList<String> commands = new ArrayList<>();
-        switch(args.length)
+        if(args.length == 1)
         {
-            case 1:
-                String[] arg1Strings = this.getAllCommandStrings(true);
-                Collections.addAll(commands, arg1Strings);
-                break;
+            String[] arg1Strings = this.getAllCommandStrings(true);
+            Collections.addAll(commands, arg1Strings);
         }
         return commands;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public String getName()
     {

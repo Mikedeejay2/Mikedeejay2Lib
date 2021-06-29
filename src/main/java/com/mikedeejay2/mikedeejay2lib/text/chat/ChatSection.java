@@ -20,6 +20,9 @@ import java.util.List;
  */
 public class ChatSection
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // The list of Chat Modules for this section
     protected List<ChatModule> modules;

@@ -13,6 +13,9 @@ import java.util.List;
  */
 public class TitleSystem
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // The list of title frames
     protected List<TitleFrame> frames;

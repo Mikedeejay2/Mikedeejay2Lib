@@ -14,6 +14,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class GUIPrintMessageEvent implements GUIEvent
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // The message to be printed
     private String message;

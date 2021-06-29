@@ -22,6 +22,9 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class GUINavigatorModule implements GUIModule
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     // The ID of the Navigator
     protected String navigationID;
@@ -242,7 +245,10 @@ public class GUINavigatorModule implements GUIModule
      */
     public static class GUINavBackEvent implements GUIEvent
     {
-        protected final BukkitPlugin plugin;
+        /**
+     * The {@link BukkitPlugin} instance
+     */
+    protected final BukkitPlugin plugin;
 
         public GUINavBackEvent(BukkitPlugin plugin)
         {
@@ -272,7 +278,10 @@ public class GUINavigatorModule implements GUIModule
      */
     public static class GUINavForwardEvent implements GUIEvent
     {
-        protected final BukkitPlugin plugin;
+        /**
+     * The {@link BukkitPlugin} instance
+     */
+    protected final BukkitPlugin plugin;
 
         public GUINavForwardEvent(BukkitPlugin plugin)
         {

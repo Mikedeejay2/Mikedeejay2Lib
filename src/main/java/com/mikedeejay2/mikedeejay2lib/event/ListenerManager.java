@@ -13,6 +13,9 @@ import java.util.ArrayList;
  */
 public class ListenerManager
 {
+    /**
+     * The {@link BukkitPlugin} instance
+     */
     protected final BukkitPlugin plugin;
     private final ArrayList<Listener> listeners;
 
