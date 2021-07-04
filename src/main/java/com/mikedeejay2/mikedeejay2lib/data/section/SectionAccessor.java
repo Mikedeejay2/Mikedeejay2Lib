@@ -19,8 +19,6 @@ import java.util.Set;
 
 /**
  * A large abstract class for easily accessing anything in a DataFile.
- * Only the strongest of programmers can inherit this class. This class is
- * without a doubt the hardest class to inherit in this plugin.
  *
  * @param <D> The DataFile type that is being accessed.
  * @param <T> The default return type of the Section Accessor, see <code>get</code> and <code>set</code> methods

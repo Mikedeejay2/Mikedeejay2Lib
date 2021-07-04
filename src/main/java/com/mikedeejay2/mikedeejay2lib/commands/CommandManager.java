@@ -4,12 +4,14 @@ import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import org.apache.commons.lang.Validate;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.TabExecutor;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * Manages a command with subcommands
@@ -41,7 +43,7 @@ public class CommandManager implements TabCommandBase
     /**
      * Constructs a new <code>CommandManager</code>
      *
-     * @param plugin The {@link BukkitPlugin} instance
+     * @param plugin      The {@link BukkitPlugin} instance
      * @param commandName The name of the command
      */
     public CommandManager(@NotNull BukkitPlugin plugin, @NotNull String commandName)

@@ -38,7 +38,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
      * Constructor for <code>JsonAccessor</code>
      *
      * @param dataFile The accessor's <code>JsonFile</code>
-     * @param json The <code>JsonObject</code> that this accessor is referencing
+     * @param json     The <code>JsonObject</code> that this accessor is referencing
      */
     public JsonAccessor(@NotNull JsonFile dataFile, @NotNull JsonObject json)
     {

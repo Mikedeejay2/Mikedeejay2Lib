@@ -93,12 +93,23 @@ public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
         return element.getAsString();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param name The name of the section to get
+     * @return The <code>SectionAccessor</code> of the requested section
+     */
     @Override
     public JsonAccessor getAccessor(String name)
     {
-        return (JsonAccessor) accessor.getSection(name);
+        return accessor.getSection(name);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return The root <code>SectionAccessor</code>
+     */
     @Override
     public JsonAccessor getAccessor()
     {

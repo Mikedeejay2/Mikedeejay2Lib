@@ -7,9 +7,8 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import java.util.*;
 
 /**
- * This Enhanced Yaml class inherits YamlConfiguration and is meant to be
- * a middle layer that adds extra processing and features to the YamlConfiguration
- * class.
+ * This Enhanced Yaml class inherits YamlConfiguration and is meant to be a middle layer that adds extra processing and
+ * features to the YamlConfiguration class.
  * <p>
  * The main things that this class does is
  * <ul>
@@ -22,7 +21,9 @@ import java.util.*;
  */
 public class EnhancedYaml extends YamlConfiguration
 {
-    // Map that stores paths to comments and the comments themselves, used when saving comments to disk
+    /**
+     * Map that stores paths to comments and the comments themselves, used when saving comments to disk
+     */
     private Map<String, String> comments;
 
     public EnhancedYaml()
