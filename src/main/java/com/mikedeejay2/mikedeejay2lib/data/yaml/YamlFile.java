@@ -11,7 +11,7 @@ import com.mikedeejay2.mikedeejay2lib.util.file.YamlFileIO;
  *
  * @author Mikedeejay2
  */
-public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor>
+public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor, YamlFile, Object>
 {
     // The EnhancedYaml object that the YamlFile is accessing
     protected EnhancedYaml yamlFile;

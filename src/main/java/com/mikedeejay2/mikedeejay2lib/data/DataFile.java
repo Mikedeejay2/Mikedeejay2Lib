@@ -18,13 +18,26 @@ public abstract class DataFile implements DataObject
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // Path from the plugins folder to the file. (This DOES NOT include plugin.getDataFolder())
+    /**
+     * Path from the plugins folder to the file. (This DOES NOT include <code>plugin.getDataFolder()</code>)
+     */
     protected String filePath;
-    // The file to to this file on the disk (This does not ensure that the file is on the disk)
+    /**
+     * The file to to this file on the disk (This does not ensure that the file is on the disk)
+     */
     protected File file;
-    // If the file is loaded
+    /**
+     * If the file is loaded
+     */
     protected boolean isLoaded;
 
+    /**
+     * Construct a new <code>DataFile</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     * @param filePath Path from the plugins folder to the file.
+     *                 (This DOES NOT include <code>plugin.getDataFolder()</code>)
+     */
     public DataFile(BukkitPlugin plugin, String filePath)
     {
         this.plugin = plugin;
@@ -75,7 +88,8 @@ public abstract class DataFile implements DataObject
 
     /**
      * Resets this file's data to the default file specified in the jar.
-     * DO NOT use this method if this file does not exist in this plugin's jar.
+     * <p>
+     * <strong>DO NOT</strong> use this method if this file does not exist in this plugin's jar.
      * <p>
      * This method does the following in order:
      * <ol>
@@ -117,9 +131,8 @@ public abstract class DataFile implements DataObject
     }
 
     /**
-     * Reload this file.
-     * Unless this method is overloaded, this will only
-     * load from disk replacing the current information.
+     * Reload this file. Unless this method is overloaded, this will only load from disk replacing the current
+     * information.
      *
      * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
@@ -130,8 +143,8 @@ public abstract class DataFile implements DataObject
     }
 
     /**
-     * Load this file from disk. The location that would be loaded is
-     * the plugin's data folder + the file path of this file
+     * Load this file from disk. The location that would be loaded is the plugin's data folder + the file path of this
+     * file
      *
      * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
@@ -139,9 +152,8 @@ public abstract class DataFile implements DataObject
     public abstract boolean loadFromDisk(boolean throwErrors);
 
     /**
-     * Load this file from this plugin's jar. The file MUST exist on
-     * the jar for this to work! This method does NOT save to disk, you
-     * must do that by calling saveToDisk();
+     * Load this file from this plugin's jar. The file <strong>MUST</strong> exist on the jar for this to work! This
+     * method does NOT save to disk, you must do that by calling {@link DataFile#saveToDisk(boolean)}
      *
      * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
@@ -149,8 +161,7 @@ public abstract class DataFile implements DataObject
     public abstract boolean loadFromJar(boolean throwErrors);
 
     /**
-     * Save this file to disk. The file will be saved to this
-     * plugin's data folder + the file path.
+     * Save this file to disk. The file will be saved to this plugin's data folder + the file path.
      *
      * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
@@ -158,8 +169,7 @@ public abstract class DataFile implements DataObject
     public abstract boolean saveToDisk(boolean throwErrors);
 
     /**
-     * Delete this file from the disk. You should be checking that the
-     * file is on the disk before calling this method.
+     * Delete this file from the disk. You should be checking that the file is on the disk before calling this method.
      *
      * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
@@ -171,12 +181,15 @@ public abstract class DataFile implements DataObject
     }
 
     /**
-     * Update this file from the jar, keeping existing values but adding any
-     * new values that the jar file's version has but the disk's version does
-     * not.
+     * Update this file from the jar, keeping existing values but adding any new values that the jar file's version has
+     * but the disk's version does not.
      * <p>
      * This is useful for configs, especially when a config is updated so that the
      * user does not have to manually add new keys to the config.
+     * <p>
+     * Note that this method <strong>does not</strong> remove old keys from the config, as the values to be removed can
+     * not be accurately determined given that custom config values can create keys that don't exist in the base config
+     * but should exist anyways.
      *
      * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not

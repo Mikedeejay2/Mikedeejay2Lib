@@ -13,7 +13,7 @@ import com.mikedeejay2.mikedeejay2lib.util.file.JsonFileIO;
  *
  * @author Mikedeejay2
  */
-public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
+public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor, JsonFile, JsonElement>
 {
     /**
      * The root <code>JsonObject</code> that this {@link DataFile} holds
@@ -37,6 +37,12 @@ public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
         this.accessor = new JsonAccessor(this, jsonObject);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param throwErrors Silence any errors that this operation might produce
+     * @return If this operation was successful or not
+     */
     @Override
     public boolean loadFromDisk(boolean throwErrors)
     {
@@ -44,6 +50,12 @@ public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
         return file.exists();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param throwErrors Silence any errors that this operation might produce
+     * @return If this operation was successful or not
+     */
     @Override
     public boolean loadFromJar(boolean throwErrors)
     {
@@ -51,12 +63,24 @@ public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
         return FileIO.getInputStreamFromJar(filePath, plugin.classLoader()) != null;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param throwErrors Silence any errors that this operation might produce
+     * @return If this operation was successful or not
+     */
     @Override
     public boolean saveToDisk(boolean throwErrors)
     {
         return JsonFileIO.saveJsonFile(file, jsonObject, throwErrors);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param throwErrors Silence any errors that this operation might produce
+     * @return If this operation was successful or not
+     */
     @Override
     public boolean updateFromJar(boolean throwErrors)
     {
@@ -64,16 +88,21 @@ public class JsonFile extends DataFile implements SectionInstancer<JsonAccessor>
         return true;
     }
 
+    /**
+     * Get the root <code>JsonObject</code> of this <code>JsonFile</code>
+     *
+     * @return The root <code>JsonObject</code>
+     */
     public JsonObject getJsonObject()
     {
         return jsonObject;
     }
 
     /**
-     * Get a JsonElement from the json file
+     * Get a <code>JsonElement</code> from the json file
      *
      * @param element Element to get
-     * @return The JsonElement. If non-existent, will return null.
+     * @return The <code>JsonElement</code>. If non-existent, will return null.
      */
     public JsonElement getElement(String element)
     {
