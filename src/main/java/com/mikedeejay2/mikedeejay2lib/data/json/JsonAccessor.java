@@ -22,7 +22,7 @@ import java.lang.reflect.Type;
 import java.util.*;
 
 /**
- * A Json accessor that overrides <code>SectionAccessor</code> for accessing Json files easily
+ * A Json accessor that overrides {@link SectionAccessor} for accessing Json files easily
  *
  * @author Mikedeejay2
  */

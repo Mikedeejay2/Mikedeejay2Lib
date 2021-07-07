@@ -14,7 +14,7 @@ import com.mikedeejay2.mikedeejay2lib.data.DataFile;
 public interface SectionInstancer<R extends SectionAccessor<D, T>, D extends DataFile, T>
 {
     /**
-     * Retrieve a {@link SectionAccessor} of a
+     * Retrieve a {@link SectionAccessor} of a specified key name
      *
      * @param name The name of the section to get
      * @return The <code>SectionAccessor</code> of the requested section

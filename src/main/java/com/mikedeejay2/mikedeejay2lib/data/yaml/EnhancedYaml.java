@@ -26,15 +26,17 @@ public class EnhancedYaml extends YamlConfiguration
      */
     private Map<String, String> comments;
 
+    /**
+     * Construct a new <code>EnhancedYaml</code>
+     */
     public EnhancedYaml()
     {
         comments = new LinkedHashMap<>();
     }
 
     /**
-     * This is an override of the saveToString class to implement
-     * comments anywhere in the file. Where comments are located,
-     * the comment is added to the String that will be returned.
+     * This is an override of the {@link YamlConfiguration#saveToString()} method to implement comments anywhere in the
+     * file. Where comments are located, the comment is added to the String that will be returned.
      *
      * @return The String with the added comments
      */
@@ -78,10 +80,8 @@ public class EnhancedYaml extends YamlConfiguration
     }
 
     /**
-     * This method overrides the loadFromString method so that
-     * comment locations from the file will be read and stored in
-     * this class so that when the file is saved later the comments will
-     * stay in their correct place.
+     * This method overrides the {@link YamlConfiguration#loadFromString(String)} method so that comment locations from the file will be read and stored
+     * in this class so that when the file is saved later the comments will stay in their correct place.
      *
      * @param contents Original contents of the yaml file without comments.
      * @throws InvalidConfigurationException If there is an error in the yaml file, an <code>InvalidConfigurationException</code> will be thrown
@@ -131,9 +131,9 @@ public class EnhancedYaml extends YamlConfiguration
 
     /**
      * Update this yaml file based on a yaml file in this plugin's jar file.
-     * It is important that you know that the file in the plugin's jar exists
-     * before attempting to update, otherwise nothing will happen and you will
-     * have wasted a small amount of processing power on doing nothing.
+     * <p>
+     * It is important that you know that the file in the plugin's jar exists before attempting to update, otherwise
+     * nothing will happen and you will have wasted a small amount of processing power on doing nothing.
      *
      * @param filePath The path to the file in the jar to update with.
      * @param classLoader The <code>ClassLoader</code> to get the resource from
@@ -178,8 +178,8 @@ public class EnhancedYaml extends YamlConfiguration
     }
 
     /**
-     * Helper method to take contents of the yaml file and remove
-     * all of the contents (aka that annoying header that was duplicating the top comment)
+     * Helper method to take contents of the yaml file and remove all of the contents
+     * <i>(aka that annoying header that was duplicating the top comment)</i>
      *
      * @param contents Yaml file contents to be processed
      * @return The string of contents but without the comments
