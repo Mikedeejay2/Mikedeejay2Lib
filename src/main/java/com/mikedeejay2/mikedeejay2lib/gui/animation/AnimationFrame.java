@@ -9,19 +9,33 @@ import org.bukkit.inventory.ItemStack;
  */
 public class AnimationFrame
 {
-    // The item of the animation frame, null if not an item frame.
+    /**
+     * The item of the animation frame, null if not an item frame
+     */
     protected ItemStack item;
-    // The type of movement that this frame processes, null if not movement frame.
+    /**
+     * The type of movement that this frame processes, null if not movement frame.
+     */
     protected MovementType movementType;
-    // The row of this frame, null if not movement frame.
+    /**
+     * The row of this frame, null if not movement frame.
+     */
     protected int row;
-    // The column of this frame, null if not movement frame.
+    /**
+     * The column of this frame, null if not movement frame.
+     */
     protected int col;
-    // The period of this frame, aka the time between this frame and the next one
+    /**
+     * The period of this frame, aka the time between this frame and the next one
+     */
     protected long period;
-    // The FrameType, either ITEM, MOVEMENT, or BOTH;
+    /**
+     * The FrameType, either ITEM, MOVEMENT, or BOTH;
+     */
     protected FrameType type;
-    // Whether or not relative (local) movement is use, null if not a movement frame.
+    /**
+     * Whether or not relative (local) movement is use, null if not a movement frame.
+     */
     protected boolean relativeMovement;
 
     /**
@@ -78,7 +92,7 @@ public class AnimationFrame
     }
 
     /**
-     * Get the item of this frame, null if the <code>FrameType</code> is not <code>ITEM</code> or <code>BOTH</code>
+     * Get the item of this frame, null if the {@link FrameType} is not <code>ITEM</code> or <code>BOTH</code>
      *
      * @return The item of this frame
      */
@@ -90,7 +104,8 @@ public class AnimationFrame
     /**
      * Set the item of this frame.
      * <p>
-     * Note: The item will only be used if the <code>FrameType</code> for this frame is <code>ITEM</code> or <code>BOTH</code>
+     * Note: The item will only be used if the {@link FrameType} for this frame is <code>ITEM</code> or 
+     * <code>BOTH</code>
      *
      * @param item The item to set this frame's item to
      */
@@ -100,7 +115,8 @@ public class AnimationFrame
     }
 
     /**
-     * Get the <code>MovementType</code> of this frame, null if the <code>FrameType</code> is not <code>MOVEMENT</code> or <code>BOTH</code>
+     * Get the <code>MovementType</code> of this frame, null if the {@link FrameType} is not <code>MOVEMENT</code> 
+     * or <code>BOTH</code>
      *
      * @return The movement type of this frame
      */
@@ -112,7 +128,8 @@ public class AnimationFrame
     /**
      * Set the <code>MovementType</code> of this frame.
      * <p>
-     * Note: The <code>MovementType</code> will only be used if the <code>FrameType</code> for this frame is <code>MOVEMENT</code> or <code>BOTH</code>
+     * Note: The <code>MovementType</code> will only be used if the {@link FrameType} for this frame is 
+     * <code>MOVEMENT</code> or <code>BOTH</code>
      *
      * @param movementType The movement type to set this frame to
      */
@@ -122,7 +139,7 @@ public class AnimationFrame
     }
 
     /**
-     * Get the row of this frame, null if the <code>FrameType</code> is not <code>MOVEMENT</code> or <code>BOTH</code>
+     * Get the row of this frame, null if the {@link FrameType} is not <code>MOVEMENT</code> or <code>BOTH</code>
      *
      * @return The row of this frame
      */
@@ -135,7 +152,8 @@ public class AnimationFrame
     /**
      * Set the row of this frame.
      * <p>
-     * Note: This will only be used if the <code>FrameType</code> for this frame is <code>MOVEMENT</code> or <code>BOTH</code>
+     * Note: This will only be used if the {@link FrameType} for this frame is <code>MOVEMENT</code> or 
+     * <code>BOTH</code>
      *
      * @param row The row to set this frame to
      */
@@ -145,7 +163,8 @@ public class AnimationFrame
     }
 
     /**
-     * Get the column of this frame, null if the <code>FrameType</code> is not <code>MOVEMENT</code> or <code>BOTH</code>
+     * Get the column of this frame, null if the {@link FrameType} is not <code>MOVEMENT</code> or 
+     * <code>BOTH</code>
      *
      * @return The column of this frame
      */
@@ -157,7 +176,8 @@ public class AnimationFrame
     /**
      * Set the column of this frame.
      * <p>
-     * Note: This will only be used if the <code>FrameType</code> for this frame is <code>MOVEMENT</code> or <code>BOTH</code>
+     * Note: This will only be used if the {@link FrameType} for this frame is <code>MOVEMENT</code> or 
+     * <code>BOTH</code>
      *
      * @param col The column to set this frame to
      */
@@ -169,7 +189,8 @@ public class AnimationFrame
     /**
      * Set the row and column of this frame.
      * <p>
-     * Note: This will only be used if the <code>FrameType</code> for this frame is <code>MOVEMENT</code> or <code>BOTH</code>
+     * Note: This will only be used if the {@link FrameType} for this frame is <code>MOVEMENT</code> or 
+     * <code>BOTH</code>
      *
      * @param row The row to set this frame to
      * @param col The column to set this frame to
@@ -181,7 +202,7 @@ public class AnimationFrame
     }
 
     /**
-     * Get the period of this frame (The wait time between this frame and the next frame in ticks)
+     * Get the period of this frame <i>(The wait time between this frame and the next frame in ticks)</i>
      *
      * @return The period
      */
@@ -191,7 +212,7 @@ public class AnimationFrame
     }
 
     /**
-     * Set the period of this frame (The wait time between this frame and the next frame in ticks)
+     * Set the period of this frame <i>(The wait time between this frame and the next frame in ticks)</i>
      *
      * @param period The period that this frame will be set to
      */
@@ -201,7 +222,7 @@ public class AnimationFrame
     }
 
     /**
-     * Get the <code>FrameType</code> of this frame
+     * Get the {@link FrameType} of this frame
      *
      * @return This frame's type
      */
@@ -211,10 +232,10 @@ public class AnimationFrame
     }
 
     /**
-     * Set the <code>FrameType</code> of this frame.
+     * Set the {@link FrameType} of this frame.
      * <p>
      * Note: When using this method, it is important that the type of frame that you are setting
-     * has all values set in this frame. If data is missing in this frame that the <code>FrameType</code>
+     * has all values set in this frame. If data is missing in this frame that the {@link FrameType}
      * requires, a <code>NullPointerException</code> will be thrown.
      *
      * @param type The type to set this frame to.

@@ -1,19 +1,18 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
- * An event that is called when a <code>GUIItem</code> is called
+ * An event that is called when a {@link GUIItem} is called
  * <p>
- * When a <code>GUIEvent</code> is added to a <code>GUIItem</code> through
- * {@link com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem#addEvent(GUIEvent)}, the <code>execute()</code> method
+ * When a {@link GUIEvent} is added to a {@link GUIItem} through
+ * {@link GUIItem#addEvent(GUIEvent)}, the {@link GUIEvent#execute(InventoryClickEvent, GUIContainer)} method
  * will be called for the event.
  * <p>
- * Multiple <code>GUIEvents</code> can be added to a <code>GUIItem</code>
- * through the use of a <code>GUIEventHandler</code> which can hold multiple
- * <code>GUIEvents</code>. This is automatically done so you don't have to
- * worry about it.
+ * Multiple <code>GUIEvents</code> can be added to a <code>GUIItem</code> through the use of a {@link GUIEventHandler}
+ * which can hold multiple <code>GUIEvents</code>. This is automatically done so you don't have to worry about it.
  *
  * @author Mikedeejay2
  */

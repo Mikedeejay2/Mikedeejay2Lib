@@ -18,15 +18,29 @@ public class GUIPrintMessageEvent implements GUIEvent
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // The message to be printed
+    /**
+     * The message to be printed
+     */
     private String message;
 
+    /**
+     * Construct a new <code>GUIPrintMessageEvent</code>
+     *
+     * @param plugin  The {@link BukkitPlugin} instance
+     * @param message The message to be printed
+     */
     public GUIPrintMessageEvent(BukkitPlugin plugin, String message)
     {
         this.plugin = plugin;
         this.message = message;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param event The event of the click
+     * @param gui   The GUI that the event took place in
+     */
     @Override
     public void execute(InventoryClickEvent event, GUIContainer gui)
     {
@@ -34,5 +48,25 @@ public class GUIPrintMessageEvent implements GUIEvent
         ClickType clickType = event.getClick();
         if(clickType != ClickType.LEFT) return;
         plugin.sendMessage(player, message);
+    }
+
+    /**
+     * Get the message to be printed
+     *
+     * @return The message to be printed
+     */
+    public String getMessage()
+    {
+        return message;
+    }
+
+    /**
+     * Set the message to be printed
+     *
+     * @param message The new message to be printed
+     */
+    public void setMessage(String message)
+    {
+        this.message = message;
     }
 }

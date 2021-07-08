@@ -13,6 +13,12 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class GUIRefreshEvent implements GUIEvent
 {
+    /**
+     * {@inheritDoc}
+     *
+     * @param event The event of the click
+     * @param gui   The GUI that the event took place in
+     */
     @Override
     public void execute(InventoryClickEvent event, GUIContainer gui)
     {

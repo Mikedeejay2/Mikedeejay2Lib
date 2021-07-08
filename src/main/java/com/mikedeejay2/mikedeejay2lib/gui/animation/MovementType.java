@@ -1,8 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.gui.animation;
 
 /**
- * Holds the different types of movements that the movement <code>AnimationFrame</code> type
- * can run.
+ * Holds the different types of movements that the movement <code>AnimationFrame</code> type can run.
  * <p>
  * The types of movement are:
  * <ul>
@@ -24,10 +23,34 @@ package com.mikedeejay2.mikedeejay2lib.gui.animation;
  */
 public enum MovementType
 {
+    /**
+     * Override the item that the current item is being moved to.
+     * If an item is currently in the slot that this item is being moved to, override it.
+     */
     OVERRIDE_ITEM,
+    /**
+     * Swap the item in the slot that this frame is attempting to move to.
+     * If there is an item currently in the slot that this item is being moved to, swap them.
+     */
     SWAP_ITEM,
+    /**
+     * If there is an item currently in the slot that this item is being moved to,
+     * push that item down in the GUI.
+     */
     PUSH_ITEM_DOWN,
+    /**
+     * If there is an item currently in the slot that this item is being moved to,
+     * push that item up in the GUI.
+     */
     PUSH_ITEM_UP,
+    /**
+     * If there is an item currently in the slot that this item is being moved to,
+     * push that item to the left in the GUI.
+     */
     PUSH_ITEM_LEFT,
+    /**
+     * If there is an item currently in the slot that this item is being moved to,
+     * push that item to the right in the GUI.
+     */
     PUSH_ITEM_RIGHT
 }

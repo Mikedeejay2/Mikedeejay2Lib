@@ -11,18 +11,50 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
  */
 public enum GUIAnimPattern
 {
+    /**
+     * Diagonal animation starting from the top left
+     */
     TOP_LEFT_DIAGONAL((row, col, maxRow, maxCol) -> (row - 1) + (col - 1)),
+    /**
+     * Diagonal animation starting from the top right
+     */
     TOP_RIGHT_DIAGONAL((row, col, maxRow, maxCol) -> (row - 1) + (maxCol - (col - 1))),
+    /**
+     * Diagonal animation starting from the bottom left
+     */
     BOTTOM_LEFT_DIAGONAL((row, col, maxRow, maxCol) -> (maxRow - (row - 1)) + (col - 1)),
+    /**
+     * Diagonal animation starting from the bottom right
+     */
     BOTTOM_RIGHT_DIAGONAL((row, col, maxRow, maxCol) -> (maxRow - (row - 1)) + (maxCol - (col - 1))),
+    /**
+     * Animation starting from the top and animating down
+     */
     TOP_DOWN((row, col, maxRow, maxCol) -> row - 1),
+    /**
+     * Animation starting from the bottom and animating up
+     */
     DOWN_UP((row, col, maxRow, maxCol) -> maxRow - (row - 1)),
+    /**
+     * Animation starting from the left and animating to the right
+     */
     LEFT_RIGHT((row, col, maxRow, maxCol) -> col - 1),
+    /**
+     * Animation starting from the right and animating to the left
+     */
     RIGHT_LEFT((row, col, maxRow, maxCol) -> maxCol - (col - 1)),
     ;
 
+    /**
+     * The {@link PatternApplier} for getting the delay for an item's position
+     */
     private final PatternApplier applier;
 
+    /**
+     * Enum <code>GUIAnimPattern</code> constructor
+     *
+     * @param applier The {@link PatternApplier} of the pattern
+     */
     GUIAnimPattern(PatternApplier applier)
     {
         this.applier = applier;

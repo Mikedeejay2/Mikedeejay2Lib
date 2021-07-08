@@ -15,11 +15,11 @@ import java.util.List;
 /**
  * A <code>GUIItem</code> with the added ability of having animation capabilities. <p>
  *
- * <b>IMPORTANT: To use the animation capabilities of this class, <code>GUIAnimationModule</code>
+ * <strong>IMPORTANT: To use the animation capabilities of this class, <code>GUIAnimationModule</code>
  * must be a module that has been appended to the <code>GUIContainer</code>. This is because the
  * <code>GUIAnimationModule</code> adds animation functionality to the GUI while this object is
  * just some added information to a regular <code>GUIItem</code> that gives the information needed
- * to animate this item.</b>
+ * to animate this item.</strong>
  *
  * @author Mikedeejay2
  */

@@ -16,11 +16,17 @@ import java.util.concurrent.ConcurrentMap;
  */
 public class AnimationRuntime extends EnhancedRunnable
 {
-    // The map of items to be executed
+    /**
+     * The map of items to be executed
+     */
     protected ConcurrentMap<AnimatedGUIItem, AnimatedGUIItemProperties> items;
-    // The GUIContainer that this AnimationRuntime is a child of
+    /**
+     * The GUIContainer that this AnimationRuntime is a child of
+     */
     protected GUIContainer gui;
-    // The player that has opened the GUI
+    /**
+     * The player that has opened the GUI
+     */
     protected Player player;
 
     /**
@@ -50,7 +56,7 @@ public class AnimationRuntime extends EnhancedRunnable
     }
 
     /**
-     * Set the <code>GUIContainer</code> that this <code>AnimationRuntime</code> is a child of
+     * Set the {@link GUIContainer} that this <code>AnimationRuntime</code> is a child of
      * <p>
      * <b>This method MUST be run before the runtime is started, a <code>NullPointerException</code>
      * will be thrown otherwise.</b>
@@ -63,8 +69,9 @@ public class AnimationRuntime extends EnhancedRunnable
     }
 
     /**
-     * Overridden <code>onRun()</code> method. This method iterates through all items in the items list and runs their
-     * <code>tick()</code> method, if the tick method returns true the GUI is updated at the end of the run.
+     * Overridden {@link EnhancedRunnable#onRun()} method. This method iterates through all items in the items list and
+     * runs their {@link AnimatedGUIItem#tick(long, AnimatedGUIItemProperties)} method, if the tick method returns true
+     * the GUI is updated at the end of the run.
      */
     @Override
     public void onRun()
@@ -81,7 +88,7 @@ public class AnimationRuntime extends EnhancedRunnable
     }
 
     /**
-     * Get the map <code>AnimatedGUIItems</code> that this runtime holds
+     * Get the map {@link AnimatedGUIItem} that this runtime holds
      *
      * @return The map of items
      */

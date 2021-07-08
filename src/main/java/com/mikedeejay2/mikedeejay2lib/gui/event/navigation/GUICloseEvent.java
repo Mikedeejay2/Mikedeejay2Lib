@@ -19,11 +19,22 @@ public class GUICloseEvent implements GUIEvent
      */
     protected final BukkitPlugin plugin;
 
+    /**
+     * Construct a new <code>GUICloseEvent</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     */
     public GUICloseEvent(BukkitPlugin plugin)
     {
         this.plugin = plugin;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param event The event of the click
+     * @param gui   The GUI that the event took place in
+     */
     @Override
     public void execute(InventoryClickEvent event, GUIContainer gui)
     {

@@ -5,6 +5,8 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 /**
  * Event for clearing an entire layer of all items in a GUI
@@ -13,27 +15,57 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  */
 public class GUIClearLayerEvent implements GUIEvent
 {
-    protected String layerName;
-    protected int index;
-    protected GUILayer layer;
-    int mode;
+    /**
+     * The layer name of the layer to clear. Null if <code>mode</code> is not {@link ClearLayerMode#LAYER_NAME}
+     */
+    protected @Nullable String layerName;
 
-    public GUIClearLayerEvent(String layerName)
+    /**
+     * The index of the layer to clear. <code>0</code> if <code>mode</code> is not {@link ClearLayerMode#INDEX}
+     */
+    protected int index;
+
+    /**
+     * The index of the layer to clear. Null if <code>mode</code> is not {@link ClearLayerMode#LAYER}
+     */
+    protected @Nullable GUILayer layer;
+
+    /**
+     * The {@link ClearLayerMode} of the event
+     */
+    protected ClearLayerMode mode;
+
+    /**
+     * Construct a new <code>GUIClearLayerEvent</code> based off of the layer's name
+     *
+     * @param layerName The layer name to clear
+     */
+    public GUIClearLayerEvent(@NotNull String layerName)
     {
         this.layerName = layerName;
-        this.mode = 1;
+        this.mode = ClearLayerMode.LAYER_NAME;
     }
 
+    /**
+     * Construct a new <code>GUIClearLayerEvent</code> based off of the layer's index
+     *
+     * @param index The index of the layer to clear
+     */
     public GUIClearLayerEvent(int index)
     {
         this.index =  index;
-        this.mode = 2;
+        this.mode = ClearLayerMode.INDEX;
     }
 
-    public GUIClearLayerEvent(GUILayer layer)
+    /**
+     * Construct a new <code>GUIClearLayerEvent</code> based off of the layer's instance
+     *
+     * @param layer The layer to clear
+     */
+    public GUIClearLayerEvent(@NotNull GUILayer layer)
     {
         this.layer = layer;
-        this.mode = 3;
+        this.mode = ClearLayerMode.LAYER;
     }
 
     @Override
@@ -44,17 +76,24 @@ public class GUIClearLayerEvent implements GUIEvent
         GUILayer layer = null;
         switch(mode)
         {
-            case 1:
+            case LAYER_NAME:
                 layer = gui.getLayer(layerName);
                 break;
-            case 2:
+            case INDEX:
                 layer = gui.getLayer(index);
                 break;
-            case 3:
+            case LAYER:
                 layer = this.layer;
                 break;
         }
 
         if(layer != null) layer.clearLayer();
+    }
+
+    private enum ClearLayerMode
+    {
+        LAYER_NAME,
+        INDEX,
+        LAYER;
     }
 }

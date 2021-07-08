@@ -22,12 +22,24 @@ public class GUIOpenEvent implements GUIEvent
     // The GUI that will be opened
     private GUIContainer guiToOpen;
 
+    /**
+     * Construct a new <code>GUIOpenEvent</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     * @param gui    The {@link GUIContainer} to open
+     */
     public GUIOpenEvent(BukkitPlugin plugin, GUIContainer gui)
     {
         this.plugin = plugin;
         this.guiToOpen = gui;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param event The event of the click
+     * @param gui   The GUI that the event took place in
+     */
     @Override
     public void execute(InventoryClickEvent event, GUIContainer gui)
     {

@@ -5,6 +5,7 @@ import org.bukkit.event.Listener;
 import org.bukkit.plugin.PluginManager;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A class that manages the registration and referencing of Listeners for a plugin
@@ -17,7 +18,11 @@ public class ListenerManager
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    private final ArrayList<Listener> listeners;
+
+    /**
+     * The List of {@link Listener} that this manager holds
+     */
+    private final List<Listener> listeners;
 
     public ListenerManager(BukkitPlugin plugin)
     {
@@ -48,11 +53,11 @@ public class ListenerManager
     }
 
     /**
-     * Get the <code>ArrayList</code> of <code>Listeners</code>
+     * Get the List of {@link Listener}
      *
-     * @return All <code>Listeners</code> that this manager holds
+     * @return All Listeners that this manager holds
      */
-    public ArrayList<Listener> getListeners()
+    public List<Listener> getListeners()
     {
         return listeners;
     }

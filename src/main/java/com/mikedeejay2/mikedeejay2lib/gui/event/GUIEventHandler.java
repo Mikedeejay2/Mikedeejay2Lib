@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.util.ArrayList;
@@ -15,18 +16,23 @@ import java.util.List;
  */
 public class GUIEventHandler implements Cloneable
 {
-    // A list of GUIEvents that this GUIEventHandler holds
-    List<GUIEvent> events;
+    /**
+     * A list of GUIEvents that this <code>GUIEventHandler</code> holds
+     */
+    protected List<GUIEvent> events;
 
+    /**
+     * Construct a new <code>GUIEventHandler</code>
+     */
     public GUIEventHandler()
     {
         events = new ArrayList<>();
     }
 
     /**
-     * Called when a player clicks on the parent <code>GUIItem</code>. This method iterates
-     * through all of the <code>GUIEvents</code> that are held in the <code>events</code> list
-     * and runs their <code>execute()</code> method.
+     * Called when a player clicks on the parent {@link GUIItem}. This method iterates
+     * through all of the {@link GUIEvent}s that are held in the <code>events</code> list
+     * and runs their {@link GUIEvent#execute(InventoryClickEvent, GUIContainer)} method.
      *
      * @param event The event of the click
      * @param gui   The GUI that this event took place in
@@ -76,7 +82,7 @@ public class GUIEventHandler implements Cloneable
     }
 
     /**
-     * Returns whether this object holds the <code>GUIEvent</code>
+     * Returns whether this object holds the {@link GUIEvent}
      *
      * @param event The event to check for
      * @return Whether this object holds the event
@@ -102,7 +108,7 @@ public class GUIEventHandler implements Cloneable
     }
 
     /**
-     * Returns whether this object holds a <code>GUIEvent</code> of the specified class
+     * Returns whether this object holds a {@link GUIEvent} of the specified class
      *
      * @param eventClass The event class to search for
      * @return Whether this object holds the event
@@ -118,10 +124,10 @@ public class GUIEventHandler implements Cloneable
     }
 
     /**
-     * Attempts to get a <code>GUIEvent</code> of the specified class
+     * Attempts to get a {@link GUIEvent} of the specified class
      *
      * @param eventClass The event class to search for
-     * @param <T> The <code>GUIEvent</code> type, from given class
+     * @param <T> The {@link GUIEvent} type, from given class
      * @return The <code>GUIEvent</code> of the class type if it exists, null if it doesn't
      */
     public <T extends GUIEvent> T getEvent(Class<T> eventClass)
@@ -129,16 +135,16 @@ public class GUIEventHandler implements Cloneable
         for(GUIEvent event : events)
         {
             if(eventClass != event.getClass()) continue;
-            return (T) event;
+            return eventClass.cast(event);
         }
         return null;
     }
 
     /**
-     * Get a <code>GUIEvent</code> based on the index that it's located in
+     * Get a {@link GUIEvent} based on the index that it's located in
      *
      * @param index The index of the event to get
-     * @return The <code>GUIEvent</code> contained within the index
+     * @return The {@link GUIEvent} contained within the index
      */
     public GUIEvent getEvent(int index)
     {
@@ -148,7 +154,7 @@ public class GUIEventHandler implements Cloneable
     @Override
     public GUIEventHandler clone()
     {
-        GUIEventHandler newEvents = null;
+        GUIEventHandler newEvents;
         try
         {
             newEvents = (GUIEventHandler) super.clone();
@@ -156,7 +162,10 @@ public class GUIEventHandler implements Cloneable
         catch(CloneNotSupportedException e)
         {
             e.printStackTrace();
+            return null;
         }
+
+        newEvents.events = new ArrayList<>(events);
         return newEvents;
     }
 }
