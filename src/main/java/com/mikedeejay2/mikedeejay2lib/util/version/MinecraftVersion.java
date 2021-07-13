@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.util.version;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
+import com.mikedeejay2.mikedeejay2lib.util.debug.DebugUtil;
 
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -22,15 +23,12 @@ public final class MinecraftVersion
     private final int versionShort;
     // String version of the NMS identifier
     private final String versionNMS;
-    // Enum version of the NMS identifier
-    private final VersionEnum versionEnum;
 
     public MinecraftVersion(BukkitPlugin plugin)
     {
         this.versionString = calcVersionString(plugin);
         this.versionLong = calcLongVersion();
         this.versionShort = calcShortVersion();
-        this.versionEnum = calcVersionEnum(plugin);
         this.versionNMS = calcVersionNMS(plugin);
     }
 
@@ -77,26 +75,6 @@ public final class MinecraftVersion
     {
         String[] splitStr = versionString.split("\\.");
         return Integer.parseInt(splitStr[1]);
-    }
-
-    /**
-     * Calculate the version enum. Example: v1_16_R3
-     *
-     * @param plugin A reference to the plugin
-     * @return The calculated version enum
-     */
-    private VersionEnum calcVersionEnum(BukkitPlugin plugin)
-    {
-        String ver = calcVersionNMS(plugin);
-        try
-        {
-            return VersionEnum.valueOf(ver);
-        }
-        catch(Exception e)
-        {
-            plugin.sendWarning(String.format("Could not find NMS version for version %s, errors may occur.", versionString));
-            return null;
-        }
     }
 
     /**
@@ -150,16 +128,5 @@ public final class MinecraftVersion
     public String getVersionNMS()
     {
         return versionNMS;
-    }
-
-    /**
-     * Get the NMS Enum version that the Minecraft server is running on. Example: v1_16_R3
-     * @see VersionEnum
-     *
-     * @return The NMS Enum version
-     */
-    public VersionEnum getVersionEnum()
-    {
-        return versionEnum;
     }
 }

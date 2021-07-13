@@ -1,15 +1,10 @@
 package com.mikedeejay2.mikedeejay2lib;
 
-import com.mikedeejay2.mikedeejay2lib.data.DataManager;
 import com.mikedeejay2.mikedeejay2lib.gui.listeners.GUIListener;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.GUIManager;
-import com.mikedeejay2.mikedeejay2lib.nms.NMSHandler;
 import com.mikedeejay2.mikedeejay2lib.text.language.LangManager;
 import com.mikedeejay2.mikedeejay2lib.util.enchant.GlowEnchantment;
 import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
-import org.bukkit.plugin.java.JavaPlugin;
-
-import java.lang.reflect.Field;
 
 /**
  * Main class for Mikedeejay2Lib.
@@ -27,7 +22,6 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin
     private MinecraftVersion minecraftVersion;
     private LangManager libLangManager;
     private GUIManager guiManager;
-    private NMSHandler nms;
 
     @Override
     public void onEnable()
@@ -35,7 +29,6 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin
         super.onEnable();
         this.minecraftVersion = new MinecraftVersion(this);
         this.libLangManager = new LangManager(this, "lang/lib");
-        this.nms = new NMSHandler(this);
         this.guiManager = new GUIManager(this);
 
         this.getServer().getPluginManager().registerEvents(new GUIListener(this), this);
@@ -69,16 +62,6 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin
     public GUIManager getGUIManager()
     {
         return guiManager;
-    }
-
-    /**
-     * Gets the Net Minecraft Server handler
-     *
-     * @return The Net Minecraft Server handler
-     */
-    public NMSHandler getNMSHandler()
-    {
-        return nms;
     }
 
     /**
