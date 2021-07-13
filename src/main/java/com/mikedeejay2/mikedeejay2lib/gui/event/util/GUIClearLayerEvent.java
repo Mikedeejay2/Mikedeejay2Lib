@@ -68,6 +68,12 @@ public class GUIClearLayerEvent implements GUIEvent
         this.mode = ClearLayerMode.LAYER;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param event The event of the click
+     * @param gui   The GUI that the event took place in
+     */
     @Override
     public void execute(InventoryClickEvent event, GUIContainer gui)
     {
@@ -90,6 +96,11 @@ public class GUIClearLayerEvent implements GUIEvent
         if(layer != null) layer.clearLayer();
     }
 
+    /**
+     * The layer mode used to clear the and reference the layer
+     *
+     * @author Mikedeejay2
+     */
     private enum ClearLayerMode
     {
         LAYER_NAME,

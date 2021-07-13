@@ -6,7 +6,7 @@
 
     <groupId>com.mikedeejay2</groupId>
     <artifactId>mikedeejay2lib</artifactId>
-    <version>1.17-SNAPSHOT</version>
+    <version>1.17.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Mikedeejay2Lib</name>
@@ -176,7 +176,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.17-R0.1-SNAPSHOT</version>
+            <version>1.17.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -208,9 +208,9 @@
         <dependency>
             <groupId>net.minecraft.server</groupId>
             <artifactId>v1_17_R1</artifactId>
-            <version>1.17</version>
+            <version>1.17.1</version>
             <scope>system</scope>
-            <systemPath>${project.build.directory}/../libs/spigot-1.17.jar</systemPath>
+            <systemPath>${project.build.directory}/../libs/spigot-1.17.1.jar</systemPath>
         </dependency>
         <dependency>
             <groupId>net.minecraft.server</groupId>

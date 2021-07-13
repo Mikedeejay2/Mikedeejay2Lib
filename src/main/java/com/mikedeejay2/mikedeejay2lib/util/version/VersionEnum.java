@@ -7,7 +7,7 @@ package com.mikedeejay2.mikedeejay2lib.util.version;
  */
 public enum VersionEnum
 {
-    v1_17_R1, // 1.17
+    v1_17_R1, // 1.17, 1.17.1
     v1_16_R3, // 1.16.4
     v1_16_R2, // 1.16.3, 1.16.2
     v1_16_R1, // 1.16.1

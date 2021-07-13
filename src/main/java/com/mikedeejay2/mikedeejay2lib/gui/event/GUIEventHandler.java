@@ -151,6 +151,11 @@ public class GUIEventHandler implements Cloneable
         return events.get(index);
     }
 
+    /**
+     * Clone this <code>GUIEventHandler</code>
+     *
+     * @return A cloned <code>GUIEventHandler</code>
+     */
     @Override
     public GUIEventHandler clone()
     {

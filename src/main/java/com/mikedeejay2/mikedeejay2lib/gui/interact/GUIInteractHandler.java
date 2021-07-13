@@ -20,16 +20,21 @@ import java.util.List;
  */
 public abstract class GUIInteractHandler
 {
-    // A list of the GUIInteractionExecutors that this handler executes
+    /**
+     * A list of the GUIInteractionExecutors that this handler executes
+     */
     protected List<GUIInteractExecutor> executors;
 
+    /**
+     * Construct a new <code>GUIInteractHandler</code>
+     */
     public GUIInteractHandler()
     {
         this.executors = new ArrayList<>();
     }
 
     /**
-     * Handle an interaction between a <code>Player</code> and a <code>GUIContainer</code> to properly move an item
+     * Handle an interaction between a {@link Player} and a {@link GUIContainer} to properly move an item
      *
      * @param event The event of the interaction
      * @param gui   The GUI that the player interacted with
@@ -37,7 +42,7 @@ public abstract class GUIInteractHandler
     public abstract void handleInteraction(InventoryClickEvent event, GUIContainer gui);
 
     /**
-     * Add a <code>GUIInteractExecutor</code> that will be executed upon the handling of an interaction
+     * Add a {@link GUIInteractExecutor} that will be executed upon the handling of an interaction
      *
      * @param executor The <code>GUIInteractExecutor</code> to add
      */
@@ -47,7 +52,7 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Returns whether this handler executes a <code>GUIInteractExecutor</code> of a class's type
+     * Returns whether this handler executes a {@link GUIInteractExecutor} of a class's type
      *
      * @param executorClass The class of the <code>GUIInteractExecutor</code> to search for
      * @return Whether an executor of the specified class was found or not
@@ -62,7 +67,7 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Returns whether this handler executes a <code>GUIInteractExecutor</code> of an executor's instance
+     * Returns whether this handler executes a {@link GUIInteractExecutor} of an executor's instance
      *
      * @param executor The executor to search for
      * @return Whether an executor of the specified instance was found or not
@@ -73,7 +78,7 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Remove a <code>GUIInteractExecutor</code> from this handler's executor list
+     * Remove a {@link GUIInteractExecutor} from this handler's executor list
      *
      * @param executorClass The <code>GUIInteractExecutor</code> class to find and remove from the list
      */
@@ -88,7 +93,7 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Remove a <code>GUIInteractExecutor</code> from this handler's executor list
+     * Remove a {@link GUIInteractExecutor} from this handler's executor list
      *
      * @param executor The <code>GUIInteractExecutor</code> object instance to find and remove from the list
      */
@@ -98,7 +103,7 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Clear all <code>GUIInteractExecutors</code> from this handler's executor list
+     * Clear all {@link GUIInteractExecutor}s from this handler's executor list
      */
     public void resetExecutors()
     {
@@ -106,7 +111,7 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Get the list of <code>GUIInteractExecutors</code> that this handler executes
+     * Get the list of {@link GUIInteractExecutor}s that this handler executes
      *
      * @return The list of <code>GUIInteractExecutors</code>
      */
@@ -116,55 +121,55 @@ public abstract class GUIInteractHandler
     }
 
     /**
-     * Get a <code>GUIInteractExecutor</code> from this handlers executor list
+     * Get a {@link GUIInteractExecutor} from this handlers executor list
      *
      * @param executorClass The <code>GUIInteractExecutor</code> class to find and get from the list
-     * @param <T> The type of <code>GUIInteractExecutor</code>, specified from the given class
+     * @param <T>           The type of <code>GUIInteractExecutor</code>, specified from the given class
      * @return The requested <code>GUIInteractExecutor</code>
      */
     public <T extends GUIInteractExecutor> T getExecutor(Class<T> executorClass)
     {
         for(GUIInteractExecutor executor : executors)
         {
-            if(executorClass == executor.getClass()) return (T)executor;
+            if(executorClass == executor.getClass()) return executorClass.cast(executor);
         }
         return null;
     }
 
     /**
-     * Executes a specific <code>InventoryAction</code> and sends the action to <code>GUIInteractExecutor</code>
+     * Executes a specific {@link InventoryAction} and sends the action to {@link GUIInteractExecutor}
      *
-     * @param player The <code>Player</code> performing the action
+     * @param player    The <code>Player</code> performing the action
      * @param inventory The <code>Inventory</code> that the action is being performed in
-     * @param slot The slot that the action is being performed on
-     * @param action The <code>InventoryAction</code> that is being executed
-     * @param event The original <code>InventoryClickEvent</code>
-     * @param gui The GUI that the action is being performed in
-     * @param layer The <code>GUILayer</code> that the action should be performed on
+     * @param slot      The slot that the action is being performed on
+     * @param action    The <code>InventoryAction</code> that is being executed
+     * @param event     The original <code>InventoryClickEvent</code>
+     * @param gui       The GUI that the action is being performed in
+     * @param layer     The <code>GUILayer</code> that the action should be performed on
      */
     public void executeAction(Player player, Inventory inventory, int slot, InventoryAction action, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
         switch(action)
         {
-            case NOTHING:                   for(GUIInteractExecutor e : executors) e.executeNothing(player, inventory, slot, event, gui, layer);               break;
-            case PICKUP_ALL:                for(GUIInteractExecutor e : executors) e.executePickupAll(player, inventory, slot, event, gui, layer);             break;
-            case PICKUP_SOME:               for(GUIInteractExecutor e : executors) e.executePickupSome(player, inventory, slot, event, gui, layer);            break;
-            case PICKUP_HALF:               for(GUIInteractExecutor e : executors) e.executePickupHalf(player, inventory, slot, event, gui, layer);            break;
-            case PICKUP_ONE:                for(GUIInteractExecutor e : executors) e.executePickupOne(player, inventory, slot, event, gui, layer);             break;
-            case PLACE_ALL:                 for(GUIInteractExecutor e : executors) e.executePlaceAll(player, inventory, slot, event, gui, layer);              break;
-            case PLACE_SOME:                for(GUIInteractExecutor e : executors) e.executePlaceSome(player, inventory, slot, event, gui, layer);             break;
-            case PLACE_ONE:                 for(GUIInteractExecutor e : executors) e.executePlaceOne(player, inventory, slot, event, gui, layer);              break;
-            case SWAP_WITH_CURSOR:          for(GUIInteractExecutor e : executors) e.executeSwapWithCursor(player, inventory, slot, event, gui, layer);        break;
-            case DROP_ALL_CURSOR:           for(GUIInteractExecutor e : executors) e.executeDropAllCursor(player, inventory, slot, event, gui, layer);         break;
-            case DROP_ONE_CURSOR:           for(GUIInteractExecutor e : executors) e.executeDropOneCursor(player, inventory, slot, event, gui, layer);         break;
-            case DROP_ALL_SLOT:             for(GUIInteractExecutor e : executors) e.executeDropAllSlot(player, inventory, slot, event, gui, layer);           break;
-            case DROP_ONE_SLOT:             for(GUIInteractExecutor e : executors) e.executeDropOneSlot(player, inventory, slot, event, gui, layer);           break;
-            case MOVE_TO_OTHER_INVENTORY:   for(GUIInteractExecutor e : executors) e.executeMoveToOtherInventory(player, inventory, slot, event, gui, layer);  break;
-            case HOTBAR_MOVE_AND_READD:     for(GUIInteractExecutor e : executors) e.executeHotbarMoveAndReadd(player, inventory, slot, event, gui, layer);    break;
-            case HOTBAR_SWAP:               for(GUIInteractExecutor e : executors) e.executeHotbarSwap(player, inventory, slot, event, gui, layer);            break;
-            case CLONE_STACK:               for(GUIInteractExecutor e : executors) e.executeCloneStack(player, inventory, slot, event, gui, layer);            break;
-            case COLLECT_TO_CURSOR:         for(GUIInteractExecutor e : executors) e.executeCollectToCursor(player, inventory, slot, event, gui, layer);       break;
-            default: for(GUIInteractExecutor e : executors) e.executeUnknown(player, inventory, slot, event, gui, layer); break;
+            case NOTHING:                   executors.forEach(e -> e.executeNothing             (player, inventory, slot, event, gui, layer)); break;
+            case PICKUP_ALL:                executors.forEach(e -> e.executePickupAll           (player, inventory, slot, event, gui, layer)); break;
+            case PICKUP_SOME:               executors.forEach(e -> e.executePickupSome          (player, inventory, slot, event, gui, layer)); break;
+            case PICKUP_HALF:               executors.forEach(e -> e.executePickupHalf          (player, inventory, slot, event, gui, layer)); break;
+            case PICKUP_ONE:                executors.forEach(e -> e.executePickupOne           (player, inventory, slot, event, gui, layer)); break;
+            case PLACE_ALL:                 executors.forEach(e -> e.executePlaceAll            (player, inventory, slot, event, gui, layer)); break;
+            case PLACE_SOME:                executors.forEach(e -> e.executePlaceSome           (player, inventory, slot, event, gui, layer)); break;
+            case PLACE_ONE:                 executors.forEach(e -> e.executePlaceOne            (player, inventory, slot, event, gui, layer)); break;
+            case SWAP_WITH_CURSOR:          executors.forEach(e -> e.executeSwapWithCursor      (player, inventory, slot, event, gui, layer)); break;
+            case DROP_ALL_CURSOR:           executors.forEach(e -> e.executeDropAllCursor       (player, inventory, slot, event, gui, layer)); break;
+            case DROP_ONE_CURSOR:           executors.forEach(e -> e.executeDropOneCursor       (player, inventory, slot, event, gui, layer)); break;
+            case DROP_ALL_SLOT:             executors.forEach(e -> e.executeDropAllSlot         (player, inventory, slot, event, gui, layer)); break;
+            case DROP_ONE_SLOT:             executors.forEach(e -> e.executeDropOneSlot         (player, inventory, slot, event, gui, layer)); break;
+            case MOVE_TO_OTHER_INVENTORY:   executors.forEach(e -> e.executeMoveToOtherInventory(player, inventory, slot, event, gui, layer)); break;
+            case HOTBAR_MOVE_AND_READD:     executors.forEach(e -> e.executeHotbarMoveAndReadd  (player, inventory, slot, event, gui, layer)); break;
+            case HOTBAR_SWAP:               executors.forEach(e -> e.executeHotbarSwap          (player, inventory, slot, event, gui, layer)); break;
+            case CLONE_STACK:               executors.forEach(e -> e.executeCloneStack          (player, inventory, slot, event, gui, layer)); break;
+            case COLLECT_TO_CURSOR:         executors.forEach(e -> e.executeCollectToCursor     (player, inventory, slot, event, gui, layer)); break;
+            default:                        executors.forEach(e -> e.executeUnknown             (player, inventory, slot, event, gui, layer)); break;
         }
     }
 }
