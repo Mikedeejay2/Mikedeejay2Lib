@@ -15,37 +15,70 @@ import java.util.List;
 /**
  * A <code>GUIItem</code> with the added ability of having animation capabilities. <p>
  *
- * <strong>IMPORTANT: To use the animation capabilities of this class, <code>GUIAnimationModule</code>
- * must be a module that has been appended to the <code>GUIContainer</code>. This is because the
- * <code>GUIAnimationModule</code> adds animation functionality to the GUI while this object is
- * just some added information to a regular <code>GUIItem</code> that gives the information needed
+ * <strong>IMPORTANT: To use the animation capabilities of this class, {@link GUIAnimationModule}
+ * must be a module that has been appended to the {@link GUIContainer}. This is because the
+ * {@link GUIAnimationModule} adds animation functionality to the GUI while this object is
+ * just some added information to a regular {@link GUIItem} that gives the information needed
  * to animate this item.</strong>
+ *
+ * @see GUIAnimationModule
  *
  * @author Mikedeejay2
  */
 public class AnimatedGUIItem extends GUIItem
 {
-    // The list of AnimationFrames of this item
+    /**
+     * The list of AnimationFrames of this item
+     */
     protected List<AnimationFrame> frames;
-    // Whether this item's animation will loop or not
+    /**
+     * Whether this item's animation will loop or not
+     */
     protected boolean loop;
-    // The delay that this item has before its animation begins
+    /**
+     * The delay that this item has before its animation begins
+     */
     protected long delay;
-    // Whether to reset the animation of this item on click
+    /**
+     * Whether to reset the animation of this item on click
+     */
     protected boolean resetOnClick;
-    // Starting frame index
+    /**
+     * Starting frame index
+     */
     protected int startingIndex;
 
+    /**
+     * Construct a new <code>AnimatedGUIItem</code>
+     *
+     * @param item
+     * @param loop
+     */
     public AnimatedGUIItem(ItemStack item, boolean loop)
     {
         this(item, loop, 0);
     }
 
+    /**
+     * Construct a new <code>AnimatedGUIItem</code>
+     *
+     * @param item
+     * @param loop
+     * @param delay
+     */
     public AnimatedGUIItem(ItemStack item, boolean loop, long delay)
     {
         this(item, loop, delay, false);
     }
 
+    /**
+     * Construct a new <code>AnimatedGUIItem</code>
+     *
+     * @param item
+     * @param loop
+     * @param delay
+     * @param resetAnimOnClick
+     */
     public AnimatedGUIItem(ItemStack item, boolean loop, long delay, boolean resetAnimOnClick)
     {
         super(item);

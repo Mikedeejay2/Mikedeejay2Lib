@@ -36,14 +36,14 @@ public class GUIInteractExecutorList implements GUIInteractExecutor
     protected int limit;
 
     /**
-     * Whether or not to consume the items when moving them into the list
+     * Whether or not to consume the items
      */
     protected boolean consume;
 
     /**
      * Construct a new <code>GUIInteractExecutorList</code>
      *
-     * @param limit
+     * @param limit The item stack limit, <code>-1</code> is default stack limit
      */
     public GUIInteractExecutorList(int limit)
     {
@@ -65,8 +65,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor
     /**
      * Construct a new <code>GUIInteractExecutorList</code>
      *
-     * @param limit
-     * @param consume
+     * @param limit   The item stack limit, <code>-1</code> is default stack limit
+     * @param consume Whether or not to consume the items
      */
     public GUIInteractExecutorList(int limit, boolean consume)
     {
@@ -78,7 +78,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor
     /**
      * Construct a new <code>GUIInteractExecutorList</code>
      *
-     * @param consume
+     * @param consume Whether or not to consume the items
      */
     public GUIInteractExecutorList(boolean consume)
     {
@@ -90,8 +90,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor
     /**
      * Construct a new <code>GUIInteractExecutorList</code>
      *
-     * @param type
-     * @param limit
+     * @param type  The {@link GUIInteractType} of this interact executor
+     * @param limit The item stack limit, <code>-1</code> is default stack limit
      */
     public GUIInteractExecutorList(GUIInteractType type, int limit)
     {
@@ -103,7 +103,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor
     /**
      * Construct a new <code>GUIInteractExecutorList</code>
      *
-     * @param type
+     * @param type The {@link GUIInteractType} of this interact executor
      */
     public GUIInteractExecutorList(GUIInteractType type)
     {
@@ -115,9 +115,9 @@ public class GUIInteractExecutorList implements GUIInteractExecutor
     /**
      * Construct a new <code>GUIInteractExecutorList</code>
      *
-     * @param type
-     * @param limit
-     * @param consume
+     * @param type    The {@link GUIInteractType} of this interact executor
+     * @param limit   The item stack limit, <code>-1</code> is default stack limit
+     * @param consume Whether or not to consume the items
      */
     public GUIInteractExecutorList(GUIInteractType type, int limit, boolean consume)
     {
@@ -129,8 +129,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor
     /**
      * Construct a new <code>GUIInteractExecutorList</code>
      *
-     * @param type
-     * @param consume
+     * @param type    The {@link GUIInteractType} of this interact executor
+     * @param consume Whether or not to consume the items
      */
     public GUIInteractExecutorList(GUIInteractType type, boolean consume)
     {
@@ -879,7 +879,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor
     }
 
     /**
-     * Whether or not to consume the items when moving them into the list
+     * Whether or not to consume the items
      *
      * @return Whether or not to consume items
      */
@@ -889,7 +889,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor
     }
 
     /**
-     * Set whether or not to consume the items when moving them into the list
+     * Set whether or not to consume the items
      *
      * @param consume The new consume state
      */

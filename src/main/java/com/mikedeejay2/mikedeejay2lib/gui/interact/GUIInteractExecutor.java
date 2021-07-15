@@ -184,7 +184,7 @@ public interface GUIInteractExecutor
     void executeMoveToOtherInventory(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
 
     /**
-     * Called when an item in the hotbar is moved and readded to a different slot
+     * Called when an item in the hotbar is moved and re-added to a different slot
      *
      * @param player    The {@link Player} interacting with the GUI
      * @param inventory The {@link Inventory} that was interacted with

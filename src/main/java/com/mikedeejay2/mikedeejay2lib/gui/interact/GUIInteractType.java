@@ -8,7 +8,18 @@ package com.mikedeejay2.mikedeejay2lib.gui.interact;
  */
 public enum GUIInteractType
 {
+    /**
+     * The default interaction type, matches vanilla movement
+     */
     DEFAULT,
+
+    /**
+     * Only allow one of an exact item to exist in the GUI
+     */
     SINGLE_ITEM,
+
+    /**
+     * Only allow one of a material to exist in the GUI
+     */
     SINGLE_MATERIAL;
 }

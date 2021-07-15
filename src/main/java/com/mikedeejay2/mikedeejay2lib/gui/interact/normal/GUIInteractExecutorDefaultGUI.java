@@ -22,10 +22,26 @@ import org.bukkit.inventory.ItemStack;
  */
 public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
 {
+    /**
+     * The {@link GUIInteractType} of this interact executor
+     */
     protected GUIInteractType interactType;
+
+    /**
+     * The item stack limit, <code>-1</code> is default stack limit
+     */
     protected int limit;
+
+    /**
+     * Whether or not to consume the items when moving them
+     */
     protected boolean consume;
 
+    /**
+     * Construct a new <code>GUIInteractExecutorDefaultGUI</code>
+     *
+     * @param limit The item stack limit, <code>-1</code> is default stack limit
+     */
     public GUIInteractExecutorDefaultGUI(int limit)
     {
         this.limit = Math.min(limit, 64);
@@ -33,6 +49,9 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         this.consume = true;
     }
 
+    /**
+     * Construct a new <code>GUIInteractExecutorDefaultGUI</code>
+     */
     public GUIInteractExecutorDefaultGUI()
     {
         this.limit = -1;
@@ -40,6 +59,12 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         this.consume = true;
     }
 
+    /**
+     * Construct a new <code>GUIInteractExecutorDefaultGUI</code>
+     *
+     * @param limit The item stack limit, <code>-1</code> is default stack limit
+     * @param consume Whether or not to consume the items when moving them
+     */
     public GUIInteractExecutorDefaultGUI(int limit, boolean consume)
     {
         this.limit = Math.min(limit, 64);
@@ -47,6 +72,11 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         this.consume = consume;
     }
 
+    /**
+     * Construct a new <code>GUIInteractExecutorDefaultGUI</code>
+     *
+     * @param consume Whether or not to consume the items when moving them
+     */
     public GUIInteractExecutorDefaultGUI(boolean consume)
     {
         this.limit = -1;
@@ -54,6 +84,12 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         this.consume = consume;
     }
 
+    /**
+     * Construct a new <code>GUIInteractExecutorDefaultGUI</code>
+     *
+     * @param type The {@link GUIInteractType} of this interact executor
+     * @param limit The item stack limit, <code>-1</code> is default stack limit
+     */
     public GUIInteractExecutorDefaultGUI(GUIInteractType type, int limit)
     {
         this.limit = Math.min(limit, 64);
@@ -61,6 +97,11 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         this.consume = true;
     }
 
+    /**
+     * Construct a new <code>GUIInteractExecutorDefaultGUI</code>
+     *
+     * @param type The {@link GUIInteractType} of this interact executor
+     */
     public GUIInteractExecutorDefaultGUI(GUIInteractType type)
     {
         this.limit = -1;
@@ -68,6 +109,13 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         this.consume = true;
     }
 
+    /**
+     * Construct a new <code>GUIInteractExecutorDefaultGUI</code>
+     *
+     * @param type The {@link GUIInteractType} of this interact executor
+     * @param limit The item stack limit, <code>-1</code> is default stack limit
+     * @param consume Whether or not to consume the items when moving them
+     */
     public GUIInteractExecutorDefaultGUI(GUIInteractType type, int limit, boolean consume)
     {
         this.limit = Math.min(limit, 64);
@@ -75,6 +123,12 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         this.consume = consume;
     }
 
+    /**
+     * Construct a new <code>GUIInteractExecutorDefaultGUI</code>
+     *
+     * @param type The {@link GUIInteractType} of this interact executor
+     * @param consume Whether or not to consume the items when moving them into the list
+     */
     public GUIInteractExecutorDefaultGUI(GUIInteractType type, boolean consume)
     {
         this.limit = -1;
@@ -82,6 +136,16 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         this.consume = consume;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executePickupAll(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
@@ -107,6 +171,16 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executePickupSome(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
@@ -127,6 +201,16 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executePickupHalf(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
@@ -154,6 +238,16 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         guiItem.setAmount(halfBottom);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executePickupOne(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
@@ -178,6 +272,16 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         if(consume) player.setItemOnCursor(cursorItem);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executePlaceAll(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
@@ -217,6 +321,16 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executePlaceSome(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
@@ -239,6 +353,16 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executePlaceOne(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
@@ -270,6 +394,16 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executeSwapWithCursor(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
@@ -287,6 +421,16 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         if(consume) player.setItemOnCursor(bottomItem);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executeDropAllSlot(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
@@ -313,6 +457,16 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         item.setVelocity(location.getDirection().multiply(1.0 / 3.0));
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executeDropOneSlot(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
@@ -330,6 +484,16 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         item.setVelocity(location.getDirection().multiply(1.0 / 3.0));
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executeMoveToOtherInventory(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
@@ -455,6 +619,16 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         }
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executeHotbarMoveAndReadd(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
@@ -473,6 +647,16 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         if(consume) playerInv.setItem(hotbarSlot, topItem);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executeHotbarSwap(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
@@ -518,6 +702,16 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         guiItem.setItem(curItem);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executeCloneStack(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
@@ -531,6 +725,16 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         player.setItemOnCursor(item);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executeCollectToCursor(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
     {
@@ -567,43 +771,113 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor
         }
     }
 
+    /**
+     * Not a GUI execution, therefore not implemented.
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executeNothing(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)       {}
 
+    /**
+     * Not a GUI execution, therefore not implemented.
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executeDropAllCursor(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {}
 
+    /**
+     * Not a GUI execution, therefore not implemented.
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executeDropOneCursor(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {}
 
+    /**
+     * Not a GUI execution, therefore not implemented.
+     *
+     * @param player    The {@link Player} interacting with the GUI
+     * @param inventory The {@link Inventory} that was interacted with
+     * @param slot      The slot that was interacted with
+     * @param event     The event of the click
+     * @param gui       The {@link GUIContainer} that was interacted with
+     * @param layer     The {@link GUILayer} that items should be placed on
+     */
     @Override
     public void executeUnknown(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer)       {}
 
+    /**
+     * Get the item stack limit, <code>-1</code> is default stack limit
+     *
+     * @return The item stack limit
+     */
     public int getLimit()
     {
         return limit;
     }
 
+    /**
+     * Set the item stack limit, <code>-1</code> is default stack limit
+     *
+     * @param limit The new item stack limit
+     */
     public void setLimit(int limit)
     {
         this.limit = limit;
     }
 
+    /**
+     * Whether or not to consume the items
+     *
+     * @return Whether or not to consume items
+     */
     public boolean consumesItems()
     {
         return consume;
     }
 
+    /**
+     * Set whether or not to consume the items
+     *
+     * @param consume The new consume state
+     */
     public void setConsume(boolean consume)
     {
         this.consume = consume;
     }
 
+    /**
+     * Get the {@link GUIInteractType} of this interact executor
+     *
+     * @return The <code>GUIInteractType</code>
+     */
     public GUIInteractType getInteractType()
     {
         return interactType;
     }
 
+    /**
+     * Set the {@link GUIInteractType} of this interact executor
+     *
+     * @param interactType The new <code>GUIInteractType</code>
+     */
     public void setInteractType(GUIInteractType interactType)
     {
         this.interactType = interactType;

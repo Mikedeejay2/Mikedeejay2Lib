@@ -21,8 +21,16 @@ import org.bukkit.inventory.ItemStack;
  */
 public class GUIInteractHandlerList extends GUIInteractHandler
 {
+    /**
+     * The item stack limit, <code>-1</code> is default stack limit
+     */
     protected int limit;
 
+    /**
+     * Construct a new <code>GUIInteractHandlerList</code>
+     *
+     * @param limit The item stack limit, <code>-1</code> is default stack limit
+     */
     public GUIInteractHandlerList(int limit)
     {
         super();
@@ -31,6 +39,9 @@ public class GUIInteractHandlerList extends GUIInteractHandler
         executors.add(new GUIInteractExecutorList(this.limit));
     }
 
+    /**
+     * Construct a new <code>GUIInteractHandlerList</code>
+     */
     public GUIInteractHandlerList()
     {
         super();
@@ -40,7 +51,7 @@ public class GUIInteractHandlerList extends GUIInteractHandler
     }
 
     /**
-     * Handle an interaction between a <code>Player</code> and a <code>GUIContainer</code> to properly move an item
+     * Handle an interaction between a {@link Player} and a {@link GUIContainer} to properly move an item
      * <p>
      * This method override handles the default state of item movement where items move like default Minecraft.
      *
@@ -50,22 +61,22 @@ public class GUIInteractHandlerList extends GUIInteractHandler
     @Override
     public void handleInteraction(InventoryClickEvent event, GUIContainer gui)
     {
-        ClickType       clickType = event.getClick();
-        InventoryAction action    = event.getAction();
-        Player          player    = (Player) event.getWhoClicked();
-        int             slot      = event.getSlot();
+        ClickType clickType = event.getClick();
+        InventoryAction action = event.getAction();
+        Player player = (Player) event.getWhoClicked();
+        int slot = event.getSlot();
 
         Inventory clickedInv = event.getClickedInventory();
-        Inventory playerInv  = player.getInventory();
-        GUILayer  layer      = gui.getLayer(0);
+        Inventory playerInv = player.getInventory();
+        GUILayer layer = gui.getLayer(0);
 
         ItemStack cursorItem = player.getItemOnCursor();
         if(cursorItem.getType() == Material.AIR) cursorItem = null;
         ItemStack bottomItem = null;
         if(clickedInv == gui.getInventory())
         {
-            int     row     = gui.getRowFromSlot(slot);
-            int     col     = gui.getColFromSlot(slot);
+            int row = gui.getRowFromSlot(slot);
+            int col = gui.getColFromSlot(slot);
             GUIItem guiItem = layer.getItem(row, col);
             if(guiItem != null)
             {
@@ -140,7 +151,7 @@ public class GUIInteractHandlerList extends GUIInteractHandler
     }
 
     /**
-     * Get the limit of this <code>GUIInteractHandler</code>
+     * Get the limit of this <code>GUIInteractHandler</code>, <code>-1</code> is default stack limit
      *
      * @return The limit
      */

@@ -21,8 +21,16 @@ import org.bukkit.inventory.ItemStack;
  */
 public class GUIInteractHandlerDefault extends GUIInteractHandler
 {
+    /**
+     * The item stack limit, <code>-1</code> is default stack limit
+     */
     protected int limit;
 
+    /**
+     * Construct a new <code>GUIInteractHandlerDefault</code>
+     *
+     * @param limit The item stack limit, <code>-1</code> is default stack limit
+     */
     public GUIInteractHandlerDefault(int limit)
     {
         super();
@@ -31,6 +39,9 @@ public class GUIInteractHandlerDefault extends GUIInteractHandler
         executors.add(new GUIInteractExecutorDefaultGUI(this.limit));
     }
 
+    /**
+     * Construct a new <code>GUIInteractHandlerDefault</code>
+     */
     public GUIInteractHandlerDefault()
     {
         super();
