@@ -51,8 +51,8 @@ public class AnimatedGUIItem extends GUIItem
     /**
      * Construct a new <code>AnimatedGUIItem</code>
      *
-     * @param item
-     * @param loop
+     * @param item The reference base item
+     * @param loop Whether this item's animation will loop or not
      */
     public AnimatedGUIItem(ItemStack item, boolean loop)
     {
@@ -62,9 +62,9 @@ public class AnimatedGUIItem extends GUIItem
     /**
      * Construct a new <code>AnimatedGUIItem</code>
      *
-     * @param item
-     * @param loop
-     * @param delay
+     * @param item  The reference base item
+     * @param loop  Whether this item's animation will loop or not
+     * @param delay The delay that this item has before its animation begins
      */
     public AnimatedGUIItem(ItemStack item, boolean loop, long delay)
     {
@@ -74,10 +74,10 @@ public class AnimatedGUIItem extends GUIItem
     /**
      * Construct a new <code>AnimatedGUIItem</code>
      *
-     * @param item
-     * @param loop
-     * @param delay
-     * @param resetAnimOnClick
+     * @param item             The reference base item
+     * @param loop             Whether this item's animation will loop or not
+     * @param delay            The delay that this item has before its animation begins
+     * @param resetAnimOnClick Whether to reset the animation of this item on click
      */
     public AnimatedGUIItem(ItemStack item, boolean loop, long delay, boolean resetAnimOnClick)
     {
@@ -180,12 +180,12 @@ public class AnimatedGUIItem extends GUIItem
      */
     private void processMovement(AnimationFrame frame, AnimatedGUIItemProperties properties)
     {
-        GUILayer layer          = properties.getLocation().getLayer();
+        GUILayer layer          = properties.getLayer();
         boolean  moveRelatively = frame.moveRelative();
         int      frameRow       = frame.getRow();
         int      frameCol       = frame.getCol();
-        int      currentRow     = properties.getLocation().getRow();
-        int      currentCol     = properties.getLocation().getCol();
+        int      currentRow     = properties.getRow();
+        int      currentCol     = properties.getCol();
         int      newRow         = moveRelatively ? currentRow + frameRow : frameRow;
         int      newCol         = moveRelatively ? currentCol + frameCol : currentCol;
         if(!validCheck(newRow, newCol, properties))
@@ -197,23 +197,22 @@ public class AnimatedGUIItem extends GUIItem
 
         MovementType    movementType = frame.getMovementType();
         GUIItem[][]     items        = layer.getItemsAsArray();
-        GUIItemLocation location     = properties.getLocation();
         switch(movementType)
         {
             case SWAP_ITEM:
             {
                 items[newRow - 1][newCol - 1] = this;
                 items[currentRow - 1][currentCol - 1] = previousItem;
-                location.setRow(newRow);
-                location.setCol(newCol);
+                properties.setRow(newRow);
+                properties.setCol(newCol);
                 break;
             }
             case OVERRIDE_ITEM:
             {
                 items[currentRow - 1][currentCol - 1] = null;
                 items[newRow - 1][newCol - 1] = this;
-                location.setRow(newRow);
-                location.setCol(newCol);
+                properties.setRow(newRow);
+                properties.setCol(newCol);
                 break;
             }
             case PUSH_ITEM_UP:
@@ -223,8 +222,8 @@ public class AnimatedGUIItem extends GUIItem
                 if(!validCheck(pushRow, pushCol, properties)) break;
                 items[currentRow - 1][currentCol - 1] = null;
                 items[pushRow - 1][pushCol - 1] = previousItem;
-                location.setRow(pushRow);
-                location.setCol(pushCol);
+                properties.setRow(pushRow);
+                properties.setCol(pushCol);
                 break;
             }
             case PUSH_ITEM_DOWN:
@@ -267,7 +266,7 @@ public class AnimatedGUIItem extends GUIItem
      */
     private boolean validCheck(int row, int col, final AnimatedGUIItemProperties properties)
     {
-        return !(row < 1 || col < 1 || row > properties.getLocation().getLayer().getRows() || col > properties.getLocation().getLayer().getCols());
+        return !(row < 1 || col < 1 || row > properties.getLayer().getRows() || col > properties.getLayer().getCols());
     }
 
     /**
@@ -398,13 +397,20 @@ public class AnimatedGUIItem extends GUIItem
         return this;
     }
 
+    /**
+     * Called when this <code>AnimatedGUIItem</code> is clicked
+     * <p>
+     * This method also checks whether the animation requires a reset if {@link AnimatedGUIItem#resetOnClick}
+     *
+     * @param event The event of the click
+     * @param gui   The GUI that was clicked on
+     */
     @Override
     public void onClick(InventoryClickEvent event, GUIContainer gui)
     {
         super.onClick(event, gui);
         if(resetOnClick)
         {
-            int slot = event.getSlot();
             GUIAnimationModule module = gui.getModule(GUIAnimationModule.class);
             AnimatedGUIItemProperties properties = module.getProperties(this);
             properties.index = 0;
@@ -434,6 +440,11 @@ public class AnimatedGUIItem extends GUIItem
         return this;
     }
 
+    /**
+     * Clone this <code>AnimatedGUIItem</code>
+     *
+     * @return The new cloned <code>AnimatedGUIItem</code>
+     */
     public AnimatedGUIItem clone()
     {
         AnimatedGUIItem clone = (AnimatedGUIItem) super.clone();

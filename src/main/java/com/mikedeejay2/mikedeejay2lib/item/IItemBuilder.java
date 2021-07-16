@@ -45,14 +45,14 @@ public interface IItemBuilder<I, T>
     T set(I item);
 
     /**
-     * Get the <code>ItemMeta</code>
+     * Get the {@link ItemMeta}
      *
      * @return The <code>ItemMeta</code> of the item
      */
     ItemMeta getMeta();
 
     /**
-     * Set the new <code>ItemMeta</code>
+     * Set the new {@link ItemMeta}
      *
      * @param meta The new <code>ItemMeta</code>
      * @return A reference to this object
@@ -201,6 +201,12 @@ public interface IItemBuilder<I, T>
      */
     T addEnchant(Enchantment enchantment, int level);
 
+    /**
+     * Get whether the item has an enchantment that conflicts with a specified enchantment
+     *
+     * @param enchantment The enchantment to check for
+     * @return True if the item has a conflicting enchantment, false if it doesn't
+     */
     boolean hasConflictingEnchant(Enchantment enchantment);
 
     /**
@@ -230,12 +236,12 @@ public interface IItemBuilder<I, T>
     /**
      * Get a <code>Set</code> of all of the item flags for the item
      *
-     * @return The <code>ItemFlags</code> set
+     * @return The {@link ItemFlag}s set
      */
     Set<ItemFlag> getItemFlags();
 
     /**
-     * Add a single <code>ItemFlag</code> to the item
+     * Add a single {@link ItemFlag} to the item
      *
      * @param flag The <code>ItemFlag</code> to add to the item
      * @return A reference to this object
@@ -283,7 +289,7 @@ public interface IItemBuilder<I, T>
     /**
      * Get the head owner of the head item
      * <p>
-     * Note: The item must be of type <code>PLAYER_HEAD</code> and must have a head owner
+     * Note: The item must be of type {@link Material#PLAYER_HEAD} and must have a head owner
      * set from {@link IItemBuilder#setHeadOwner(OfflinePlayer)}
      *
      * @return The current head owner of the head item
@@ -293,7 +299,7 @@ public interface IItemBuilder<I, T>
     /**
      * Set the new head owner of the head item
      * <p>
-     * Note: The item must be of type <code>PLAYER_HEAD</code>
+     * Note: The item must be of type {@link Material#PLAYER_HEAD}
      *
      * @param player The new head owner of the head item
      * @return A reference to this object
@@ -303,7 +309,7 @@ public interface IItemBuilder<I, T>
     /**
      * Get the base 64 string of the item
      * <p>
-     * Note: The item must be of type <code>PLAYER_HEAD</code> and must have a base 64 string
+     * Note: The item must be of type {@link Material#PLAYER_HEAD} and must have a base 64 string
      * set from {@link IItemBuilder#setHeadBase64(String)}
      *
      * @return The current base 64 String of the head item
@@ -313,7 +319,7 @@ public interface IItemBuilder<I, T>
     /**
      * Set the new base 64 String of the head item.
      * <p>
-     * Note: The item must be of type <code>PLAYER_HEAD</code>
+     * Note: The item must be of type {@link Material#PLAYER_HEAD}
      *
      * @param base64 The new base 64 String of the head item
      * @return A reference to this object
@@ -328,14 +334,14 @@ public interface IItemBuilder<I, T>
     boolean hasAttributeModifiers();
 
     /**
-     * Get a <code>MultiMap</code> of <code>Attribute</code> to <code>AttributeModifiers</code> for the item
+     * Get a {@link Multimap} of {@link Attribute} to {@link AttributeModifier}s for the item
      *
      * @return A map of attributes for the item
      */
     Multimap<Attribute, AttributeModifier> getAttributeModifiers();
 
     /**
-     * Get a <code>MultiMap</code> of <code>Attribute</code> to <code>AttributeModifiers</code> for the item based off of
+     * Get a {@link Multimap} of {@link Attribute} to {@link AttributeModifier}s for the item based off of
      * the equipment slot
      *
      * @param slot The <code>EquipmentSlot</code> to get
@@ -344,8 +350,8 @@ public interface IItemBuilder<I, T>
     Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot);
 
     /**
-     * Get a <code>Collection</code> of <code>AttributeModifiers</code> for the item based off of the requested
-     * <code>Attribute</code>
+     * Get a <code>Collection</code> of {@link AttributeModifier}s for the item based off of the requested
+     * {@link Attribute}
      *
      * @param attribute The <code>Attribute</code> to get
      * @return The collection of <code>AttributeModifiers</code>
@@ -353,7 +359,7 @@ public interface IItemBuilder<I, T>
     Collection<AttributeModifier> getAttributeModifiers(Attribute attribute);
 
     /**
-     * Add an <code>Attribute</code> to the item
+     * Add an {@link Attribute} to the item
      *
      * @param attribute The <code>Attribute</code> to add to the item
      * @param modifier The <code>AttributeModifier</code> to add
@@ -362,7 +368,7 @@ public interface IItemBuilder<I, T>
     T addAttributeModifier(Attribute attribute, AttributeModifier modifier);
 
     /**
-     * Add multiple <code>Attribute</code> with multiple <code>AttributeModifiers</code> to the item
+     * Add multiple {@link Attribute} with multiple {@link AttributeModifier}s to the item
      *
      * @param attribute The <code>Attribute</code> to add to the item
      * @param modifiers The <code>AttributeModifiers</code> to add
@@ -371,7 +377,7 @@ public interface IItemBuilder<I, T>
     T addAttributeModifiers(Attribute attribute, AttributeModifier... modifiers);
 
     /**
-     * Set a new <code>MultiMap</code> of <code>Attribute</code> <code>AttributeModifiers</code> to the item
+     * Set a new {@link Multimap} of {@link Attribute} {@link AttributeModifier}s to the item
      *
      * @param attributeModifiers The new map of attributes
      * @return A reference to this object
@@ -379,7 +385,7 @@ public interface IItemBuilder<I, T>
     T setAttributeModifiers(Multimap<Attribute, AttributeModifier> attributeModifiers);
 
     /**
-     * Remove an <code>Attribute</code> from the item
+     * Remove an {@link Attribute} from the item
      *
      * @param attribute The <code>Attribute</code> to remove
      * @return A reference to this object
@@ -389,13 +395,13 @@ public interface IItemBuilder<I, T>
     /**
      * Remove multiple <code>Attributes</code> from the item
      *
-     * @param attributes The <code>Attribute</code> to remove
+     * @param attributes The {@link Attribute} to remove
      * @return A reference to this object
      */
     T removeAttributeModifiers(Attribute... attributes);
 
     /**
-     * Remove attribute modifiers of the specified <code>EquipmentSlot</code>
+     * Remove attribute modifiers of the specified {@link EquipmentSlot}
      *
      * @param slot The <code>EquipmentSlot</code> to remove attributes from
      * @return A reference to this object
@@ -403,7 +409,7 @@ public interface IItemBuilder<I, T>
     T removeAttributeModifier(EquipmentSlot slot);
 
     /**
-     * Remove multiple attribute modifiers of the specified <code>EquipmentSlots</code>
+     * Remove multiple attribute modifiers of the specified {@link EquipmentSlot}s
      *
      * @param slots The <code>EquipmentSlots</code> to remove attributes from
      * @return A reference to this object
@@ -411,7 +417,7 @@ public interface IItemBuilder<I, T>
     T removeAttributeModifiers(EquipmentSlot... slots);
 
     /**
-     * Remove an <code>Attribute's</code> <code>AttributeModifier</code> from the item
+     * Remove an <code>Attribute's</code> {@link AttributeModifier} from the item
      *
      * @param attribute The <code>Attribute</code> to remove from
      * @param modifier The <code>AttributeModifier</code> to remove
@@ -420,7 +426,7 @@ public interface IItemBuilder<I, T>
     T removeAttributeModifier(Attribute attribute, AttributeModifier modifier);
 
     /**
-     * Remove an <code>Attribute</code> <code>AttributeModifiers</code> from the item
+     * Remove an {@link Attribute} {@link AttributeModifier}s from the item
      *
      * @param attribute The <code>Attribute</code> to remove from
      * @param modifiers The <code>AttributeModifiers</code> to remove
@@ -429,7 +435,7 @@ public interface IItemBuilder<I, T>
     T removeAttributeModifiers(Attribute attribute, AttributeModifier... modifiers);
 
     /**
-     * Get the {@link PersistentDataContainer} for the <code>ItemMeta</code>
+     * Get the {@link PersistentDataContainer} for the {@link ItemMeta}
      *
      * @return The <code>PersistentDataContainer</code>
      */
@@ -446,7 +452,7 @@ public interface IItemBuilder<I, T>
     /**
      * Get the custom model data of the item
      * <p>
-     * <code>hasCustomModelData()</code> should first be checked before executing this method
+     * {@link IItemBuilder#hasCustomModelData()} should first be checked before executing this method
      *
      * @return The custom model data for the item
      */
@@ -470,7 +476,7 @@ public interface IItemBuilder<I, T>
     /**
      * Get the localized name of the item
      * <p>
-     * <code>hasLocalizedName()</code> should first be checked before executing this method
+     * {@link IItemBuilder#hasLocalizedName()} should first be checked before executing this method
      *
      * @return The localized name of the item
      */
@@ -486,7 +492,7 @@ public interface IItemBuilder<I, T>
     /**
      * Get the display name of the item
      * <p>
-     * <code>hasDisplayName()</code> should first be checked before executing this method
+     * {@link IItemBuilder#hasDisplayName()} should first be checked before executing this method
      *
      * @return The display name of the item
      */
@@ -510,7 +516,7 @@ public interface IItemBuilder<I, T>
     /**
      * Get the durability of the item.
      * <p>
-     * It must be ensured that the item has a durability with <code>hasDurability()</code>
+     * It must be ensured that the item has a durability with {@link IItemBuilder#hasDurability()}
      *
      * @return The durability of the item
      */
@@ -519,7 +525,7 @@ public interface IItemBuilder<I, T>
     /**
      * Set the durability of the item.
      * <p>
-     * It must be ensured that the item has a durability with <code>hasDurability()</code>
+     * It must be ensured that the item has a durability with {@link IItemBuilder#hasDurability()}
      *
      * @param durability The new durability of the item
      * @return A reference to this object
@@ -541,7 +547,7 @@ public interface IItemBuilder<I, T>
     boolean hasDurability();
 
     /**
-     * Set data in the item's <code>PersistentDataContainer</code>
+     * Set data in the item's {@link PersistentDataContainer}
      *
      * @param key   The <code>NamespacedKey</code> to set the data in
      * @param type  The <code>PersistentDataContainer</code> to use
@@ -553,7 +559,7 @@ public interface IItemBuilder<I, T>
     <Y, Z> T setData(NamespacedKey key, PersistentDataType<Y, Z> type, Z value);
 
     /**
-     * Set data in the item's <code>PersistentDataContainer</code>
+     * Set data in the item's {@link PersistentDataContainer}
      *
      * @param plugin The plugin's reference for namespace
      * @param key    The String key to set the data in
@@ -566,7 +572,7 @@ public interface IItemBuilder<I, T>
     <Y, Z> T setData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z value);
 
     /**
-     * Get whether there is specific data in the item's <code>PersistentDataContainer</code>
+     * Get whether there is specific data in the item's {@link PersistentDataContainer}
      *
      * @param key  The <code>NamespacedKey</code> to check for
      * @param type The <code>PersistentDataContainer</code> to use
@@ -577,7 +583,7 @@ public interface IItemBuilder<I, T>
     <Y, Z> boolean hasData(NamespacedKey key, PersistentDataType<Y, Z> type);
 
     /**
-     * Get whether there is specific data in the item's <code>PersistentDataContainer</code>
+     * Get whether there is specific data in the item's {@link PersistentDataContainer}
      *
      * @param plugin The plugin's reference for namespace
      * @param key    The String key to check for
@@ -589,7 +595,7 @@ public interface IItemBuilder<I, T>
     <Y, Z> boolean hasData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type);
 
     /**
-     * Get data from the item's <code>PersistentDataContainer</code>
+     * Get data from the item's {@link PersistentDataContainer}
      *
      * @param key  The <code>NamespacedKey</code> to get the data from
      * @param type The <code>PersistentDataContainer</code> to use
@@ -600,7 +606,7 @@ public interface IItemBuilder<I, T>
     <Y, Z> Z getData(NamespacedKey key, PersistentDataType<Y, Z> type);
 
     /**
-     * Get data from the item's <code>PersistentDataContainer</code>
+     * Get data from the item's {@link PersistentDataContainer}
      *
      * @param plugin The plugin's reference for namespace
      * @param key    The String key to get
@@ -612,7 +618,7 @@ public interface IItemBuilder<I, T>
     <Y, Z> Z getData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type);
 
     /**
-     * Get data from the item's <code>PersistentDataContainer</code>. If the data does not exist, get a
+     * Get data from the item's {@link PersistentDataContainer}. If the data does not exist, get a
      * default value instead.
      *
      * @param key          The <code>NamespacedKey</code> to get the data from
@@ -625,7 +631,7 @@ public interface IItemBuilder<I, T>
     <Y, Z> Z getOrDefaultData(NamespacedKey key, PersistentDataType<Y, Z> type, Z defaultValue);
 
     /**
-     * Get data from the item's <code>PersistentDataContainer</code>. If the data does not exist, get a
+     * Get data from the item's {@link PersistentDataContainer}. If the data does not exist, get a
      * default value instead.
      *
      * @param plugin       The plugin's reference for namespace
@@ -639,7 +645,7 @@ public interface IItemBuilder<I, T>
     <Y, Z> Z getOrDefaultData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z defaultValue);
 
     /**
-     * Remove data from the item's <code>PersistentDataContainer</code>
+     * Remove data from the item's {@link PersistentDataContainer}
      *
      * @param key The <code>NamespacedKey</code> to remove
      * @return A reference to this object
@@ -647,7 +653,7 @@ public interface IItemBuilder<I, T>
     T removeData(NamespacedKey key);
 
     /**
-     * Remove data from the item's <code>PersistentDataContainer</code>
+     * Remove data from the item's {@link PersistentDataContainer}
      *
      * @param plugin The plugin's reference for namespace
      * @param key    The String key to remove
@@ -656,7 +662,7 @@ public interface IItemBuilder<I, T>
     T removeData(BukkitPlugin plugin, String key);
 
     /**
-     * Remove data from the item's <code>PersistentDataContainer</code>
+     * Remove data from the item's {@link PersistentDataContainer}
      *
      * @param keys The <code>NamespacedKeys</code> to remove
      * @return A reference to this object
@@ -664,7 +670,7 @@ public interface IItemBuilder<I, T>
     T removeData(NamespacedKey... keys);
 
     /**
-     * Remove data from the item's <code>PersistentDataContainer</code>
+     * Remove data from the item's {@link PersistentDataContainer}
      *
      * @param plugin The plugin's reference for namespace
      * @param keys   The String keys to remove
@@ -673,7 +679,7 @@ public interface IItemBuilder<I, T>
     T removeData(BukkitPlugin plugin, String... keys);
 
     /**
-     * Get whether the item's <code>PersistentDataContainer</code> is empty or not
+     * Get whether the item's {@link PersistentDataContainer} is empty or not
      *
      * @return Whether the item's data is empty
      */

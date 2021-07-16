@@ -4,21 +4,52 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 
 public class AnimatedGUIItemProperties
 {
-    // The current frame index of this item
+    /**
+     * The current frame index of this item
+     */
     protected int index;
-    // The current wait time of this item
-    protected long wait;
-    // Whether or not it is this item's first run or not
-    protected boolean firstRun;
-    // The location of the item
-    protected GUIItemLocation location;
 
+    /**
+     * The current wait time of this item
+     */
+    protected long wait;
+
+    /**
+     * Whether or not it is this item's first run or not
+     */
+    protected boolean firstRun;
+
+    /**
+     * The row that this item is located on
+     */
+    protected int row;
+
+    /**
+     * The column that this item is located on
+     */
+    protected int col;
+
+    /**
+     * The name of the layer that the item was added on
+     */
+    protected GUILayer layer;
+
+    /**
+     *
+     *
+     * @param startingIndex The index that the animation should start on
+     * @param row The row that this item is located on
+     * @param col The column that this item is located on
+     * @param layer The name of the layer that the item was added on
+     */
     public AnimatedGUIItemProperties(int startingIndex, int row, int col, GUILayer layer)
     {
         this.index = startingIndex;
         this.wait = 0;
         this.firstRun = true;
-        this.location = new GUIItemLocation(row, col, layer);
+        this.row = row;
+        this.col = col;
+        this.layer = layer;
     }
 
     /**
@@ -82,22 +113,62 @@ public class AnimatedGUIItemProperties
     }
 
     /**
-     * Get the <code>GUIItemLocation</code> of this property
+     * Get the <code>GUILayer</code> of this item
      *
-     * @return The <code>GUIItemLocation</code>
+     * @return The layer of this item
      */
-    public GUIItemLocation getLocation()
+    public GUILayer getLayer()
     {
-        return location;
+        return layer;
     }
 
     /**
-     * Set a new <code>GUIItemLocation</code> of this property
+     * Set the <code>GUILayer</code> of this item
      *
-     * @param location The new location to use
+     * @param layer The new layer of this item
      */
-    public void setLocation(GUIItemLocation location)
+    public void setLayer(GUILayer layer)
     {
-        this.location = location;
+        this.layer = layer;
+    }
+
+    /**
+     * Set the row that this item is on
+     *
+     * @param row The row that this item is on
+     */
+    public void setRow(int row)
+    {
+        this.row = row;
+    }
+
+    /**
+     * Set the column that this item is on
+     *
+     * @param col the column that this item is on
+     */
+    public void setCol(int col)
+    {
+        this.col = col;
+    }
+
+    /**
+     * Gets the current row in a GUI that this item is on
+     *
+     * @return The row
+     */
+    public int getRow()
+    {
+        return row;
+    }
+
+    /**
+     * Gets the current row in a GUI that this item is on
+     *
+     * @return The column
+     */
+    public int getCol()
+    {
+        return col;
     }
 }
