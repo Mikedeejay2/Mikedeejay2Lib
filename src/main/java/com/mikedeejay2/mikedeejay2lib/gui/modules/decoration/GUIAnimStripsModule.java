@@ -13,13 +13,27 @@ import org.bukkit.entity.Player;
  */
 public class GUIAnimStripsModule implements GUIModule
 {
+    /**
+     * The item that will be used for the strips
+     */
     protected AnimatedGUIItem item;
 
+    /**
+     * Construct a new <code>GUIAnimStripsModule</code>
+     *
+     * @param item The item that will be used for the strips
+     */
     public GUIAnimStripsModule(AnimatedGUIItem item)
     {
         this.item = item;
     }
 
+    /**
+     * Method injected into the head of the GUI that adds the strips to the GUI
+     *
+     * @param player The player that is viewing the GUI
+     * @param gui    The GUI
+     */
     @Override
     public void onOpenHead(Player player, GUIContainer gui)
     {
@@ -31,5 +45,25 @@ public class GUIAnimStripsModule implements GUIModule
             layer.setItem(row, 1, curItem);
             layer.setItem(row, gui.getCols(), curItem);
         }
+    }
+
+    /**
+     * Get the item that will be used for the strips
+     *
+     * @return
+     */
+    public AnimatedGUIItem getItem()
+    {
+        return item;
+    }
+
+    /**
+     * Set the item that will be used for the strips
+     *
+     * @param item The new item
+     */
+    public void setItem(AnimatedGUIItem item)
+    {
+        this.item = item;
     }
 }

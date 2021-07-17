@@ -14,9 +14,16 @@ import org.bukkit.inventory.ItemStack;
  */
 public class GUIBorderModule implements GUIModule
 {
-    // The GUI item that will be used for the border
+    /**
+     * The GUI item that will be used for the border
+     */
     private GUIItem borderItem;
 
+    /**
+     * Construct a new <code>GUIBorderModule</code>
+     *
+     * @param borderItem The GUI item that will be used for the border
+     */
     public GUIBorderModule(GUIItem borderItem)
     {
         this.borderItem = borderItem;

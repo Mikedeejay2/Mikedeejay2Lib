@@ -14,17 +14,33 @@ import org.bukkit.entity.Player;
  */
 public class GUIAnimBackgroundModule implements GUIModule
 {
-    // The animation pattern to use
+    /**
+     * The animation pattern to use
+     */
     private GUIAnimPattern pattern;
-    // The GUI item that will be used for the border
+
+    /**
+     * The GUI item that will be used for the border
+     */
     private AnimatedGUIItem backgroundItem;
 
+    /**
+     * Construct a new <code>GUIAnimBackgroundModule</code>
+     *
+     * @param backgroundItem The GUI item that will be used for the border
+     * @param pattern        The animation pattern to use
+     */
     public GUIAnimBackgroundModule(AnimatedGUIItem backgroundItem, GUIAnimPattern pattern)
     {
         this.pattern = pattern;
         this.backgroundItem = backgroundItem;
     }
 
+    /**
+     * Construct a new <code>GUIAnimBackgroundModule</code> with the default top left diagonal {@link GUIAnimPattern}
+     *
+     * @param backgroundItem The GUI item that will be used for the border
+     */
     public GUIAnimBackgroundModule(AnimatedGUIItem backgroundItem)
     {
         this(backgroundItem, GUIAnimPattern.TOP_LEFT_DIAGONAL);

@@ -26,6 +26,11 @@ public class GUIListener implements Listener
      */
     protected final BukkitPlugin plugin;
 
+    /**
+     * Construct a new <code>GUIListener</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     */
     public GUIListener(BukkitPlugin plugin)
     {
         this.plugin = plugin;
@@ -71,8 +76,7 @@ public class GUIListener implements Listener
     }
 
     /**
-     * On inventory close. This listener exists to detect whether a player
-     * is in a GUI or not.
+     * On inventory close. This listener exists to detect whether a player is in a GUI or not.
      *
      * @param event The event to be processed
      */
@@ -95,8 +99,7 @@ public class GUIListener implements Listener
     }
 
     /**
-     * On inventory open. This listener exists to detect whether a player
-     * is in a GUI or not.
+     * On inventory open. This listener exists to detect whether a player is in a GUI or not.
      *
      * @param event The event to be processed
      */
@@ -132,7 +135,7 @@ public class GUIListener implements Listener
     }
 
     /**
-     * Removes the <code>Player</code> from the <code>GUIManager</code> when they leave to prevent memory leaks
+     * Removes the {@link Player} from the {@link GUIManager} when they leave to prevent memory leaks
      *
      * @param event The event to be processed
      */

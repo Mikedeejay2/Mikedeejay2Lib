@@ -21,14 +21,30 @@ public class PlayerGUI
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // The map of NavigationHolders of this player
+
+    /**
+     * The map of NavigationHolders of this player
+     */
     protected Map<String, NavigationHolder<GUIContainer>> naviSystems;
-    // The player's current GUIContainer
+
+    /**
+     * The player's current GUIContainer
+     */
     protected GUIContainer gui;
-    // The player of this PlayerGUI
+
+    /**
+     * The player of this PlayerGUI
+     */
     protected Player player;
-    // Boolean for if the GUI is currently opened or not
+
+    /**
+     * Boolean for if the GUI is currently opened or not
+     */
     protected boolean guiOpened;
+
+    /**
+     * Whether the GUI has just been changed or not. Used to fix a bug where the GUI would auto-close on a GUI change.
+     */
     protected boolean guiChange;
 
     public PlayerGUI(BukkitPlugin plugin, Player player)

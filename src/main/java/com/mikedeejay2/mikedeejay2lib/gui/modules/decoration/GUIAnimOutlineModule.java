@@ -14,17 +14,33 @@ import org.bukkit.entity.Player;
  */
 public class GUIAnimOutlineModule implements GUIModule
 {
-    // The animation pattern to use
+    /**
+     * The animation pattern to use
+     */
     private GUIAnimPattern pattern;
-    // The GUI item that will be used for the border
+
+    /**
+     * The GUI item that will be used for the border
+     */
     private AnimatedGUIItem outlineItem;
 
+    /**
+     * Construct a new <code>GUIAnimOutlineModule</code>
+     *
+     * @param outlineItem The GUI item that will be used for the border
+     * @param pattern     The animation pattern to use
+     */
     public GUIAnimOutlineModule(AnimatedGUIItem outlineItem, GUIAnimPattern pattern)
     {
         this.pattern = pattern;
         this.outlineItem = outlineItem;
     }
 
+    /**
+     * Construct a new <code>GUIAnimOutlineModule</code> with the default top left diagonal {@link GUIAnimPattern}
+     *
+     * @param outlineItem The GUI item that will be used for the border
+     */
     public GUIAnimOutlineModule(AnimatedGUIItem outlineItem)
     {
         this(outlineItem, GUIAnimPattern.TOP_LEFT_DIAGONAL);

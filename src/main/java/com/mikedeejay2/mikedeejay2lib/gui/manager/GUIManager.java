@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * A manager for managing players' GUIs. Needed for getting the GUI
- * that the player is currently in and other relevant information.
+ * A manager for managing players' GUIs. Needed for getting the GUI that the player is currently in and other relevant
+ * information.
  *
  * @author Mikedeejay2
  */
@@ -18,9 +18,17 @@ public class GUIManager
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // The HashMap that stores the Player's GUIs
+
+    /**
+     * The <code>Map</code> that stores the Player's GUIs
+     */
     protected Map<Player, PlayerGUI> playerGUIs;
 
+    /**
+     * Construct a new <code>GUIManager</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     */
     public GUIManager(BukkitPlugin plugin)
     {
         this.plugin = plugin;
@@ -67,6 +75,12 @@ public class GUIManager
         playerGUIs.remove(player);
     }
 
+    /**
+     * Get whether this manager contains a specific player
+     *
+     * @param player The player to check for
+     * @return Whether the player exists in this manager or not
+     */
     public boolean containsPlayer(Player player)
     {
         return playerGUIs.containsKey(player);
