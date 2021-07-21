@@ -533,4 +533,46 @@ public final class RayTracer
         newLoc.setDirection(lookVec);
         return newLoc;
     }
+
+    /**
+     * Step a Vector forward based off of the location's direction vector
+     *
+     * @param location The location that will be stepped
+     * @param distance The distance that the location should be moved forward
+     * @return The Vector of the new position
+     */
+    public static Vector stepVector(Location location, double distance) {
+        Vector direction = location.getDirection();
+        direction.multiply(distance);
+        location.add(direction);
+        return location.toVector();
+    }
+
+    /**
+     * Step a Vector forward based off of the position vector and the direction vector
+     *
+     * @param position  The position vector
+     * @param direction The direction vecotr
+     * @param distance  The distance that the vector should be moved forward
+     * @return The Vector of the new position
+     */
+    public static Vector stepVector(Vector position, Vector direction, double distance) {
+        direction.multiply(distance);
+        position.add(direction);
+        return position;
+    }
+
+    /**
+     * Step a Location forward based off of the direction vector
+     *
+     * @param location The location that will be stepped
+     * @param distance The distance that the location should be moved forward
+     * @return The Location of the new position
+     */
+    public static Location stepLocation(Location location, double distance) {
+        Vector direction = location.getDirection();
+        direction.multiply(distance);
+        location.add(direction);
+        return location;
+    }
 }
