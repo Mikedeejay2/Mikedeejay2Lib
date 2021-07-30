@@ -245,7 +245,7 @@ public class GUINavigatorModule implements GUIModule
      */
     public static class GUINavBackEvent implements GUIEvent
     {
-        /**
+     /**
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
@@ -267,6 +267,7 @@ public class GUINavigatorModule implements GUIModule
             GUIContainer backGUI = system.popBack();
             system.pushForward(gui);
             system.setNavigationFlag(true);
+            gui.onClose(player);
             backGUI.open(player);
         }
     }
@@ -300,6 +301,7 @@ public class GUINavigatorModule implements GUIModule
             GUIContainer forwardGUI = system.popForward();
             system.pushBack(gui);
             system.setNavigationFlag(true);
+            gui.onClose(player);
             forwardGUI.open(player);
         }
     }
