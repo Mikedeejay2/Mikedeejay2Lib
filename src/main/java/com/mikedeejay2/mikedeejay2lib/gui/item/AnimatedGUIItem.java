@@ -409,7 +409,7 @@ public class AnimatedGUIItem extends GUIItem
     public void onClick(InventoryClickEvent event, GUIContainer gui)
     {
         super.onClick(event, gui);
-        if(resetOnClick)
+        if(resetOnClick && gui.containsModule(GUIAnimationModule.class))
         {
             GUIAnimationModule module = gui.getModule(GUIAnimationModule.class);
             AnimatedGUIItemProperties properties = module.getProperties(this);
