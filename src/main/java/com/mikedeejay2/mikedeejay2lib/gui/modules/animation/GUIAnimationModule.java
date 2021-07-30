@@ -33,7 +33,7 @@ public class GUIAnimationModule implements GUIModule
     /**
      * The list of Animated GUI Items to be animated
      */
-    protected final ConcurrentMap<AnimatedGUIItem, AnimatedGUIItemProperties> animatedItems;
+    protected final Map<AnimatedGUIItem, AnimatedGUIItemProperties> animatedItems;
 
     /**
      * The AnimationRuntime for this module
@@ -72,7 +72,7 @@ public class GUIAnimationModule implements GUIModule
         runtime.setPlayer(player);
         runtime.setGUI(gui);
         runtime.setItems(animatedItems);
-        runtime.runTaskTimer(plugin, period);
+        runtime.runTaskTimerAsynchronously(plugin, period);
     }
 
     /**

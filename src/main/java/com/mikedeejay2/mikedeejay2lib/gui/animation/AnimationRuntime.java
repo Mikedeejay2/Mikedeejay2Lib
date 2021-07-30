@@ -19,7 +19,7 @@ public class AnimationRuntime extends EnhancedRunnable
     /**
      * The map of items to be executed
      */
-    protected ConcurrentMap<AnimatedGUIItem, AnimatedGUIItemProperties> items;
+    protected Map<AnimatedGUIItem, AnimatedGUIItemProperties> items;
     /**
      * The GUIContainer that this AnimationRuntime is a child of
      */
@@ -37,7 +37,7 @@ public class AnimationRuntime extends EnhancedRunnable
      *
      * @param items The list of AnimatedGUIItems that this runtime will iterate through
      */
-    public void setItems(ConcurrentMap<AnimatedGUIItem, AnimatedGUIItemProperties> items)
+    public void setItems(Map<AnimatedGUIItem, AnimatedGUIItemProperties> items)
     {
         this.items = items;
     }
@@ -78,7 +78,9 @@ public class AnimationRuntime extends EnhancedRunnable
     {
         boolean shouldUpdate = false;
 
-        for(Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry : items.entrySet())
+        Set<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> copy = new HashSet<>(items.entrySet());
+
+        for(Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry : copy)
         {
             AnimatedGUIItem item = entry.getKey();
             AnimatedGUIItemProperties properties = entry.getValue();
@@ -92,7 +94,7 @@ public class AnimationRuntime extends EnhancedRunnable
      *
      * @return The map of items
      */
-    public ConcurrentMap<AnimatedGUIItem, AnimatedGUIItemProperties> getItems()
+    public Map<AnimatedGUIItem, AnimatedGUIItemProperties> getItems()
     {
         return items;
     }
