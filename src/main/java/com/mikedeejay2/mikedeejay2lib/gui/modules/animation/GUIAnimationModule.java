@@ -72,7 +72,7 @@ public class GUIAnimationModule implements GUIModule
         runtime.setPlayer(player);
         runtime.setGUI(gui);
         runtime.setItems(animatedItems);
-        runtime.runTaskTimerAsynchronously(plugin, period);
+        runtime.runTaskTimer(plugin, period);
     }
 
     /**
