@@ -1,7 +1,9 @@
 package com.mikedeejay2.mikedeejay2lib.util.logging;
 
 import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginLogger;
 
+import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
 import java.util.logging.Logger;
@@ -12,8 +14,9 @@ import java.util.logging.Logger;
  *
  * @author Mikedeejay2
  */
-public class EnhancedPluginLogger extends Logger
+public class EnhancedPluginLogger extends PluginLogger
 {
+    private final Logger logger;
     private String prefix;
 
     /**
@@ -23,7 +26,8 @@ public class EnhancedPluginLogger extends Logger
      */
     public EnhancedPluginLogger(Plugin plugin)
     {
-        super("", null);
+        super(plugin);
+        this.logger = new NoNameLogger();
         String prefix = plugin.getDescription().getPrefix();
         this.prefix = prefix != null ? "[" + prefix + "] " : "[" + plugin.getDescription().getName() + "] ";
         setParent(plugin.getServer().getLogger());
@@ -39,7 +43,7 @@ public class EnhancedPluginLogger extends Logger
     public void log(LogRecord logRecord)
     {
         logRecord.setMessage(prefix + logRecord.getMessage());
-        super.log(logRecord);
+        logger.log(logRecord);
     }
 
     /**
@@ -61,5 +65,16 @@ public class EnhancedPluginLogger extends Logger
     public void setPrefix(String prefix)
     {
         this.prefix = prefix;
+    }
+
+    /**
+     * Hacky class to call a new logger without a name. Workaround for having to extend {@link PluginLogger}
+     */
+    private static class NoNameLogger extends Logger
+    {
+        public NoNameLogger()
+        {
+            super("", null);
+        }
     }
 }

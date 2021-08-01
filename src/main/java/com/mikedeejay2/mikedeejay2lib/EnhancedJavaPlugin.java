@@ -45,15 +45,6 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     private ClassLoader classLoader;
 
     /**
-     * Constructor for <code>EnhancedJavaPlugin</code>
-     */
-    public EnhancedJavaPlugin()
-    {
-        forceColorfulLogger();
-        this.classLoader =  retrieveClassLoader();
-    }
-
-    /**
      * Force Paper server types to allow this plugin to have a colored logger
      * prefix. This is done by replacing the logger in {@link JavaPlugin} with
      * the legacy Bukkit {@link PluginLogger}. The name of the logger must also
@@ -79,6 +70,9 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     public void onEnable()
     {
         super.onEnable();
+        forceColorfulLogger();
+        this.classLoader =  retrieveClassLoader();
+
         String prefix = this.getDescription().getPrefix();
         setPrefix(prefix != null ? "[" + prefix + "]" : "[" + this.getDescription().getName() + "]");
     }

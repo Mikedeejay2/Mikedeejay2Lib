@@ -58,7 +58,7 @@ public final class ChatConverter
      */
     public static HoverEvent getHoverEvent(HoverEvent.Action action, String text)
     {
-        return new HoverEvent(action, new Text(Colors.format(text)));
+        return new HoverEvent(action, getBaseComponentArray(text));
     }
 
     /**
