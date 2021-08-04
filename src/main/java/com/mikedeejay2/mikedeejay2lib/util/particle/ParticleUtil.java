@@ -97,8 +97,8 @@ public final class ParticleUtil
             public void onRun()
             {
                 if(entity.isDead()) this.cancel();
-
-                entity.getWorld().spawnParticle(particle, entity.getLocation(), particleCount, offsetX, offsetY, offsetZ, speed, null, force);
+                Location centerLoc = entity.getBoundingBox().getCenter().toLocation(entity.getWorld());
+                entity.getWorld().spawnParticle(particle, centerLoc, particleCount, offsetX, offsetY, offsetZ, speed, null, force);
             }
         }.runTaskTimerCounted(plugin, 0, 0, timeToLive);
     }
