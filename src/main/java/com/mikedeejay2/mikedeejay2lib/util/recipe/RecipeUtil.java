@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.util.recipe;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
+import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.inventory.*;
@@ -71,7 +72,7 @@ public final class RecipeUtil
             @Override
             public void run()
             {
-                int version = plugin.getMCVersion().getVersionShort();
+                int version = MinecraftVersion.getVersionShort();
                 blastingInputs.clear();
                 campfireInputs.clear();
                 furnaceInputs.clear();

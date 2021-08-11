@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.util.version;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.util.debug.DebugUtil;
+import org.bukkit.Bukkit;
 
 import java.util.Arrays;
 import java.util.regex.Matcher;
@@ -16,31 +17,38 @@ import java.util.regex.Pattern;
 public final class MinecraftVersion
 {
     // Holds the version string like "1.16.3"
-    private final String versionString;
+    private static final String versionString;
     // An array of a Minecraft version like [1, 16, 3]
-    private final int[] versionLong;
+    private static final int[] versionLong;
     // A short integer of the minor version (i.e 16, 15, 14)
-    private final int versionShort;
+    private static final int versionShort;
     // String version of the NMS identifier
-    private final String versionNMS;
+    private static final String versionNMS;
 
-    public MinecraftVersion(BukkitPlugin plugin)
+    static
     {
-        this.versionString = calcVersionString(plugin);
-        this.versionLong = calcLongVersion();
-        this.versionShort = calcShortVersion();
-        this.versionNMS = calcVersionNMS(plugin);
+        versionString = calcVersionString();
+        versionLong = calcLongVersion();
+        versionShort = calcShortVersion();
+        versionNMS = calcVersionNMS();
+    }
+
+    /**
+     * This class is static and should not be constructed
+     */
+    private MinecraftVersion()
+    {
+        throw new UnsupportedOperationException("Can not initialize static class MinecraftVersion");
     }
 
     /**
      * Calculate the version in String form. Example: "1.16.3"
      *
-     * @param plugin A reference to the plugin
      * @return The calculated version String
      */
-    private String calcVersionString(BukkitPlugin plugin)
+    private static String calcVersionString()
     {
-        String version = plugin.getServer().getVersion();
+        String version = Bukkit.getServer().getVersion();
         Pattern pattern = Pattern.compile("(\\(MC: )([\\d\\.]+)(\\))");
         Matcher matcher = pattern.matcher(version);
         if(matcher.find())
@@ -55,7 +63,7 @@ public final class MinecraftVersion
      *
      * @return A long array version
      */
-    private int[] calcLongVersion()
+    private static int[] calcLongVersion()
     {
         String[] splitStr = versionString.split("\\.");
         int[] arr = new int[splitStr.length];
@@ -71,7 +79,7 @@ public final class MinecraftVersion
      *
      * @return The short int version
      */
-    private int calcShortVersion()
+    private static int calcShortVersion()
     {
         String[] splitStr = versionString.split("\\.");
         return Integer.parseInt(splitStr[1]);
@@ -80,12 +88,11 @@ public final class MinecraftVersion
     /**
      * Calculate the NMS version String. Example: "v1_16_R3"
      *
-     * @param plugin A reference to the plugin
      * @return The calculated NMS version String
      */
-    private String calcVersionNMS(BukkitPlugin plugin)
+    private static String calcVersionNMS()
     {
-        String raw = plugin.getServer().getClass().getPackage().getName();
+        String raw = Bukkit.getServer().getClass().getPackage().getName();
         String[] split = raw.split("\\.");
         return split[split.length - 1];
     }
@@ -95,7 +102,7 @@ public final class MinecraftVersion
      *
      * @return The version String
      */
-    public String getVersionString()
+    public static String getVersionString()
     {
         return versionString;
     }
@@ -105,7 +112,7 @@ public final class MinecraftVersion
      *
      * @return The long version array
      */
-    public int[] getVersionLong()
+    public static int[] getVersionLong()
     {
         return versionLong;
     }
@@ -115,7 +122,7 @@ public final class MinecraftVersion
      *
      * @return The short int version
      */
-    public int getVersionShort()
+    public static int getVersionShort()
     {
         return versionShort;
     }
@@ -125,7 +132,7 @@ public final class MinecraftVersion
      *
      * @return The NMS String version
      */
-    public String getVersionNMS()
+    public static String getVersionNMS()
     {
         return versionNMS;
     }

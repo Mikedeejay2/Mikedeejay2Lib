@@ -19,7 +19,6 @@ import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
  */
 public abstract class BukkitPlugin extends EnhancedJavaPlugin
 {
-    private MinecraftVersion minecraftVersion;
     private LangManager libLangManager;
     private GUIManager guiManager;
 
@@ -27,7 +26,6 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin
     public void onEnable()
     {
         super.onEnable();
-        this.minecraftVersion = new MinecraftVersion(this);
         this.libLangManager = new LangManager(this, "lang/lib");
         this.guiManager = new GUIManager(this);
 
@@ -42,16 +40,6 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin
     public void onDisable()
     {
         super.onDisable();
-    }
-
-    /**
-     * Get the Minecraft server's Minecraft version
-     *
-     * @return The Minecraft version
-     */
-    public MinecraftVersion getMCVersion()
-    {
-        return minecraftVersion;
     }
 
     /**

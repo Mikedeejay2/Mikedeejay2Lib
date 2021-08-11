@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.util.chat;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
+import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
 import net.md_5.bungee.api.ChatColor;
 
 import java.util.regex.Matcher;
@@ -66,7 +67,7 @@ public final class ColorFormatterAdvanced implements IColorFormatter
      */
     public String formatHexCodes(String message)
     {
-        boolean hexSupported = plugin.getMCVersion().getVersionShort() >= 16;
+        boolean hexSupported = MinecraftVersion.getVersionShort() >= 16;
         Matcher match1 = pattern1.matcher(message);
         while(match1.find())
         {
