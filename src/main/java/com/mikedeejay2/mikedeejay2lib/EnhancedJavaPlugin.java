@@ -106,7 +106,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void setPrefix(String prefix)
     {
-        this.prefix = Colors.format(prefix) + " ";
+        this.prefix = Colors.format(prefix);
         EnhancedPluginLogger logger = (EnhancedPluginLogger) this.getLogger();
         logger.setPrefix(this.prefix);
     }

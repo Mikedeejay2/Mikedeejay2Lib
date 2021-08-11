@@ -1,12 +1,12 @@
 package com.mikedeejay2.mikedeejay2lib.util.logging;
 
+import org.apache.logging.log4j.Logger;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginLogger;
 
-import java.lang.reflect.Field;
 import java.util.logging.Level;
 import java.util.logging.LogRecord;
-import java.util.logging.Logger;
+import org.apache.logging.log4j.LogManager;
 
 /**
  * A plugin logger to act similar to a {@link org.bukkit.plugin.PluginLogger} but avoid immutable
@@ -27,11 +27,9 @@ public class EnhancedPluginLogger extends PluginLogger
     public EnhancedPluginLogger(Plugin plugin)
     {
         super(plugin);
-        this.logger = new NoNameLogger();
+        this.logger = LogManager.getRootLogger();
         String prefix = plugin.getDescription().getPrefix();
         this.prefix = prefix != null ? "[" + prefix + "] " : "[" + plugin.getDescription().getName() + "] ";
-        setParent(plugin.getServer().getLogger());
-        setLevel(Level.ALL);
     }
 
     /**
@@ -43,7 +41,31 @@ public class EnhancedPluginLogger extends PluginLogger
     public void log(LogRecord logRecord)
     {
         logRecord.setMessage(prefix + logRecord.getMessage());
-        logger.log(logRecord);
+        Level level = logRecord.getLevel();
+        String message = logRecord.getMessage();
+        Throwable exception = logRecord.getThrown();
+
+        // Taken from org.bukkit.craftbukkit.util.ForwardLogHandler#publish(LogRecord record)
+        if(level == Level.SEVERE)
+        {
+            logger.error(message, exception);
+        }
+        else if(level == Level.WARNING)
+        {
+            logger.warn(message, exception);
+        }
+        else if(level == Level.INFO)
+        {
+            logger.info(message, exception);
+        }
+        else if(level == Level.CONFIG)
+        {
+            logger.debug(message, exception);
+        }
+        else
+        {
+            logger.trace(message, exception);
+        }
     }
 
     /**
@@ -65,16 +87,5 @@ public class EnhancedPluginLogger extends PluginLogger
     public void setPrefix(String prefix)
     {
         this.prefix = prefix;
-    }
-
-    /**
-     * Hacky class to call a new logger without a name. Workaround for having to extend {@link PluginLogger}
-     */
-    private static class NoNameLogger extends Logger
-    {
-        public NoNameLogger()
-        {
-            super("", null);
-        }
     }
 }
