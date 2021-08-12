@@ -50,7 +50,7 @@ public class GUIAnimStripsModule implements GUIModule
     /**
      * Get the item that will be used for the strips
      *
-     * @return
+     * @return The {@link AnimatedGUIItem} being used
      */
     public AnimatedGUIItem getItem()
     {

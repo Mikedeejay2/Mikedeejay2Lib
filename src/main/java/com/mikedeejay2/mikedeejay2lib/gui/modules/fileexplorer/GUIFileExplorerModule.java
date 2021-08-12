@@ -23,24 +23,62 @@ import java.util.Queue;
  * A file explorer to browse real files.
  * File icons are based off of their respective extension name. See {@link HeadUtil#getHeadFromFileExtension(String)}
  * for all supported file extensions.
+ * <p>
+ * This class is mostly a test and nowhere near a complete file explorer.
  *
  * @author Mikedeejay2
  */
 public class GUIFileExplorerModule extends GUIListModule
 {
+    /**
+     * The file separator character, different for different operating systems
+     */
     private static final String separator = File.separatorChar == '\\' ? "\\\\" : String.valueOf(File.separatorChar);
 
-    // The file of this GUI
+    /**
+     * The file of this GUI, the root file to be explored
+     */
     protected File file;
 
+    /**
+     * The file view history
+     */
     protected HistoryHolder<File> history;
 
+    /**
+     * The valid back navigation item
+     */
     protected GUIItem backItemValid;
+
+    /**
+     * The valid forward navigation item
+     */
     protected GUIItem forwardItemValid;
 
+    /**
+     * Whether to allow subfolders to be explored. This could pose a security risk if this is not necessary.
+     */
     protected boolean allowSubFolders;
+
+    /**
+     * Allow upward traversal in the GUI. This allows the GUI to navigate <strong>potentially all folders on a
+     * drive</strong>. It is heavily recommended that this is not true, as it poses a security risk if it is not
+     * absolutely necessary.
+     */
     protected boolean allowUpwardTraversal;
 
+    /**
+     * Construct a new <code>GUIFileExplorer</code>
+     *
+     * @param plugin    The {@link BukkitPlugin} instance
+     * @param file      The <code>File</code> to be opened in the GUI
+     * @param viewMode  The viewing mode of the file list
+     * @param topRow    The top row location of the explorer
+     * @param bottomRow The bottom row location of the explorer
+     * @param leftCol   The left column location of the explorer
+     * @param rightCol  The right column location of the explorer
+     * @param layerName The name of the layer that the explorer will exist on
+     */
     public GUIFileExplorerModule(BukkitPlugin plugin, File file, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol, String layerName)
     {
         super(plugin, viewMode, topRow, bottomRow, leftCol, rightCol, layerName);
@@ -65,11 +103,32 @@ public class GUIFileExplorerModule extends GUIListModule
             .addEvent(new GUINavFileForwardEvent());
     }
 
+    /**
+     * Construct a new <code>GUIFileExplorer</code>
+     *
+     * @param plugin    The {@link BukkitPlugin} instance
+     * @param file      The <code>File</code> to be opened in the GUI
+     * @param viewMode  The viewing mode of the file list
+     * @param topRow    The top row location of the explorer
+     * @param bottomRow The bottom row location of the explorer
+     * @param leftCol   The left column location of the explorer
+     * @param rightCol  The right column location of the explorer
+     */
     public GUIFileExplorerModule(BukkitPlugin plugin, File file, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol)
     {
         this(plugin, file, viewMode, topRow, bottomRow, leftCol, rightCol, "explorer");
     }
 
+    /**
+     * Construct a new <code>GUIFileExplorer</code>
+     *
+     * @param plugin    The {@link BukkitPlugin} instance
+     * @param file      The <code>File</code> to be opened in the GUI
+     * @param topRow    The top row location of the explorer
+     * @param bottomRow The bottom row location of the explorer
+     * @param leftCol   The left column location of the explorer
+     * @param rightCol  The right column location of the explorer
+     */
     public GUIFileExplorerModule(BukkitPlugin plugin, File file, int topRow, int bottomRow, int leftCol, int rightCol)
     {
         this(plugin, file, ListViewMode.SCROLL, topRow, bottomRow, leftCol, rightCol);
@@ -98,6 +157,12 @@ public class GUIFileExplorerModule extends GUIListModule
         fillDecor(baseLayer);
     }
 
+    /**
+     * Overridden update method that updates the history buttons
+     *
+     * @param player The player that is viewing the GUI
+     * @param gui    The GUI
+     */
     @Override
     public void onUpdateHead(Player player, GUIContainer gui)
     {
@@ -107,6 +172,11 @@ public class GUIFileExplorerModule extends GUIListModule
         setHistoryButtons(layer);
     }
 
+    /**
+     * Localize the GUI history buttons
+     *
+     * @param player The reference player viewing the GUI
+     */
     private void localize(Player player)
     {
         this.backItemValid.setName("&f" + plugin.getLibLangManager().getText(player, "gui.modules.navigator.backward"))
@@ -115,12 +185,22 @@ public class GUIFileExplorerModule extends GUIListModule
             .setAmount(Math.min(Math.max(1, history.forwardSize()), 64));
     }
 
+    /**
+     * Set the file history buttons
+     *
+     * @param layer The <code>GUILayer</code> to set the items on
+     */
     private void setHistoryButtons(GUILayer layer)
     {
         layer.setItem(1, 1, history.hasBack() ? backItemValid : null);
         layer.setItem(1, 2, history.hasForward() ? forwardItemValid : null);
     }
 
+    /**
+     * Fill the decoration items for the GUI
+     *
+     * @param baseLayer The base layer of the GUI, the layer that the background decor will be set on
+     */
     private void fillDecor(GUILayer baseLayer)
     {
         GUIItem background1 = backItemValid.clone();
@@ -137,6 +217,9 @@ public class GUIFileExplorerModule extends GUIListModule
         baseLayer.setItem(1, 9, background4);
     }
 
+    /**
+     * Fill the upwards traversal of the file history
+     */
     private void fillUpwardTraversal()
     {
         Queue<File> temp = new LinkedList<>();
@@ -223,26 +306,54 @@ public class GUIFileExplorerModule extends GUIListModule
         this.file = file;
     }
 
+    /**
+     * Get the {@link HistoryHolder} of the file history for this GUI
+     *
+     * @return The file history
+     */
     public HistoryHolder<File> getHistory()
     {
         return history;
     }
 
+    /**
+     * Get whether this GUI allows subfolders
+     *
+     * @return Whether this GUI allows subfolders
+     */
     public boolean isAllowSubFolders()
     {
         return allowSubFolders;
     }
 
+    /**
+     * Set whether this GUI allows subfolders. This could pose a security risk if this is not necessary.
+     *
+     * @param allowSubFolders Whether this GUI allows subfolders
+     */
     public void setAllowSubFolders(boolean allowSubFolders)
     {
         this.allowSubFolders = allowSubFolders;
     }
 
+    /**
+     * Get whether this GUI allows upward traversal. This allows the GUI to navigate <strong>potentially all folders on
+     * a drive</strong>.
+     *
+     * @return Whether this GUI allows upward traversal
+     */
     public boolean isAllowUpwardTraversal()
     {
         return allowUpwardTraversal;
     }
 
+    /**
+     * Set whether this GUI allows upward traversal. This allows the GUI to navigate <strong>potentially all folders on
+     * a drive</strong>. It is heavily recommended that this is not true, as it poses a security risk if it is not
+     * absolutely necessary.
+     *
+     * @param allowUpwardTraversal Whether this GUI allows upward traversal
+     */
     public void setAllowUpwardTraversal(boolean allowUpwardTraversal)
     {
         this.allowUpwardTraversal = allowUpwardTraversal;
@@ -255,13 +366,27 @@ public class GUIFileExplorerModule extends GUIListModule
      */
     public static class GUISwitchFolderEvent implements GUIEvent
     {
+        /**
+         * The <code>File</code> folder to be switched to
+         */
         private final File file;
 
+        /**
+         * Construct a new <code>GUISwitchFolderEvent</code>
+         *
+         * @param file The <code>File</code> folder to be switched to
+         */
         public GUISwitchFolderEvent(File file)
         {
             this.file = file;
         }
 
+        /**
+         * Switch the explorer to view the {@link GUISwitchFolderEvent#file}
+         *
+         * @param event The event of the click
+         * @param gui   The GUI that the event took place in
+         */
         @Override
         public void execute(InventoryClickEvent event, GUIContainer gui)
         {
@@ -278,8 +403,19 @@ public class GUIFileExplorerModule extends GUIListModule
         }
     }
 
+    /**
+     * Event to navigate back a folder in a {@link GUIFileExplorerModule} GUI
+     *
+     * @author Mikedeejay2
+     */
     public static class GUINavFileBackEvent implements GUIEvent
     {
+        /**
+         * Navigate back a folder
+         *
+         * @param event The event of the click
+         * @param gui   The GUI that the event took place in
+         */
         @Override
         public void execute(InventoryClickEvent event, GUIContainer gui)
         {
@@ -296,8 +432,19 @@ public class GUIFileExplorerModule extends GUIListModule
         }
     }
 
+    /**
+     * Event to navigate forward a folder in a {@link GUIFileExplorerModule} GUI
+     *
+     * @author Mikedeejay2
+     */
     public static class GUINavFileForwardEvent implements GUIEvent
     {
+        /**
+         * Navigate forward a folder
+         *
+         * @param event The event of the click
+         * @param gui   The GUI that the event took place in
+         */
         @Override
         public void execute(InventoryClickEvent event, GUIContainer gui)
         {

@@ -35,56 +35,120 @@ public class GUIListModule implements GUIModule
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // The list of items that this list holds
+
+    /**
+     * The list of items that this list holds
+     */
     protected List<GUIItem> list;
-    // The search list of the items if search is enabled
+
+    /**
+     * The search list of the items if search is enabled
+     */
     protected List<Pair<GUIItem, Integer>> searchList;
-    // Whether search mode is enabled or not
+
+    /**
+     * Whether search mode is enabled or not
+     */
     protected boolean searchMode;
-    // The search term that has previously been used
+
+    /**
+     * The search term that has previously been used
+     */
     protected String searchTerm;
-    // The current location that the player is on
+
+    /**
+     * The current location that the player is on
+     */
     protected int curLoc;
-    // Items that will be appended to the very end of the list
+
+    /**
+     * Items that will be appended to the very end of the list
+     */
     protected List<GUIItem> endItems;
 
-    // The back item that will be used
+    /**
+     * The back item that will be used
+     */
     protected GUIItem backItem;
-    // The forward item that will be used
+
+    /**
+     * The forward item that will be used
+     */
     protected GUIItem forwardItem;
-    // The search item that will be used
+
+    /**
+     * The search item that will be used
+     */
     protected GUIItem searchItem;
-    // The turn search off item that will be used
+
+    /**
+     * The turn search off item that will be used
+     */
     protected GUIItem searchOffItem;
-    // Whether search is allowed or not
+
+    /**
+     * Whether search is allowed or not
+     */
     protected boolean searchEnabled;
-    // Whether this list has been changed since its last update
+
+    /**
+     * Whether this list has been changed since its last update
+     */
     protected boolean changed;
 
-    // The current view mode of the list
+    /**
+     * The current view mode of the list
+     */
     protected ListViewMode viewMode;
 
-    // The top left location of the list
+    /**
+     * The top left location of the list
+     */
     protected Pair<Integer, Integer> topLeft;
-    // The bottom right location of the list
+
+    /**
+     * The bottom right location of the list
+     */
     protected Pair<Integer, Integer> bottomRight;
-    // The location of the search button (if visible)
+
+    /**
+     * The location of the search button (if visible)
+     */
     protected Pair<Integer, Integer> search;
-    // The locations of the forwards buttons
+
+    /**
+     * The locations of the forwards buttons
+     */
     protected List<Pair<Integer, Integer>> forwards;
-    // The locations of the forwards buttons
+
+    /**
+     * The locations of the forwards buttons
+     */
     protected List<Pair<Integer, Integer>> backs;
 
-    // The list layer's name, used for getting the layer that the list is located on
+    /**
+     * The list layer's name, used for getting the layer that the list is located on
+     */
     protected String layerName;
 
-    // The prefix of the page change name. This can be used to change the color of text or add text
+    /**
+     * The prefix of the page change name. This can be used to change the color of text or add text
+     */
     protected String pageChangePreName;
-    // The prefix of the scroll change name. This can be used to change the color of text or add text
+
+    /**
+     * The prefix of the scroll change name. This can be used to change the color of text or add text
+     */
     protected String scrollChangePreName;
-    // The prefix of the search name. This can be used to change the color of text or add text
+
+    /**
+     * The prefix of the search name. This can be used to change the color of text or add text
+     */
     protected String searchPreName;
-    // The prefix of the search off name. This can be used to change the color of text or add text
+
+    /**
+     * The prefix of the search off name. This can be used to change the color of text or add text
+     */
     protected String searchOffPreName;
 
     /**
@@ -182,16 +246,18 @@ public class GUIListModule implements GUIModule
     {
         if(searchItem == null)
         {
-            this.searchItem = new GUIItem(ItemBuilder.of(Material.COMPASS)
-                                                  .setName(searchPreName + plugin.getLibLangManager().getText(player, "gui.modules.list.search"))
-                                                  .get());
+            this.searchItem = new GUIItem(
+                ItemBuilder.of(Material.COMPASS)
+                    .setName(searchPreName + plugin.getLibLangManager().getText(player, "gui.modules.list.search"))
+                    .get());
             searchItem.addEvent(new GUIListSearchEvent(plugin));
         }
         if(searchOffItem == null)
         {
-            this.searchOffItem = new GUIItem(ItemBuilder.of(Material.BOOK)
-                                                     .setName(searchOffPreName + plugin.getLibLangManager().getText(player, "gui.modules.list.search_off"))
-                                                     .get());
+            this.searchOffItem = new GUIItem(
+                ItemBuilder.of(Material.BOOK)
+                    .setName(searchOffPreName + plugin.getLibLangManager().getText(player, "gui.modules.list.search_off"))
+                    .get());
             searchOffItem.addEvent(new GUIListSearchOffEvent());
         }
     }
@@ -261,15 +327,12 @@ public class GUIListModule implements GUIModule
     /**
      * Updates the current list view, called on {@link GUIListModule#onUpdateHead(Player player, GUIContainer gui)}
      *
-     * @param layer  The layer to update the view on
+     * @param layer The layer to update the view on
      */
     private void updateView(GUILayer layer)
     {
         int topRow = topLeft.getKey();
-        // int bottomRow = bottomRight.getKey(); // unused
         int leftCol = topLeft.getValue();
-        // int rightCol = bottomRight.getValue(); // unused
-        // int rowDif = getSlotsPerRow(); // unused
         int colDif = getSlotsPerCol();
 
         int viewSize = getViewSize();
@@ -307,7 +370,7 @@ public class GUIListModule implements GUIModule
     /**
      * Update the controls for the list, called on {@link GUIListModule#onUpdateHead(Player player, GUIContainer gui)}
      *
-     * @param layer  The layer to update the controls on
+     * @param layer The layer to update the controls on
      */
     private void updateListControls(GUILayer layer, Player player)
     {
@@ -484,7 +547,7 @@ public class GUIListModule implements GUIModule
 
     /**
      * Get a list's index based off of its row and column in the GUI.
-     * Not recommended to use but included just in case.
+     * Not recommended for use but included just in case.
      *
      * @param row The row to get the item from
      * @param col The column to get the item from
@@ -519,7 +582,7 @@ public class GUIListModule implements GUIModule
     }
 
     /**
-     * Get a list item from it's slot in the list.
+     * Get a list item from its slot in the list.
      *
      * @param slot The slot to get the item from
      * @return The <code>GUIItem</code> of the slot
@@ -604,6 +667,11 @@ public class GUIListModule implements GUIModule
         return backItem;
     }
 
+    /**
+     * Set the item that represents the back button
+     *
+     * @param backItem The new back item
+     */
     public void setBackItem(GUIItem backItem)
     {
         this.backItem = backItem;
@@ -619,6 +687,11 @@ public class GUIListModule implements GUIModule
         return forwardItem;
     }
 
+    /**
+     * Set the item that represents the forward button
+     *
+     * @param forwardItem The new forward item
+     */
     public void setForwardItem(GUIItem forwardItem)
     {
         this.forwardItem = forwardItem;
@@ -679,6 +752,11 @@ public class GUIListModule implements GUIModule
         return searchOffItem;
     }
 
+    /**
+     * Set the item that represents the off search button
+     *
+     * @param searchOffItem The new search off item
+     */
     public void setSearchOffItem(GUIItem searchOffItem)
     {
         this.searchOffItem = searchOffItem;
@@ -1123,15 +1201,26 @@ public class GUIListModule implements GUIModule
     public static class GUIListSearchEvent implements GUIEvent
     {
         /**
-     * The {@link BukkitPlugin} instance
-     */
-    protected final BukkitPlugin plugin;
+         * The {@link BukkitPlugin} instance
+         */
+        protected final BukkitPlugin plugin;
 
+        /**
+         * Construct a new <code>GUIListSearchEvent</code>
+         *
+         * @param plugin The {@link BukkitPlugin} instance
+         */
         public GUIListSearchEvent(BukkitPlugin plugin)
         {
             this.plugin = plugin;
         }
 
+        /**
+         * Execute search event that prompts user to input data
+         *
+         * @param event The event of the click
+         * @param gui   The GUI that the event took place in
+         */
         @Override
         public void execute(InventoryClickEvent event, GUIContainer gui)
         {
@@ -1153,6 +1242,12 @@ public class GUIListModule implements GUIModule
      */
     public static class GUIListSearchOffEvent implements GUIEvent
     {
+        /**
+         * Execute disabling search mode on the GUI
+         *
+         * @param event The event of the click
+         * @param gui   The GUI that the event took place in
+         */
         @Override
         public void execute(InventoryClickEvent event, GUIContainer gui)
         {
@@ -1169,6 +1264,12 @@ public class GUIListModule implements GUIModule
      */
     public static class GUISwitchListLocEvent implements GUIEvent
     {
+        /**
+         * Execute the modification of a list location switch (Moving what is being viewed on the list)
+         *
+         * @param event The event of the click
+         * @param gui   The GUI that the event took place in
+         */
         @Override
         public void execute(InventoryClickEvent event, GUIContainer gui)
         {

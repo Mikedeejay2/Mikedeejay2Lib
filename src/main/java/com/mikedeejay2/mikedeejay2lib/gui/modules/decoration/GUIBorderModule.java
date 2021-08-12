@@ -8,7 +8,7 @@ import org.bukkit.inventory.ItemStack;
 
 /**
  * Module that adds a border of an item type to the top and bottom row of a GUI.
- * Use to add decoration to a GUI.
+ * Used to add decoration to a GUI.
  *
  * @author Mikedeejay2
  */
@@ -63,7 +63,7 @@ public class GUIBorderModule implements GUIModule
      * Method injected into the head of the GUI that adds a border to the GUI
      *
      * @param player Player that is viewing the GUI
-     * @param gui    The GUi
+     * @param gui    The GUI
      */
     @Override
     public void onOpenHead(Player player, GUIContainer gui)

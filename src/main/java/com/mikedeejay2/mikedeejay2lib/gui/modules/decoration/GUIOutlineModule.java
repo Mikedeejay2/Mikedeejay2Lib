@@ -14,9 +14,17 @@ import org.bukkit.inventory.ItemStack;
  */
 public class GUIOutlineModule implements GUIModule
 {
-    // The GUI item that will be used for the border
+
+    /**
+     * The GUI item that will be used for the border
+     */
     private GUIItem outlineItem;
 
+    /**
+     * Construct a new <code>GUIOutlineModule</code>
+     *
+     * @param outlineItem The <code>GUIItem</code> to use
+     */
     public GUIOutlineModule(GUIItem outlineItem)
     {
         this.outlineItem = outlineItem;
@@ -56,7 +64,7 @@ public class GUIOutlineModule implements GUIModule
      * Method injected into the head of the GUI that adds an outline to the GUI
      *
      * @param player Player that is viewing the GUI
-     * @param gui    The GUi
+     * @param gui    The GUI
      */
     @Override
     public void onOpenHead(Player player, GUIContainer gui)

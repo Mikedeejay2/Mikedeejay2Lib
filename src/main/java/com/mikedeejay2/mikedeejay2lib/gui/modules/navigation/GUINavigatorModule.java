@@ -26,18 +26,38 @@ public class GUINavigatorModule implements GUIModule
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // The ID of the Navigator
+
+    /**
+     * The ID of the Navigator
+     */
     protected String navigationID;
 
-    // The valid back item
+    /**
+     * The valid back item
+     */
     protected GUIItem validBackItem;
-    // The valid forward item
+
+    /**
+     * The valid forward item
+     */
     protected GUIItem validForwardItem;
-    // The invalid back item
+
+    /**
+     * The invalid back item
+     */
     protected GUIItem invalidBackItem;
-    // The invalid forward item
+
+    /**
+     * The invalid forward item
+     */
     protected GUIItem invalidForwardItem;
 
+    /**
+     * Construct a new <code>GUINavigatorModule</code>
+     *
+     * @param plugin       The {@link BukkitPlugin} instance
+     * @param navigationID The navigation ID to use
+     */
     public GUINavigatorModule(BukkitPlugin plugin, String navigationID)
     {
         this.plugin = plugin;
