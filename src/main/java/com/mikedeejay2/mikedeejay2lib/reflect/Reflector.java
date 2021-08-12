@@ -1,5 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.reflect;
 
+import org.jetbrains.annotations.Nullable;
+
 /**
  * Static entrypoint class for reflecting with Mikedeejay2Lib.
  *
@@ -38,6 +40,19 @@ public final class Reflector
      */
     public static ReflectorClass<?> of(String className)
     {
+        Class<?> clazz = classForName(className);
+        return clazz == null ? null : of(clazz);
+    }
+
+    /**
+     * Get a class based off of the class's name
+     *
+     * @param className The name of the class to get
+     * @return The requested <code>Class</code>
+     */
+    @Nullable
+    public static Class<?> classForName(String className)
+    {
         Class<?> clazz;
         try
         {
@@ -48,6 +63,6 @@ public final class Reflector
             e.printStackTrace();
             return null;
         }
-        return of(clazz);
+        return clazz;
     }
 }
