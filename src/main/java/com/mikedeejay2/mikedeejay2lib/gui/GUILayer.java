@@ -18,23 +18,54 @@ import java.util.List;
  */
 public class GUILayer
 {
-    // The 2D array of items that this layer stores
+    /**
+     * The 2D array of items that this layer stores
+     */
     protected GUIItem[][] items;
-    // The amount of rows that this layer has
+
+    /**
+     * The amount of rows that this layer has
+     */
     protected int inventoryRows;
-    // The amount of columns that this layer has
+
+    /**
+     * The amount of columns that this layer has
+     */
     protected int inventoryCols;
-    // This layer's name
+
+    /**
+     * This layer's name
+     */
     protected String layerName;
-    // The default move state of this layer
+
+    /**
+     * The default move state of this layer
+     */
     protected boolean defaultMoveState;
-    // Whether this layer is visible or not
+
+    /**
+     * Whether this layer is visible or not
+     */
     protected boolean visible;
-    // Whether this layer is an overlay layer or not
+
+    /**
+     * Whether this layer is an overlay layer or not
+     */
     protected boolean overlay;
-    // A reference to the parent GUI
+
+    /**
+     * A reference to the parent GUI
+     */
     protected GUIContainer gui;
 
+    /**
+     * Construct a new <code>GUILayer</code>
+     *
+     * @param gui              A reference to the parent GUI
+     * @param layerName        The name of the layer
+     * @param overlay          Whether this layer is an overlay layer or not
+     * @param defaultMoveState The default move state of this layer
+     */
     public GUILayer(GUIContainer gui, String layerName, boolean overlay, boolean defaultMoveState)
     {
         this.gui = gui;
@@ -467,6 +498,11 @@ public class GUILayer
         return (slot % GUIContainer.MAX_INVENTORY_COLS) + 1 + gui.getColOffset();
     }
 
+    /**
+     * Get the parent GUI of this layer
+     *
+     * @return The parent GUI
+     */
     public GUIContainer getGUI()
     {
         return gui;

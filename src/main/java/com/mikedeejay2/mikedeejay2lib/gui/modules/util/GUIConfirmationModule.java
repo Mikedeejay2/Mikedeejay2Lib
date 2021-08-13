@@ -12,11 +12,21 @@ import org.bukkit.entity.Player;
  */
 public class GUIConfirmationModule implements GUIModule
 {
-    // The confirm item
+    /**
+     * The confirm <code>GUIItem</code>
+     */
     protected GUIItem confirmItem;
-    // The deny item
+    /**
+     * The deny <code>GUIItem</code>
+     */
     protected GUIItem denyItem;
 
+    /**
+     * Construct a new <code>GUIConfirmationModule</code>
+     *
+     * @param confirmItem The confirm <code>GUIItem</code>
+     * @param denyItem    The deny <code>GUIItem</code>
+     */
     public GUIConfirmationModule(GUIItem confirmItem, GUIItem denyItem)
     {
         this.confirmItem = confirmItem;

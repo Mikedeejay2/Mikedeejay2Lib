@@ -8,5 +8,10 @@ package com.mikedeejay2.mikedeejay2lib.gui;
 @FunctionalInterface
 public interface GUIConstructor
 {
+    /**
+     * Get a newly constructed {@link GUIContainer}. Constructed when this method is called.
+     *
+     * @return A new {@link GUIContainer}
+     */
     GUIContainer get();
 }

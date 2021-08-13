@@ -15,19 +15,44 @@ import java.util.List;
  */
 public class GUITreeNode
 {
-    // A list of the node children
+    /**
+     * A list of the node children
+     */
     protected List<GUITreeNode> children;
-    // The item to display
+
+    /**
+     * The item to display
+     */
     protected GUIItem item;
-    // The branch item that will be used from the parent to this child node
+
+    /**
+     * The branch item that will be used from the parent to this child node
+     */
     protected GUIItem branchItem;
-    // The row to display this node at - relative if a child node
+
+    /**
+     * The row to display this node at - relative if a child node
+     */
     protected int row;
-    // The column to display this node at - relative if a child node
+
+    /**
+     * The column to display this node at - relative if a child node
+     */
     protected int col;
-    // The Branch Type to display
+
+    /**
+     * The {@link BranchType} to display
+     */
     protected BranchType branchType;
 
+    /**
+     * Construct a new <code>GUITreeNode</code>
+     *
+     * @param item The item to display
+     * @param row The row to display this node at - relative if a child node
+     * @param col The column to display this node at - relative if a child node
+     * @param type The {@link BranchType} to display
+     */
     public GUITreeNode(GUIItem item, int row, int col, BranchType type)
     {
         this.children = new ArrayList<>();
@@ -169,21 +194,28 @@ public class GUITreeNode
         this.col = col;
     }
 
+    /**
+     * Build the children of this node. Render the branches and items of all children of thi node.
+     *
+     * @param layer  The {@link GUILayer} to set items on
+     * @param curRow The current row of this node
+     * @param curCol The current column of this node
+     */
     public void buildChildren(GUILayer layer, int curRow, int curCol)
     {
         for(GUITreeNode node : children)
         {
             GUIItem nodeItem = node.getItem();
-            int     nodeRow  = curRow + node.getRow();
-            int     nodeCol  = curCol + node.getCol();
+            int nodeRow = curRow + node.getRow();
+            int nodeCol = curCol + node.getCol();
             layer.setItem(nodeRow, nodeCol, nodeItem);
 
-            GUIItem    nodeBranchItem = node.getBranchItem();
+            GUIItem nodeBranchItem = node.getBranchItem();
             BranchType nodeBranchType = node.getBranchType();
-            int        startRow       = Math.min(curRow, nodeRow);
-            int        endRow         = Math.max(curRow, nodeRow);
-            int        startCol       = Math.min(curCol, nodeCol);
-            int        endCol         = Math.max(curCol, nodeCol);
+            int startRow = Math.min(curRow, nodeRow);
+            int endRow   = Math.max(curRow, nodeRow);
+            int startCol = Math.min(curCol, nodeCol);
+            int endCol   = Math.max(curCol, nodeCol);
 
             switch(nodeBranchType)
             {

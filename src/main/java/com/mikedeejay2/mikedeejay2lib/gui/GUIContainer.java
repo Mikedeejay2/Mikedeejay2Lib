@@ -21,7 +21,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A flexible, over engineered GUI. The main way of adding onto this GUI
+ * A flexible, over-engineered GUI. The main way of adding onto this GUI
  * is by creating or using a {@link GUIModule} so that this GUIContainer
  * does more than nothing.
  *
@@ -33,38 +33,86 @@ public class GUIContainer
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // The default (Minecraft) amount of inventory rows
+
+    /**
+     * The default (Minecraft) amount of inventory rows
+     */
     public static final int MAX_INVENTORY_ROWS = 6;
-    // The default (Minecraft) amount of inventory columns
+
+    /**
+     * The default (Minecraft) amount of inventory columns
+     */
     public static final int MAX_INVENTORY_COLS = 9;
-    // An empty name so that items that shouldn't have a title have the smallest
-    // title possible for Minecraft (Because you can't specify no specify)
+
+    /**
+     * An empty name so that items that shouldn't have a title have the smallest title possible for Minecraft
+     * (Because you can't specify nothing)
+     */
     public static final String EMPTY_NAME = "§7";
-    // An empty stack, usually a light gray stained glass pane so it's nearly invisible
+
+    /**
+     * An empty stack, usually a light gray stained glass pane so it's nearly invisible
+     */
     protected ItemStack backgroundItem;
-    // The inventory of this GUI
+
+    /**
+     * The inventory of this GUI
+     */
     protected Inventory inventory;
-    // The name of this GUI's inventory
+
+    /**
+     * The name of this GUI's inventory
+     */
     protected String inventoryName;
-    // The amount of slots in this GUI
+
+    /**
+     * The amount of slots in this GUI
+     */
     protected int inventorySlots;
-    // The amount of rows in this GUI
+
+    /**
+     * The amount of rows in this GUI
+     */
     protected int inventoryRows;
-    // The amount of columns in this GUI
+
+    /**
+     * The amount of columns in this GUI
+     */
     protected int inventoryCols;
-    // The layers of this GUI
+
+    /**
+     * The layers of this GUI
+     */
     protected List<GUILayer> layers;
-    // The list of GUIModules that this GUI contains
+
+    /**
+     * The list of GUIModules that this GUI contains
+     */
     protected List<GUIModule> modules;
-    // The default move state of this GUI
+
+    /**
+     * The default move state of this GUI
+     */
     protected boolean defaultMoveState;
-    // The offset of the row
+
+    /**
+     * The offset of the row
+     */
     protected int rowOffset;
-    // The offset of the column
+
+    /**
+     * The offset of the column
+     */
     protected int colOffset;
-    // The item interaction handler
+
+    /**
+     * The {@link GUIInteractHandler}
+     */
     protected GUIInteractHandler interactionHandler;
-    // Boolean for whether non-filled items should be filled in the GUI
+
+    /**
+     * Boolean for whether non-filled items should be filled in the GUI
+     */
     protected boolean fillEmpty;
 
     /**
@@ -125,7 +173,7 @@ public class GUIContainer
 
     /**
      * Calls the open for all modules of this GUI, does not close the
-     * player's GUI however.
+     * player's GUI, however.
      *
      * @param player The player that this GUI will open to
      */
@@ -138,7 +186,7 @@ public class GUIContainer
 
     /**
      * Calls the close for all modules of this GUI, does not close the
-     * player's GUI however.
+     * player's GUI, however.
      *
      * @param player The player that was viewing the GUI
      */
@@ -147,6 +195,11 @@ public class GUIContainer
         modules.forEach(module -> module.onClose(player, this));
     }
 
+    /**
+     * Open this GUI for a specified player
+     *
+     * @param player The player to open the GUI for
+     */
     public void open(Player player)
     {
         PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
@@ -155,6 +208,11 @@ public class GUIContainer
         player.openInventory(inventory);
     }
 
+    /**
+     * Close the GUI for a player
+     *
+     * @param player The player who is currently viewing the GUI
+     */
     public void close(Player player)
     {
         onClose(player);

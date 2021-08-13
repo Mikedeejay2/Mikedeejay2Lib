@@ -20,16 +20,42 @@ public class GUIScrollerModule implements GUIModule
      */
     protected final BukkitPlugin plugin;
 
+    /**
+     * The <code>GUIItem</code> representing the up arrow
+     */
     protected GUIItem upItem;
+
+    /**
+     * The <code>GUIItem</code> representing the down arrow
+     */
     protected GUIItem downItem;
+
+    /**
+     * The <code>GUIItem</code> representing the left arrow
+     */
     protected GUIItem leftItem;
+
+    /**
+     * The <code>GUIItem</code> representing the right arrow
+     */
     protected GUIItem rightItem;
 
+    /**
+     * Construct a new <code>GUIScrollerModule</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     */
     public GUIScrollerModule(BukkitPlugin plugin)
     {
         this.plugin = plugin;
     }
 
+    /**
+     * Generate the UI for the scroller when the GUI opens
+     *
+     * @param player The player that is viewing the GUI
+     * @param gui    The GUI
+     */
     @Override
     public void onOpenHead(Player player, GUIContainer gui)
     {
@@ -78,6 +104,12 @@ public class GUIScrollerModule implements GUIModule
         }
     }
 
+    /**
+     * Update scroller controls on update of the GUI
+     *
+     * @param player The player that is viewing the GUI
+     * @param gui    The GUI
+     */
     @Override
     public void onUpdateHead(Player player, GUIContainer gui)
     {
@@ -97,15 +129,34 @@ public class GUIScrollerModule implements GUIModule
      */
     public static class GUIScrollEvent implements GUIEvent
     {
+        /**
+         * The row amount to scroll on click
+         */
         protected int rowAmt;
+
+        /**
+         * The column amount to scroll on click
+         */
         protected int colAmt;
 
+        /**
+         * Construct a new <code>GUIScrollEvent</code>
+         *
+         * @param rowAmt The row amount to scroll on click
+         * @param colAmt The column amount to scroll on click
+         */
         public GUIScrollEvent(int rowAmt, int colAmt)
         {
             this.rowAmt = rowAmt;
             this.colAmt = colAmt;
         }
 
+        /**
+         * Execute scrolling in the specified direction
+         *
+         * @param event The event of the click
+         * @param gui   The GUI that the event took place in
+         */
         @Override
         public void execute(InventoryClickEvent event, GUIContainer gui)
         {

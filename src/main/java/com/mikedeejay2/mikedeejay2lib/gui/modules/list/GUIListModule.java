@@ -1324,9 +1324,13 @@ public class GUIListModule implements GUIModule
      */
     public enum ListViewMode
     {
-        // Paged mode, the view of the list acts as pages, showing an entirely new page each time
+        /**
+         * Paged mode, the view of the list acts as pages, showing an entirely new page each time
+         */
         PAGED,
-        // Scroll mode, the view of the list acts as a scroll bar, moving one at a time
+        /**
+         * Scroll mode, the view of the list acts as a scroll bar, moving one at a time
+         */
         SCROLL
         ;
     }

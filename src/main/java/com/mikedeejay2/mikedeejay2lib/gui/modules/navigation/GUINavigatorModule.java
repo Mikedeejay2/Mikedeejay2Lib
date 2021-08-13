@@ -64,6 +64,12 @@ public class GUINavigatorModule implements GUIModule
         this.navigationID = navigationID;
     }
 
+    /**
+     * Generate the navigation UI on open
+     *
+     * @param player The player that is viewing the GUI
+     * @param gui    The GUI
+     */
     @Override
     public void onOpenHead(Player player, GUIContainer gui)
     {
@@ -99,8 +105,6 @@ public class GUINavigatorModule implements GUIModule
                                                           .get());
         }
     }
-
-
 
     /**
      * Checks whether the GUI is using a navigation system and if so calculate the forward
@@ -265,16 +269,27 @@ public class GUINavigatorModule implements GUIModule
      */
     public static class GUINavBackEvent implements GUIEvent
     {
-     /**
-     * The {@link BukkitPlugin} instance
-     */
-    protected final BukkitPlugin plugin;
+        /**
+         * The {@link BukkitPlugin} instance
+         */
+        protected final BukkitPlugin plugin;
 
+        /**
+         * Construct a new <code>GUINavBackEvent</code>
+         *
+         * @param plugin The {@link BukkitPlugin} instance
+         */
         public GUINavBackEvent(BukkitPlugin plugin)
         {
             this.plugin = plugin;
         }
 
+        /**
+         * Execute navigating the GUI back through history
+         *
+         * @param event The event of the click
+         * @param gui   The GUI that the event took place in
+         */
         @Override
         public void execute(InventoryClickEvent event, GUIContainer gui)
         {
@@ -300,15 +315,26 @@ public class GUINavigatorModule implements GUIModule
     public static class GUINavForwardEvent implements GUIEvent
     {
         /**
-     * The {@link BukkitPlugin} instance
-     */
-    protected final BukkitPlugin plugin;
+         * The {@link BukkitPlugin} instance
+         */
+        protected final BukkitPlugin plugin;
 
+        /**
+         * Construct a new <code>GUINavForwardEvent</code>
+         *
+         * @param plugin The {@link BukkitPlugin} instance
+         */
         public GUINavForwardEvent(BukkitPlugin plugin)
         {
             this.plugin = plugin;
         }
 
+        /**
+         * Execute navigating the GUI forward through history
+         *
+         * @param event The event of the click
+         * @param gui   The GUI that the event took place in
+         */
         @Override
         public void execute(InventoryClickEvent event, GUIContainer gui)
         {

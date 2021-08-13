@@ -17,9 +17,14 @@ import java.util.List;
  */
 public class GUITreeModule implements GUIModule
 {
-    // The list of nodes that this tree module displays
+    /**
+     * The list of nodes that this tree module displays
+     */
     protected List<GUITreeNode> nodes;
 
+    /**
+     * Construct a new <code>GUITreeModule</code>
+     */
     public GUITreeModule()
     {
         this.nodes = new ArrayList<>();
@@ -59,7 +64,7 @@ public class GUITreeModule implements GUIModule
     /**
      * Remove a node from the tree
      *
-     * @param node THe node to remove
+     * @param node The node to remove
      */
     public void removeNode(GUITreeNode node)
     {
@@ -67,7 +72,7 @@ public class GUITreeModule implements GUIModule
     }
 
     /**
-     * Return whether this tree contains a node in it's root level
+     * Return whether this tree contains a node in its root level
      *
      * @param node The node to search for
      * @return Whether this tree contains a node
