@@ -56,4 +56,51 @@ public final class Colors implements IColorFormatter
         }
         return result;
     }
+
+    /**
+     * Format a message using Minecraft's legacy color codes
+     * <p>
+     * Also add a reset to the beginning of the text. Used for negating Minecraft's default lore italics
+     *
+     * @param message The input string to be formatted
+     * @return The string formatted with Minecraft color codes
+     */
+    public static String formatR(String message)
+    {
+        return ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message);
+    }
+
+    /**
+     * Format an array of messages using Minecraft's legacy color codes
+     *
+     * @param messages The input array of strings to be formatted
+     * @return The string array formatted with Minecraft color codes
+     */
+    public static String[] formatR(String... messages)
+    {
+        String[] result = new String[messages.length];
+        for(int i = 0; i < messages.length; ++i)
+        {
+            result[i] = formatR(messages[i]);
+        }
+        return result;
+    }
+
+    /**
+     * Format a list of messages using Minecraft's legacy color codes
+     * <p>
+     * Also add a reset to the beginning of the text. Used for negating Minecraft's default lore italics
+     *
+     * @param messages The input list of strings to be formatted
+     * @return The string list formatted with Minecraft color codes
+     */
+    public static List<String> formatR(List<String> messages)
+    {
+        List<String> result = new ArrayList<>();
+        for(String message : messages)
+        {
+            result.add(formatR(message));
+        }
+        return result;
+    }
 }
