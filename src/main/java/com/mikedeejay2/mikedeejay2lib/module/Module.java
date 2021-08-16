@@ -8,7 +8,9 @@ package com.mikedeejay2.mikedeejay2lib.module;
  */
 public abstract class Module implements ModuleInterface
 {
-    // Whether the module is enabled or not
+    /**
+     * Whether the module is enabled or not
+     */
     private boolean isEnabled;
 
     /**
