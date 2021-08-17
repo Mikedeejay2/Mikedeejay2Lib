@@ -4,6 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.scheduler.BukkitRunnable;
 import org.bukkit.scheduler.BukkitTask;
+import org.jetbrains.annotations.NotNull;
 
 /**
  * EnhancedRunnable does several things on top of BukkitRunnable.
@@ -21,14 +22,26 @@ import org.bukkit.scheduler.BukkitTask;
  */
 public abstract class EnhancedRunnable extends BukkitRunnable
 {
-    // Current count of the amount of times that this runnable has been run
+    /**
+     * Current count of the amount of times that this runnable has been run
+     */
     protected long count;
-    // The end count, the count that the runnable should stop at. If 0, don't stop.
+
+    /**
+     * The end count, the count that the runnable should stop at. If 0, don't stop.
+     */
     protected long endCount;
-    // A reference to the period of this runnable
+
+    /**
+     * A reference to the period of this runnable
+     */
     protected long period;
-    // A reference to the delay of this runnable
+
+    /**
+     * A reference to the delay of this runnable
+     */
     protected long delay;
+
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -105,7 +118,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @return a BukkitTask that contains the id number
      */
     @Override
-    public synchronized BukkitTask runTask(Plugin plugin)
+    public synchronized @NotNull BukkitTask runTask(Plugin plugin)
     {
         this.plugin = (BukkitPlugin) plugin;
         return super.runTask(plugin);
@@ -118,7 +131,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @return a BukkitTask that contains the id number
      */
     @Override
-    public synchronized BukkitTask runTaskAsynchronously(Plugin plugin)
+    public synchronized @NotNull BukkitTask runTaskAsynchronously(Plugin plugin)
     {
         this.plugin = (BukkitPlugin) plugin;
         return super.runTaskAsynchronously(plugin);
@@ -132,7 +145,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @return a BukkitTask that contains the id number
      */
     @Override
-    public synchronized BukkitTask runTaskLater(Plugin plugin, long delay)
+    public synchronized @NotNull BukkitTask runTaskLater(Plugin plugin, long delay)
     {
         this.plugin = (BukkitPlugin) plugin;
         this.delay = delay;
@@ -145,7 +158,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param plugin the reference to the plugin scheduling task
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskLater(Plugin plugin)
+    public synchronized @NotNull BukkitTask runTaskLater(Plugin plugin)
     {
         this.plugin = (BukkitPlugin) plugin;
         return this.runTaskLater(plugin, 0);
@@ -159,7 +172,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @return a BukkitTask that contains the id number
      */
     @Override
-    public synchronized BukkitTask runTaskLaterAsynchronously(Plugin plugin, long delay)
+    public synchronized @NotNull BukkitTask runTaskLaterAsynchronously(Plugin plugin, long delay)
     {
         this.plugin = (BukkitPlugin) plugin;
         this.delay = delay;
@@ -172,7 +185,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param plugin the reference to the plugin scheduling task
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskLaterAsynchronously(Plugin plugin)
+    public synchronized @NotNull BukkitTask runTaskLaterAsynchronously(Plugin plugin)
     {
         this.plugin = (BukkitPlugin) plugin;
         return this.runTaskLaterAsynchronously(plugin, 0);
@@ -187,7 +200,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @return a BukkitTask that contains the id number
      */
     @Override
-    public synchronized BukkitTask runTaskTimer(Plugin plugin, long delay, long period)
+    public synchronized @NotNull BukkitTask runTaskTimer(Plugin plugin, long delay, long period)
     {
         this.plugin = (BukkitPlugin) plugin;
         this.delay = delay;
@@ -201,7 +214,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param plugin the reference to the plugin scheduling task
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimer(Plugin plugin)
+    public synchronized @NotNull BukkitTask runTaskTimer(Plugin plugin)
     {
         this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimer(plugin, 0, 0);
@@ -214,7 +227,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param period the ticks to wait between runs
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimer(Plugin plugin, long period)
+    public synchronized @NotNull BukkitTask runTaskTimer(Plugin plugin, long period)
     {
         this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimer(plugin, 0, period);
@@ -229,7 +242,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @return a BukkitTask that contains the id number
      */
     @Override
-    public synchronized BukkitTask runTaskTimerAsynchronously(Plugin plugin, long delay, long period)
+    public synchronized @NotNull BukkitTask runTaskTimerAsynchronously(Plugin plugin, long delay, long period)
     {
         this.plugin = (BukkitPlugin) plugin;
         this.delay = delay;
@@ -243,7 +256,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param plugin the reference to the plugin scheduling task
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerAsynchronously(Plugin plugin)
+    public synchronized @NotNull BukkitTask runTaskTimerAsynchronously(Plugin plugin)
     {
         this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimerAsynchronously(plugin, 0, 0);
@@ -256,7 +269,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param period the ticks to wait between runs
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerAsynchronously(Plugin plugin, long period)
+    public synchronized @NotNull BukkitTask runTaskTimerAsynchronously(Plugin plugin, long period)
     {
         this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimerAsynchronously(plugin, 0, period);
@@ -272,7 +285,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param count  the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerCounted(Plugin plugin, long delay, long period, long count)
+    public synchronized @NotNull BukkitTask runTaskTimerCounted(Plugin plugin, long delay, long period, long count)
     {
         this.plugin = (BukkitPlugin) plugin;
         this.delay = delay;
@@ -288,7 +301,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param plugin the reference to the plugin scheduling task
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerCounted(Plugin plugin)
+    public synchronized @NotNull BukkitTask runTaskTimerCounted(Plugin plugin)
     {
         this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimerCounted(plugin, 0, 0, 0);
@@ -302,7 +315,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param count the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerCounted(Plugin plugin, long count)
+    public synchronized @NotNull BukkitTask runTaskTimerCounted(Plugin plugin, long count)
     {
         this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimerCounted(plugin, 0, 0, count);
@@ -317,7 +330,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param count  the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerCounted(Plugin plugin, long period, long count)
+    public synchronized @NotNull BukkitTask runTaskTimerCounted(Plugin plugin, long period, long count)
     {
         this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimerCounted(plugin, 0, period, count);
@@ -333,7 +346,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param count  the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin, long delay, long period, long count)
+    public synchronized @NotNull BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin, long delay, long period, long count)
     {
         this.plugin = (BukkitPlugin) plugin;
         this.delay = delay;
@@ -349,7 +362,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param plugin the reference to the plugin scheduling task
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin)
+    public synchronized @NotNull BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin)
     {
         this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimerCountedAsynchronously(plugin, 0, 0, 0);
@@ -363,7 +376,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param count the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin, long count)
+    public synchronized @NotNull BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin, long count)
     {
         this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimerCountedAsynchronously(plugin, 0, 0, count);
@@ -378,7 +391,7 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      * @param count  the amount of times that this runnable should be run before it is stopped
      * @return a BukkitTask that contains the id number
      */
-    public synchronized BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin, long period, long count)
+    public synchronized @NotNull BukkitTask runTaskTimerCountedAsynchronously(Plugin plugin, long period, long count)
     {
         this.plugin = (BukkitPlugin) plugin;
         return this.runTaskTimerCountedAsynchronously(plugin, 0, period, count);
@@ -414,16 +427,31 @@ public abstract class EnhancedRunnable extends BukkitRunnable
         this.endCount = endCount;
     }
 
+    /**
+     * Get the run period of this runnable
+     *
+     * @return The period
+     */
     public long getPeriod()
     {
         return period;
     }
 
+    /**
+     * Get the run delay of this runnable
+     *
+     * @return The delay
+     */
     public long getDelay()
     {
         return delay;
     }
 
+    /**
+     * Get the {@link BukkitPlugin} instance
+     *
+     * @return The {@link BukkitPlugin} instance
+     */
     public BukkitPlugin getPlugin()
     {
         return plugin;
