@@ -16,11 +16,22 @@ import org.bukkit.entity.Player;
  */
 public class ActionBarFrame
 {
-    // The String of text that this frame holds
+    /**
+     * The String of text that this frame holds
+     */
     protected String text;
-    // The period (in ticks) of this frame
+
+    /**
+     * The period (in ticks) of this frame
+     */
     protected long period;
 
+    /**
+     * Construct a new <code>ActionBarFrame</code>
+     *
+     * @param text   The String of text that this frame holds
+     * @param period The period (in ticks) of this frame
+     */
     public ActionBarFrame(String text, long period)
     {
         this.text = Colors.format(text);

@@ -20,17 +20,33 @@ import java.util.List;
  */
 public class ActionBarRuntime extends EnhancedRunnable
 {
-    // The array of players to print the action bar to
+    /**
+     * The array of players to print the action bar to
+     */
     protected Player[] players;
-    // The parent action bar
+    /**
+     * The parent action bar
+     */
     protected ActionBar actionBar;
-    // The current index of this action bar
+    /**
+     * The current index of this action bar
+     */
     protected int curIndex;
-    // The current wait time of this action bar
+    /**
+     * The current wait time of this action bar
+     */
     protected int wait;
-    // Whether this action bar is on its first run or not
+    /**
+     * Whether this action bar is on its first run or not
+     */
     protected boolean firstRun;
 
+    /**
+     * Construct a new <code>ActionBarRuntime</code>
+     *
+     * @param actionBar The {@link ActionBar} parent
+     * @param players The array of players to print the action bar to
+     */
     public ActionBarRuntime(ActionBar actionBar, Player... players)
     {
         this.players = players;

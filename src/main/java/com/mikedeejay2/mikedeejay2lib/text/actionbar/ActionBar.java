@@ -19,15 +19,32 @@ public class ActionBar
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // Whether the frames of the action bar will loop or not
+
+    /**
+     * Whether the frames of the action bar will loop or not
+     */
     protected boolean loop;
-    // The list of frames of the action bar
+
+    /**
+     * The list of frames of the action bar
+     */
     protected List<ActionBarFrame> frames;
-    // The action bar runtime, null if not displayed yet
+
+    /**
+     * The action bar runtime, null if not displayed yet
+     */
     protected ActionBarRuntime runtime;
-    // The list of action bar modules of the action bar
+
+    /**
+     * The list of action bar modules of the action bar
+     */
     protected List<ActionBarModule> modules;
 
+    /**
+     * Construct a new <code>ActionBar</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     */
     public ActionBar(BukkitPlugin plugin)
     {
         this.plugin = plugin;
@@ -35,6 +52,12 @@ public class ActionBar
         this.modules = new ArrayList<>();
     }
 
+    /**
+     * Construct a new <code>ActionBar</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     * @param loop   Whether the frames of the action bar will loop or not
+     */
     public ActionBar(BukkitPlugin plugin, boolean loop)
     {
         this.plugin = plugin;
@@ -213,9 +236,9 @@ public class ActionBar
     }
 
     /**
-     * Add an <code>ActionBarModule</code> to this action bar
+     * Add an {@link ActionBarModule} to this action bar
      *
-     * @param module The <code>ActionBarModule</code> to add
+     * @param module The {@link ActionBarModule} to add
      * @return The current <code>ActionBar</code>
      */
     public ActionBar addModule(ActionBarModule module)
@@ -225,9 +248,9 @@ public class ActionBar
     }
 
     /**
-     * Add a <code>ActionBarModule</code> to this action bar at a specified index
+     * Add a {@link ActionBarModule} to this action bar at a specified index
      *
-     * @param module The <code>ActionBarModule</code> to add
+     * @param module The {@link ActionBarModule} to add
      * @param index  The index to add the module at
      * @return The current <code>ActionBar</code>
      */
@@ -238,7 +261,7 @@ public class ActionBar
     }
 
     /**
-     * Remove an <code>ActionBarModule</code> from this action bar based off of a reference to the module
+     * Remove an {@link ActionBarModule} from this action bar based off of a reference to the module
      *
      * @param module The module to remove
      * @return The current <code>ActionBar</code>
@@ -250,7 +273,7 @@ public class ActionBar
     }
 
     /**
-     * Remove an <code>ActionBarModule</code> from this action bar based off of the module's index
+     * Remove an {@link ActionBarModule} from this action bar based off of the module's index
      *
      * @param index The index of the module to remove
      * @return The current <code>ActionBar</code>
@@ -262,10 +285,10 @@ public class ActionBar
     }
 
     /**
-     * See whether this <code>ActionBar</code> contains a specific <code>ActionBarModule</code>
+     * See whether this <code>ActionBar</code> contains a specific {@link ActionBarModule}
      *
-     * @param module The <code>ActionBarModule</code> to search for
-     * @return Whether the <code>ActionBarModule</code> was found or not
+     * @param module The {@link ActionBarModule} to search for
+     * @return Whether the {@link ActionBarModule} was found or not
      */
     public boolean containsModule(ActionBarModule module)
     {
@@ -273,10 +296,10 @@ public class ActionBar
     }
 
     /**
-     * See whether this <code>ActionBar</code> contains the class of an <code>ActionBarModule</code>
+     * See whether this <code>ActionBar</code> contains the class of an {@link ActionBarModule}
      *
      * @param moduleClass The class of the module to search for
-     * @return Whether the <code>ActionBarModule</code> was found or not
+     * @return Whether the {@link ActionBarModule} was found or not
      */
     public boolean containsModule(Class<? extends ActionBarModule> moduleClass)
     {
@@ -288,10 +311,10 @@ public class ActionBar
     }
 
     /**
-     * Get an <code>ActionBarModule</code> based off of the index of the module
+     * Get an {@link ActionBarModule} based off of the index of the module
      *
      * @param index The index to get the module from
-     * @return The requested <code>ActionBarModule</code>
+     * @return The requested {@link ActionBarModule}
      */
     public ActionBarModule getModule(int index)
     {
@@ -299,11 +322,11 @@ public class ActionBar
     }
 
     /**
-     * Get an <code>ActionBarModule</code> based off of the class type of the module
+     * Get an {@link ActionBarModule} based off of the class type of the module
      *
      * @param moduleClass The class of the module to get
      * @param <T>         The class type of the module
-     * @return The a <code>ActionBarModule</code> of the specified class, null if not found
+     * @return The a {@link ActionBarModule} of the specified class, null if not found
      */
     public <T extends ActionBarModule> T getModule(Class<? extends ActionBarModule> moduleClass)
     {

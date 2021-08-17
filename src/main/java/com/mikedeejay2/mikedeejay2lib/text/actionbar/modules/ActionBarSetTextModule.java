@@ -11,7 +11,9 @@ import com.mikedeejay2.mikedeejay2lib.text.actionbar.ActionBarFrame;
  */
 public class ActionBarSetTextModule implements ActionBarModule
 {
-    // The String of text that the action bar will be changed to
+    /**
+     * The String of text that the action bar will be changed to
+     */
     protected String text;
 
     /**
@@ -22,6 +24,12 @@ public class ActionBarSetTextModule implements ActionBarModule
         this.text = text;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param bar   The <code>ActionBarSystem</code> being ticked
+     * @param frame The frame that the action bar is on
+     */
     @Override
     public void onTick(ActionBar bar, ActionBarFrame frame)
     {
