@@ -26,28 +26,60 @@ public class BossBarSystem
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // The title text of the boss bar
+
+    /**
+     * The title text of the boss bar
+     */
     protected String title;
-    // The boss bar itself
+
+    /**
+     * The boss bar itself
+     */
     protected BossBar bar;
-    // The color of the boss bar
+
+    /**
+     * The color of the boss bar
+     */
     protected BarColor color;
-    // The style of the boss bar
+
+    /**
+     * The style of the boss bar
+     */
     protected BarStyle style;
-    // The list of BarFlags of the boss bar
+
+    /**
+     * The list of BarFlags of the boss bar
+     */
     protected List<BarFlag> flags;
-    // The set of players that can see this boss bar
+
+    /**
+     * The set of players that can see this boss bar
+     */
     protected Set<Player> players;
-    // The progress of the boss bar (0.0 - 1.0)
+
+    /**
+     * The progress of the boss bar (0.0 - 1.0)
+     */
     protected double progress;
-    // The boss bar runtime
+
+    /**
+     * The boss bar runtime
+     */
     protected BossBarRuntime runtime;
-    // Whether the boss bar is visible or not
+
+    /**
+     * Whether the boss bar is visible or not
+     */
     protected boolean visible;
-    // The list of boss bar modules that this system has
+
+    /**
+     * The list of boss bar modules that this system has
+     */
     protected List<BossBarModule> modules;
 
     /**
+     * Construct a new <code>BossBarSystem</code>
+     *
      * @param plugin   A reference to the plugin
      * @param title    The title String of the boss bar
      * @param color    The <code>BarColor</code> of the boss bar

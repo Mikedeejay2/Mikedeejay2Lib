@@ -17,16 +17,29 @@ import java.util.Map;
  */
 public abstract class BossBarFrameModule<T> implements BossBarModule
 {
-    // The list of map entries of frames
+    /**
+     * The list of map entries of frames
+     */
     protected List<Map.Entry<Long, T>> frames;
-    // The current index of the frames (runtime variable)
+
+    /**
+     * The current index of the frames (runtime variable)
+     */
     protected int curIndex;
-    // The current wait time of the frames (runtime variables)
+
+    /**
+     * The current wait time of the frames (runtime variables)
+     */
     protected int wait;
-    // Whether this module should loop the frames or not
+
+    /**
+     * Whether this module should loop the frames or not
+     */
     protected boolean loop;
 
     /**
+     * Construct a new <code>BossBarFrameModule</code>
+     *
      * @param loop Whether this module should loop the frames or not
      */
     public BossBarFrameModule(boolean loop)

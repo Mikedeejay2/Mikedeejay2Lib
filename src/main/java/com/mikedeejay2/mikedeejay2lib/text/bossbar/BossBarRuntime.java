@@ -16,13 +16,26 @@ import java.util.List;
  */
 public class BossBarRuntime extends EnhancedRunnable
 {
-    // The boss bar system that this runtime controls
+    /**
+     * The boss bar system that this runtime controls
+     */
     protected BossBarSystem system;
-    // The boss bar object
+
+    /**
+     * The boss bar object
+     */
     protected BossBar bar;
-    // The list of BossBarModules of this system
+
+    /**
+     * The list of BossBarModules of this system
+     */
     protected List<BossBarModule> modules;
 
+    /**
+     * Construct a new <code>BossBarRuntime</code>
+     *
+     * @param bar The boss bar object
+     */
     public BossBarRuntime(BossBarSystem bar)
     {
         this.system = bar;
