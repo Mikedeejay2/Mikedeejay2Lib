@@ -10,10 +10,14 @@ import java.util.regex.Pattern;
 /**
  * A more advanced form of {@link Colors} that does the following:
  * <ul>
- *     <li>Convert alternate color codes to their respective colors (<code>"*AND*c"</code> = red, <code>"*AND*1"</code> = blue)</li>
- *     <li>Convert hex codes to their respective colors if the version if 1.16 or above (<code>#ff0000</code> = red, <code>#0000ff</code> = blue)</li>
- *     <li>Convert color shortcuts (see {@link ColorShortcut}) to their respective colors (<code>%red%</code> = red, <code>%blue%</code> = blue)</li>
- *     <li>Ability to use placeholder formatting for hex codes and color shortcuts (<code>%ff0000%</code> = red, <code>%b%</code> = blue)</li>
+ *     <li>Convert alternate color codes to their respective colors
+ *     (<code>"&amp;c"</code> -&gt; red, <code>"&amp;1"</code> -&gt; blue)</li>
+ *     <li>Convert hex codes to their respective colors if the version if 1.16 or above
+ *     (<code>#ff0000</code> -&gt; red, <code>#0000ff</code> -&gt; blue)</li>
+ *     <li>Convert color shortcuts (see {@link ColorShortcut}) to their respective colors
+ *     (<code>%red%</code> -&gt; red, <code>%blue%</code> -&gt; blue)</li>
+ *     <li>Ability to use placeholder formatting for hex codes and color shortcuts
+ *     (<code>%ff0000%</code> -&gt; red, <code>%b%</code> -&gt; blue)</li>
  * </ul>
  *
  * @author Mikedeejay2
@@ -40,7 +44,7 @@ public final class ColorFormatterAdvanced implements IColorFormatter
     /**
      * Format all alternative color codes in the message.
      * <p>
-     * For example, <code>"*AND*c"</code> will become a red color, <code>"*AND*1"</code> will become a blue color.
+     * For example, <code>"&amp;c"</code> will become a red color, <code>"&amp;1"</code> will become a blue color.
      * <p>
      * Color codes are converted using {@link ChatColor#translateAlternateColorCodes(char, String)}
      * 
@@ -116,7 +120,7 @@ public final class ColorFormatterAdvanced implements IColorFormatter
     /**
      * Format hex, alternate color codes, AND color shortcuts.
      * <p>
-     * For example, <code>"*AND*c"</code> would be an alternate color code that would translate to red,
+     * For example, <code>"&amp;c"</code> would be an alternate color code that would translate to red,
      * while <code>#0000ff</code> would be a hex code that would translate to a blue color.
      * Placeholders can also be used for hex and color shortcuts, such as <code>%ff0000%</code> would
      * translate to red while <code>%blue%</code> would translate to blue.

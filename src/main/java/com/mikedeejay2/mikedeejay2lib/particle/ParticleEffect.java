@@ -76,12 +76,12 @@ public class ParticleEffect
     protected boolean updated;
 
     /**
-     * The delay of showing this effect (delay <= 0 will ignore delay)
+     * The delay of showing this effect (delay &lt;= 0 will ignore delay)
      */
     protected long delay;
 
     /**
-     * The amount of times that this effect will be visible (count <= 0 will always be visible)
+     * The amount of times that this effect will be visible (count &lt;= 0 will always be visible)
      */
     protected long count;
 

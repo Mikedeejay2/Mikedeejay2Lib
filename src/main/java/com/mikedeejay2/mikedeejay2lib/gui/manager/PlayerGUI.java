@@ -47,6 +47,12 @@ public class PlayerGUI
      */
     protected boolean guiChange;
 
+    /**
+     * Construct a new <code>PlayerGUI</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     * @param player The player of this PlayerGUI
+     */
     public PlayerGUI(BukkitPlugin plugin, Player player)
     {
         this.plugin = plugin;
