@@ -737,6 +737,11 @@ public class GUIListModule implements GUIModule
         return searchItem;
     }
 
+    /**
+     * Set the item that represents the search button
+     *
+     * @param searchItem The new search item
+     */
     public void setSearchItem(GUIItem searchItem)
     {
         this.searchItem = searchItem;

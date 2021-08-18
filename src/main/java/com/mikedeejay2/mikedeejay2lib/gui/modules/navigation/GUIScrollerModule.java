@@ -13,6 +13,11 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
+/**
+ * A module that allows for the scrolling of large GUIs.
+ *
+ * @author Mikedeejay2
+ */
 public class GUIScrollerModule implements GUIModule
 {
     /**

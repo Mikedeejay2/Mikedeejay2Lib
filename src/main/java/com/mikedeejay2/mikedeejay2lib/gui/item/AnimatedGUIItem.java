@@ -326,6 +326,12 @@ public class AnimatedGUIItem extends GUIItem
         return frames.get(index).getItem();
     }
 
+    /**
+     * Get the {@link AnimationFrame} of the specified index
+     *
+     * @param index The index to get the frame from
+     * @return The {@link AnimationFrame} of the specified index
+     */
     public AnimationFrame getFrame(int index)
     {
         return frames.get(index);

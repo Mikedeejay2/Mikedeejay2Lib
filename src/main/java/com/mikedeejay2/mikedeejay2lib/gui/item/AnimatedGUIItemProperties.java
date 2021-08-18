@@ -2,6 +2,11 @@ package com.mikedeejay2.mikedeejay2lib.gui.item;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 
+/**
+ * Holds properties relating to an {@link AnimatedGUIItem}, such as it's frame index, wait times, position, and layer.
+ *
+ * @author Mikedeejay2
+ */
 public class AnimatedGUIItemProperties
 {
     /**
@@ -35,7 +40,7 @@ public class AnimatedGUIItemProperties
     protected GUILayer layer;
 
     /**
-     *
+     * Construct a new <code>AnimatedGUIItemProperties</code>
      *
      * @param startingIndex The index that the animation should start on
      * @param row The row that this item is located on
