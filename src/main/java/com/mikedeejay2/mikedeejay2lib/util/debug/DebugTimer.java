@@ -13,14 +13,25 @@ import java.util.*;
  */
 public final class DebugTimer
 {
-    // The time that the debug timer was started
-    protected long startTime;
-    // The list of entries that this timer holds
-    protected List<TimerEntry> entries;
-    // The name of this timer
-    protected String name;
-    // The overall difference from internal processing
-    protected long overallDifference;
+    /**
+     * The time that the debug timer was started
+     */
+    private final long startTime;
+
+    /**
+     * The list of entries that this timer holds
+     */
+    private final List<TimerEntry> entries;
+
+    /**
+     * The name of this timer
+     */
+    private final String name;
+
+    /**
+     * The overall difference from internal processing
+     */
+    private long overallDifference;
 
     public DebugTimer(String name)
     {
@@ -103,5 +114,76 @@ public final class DebugTimer
     public void printReport()
     {
         printReport(2);
+    }
+
+
+    /**
+     * A timer's entry (A point to be printed)
+     *
+     * @author Mikedeejay2
+     */
+    private static class TimerEntry
+    {
+        /**
+         * The time of the entry
+         */
+        protected long time;
+
+        /**
+         * The name of the entry
+         */
+        protected String name;
+
+        /**
+         * Construct a new <code>TimerEntry</code>
+         *
+         * @param name The name of the entry
+         * @param time The time of the entry
+         */
+        public TimerEntry(String name, long time)
+        {
+            this.time = time;
+            this.name = name;
+        }
+
+        /**
+         * Get the time
+         *
+         * @return The time
+         */
+        public long getTime()
+        {
+            return time;
+        }
+
+        /**
+         * Get the name
+         *
+         * @return The name
+         */
+        public String getName()
+        {
+            return name;
+        }
+
+        /**
+         * Set the time
+         *
+         * @param time The new time
+         */
+        public void setTime(long time)
+        {
+            this.time = time;
+        }
+
+        /**
+         * Set the name
+         *
+         * @param name The new name
+         */
+        public void setName(String name)
+        {
+            this.name = name;
+        }
     }
 }
