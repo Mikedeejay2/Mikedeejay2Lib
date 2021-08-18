@@ -56,6 +56,11 @@ public class GUIEventHandler implements Cloneable
         return events;
     }
 
+    /**
+     * Set the list of events that this object holds
+     *
+     * @param events The new list of events
+     */
     public void setEvents(List<GUIEvent> events)
     {
         this.events = events;
