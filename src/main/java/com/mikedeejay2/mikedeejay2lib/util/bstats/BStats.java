@@ -14,9 +14,22 @@ public class BStats
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
+
+    /**
+     * The BStats ID
+     */
     protected int id;
+
+    /**
+     * The BStats {@link Metrics} object
+     */
     protected Metrics bStats;
 
+    /**
+     * Construct a new <code>BStats</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     */
     public BStats(BukkitPlugin plugin)
     {
         this.plugin = plugin;

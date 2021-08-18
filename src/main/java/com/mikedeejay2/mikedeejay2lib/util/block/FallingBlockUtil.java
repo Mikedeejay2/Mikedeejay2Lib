@@ -10,6 +10,11 @@ import org.bukkit.util.Vector;
 
 import java.util.Random;
 
+/**
+ * Small utility class used for converting existing blocks into {@link FallingBlock}s.
+ *
+ * @author Mikedeejay2
+ */
 public final class FallingBlockUtil
 {
     private static final Random random = new Random();

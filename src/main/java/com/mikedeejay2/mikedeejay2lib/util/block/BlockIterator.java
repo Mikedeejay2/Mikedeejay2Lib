@@ -10,6 +10,12 @@ import org.bukkit.block.Block;
 import java.util.List;
 import java.util.function.Predicate;
 
+/**
+ * Utility class used for iterating through blocks of a <code>World</code>. Allows for different shapes and type
+ * predicates during iteration with the use of a {@link BlockConsumer}
+ *
+ * @author Mikedeejay2
+ */
 public class BlockIterator
 {
     /**
