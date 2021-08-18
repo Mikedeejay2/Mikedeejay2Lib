@@ -11,13 +11,26 @@ import org.bukkit.util.Vector;
  */
 public class ParticleSSubRotation implements ParticleSModule
 {
+    /**
+     * The rotation <code>Vector</code>
+     */
     protected Vector vector;
 
+    /**
+     * Construct a new <code>ParticleSSubRotation</code>
+     *
+     * @param vector The rotation <code>Vector</code>
+     */
     public ParticleSSubRotation(Vector vector)
     {
         this.vector = vector;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param effect The <code>ParticleSystem</code>
+     */
     @Override
     public void onUpdateHead(ParticleSystem effect)
     {

@@ -28,31 +28,76 @@ public class ParticleSystem
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // The list of particle effects
+
+    /**
+     * The list of particle effects
+     */
     protected List<ParticleEffect> effects;
-    // The global scale vector for this system
+
+    /**
+     * The global scale vector for this system
+     */
     protected Vector scaleVec;
-    // The global rotation vector for this system
+
+    /**
+     * The global rotation vector for this system
+     */
     protected Vector rotationVec;
-    // The global translation vector for this system
+
+    /**
+     * The global translation vector for this system
+     */
     protected Vector translationVec;
-    // The origin location of this system (For global transformations)
+
+    /**
+     * The origin location of this system (For global transformations)
+     */
     protected Location origin;
-    // The world that this system is located in (From origin location)
+
+    /**
+     * The world that this system is located in (From origin location)
+     */
     protected World world;
-    // The amount of ticks that the particle will play for
+
+    /**
+     * The amount of ticks that the particle will play for
+     */
     protected long playTicks;
-    // The tick rate (refresh rate) of the particle system
+
+    /**
+     * The tick rate (refresh rate) of the particle system
+     */
     protected long tickRate;
-    // The update rate (rate at which transformations are updated) of the particle system
+
+    /**
+     * The update rate (rate at which transformations are updated) of the particle system
+     */
     protected long updateRate;
-    // This particle system's particle runtime for displaying the particles
+
+    /**
+     * This particle system's particle runtime for displaying the particles
+     */
     protected ParticleRuntime runtime;
-    // The list of global particle system modules
+
+    /**
+     * The list of global particle system modules
+     */
     protected List<ParticleSModule> modules;
-    // Whether the transformations are up to date on the display
+
+    /**
+     * Whether the transformations are up to date on the display
+     */
     protected boolean updated;
 
+    /**
+     * Construct a new <code>ParticleSystem</code>
+     *
+     * @param plugin     The {@link BukkitPlugin} instance
+     * @param origin     The origin location of this system (For global transformations)
+     * @param playTicks  The amount of ticks that the particle will play for
+     * @param tickRate   The tick rate (refresh rate) of the particle system
+     * @param updateRate The update rate (rate at which transformations are updated) of the particle system
+     */
     public ParticleSystem(BukkitPlugin plugin, Location origin, long playTicks, long tickRate, long updateRate)
     {
         this.plugin = plugin;
@@ -68,11 +113,26 @@ public class ParticleSystem
         this.updated = true;
     }
 
+    /**
+     * Construct a new <code>ParticleSystem</code>
+     *
+     * @param plugin     The {@link BukkitPlugin} instance
+     * @param origin     The origin location of this system (For global transformations)
+     * @param playTicks  The amount of ticks that the particle will play for
+     * @param tickRate   The tick rate (refresh rate) of the particle system
+     */
     public ParticleSystem(BukkitPlugin plugin, Location origin, long playTicks, long tickRate)
     {
         this(plugin, origin, playTicks, tickRate, 0);
     }
 
+    /**
+     * Construct a new <code>ParticleSystem</code>
+     *
+     * @param plugin     The {@link BukkitPlugin} instance
+     * @param origin     The origin location of this system (For global transformations)
+     * @param playTicks  The amount of ticks that the particle will play for
+     */
     public ParticleSystem(BukkitPlugin plugin, Location origin, long playTicks)
     {
         this(plugin, origin, playTicks, 0, 0);

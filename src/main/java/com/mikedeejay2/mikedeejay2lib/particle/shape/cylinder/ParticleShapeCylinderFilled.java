@@ -14,16 +14,29 @@ import java.util.List;
  */
 public class ParticleShapeCylinderFilled implements ParticleShape
 {
-    // The center location
+    /**
+     * The center location
+     */
     protected Location location;
-    // The radius
+
+    /**
+     * The radius
+     */
     protected double radius;
-    // The height
+
+    /**
+     * The density of particles
+     */
     protected double density;
-    // The density of particles
+
+    /**
+     * The height
+     */
     protected double height;
 
     /**
+     * Construct a new <code>ParticleShapeCylinderFilled</code>
+     *
      * @param location The center location
      * @param radius   The radius
      * @param height   The height
@@ -37,6 +50,11 @@ public class ParticleShapeCylinderFilled implements ParticleShape
         this.height = height;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return The vector list
+     */
     @Override
     public List<Vector> getShape()
     {

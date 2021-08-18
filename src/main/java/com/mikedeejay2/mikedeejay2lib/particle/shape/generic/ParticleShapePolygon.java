@@ -14,16 +14,29 @@ import java.util.List;
  */
 public class ParticleShapePolygon implements ParticleShape
 {
-    // The center location
+    /**
+     * The center location
+     */
     protected Location location;
-    // The density of particles
+
+    /**
+     * The density of particles
+     */
     protected double density;
-    // The amount of edges of the shape
+
+    /**
+     * The amount of edges of the shape
+     */
     protected int edges;
-    // The size (radius)
+
+    /**
+     * The size (radius)
+     */
     protected double size;
 
     /**
+     * Construct a new <code>ParticleShapePolygon</code>
+     *
      * @param location The center location
      * @param size     The size (radius)
      * @param density  The density of particles
@@ -37,6 +50,11 @@ public class ParticleShapePolygon implements ParticleShape
         this.size = size;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return The vector list
+     */
     @Override
     public List<Vector> getShape()
     {

@@ -20,35 +20,82 @@ import java.util.List;
  */
 public class ParticleEffect
 {
-    // The list of particle shapes
+    /**
+     * The list of particle shapes
+     */
     protected List<ParticleShape> shapes;
-    // The particle data for displaying the particles
+
+    /**
+     * The particle data for displaying the particles
+     */
     protected ParticleData particleData;
-    // The vectors of untranslated (baked) vectors
+
+    /**
+     * The vectors of untranslated (baked) vectors
+     */
     protected List<Vector> untranslatedVecs;
-    // The vectors of translated vectors
+
+    /**
+     * The vectors of translated vectors
+     */
     protected List<Vector> translatedVecs;
-    // The scale vector for this effect
+
+    /**
+     * The scale vector for this effect
+     */
     protected Vector scaleVec;
-    // The rotation vector for this effect
+
+    /**
+     * The rotation vector for this effect
+     */
     protected Vector rotationVec;
-    // The translation vector for this effect
+
+    /**
+     * The translation vector for this effect
+     */
     protected Vector translationVec;
-    // The origin location
+
+    /**
+     * The origin location
+     */
     protected Location origin;
-    // The world (from the origin location)
+
+    /**
+     * The world (from the origin location)
+     */
     protected World world;
-    // Whether this effect has been baked yet
+
+    /**
+     * Whether this effect has been baked yet
+     */
     protected boolean baked;
-    // Whether this effect has been updated to the latest translations
+
+    /**
+     * Whether this effect has been updated to the latest translations
+     */
     protected boolean updated;
-    // The delay of showing this effect (delay <= 0 will ignore delay)
+
+    /**
+     * The delay of showing this effect (delay <= 0 will ignore delay)
+     */
     protected long delay;
-    // The amount of times that this effect will be visible (count <= 0 will always be visible)
+
+    /**
+     * The amount of times that this effect will be visible (count <= 0 will always be visible)
+     */
     protected long count;
-    // The list of effect modules
+
+    /**
+     * The list of effect modules
+     */
     protected List<ParticleEModule> modules;
 
+    /**
+     * Construct a new <code>ParticleEffect</code>
+     *
+     * @param origin       The origin location
+     * @param particleData The particle data for displaying the particles
+     */
     public ParticleEffect(Location origin, ParticleData particleData)
     {
         this.shapes = new ArrayList<>();
@@ -369,9 +416,9 @@ public class ParticleEffect
         Vector sysScaleVec       = system.getScaleVec();
         Vector sysRotationVec    = system.getRotationVec();
         Vector sysTranslationVec = system.getTranslationVec();
-        double rotX              = sysRotationVec.getX();
-        double rotY              = sysRotationVec.getY();
-        double rotZ              = sysRotationVec.getZ();
+        double rotX = sysRotationVec.getX();
+        double rotY = sysRotationVec.getY();
+        double rotZ = sysRotationVec.getZ();
         for(Vector vector : translatedVecs)
         {
             if(sysScaleVec.getX() != 1.0 || sysScaleVec.getY() != 1.0 || sysScaleVec.getZ() != 1.0)

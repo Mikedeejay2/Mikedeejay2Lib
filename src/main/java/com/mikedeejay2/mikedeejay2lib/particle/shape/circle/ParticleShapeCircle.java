@@ -14,14 +14,24 @@ import java.util.List;
  */
 public class ParticleShapeCircle implements ParticleShape
 {
-    // The center location
+    /**
+     * The center location
+     */
     protected Location location;
-    // The radius
+
+    /**
+     * The radius
+     */
     protected double radius;
-    // The density of particles
+
+    /**
+     * The density of particles
+     */
     protected double density;
 
     /**
+     * Construct a new <code>ParticleShapeCircle</code>
+     *
      * @param location The center location
      * @param radius   The radius
      * @param density  The density of particles
@@ -33,6 +43,11 @@ public class ParticleShapeCircle implements ParticleShape
         this.radius = radius;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return The vector list
+     */
     @Override
     public List<Vector> getShape()
     {

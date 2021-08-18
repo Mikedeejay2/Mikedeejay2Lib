@@ -14,26 +14,51 @@ import java.util.List;
  */
 public class ParticleShapeCubeOutline implements ParticleShape
 {
-    // The center location
+    /**
+     * The center location
+     */
     protected Location location;
-    // The density of particles
+
+    /**
+     * The density of particles
+     */
     protected double density;
-    // The X width
+
+    /**
+     * The X width
+     */
     protected double xWidth;
-    // The Y width
+
+    /**
+     * The Y width
+     */
     protected double yWidth;
-    // The Z width
+
+    /**
+     * The Z width
+     */
     protected double zWidth;
-    // First location
+
+    /**
+     * First location
+     */
     protected Location loc1;
-    // Second location
+
+    /**
+     * Second location
+     */
     protected Location loc2;
-    // The mode of the cube
-    // true - Dual location method
-    // false - Widths method
+
+    /**
+     * The mode of the cube
+     * <code>true</code> - Dual location method
+     * <code>false</code> - Widths method
+     */
     boolean mode;
 
     /**
+     * Construct a new <code>ParticleShapeCubeOutline</code>
+     *
      * @param location The center location
      * @param xWidth   The X width
      * @param yWidth   The Y width
@@ -51,6 +76,8 @@ public class ParticleShapeCubeOutline implements ParticleShape
     }
 
     /**
+     * Construct a new <code>ParticleShapeCubeOutline</code>
+     *
      * @param loc1    First location
      * @param loc2    Second location
      * @param density The density of particles
@@ -63,6 +90,11 @@ public class ParticleShapeCubeOutline implements ParticleShape
         this.mode = true;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return The vector list
+     */
     @Override
     public List<Vector> getShape()
     {

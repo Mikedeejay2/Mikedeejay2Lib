@@ -11,13 +11,26 @@ import org.bukkit.util.Vector;
  */
 public class ParticleSAddScale implements ParticleSModule
 {
+    /**
+     * The rotation <code>Vector</code>
+     */
     protected Vector vector;
 
+    /**
+     * Construct a new <code>ParticleSAddScale</code>
+     *
+     * @param vector The rotation <code>Vector</code>
+     */
     public ParticleSAddScale(Vector vector)
     {
         this.vector = vector;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param effect The <code>ParticleSystem</code>
+     */
     @Override
     public void onUpdateHead(ParticleSystem effect)
     {

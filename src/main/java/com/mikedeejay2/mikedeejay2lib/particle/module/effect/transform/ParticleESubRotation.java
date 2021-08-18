@@ -11,13 +11,26 @@ import org.bukkit.util.Vector;
  */
 public class ParticleESubRotation implements ParticleEModule
 {
+    /**
+     * The rotation <code>Vector</code>
+     */
     protected Vector vector;
 
+    /**
+     * Construct a new <code>ParticleESubRotation</code>
+     *
+     * @param vector The rotation <code>Vector</code>
+     */
     public ParticleESubRotation(Vector vector)
     {
         this.vector = vector;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param effect The <code>ParticleEffect</code>
+     */
     @Override
     public void onUpdateHead(ParticleEffect effect)
     {

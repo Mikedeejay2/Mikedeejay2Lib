@@ -9,25 +9,50 @@ import org.bukkit.Particle;
  */
 public class ParticleData
 {
-    // The particle enum
+    /**
+     * The particle enum
+     */
     protected Particle particle;
-    // The count of particles to spawn
+
+    /**
+     * The count of particles to spawn
+     */
     protected int count;
-    // The X offset of the particles
+
+    /**
+     * The X offset of the particles
+     */
     protected double offsetX;
-    // The Y offset of the particles
+
+    /**
+     * The Y offset of the particles
+     */
     protected double offsetY;
-    // The Z offset of the particles
+
+    /**
+     * The Z offset of the particles
+     */
     protected double offsetZ;
-    // The speed of the particles
+
+    /**
+     * The speed of the particles
+     */
     protected double speed;
-    // The data of the particles (if any)
+
+    /**
+     * The data of the particles (if any)
+     */
     protected Object data;
-    // Whether or not to force the particles to render or not
+
+    /**
+     * Whether or not to force the particles to render or not
+     */
     protected boolean force;
 
 
     /**
+     * Construct a new <code>ParticleData</code>
+     *
      * @param particle The particle enum
      * @param count    The count of particles to spawn
      * @param offsetX  The X offset of the particles
@@ -50,6 +75,8 @@ public class ParticleData
     }
 
     /**
+     * Construct a new <code>ParticleData</code>
+     *
      * @param particle The particle enum
      * @param count    The count of particles to spawn
      * @param offsetX  The X offset of the particles
@@ -64,6 +91,8 @@ public class ParticleData
     }
 
     /**
+     * Construct a new <code>ParticleData</code>
+     *
      * @param particle The particle enum
      * @param count    The count of particles to spawn
      * @param offsetX  The X offset of the particles
@@ -78,6 +107,8 @@ public class ParticleData
     }
 
     /**
+     * Construct a new <code>ParticleData</code>
+     *
      * @param particle The particle enum
      * @param count    The count of particles to spawn
      * @param offsetX  The X offset of the particles
@@ -91,6 +122,8 @@ public class ParticleData
     }
 
     /**
+     * Construct a new <code>ParticleData</code>
+     *
      * @param particle The particle enum
      * @param count    The count of particles to spawn
      * @param offsetX  The X offset of the particles
@@ -104,6 +137,8 @@ public class ParticleData
     }
 
     /**
+     * Construct a new <code>ParticleData</code>
+     *
      * @param particle The particle enum
      * @param count    The count of particles to spawn
      * @param speed    The speed of the particles
@@ -116,6 +151,8 @@ public class ParticleData
     }
 
     /**
+     * Construct a new <code>ParticleData</code>
+     *
      * @param particle The particle enum
      * @param count    The count of particles to spawn
      * @param speed    The speed of the particles
@@ -127,6 +164,8 @@ public class ParticleData
     }
 
     /**
+     * Construct a new <code>ParticleData</code>
+     *
      * @param particle The particle enum
      * @param count    The count of particles to spawn
      * @param speed    The speed of the particles
@@ -137,6 +176,8 @@ public class ParticleData
     }
 
     /**
+     * Construct a new <code>ParticleData</code>
+     *
      * @param particle The particle enum
      * @param count    The count of particles to spawn
      * @param force    Whether or not to force the particles to render or not
@@ -147,6 +188,8 @@ public class ParticleData
     }
 
     /**
+     * Construct a new <code>ParticleData</code>
+     *
      * @param particle The particle enum
      * @param count    The count of particles to spawn
      */
@@ -156,6 +199,8 @@ public class ParticleData
     }
 
     /**
+     * Construct a new <code>ParticleData</code>
+     *
      * @param particle The particle enum
      */
     public ParticleData(Particle particle)

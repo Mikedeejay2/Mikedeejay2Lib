@@ -14,14 +14,24 @@ import java.util.List;
  */
 public class ParticleShapeLine implements ParticleShape
 {
-    // The starting location
+    /**
+     * The starting location
+     */
     protected Location start;
-    // The ending location
+
+    /**
+     * The ending location
+     */
     protected Location end;
-    // The density of particles
+
+    /**
+     * The density of particles
+     */
     protected double density;
 
     /**
+     * Construct a new <code>ParticleShapeLine</code>
+     *
      * @param start   The starting location
      * @param end     The ending location
      * @param density The density of particles
@@ -33,6 +43,11 @@ public class ParticleShapeLine implements ParticleShape
         this.density = density;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return The vector list
+     */
     @Override
     public List<Vector> getShape()
     {

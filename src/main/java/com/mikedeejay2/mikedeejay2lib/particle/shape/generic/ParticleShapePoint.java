@@ -16,10 +16,14 @@ import java.util.List;
  */
 public class ParticleShapePoint implements ParticleShape
 {
-    // The location
+    /**
+     * The location
+     */
     protected Location location;
 
     /**
+     * Construct a new <code>ParticleShapePoint</code>
+     *
      * @param location The location
      */
     public ParticleShapePoint(Location location)
@@ -27,6 +31,11 @@ public class ParticleShapePoint implements ParticleShape
         this.location = location;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return The vector list
+     */
     @Override
     public List<Vector> getShape()
     {

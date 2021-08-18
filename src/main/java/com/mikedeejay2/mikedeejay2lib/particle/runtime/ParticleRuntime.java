@@ -10,7 +10,7 @@ import java.util.List;
 /**
  * The runtime which runs and manages displaying particles for <code>ParticleSystems</code>.
  * <p>
- * This runtime should not be declared outside of a <code>ParticleSystem</code>.
+ * This runtime should not be declared outside a <code>ParticleSystem</code>.
  * <p>
  * To create this runtime internally {@link ParticleSystem#display()} should be called which
  * creates this runtime automatically and properly configures this runtime.
@@ -21,15 +21,32 @@ import java.util.List;
  */
 public class ParticleRuntime extends EnhancedRunnable
 {
-    // The particle system that this runtime is controlling
+    /**
+     * The particle system that this runtime is controlling
+     */
     protected ParticleSystem system;
-    // The list of particle effects (from the particle system)
+
+    /**
+     * The list of particle effects (from the particle system)
+     */
     protected List<ParticleEffect> effects;
-    // The rate at which updates occur at the runtime
+
+    /**
+     * The rate at which updates occur at the runtime
+     */
     protected long updateRate;
-    // The current update rate (run-time temporary variable for tracking)
+
+    /**
+     * The current update rate (run-time temporary variable for tracking)
+     */
     protected long curUpdateRate;
 
+    /**
+     * Construct a new <code>ParticleRuntime</code>
+     *
+     * @param system     The particle system that this runtime is controlling
+     * @param updateRate The rate at which updates occur at the runtime
+     */
     public ParticleRuntime(ParticleSystem system, long updateRate)
     {
         super();
@@ -40,7 +57,7 @@ public class ParticleRuntime extends EnhancedRunnable
     }
 
     /**
-     * Overridden <code>onRun()</code> method that processes all of the logic for baking, updating, and
+     * Overridden <code>onRun()</code> method that processes all the logic for baking, updating, and
      * displaying a <code>ParticleSystem</code>. This should run asynchronously.
      */
     @Override
