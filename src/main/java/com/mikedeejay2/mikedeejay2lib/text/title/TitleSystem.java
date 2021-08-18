@@ -17,11 +17,22 @@ public class TitleSystem
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // The list of title frames
+
+    /**
+     * The list of title frames
+     */
     protected List<TitleFrame> frames;
-    // The title frame, will be null if hasn't been displayed yet
+
+    /**
+     * The title frame, will be null if it hasn't been displayed yet
+     */
     protected TitleRuntime runtime;
 
+    /**
+     * Construct a new <code>TitleSystem</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     */
     public TitleSystem(BukkitPlugin plugin)
     {
         this.plugin = plugin;

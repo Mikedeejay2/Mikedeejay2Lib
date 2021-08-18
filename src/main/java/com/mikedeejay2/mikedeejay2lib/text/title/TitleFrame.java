@@ -10,20 +10,39 @@ import org.bukkit.entity.Player;
  */
 public class TitleFrame
 {
-    // The title String of the frame
+    /**
+     * The title String of the frame
+     */
     protected String title;
-    // The subtitle String of the frame
+
+    /**
+     * The subtitle String of the frame
+     */
     protected String subtitle;
-    // The fade in time of the frame
+
+    /**
+     * The fade in time of the frame
+     */
     protected int fadeIn;
-    // The stay time of frame
+
+    /**
+     * The stay time of frame
+     */
     protected int stay;
-    // The fade out time of the frame
+
+    /**
+     * The fade out time of the frame
+     */
     protected int fadeOut;
-    // The maximum period of ticks that the frame is displayed
+
+    /**
+     * The maximum period of ticks that the frame is displayed
+     */
     protected long period;
 
     /**
+     * Construct a new <code>TitleFrame</code>
+     *
      * @param title    The title String of the frame
      * @param subtitle The subtitle String of the frame
      * @param fadeIn   The fade in time of the frame

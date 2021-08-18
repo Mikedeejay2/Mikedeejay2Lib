@@ -14,17 +14,37 @@ import java.util.List;
  */
 public class TitleRuntime extends EnhancedRunnable
 {
-    // The system that this runtime is controlling
+    /**
+     * The system that this runtime is controlling
+     */
     protected TitleSystem system;
-    // The current wait time (run-time variable)
+
+    /**
+     * The current wait time (run-time variable)
+     */
     protected long wait;
-    // Whether this runtime is on its first run or not
+
+    /**
+     * Whether this runtime is on its first run or not
+     */
     protected boolean firstRun;
-    // The current index of the runtime (run-time variable)
+
+    /**
+     * The current index of the runtime (run-time variable)
+     */
     protected int curIndex;
-    // The array of players that this runtime is printing to
+
+    /**
+     * The array of players that this runtime is printing to
+     */
     protected Player[] players;
 
+    /**
+     * Construct a new <code>TitleRuntime</code>
+     *
+     * @param system  The system that this runtime is controlling
+     * @param players The array of players that this runtime is printing to
+     */
     public TitleRuntime(TitleSystem system, Player... players)
     {
         this.system = system;
