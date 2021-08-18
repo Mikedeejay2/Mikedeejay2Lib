@@ -47,6 +47,9 @@ public abstract class EnhancedRunnable extends BukkitRunnable
      */
     protected BukkitPlugin plugin;
 
+    /**
+     * Construct a new <code>EnhancedRunnable</code>
+     */
     public EnhancedRunnable()
     {
         this.count = 0;
