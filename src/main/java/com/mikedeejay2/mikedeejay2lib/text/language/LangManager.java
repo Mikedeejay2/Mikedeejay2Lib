@@ -22,15 +22,30 @@ public class LangManager
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // The default language locale
+
+    /**
+     * The default language locale
+     */
     protected static final String ENGLISH = "en_us";
+
+    /**
+     * The default language locale. By default, {@link LangManager#ENGLISH}
+     */
     private String defaultLang;
 
-    // Hash map of lang locales to lang files
+    /**
+     * Map of lang locales to lang files
+     */
     protected Map<String, JsonFile> langFiles;
+
+    /**
+     * A List of locales that could not be loaded and should not be attempted to be loaded again
+     */
     protected List<String> doNotLoad;
 
-    // Path to the language files
+    /**
+     * Path to the language files
+     */
     protected String filePath;
 
     /**
