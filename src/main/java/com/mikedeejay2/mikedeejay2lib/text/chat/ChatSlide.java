@@ -19,17 +19,34 @@ public class ChatSlide
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // The length of time between this slide and the next slide
+
+    /**
+     * The length of time between this slide and the next slide
+     */
     protected long period;
-    // A list of chat sections
+
+    /**
+     * A list of chat sections
+     */
     protected List<ChatSection> sections;
 
+    /**
+     * Construct a new <code>ChatSlide</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     */
     public ChatSlide(BukkitPlugin plugin)
     {
         this.plugin = plugin;
         this.sections = new ArrayList<>();
     }
 
+    /**
+     * Construct a new <code>ChatSlide</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     * @param period The length of time between this slide and the next slide
+     */
     public ChatSlide(BukkitPlugin plugin, long period)
     {
         this(plugin);

@@ -17,11 +17,24 @@ public class ChatClickModule implements ChatModule
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // The text that the click event will use
+
+    /**
+     * The text that the click event will use
+     */
     protected String clickText;
-    // The action of the click event
+
+    /**
+     * The action of the click event
+     */
     protected ClickEvent.Action action;
 
+    /**
+     * Construct a new <code>ChatClickModule</code>
+     *
+     * @param clickText The text that the click event will use
+     * @param action    The action of the click event
+     * @param plugin    The {@link BukkitPlugin} instance
+     */
     public ChatClickModule(String clickText, ClickEvent.Action action, BukkitPlugin plugin)
     {
         this.clickText = clickText;

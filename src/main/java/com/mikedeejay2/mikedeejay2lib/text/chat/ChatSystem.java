@@ -21,11 +21,22 @@ public class ChatSystem
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // The chat slides that this system contains
+
+    /**
+     * The chat slides that this system contains
+     */
     protected List<ChatSlide> slides;
-    // The animation runtime for this system. Nullable.
+
+    /**
+     * The animation runtime for this system. Nullable.
+     */
     protected ChatAnimRuntime runtime;
 
+    /**
+     * Construct a new <code>ChatSystem</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     */
     public ChatSystem(BukkitPlugin plugin)
     {
         this.plugin = plugin;

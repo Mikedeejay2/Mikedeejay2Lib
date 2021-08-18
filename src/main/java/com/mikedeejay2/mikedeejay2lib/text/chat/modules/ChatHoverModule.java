@@ -17,11 +17,24 @@ public class ChatHoverModule implements ChatModule
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // The text that the hover event will use
+
+    /**
+     * The text that the hover event will use
+     */
     protected String hoverText;
-    // The action of the hover event
+
+    /**
+     * The action of the hover event
+     */
     protected HoverEvent.Action action;
 
+    /**
+     * Construct a new <code>ChatHoverModule</code>
+     *
+     * @param hoverText The text that the hover event will use
+     * @param action    The action of the hover event
+     * @param plugin    The {@link BukkitPlugin} instance
+     */
     public ChatHoverModule(String hoverText, HoverEvent.Action action, BukkitPlugin plugin)
     {
         this.hoverText = hoverText;

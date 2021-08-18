@@ -24,15 +24,32 @@ public class ChatSection
      * The {@link BukkitPlugin} instance
      */
     protected final BukkitPlugin plugin;
-    // The list of Chat Modules for this section
+
+    /**
+     * The list of Chat Modules for this section
+     */
     protected List<ChatModule> modules;
-    // The String of text for this section
+
+    /**
+     * The String of text for this section
+     */
     protected String text;
-    // Whether this section has been baked or not
+
+    /**
+     * Whether this section has been baked or not
+     */
     protected boolean baked;
-    // The baked array of components for this section
+
+    /**
+     * The baked array of components for this section
+     */
     protected BaseComponent[] components;
 
+    /**
+     * Construct a new <code>ChatSection</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     */
     public ChatSection(BukkitPlugin plugin)
     {
         this.plugin = plugin;

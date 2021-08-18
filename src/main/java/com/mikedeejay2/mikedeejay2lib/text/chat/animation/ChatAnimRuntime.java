@@ -15,19 +15,42 @@ import java.util.List;
  */
 public class ChatAnimRuntime extends EnhancedRunnable
 {
-    // The chat system of this runnable
+    /**
+     * The chat system of this runnable
+     */
     protected ChatSystem system;
-    // The list of slides that this runtime animates through
+
+    /**
+     * The list of slides that this runtime animates through
+     */
     protected List<ChatSlide> slides;
-    // The current wait time of the animation
+
+    /**
+     * The current wait time of the animation
+     */
     protected long wait;
-    // The current frame index of the animation
+
+    /**
+     * The current frame index of the animation
+     */
     protected int index;
-    // The list of command senders to receive the slides
+
+    /**
+     * The list of command senders to receive the slides
+     */
     protected CommandSender[] receivers;
-    // Whether this is the runtimes first run or not
+
+    /**
+     * Whether this is the runtimes first run or not
+     */
     protected boolean firstRun;
 
+    /**
+     * Construct a new <code>ChatAnimRuntime</code>
+     *
+     * @param system    The chat system of this runnable
+     * @param receivers The list of command senders to receive the slides
+     */
     public ChatAnimRuntime(ChatSystem system, CommandSender... receivers)
     {
         this.system = system;
