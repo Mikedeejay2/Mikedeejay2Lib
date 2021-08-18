@@ -24,6 +24,11 @@ public class ListenerManager
      */
     private final List<Listener> listeners;
 
+    /**
+     * Construct a new <code>ListenerManager</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     */
     public ListenerManager(BukkitPlugin plugin)
     {
         this.plugin = plugin;
