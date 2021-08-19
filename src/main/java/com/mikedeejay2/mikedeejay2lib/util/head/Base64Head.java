@@ -836,13 +836,24 @@ public enum Base64Head
     QUESTION_MARK_BLACK     ("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvNDZiYTYzMzQ0ZjQ5ZGQxYzRmNTQ4OGU5MjZiZjNkOWUyYjI5OTE2YTZjNTBkNjEwYmI0MGE1MjczZGM4YzgyIn19fQ=="),
     ;
 
+    /**
+     * The base 64 String of the head
+     */
     private final String base64;
 
+    /**
+     * @param base64 The base 64 String of the head
+     */
     Base64Head(String base64)
     {
         this.base64 = base64;
     }
 
+    /**
+     * Get the base 64 String of the head
+     *
+     * @return The base 64 String of the head
+     */
     public String get()
     {
         return base64;

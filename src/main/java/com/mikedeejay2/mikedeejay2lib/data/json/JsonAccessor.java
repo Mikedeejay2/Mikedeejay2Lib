@@ -486,7 +486,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement>
      *
      * @param name  The key name
      * @param clazz The class type to interpret the value as
-     * @param <C>
+     * @param <C>   The type of data to get
      * @return The requested value
      */
     @Override

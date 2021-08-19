@@ -215,6 +215,12 @@ public final class FileIO
         Bukkit.getLogger().log(Level.SEVERE, "The file \"" + filePath + "\" could not be loaded!", exception);
     }
 
+    /**
+     * Helper method for printing "The file {filePath} could not be saved!"
+     *
+     * @param filePath  Path to print
+     * @param exception The exception that was thrown
+     */
     public static void logFileCouldNotBeSaved(String filePath, Exception exception)
     {
         Bukkit.getLogger().log(Level.SEVERE, "The file \"" + filePath + "\" could not be saved!", exception);

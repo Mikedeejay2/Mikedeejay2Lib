@@ -33,6 +33,11 @@ public final class DebugTimer
      */
     private long overallDifference;
 
+    /**
+     * Construct a new <code>DebugTimer</code>
+     *
+     * @param name The name of this timer
+     */
     public DebugTimer(String name)
     {
         this.name = name;
