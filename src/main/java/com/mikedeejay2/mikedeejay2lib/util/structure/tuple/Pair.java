@@ -17,6 +17,9 @@ import java.util.Map;
  */
 public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, R>>, Serializable
 {
+    /**
+     * Internal serial version unique ID
+     */
     private static final long serialVersionUID = 1L;
 
     /**
@@ -33,6 +36,12 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
      */
     public abstract R getRight();
 
+    /**
+     * Compare one pair to another
+     *
+     * @param other The other <code>Pair</code> to compare
+     * @return The comparison result
+     */
     @Override
     public int compareTo(Pair<L, R> other)
     {
@@ -49,6 +58,12 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
         return comparison;
     }
 
+    /**
+     * Get whether this pair equals another object
+     *
+     * @param obj The other object
+     * @return true if this object is the same as the obj argument; false otherwise.
+     */
     @Override
     public boolean equals(Object obj)
     {
@@ -74,6 +89,11 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
         return true;
     }
 
+    /**
+     * To String method
+     *
+     * @return The generated String
+     */
     @Override
     public String toString()
     {

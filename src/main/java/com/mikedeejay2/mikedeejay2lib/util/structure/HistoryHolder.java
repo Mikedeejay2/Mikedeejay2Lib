@@ -11,11 +11,19 @@ import java.util.Stack;
  */
 public class HistoryHolder<T>
 {
-    // The back history stack
+    /**
+     * The back history stack
+     */
     protected Stack<T> back;
-    // The forward history stack
+
+    /**
+     * The forward history stack
+     */
     protected Stack<T> forward;
 
+    /**
+     * Construct a new <code>HistoryHolder</code>
+     */
     public HistoryHolder()
     {
         this.back = new Stack<>();

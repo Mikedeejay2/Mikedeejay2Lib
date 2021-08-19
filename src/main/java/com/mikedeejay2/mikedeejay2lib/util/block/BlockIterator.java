@@ -405,4 +405,22 @@ public class BlockIterator
     {
         iterateBlocks(locs, consumer, plugin, null);
     }
+
+    /**
+     * A simple interface that acts as a consumer that takes
+     * a <code>Block</code> and a <code>Location</code>
+     *
+     * @author Mikedeejay2
+     */
+    @FunctionalInterface
+    public interface BlockConsumer
+    {
+        /**
+         * Accept a block and a location
+         *
+         * @param location The location of the block
+         * @param block    The block
+         */
+        void accept(Location location, Block block);
+    }
 }

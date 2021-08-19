@@ -2,11 +2,21 @@ package com.mikedeejay2.mikedeejay2lib.util.structure;
 
 public class NavigationHolder<T> extends HistoryHolder<T> implements IdentityHolder<String>
 {
-    // The navigation ID
+    /**
+     * The navigation ID
+     */
     protected String navigationID;
-    // Whether navigation has recently occurred
+
+    /**
+     * Whether navigation has recently occurred
+     */
     protected boolean hasNavigated;
 
+    /**
+     * Construct a new <code>NavigationHolder</code>
+     *
+     * @param navigationID The navigation ID
+     */
     public NavigationHolder(String navigationID)
     {
         this.navigationID = navigationID;

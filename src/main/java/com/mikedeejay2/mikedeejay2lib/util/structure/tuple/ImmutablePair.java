@@ -14,9 +14,19 @@ package com.mikedeejay2.mikedeejay2lib.util.structure.tuple;
  */
 public class ImmutablePair<L, R> extends Pair<L, R>
 {
+    /**
+     * Internal serial version unique ID
+     */
     private static final long serialVersionUID = -1270737821267829565L;
 
+    /**
+     * The left value
+     */
     protected final L left;
+
+    /**
+     * The right value
+     */
     protected final R right;
 
     public ImmutablePair(L left, R right)

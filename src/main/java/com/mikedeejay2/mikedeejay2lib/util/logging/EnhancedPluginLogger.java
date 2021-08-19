@@ -16,7 +16,14 @@ import org.apache.logging.log4j.LogManager;
  */
 public class EnhancedPluginLogger extends PluginLogger
 {
+    /**
+     * The root logger from Log4J
+     */
     private final Logger logger;
+
+    /**
+     * The prefix of this plugin logger
+     */
     private String prefix;
 
     /**

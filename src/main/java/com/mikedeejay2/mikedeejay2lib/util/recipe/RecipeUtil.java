@@ -12,27 +12,110 @@ import java.util.*;
 public final class RecipeUtil
 {
     // Internal lists that store all crafting inputs and outputs if using preload
-    private static HashSet<Material> blastingInputs = new HashSet<>();
-    private static HashSet<Material> campfireInputs = new HashSet<>();
-    private static HashSet<Material> furnaceInputs = new HashSet<>();
-    private static HashSet<Material> cookingInputs = new HashSet<>();
-    private static HashSet<Material> merchantInputs = new HashSet<>();
-    private static HashSet<Material> shapedInputs = new HashSet<>();
-    private static HashSet<Material> shapelessInputs = new HashSet<>();
-    private static HashSet<Material> smithingInputs = new HashSet<>();
-    private static HashSet<Material> smokingInputs = new HashSet<>();
-    private static HashSet<Material> stonecuttingInputs = new HashSet<>();
-    private static HashSet<Material> blastingResults = new HashSet<>();
-    private static HashSet<Material> campfireResults = new HashSet<>();
-    private static HashSet<Material> furnaceResults = new HashSet<>();
-    private static HashSet<Material> cookingResults = new HashSet<>();
-    private static HashSet<Material> merchantResults = new HashSet<>();
-    private static HashSet<Material> shapedResults = new HashSet<>();
-    private static HashSet<Material> shapelessResults = new HashSet<>();
-    private static HashSet<Material> smithingResults = new HashSet<>();
-    private static HashSet<Material> smokingResults = new HashSet<>();
-    private static HashSet<Material> stonecuttingResults = new HashSet<>();
-    // Whether RecipeUtil has been preloaded or not
+
+    /**
+     * Internal list for storing all blast furnace inputs
+     */
+    private static final HashSet<Material> blastingInputs = new HashSet<>();
+
+    /**
+     * Internal list for storing all campfire inputs
+     */
+    private static final HashSet<Material> campfireInputs = new HashSet<>();
+
+    /**
+     * Internal list for storing all furnace inputs
+     */
+    private static final HashSet<Material> furnaceInputs = new HashSet<>();
+
+    /**
+     * Internal list for storing all cooking inputs
+     */
+    private static final HashSet<Material> cookingInputs = new HashSet<>();
+
+    /**
+     * Internal list for storing all merchant inputs
+     */
+    private static final HashSet<Material> merchantInputs = new HashSet<>();
+
+    /**
+     * Internal list for storing all shaped recipe inputs
+     */
+    private static final HashSet<Material> shapedInputs = new HashSet<>();
+
+    /**
+     * Internal list for storing all shapeless recipe inputs
+     */
+    private static final HashSet<Material> shapelessInputs = new HashSet<>();
+
+    /**
+     * Internal list for storing all smithing table inputs
+     */
+    private static final HashSet<Material> smithingInputs = new HashSet<>();
+
+    /**
+     * Internal list for storing all smoker inputs
+     */
+    private static final HashSet<Material> smokingInputs = new HashSet<>();
+
+    /**
+     * Internal list for storing all stone cutter inputs
+     */
+    private static final HashSet<Material> stonecuttingInputs = new HashSet<>();
+
+    /**
+     * Internal list for storing all blast furnace results
+     */
+    private static final HashSet<Material> blastingResults = new HashSet<>();
+
+    /**
+     * Internal list for storing all campfire results
+     */
+    private static final HashSet<Material> campfireResults = new HashSet<>();
+
+    /**
+     * Internal list for storing all furnace results
+     */
+    private static final HashSet<Material> furnaceResults = new HashSet<>();
+
+    /**
+     * Internal list for storing all cooking results
+     */
+    private static final HashSet<Material> cookingResults = new HashSet<>();
+
+    /**
+     * Internal list for storing all merchant results
+     */
+    private static final HashSet<Material> merchantResults = new HashSet<>();
+
+    /**
+     * Internal list for storing all shaped recipe results
+     */
+    private static final HashSet<Material> shapedResults = new HashSet<>();
+
+    /**
+     * Internal list for storing all shapeless recipe results
+     */
+    private static final HashSet<Material> shapelessResults = new HashSet<>();
+
+    /**
+     * Internal list for storing all smithing table results
+     */
+    private static final HashSet<Material> smithingResults = new HashSet<>();
+
+    /**
+     * Internal list for storing all smoker results
+     */
+    private static final HashSet<Material> smokingResults = new HashSet<>();
+
+    /**
+     * Internal list for storing all stone cutter results
+     */
+    private static final HashSet<Material> stonecuttingResults = new HashSet<>();
+
+    /**
+     * Whether RecipeUtil has been preloaded or not
+     */
     private static boolean preloaded = false;
 
     /**

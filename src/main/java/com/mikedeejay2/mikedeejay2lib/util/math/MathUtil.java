@@ -21,11 +21,34 @@ import java.util.concurrent.TimeUnit;
  */
 public final class MathUtil
 {
+    /**
+     * The time in minutes that the cache should hold values
+     */
     private static final long CACHE_TIME = 10;
+
+    /**
+     * The size of the caches
+     */
     private static final long CACHE_SIZE = 1000;
+
+    /**
+     * Cache that holds values of circle around angles in radians with a radius of 1
+     */
     private static final Cache<Double, Vector> circleCache;
+
+    /**
+     * Cache that holds values of a filled circle in relation to its density
+     */
     private static final Cache<Double, List<Vector>> circleFilledCache;
+
+    /**
+     * Cache that holds hollow spheres in relation to its density
+     */
     private static final Cache<Double, List<Vector>> sphereHollowCache;
+
+    /**
+     * Cache that holds filled spheres in relation to its density
+     */
     private static final Cache<Double, List<Vector>> sphereFilledCache;
 
     static

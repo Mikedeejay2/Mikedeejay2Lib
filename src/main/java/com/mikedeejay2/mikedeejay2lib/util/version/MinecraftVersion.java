@@ -16,13 +16,24 @@ import java.util.regex.Pattern;
  */
 public final class MinecraftVersion
 {
-    // Holds the version string like "1.16.3"
+    /**
+     * Holds the version string like "1.16.3"
+     */
     private static final String versionString;
-    // An array of a Minecraft version like [1, 16, 3]
+
+    /**
+     * An array of a Minecraft version like [1, 16, 3]
+     */
     private static final int[] versionLong;
-    // A short integer of the minor version (i.e 16, 15, 14)
+
+    /**
+     * A short integer of the minor version (i.e 16, 15, 14)
+     */
     private static final int versionShort;
-    // String version of the NMS identifier
+
+    /**
+     * String version of the NMS identifier
+     */
     private static final String versionNMS;
 
     static

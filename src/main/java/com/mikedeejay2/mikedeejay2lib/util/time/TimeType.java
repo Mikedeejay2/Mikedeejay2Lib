@@ -7,9 +7,24 @@ package com.mikedeejay2.mikedeejay2lib.util.time;
  */
 public enum TimeType
 {
+    /**
+     * A single tick. 1/20 of a second.
+     */
     TICK,
+
+    /**
+     * One second. 1/60 of a minute.
+     */
     SECOND,
+
+    /**
+     * One minute. 1/60 of an hour.
+     */
     MINUTE,
+
+    /**
+     * One hour. 60 minutes.
+     */
     HOUR;
 
     /**

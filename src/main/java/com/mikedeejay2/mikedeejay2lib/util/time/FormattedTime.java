@@ -10,9 +10,14 @@ import java.time.format.DateTimeFormatter;
  */
 public final class FormattedTime
 {
-    // The formatter that will format the current time
+    /**
+     * The formatter that will format the current time
+     */
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-    // A reference to the current LocalDateTime
+
+    /**
+     * A reference to the current LocalDateTime
+     */
     private static final LocalDateTime now = LocalDateTime.now();
 
     /**

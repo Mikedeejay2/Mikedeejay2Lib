@@ -11,17 +11,36 @@ import org.bukkit.inventory.*;
 import java.util.AbstractMap;
 import java.util.Map;
 
+/**
+ * Utility class of inventory identifiers and detection methods for fast item checking
+ *
+ * @author Mikedeejay2
+ */
 public final class InventoryIdentifiers
 {
-    // The slot of the offhand (Regular slot)
+    /**
+     * The slot of the offhand (Regular slot)
+     */
     public static final int OFFHAND_SLOT = 40;
-    // The helmet armor slot (Regular slot)
+
+    /**
+     * The helmet armor slot (Regular slot)
+     */
     public static final int HELMET_SLOT = 39;
-    // The chestplate armor slot (Regular slot)
+
+    /**
+     * The chestplate armor slot (Regular slot)
+     */
     public static final int CHESTPLATE_SLOT = 38;
-    // The leggings armor slot (Regular slot)
+
+    /**
+     * The leggings armor slot (Regular slot)
+     */
     public static final int LEGGINGS_SLOT = 37;
-    // The boots armor slot (Regular slot)
+
+    /**
+     * The boots armor slot (Regular slot)
+     */
     public static final int BOOTS_SLOT = 36;
 
     /**

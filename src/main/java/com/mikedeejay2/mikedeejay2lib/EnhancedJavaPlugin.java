@@ -41,7 +41,14 @@ import java.util.logging.Logger;
  */
 public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedPlugin
 {
+    /**
+     * The plugin prefix. Used in the plugin's logger.
+     */
     private String prefix;
+
+    /**
+     * The {@link ClassLoader} of this plugin.
+     */
     private ClassLoader classLoader;
 
     /**
@@ -66,6 +73,9 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onEnable()
     {
@@ -77,6 +87,9 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
         setPrefix(prefix != null ? "[" + prefix + "]" : "[" + this.getDescription().getName() + "] ");
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onDisable()
     {

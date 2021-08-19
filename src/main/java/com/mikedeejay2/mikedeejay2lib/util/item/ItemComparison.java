@@ -5,8 +5,6 @@ import org.bukkit.inventory.meta.ItemMeta;
 
 /**
  * Helper methods for comparing items.
- * Methods are heavily modified forms of CraftBukkit methods modified
- * for use with the standard Bukkit API
  *
  * @author Mikedeejay2
  */
@@ -23,14 +21,7 @@ public final class ItemComparison
     {
         ItemMeta meta1 = stack1.getItemMeta();
         ItemMeta meta2 = stack2.getItemMeta();
-        if(stack1.getType() != stack2.getType())
-        {
-            return false;
-        }
-        if(!meta1.equals(meta2))
-        {
-            return false;
-        }
-        return true;
+        if(stack1.getType() != stack2.getType()) return false;
+        return meta1.equals(meta2);
     }
 }

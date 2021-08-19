@@ -17,55 +17,101 @@ import java.lang.reflect.Field;
  */
 public final class GlowEnchantment extends Enchantment
 {
+    /**
+     * The existing <code>GlowEnchantment</code> instance
+     */
     private static GlowEnchantment enchant;
 
+    /**
+     * Construct a new <code>GlowEnchantment</code>
+     */
     private GlowEnchantment()
     {
         super(new NamespacedKey("mikedeejay2lib", "glow"));
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return null
+     */
     @Override
     public String getName()
     {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return 0
+     */
     @Override
     public int getMaxLevel()
     {
         return 0;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return 0
+     */
     @Override
     public int getStartLevel()
     {
         return 0;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return null
+     */
     @Override
     public EnchantmentTarget getItemTarget()
     {
         return null;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return false
+     */
     @Override
     public boolean isTreasure()
     {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return false
+     */
     @Override
     public boolean isCursed()
     {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return false
+     */
     @Override
     public boolean conflictsWith(Enchantment other)
     {
         return false;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @return false
+     */
     @Override
     public boolean canEnchantItem(ItemStack item)
     {
@@ -107,6 +153,11 @@ public final class GlowEnchantment extends Enchantment
         }
     }
 
+    /**
+     * Get the {@link GlowEnchantment} instance
+     *
+     * @return The <code>GlowEnchant</code> instance
+     */
     public static GlowEnchantment get()
     {
         return enchant;

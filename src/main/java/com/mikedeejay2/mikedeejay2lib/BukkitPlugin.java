@@ -19,9 +19,19 @@ import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
  */
 public abstract class BukkitPlugin extends EnhancedJavaPlugin
 {
+    /**
+     * The Mikedeejay2Lib {@link LangManager}. Used for some miscellaneous texts.
+     */
     private LangManager libLangManager;
+
+    /**
+     * The {@link GUIManager} of this plugin. Used when a GUI is in use.
+     */
     private GUIManager guiManager;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onEnable()
     {
@@ -36,6 +46,9 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin
         this.sendMessage(String.format("&a%s is powered by Mikedeejay2Lib, a collection of open source resources for developers to use.", this.getDescription().getName()));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void onDisable()
     {

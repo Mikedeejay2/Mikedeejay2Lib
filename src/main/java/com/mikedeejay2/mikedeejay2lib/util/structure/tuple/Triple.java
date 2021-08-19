@@ -17,6 +17,9 @@ import java.io.Serializable;
  */
 public abstract class Triple<L, M, R> implements Comparable<Triple<L, M, R>>, Serializable
 {
+    /**
+     * Internal serial version unique ID
+     */
     private static final long serialVersionUID = 1L;
 
     /**
@@ -40,6 +43,12 @@ public abstract class Triple<L, M, R> implements Comparable<Triple<L, M, R>>, Se
      */
     public abstract R getRight();
 
+    /**
+     * Compare one triple to another
+     *
+     * @param other The other <code>Triple</code> to compare
+     * @return The comparison result
+     */
     @Override
     public int compareTo(Triple<L, M, R> other)
     {
@@ -59,6 +68,12 @@ public abstract class Triple<L, M, R> implements Comparable<Triple<L, M, R>>, Se
         return comparison;
     }
 
+    /**
+     * Get whether this triple equals another object
+     *
+     * @param obj The other object
+     * @return true if this object is the same as the obj argument; false otherwise.
+     */
     @Override
     public boolean equals(Object obj)
     {
@@ -92,6 +107,11 @@ public abstract class Triple<L, M, R> implements Comparable<Triple<L, M, R>>, Se
         return true;
     }
 
+    /**
+     * To String method
+     *
+     * @return The generated String
+     */
     @Override
     public String toString()
     {

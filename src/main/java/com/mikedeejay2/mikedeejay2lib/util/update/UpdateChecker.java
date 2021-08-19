@@ -35,15 +35,51 @@ public class UpdateChecker
      */
     protected final BukkitPlugin plugin;
 
+    /**
+     * The username that owns the repository
+     */
     protected String userName;
+
+    /**
+     * The name of the repository
+     */
     protected String repoName;
+
+    /**
+     * The URL to the API link of the repository
+     */
     protected URL url;
+
+    /**
+     * The latest version from the API
+     */
     protected String version;
+
+    /**
+     * The name of the version from the API
+     */
     protected String versionName;
+
+    /**
+     * The relase time from the API
+     */
     protected String releasedTime;
+
+    /**
+     * The direct download URL from the API
+     */
     protected String downloadUrl;
+
+    /**
+     * The {@link JsonObject} of the API information of the repository
+     */
     protected JsonObject json;
 
+    /**
+     * Construct a new <code>UpdateChecker</code>
+     *
+     * @param plugin The {@link BukkitPlugin} instance
+     */
     public UpdateChecker(BukkitPlugin plugin)
     {
         this.plugin = plugin;

@@ -74,4 +74,24 @@ public final class InventoryIterator
             iterateInventory(inventory, consumer, storageOnly, predicate, start, end, increment);
         }
     }
+
+    /**
+     * Consumer-type interface for consuming entries from {@link InventoryIterator}
+     * <p>
+     * Accepts inventory, item stack, and slot.
+     *
+     * @author Mikedeejay2
+     */
+    @FunctionalInterface
+    public interface InventorySlotConsumer
+    {
+        /**
+         * Accept an inventory slot
+         *
+         * @param inventory The inventory
+         * @param itemStack The item stack of the slot
+         * @param slot      The slot number
+         */
+        void accept(Inventory inventory, ItemStack itemStack, int slot);
+    }
 }

@@ -15,10 +15,23 @@ package com.mikedeejay2.mikedeejay2lib.util.structure.tuple;
  */
 public class ImmutableTriple<L, M, R> extends Triple<L, M, R>
 {
+    /**
+     * Internal serial version unique ID
+     */
     private static final long serialVersionUID = -702456999580241256L;
 
+    /**
+     * The left value
+     */
     protected final L left;
+    /**
+     * The middle value
+     */
     protected final M middle;
+
+    /**
+     * The right value
+     */
     protected final R right;
 
     /**
