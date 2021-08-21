@@ -22,7 +22,7 @@ public class GUIGiveItemEvent implements GUIEvent
     /**
      * The item that will be given to the player upon click
      */
-    protected Function<ClickType, ItemStack> itemStack;
+    protected Function<InventoryClickEvent, ItemStack> itemStack;
 
     /**
      * Construct a new <code>GUIGiveItemEvent</code>
@@ -31,7 +31,7 @@ public class GUIGiveItemEvent implements GUIEvent
      */
     public GUIGiveItemEvent(ItemStack itemStack)
     {
-        this.itemStack = (clickType) -> itemStack;
+        this.itemStack = (event) -> itemStack;
     }
 
     /**
@@ -41,7 +41,7 @@ public class GUIGiveItemEvent implements GUIEvent
      */
     public GUIGiveItemEvent(ItemBuilder builder)
     {
-        this.itemStack = (clickType) -> builder.get();
+        this.itemStack = (event) -> builder.get();
     }
 
     /**
@@ -49,7 +49,7 @@ public class GUIGiveItemEvent implements GUIEvent
      *
      * @param function The function that will generate the item that will be given to the player upon click
      */
-    public GUIGiveItemEvent(Function<ClickType, ItemStack> function)
+    public GUIGiveItemEvent(Function<InventoryClickEvent, ItemStack> function)
     {
         this.itemStack = function;
     }
@@ -63,19 +63,8 @@ public class GUIGiveItemEvent implements GUIEvent
     @Override
     public void execute(InventoryClickEvent event, GUIContainer gui)
     {
-        if(!event.isLeftClick()) return;
         Player player = (Player) event.getWhoClicked();
-        player.getInventory().addItem(itemStack.apply(event.getClick()));
-    }
-
-    /**
-     * Get the <code>ItemStack</code> that will be given to the player upon click
-     *
-     * @return The <code>ItemStack</code> that will be given to the player upon click
-     */
-    public ItemStack getItemStack()
-    {
-        return itemStack.apply(ClickType.LEFT);
+        player.getInventory().addItem(itemStack.apply(event));
     }
 
     /**
@@ -93,7 +82,7 @@ public class GUIGiveItemEvent implements GUIEvent
      *
      * @param function The function that will generate the item that will be given to the player upon click
      */
-    public void setItemStack(Function<ClickType, ItemStack> function)
+    public void setItemStack(Function<InventoryClickEvent, ItemStack> function)
     {
         this.itemStack = function;
     }
