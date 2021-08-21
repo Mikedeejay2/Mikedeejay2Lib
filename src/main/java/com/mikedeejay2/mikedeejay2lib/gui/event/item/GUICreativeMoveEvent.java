@@ -19,7 +19,7 @@ import java.util.function.Supplier;
  *
  * @author Mikedeejay2
  */
-public class GUICopyItemEvent implements GUIEvent
+public class GUICreativeMoveEvent implements GUIEvent
 {
     /**
      * The item that will be copied to the player's cursor upon click
@@ -31,7 +31,7 @@ public class GUICopyItemEvent implements GUIEvent
      *
      * @param itemStack The item that will be copied to the player's cursor upon click
      */
-    public GUICopyItemEvent(ItemStack itemStack)
+    public GUICreativeMoveEvent(ItemStack itemStack)
     {
         this.itemStack = () -> itemStack;
     }
@@ -41,7 +41,7 @@ public class GUICopyItemEvent implements GUIEvent
      *
      * @param builder The item that will be copied to the player's cursor upon click
      */
-    public GUICopyItemEvent(ItemBuilder builder)
+    public GUICreativeMoveEvent(ItemBuilder builder)
     {
         this.itemStack = builder::get;
     }
@@ -51,7 +51,7 @@ public class GUICopyItemEvent implements GUIEvent
      *
      * @param supplier The supplier that will generate the item that will be copied to the player's cursor upon click
      */
-    public GUICopyItemEvent(Supplier<ItemStack> supplier)
+    public GUICreativeMoveEvent(Supplier<ItemStack> supplier)
     {
         this.itemStack = supplier;
     }
@@ -70,7 +70,6 @@ public class GUICopyItemEvent implements GUIEvent
         ItemStack item = itemStack.get().clone();
         switch(event.getAction())
         {
-            case SWAP_WITH_CURSOR:
             case PICKUP_ALL:
                 inventory.setCursor(item);
                 break;
@@ -111,6 +110,9 @@ public class GUICopyItemEvent implements GUIEvent
                 droppedItem.setVelocity(location.getDirection().multiply(1.0 / 3.0));
                 break;
             }
+            default:
+                inventory.setCursor(null);
+                break;
         }
     }
 
