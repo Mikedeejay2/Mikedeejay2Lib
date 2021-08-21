@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.gui.event.util;
+package com.mikedeejay2.mikedeejay2lib.gui.event.item;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
