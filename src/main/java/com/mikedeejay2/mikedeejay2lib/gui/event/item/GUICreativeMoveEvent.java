@@ -90,7 +90,7 @@ public class GUICreativeMoveEvent implements GUIEvent
             case HOTBAR_MOVE_AND_READD:
             case HOTBAR_SWAP:
                 item.setAmount(item.getMaxStackSize());
-                inventory.setItem(event.getHotbarButton(), item);
+                inventory.getBottomInventory().setItem(event.getHotbarButton(), item);
                 break;
             case DROP_ALL_SLOT:
             {
