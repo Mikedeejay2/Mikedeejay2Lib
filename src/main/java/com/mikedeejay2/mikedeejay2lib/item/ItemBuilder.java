@@ -209,7 +209,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
     @Override
     public ItemBuilder setName(String name)
     {
-        this.meta.setDisplayName(Colors.format(name));
+        this.meta.setDisplayName(Colors.formatR(name));
         this.changed = true;
         return this;
     }
@@ -909,7 +909,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
     @Override
     public ItemBuilder setLocalizedName(String name)
     {
-        this.meta.setLocalizedName(Colors.format(name));
+        this.meta.setLocalizedName(Colors.formatR(name));
         this.changed = true;
         return this;
     }
