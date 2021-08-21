@@ -9,6 +9,7 @@ import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
+import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
@@ -22,7 +23,7 @@ public class GUIGiveItemEvent implements GUIEvent
     /**
      * The item that will be given to the player upon click
      */
-    protected Function<InventoryClickEvent, ItemStack> itemStack;
+    protected Supplier<ItemStack> itemStack;
 
     /**
      * Construct a new <code>GUIGiveItemEvent</code>
@@ -31,7 +32,7 @@ public class GUIGiveItemEvent implements GUIEvent
      */
     public GUIGiveItemEvent(ItemStack itemStack)
     {
-        this.itemStack = (event) -> itemStack;
+        this.itemStack = () -> itemStack;
     }
 
     /**
@@ -41,17 +42,17 @@ public class GUIGiveItemEvent implements GUIEvent
      */
     public GUIGiveItemEvent(ItemBuilder builder)
     {
-        this.itemStack = (event) -> builder.get();
+        this.itemStack = builder::get;
     }
 
     /**
      * Construct a new <code>GUIGiveItemEvent</code>
      *
-     * @param function The function that will generate the item that will be given to the player upon click
+     * @param supplier The supplier that will generate the item that will be given to the player upon click
      */
-    public GUIGiveItemEvent(Function<InventoryClickEvent, ItemStack> function)
+    public GUIGiveItemEvent(Supplier<ItemStack> supplier)
     {
-        this.itemStack = function;
+        this.itemStack = supplier;
     }
 
     /**
@@ -64,7 +65,17 @@ public class GUIGiveItemEvent implements GUIEvent
     public void execute(InventoryClickEvent event, GUIContainer gui)
     {
         Player player = (Player) event.getWhoClicked();
-        player.getInventory().addItem(itemStack.apply(event));
+        player.getInventory().addItem(itemStack.get());
+    }
+
+    /**
+     * Get the <code>ItemStack</code> that will be given to the player upon click
+     *
+     * @return The <code>ItemStack</code> that will be given to the player upon click
+     */
+    public ItemStack getItemStack()
+    {
+        return itemStack.get();
     }
 
     /**
@@ -74,7 +85,7 @@ public class GUIGiveItemEvent implements GUIEvent
      */
     public void setItemStack(ItemStack itemStack)
     {
-        this.itemStack = (clickType) -> itemStack;
+        this.itemStack = () -> itemStack;
     }
 
     /**
@@ -82,7 +93,7 @@ public class GUIGiveItemEvent implements GUIEvent
      *
      * @param function The function that will generate the item that will be given to the player upon click
      */
-    public void setItemStack(Function<InventoryClickEvent, ItemStack> function)
+    public void setItemStack(Supplier<ItemStack> function)
     {
         this.itemStack = function;
     }
