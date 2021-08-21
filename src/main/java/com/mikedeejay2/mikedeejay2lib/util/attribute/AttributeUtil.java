@@ -293,6 +293,7 @@ public final class AttributeUtil
         if(hasAttributeModifier(attribModifier.getUniqueId(), itemStack))
         {
             removeAttributeModifier(attribModifier.getUniqueId(), itemStack);
+            itemMeta = itemStack.getItemMeta();
         }
         itemMeta.addAttributeModifier(attribute, attribModifier);
         itemStack.setItemMeta(itemMeta);
