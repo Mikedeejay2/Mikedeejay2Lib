@@ -1,10 +1,12 @@
 package com.mikedeejay2.mikedeejay2lib.util.attribute;
 
 import com.google.common.base.Preconditions;
+import org.bukkit.Bukkit;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.inventory.EquipmentSlot;
+import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
@@ -22,12 +24,14 @@ public final class AttributeUtil
      * Get whether an {@link ItemMeta} has a specified {@link AttributeModifier} based off of UUID
      *
      * @param uuid     The UUID of the {@link AttributeModifier}
-     * @param itemMeta The <code>ItemMeta</code> to reference
+     * @param itemStack The <code>ItemStack</code> to reference
      * @return Whether the {@link AttributeModifier} was found or not
      */
-    public static boolean hasAttributeModifier(@NotNull final UUID uuid, ItemMeta itemMeta)
+    public static boolean hasAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack)
     {
-        Preconditions.checkNotNull(uuid, "UUID cannot be null");
+        Preconditions.checkNotNull(uuid, "UUID can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers().values())
@@ -41,14 +45,16 @@ public final class AttributeUtil
      * Get whether an {@link ItemMeta} has a specified {@link AttributeModifier} based off of UUID
      *
      * @param uuid     The UUID of the {@link AttributeModifier}
-     * @param itemMeta The <code>ItemMeta</code> to reference
+     * @param itemStack The <code>ItemStack</code> to reference
      * @param slot     The {@link EquipmentSlot} of the modifier
      * @return Whether the {@link AttributeModifier} was found or not
      */
-    public static boolean hasAttributeModifier(@NotNull final UUID uuid, ItemMeta itemMeta, @NotNull final EquipmentSlot slot)
+    public static boolean hasAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack, @NotNull final EquipmentSlot slot)
     {
-        Preconditions.checkNotNull(uuid, "UUID cannot be null");
-        Preconditions.checkNotNull(slot, "EquipmentSlot cannot be null");
+        Preconditions.checkNotNull(uuid, "UUID can not be null");
+        Preconditions.checkNotNull(slot, "EquipmentSlot can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers(slot).values())
@@ -62,14 +68,16 @@ public final class AttributeUtil
      * Get whether an {@link ItemMeta} has a specified {@link AttributeModifier} based off of UUID
      *
      * @param uuid     The UUID of the {@link AttributeModifier}
-     * @param itemMeta The <code>ItemMeta</code> to reference
+     * @param itemStack The <code>ItemStack</code> to reference
      * @param attribute     The {@link AttributeInstance} of the modifier
      * @return Whether the {@link AttributeModifier} was found or not
      */
-    public static boolean hasAttributeModifier(@NotNull final UUID uuid, ItemMeta itemMeta, @NotNull final Attribute attribute)
+    public static boolean hasAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack, @NotNull final Attribute attribute)
     {
-        Preconditions.checkNotNull(uuid, "UUID cannot be null");
-        Preconditions.checkNotNull(attribute, "Attribute cannot be null");
+        Preconditions.checkNotNull(uuid, "UUID can not be null");
+        Preconditions.checkNotNull(attribute, "Attribute can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers(attribute))
@@ -88,8 +96,8 @@ public final class AttributeUtil
      */
     public static boolean hasAttributeModifier(@NotNull final UUID uuid, @NotNull final AttributeInstance attribute)
     {
-        Preconditions.checkNotNull(uuid, "UUID cannot be null");
-        Preconditions.checkNotNull(attribute, "Attribute cannot be null");
+        Preconditions.checkNotNull(uuid, "UUID can not be null");
+        Preconditions.checkNotNull(attribute, "Attribute can not be null");
         for(AttributeModifier modifier : attribute.getModifiers())
         {
             if(uuid.equals(modifier.getUniqueId())) return true;
@@ -101,12 +109,14 @@ public final class AttributeUtil
      * Get whether an {@link ItemMeta} has a specified {@link AttributeModifier} based off of name
      *
      * @param name     The name of the {@link AttributeModifier}
-     * @param itemMeta The <code>ItemMeta</code> to reference
+     * @param itemStack The <code>ItemStack</code> to reference
      * @return Whether the {@link AttributeModifier} was found or not
      */
-    public static boolean hasAttributeModifier(@NotNull final String name, ItemMeta itemMeta)
+    public static boolean hasAttributeModifier(@NotNull final String name, ItemStack itemStack)
     {
-        Preconditions.checkNotNull(name, "Modifier name cannot be null");
+        Preconditions.checkNotNull(name, "Modifier name can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers().values())
@@ -120,14 +130,16 @@ public final class AttributeUtil
      * Get whether an {@link ItemMeta} has a specified {@link AttributeModifier} based off of name
      *
      * @param name     The name of the {@link AttributeModifier}
-     * @param itemMeta The <code>ItemMeta</code> to reference
+     * @param itemStack The <code>ItemStack</code> to reference
      * @param slot     The {@link EquipmentSlot} of the modifier
      * @return Whether the {@link AttributeModifier} was found or not
      */
-    public static boolean hasAttributeModifier(@NotNull final String name, ItemMeta itemMeta, @NotNull final EquipmentSlot slot)
+    public static boolean hasAttributeModifier(@NotNull final String name, ItemStack itemStack, @NotNull final EquipmentSlot slot)
     {
-        Preconditions.checkNotNull(name, "Modifier name cannot be null");
-        Preconditions.checkNotNull(slot, "EquipmentSlot cannot be null");
+        Preconditions.checkNotNull(name, "Modifier name can not be null");
+        Preconditions.checkNotNull(slot, "EquipmentSlot can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers(slot).values())
@@ -141,14 +153,16 @@ public final class AttributeUtil
      * Get whether an {@link ItemMeta} has a specified {@link AttributeModifier} based off of name
      *
      * @param name     The name of the {@link AttributeModifier}
-     * @param itemMeta The <code>ItemMeta</code> to reference
+     * @param itemStack The <code>ItemStack</code> to reference
      * @param attribute     The {@link AttributeInstance} of the modifier
      * @return Whether the {@link AttributeModifier} was found or not
      */
-    public static boolean hasAttributeModifier(@NotNull final String name, ItemMeta itemMeta, @NotNull final Attribute attribute)
+    public static boolean hasAttributeModifier(@NotNull final String name, ItemStack itemStack, @NotNull final Attribute attribute)
     {
-        Preconditions.checkNotNull(name, "Modifier name cannot be null");
-        Preconditions.checkNotNull(attribute, "Attribute cannot be null");
+        Preconditions.checkNotNull(name, "Modifier name can not be null");
+        Preconditions.checkNotNull(attribute, "Attribute can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers(attribute))
@@ -167,8 +181,8 @@ public final class AttributeUtil
      */
     public static boolean hasAttributeModifier(@NotNull final String name, @NotNull final AttributeInstance attribute)
     {
-        Preconditions.checkNotNull(name, "Modifier name cannot be null");
-        Preconditions.checkNotNull(attribute, "Attribute cannot be null");
+        Preconditions.checkNotNull(name, "Modifier name can not be null");
+        Preconditions.checkNotNull(attribute, "Attribute can not be null");
         for(AttributeModifier modifier : attribute.getModifiers())
         {
             if(name.equals(modifier.getName())) return true;
@@ -180,12 +194,14 @@ public final class AttributeUtil
      * Get whether an {@link ItemMeta} has a specified {@link AttributeModifier} based off of the modifier's instance
      *
      * @param attribModifier The {@link AttributeModifier} reference
-     * @param itemMeta       The <code>ItemMeta</code> to reference
+     * @param itemStack       The <code>ItemStack</code> to reference
      * @return Whether the {@link AttributeModifier} was found or not
      */
-    public static boolean hasAttributeModifier(@NotNull final AttributeModifier attribModifier, ItemMeta itemMeta)
+    public static boolean hasAttributeModifier(@NotNull final AttributeModifier attribModifier, ItemStack itemStack)
     {
-        Preconditions.checkNotNull(attribModifier, "Modifier cannot be null");
+        Preconditions.checkNotNull(attribModifier, "Modifier can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers().values())
@@ -199,14 +215,16 @@ public final class AttributeUtil
      * Get whether an {@link ItemMeta} has a specified {@link AttributeModifier} based off of the modifier's instance
      *
      * @param attribModifier The {@link AttributeModifier} reference
-     * @param itemMeta       The <code>ItemMeta</code> to reference
+     * @param itemStack       The <code>ItemStack</code> to reference
      * @param slot           The {@link EquipmentSlot} of the modifier
      * @return Whether the {@link AttributeModifier} was found or not
      */
-    public static boolean hasAttributeModifier(@NotNull final AttributeModifier attribModifier, ItemMeta itemMeta, @NotNull final EquipmentSlot slot)
+    public static boolean hasAttributeModifier(@NotNull final AttributeModifier attribModifier, ItemStack itemStack, @NotNull final EquipmentSlot slot)
     {
-        Preconditions.checkNotNull(attribModifier, "Modifier cannot be null");
-        Preconditions.checkNotNull(slot, "EquipmentSlot cannot be null");
+        Preconditions.checkNotNull(attribModifier, "Modifier can not be null");
+        Preconditions.checkNotNull(slot, "EquipmentSlot can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers(slot).values())
@@ -220,14 +238,16 @@ public final class AttributeUtil
      * Get whether an {@link ItemMeta} has a specified {@link AttributeModifier} based off of the modifier's instance
      *
      * @param attribModifier The {@link AttributeModifier} reference
-     * @param itemMeta       The <code>ItemMeta</code> to reference
+     * @param itemStack       The <code>ItemStack</code> to reference
      * @param attribute      The {@link AttributeInstance} of the modifier
      * @return Whether the {@link AttributeModifier} was found or not
      */
-    public static boolean hasAttributeModifier(@NotNull final AttributeModifier attribModifier, ItemMeta itemMeta, @NotNull final Attribute attribute)
+    public static boolean hasAttributeModifier(@NotNull final AttributeModifier attribModifier, ItemStack itemStack, @NotNull final Attribute attribute)
     {
-        Preconditions.checkNotNull(attribModifier, "Modifier cannot be null");
-        Preconditions.checkNotNull(attribute, "Attribute cannot be null");
+        Preconditions.checkNotNull(attribModifier, "Modifier can not be null");
+        Preconditions.checkNotNull(attribute, "Attribute can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers(attribute))
@@ -246,8 +266,8 @@ public final class AttributeUtil
      */
     public static boolean hasAttributeModifier(@NotNull final AttributeModifier attribModifier, @NotNull final AttributeInstance attribute)
     {
-        Preconditions.checkNotNull(attribModifier, "Modifier cannot be null");
-        Preconditions.checkNotNull(attribute, "Attribute cannot be null");
+        Preconditions.checkNotNull(attribModifier, "Modifier can not be null");
+        Preconditions.checkNotNull(attribute, "Attribute can not be null");
         for(AttributeModifier modifier : attribute.getModifiers())
         {
             if(attribModifier.equals(modifier)) return true;
@@ -261,18 +281,21 @@ public final class AttributeUtil
      * Includes safety checking: If modifier already exists, replace it.
      *
      * @param attribModifier The {@link AttributeModifier} reference
-     * @param itemMeta       The <code>ItemMeta</code> to reference
+     * @param itemStack       The <code>ItemStack</code> to reference
      * @param attribute      The {@link AttributeInstance} of the modifier
      */
-    public static void addAttributeModifier(@NotNull final AttributeModifier attribModifier, @NotNull ItemMeta itemMeta, @NotNull final Attribute attribute)
+    public static void addAttributeModifier(@NotNull final AttributeModifier attribModifier, @NotNull ItemStack itemStack, @NotNull final Attribute attribute)
     {
-        Preconditions.checkNotNull(attribModifier, "Modifier cannot be null");
-        Preconditions.checkNotNull(itemMeta, "ItemMeta cannot be null");
-        if(hasAttributeModifier(attribModifier.getUniqueId(), itemMeta))
+        Preconditions.checkNotNull(attribModifier, "Modifier can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if(itemMeta == null) itemMeta = Bukkit.getItemFactory().getItemMeta(itemStack.getType());
+        if(hasAttributeModifier(attribModifier.getUniqueId(), itemStack))
         {
-            removeAttributeModifier(attribModifier.getUniqueId(), itemMeta);
+            removeAttributeModifier(attribModifier.getUniqueId(), itemStack);
         }
         itemMeta.addAttributeModifier(attribute, attribModifier);
+        itemStack.setItemMeta(itemMeta);
     }
 
     /**
@@ -285,8 +308,8 @@ public final class AttributeUtil
      */
     public static void addAttributeModifier(@NotNull final AttributeModifier attribModifier, @NotNull final AttributeInstance attribute)
     {
-        Preconditions.checkNotNull(attribModifier, "Modifier cannot be null");
-        Preconditions.checkNotNull(attribute, "Attribute cannot be null");
+        Preconditions.checkNotNull(attribModifier, "Modifier can not be null");
+        Preconditions.checkNotNull(attribute, "Attribute can not be null");
         if(hasAttributeModifier(attribModifier.getUniqueId(), attribute))
         {
             removeAttributeModifier(attribModifier.getUniqueId(), attribute);
@@ -298,13 +321,15 @@ public final class AttributeUtil
      * Remove an {@link AttributeModifier} from an {@link ItemMeta} UUID
      *
      * @param uuid     The UUID of the {@link AttributeModifier}
-     * @param itemMeta The <code>ItemMeta</code> to reference
+     * @param itemStack The <code>ItemStack</code> to reference
      * @return Whether the {@link AttributeModifier} was removed
      */
-    public static boolean removeAttributeModifier(@NotNull final UUID uuid, ItemMeta itemMeta)
+    public static boolean removeAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack)
     {
-        Preconditions.checkNotNull(uuid, "UUID cannot be null");
-        Preconditions.checkNotNull(itemMeta, "ItemMeta cannot be null");
+        Preconditions.checkNotNull(uuid, "UUID can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         for(Map.Entry<Attribute, AttributeModifier> entry : itemMeta.getAttributeModifiers().entries())
         {
@@ -312,6 +337,7 @@ public final class AttributeUtil
             Attribute attribute = entry.getKey();
             if(uuid.equals(modifier.getUniqueId())) {
                 itemMeta.removeAttributeModifier(attribute, modifier);
+                itemStack.setItemMeta(itemMeta);
                 return true;
             }
         }
@@ -322,15 +348,17 @@ public final class AttributeUtil
      * Remove an {@link AttributeModifier} from an {@link ItemMeta} UUID
      *
      * @param uuid     The UUID of the {@link AttributeModifier}
-     * @param itemMeta The <code>ItemMeta</code> to reference
+     * @param itemStack The <code>ItemStack</code> to reference
      * @param slot     The {@link EquipmentSlot} of the modifier
      * @return Whether the {@link AttributeModifier} was removed
      */
-    public static boolean removeAttributeModifier(@NotNull final UUID uuid, ItemMeta itemMeta, @NotNull final EquipmentSlot slot)
+    public static boolean removeAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack, @NotNull final EquipmentSlot slot)
     {
-        Preconditions.checkNotNull(uuid, "UUID cannot be null");
-        Preconditions.checkNotNull(slot, "EquipmentSlot cannot be null");
-        Preconditions.checkNotNull(itemMeta, "ItemMeta cannot be null");
+        Preconditions.checkNotNull(uuid, "UUID can not be null");
+        Preconditions.checkNotNull(slot, "EquipmentSlot can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         for(Map.Entry<Attribute, AttributeModifier> entry : itemMeta.getAttributeModifiers(slot).entries())
         {
@@ -338,6 +366,7 @@ public final class AttributeUtil
             Attribute attribute = entry.getKey();
             if(uuid.equals(modifier.getUniqueId())) {
                 itemMeta.removeAttributeModifier(attribute, modifier);
+                itemStack.setItemMeta(itemMeta);
                 return true;
             }
         }
@@ -348,20 +377,23 @@ public final class AttributeUtil
      * Remove an {@link AttributeModifier} from an {@link ItemMeta} UUID
      *
      * @param uuid      The UUID of the {@link AttributeModifier}
-     * @param itemMeta  The <code>ItemMeta</code> to reference
+     * @param itemStack  The <code>ItemStack</code> to reference
      * @param attribute The {@link AttributeInstance} of the modifier
      * @return Whether the {@link AttributeModifier} was removed
      */
-    public static boolean removeAttributeModifier(@NotNull final UUID uuid, ItemMeta itemMeta, @NotNull final Attribute attribute)
+    public static boolean removeAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack, @NotNull final Attribute attribute)
     {
-        Preconditions.checkNotNull(uuid, "UUID cannot be null");
-        Preconditions.checkNotNull(attribute, "Attribute cannot be null");
-        Preconditions.checkNotNull(itemMeta, "ItemMeta cannot be null");
+        Preconditions.checkNotNull(uuid, "UUID can not be null");
+        Preconditions.checkNotNull(attribute, "Attribute can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers(attribute))
         {
             if(uuid.equals(modifier.getUniqueId())) {
                 itemMeta.removeAttributeModifier(attribute, modifier);
+                itemStack.setItemMeta(itemMeta);
                 return true;
             }
         }
@@ -377,8 +409,8 @@ public final class AttributeUtil
      */
     public static boolean removeAttributeModifier(@NotNull final UUID uuid, @NotNull final AttributeInstance attribute)
     {
-        Preconditions.checkNotNull(uuid, "UUID cannot be null");
-        Preconditions.checkNotNull(attribute, "Attribute cannot be null");
+        Preconditions.checkNotNull(uuid, "UUID can not be null");
+        Preconditions.checkNotNull(attribute, "Attribute can not be null");
         for(AttributeModifier modifier : attribute.getModifiers())
         {
             if(uuid.equals(modifier.getUniqueId())) {
@@ -393,13 +425,15 @@ public final class AttributeUtil
      * Remove an {@link AttributeModifier} from an {@link ItemMeta} name
      *
      * @param name     The name of the {@link AttributeModifier}
-     * @param itemMeta The <code>ItemMeta</code> to reference
+     * @param itemStack The <code>ItemStack</code> to reference
      * @return Whether the {@link AttributeModifier} was removed
      */
-    public static boolean removeAttributeModifier(@NotNull final String name, ItemMeta itemMeta)
+    public static boolean removeAttributeModifier(@NotNull final String name, ItemStack itemStack)
     {
-        Preconditions.checkNotNull(name, "Modifier name cannot be null");
-        Preconditions.checkNotNull(itemMeta, "ItemMeta cannot be null");
+        Preconditions.checkNotNull(name, "Modifier name can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         boolean success = false;
         for(Map.Entry<Attribute, AttributeModifier> entry : itemMeta.getAttributeModifiers().entries())
@@ -411,6 +445,7 @@ public final class AttributeUtil
                 success = true;
             }
         }
+        itemStack.setItemMeta(itemMeta);
         return success;
     }
 
@@ -418,15 +453,17 @@ public final class AttributeUtil
      * Remove an {@link AttributeModifier} from an {@link ItemMeta} name
      *
      * @param name     The name of the {@link AttributeModifier}
-     * @param itemMeta The <code>ItemMeta</code> to reference
+     * @param itemStack The <code>ItemStack</code> to reference
      * @param slot     The {@link EquipmentSlot} of the modifier
      * @return Whether the {@link AttributeModifier} was removed
      */
-    public static boolean removeAttributeModifier(@NotNull final String name, ItemMeta itemMeta, @NotNull final EquipmentSlot slot)
+    public static boolean removeAttributeModifier(@NotNull final String name, ItemStack itemStack, @NotNull final EquipmentSlot slot)
     {
-        Preconditions.checkNotNull(name, "Modifier name cannot be null");
-        Preconditions.checkNotNull(slot, "EquipmentSlot cannot be null");
-        Preconditions.checkNotNull(itemMeta, "ItemMeta cannot be null");
+        Preconditions.checkNotNull(name, "Modifier name can not be null");
+        Preconditions.checkNotNull(slot, "EquipmentSlot can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         boolean success = false;
         for(Map.Entry<Attribute, AttributeModifier> entry : itemMeta.getAttributeModifiers(slot).entries())
@@ -438,6 +475,7 @@ public final class AttributeUtil
                 success = true;
             }
         }
+        itemStack.setItemMeta(itemMeta);
         return success;
     }
 
@@ -445,15 +483,17 @@ public final class AttributeUtil
      * Remove an {@link AttributeModifier} from an {@link ItemMeta} name
      *
      * @param name      The name of the {@link AttributeModifier}
-     * @param itemMeta  The <code>ItemMeta</code> to reference
+     * @param itemStack  The <code>ItemStack</code> to reference
      * @param attribute The {@link AttributeInstance} of the modifier
      * @return Whether the {@link AttributeModifier} was removed
      */
-    public static boolean removeAttributeModifier(@NotNull final String name, ItemMeta itemMeta, @NotNull final Attribute attribute)
+    public static boolean removeAttributeModifier(@NotNull final String name, ItemStack itemStack, @NotNull final Attribute attribute)
     {
-        Preconditions.checkNotNull(name, "Modifier name cannot be null");
-        Preconditions.checkNotNull(attribute, "Attribute cannot be null");
-        Preconditions.checkNotNull(itemMeta, "ItemMeta cannot be null");
+        Preconditions.checkNotNull(name, "Modifier name can not be null");
+        Preconditions.checkNotNull(attribute, "Attribute can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         boolean success = false;
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers(attribute))
@@ -463,6 +503,7 @@ public final class AttributeUtil
                 success = true;
             }
         }
+        itemStack.setItemMeta(itemMeta);
         return success;
     }
 
@@ -475,8 +516,8 @@ public final class AttributeUtil
      */
     public static boolean removeAttributeModifier(@NotNull final String name, @NotNull final AttributeInstance attribute)
     {
-        Preconditions.checkNotNull(name, "Modifier name cannot be null");
-        Preconditions.checkNotNull(attribute, "Attribute cannot be null");
+        Preconditions.checkNotNull(name, "Modifier name can not be null");
+        Preconditions.checkNotNull(attribute, "Attribute can not be null");
         boolean success = false;
         for(AttributeModifier modifier : attribute.getModifiers())
         {
@@ -492,13 +533,15 @@ public final class AttributeUtil
      * Remove an {@link AttributeModifier} from an {@link ItemMeta} the modifier's instance
      *
      * @param attribModifier The {@link AttributeModifier} reference
-     * @param itemMeta       The <code>ItemMeta</code> to reference
+     * @param itemStack       The <code>ItemStack</code> to reference
      * @return Whether the {@link AttributeModifier} was removed
      */
-    public static boolean removeAttributeModifier(@NotNull final AttributeModifier attribModifier, ItemMeta itemMeta)
+    public static boolean removeAttributeModifier(@NotNull final AttributeModifier attribModifier, ItemStack itemStack)
     {
-        Preconditions.checkNotNull(attribModifier, "Modifier cannot be null");
-        Preconditions.checkNotNull(itemMeta, "ItemMeta cannot be null");
+        Preconditions.checkNotNull(attribModifier, "Modifier can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         boolean success = false;
         for(Map.Entry<Attribute, AttributeModifier> entry : itemMeta.getAttributeModifiers().entries())
@@ -510,6 +553,7 @@ public final class AttributeUtil
                 success =  true;
             }
         }
+        itemStack.setItemMeta(itemMeta);
         return success;
     }
 
@@ -517,15 +561,17 @@ public final class AttributeUtil
      * Remove an {@link AttributeModifier} from an {@link ItemMeta} the modifier's instance
      *
      * @param attribModifier The {@link AttributeModifier} reference
-     * @param itemMeta       The <code>ItemMeta</code> to reference
+     * @param itemStack       The <code>ItemStack</code> to reference
      * @param slot           The {@link EquipmentSlot} of the modifier
      * @return Whether the {@link AttributeModifier} was removed
      */
-    public static boolean removeAttributeModifier(@NotNull final AttributeModifier attribModifier, ItemMeta itemMeta, @NotNull final EquipmentSlot slot)
+    public static boolean removeAttributeModifier(@NotNull final AttributeModifier attribModifier, ItemStack itemStack, @NotNull final EquipmentSlot slot)
     {
-        Preconditions.checkNotNull(attribModifier, "Modifier cannot be null");
-        Preconditions.checkNotNull(slot, "EquipmentSlot cannot be null");
-        Preconditions.checkNotNull(itemMeta, "ItemMeta cannot be null");
+        Preconditions.checkNotNull(attribModifier, "Modifier can not be null");
+        Preconditions.checkNotNull(slot, "EquipmentSlot can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         boolean success = false;
         for(Map.Entry<Attribute, AttributeModifier> entry : itemMeta.getAttributeModifiers(slot).entries())
@@ -537,6 +583,7 @@ public final class AttributeUtil
                 success =  true;
             }
         }
+        itemStack.setItemMeta(itemMeta);
         return success;
     }
 
@@ -544,15 +591,17 @@ public final class AttributeUtil
      * Remove an {@link AttributeModifier} from an {@link ItemMeta} the modifier's instance
      *
      * @param attribModifier The {@link AttributeModifier} reference
-     * @param itemMeta       The <code>ItemMeta</code> to reference
+     * @param itemStack       The <code>ItemStack</code> to reference
      * @param attribute      The {@link AttributeInstance} of the modifier
      * @return Whether the {@link AttributeModifier} was removed
      */
-    public static boolean removeAttributeModifier(@NotNull final AttributeModifier attribModifier, ItemMeta itemMeta, @NotNull final Attribute attribute)
+    public static boolean removeAttributeModifier(@NotNull final AttributeModifier attribModifier, ItemStack itemStack, @NotNull final Attribute attribute)
     {
-        Preconditions.checkNotNull(attribModifier, "Modifier cannot be null");
-        Preconditions.checkNotNull(attribute, "Attribute cannot be null");
-        Preconditions.checkNotNull(itemMeta, "ItemMeta cannot be null");
+        Preconditions.checkNotNull(attribModifier, "Modifier can not be null");
+        Preconditions.checkNotNull(attribute, "Attribute can not be null");
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         boolean success = false;
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers(attribute))
@@ -562,6 +611,7 @@ public final class AttributeUtil
                 success =  true;
             }
         }
+        itemStack.setItemMeta(itemMeta);
         return success;
     }
 
@@ -573,8 +623,8 @@ public final class AttributeUtil
      */
     public static void removeAttributeModifier(@NotNull final AttributeModifier attribModifier, @NotNull final AttributeInstance attribute)
     {
-        Preconditions.checkNotNull(attribModifier, "Modifier cannot be null");
-        Preconditions.checkNotNull(attribute, "Attribute cannot be null");
+        Preconditions.checkNotNull(attribModifier, "Modifier can not be null");
+        Preconditions.checkNotNull(attribute, "Attribute can not be null");
         attribute.removeModifier(attribModifier);
     }
 }
