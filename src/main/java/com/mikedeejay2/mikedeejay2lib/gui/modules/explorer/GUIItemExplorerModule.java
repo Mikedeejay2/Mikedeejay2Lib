@@ -30,26 +30,6 @@ import java.util.List;
 public class GUIItemExplorerModule extends GUIListModule
 {
     /**
-     * Comparator for sorting folders in alphabetical order
-     */
-    protected static final Comparator<? super ItemFolder> FOLDER_SORT =
-        Comparator.comparing(ItemFolder::getName);
-
-    /**
-     * Comparator for sorting items in alphabetical order
-     */
-    protected static final Comparator<? super GUIItem> ITEM_SORT =
-        Comparator.comparing(guiItem -> {
-            if(guiItem == null) return null;
-            ItemMeta meta = guiItem.getMeta();
-            if(meta != null && meta.hasDisplayName())
-            {
-                return meta.getDisplayName();
-            }
-            return guiItem.getType().toString();
-        });
-
-    /**
      * The folder currently being viewed
      */
     protected ItemFolder folder;
@@ -236,8 +216,6 @@ public class GUIItemExplorerModule extends GUIListModule
         List<ItemFolder> folders = folder.getFolders();
         List<GUIItem> guiItems = folder.getItems();
 
-        folders.sort(FOLDER_SORT);
-        guiItems.sort(ITEM_SORT);
         for(ItemFolder folder : folders)
         {
             GUIItem item = genFolderItem(folder);
@@ -281,8 +259,6 @@ public class GUIItemExplorerModule extends GUIListModule
         List<GUIItem> guiItems = new ArrayList<>();
         recurSearchFolders(folder, folders, 0);
         recurSearchItems(folder, guiItems, 0);
-        folders.sort(ITEM_SORT);
-        guiItems.sort(ITEM_SORT);
         folders.forEach(item -> searchList.add(new ImmutablePair<>(item, -1)));
         guiItems.forEach(item -> searchList.add(new ImmutablePair<>(item, -1)));
     }
