@@ -18,6 +18,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.ArrayList;
 import java.util.Comparator;
@@ -155,7 +156,7 @@ public class GUIListModule implements GUIModule
     /**
      * Comparator for sorting items. If null, no sort will occur.
      */
-    Comparator<? super GUIItem> sorter;
+    protected @Nullable Comparator<? super GUIItem> sorter;
 
     /**
      * Construct a new GUI List module
@@ -279,11 +280,18 @@ public class GUIListModule implements GUIModule
     public void onUpdateHead(Player player, GUIContainer gui)
     {
         GUILayer layer = gui.getLayer(layerName, false);
+
+        if(sorter != null)
+        {
+            list.sort(sorter);
+        }
+
         if(searchMode)
         {
             searchThroughList();
         }
         updateListControls(layer, player);
+
         updateView(layer);
     }
 
@@ -1204,6 +1212,25 @@ public class GUIListModule implements GUIModule
         this.scrollChangePreName = scrollChangePreName;
     }
 
+    /**
+     * Get the comparator for sorting items. Null if no sorter is applied
+     *
+     * @return The comparator for sorting items
+     */
+    public @Nullable Comparator<? super GUIItem> getSorter()
+    {
+        return sorter;
+    }
+
+    /**
+     * Set the comparator for sorting items. If null, no sort will occur.
+     *
+     * @param sorter The new {@link Comparator}
+     */
+    public void setSorter(@Nullable Comparator<? super GUIItem> sorter)
+    {
+        this.sorter = sorter;
+    }
 
     /**
      * An event that prompts the user to search for something in a list GUI
