@@ -156,9 +156,10 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
         this.type = item != null ? item.getType() : null;
         this.amount = item != null ? item.getAmount() : 0;
         this.meta = null;
-        if(item != null && item.hasItemMeta())
+        if(item != null)
         {
-            internalSetMeta(item.getItemMeta());
+            if(item.hasItemMeta()) internalSetMeta(item.getItemMeta());
+            else internalSetMeta(Bukkit.getItemFactory().getItemMeta(type));
         }
         this.changed = true;
         return this;
