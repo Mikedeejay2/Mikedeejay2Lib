@@ -8,12 +8,17 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.list.GUIListModule;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
+import com.mikedeejay2.mikedeejay2lib.util.search.SearchUtil;
 import com.mikedeejay2.mikedeejay2lib.util.structure.HistoryHolder;
+import com.mikedeejay2.mikedeejay2lib.util.structure.tuple.ImmutablePair;
+import com.mikedeejay2.mikedeejay2lib.util.structure.tuple.MutablePair;
+import com.mikedeejay2.mikedeejay2lib.util.structure.tuple.Pair;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 
@@ -24,6 +29,26 @@ import java.util.List;
  */
 public class GUIItemExplorerModule extends GUIListModule
 {
+    /**
+     * Comparator for sorting folders in alphabetical order
+     */
+    protected static final Comparator<? super ItemFolder> FOLDER_SORT =
+        Comparator.comparing(ItemFolder::getName);
+
+    /**
+     * Comparator for sorting items in alphabetical order
+     */
+    protected static final Comparator<? super GUIItem> ITEM_SORT =
+        Comparator.comparing(guiItem -> {
+            if(guiItem == null) return null;
+            ItemMeta meta = guiItem.getMeta();
+            if(meta != null && meta.hasDisplayName())
+            {
+                return meta.getDisplayName();
+            }
+            return guiItem.getType().toString();
+        });
+
     /**
      * The folder currently being viewed
      */
@@ -43,6 +68,16 @@ public class GUIItemExplorerModule extends GUIListModule
      * The valid forward navigation item
      */
     protected GUIItem forwardItemValid;
+
+    /**
+     * If search mode is enabled, allow deep search through all folders. This effects performance on large folders
+     */
+    protected boolean deepSearch;
+
+    /**
+     * If deep search is enabled, depth that items are searched through. -1 is infinite.
+     */
+    protected int searchDepth;
 
     /**
      * Construct a new <code>GUIItemExplorerModule</code>
@@ -75,6 +110,8 @@ public class GUIItemExplorerModule extends GUIListModule
                 .setName("&f" + plugin.getLibLangManager().getText("gui.modules.navigator.backward"))
                 .get())
             .addEvent(new GUINavFolderForwardEvent());
+        this.deepSearch = false;
+        this.searchDepth = 10;
     }
 
     /**
@@ -199,26 +236,103 @@ public class GUIItemExplorerModule extends GUIListModule
         List<ItemFolder> folders = folder.getFolders();
         List<GUIItem> guiItems = folder.getItems();
 
-        folders.sort(Comparator.comparing(ItemFolder::getName));
-        guiItems.sort(Comparator.comparing(guiItem -> {
-            if(guiItem == null) return null;
-            ItemMeta meta = guiItem.getMeta();
-            if(meta.hasDisplayName())
-            {
-                return meta.getDisplayName();
-            }
-            return guiItem.getType().toString();
-        }));
+        folders.sort(FOLDER_SORT);
+        guiItems.sort(ITEM_SORT);
         for(ItemFolder folder : folders)
         {
-            GUIItem item = new GUIItem(folder.getFolderItem());
-            item.setName(folder.getName());
-            item.addEvent(new GUISwitchFolderEvent(folder));
+            GUIItem item = genFolderItem(folder);
             this.addListItem(item);
         }
         for(GUIItem item : guiItems)
         {
             this.addListItem(item);
+        }
+    }
+
+    /**
+     * Generate a folder item from an {@link ItemFolder}
+     *
+     * @param folder The folder to get the item from
+     * @return The new {@link GUIItem}
+     */
+    @NotNull
+    private GUIItem genFolderItem(ItemFolder folder)
+    {
+        GUIItem item = new GUIItem(folder.getFolderItem());
+        item.setName(folder.getName());
+        item.addEvent(new GUISwitchFolderEvent(folder));
+        return item;
+    }
+
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    protected void searchThroughList()
+    {
+        if(!deepSearch)
+        {
+            super.searchThroughList();
+            return;
+        }
+        searchMode = true;
+        searchList.clear();
+        List<GUIItem> folders = new ArrayList<>();
+        List<GUIItem> guiItems = new ArrayList<>();
+        recurSearchFolders(folder, folders, 0);
+        recurSearchItems(folder, guiItems, 0);
+        folders.sort(ITEM_SORT);
+        guiItems.sort(ITEM_SORT);
+        folders.forEach(item -> searchList.add(new ImmutablePair<>(item, -1)));
+        guiItems.forEach(item -> searchList.add(new ImmutablePair<>(item, -1)));
+    }
+
+    /**
+     * Recursive deep search for folders in explorer folders.
+     * Only called if {@link GUIItemExplorerModule#deepSearch} is true.
+     *
+     * @param folder The current folder to search
+     * @param list The list of generated items
+     * @param depth The current depth of the search from the starting folder
+     */
+    private void recurSearchFolders(ItemFolder folder, List<GUIItem> list, int depth)
+    {
+        List<ItemFolder> folders = folder.getFolders();
+        for(ItemFolder curFolder : folders)
+        {
+            if(!curFolder.getName().toLowerCase().contains(searchTerm.toLowerCase())) continue;
+            list.add(genFolderItem(curFolder));
+        }
+        if(searchDepth == -1 || depth < searchDepth)
+        {
+            for(ItemFolder curFolder : folders)
+            {
+                recurSearchFolders(curFolder, list, ++depth);
+            }
+        }
+    }
+
+    /**
+     * Recursive deep search for items in explorer folders.
+     * Only called if {@link GUIItemExplorerModule#deepSearch} is true.
+     *
+     * @param folder The current folder to search
+     * @param list The list of generated items
+     * @param depth The current depth of the search from the starting folder
+     */
+    private void recurSearchItems(ItemFolder folder, List<GUIItem> list, int depth)
+    {
+        for(GUIItem item : folder.getItems())
+        {
+            if(!SearchUtil.searchMetaFuzzy(item.getMetaView(), searchTerm)) continue;
+            list.add(item);
+        }
+        if(searchDepth == -1 || depth < searchDepth)
+        {
+            for(ItemFolder curFolder : folder.getFolders())
+            {
+                recurSearchItems(curFolder, list, ++depth);
+            }
         }
     }
 
@@ -250,6 +364,47 @@ public class GUIItemExplorerModule extends GUIListModule
     public HistoryHolder<ItemFolder> getHistory()
     {
         return history;
+    }
+
+    /**
+     * Get whether deep search is enabled
+     *
+     * @return Whether deep search is enabled
+     */
+    public boolean isDeepSearch()
+    {
+        return deepSearch;
+    }
+
+    /**
+     * Set whether to allow deep search. If search mode is enabled, allow deep search through all folders.
+     * This effects performance on large folders
+     *
+     * @param deepSearch The new deep search value
+     */
+    public void setDeepSearch(boolean deepSearch)
+    {
+        this.deepSearch = deepSearch;
+    }
+
+    /**
+     * Get the deep search depth
+     *
+     * @return The deep search depth
+     */
+    public int getSearchDepth()
+    {
+        return searchDepth;
+    }
+
+    /**
+     * Set the new deep search depth. -1 is infinite.
+     *
+     * @param searchDepth The new deep search depth
+     */
+    public void setSearchDepth(int searchDepth)
+    {
+        this.searchDepth = searchDepth;
     }
 
     /**

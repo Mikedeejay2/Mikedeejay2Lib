@@ -20,6 +20,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -152,6 +153,11 @@ public class GUIListModule implements GUIModule
     protected String searchOffPreName;
 
     /**
+     * Comparator for sorting items. If null, no sort will occur.
+     */
+    Comparator<? super GUIItem> sorter;
+
+    /**
      * Construct a new GUI List module
      *
      * @param plugin    Reference to the <code>BukkitPlugin</code> of the plugin
@@ -204,6 +210,7 @@ public class GUIListModule implements GUIModule
         this.scrollChangePreName = "&f";
         this.searchPreName = "&f&o";
         this.searchOffPreName = "&f&o";
+        this.sorter = null;
     }
 
     /**
@@ -645,7 +652,7 @@ public class GUIListModule implements GUIModule
      * Search through this entire list, called in {@link GUIListModule#onUpdateHead(Player, GUIContainer)}
      * if search mode is enabled.
      */
-    private void searchThroughList()
+    protected void searchThroughList()
     {
         searchMode = true;
         searchList.clear();
