@@ -11,11 +11,10 @@ import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import com.mikedeejay2.mikedeejay2lib.util.search.SearchUtil;
 import com.mikedeejay2.mikedeejay2lib.util.structure.HistoryHolder;
 import com.mikedeejay2.mikedeejay2lib.util.structure.tuple.ImmutablePair;
-import com.mikedeejay2.mikedeejay2lib.util.structure.tuple.MutablePair;
-import com.mikedeejay2.mikedeejay2lib.util.structure.tuple.Pair;
+import org.apache.commons.lang.Validate;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
@@ -236,10 +235,12 @@ public class GUIItemExplorerModule extends GUIListModule
     @NotNull
     private GUIItem genFolderItem(ItemFolder folder)
     {
-        GUIItem item = new GUIItem(folder.getFolderItem());
-        item.setName(folder.getName());
-        item.addEvent(new GUISwitchFolderEvent(folder));
-        return item;
+        ItemStack item = folder.getFolderItem();
+        Validate.notNull(item, "Folder item can not be null");
+        GUIItem guiItem = new GUIItem(item);
+        guiItem.setName(folder.getName());
+        guiItem.addEvent(new GUISwitchFolderEvent(folder));
+        return guiItem;
     }
 
     /**
