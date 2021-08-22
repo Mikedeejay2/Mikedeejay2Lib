@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.gui.modules.fileexplorer;
+package com.mikedeejay2.mikedeejay2lib.gui.modules.explorer;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
