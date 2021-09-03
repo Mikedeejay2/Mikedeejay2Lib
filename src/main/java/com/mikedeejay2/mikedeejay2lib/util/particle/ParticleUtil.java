@@ -82,6 +82,45 @@ public final class ParticleUtil
      * @param particle      The particle type to add
      * @param timeToLive    The time for the particle to exist on the entity
      * @param particleCount The count of particles per tick
+     * @param density       The density of the particle line
+     * @param speed         The speed of the particles
+     * @param offsetX       The offset in the X direction of the particle
+     * @param offsetY       The offset in the Y direction of the particle
+     * @param offsetZ       The offset in the Z direction of the particle
+     * @param force         Force the particles to be rendered even when outside of view distance
+     */
+    public static void addParticleToEntity(BukkitPlugin plugin, Entity entity, Particle particle, long timeToLive, int particleCount, double density, float speed, double offsetX, double offsetY, double offsetZ, boolean force)
+    {
+        if(particle == null) return;
+        new EnhancedRunnable()
+        {
+            private Location prevLocation;
+
+            @Override
+            public void onFirstRun()
+            {
+                prevLocation = entity.getBoundingBox().getCenter().toLocation(entity.getWorld());
+            }
+
+            @Override
+            public void onRun()
+            {
+                if(entity.isDead()) this.cancel();
+                Location centerLoc = entity.getBoundingBox().getCenter().toLocation(entity.getWorld());
+                particleLine(prevLocation, centerLoc, particle, particleCount, speed, offsetX, offsetY, offsetZ, 1, force);
+                prevLocation = centerLoc;
+            }
+        }.runTaskTimerCounted(plugin, 0, 0, timeToLive);
+    }
+
+    /**
+     * Add a particle to an entity that will track the entity for the lifetime of the entity or the lifetime of the server
+     *
+     * @param plugin        A reference to the plugin for creating the runnable
+     * @param entity        Entity to add the particle to
+     * @param particle      The particle type to add
+     * @param timeToLive    The time for the particle to exist on the entity
+     * @param particleCount The count of particles per tick
      * @param speed         The speed of the particles
      * @param offsetX       The offset in the X direction of the particle
      * @param offsetY       The offset in the Y direction of the particle
@@ -90,17 +129,7 @@ public final class ParticleUtil
      */
     public static void addParticleToEntity(BukkitPlugin plugin, Entity entity, Particle particle, long timeToLive, int particleCount, float speed, double offsetX, double offsetY, double offsetZ, boolean force)
     {
-        if(particle == null) return;
-        new EnhancedRunnable()
-        {
-            @Override
-            public void onRun()
-            {
-                if(entity.isDead()) this.cancel();
-                Location centerLoc = entity.getBoundingBox().getCenter().toLocation(entity.getWorld());
-                entity.getWorld().spawnParticle(particle, centerLoc, particleCount, offsetX, offsetY, offsetZ, speed, null, force);
-            }
-        }.runTaskTimerCounted(plugin, 0, 0, timeToLive);
+        addParticleToEntity(plugin, entity, particle, timeToLive, particleCount, 1, speed, offsetX, offsetY, offsetZ, force);
     }
 
     /**
