@@ -7,10 +7,7 @@ import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mikedeejay2.mikedeejay2lib.util.enchant.GlowEnchantment;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
-import org.bukkit.Bukkit;
-import org.bukkit.Material;
-import org.bukkit.NamespacedKey;
-import org.bukkit.OfflinePlayer;
+import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.enchantments.Enchantment;
@@ -210,7 +207,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
     @Override
     public ItemBuilder setName(String name)
     {
-        this.meta.setDisplayName(Colors.formatAll(name));
+        this.meta.setDisplayName(Colors.addReset(Colors.formatAll(name)));
         this.changed = true;
         return this;
     }
@@ -288,7 +285,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
     @Override
     public ItemBuilder setLore(List<String> lore)
     {
-        this.meta.setLore(Colors.formatAll(lore));
+        this.meta.setLore(Colors.addReset(Colors.formatAll(lore)));
         this.changed = true;
         return this;
     }
@@ -302,7 +299,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
     @Override
     public ItemBuilder setLore(String... lore)
     {
-        this.meta.setLore(Colors.formatAll(Arrays.asList(lore)));
+        this.meta.setLore(Colors.addReset(Colors.formatAll(Arrays.asList(lore))));
         this.changed = true;
         return this;
     }
@@ -318,7 +315,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
     {
         List<String> curLore = this.meta.getLore();
         if(curLore == null) curLore = new ArrayList<>();
-        curLore.addAll(Colors.formatAll(lore));
+        curLore.addAll(Colors.addReset(Colors.formatAll(lore)));
         this.meta.setLore(curLore);
         return this;
     }
@@ -334,7 +331,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
     {
         List<String> curLore = this.meta.getLore();
         if(curLore == null) curLore = new ArrayList<>();
-        curLore.addAll(Arrays.asList(Colors.formatAll(lore)));
+        curLore.addAll(Arrays.asList(Colors.addReset(Colors.formatAll(lore))));
         this.meta.setLore(curLore);
         return this;
     }
@@ -351,7 +348,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
     {
         List<String> curLore = this.meta.getLore();
         if(curLore == null) curLore = new ArrayList<>();
-        curLore.addAll(index, Colors.formatAll(lore));
+        curLore.addAll(index, Colors.addReset(Colors.formatAll(lore)));
         this.meta.setLore(curLore);
         return this;
     }
@@ -368,7 +365,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
     {
         List<String> curLore = this.meta.getLore();
         if(curLore == null) curLore = new ArrayList<>();
-        curLore.addAll(index, Arrays.asList(Colors.formatAll(lore)));
+        curLore.addAll(index, Arrays.asList(Colors.addReset(Colors.formatAll(lore))));
         this.meta.setLore(curLore);
         return this;
     }
@@ -910,7 +907,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
     @Override
     public ItemBuilder setLocalizedName(String name)
     {
-        this.meta.setLocalizedName(Colors.formatAll(name));
+        this.meta.setLocalizedName(Colors.addReset(Colors.formatAll(name)));
         this.changed = true;
         return this;
     }
