@@ -107,7 +107,7 @@ public final class ParticleUtil
             {
                 if(entity.isDead()) this.cancel();
                 Location centerLoc = entity.getBoundingBox().getCenter().toLocation(entity.getWorld());
-                particleLine(prevLocation, centerLoc, particle, particleCount, speed, offsetX, offsetY, offsetZ, 1, force);
+                particleLine(prevLocation, centerLoc, particle, particleCount, speed, offsetX, offsetY, offsetZ, density, force);
                 prevLocation = centerLoc;
             }
         }.runTaskTimerCounted(plugin, 0, 0, timeToLive);
