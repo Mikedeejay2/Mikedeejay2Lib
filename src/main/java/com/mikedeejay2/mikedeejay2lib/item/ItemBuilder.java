@@ -1270,6 +1270,17 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
     }
 
     /**
+     * Get an {@link ItemBuilder} of a specified <code>ItemBuilder</code>
+     *
+     * @param builder The reference <code>ItemBuilder</code>
+     * @return The new {@link ItemBuilder}
+     */
+    public static ItemBuilder of(ItemBuilder builder)
+    {
+        return new ItemBuilder(builder.get());
+    }
+
+    /**
      * Get an {@link ItemBuilder} of a specified <code>Material</code>
      *
      * @param type The Material type to use
