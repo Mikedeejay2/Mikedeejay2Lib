@@ -105,7 +105,7 @@ public final class Colors
      */
     public static String formatR(String message)
     {
-        return ChatColor.RESET + ChatColor.translateAlternateColorCodes('&', message);
+        return ChatColor.RESET + format(message);
     }
 
     /**
