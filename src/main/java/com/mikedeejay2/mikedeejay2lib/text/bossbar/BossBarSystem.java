@@ -119,7 +119,7 @@ public class BossBarSystem
     public void display(long delay, long period)
     {
         this.runtime = new BossBarRuntime(this);
-        runtime.runTaskTimerAsynchronously(plugin, delay, period);
+        runtime.runTaskTimer(plugin, delay, period);
         setVisible(true);
     }
 
