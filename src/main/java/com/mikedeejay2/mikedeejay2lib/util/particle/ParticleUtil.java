@@ -107,7 +107,7 @@ public final class ParticleUtil
             {
                 if(entity.isDead()) this.cancel();
                 Location centerLoc = entity.getBoundingBox().getCenter().toLocation(entity.getWorld());
-                centerLoc.getWorld().spawnParticle(particle, centerLoc, (int) count, offsetX, offsetY, offsetZ, speed, null, force);
+                centerLoc.getWorld().spawnParticle(particle, centerLoc, particleCount, offsetX, offsetY, offsetZ, speed, null, force);
                 particleLine(prevLocation, centerLoc, particle, particleCount, speed, offsetX, offsetY, offsetZ, density, force);
                 prevLocation = centerLoc;
             }
