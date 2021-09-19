@@ -2,16 +2,18 @@ package com.mikedeejay2.mikedeejay2lib.util.attribute;
 
 import com.google.common.base.Preconditions;
 import org.bukkit.Bukkit;
+import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.entity.LivingEntity;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.jetbrains.annotations.NotNull;
 
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * Static utility class for modifying and getting data of {@link AttributeInstance} and {@link AttributeModifier}
@@ -627,5 +629,70 @@ public final class AttributeUtil
         Preconditions.checkNotNull(attribModifier, "Modifier can not be null");
         Preconditions.checkNotNull(attribute, "Attribute can not be null");
         attribute.removeModifier(attribModifier);
+    }
+
+    /**
+     * Remove all {@link AttributeModifier}s off of an {@link ItemStack}
+     *
+     * @param itemStack The <code>ItemStack</code> to reference
+     */
+    public static void resetAttributeModifiers(ItemStack itemStack)
+    {
+        Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        if(itemMeta == null) return;
+        if(!itemMeta.hasAttributeModifiers()) return;
+        for(Attribute attribute : itemMeta.getAttributeModifiers().keySet())
+        {
+            itemMeta.removeAttributeModifier(attribute);
+        }
+        itemStack.setItemMeta(itemMeta);
+    }
+
+    /**
+     * Remove all {@link AttributeModifier}s off of an {@link AttributeInstance}
+     *
+     * @param attribute The {@link AttributeInstance} to reference
+     */
+    public static void resetAttributeModifiers(AttributeInstance attribute)
+    {
+        Preconditions.checkNotNull(attribute, "Attribute can not be null");
+        for(AttributeModifier modifier : attribute.getModifiers())
+        {
+            attribute.removeModifier(modifier);
+        }
+    }
+
+    /**
+     * Remove all {@link AttributeModifier}s off of an {@link Attributable}
+     *
+     * @param attributable The {@link Attributable} to reference
+     */
+    public static void resetAttributeModifiers(Attributable attributable)
+    {
+        Preconditions.checkNotNull(attributable, "Attributable can not be null");
+        for(AttributeInstance attribute : getAllAttributes(attributable))
+        {
+            Collection<AttributeModifier> modifiers = attribute.getModifiers();
+            modifiers.forEach(attribute::removeModifier);
+        }
+    }
+
+    /**
+     * Get all {@link AttributeInstance}s from an {@link Attributable}
+     *
+     * @param attributable The {@link Attributable} to reference
+     * @return The list of all of the {@link Attributable}'s {@link AttributeInstance}s
+     */
+    public static List<AttributeInstance> getAllAttributes(Attributable attributable)
+    {
+        Preconditions.checkNotNull(attributable, "Attributable can not be null");
+        List<AttributeInstance> attributes = new ArrayList<>();
+        for(Attribute attribute : Attribute.values())
+        {
+            AttributeInstance cur = attributable.getAttribute(attribute);
+            attributes.add(cur);
+        }
+        return attributes;
     }
 }
