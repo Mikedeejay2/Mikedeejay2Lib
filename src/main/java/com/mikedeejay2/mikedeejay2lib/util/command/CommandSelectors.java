@@ -43,7 +43,7 @@ public final class CommandSelectors
      * @param value The input value, either a player's name or a player selector
      * @return The list of retrieved players
      */
-    public List<Player> getPlayers(String value, CommandSender sender)
+    public static List<Player> getPlayers(String value, CommandSender sender)
     {
         switch(value.toLowerCase())
         {
