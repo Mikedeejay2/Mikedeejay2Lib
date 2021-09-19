@@ -673,6 +673,7 @@ public final class AttributeUtil
         Preconditions.checkNotNull(attributable, "Attributable can not be null");
         for(AttributeInstance attribute : getAllAttributes(attributable))
         {
+            if(attribute == null) continue;
             Collection<AttributeModifier> modifiers = attribute.getModifiers();
             modifiers.forEach(attribute::removeModifier);
         }
