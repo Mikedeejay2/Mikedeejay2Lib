@@ -8,6 +8,7 @@ import com.mikedeejay2.mikedeejay2lib.util.array.ArrayUtil;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.util.Vector;
 
 import java.util.ArrayList;
@@ -1060,5 +1061,71 @@ public final class MathUtil
     public static void normalizeList(List<Vector> vectors)
     {
         vectors.forEach(Vector::normalize);
+    }
+
+    /**
+     * Get the nearest <code>Player</code> of a <code>Location</code>
+     *
+     * @param location The location to compare
+     * @return The nearest player
+     */
+    public static Player getNearestPlayer(Location location)
+    {
+        double previousDistance = Double.MAX_VALUE;
+        Player result = null;
+        for(Player player : location.getWorld().getPlayers())
+        {
+            double newDistance = player.getLocation().distanceSquared(location);
+            if(newDistance < previousDistance)
+            {
+                previousDistance = newDistance;
+                result = player;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Get the nearest <code>Location</code> of a list of <code>Locations</code>
+     *
+     * @param locations The list of locations to compare
+     * @return The nearest location
+     */
+    public static Location getNearestLocation(List<Location> locations)
+    {
+        double previousDistance = Double.MAX_VALUE;
+        Location result = null;
+        for(Location location : locations)
+        {
+            double newDistance = location.distanceSquared(location);
+            if(newDistance < previousDistance)
+            {
+                previousDistance = newDistance;
+                result = location;
+            }
+        }
+        return result;
+    }
+
+    /**
+     * Get the nearest <code>Vector</code> of a list of <code>Vectors</code>
+     *
+     * @param vectors The list of locations to compare
+     * @return The nearest location
+     */
+    public static Vector getNearestVector(List<Vector> vectors)
+    {
+        double previousDistance = Double.MAX_VALUE;
+        Vector result = null;
+        for(Vector location : vectors)
+        {
+            double newDistance = location.distanceSquared(location);
+            if(newDistance < previousDistance)
+            {
+                previousDistance = newDistance;
+                result = location;
+            }
+        }
+        return result;
     }
 }
