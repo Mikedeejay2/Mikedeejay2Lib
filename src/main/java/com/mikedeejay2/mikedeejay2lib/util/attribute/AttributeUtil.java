@@ -691,7 +691,6 @@ public final class AttributeUtil
         List<AttributeInstance> attributes = new ArrayList<>();
         for(Attribute attribute : Attribute.values())
         {
-            if(attribute == null) continue;
             AttributeInstance cur = attributable.getAttribute(attribute);
             attributes.add(cur);
         }
