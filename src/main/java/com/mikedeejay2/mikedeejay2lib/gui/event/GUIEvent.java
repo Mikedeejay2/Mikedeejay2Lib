@@ -8,7 +8,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  * An event that is called when a {@link GUIItem} is called
  * <p>
  * When a {@link GUIEvent} is added to a {@link GUIItem} through
- * {@link GUIItem#addEvent(GUIEvent)}, the {@link GUIEvent#execute(InventoryClickEvent, GUIContainer)} method
+ * {@link GUIItem#addEvent(GUIEvent)}, the {@link GUIEvent#execute(GUIEventInfo)} method
  * will be called for the event.
  * <p>
  * Multiple <code>GUIEvents</code> can be added to a <code>GUIItem</code> through the use of a {@link GUIEventHandler}
