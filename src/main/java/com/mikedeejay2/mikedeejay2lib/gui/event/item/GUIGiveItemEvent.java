@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.event.item;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import org.bukkit.entity.Player;
@@ -58,13 +59,12 @@ public class GUIGiveItemEvent implements GUIEvent
     /**
      * {@inheritDoc}
      *
-     * @param event The event of the click
-     * @param gui   The GUI that the event took place in
+     * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(InventoryClickEvent event, GUIContainer gui)
+    public void execute(GUIEventInfo info)
     {
-        Player player = (Player) event.getWhoClicked();
+        Player player = info.getPlayer();
         player.getInventory().addItem(itemStack.get());
     }
 

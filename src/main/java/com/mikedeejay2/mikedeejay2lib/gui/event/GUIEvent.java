@@ -22,8 +22,7 @@ public interface GUIEvent
     /**
      * Executes when the item that this event has been appended to is clicked on
      *
-     * @param event The event of the click
-     * @param gui   The GUI that the event took place in
+     * @param info {@link GUIEventInfo} of the event
      */
-    void execute(InventoryClickEvent event, GUIContainer gui);
+    void execute(GUIEventInfo info);
 }

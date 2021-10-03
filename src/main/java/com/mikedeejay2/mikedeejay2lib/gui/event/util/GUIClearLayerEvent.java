@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.event.util;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
@@ -71,14 +72,14 @@ public class GUIClearLayerEvent implements GUIEvent
     /**
      * {@inheritDoc}
      *
-     * @param event The event of the click
-     * @param gui   The GUI that the event took place in
+     * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(InventoryClickEvent event, GUIContainer gui)
+    public void execute(GUIEventInfo info)
     {
-        ClickType clickType = event.getClick();
+        ClickType clickType = info.getClick();
         if(clickType != ClickType.LEFT) return;
+        GUIContainer gui = info.getGUI();
         GUILayer layer = null;
         switch(mode)
         {

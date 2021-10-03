@@ -4,6 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
@@ -159,14 +160,14 @@ public class GUIScrollerModule implements GUIModule
         /**
          * Execute scrolling in the specified direction
          *
-         * @param event The event of the click
-         * @param gui   The GUI that the event took place in
+         * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(InventoryClickEvent event, GUIContainer gui)
+        public void execute(GUIEventInfo info)
         {
-            ClickType clickType = event.getClick();
+            ClickType clickType = info.getClick();
             if(clickType != ClickType.LEFT) return;
+            GUIContainer gui = info.getGUI();
             int rowOffset = gui.getRowOffset();
             int colOffset = gui.getColOffset();
             int totalRow  = rowOffset + Math.min(GUIContainer.MAX_INVENTORY_ROWS, gui.getRows());

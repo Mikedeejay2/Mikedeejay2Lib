@@ -4,6 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.list.GUIListModule;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
@@ -409,13 +410,13 @@ public class GUIItemExplorerModule extends GUIListModule
         /**
          * Switch the explorer to view the {@link GUISwitchFolderEvent#folder}
          *
-         * @param event The event of the click
-         * @param gui   The GUI that the event took place in
+         * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(InventoryClickEvent event, GUIContainer gui)
+        public void execute(GUIEventInfo info)
         {
-            Player player = (Player) event.getWhoClicked();
+            Player player = info.getPlayer();
+            GUIContainer gui = info.getGUI();
             GUIItemExplorerModule module = gui.getModule(GUIItemExplorerModule.class);
             ItemFolder oldFolder = module.getFolder();
             module.setFolder(folder);
@@ -438,13 +439,13 @@ public class GUIItemExplorerModule extends GUIListModule
         /**
          * Navigate back a folder
          *
-         * @param event The event of the click
-         * @param gui   The GUI that the event took place in
+         * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(InventoryClickEvent event, GUIContainer gui)
+        public void execute(GUIEventInfo info)
         {
-            Player player = (Player) event.getWhoClicked();
+            Player player = info.getPlayer();
+            GUIContainer gui = info.getGUI();
             GUIItemExplorerModule module = gui.getModule(GUIItemExplorerModule.class);
             ItemFolder oldFolder = module.getFolder();
             ItemFolder folder = module.getHistory().popBack();
@@ -467,13 +468,13 @@ public class GUIItemExplorerModule extends GUIListModule
         /**
          * Navigate forward a folder
          *
-         * @param event The event of the click
-         * @param gui   The GUI that the event took place in
+         * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(InventoryClickEvent event, GUIContainer gui)
+        public void execute(GUIEventInfo info)
         {
-            Player player = (Player) event.getWhoClicked();
+            Player player = info.getPlayer();
+            GUIContainer gui = info.getGUI();
             GUIItemExplorerModule module = gui.getModule(GUIItemExplorerModule.class);
             ItemFolder oldFolder = module.getFolder();
             ItemFolder newFolder = module.getHistory().popForward();

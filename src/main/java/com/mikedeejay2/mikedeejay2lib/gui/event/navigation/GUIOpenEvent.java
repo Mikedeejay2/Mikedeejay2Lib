@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.event.navigation;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
@@ -37,16 +38,15 @@ public class GUIOpenEvent implements GUIEvent
     /**
      * {@inheritDoc}
      *
-     * @param event The event of the click
-     * @param gui   The GUI that the event took place in
+     * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(InventoryClickEvent event, GUIContainer gui)
+    public void execute(GUIEventInfo info)
     {
-        Player player = (Player) event.getWhoClicked();
-        ClickType clickType = event.getClick();
+        Player player = info.getPlayer();
+        ClickType clickType = info.getClick();
         if(clickType != ClickType.LEFT) return;
-        if(gui.equals(guiToOpen)) return;
+        if(info.getGUI().equals(guiToOpen)) return;
         guiToOpen.open(player);
     }
 }

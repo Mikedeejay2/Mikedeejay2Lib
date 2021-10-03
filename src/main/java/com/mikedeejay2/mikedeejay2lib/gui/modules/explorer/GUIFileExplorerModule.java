@@ -4,6 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.list.GUIListModule;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
@@ -384,13 +385,13 @@ public class GUIFileExplorerModule extends GUIListModule
         /**
          * Switch the explorer to view the {@link GUISwitchFolderEvent#file}
          *
-         * @param event The event of the click
-         * @param gui   The GUI that the event took place in
+         * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(InventoryClickEvent event, GUIContainer gui)
+        public void execute(GUIEventInfo info)
         {
-            Player player = (Player) event.getWhoClicked();
+            Player player = info.getPlayer();
+            GUIContainer gui = info.getGUI();
             GUIFileExplorerModule module = gui.getModule(GUIFileExplorerModule.class);
             File oldFile = module.getFile();
             module.setFile(file);
@@ -413,13 +414,13 @@ public class GUIFileExplorerModule extends GUIListModule
         /**
          * Navigate back a folder
          *
-         * @param event The event of the click
-         * @param gui   The GUI that the event took place in
+         * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(InventoryClickEvent event, GUIContainer gui)
+        public void execute(GUIEventInfo info)
         {
-            Player player = (Player) event.getWhoClicked();
+            Player player = info.getPlayer();
+            GUIContainer gui = info.getGUI();
             GUIFileExplorerModule module = gui.getModule(GUIFileExplorerModule.class);
             File oldFile = module.getFile();
             File file = module.getHistory().popBack();
@@ -442,13 +443,13 @@ public class GUIFileExplorerModule extends GUIListModule
         /**
          * Navigate forward a folder
          *
-         * @param event The event of the click
-         * @param gui   The GUI that the event took place in
+         * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(InventoryClickEvent event, GUIContainer gui)
+        public void execute(GUIEventInfo info)
         {
-            Player player = (Player) event.getWhoClicked();
+            Player player = info.getPlayer();
+            GUIContainer gui = info.getGUI();
             GUIFileExplorerModule module = gui.getModule(GUIFileExplorerModule.class);
             File oldFile = module.getFile();
             File newFile = module.getHistory().popForward();

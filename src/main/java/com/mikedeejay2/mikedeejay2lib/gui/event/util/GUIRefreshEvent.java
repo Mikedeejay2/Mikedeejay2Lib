@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.event.util;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 
@@ -16,13 +17,13 @@ public class GUIRefreshEvent implements GUIEvent
     /**
      * {@inheritDoc}
      *
-     * @param event The event of the click
-     * @param gui   The GUI that the event took place in
+     * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(InventoryClickEvent event, GUIContainer gui)
+    public void execute(GUIEventInfo info)
     {
-        Player player = (Player) event.getWhoClicked();
+        Player player = info.getPlayer();
+        GUIContainer gui = info.getGUI();
         gui.onClose(player);
         gui.open(player);
     }

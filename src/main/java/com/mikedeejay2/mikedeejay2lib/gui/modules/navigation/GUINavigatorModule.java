@@ -4,6 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
@@ -287,15 +288,15 @@ public class GUINavigatorModule implements GUIModule
         /**
          * Execute navigating the GUI back through history
          *
-         * @param event The event of the click
-         * @param gui   The GUI that the event took place in
+         * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(InventoryClickEvent event, GUIContainer gui)
+        public void execute(GUIEventInfo info)
         {
-            Player player = (Player) event.getWhoClicked();
-            ClickType clickType = event.getClick();
+            Player player = info.getPlayer();
+            ClickType clickType = info.getClick();
             if(clickType != ClickType.LEFT) return;
+            GUIContainer gui = info.getGUI();
             GUINavigatorModule module = gui.getModule(GUINavigatorModule.class);
             PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
             NavigationHolder<GUIContainer> system = playerGUI.getNavigation(module.getNavigationID());
@@ -332,15 +333,15 @@ public class GUINavigatorModule implements GUIModule
         /**
          * Execute navigating the GUI forward through history
          *
-         * @param event The event of the click
-         * @param gui   The GUI that the event took place in
+         * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(InventoryClickEvent event, GUIContainer gui)
+        public void execute(GUIEventInfo info)
         {
-            Player player = (Player) event.getWhoClicked();
-            ClickType clickType = event.getClick();
+            Player player = info.getPlayer();
+            ClickType clickType = info.getClick();
             if(clickType != ClickType.LEFT) return;
+            GUIContainer gui = info.getGUI();
             GUINavigatorModule module = gui.getModule(GUINavigatorModule.class);
             PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
             NavigationHolder<GUIContainer> system = playerGUI.getNavigation(module.getNavigationID());

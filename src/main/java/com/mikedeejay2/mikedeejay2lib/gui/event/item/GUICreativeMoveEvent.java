@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.event.item;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -59,16 +60,15 @@ public class GUICreativeMoveEvent implements GUIEvent
     /**
      * {@inheritDoc}
      *
-     * @param event The event of the click
-     * @param gui   The GUI that the event took place in
+     * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(InventoryClickEvent event, GUIContainer gui)
+    public void execute(GUIEventInfo info)
     {
-        Player player = (Player) event.getWhoClicked();
+        Player player = info.getPlayer();
         InventoryView inventory = player.getOpenInventory();
         ItemStack item = itemStack.get().clone();
-        switch(event.getAction())
+        switch(info.getAction())
         {
             case PICKUP_ALL:
                 inventory.setCursor(item);
@@ -90,7 +90,7 @@ public class GUICreativeMoveEvent implements GUIEvent
             case HOTBAR_MOVE_AND_READD:
             case HOTBAR_SWAP:
                 item.setAmount(item.getMaxStackSize());
-                inventory.getBottomInventory().setItem(event.getHotbarButton(), item);
+                inventory.getBottomInventory().setItem(info.getHotbarButton(), item);
                 break;
             case DROP_ALL_SLOT:
             {

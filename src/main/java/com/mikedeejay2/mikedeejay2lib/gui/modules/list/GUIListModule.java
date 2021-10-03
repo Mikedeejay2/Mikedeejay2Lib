@@ -4,6 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
@@ -1257,15 +1258,15 @@ public class GUIListModule implements GUIModule
         /**
          * Execute search event that prompts user to input data
          *
-         * @param event The event of the click
-         * @param gui   The GUI that the event took place in
+         * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(InventoryClickEvent event, GUIContainer gui)
+        public void execute(GUIEventInfo info)
         {
-            Player player = (Player) event.getWhoClicked();
-            ClickType clickType = event.getClick();
+            Player player = info.getPlayer();
+            ClickType clickType = info.getClick();
             if(clickType != ClickType.LEFT) return;
+            GUIContainer gui = info.getGUI();
             gui.close(player);
             player.closeInventory();
             // TODO: Use chat event in GUIListener to capture search result
@@ -1284,15 +1285,14 @@ public class GUIListModule implements GUIModule
         /**
          * Execute disabling search mode on the GUI
          *
-         * @param event The event of the click
-         * @param gui   The GUI that the event took place in
+         * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(InventoryClickEvent event, GUIContainer gui)
+        public void execute(GUIEventInfo info)
         {
-            ClickType clickType = event.getClick();
+            ClickType clickType = info.getClick();
             if(clickType != ClickType.LEFT) return;
-            gui.getModule(GUIListModule.class).disableSearchMode();
+            info.getGUI().getModule(GUIListModule.class).disableSearchMode();
         }
     }
 
@@ -1306,14 +1306,14 @@ public class GUIListModule implements GUIModule
         /**
          * Execute the modification of a list location switch (Moving what is being viewed on the list)
          *
-         * @param event The event of the click
-         * @param gui   The GUI that the event took place in
+         * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(InventoryClickEvent event, GUIContainer gui)
+        public void execute(GUIEventInfo info)
         {
-            ClickType clickType = event.getClick();
-            int slot = event.getSlot();
+            ClickType clickType = info.getClick();
+            int slot = info.getSlot();
+            GUIContainer gui = info.getGUI();
             GUIListModule module = gui.getModule(GUIListModule.class);
             String listLayerName = module.getLayerName();
             GUILayer listLayer = gui.getLayer(listLayerName);
