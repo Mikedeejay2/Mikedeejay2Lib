@@ -22,7 +22,7 @@ public class GUIButtonEvent extends GUIAbstractButtonEvent
     /**
      * Construct a new <code>GUIButtonEvent</code>
      *
-     * @param consumer The consumer that is run when the button is clicked
+     * @param consumer       The consumer that is run when the button is clicked
      * @param acceptedClicks The accepted {@link ClickType}s of the button
      */
     public GUIButtonEvent(@NotNull Consumer<GUIEventInfo> consumer, ClickType... acceptedClicks)
