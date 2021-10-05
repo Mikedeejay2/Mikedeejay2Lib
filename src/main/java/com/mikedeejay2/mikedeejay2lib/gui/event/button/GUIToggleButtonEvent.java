@@ -8,7 +8,7 @@ import org.jetbrains.annotations.NotNull;
 import java.util.function.Consumer;
 
 /**
- * A simple button that executes a {@link Consumer} on click
+ * A simple button that executes a {@link Consumer} on click with an on or off state
  *
  * @author Mikedeejay2
  */
