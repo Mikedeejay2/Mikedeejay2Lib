@@ -78,4 +78,15 @@ public abstract class GUIAbstractButtonEvent implements GUIEvent
     {
         acceptedClicks.removeAll(Arrays.asList(clicks));
     }
+
+    /**
+     * Get whether a specific {@link ClickType} is an accepted click for this button
+     *
+     * @param click The <code>ClickType</code> to test
+     * @return Whether the <code>ClickType</code> is an accepted click
+     */
+    public boolean isValidClick(ClickType click)
+    {
+        return acceptedClicks.contains(click);
+    }
 }

@@ -50,6 +50,7 @@ public class GUIButtonEvent extends GUIAbstractButtonEvent
     @Override
     public void execute(GUIEventInfo info)
     {
+        if(!isValidClick(info.getClick())) return;
         consumer.accept(info);
     }
 

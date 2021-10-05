@@ -90,6 +90,7 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent
     @Override
     public void execute(GUIEventInfo info)
     {
+        if(!isValidClick(info.getClick())) return;
         state = !state;
         if(state)
         {
