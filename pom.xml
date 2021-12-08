@@ -6,7 +6,7 @@
 
     <groupId>com.mikedeejay2</groupId>
     <artifactId>mikedeejay2lib</artifactId>
-    <version>1.17.1-SNAPSHOT</version>
+    <version>1.18-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Mikedeejay2Lib</name>
@@ -15,7 +15,7 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <github.global.server>github</github.global.server>
-        <minecraft.version>1.17.1</minecraft.version>
+        <minecraft.version>1.18</minecraft.version>
     </properties>
 
     <distributionManagement>
@@ -177,7 +177,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.17.1-R0.1-SNAPSHOT</version>
+            <version>1.18-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -189,7 +189,7 @@
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
-            <version>1.7</version>
+            <version>2.2.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -201,7 +201,7 @@
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>20.1.0</version>
+            <version>22.0.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
