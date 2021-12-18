@@ -6,7 +6,7 @@
 
     <groupId>com.mikedeejay2</groupId>
     <artifactId>mikedeejay2lib</artifactId>
-    <version>1.18-SNAPSHOT</version>
+    <version>1.18.1-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>Mikedeejay2Lib</name>
@@ -15,7 +15,7 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <github.global.server>github</github.global.server>
-        <minecraft.version>1.18</minecraft.version>
+        <minecraft.version>1.18.1</minecraft.version>
     </properties>
 
     <distributionManagement>
@@ -177,7 +177,7 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.18-R0.1-SNAPSHOT</version>
+            <version>1.18.1-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
@@ -190,12 +190,6 @@
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
             <version>2.2.1</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.mikedeejay2</groupId>
-            <artifactId>oosql</artifactId>
-            <version>0.1.0-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
