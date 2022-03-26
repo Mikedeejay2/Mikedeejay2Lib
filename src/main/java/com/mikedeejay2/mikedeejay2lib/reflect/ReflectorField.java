@@ -1,7 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.reflect;
 
-import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
+import java.lang.reflect.Modifier;
 
 /**
  * A wrapper class for {@link Field} for simpler reflection needs
@@ -98,6 +98,186 @@ public class ReflectorField<T>
     }
 
     /**
+     * Set this field's value to an object
+     *
+     * @param obj The object instance, null for static
+     * @param value The value of the field to set
+     * @return This object
+     */
+    public ReflectorField<T> set(Object obj, Object value)
+    {
+        try
+        {
+            field.set(obj, value);
+        }
+        catch(IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    /**
+     * Set this field's value to a boolean
+     *
+     * @param obj The object instance, null for static
+     * @param value The value of the field to set
+     * @return This object
+     */
+    public ReflectorField<T> set(Object obj, boolean value)
+    {
+        try
+        {
+            field.setBoolean(obj, value);
+        }
+        catch(IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    /**
+     * Set this field's value to a byte
+     *
+     * @param obj The object instance, null for static
+     * @param value The value of the field to set
+     * @return This object
+     */
+    public ReflectorField<T> set(Object obj, byte value)
+    {
+        try
+        {
+            field.setByte(obj, value);
+        }
+        catch(IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    /**
+     * Set this field's value to a char
+     *
+     * @param obj The object instance, null for static
+     * @param value The value of the field to set
+     * @return This object
+     */
+    public ReflectorField<T> set(Object obj, char value)
+    {
+        try
+        {
+            field.setChar(obj, value);
+        }
+        catch(IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    /**
+     * Set this field's value to a short
+     *
+     * @param obj The object instance, null for static
+     * @param value The value of the field to set
+     * @return This object
+     */
+    public ReflectorField<T> set(Object obj, short value)
+    {
+        try
+        {
+            field.setShort(obj, value);
+        }
+        catch(IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    /**
+     * Set this field's value to an int
+     *
+     * @param obj The object instance, null for static
+     * @param value The value of the field to set
+     * @return This object
+     */
+    public ReflectorField<T> set(Object obj, int value)
+    {
+        try
+        {
+            field.setInt(obj, value);
+        }
+        catch(IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    /**
+     * Set this field's value to a float
+     *
+     * @param obj The object instance, null for static
+     * @param value The value of the field to set
+     * @return This object
+     */
+    public ReflectorField<T> set(Object obj, float value)
+    {
+        try
+        {
+            field.setFloat(obj, value);
+        }
+        catch(IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    /**
+     * Set this field's value to a double
+     *
+     * @param obj The object instance, null for static
+     * @param value The value of the field to set
+     * @return This object
+     */
+    public ReflectorField<T> set(Object obj, double value)
+    {
+        try
+        {
+            field.setDouble(obj, value);
+        }
+        catch(IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    /**
+     * Set this field's value to a long
+     *
+     * @param obj The object instance, null for static
+     * @param value The value of the field to set
+     * @return This object
+     */
+    public ReflectorField<T> set(Object obj, long value)
+    {
+        try
+        {
+            field.setLong(obj, value);
+        }
+        catch(IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    /**
      * Get the wrapped field for this <code>ReflectorField</code>
      *
      * @return The <code>Field</code>
@@ -115,5 +295,49 @@ public class ReflectorField<T>
     public ReflectorClass<T> parentClass()
     {
         return clazz;
+    }
+
+    /**
+     * Remove a modifier from this <code>ReflectorField</code>
+     *
+     * @param modifier See {@link Modifier}, for example <code>Modifier.FINAL</code>
+     *
+     * @return This object
+     */
+    public ReflectorField<T> removeModifier(int modifier)
+    {
+        try
+        {
+            Field modifiersField = Field.class.getDeclaredField("modifiers");
+            modifiersField.setAccessible(true);
+            modifiersField.setInt(field, field.getModifiers() & ~modifier);
+        }
+        catch(NoSuchFieldException | IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        return this;
+    }
+
+    /**
+     * Add a modifier to this <code>ReflectorField</code>
+     *
+     * @param modifier See {@link Modifier}, for example <code>Modifier.FINAL</code>
+     *
+     * @return This object
+     */
+    public ReflectorField<T> addModifier(int modifier)
+    {
+        try
+        {
+            Field modifiersField = Field.class.getDeclaredField("modifiers");
+            modifiersField.setAccessible(true);
+            modifiersField.setInt(field, field.getModifiers() & modifier);
+        }
+        catch(NoSuchFieldException | IllegalAccessException e)
+        {
+            e.printStackTrace();
+        }
+        return this;
     }
 }
