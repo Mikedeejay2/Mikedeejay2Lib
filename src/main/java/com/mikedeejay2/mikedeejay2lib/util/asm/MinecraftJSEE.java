@@ -12,6 +12,15 @@ import java.lang.instrument.UnmodifiableClassException;
 import java.util.UUID;
 import java.util.logging.Logger;
 
+/**
+ * A utility class for Minecraft compatibility with <code>JSEE</code> (Java Strong Encapsulation Eliminator).
+ * In the case of utilizing JSEE with Minecraft plugins, {@link MinecraftJSEE#initJSEE(Class)} should be called to
+ * properly configure JSEE.
+ * <p>
+ * JSEE is <b>REQUIRED</b> to use this class! It must be a dependency that is shaded into your plugin's jar.
+ *
+ * @author Mikedeejay2
+ */
 public class MinecraftJSEE {
     private static final Logger LOGGER = Logger.getLogger("MinecraftJSEE");
 
