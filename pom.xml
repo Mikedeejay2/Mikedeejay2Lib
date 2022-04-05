@@ -198,5 +198,11 @@
             <version>23.0.0</version>
             <scope>provided</scope>
         </dependency>
+        <dependency>
+            <groupId>com.mikedeejay2</groupId>
+            <artifactId>jsee</artifactId>
+            <version>1.0.0</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 </project>
