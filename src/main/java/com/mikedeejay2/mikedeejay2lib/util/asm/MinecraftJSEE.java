@@ -41,7 +41,7 @@ public class MinecraftJSEE {
      *
      * @param pluginClass The plugin's main <code>Class/code>
      */
-    public static void initJSEE(Class<BukkitPlugin> pluginClass) {
+    public static void initJSEE(Class<? extends BukkitPlugin> pluginClass) {
         AgentInfo.setDefaultAgent(MinecraftJSEEAgent.class);
         AgentInfo.setDefaultArgs(pluginClass.getName());
     }
