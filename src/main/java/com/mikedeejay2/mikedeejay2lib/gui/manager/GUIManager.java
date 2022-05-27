@@ -85,4 +85,18 @@ public class GUIManager
     {
         return playerGUIs.containsKey(player);
     }
+
+    /**
+     * Method to close all currently open GUIs. This method is called on plugin disable to ensure that a GUI doesn't
+     * exist after a server reload.
+     */
+    public void closeAllGuis() {
+        for(Map.Entry<Player, PlayerGUI> entry : playerGUIs.entrySet()) {
+            Player player = entry.getKey();
+            PlayerGUI playerGUI = entry.getValue();
+            if(!playerGUI.isGuiOpened()) continue;
+            if(playerGUI.getGUI() == null) continue;
+            playerGUI.getGUI().close(player);
+        }
+    }
 }

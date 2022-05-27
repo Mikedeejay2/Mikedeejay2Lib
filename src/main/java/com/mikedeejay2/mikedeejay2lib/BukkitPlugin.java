@@ -52,6 +52,7 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin
     @Override
     public void onDisable()
     {
+        this.guiManager.closeAllGuis();
         super.onDisable();
     }
 
