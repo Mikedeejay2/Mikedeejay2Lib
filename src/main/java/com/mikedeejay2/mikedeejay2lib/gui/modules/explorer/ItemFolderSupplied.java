@@ -36,7 +36,7 @@ public class ItemFolderSupplied implements ItemFolder
     protected Supplier<List<GUIItem>> itemGenerator;
 
     /**
-     * Construct a new <coded>ItemFolderSupplied</coded>
+     * Construct a new <code>ItemFolderSupplied</code>
      *
      * @param name            The name of the folder
      * @param folderItem      The display item of the folder
