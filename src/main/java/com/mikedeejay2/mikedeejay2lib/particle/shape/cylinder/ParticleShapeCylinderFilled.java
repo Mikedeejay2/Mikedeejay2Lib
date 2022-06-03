@@ -25,9 +25,14 @@ public class ParticleShapeCylinderFilled implements ParticleShape
     protected double radius;
 
     /**
-     * The density of particles
+     * The density of particles in relation to the radius
      */
-    protected double density;
+    protected double radiusDensity;
+
+    /**
+     * The density of particles in relation to the height
+     */
+    protected double heightDensity;
 
     /**
      * The height
@@ -40,12 +45,14 @@ public class ParticleShapeCylinderFilled implements ParticleShape
      * @param location The center location
      * @param radius   The radius
      * @param height   The height
-     * @param density  The density of particles
+     * @param radiusDensity The density of particles in relation to the radius
+     * @param heightDensity The density of particles in relation to the height
      */
-    public ParticleShapeCylinderFilled(Location location, double radius, double height, double density)
+    public ParticleShapeCylinderFilled(Location location, double radius, double height, double radiusDensity, double heightDensity)
     {
         this.location = location;
-        this.density = density;
+        this.radiusDensity = radiusDensity;
+        this.heightDensity = heightDensity;
         this.radius = radius;
         this.height = height;
     }
@@ -58,6 +65,6 @@ public class ParticleShapeCylinderFilled implements ParticleShape
     @Override
     public List<Vector> getShape()
     {
-        return MathUtil.getCylinderFilledVectors(location, radius, height, density);
+        return MathUtil.getCylinderFilledVectors(location, radius, height, radiusDensity, heightDensity);
     }
 }

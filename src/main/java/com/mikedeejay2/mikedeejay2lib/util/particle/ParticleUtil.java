@@ -426,12 +426,13 @@ public final class ParticleUtil
      * @param offsetX  The offset X of particles
      * @param offsetY  The offset Y of particles
      * @param offsetZ  The offset Z of particles
-     * @param density  The density (Amount of points)
+     * @param radiusDensity The density of particles in relation to the radius
+     * @param heightDensity The density of particles in relation to the height
      * @param force    Whether the particles should be force rendered or not
      */
-    public static void particleCylinderHollow(Location location, Particle particle, double height, double radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
+    public static void particleCylinderHollow(Location location, Particle particle, double height, double radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double radiusDensity, double heightDensity, boolean force)
     {
-        List<Location> cylinder = MathUtil.getCylinderHollowLocations(location, height, radius, density);
+        List<Location> cylinder = MathUtil.getCylinderHollowLocations(location, height, radius, radiusDensity, heightDensity);
         World world = location.getWorld();
 
         for(Location curLoc : cylinder)
@@ -449,12 +450,13 @@ public final class ParticleUtil
      * @param radius   The radius of the cylinder
      * @param count    The count of particles per point
      * @param speed    The speed that the particles move at
-     * @param density  The density (Amount of points)
+     * @param radiusDensity The density of particles in relation to the radius
+     * @param heightDensity The density of particles in relation to the height
      * @param force    Whether the particles should be force rendered or not
      */
-    public static void particleCylinderHollow(Location location, Particle particle, double height, double radius, int count, float speed, double density, boolean force)
+    public static void particleCylinderHollow(Location location, Particle particle, double height, double radius, int count, float speed, double radiusDensity, double heightDensity, boolean force)
     {
-        particleCylinderHollow(location, particle, height, radius, count, speed, 0, 0, 0, density, force);
+        particleCylinderHollow(location, particle, height, radius, count, speed, 0, 0, 0, radiusDensity, heightDensity, force);
     }
 
     /**
@@ -466,11 +468,12 @@ public final class ParticleUtil
      * @param radius   The radius of the cylinder
      * @param count    The count of particles per point
      * @param speed    The speed that the particles move at
-     * @param density  The density (Amount of points)
+     * @param radiusDensity The density of particles in relation to the radius
+     * @param heightDensity The density of particles in relation to the height
      */
-    public static void particleCylinderHollow(Location location, Particle particle, double height, double radius, int count, float speed, double density)
+    public static void particleCylinderHollow(Location location, Particle particle, double height, double radius, int count, float speed, double radiusDensity, double heightDensity)
     {
-        particleCylinderHollow(location, particle, height, radius, count, speed, 0, 0, 0, density, false);
+        particleCylinderHollow(location, particle, height, radius, count, speed, 0, 0, 0, radiusDensity, heightDensity, false);
     }
 
     /**
@@ -485,12 +488,13 @@ public final class ParticleUtil
      * @param offsetX  The offset X of particles
      * @param offsetY  The offset Y of particles
      * @param offsetZ  The offset Z of particles
-     * @param density  The density (Amount of points)
+     * @param radiusDensity The density of particles in relation to the radius
+     * @param heightDensity The density of particles in relation to the height
      * @param force    Whether the particles should be force rendered or not
      */
-    public static void particleCylinderFilled(Location location, Particle particle, double height, double radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
+    public static void particleCylinderFilled(Location location, Particle particle, double height, double radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double radiusDensity, double heightDensity, boolean force)
     {
-        List<Location> cylinder = MathUtil.getCylinderFilledLocations(location, height, radius, density);
+        List<Location> cylinder = MathUtil.getCylinderFilledLocations(location, height, radius, radiusDensity, heightDensity);
         World world = location.getWorld();
 
         for(Location curLoc : cylinder)
@@ -508,12 +512,13 @@ public final class ParticleUtil
      * @param radius   The radius of the cylinder
      * @param count    The count of particles per point
      * @param speed    The speed that the particles move at
-     * @param density  The density (Amount of points)
+     * @param radiusDensity The density of particles in relation to the radius
+     * @param heightDensity The density of particles in relation to the height
      * @param force    Whether the particles should be force rendered or not
      */
-    public static void particleCylinderFilled(Location location, Particle particle, double height, double radius, int count, float speed, double density, boolean force)
+    public static void particleCylinderFilled(Location location, Particle particle, double height, double radius, int count, float speed, double radiusDensity, double heightDensity, boolean force)
     {
-        particleCylinderFilled(location, particle, height, radius, count, speed, 0, 0, 0, density, force);
+        particleCylinderFilled(location, particle, height, radius, count, speed, 0, 0, 0, radiusDensity, heightDensity, force);
     }
 
     /**
@@ -525,11 +530,12 @@ public final class ParticleUtil
      * @param radius   The radius of the cylinder
      * @param count    The count of particles per point
      * @param speed    The speed that the particles move at
-     * @param density  The density (Amount of points)
+     * @param radiusDensity The density of particles in relation to the radius
+     * @param heightDensity The density of particles in relation to the height
      */
-    public static void particleCylinderFilled(Location location, Particle particle, double height, double radius, int count, float speed, double density)
+    public static void particleCylinderFilled(Location location, Particle particle, double height, double radius, int count, float speed, double radiusDensity, double heightDensity)
     {
-        particleCylinderFilled(location, particle, height, radius, count, speed, 0, 0, 0, density, false);
+        particleCylinderFilled(location, particle, height, radius, count, speed, 0, 0, 0, radiusDensity, heightDensity, false);
     }
 
     /**

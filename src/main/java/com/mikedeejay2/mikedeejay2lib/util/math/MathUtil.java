@@ -834,19 +834,20 @@ public final class MathUtil
     /**
      * Get a list of vectors that create a hollow cylinder
      *
-     * @param center  The center of the cylinder
-     * @param height  The height of the cylinder
-     * @param radius  The radius of the cylinder
-     * @param density The density between each point
+     * @param center        The center of the cylinder
+     * @param height        The height of the cylinder
+     * @param radius        The radius of the cylinder
+     * @param radiusDensity The density of particles in relation to the radius
+     * @param heightDensity The density of particles in relation to the height
      * @return A new <code>List</code> of locations that create a cylinder
      */
-    public static List<Vector> getCylinderHollowVectors(Location center, double height, double radius, double density)
+    public static List<Vector> getCylinderHollowVectors(Location center, double height, double radius, double radiusDensity, double heightDensity)
     {
         List<Vector> cylinder = new ArrayList<>();
-        List<Vector> circle = getCircleVectors(center, radius, density);
-        Vector transVec = new Vector(0, 1.0 / density, 0);
+        List<Vector> circle = getCircleVectors(center, radius, radiusDensity);
+        Vector transVec = new Vector(0, 1.0 / heightDensity, 0);
 
-        for(double y = 0; y < height; y += 1.0 / density)
+        for(double y = 0; y < height; y += 1.0 / heightDensity)
         {
             ArrayUtil.addClonedVectorsToList(circle, cylinder);
             addVectors(circle, transVec);
@@ -860,13 +861,14 @@ public final class MathUtil
      * @param center  The center of the cylinder
      * @param height  The height of the cylinder
      * @param radius  The radius of the cylinder
-     * @param density The density between each point
+     * @param radiusDensity The density of particles in relation to the radius
+     * @param heightDensity The density of particles in relation to the height
      * @return A new <code>List</code> of locations that create a cylinder
      */
-    public static List<Location> getCylinderHollowLocations(Location center, double height, double radius, double density)
+    public static List<Location> getCylinderHollowLocations(Location center, double height, double radius, double radiusDensity, double heightDensity)
     {
         World world = center.getWorld();
-        List<Vector> vectorList = getCylinderHollowVectors(center, height, radius, density);
+        List<Vector> vectorList = getCylinderHollowVectors(center, height, radius, radiusDensity, heightDensity);
         return ArrayUtil.toLocationList(vectorList, world);
     }
 
@@ -876,16 +878,17 @@ public final class MathUtil
      * @param center  The center of the cylinder
      * @param height  The height of the cylinder
      * @param radius  The radius of the cylinder
-     * @param density The density between each point
+     * @param radiusDensity The density of particles in relation to the radius
+     * @param heightDensity The density of particles in relation to the height
      * @return A new <code>List</code> of locations that create a cylinder
      */
-    public static List<Vector> getCylinderFilledVectors(Location center, double height, double radius, double density)
+    public static List<Vector> getCylinderFilledVectors(Location center, double height, double radius, double radiusDensity, double heightDensity)
     {
         List<Vector> cylinder = new ArrayList<>();
-        List<Vector> circle = getCircleFilledVectors(center, radius, density);
-        Vector transVec = new Vector(0, 1.0 / density, 0);
+        List<Vector> circle = getCircleFilledVectors(center, radius, radiusDensity);
+        Vector transVec = new Vector(0, 1.0 / heightDensity, 0);
 
-        for(double y = 0; y < height; y += 1.0 / density)
+        for(double y = 0; y < height; y += 1.0 / heightDensity)
         {
             ArrayUtil.addClonedVectorsToList(circle, cylinder);
             addVectors(circle, transVec);
@@ -899,13 +902,14 @@ public final class MathUtil
      * @param center  The center of the cylinder
      * @param height  The height of the cylinder
      * @param radius  The radius of the cylinder
-     * @param density The density between each point
+     * @param radiusDensity The density of particles in relation to the radius
+     * @param heightDensity The density of particles in relation to the height
      * @return A new <code>List</code> of locations that create a cylinder
      */
-    public static List<Location> getCylinderFilledLocations(Location center, double height, double radius, double density)
+    public static List<Location> getCylinderFilledLocations(Location center, double height, double radius, double radiusDensity, double heightDensity)
     {
         World world = center.getWorld();
-        List<Vector> vectorList = getCylinderFilledVectors(center, height, radius, density);
+        List<Vector> vectorList = getCylinderFilledVectors(center, height, radius, radiusDensity, heightDensity);
         return ArrayUtil.toLocationList(vectorList, world);
     }
 
