@@ -1132,4 +1132,24 @@ public final class MathUtil
         }
         return result;
     }
+
+    /**
+     * Convert a direction vector to yaw
+     *
+     * @param directionVector The input direction vector
+     * @return The calculated yaw
+     */
+    public static double directionToYaw(Vector directionVector) {
+        return new Location(null, 0, 0, 0).setDirection(directionVector).getYaw();
+    }
+
+    /**
+     * Convert a direction vector to pitch
+     *
+     * @param directionVector The input direction vector
+     * @return The calculated pitch
+     */
+    public static double directionToPitch(Vector directionVector) {
+        return new Location(null, 0, 0, 0).setDirection(directionVector).getPitch();
+    }
 }
