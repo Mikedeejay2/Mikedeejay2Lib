@@ -147,7 +147,7 @@ public final class ParticleUtil
      * @param density  The density (Amount of points) of the circle
      * @param force    Whether the particles should be force rendered or not
      */
-    public static void particleCircle(Location location, Particle particle, int radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
+    public static void particleCircle(Location location, Particle particle, double radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
     {
         List<Location> circle = MathUtil.getCircleLocations(location, radius, density);
         World world = location.getWorld();
@@ -168,7 +168,7 @@ public final class ParticleUtil
      * @param density  The density (Amount of points) of the circle
      * @param force    Whether the particles should be force rendered or not
      */
-    public static void particleCircle(Location location, Particle particle, int radius, int count, float speed, double density, boolean force)
+    public static void particleCircle(Location location, Particle particle, double radius, int count, float speed, double density, boolean force)
     {
         particleCircle(location, particle, radius, count, speed, 0, 0, 0, density, force);
     }
@@ -183,7 +183,7 @@ public final class ParticleUtil
      * @param speed    The speed that the particles move at
      * @param density  The density (Amount of points) of the circle
      */
-    public static void particleCircle(Location location, Particle particle, int radius, int count, float speed, double density)
+    public static void particleCircle(Location location, Particle particle, double radius, int count, float speed, double density)
     {
         particleCircle(location, particle, radius, count, speed, 0, 0, 0, density, false);
     }
@@ -202,7 +202,7 @@ public final class ParticleUtil
      * @param density  The density (Amount of points) of the circle
      * @param force    Whether the particles should be force rendered or not
      */
-    public static void particleCircleFilled(Location location, Particle particle, int radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
+    public static void particleCircleFilled(Location location, Particle particle, double radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
     {
         List<Location> circle = MathUtil.getCircleFilledLocations(location, radius, density);
         World world = location.getWorld();
@@ -223,7 +223,7 @@ public final class ParticleUtil
      * @param density  The density (Amount of points) of the circle
      * @param force    Whether the particles should be force rendered or not
      */
-    public static void particleCircleFilled(Location location, Particle particle, int radius, int count, float speed, double density, boolean force)
+    public static void particleCircleFilled(Location location, Particle particle, double radius, int count, float speed, double density, boolean force)
     {
         particleCircleFilled(location, particle, radius, count, speed, 0, 0, 0, density, force);
     }
@@ -238,7 +238,7 @@ public final class ParticleUtil
      * @param speed    The speed that the particles move at
      * @param density  The density (Amount of points) of the circle
      */
-    public static void particleCircleFilled(Location location, Particle particle, int radius, int count, float speed, double density)
+    public static void particleCircleFilled(Location location, Particle particle, double radius, int count, float speed, double density)
     {
         particleCircleFilled(location, particle, radius, count, speed, 0, 0, 0, density, false);
     }
@@ -257,7 +257,7 @@ public final class ParticleUtil
      * @param density  The density (Amount of points) of the circle
      * @param force    Whether the particles should be force rendered or not
      */
-    public static void particleSphereHollow(Location location, Particle particle, int radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
+    public static void particleSphereHollow(Location location, Particle particle, double radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
     {
         List<Location> sphere = MathUtil.getSphereHollowLocations(location, radius, density);
         World world = location.getWorld();
@@ -279,7 +279,7 @@ public final class ParticleUtil
      * @param density  The density (Amount of points) of the circle
      * @param force    Whether the particles should be force rendered or not
      */
-    public static void particleSphereHollow(Location location, Particle particle, int radius, int count, float speed, double density, boolean force)
+    public static void particleSphereHollow(Location location, Particle particle, double radius, int count, float speed, double density, boolean force)
     {
         particleSphereHollow(location, particle, radius, count, speed, 0, 0, 0, density, force);
     }
@@ -294,7 +294,7 @@ public final class ParticleUtil
      * @param speed    The speed that the particles move at
      * @param density  The density (Amount of points) of the circle
      */
-    public static void particleSphereHollow(Location location, Particle particle, int radius, int count, float speed, double density)
+    public static void particleSphereHollow(Location location, Particle particle, double radius, int count, float speed, double density)
     {
         particleSphereHollow(location, particle, radius, count, speed, 0, 0, 0, density, false);
     }
@@ -313,7 +313,7 @@ public final class ParticleUtil
      * @param density  The density (Amount of points) of the circle
      * @param force    Whether the particles should be force rendered or not
      */
-    public static void particleSphereFilled(Location location, Particle particle, int radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
+    public static void particleSphereFilled(Location location, Particle particle, double radius, int count, float speed, double offsetX, double offsetY, double offsetZ, double density, boolean force)
     {
         List<Location> sphere = MathUtil.getSphereFilledLocations(location, radius, density);
         World world = location.getWorld();
@@ -335,7 +335,7 @@ public final class ParticleUtil
      * @param density  The density (Amount of points) of the circle
      * @param force    Whether the particles should be force rendered or not
      */
-    public static void particleSphereFilled(Location location, Particle particle, int radius, int count, float speed, double density, boolean force)
+    public static void particleSphereFilled(Location location, Particle particle, double radius, int count, float speed, double density, boolean force)
     {
         particleSphereFilled(location, particle, radius, count, speed, 0, 0, 0, density, force);
     }
@@ -350,7 +350,7 @@ public final class ParticleUtil
      * @param speed    The speed that the particles move at
      * @param density  The density (Amount of points) of the circle
      */
-    public static void particleSphereFilled(Location location, Particle particle, int radius, int count, float speed, double density)
+    public static void particleSphereFilled(Location location, Particle particle, double radius, int count, float speed, double density)
     {
         particleSphereFilled(location, particle, radius, count, speed, 0, 0, 0, density, false);
     }
