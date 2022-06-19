@@ -1,7 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.commands;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;

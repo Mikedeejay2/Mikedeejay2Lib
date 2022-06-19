@@ -2,7 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.module;
 
 import com.google.common.collect.ImmutableSet;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 

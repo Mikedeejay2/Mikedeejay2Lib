@@ -6,7 +6,7 @@ import com.mikedeejay2.mikedeejay2lib.commands.TabBase;
 import com.mikedeejay2.mikedeejay2lib.commands.TabCommandBase;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mikedeejay2.mikedeejay2lib.util.logging.EnhancedPluginLogger;
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.command.*;
 import org.bukkit.entity.Player;

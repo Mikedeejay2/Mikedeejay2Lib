@@ -1,7 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.button;
 
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
-import org.apache.commons.lang.Validate;
+import org.apache.commons.lang3.Validate;
 import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.NotNull;
 
