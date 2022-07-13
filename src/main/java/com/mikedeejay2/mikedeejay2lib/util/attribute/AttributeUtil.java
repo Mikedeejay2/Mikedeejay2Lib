@@ -278,6 +278,225 @@ public final class AttributeUtil
     }
 
     /**
+     * Get an {@link AttributeModifier} based off of UUID
+     *
+     * @param uuid     The UUID of the {@link AttributeModifier}
+     * @param itemStack The <code>ItemStack</code> to reference
+     * @return The found {@link AttributeModifier}, null if it was not found
+     */
+    public static AttributeModifier getAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack)
+    {
+        if(!hasAttributeModifier(uuid, itemStack)) return null;
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        for(AttributeModifier modifier : itemMeta.getAttributeModifiers().values())
+        {
+            if(uuid.equals(modifier.getUniqueId())) return modifier;
+        }
+        return null;
+    }
+
+    /**
+     * Get an {@link AttributeModifier} based off of UUID
+     *
+     * @param uuid     The UUID of the {@link AttributeModifier}
+     * @param itemStack The <code>ItemStack</code> to reference
+     * @param slot     The {@link EquipmentSlot} of the modifier
+     * @return The found {@link AttributeModifier}, null if it was not found
+     */
+    public static AttributeModifier getAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack, @NotNull final EquipmentSlot slot)
+    {
+        if(!hasAttributeModifier(uuid, itemStack, slot)) return null;
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        for(AttributeModifier modifier : itemMeta.getAttributeModifiers(slot).values())
+        {
+            if(uuid.equals(modifier.getUniqueId())) return modifier;
+        }
+        return null;
+    }
+
+    /**
+     * Get an {@link AttributeModifier} based off of UUID
+     *
+     * @param uuid     The UUID of the {@link AttributeModifier}
+     * @param itemStack The <code>ItemStack</code> to reference
+     * @param attribute     The {@link AttributeInstance} of the modifier
+     * @return The found {@link AttributeModifier}, null if it was not found
+     */
+    public static AttributeModifier getAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack, @NotNull final Attribute attribute)
+    {
+        if(!hasAttributeModifier(uuid, itemStack, attribute)) return null;
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        for(AttributeModifier modifier : itemMeta.getAttributeModifiers(attribute))
+        {
+            if(uuid.equals(modifier.getUniqueId())) return modifier;
+        }
+        return null;
+    }
+
+    /**
+     * Get an {@link AttributeModifier} based off of UUID
+     *
+     * @param uuid     The UUID of the {@link AttributeModifier}
+     * @param attribute     The {@link AttributeInstance} of the modifier
+     * @return The found {@link AttributeModifier}, null if it was not found
+     */
+    public static AttributeModifier getAttributeModifier(@NotNull final UUID uuid, @NotNull final AttributeInstance attribute)
+    {
+        if(!hasAttributeModifier(uuid, attribute)) return null;
+        for(AttributeModifier modifier : attribute.getModifiers())
+        {
+            if(uuid.equals(modifier.getUniqueId())) return modifier;
+        }
+        return null;
+    }
+
+    /**
+     * Get an {@link AttributeModifier} based off of name
+     *
+     * @param name     The name of the {@link AttributeModifier}
+     * @param itemStack The <code>ItemStack</code> to reference
+     * @return The found {@link AttributeModifier}, null if it was not found
+     */
+    public static AttributeModifier getAttributeModifier(@NotNull final String name, ItemStack itemStack)
+    {
+        if(!hasAttributeModifier(name, itemStack)) return null;
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        for(AttributeModifier modifier : itemMeta.getAttributeModifiers().values())
+        {
+            if(name.equals(modifier.getName())) return modifier;
+        }
+        return null;
+    }
+
+    /**
+     * Get an {@link AttributeModifier} based off of name
+     *
+     * @param name     The name of the {@link AttributeModifier}
+     * @param itemStack The <code>ItemStack</code> to reference
+     * @param slot     The {@link EquipmentSlot} of the modifier
+     * @return The found {@link AttributeModifier}, null if it was not found
+     */
+    public static AttributeModifier getAttributeModifier(@NotNull final String name, ItemStack itemStack, @NotNull final EquipmentSlot slot)
+    {
+        if(!hasAttributeModifier(name, itemStack, slot)) return null;
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        for(AttributeModifier modifier : itemMeta.getAttributeModifiers(slot).values())
+        {
+            if(name.equals(modifier.getName())) return modifier;
+        }
+        return null;
+    }
+
+    /**
+     * Get an {@link AttributeModifier} based off of name
+     *
+     * @param name     The name of the {@link AttributeModifier}
+     * @param itemStack The <code>ItemStack</code> to reference
+     * @param attribute     The {@link AttributeInstance} of the modifier
+     * @return The found {@link AttributeModifier}, null if it was not found
+     */
+    public static AttributeModifier getAttributeModifier(@NotNull final String name, ItemStack itemStack, @NotNull final Attribute attribute)
+    {
+        if(!hasAttributeModifier(name, itemStack, attribute)) return null;
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        for(AttributeModifier modifier : itemMeta.getAttributeModifiers(attribute))
+        {
+            if(name.equals(modifier.getName())) return modifier;
+        }
+        return null;
+    }
+
+    /**
+     * Get an {@link AttributeModifier} based off of name
+     *
+     * @param name     The name of the {@link AttributeModifier}
+     * @param attribute     The {@link AttributeInstance} of the modifier
+     * @return The found {@link AttributeModifier}, null if it was not found
+     */
+    public static AttributeModifier getAttributeModifier(@NotNull final String name, @NotNull final AttributeInstance attribute)
+    {
+        if(!hasAttributeModifier(name, attribute)) return null;
+        for(AttributeModifier modifier : attribute.getModifiers())
+        {
+            if(name.equals(modifier.getName())) return modifier;
+        }
+        return null;
+    }
+
+    /**
+     * Get an {@link AttributeModifier} based off of the modifier's instance
+     *
+     * @param attribModifier The {@link AttributeModifier} reference
+     * @param itemStack       The <code>ItemStack</code> to reference
+     * @return The found {@link AttributeModifier}, null if it was not found
+     */
+    public static AttributeModifier getAttributeModifier(@NotNull final AttributeModifier attribModifier, ItemStack itemStack)
+    {
+        if(!hasAttributeModifier(attribModifier, itemStack)) return null;
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        for(AttributeModifier modifier : itemMeta.getAttributeModifiers().values())
+        {
+            if(attribModifier.equals(modifier)) return modifier;
+        }
+        return null;
+    }
+
+    /**
+     * Get an {@link AttributeModifier} based off of the modifier's instance
+     *
+     * @param attribModifier The {@link AttributeModifier} reference
+     * @param itemStack       The <code>ItemStack</code> to reference
+     * @param slot           The {@link EquipmentSlot} of the modifier
+     * @return The found {@link AttributeModifier}, null if it was not found
+     */
+    public static AttributeModifier getAttributeModifier(@NotNull final AttributeModifier attribModifier, ItemStack itemStack, @NotNull final EquipmentSlot slot)
+    {
+        if(!hasAttributeModifier(attribModifier, itemStack, slot)) return null;
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        for(AttributeModifier modifier : itemMeta.getAttributeModifiers(slot).values())
+        {
+            if(attribModifier.equals(modifier)) return modifier;
+        }
+        return null;
+    }
+
+    /**
+     * Get an {@link AttributeModifier} based off of the modifier's instance
+     *
+     * @param attribModifier The {@link AttributeModifier} reference
+     * @param itemStack       The <code>ItemStack</code> to reference
+     * @param attribute      The {@link AttributeInstance} of the modifier
+     * @return The found {@link AttributeModifier}, null if it was not found
+     */
+    public static AttributeModifier getAttributeModifier(@NotNull final AttributeModifier attribModifier, ItemStack itemStack, @NotNull final Attribute attribute)
+    {
+        if(!hasAttributeModifier(attribModifier, itemStack, attribute)) return null;
+        ItemMeta itemMeta = itemStack.getItemMeta();
+        for(AttributeModifier modifier : itemMeta.getAttributeModifiers(attribute))
+        {
+            if(attribModifier.equals(modifier)) return modifier;
+        }
+        return null;
+    }
+
+    /**
+     * Get an {@link AttributeModifier} based off of the modifier's instance
+     *
+     * @param attribModifier The {@link AttributeModifier} reference
+     * @param attribute      The {@link AttributeInstance} of the modifier
+     * @return The found {@link AttributeModifier}, null if it was not found
+     */
+    public static AttributeModifier getAttributeModifier(@NotNull final AttributeModifier attribModifier, @NotNull final AttributeInstance attribute)
+    {
+        if(!hasAttributeModifier(attribModifier, attribute)) return null;
+        for(AttributeModifier modifier : attribute.getModifiers())
+        {
+            if(attribModifier.equals(modifier)) return modifier;
+        }
+        return null;
+    }
+
+    /**
      * Add an {@link AttributeModifier} to an {@link ItemMeta}.
      * <p>
      * Includes safety checking: If modifier already exists, replace it.
