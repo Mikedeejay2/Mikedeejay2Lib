@@ -4,7 +4,6 @@ import com.mikedeejay2.mikedeejay2lib.gui.listeners.GUIListener;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.GUIManager;
 import com.mikedeejay2.mikedeejay2lib.text.language.LangManager;
 import com.mikedeejay2.mikedeejay2lib.util.enchant.GlowEnchantment;
-import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
 
 /**
  * Main class for Mikedeejay2Lib.

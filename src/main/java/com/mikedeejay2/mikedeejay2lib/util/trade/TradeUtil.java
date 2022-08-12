@@ -1,6 +1,5 @@
 package com.mikedeejay2.mikedeejay2lib.util.trade;
 
-import org.bukkit.entity.Player;
 import org.bukkit.entity.Villager;
 import org.bukkit.inventory.MerchantInventory;
 import org.bukkit.inventory.MerchantRecipe;

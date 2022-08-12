@@ -1,10 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.util.version;
 
-import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
-import com.mikedeejay2.mikedeejay2lib.util.debug.DebugUtil;
 import org.bukkit.Bukkit;
 
-import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
