@@ -27,8 +27,7 @@ import java.util.Set;
  *
  * @author Mikedeejay2
  */
-public interface IItemBuilder<I, T>
-{
+public interface IItemBuilder<I, T> {
     /**
      * Get the item
      *
@@ -234,7 +233,7 @@ public interface IItemBuilder<I, T>
     boolean hasItemFlag(ItemFlag flag);
 
     /**
-     * Get a <code>Set</code> of all of the item flags for the item
+     * Get a <code>Set</code> of all the item flags for the item
      *
      * @return The {@link ItemFlag}s set
      */

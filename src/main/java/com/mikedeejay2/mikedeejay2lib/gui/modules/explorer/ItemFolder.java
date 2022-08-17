@@ -10,8 +10,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public interface ItemFolder
-{
+public interface ItemFolder {
     /**
      * Get the name of the folder (Color codes allowed)
      *

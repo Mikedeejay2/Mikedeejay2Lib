@@ -11,8 +11,7 @@ import net.md_5.bungee.api.chat.HoverEvent;
  *
  * @author Mikedeejay2
  */
-public class ChatHoverModule implements ChatModule
-{
+public class ChatHoverModule implements ChatModule {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -35,8 +34,7 @@ public class ChatHoverModule implements ChatModule
      * @param action    The action of the hover event
      * @param plugin    The {@link BukkitPlugin} instance
      */
-    public ChatHoverModule(String hoverText, HoverEvent.Action action, BukkitPlugin plugin)
-    {
+    public ChatHoverModule(String hoverText, HoverEvent.Action action, BukkitPlugin plugin) {
         this.hoverText = hoverText;
         this.action = action;
         this.plugin = plugin;
@@ -49,8 +47,7 @@ public class ChatHoverModule implements ChatModule
      * @param components The current array of <code>BaseComponents</code> that have been baked
      */
     @Override
-    public void onBake(ChatSection section, BaseComponent[] components)
-    {
+    public void onBake(ChatSection section, BaseComponent[] components) {
         HoverEvent hoverEvent = ChatConverter.getHoverEvent(action, hoverText);
         ChatConverter.setHoverEvent(components, hoverEvent);
     }

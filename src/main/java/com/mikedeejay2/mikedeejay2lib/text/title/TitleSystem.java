@@ -11,8 +11,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class TitleSystem
-{
+public class TitleSystem {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -33,8 +32,7 @@ public class TitleSystem
      *
      * @param plugin The {@link BukkitPlugin} instance
      */
-    public TitleSystem(BukkitPlugin plugin)
-    {
+    public TitleSystem(BukkitPlugin plugin) {
         this.plugin = plugin;
         this.frames = new ArrayList<>();
     }
@@ -46,8 +44,7 @@ public class TitleSystem
      * @param delay   The delay before the title begins displaying
      * @param players The variable array of players
      */
-    public void display(long period, long delay, Player... players)
-    {
+    public void display(long period, long delay, Player... players) {
         this.runtime = new TitleRuntime(this, players);
         runtime.runTaskTimerAsynchronously(plugin, delay, period);
     }
@@ -58,8 +55,7 @@ public class TitleSystem
      * @param period  The period between updates of the title
      * @param players The variable array of players
      */
-    public void display(long period, Player... players)
-    {
+    public void display(long period, Player... players) {
         this.display(period, 0, players);
     }
 
@@ -68,8 +64,7 @@ public class TitleSystem
      *
      * @param players The variable array of players
      */
-    public void display(Player... players)
-    {
+    public void display(Player... players) {
         this.display(1, 0, players);
     }
 
@@ -78,8 +73,7 @@ public class TitleSystem
      *
      * @return Get the list of <code>TitleFrames</code>
      */
-    public List<TitleFrame> getFrames()
-    {
+    public List<TitleFrame> getFrames() {
         return frames;
     }
 
@@ -87,8 +81,7 @@ public class TitleSystem
      * Stop the currently displaying title. This method won't do anything if titles aren't
      * currently being displayed.
      */
-    public void stop()
-    {
+    public void stop() {
         if(runtime == null || runtime.isCancelled()) return;
         runtime.cancel();
     }
@@ -99,8 +92,7 @@ public class TitleSystem
      * @param frame The <code>TitleFrame</code> to add
      * @return The current <code>TitleSystem</code>
      */
-    public TitleSystem addFrame(TitleFrame frame)
-    {
+    public TitleSystem addFrame(TitleFrame frame) {
         frames.add(frame);
         return this;
     }
@@ -117,8 +109,7 @@ public class TitleSystem
      *                 (for full time do fadeIn + stay + fadeOut)
      * @return The current <code>TitleSystem</code>
      */
-    public TitleSystem addFrame(String title, String subtitle, int fadeIn, int stay, int fadeOut, long period)
-    {
+    public TitleSystem addFrame(String title, String subtitle, int fadeIn, int stay, int fadeOut, long period) {
         TitleFrame frame = new TitleFrame(title, subtitle, fadeIn, stay, fadeOut, period);
         frames.add(frame);
         return this;
@@ -130,8 +121,7 @@ public class TitleSystem
      * @param frame The <code>TitleFrame</code> to search for
      * @return Whether the <code>TitleFrame</code> was found or not
      */
-    public boolean containsFrame(TitleFrame frame)
-    {
+    public boolean containsFrame(TitleFrame frame) {
         return frames.contains(frame);
     }
 
@@ -141,8 +131,7 @@ public class TitleSystem
      * @param frame The <code>TitleFrame</code> to remove
      * @return The current <code>TitleSystem</code>
      */
-    public TitleSystem removeFrame(TitleFrame frame)
-    {
+    public TitleSystem removeFrame(TitleFrame frame) {
         frames.remove(frame);
         return this;
     }
@@ -153,8 +142,7 @@ public class TitleSystem
      * @param index The index to remove the <code>TitleFrame</code> at
      * @return The current <code>TitleSystem</code>
      */
-    public TitleSystem removeFrame(int index)
-    {
+    public TitleSystem removeFrame(int index) {
         frames.remove(index);
         return this;
     }
@@ -165,8 +153,7 @@ public class TitleSystem
      * @param index The index to get the <code>TitleFrame</code> from
      * @return The requested <code>TitleFrame</code>
      */
-    public TitleFrame getFrame(int index)
-    {
+    public TitleFrame getFrame(int index) {
         return frames.get(index);
     }
 }

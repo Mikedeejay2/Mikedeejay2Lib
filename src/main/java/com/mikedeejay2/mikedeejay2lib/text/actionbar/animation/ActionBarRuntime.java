@@ -18,8 +18,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class ActionBarRuntime extends EnhancedRunnable
-{
+public class ActionBarRuntime extends EnhancedRunnable {
     /**
      * The array of players to print the action bar to
      */
@@ -47,8 +46,7 @@ public class ActionBarRuntime extends EnhancedRunnable
      * @param actionBar The {@link ActionBar} parent
      * @param players The array of players to print the action bar to
      */
-    public ActionBarRuntime(ActionBar actionBar, Player... players)
-    {
+    public ActionBarRuntime(ActionBar actionBar, Player... players) {
         this.players = players;
         this.actionBar = actionBar;
         this.curIndex = 0;
@@ -60,17 +58,14 @@ public class ActionBarRuntime extends EnhancedRunnable
      * Overridden <code>onRun()</code> method that adds animation for the <code>ActionBar</code>
      */
     @Override
-    public void onRun()
-    {
+    public void onRun() {
         List<ActionBarFrame> frames = actionBar.getFrames();
         List<ActionBarModule> modules = actionBar.getModules();
         if(frames.size() == 0) return;
         wait += period;
-        if(firstRun)
-        {
+        if(firstRun) {
             modules.forEach(module -> module.onTick(actionBar, frames.get(curIndex)));
-            if(wait > delay)
-            {
+            if(wait > delay) {
                 if(curIndex < frames.size()) curIndex = 0;
                 firstRun = false;
                 ActionBarFrame curFrame = frames.get(curIndex);
@@ -81,14 +76,10 @@ public class ActionBarRuntime extends EnhancedRunnable
             }
             return;
         }
-        if(curIndex >= frames.size())
-        {
-            if(actionBar.shouldLoop())
-            {
+        if(curIndex >= frames.size()) {
+            if(actionBar.shouldLoop()) {
                 curIndex -= frames.size();
-            }
-            else
-            {
+            } else {
                 this.cancel();
                 return;
             }

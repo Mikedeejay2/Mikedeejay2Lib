@@ -6,15 +6,13 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
  * Open a player's GUI to a specified GUI
  *
  * @author Mikedeejay2
  */
-public class GUIOpenEvent implements GUIEvent
-{
+public class GUIOpenEvent implements GUIEvent {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -29,8 +27,7 @@ public class GUIOpenEvent implements GUIEvent
      * @param plugin The {@link BukkitPlugin} instance
      * @param gui    The {@link GUIContainer} to open
      */
-    public GUIOpenEvent(BukkitPlugin plugin, GUIContainer gui)
-    {
+    public GUIOpenEvent(BukkitPlugin plugin, GUIContainer gui) {
         this.plugin = plugin;
         this.guiToOpen = gui;
     }
@@ -41,8 +38,7 @@ public class GUIOpenEvent implements GUIEvent
      * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(GUIEventInfo info)
-    {
+    public void execute(GUIEventInfo info) {
         Player player = info.getPlayer();
         ClickType clickType = info.getClick();
         if(clickType != ClickType.LEFT) return;

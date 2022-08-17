@@ -15,8 +15,7 @@ import java.util.Random;
  *
  * @author Mikedeejay2
  */
-public final class FallingBlockUtil
-{
+public final class FallingBlockUtil {
     private static final Random random = new Random();
 
     /**
@@ -25,8 +24,7 @@ public final class FallingBlockUtil
      * @param block Block to make fall
      * @return The falling block entity
      */
-    public static FallingBlock makeBlockFall(Block block)
-    {
+    public static FallingBlock makeBlockFall(Block block) {
         World world = block.getWorld();
         BlockData blockData = block.getBlockData();
         Location newLocation = new Location(world, block.getX() + 0.5f, block.getY(), block.getZ() + 0.5f);
@@ -41,8 +39,7 @@ public final class FallingBlockUtil
      * @param explosiveness The explosiveness (velocity) of the block
      * @return The falling block instance
      */
-    public static FallingBlock makeBlockExplode(Block block, float explosiveness)
-    {
+    public static FallingBlock makeBlockExplode(Block block, float explosiveness) {
         BlockData blockData = block.getBlockData().clone();
         FallingBlock fallingBlock = makeBlockFall(block);
         Vector randomVec = new Vector(random.nextFloat()-0.5f, random.nextFloat()-0.5f, random.nextFloat()-0.5f);

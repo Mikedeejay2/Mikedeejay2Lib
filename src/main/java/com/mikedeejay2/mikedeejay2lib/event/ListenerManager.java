@@ -12,8 +12,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class ListenerManager
-{
+public class ListenerManager {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -29,8 +28,7 @@ public class ListenerManager
      *
      * @param plugin The {@link BukkitPlugin} instance
      */
-    public ListenerManager(BukkitPlugin plugin)
-    {
+    public ListenerManager(BukkitPlugin plugin) {
         this.plugin = plugin;
         listeners = new ArrayList<>();
     }
@@ -40,8 +38,7 @@ public class ListenerManager
      *
      * @param listener The listener to add
      */
-    public void addListener(Listener listener)
-    {
+    public void addListener(Listener listener) {
         listeners.add(listener);
     }
 
@@ -51,8 +48,7 @@ public class ListenerManager
      * This should only be called once! Add all listeners before running
      * this method.
      */
-    public void registerAll()
-    {
+    public void registerAll() {
         PluginManager manager = plugin.getServer().getPluginManager();
         listeners.forEach(listener -> manager.registerEvents(listener, plugin));
     }
@@ -62,8 +58,7 @@ public class ListenerManager
      *
      * @return All Listeners that this manager holds
      */
-    public List<Listener> getListeners()
-    {
+    public List<Listener> getListeners() {
         return listeners;
     }
 }

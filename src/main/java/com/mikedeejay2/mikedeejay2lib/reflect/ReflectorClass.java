@@ -10,8 +10,7 @@ import java.lang.reflect.Method;
  * @param <T> The class type
  * @author Mikedeejay2
  */
-public class ReflectorClass<T>
-{
+public class ReflectorClass<T> {
     /**
      * The reference {@link Class}
      */
@@ -22,8 +21,7 @@ public class ReflectorClass<T>
      *
      * @param clazz The reference {@link Class}
      */
-    public ReflectorClass(Class<T> clazz)
-    {
+    public ReflectorClass(Class<T> clazz) {
         this.clazz = clazz;
     }
 
@@ -32,8 +30,7 @@ public class ReflectorClass<T>
      *
      * @return The class reference
      */
-    public Class<T> get()
-    {
+    public Class<T> get() {
         return clazz;
     }
 
@@ -43,8 +40,7 @@ public class ReflectorClass<T>
      * @param parameterTypes The array of parameter types of the constructor
      * @return A new {@link ReflectorConstructor}
      */
-    public ReflectorConstructor<T> constructor(Class<?>... parameterTypes)
-    {
+    public ReflectorConstructor<T> constructor(Class<?>... parameterTypes) {
         return new ReflectorConstructor<>(this, parameterTypes);
     }
 
@@ -54,8 +50,7 @@ public class ReflectorClass<T>
      * @param constructor The reference <code>Constructor</code>
      * @return A new {@link ReflectorConstructor}
      */
-    public ReflectorConstructor<T> constructor(Constructor<T> constructor)
-    {
+    public ReflectorConstructor<T> constructor(Constructor<T> constructor) {
         return new ReflectorConstructor<>(this, constructor);
     }
 
@@ -65,8 +60,7 @@ public class ReflectorClass<T>
      * @param name The name of the field to get
      * @return A new {@link ReflectorField}
      */
-    public ReflectorField<T> field(String name)
-    {
+    public ReflectorField<T> field(String name) {
         return new ReflectorField<>(this, name);
     }
 
@@ -76,8 +70,7 @@ public class ReflectorClass<T>
      * @param field The reference <code>Field</code>
      * @return A new {@link ReflectorField}
      */
-    public ReflectorField<T> field(Field field)
-    {
+    public ReflectorField<T> field(Field field) {
         return new ReflectorField<>(this, field);
     }
 
@@ -88,8 +81,7 @@ public class ReflectorClass<T>
      * @param parameterTypes The list of parameter types of the method
      * @return A new {@link ReflectorMethod}
      */
-    public ReflectorMethod<T> method(String name, Class<?>... parameterTypes)
-    {
+    public ReflectorMethod<T> method(String name, Class<?>... parameterTypes) {
         return new ReflectorMethod<>(this, name, parameterTypes);
     }
 
@@ -99,8 +91,7 @@ public class ReflectorClass<T>
      * @param method The reference <code>Method</code>
      * @return A new {@link ReflectorMethod}
      */
-    public ReflectorMethod<T> method(Method method)
-    {
+    public ReflectorMethod<T> method(Method method) {
         return new ReflectorMethod<>(this, method);
     }
 }

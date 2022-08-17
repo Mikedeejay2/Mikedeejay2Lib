@@ -15,8 +15,7 @@ import java.util.Map;
  *
  * @author Mikedeejay2
  */
-public class PlayerGUI
-{
+public class PlayerGUI {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -53,8 +52,7 @@ public class PlayerGUI
      * @param plugin The {@link BukkitPlugin} instance
      * @param player The player of this PlayerGUI
      */
-    public PlayerGUI(BukkitPlugin plugin, Player player)
-    {
+    public PlayerGUI(BukkitPlugin plugin, Player player) {
         this.plugin = plugin;
         this.player = player;
         this.gui = null;
@@ -70,8 +68,7 @@ public class PlayerGUI
      *
      * @return This player's current <code>GUIContainer</code>
      */
-    public GUIContainer getGUI()
-    {
+    public GUIContainer getGUI() {
         return gui;
     }
 
@@ -81,10 +78,8 @@ public class PlayerGUI
      *
      * @param gui GUI that the player will view
      */
-    public void setGUI(GUIContainer gui)
-    {
-        if(this.guiOpened)
-        {
+    public void setGUI(GUIContainer gui) {
+        if(this.guiOpened) {
             this.guiChange = true;
             onClose();
         }
@@ -94,16 +89,14 @@ public class PlayerGUI
     /**
      * Open this player's currently selected GUI
      */
-    private void openGUI()
-    {
+    private void openGUI() {
         gui.onOpen(player);
     }
 
     /**
      * Close this player's currently opened GUI
      */
-    private void onClose()
-    {
+    private void onClose() {
         gui.onClose(player);
     }
 
@@ -112,8 +105,7 @@ public class PlayerGUI
      *
      * @param state GUI state
      */
-    public void setGUIState(boolean state)
-    {
+    public void setGUIState(boolean state) {
         guiOpened = state;
     }
 
@@ -122,8 +114,7 @@ public class PlayerGUI
      *
      * @return The player of this player GUI
      */
-    public Player getPlayer()
-    {
+    public Player getPlayer() {
         return player;
     }
 
@@ -132,8 +123,7 @@ public class PlayerGUI
      *
      * @return GUI opened state
      */
-    public boolean isGuiOpened()
-    {
+    public boolean isGuiOpened() {
         return guiOpened;
     }
 
@@ -145,8 +135,7 @@ public class PlayerGUI
      * @param navigationID The ID of the <code>NavigationHolder</code> to get
      * @return The requested <code>NavigationHolder</code>
      */
-    public NavigationHolder<GUIContainer> getNavigation(String navigationID)
-    {
+    public NavigationHolder<GUIContainer> getNavigation(String navigationID) {
         naviCheck(navigationID);
         return naviSystems.get(navigationID);
     }
@@ -159,8 +148,7 @@ public class PlayerGUI
      *
      * @param navigationID The navigation ID to check for
      */
-    public void naviCheck(String navigationID)
-    {
+    public void naviCheck(String navigationID) {
         if(naviSystems.containsKey(navigationID)) return;
         naviSystems.put(navigationID, new NavigationHolder<>(navigationID));
     }
@@ -170,8 +158,7 @@ public class PlayerGUI
      *
      * @return The map of systems
      */
-    public Map<String, NavigationHolder<GUIContainer>> getNaviSystems()
-    {
+    public Map<String, NavigationHolder<GUIContainer>> getNaviSystems() {
         return naviSystems;
     }
 
@@ -180,8 +167,7 @@ public class PlayerGUI
      *
      * @return Whether GUI has changed or not
      */
-    public boolean isGuiChange()
-    {
+    public boolean isGuiChange() {
         return guiChange;
     }
 
@@ -190,8 +176,7 @@ public class PlayerGUI
      *
      * @param guiChange The new GUI change state
      */
-    public void setGuiChange(boolean guiChange)
-    {
+    public void setGuiChange(boolean guiChange) {
         this.guiChange = guiChange;
     }
 }

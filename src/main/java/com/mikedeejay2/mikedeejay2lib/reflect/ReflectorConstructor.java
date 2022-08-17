@@ -8,8 +8,7 @@ import java.lang.reflect.Constructor;
  * @param <T> The parent class type
  * @author Mikedeejay2
  */
-public class ReflectorConstructor<T>
-{
+public class ReflectorConstructor<T> {
     /**
      * The parent {@link ReflectorClass}
      */
@@ -26,8 +25,7 @@ public class ReflectorConstructor<T>
      * @param clazz       The parent {@link ReflectorClass}
      * @param constructor The reference {@link Constructor}
      */
-    public ReflectorConstructor(ReflectorClass<T> clazz, Constructor<T> constructor)
-    {
+    public ReflectorConstructor(ReflectorClass<T> clazz, Constructor<T> constructor) {
         this.clazz = clazz;
         this.constructor = constructor;
     }
@@ -38,16 +36,12 @@ public class ReflectorConstructor<T>
      * @param clazz          The parent {@link ReflectorClass}
      * @param parameterTypes The array of parameter types of the constructor
      */
-    public ReflectorConstructor(ReflectorClass<T> clazz, Class<?>... parameterTypes)
-    {
+    public ReflectorConstructor(ReflectorClass<T> clazz, Class<?>... parameterTypes) {
         this.clazz = clazz;
         Constructor<T> constructor;
-        try
-        {
+        try {
             constructor = clazz.get().getConstructor(parameterTypes);
-        }
-        catch(NoSuchMethodException e)
-        {
+        } catch(NoSuchMethodException e) {
             e.printStackTrace();
             constructor = null;
         }
@@ -61,14 +55,10 @@ public class ReflectorConstructor<T>
      *                 types in type and amount of arguments.
      * @return A new instance of type T
      */
-    public T newInstance(Object... initargs)
-    {
-        try
-        {
+    public T newInstance(Object... initargs) {
+        try {
             return constructor.newInstance(initargs);
-        }
-        catch(ReflectiveOperationException e)
-        {
+        } catch(ReflectiveOperationException e) {
             e.printStackTrace();
         }
         return null;
@@ -79,8 +69,7 @@ public class ReflectorConstructor<T>
      *
      * @return The parent <code>ReflectorClass</code>
      */
-    public ReflectorClass<T> parentClass()
-    {
+    public ReflectorClass<T> parentClass() {
         return clazz;
     }
 }

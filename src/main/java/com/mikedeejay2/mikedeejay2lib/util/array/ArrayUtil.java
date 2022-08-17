@@ -14,8 +14,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public final class ArrayUtil
-{
+public final class ArrayUtil {
     /**
      * Get an array as a String, each index separated by a space.
      *
@@ -23,8 +22,7 @@ public final class ArrayUtil
      * @param <T> The type of array being passed
      * @return The array converted to a String
      */
-    public static <T> String getAsString(T[] arr)
-    {
+    public static <T> String getAsString(T[] arr) {
         return getAsString(arr, 0, arr.length);
     }
 
@@ -36,8 +34,7 @@ public final class ArrayUtil
      * @param <T> The type of array being passed
      * @return The array converted to a String
      */
-    public static <T> String getAsString(T[] arr, int startIndex)
-    {
+    public static <T> String getAsString(T[] arr, int startIndex) {
         return getAsString(arr, startIndex, arr.length);
     }
 
@@ -50,11 +47,9 @@ public final class ArrayUtil
      * @param <T> The type of array being passed
      * @return The array converted to a String
      */
-    public static <T> String getAsString(T[] arr, int startIndex, int endIndex)
-    {
+    public static <T> String getAsString(T[] arr, int startIndex, int endIndex) {
         StringBuilder stringBuilder = new StringBuilder();
-        for(int i = startIndex; i < endIndex; i++)
-        {
+        for(int i = startIndex; i < endIndex; i++) {
             if(stringBuilder.toString().isEmpty()) stringBuilder.append(arr[i]);
             else stringBuilder.append(" ").append(arr[i]);
         }
@@ -70,8 +65,7 @@ public final class ArrayUtil
      * @param <T>        The type of the array
      * @return The trimmed array
      */
-    public static <T> T[] trimArray(T[] arr, Class<T> clazz, int startIndex)
-    {
+    public static <T> T[] trimArray(T[] arr, Class<T> clazz, int startIndex) {
         return trimArray(arr, clazz, startIndex, arr.length);
     }
 
@@ -85,11 +79,10 @@ public final class ArrayUtil
      * @param <T>        The type of the array
      * @return The trimmed array
      */
-    public static <T> T[] trimArray(T[] arr, Class<T> clazz, int startIndex, int endIndex)
-    {
+    public static <T> T[] trimArray(T[] arr, Class<T> clazz, int startIndex, int endIndex) {
+        // TODO: There is a much better solution for this, maybe Arrays.copyOfRange()
         ArrayList<T> newList = new ArrayList<>();
-        for(int i = startIndex; i < endIndex; i++)
-        {
+        for(int i = startIndex; i < endIndex; i++) {
             T cur = arr[i];
             newList.add(cur);
         }
@@ -102,11 +95,9 @@ public final class ArrayUtil
      * @param arr The array to convert
      * @return The int array
      */
-    public static int[] toIntArray(String[] arr)
-    {
+    public static int[] toIntArray(String[] arr) {
         int[] newArr = new int[arr.length];
-        for(int i = 0; i < arr.length; i++)
-        {
+        for(int i = 0; i < arr.length; i++) {
             newArr[i] = Integer.parseInt(arr[i]);
         }
         return newArr;
@@ -118,11 +109,9 @@ public final class ArrayUtil
      * @param arr The array to convert
      * @return The double array
      */
-    public static double[] toDoubleArray(String[] arr)
-    {
+    public static double[] toDoubleArray(String[] arr) {
         double[] newArr = new double[arr.length];
-        for(int i = 0; i < arr.length; i++)
-        {
+        for(int i = 0; i < arr.length; i++) {
             newArr[i] = Double.parseDouble(arr[i]);
         }
         return newArr;
@@ -134,11 +123,9 @@ public final class ArrayUtil
      * @param arr The array to convert
      * @return The float array
      */
-    public static float[] toFloatArray(String[] arr)
-    {
+    public static float[] toFloatArray(String[] arr) {
         float[] newArr = new float[arr.length];
-        for(int i = 0; i < arr.length; i++)
-        {
+        for(int i = 0; i < arr.length; i++) {
             newArr[i] = Float.parseFloat(arr[i]);
         }
         return newArr;
@@ -150,11 +137,9 @@ public final class ArrayUtil
      * @param arr The array to convert
      * @return The long array
      */
-    public static long[] toLongArray(String[] arr)
-    {
+    public static long[] toLongArray(String[] arr) {
         long[] newArr = new long[arr.length];
-        for(int i = 0; i < arr.length; i++)
-        {
+        for(int i = 0; i < arr.length; i++) {
             newArr[i] = Long.parseLong(arr[i]);
         }
         return newArr;
@@ -166,11 +151,9 @@ public final class ArrayUtil
      * @param arr The array to convert
      * @return The boolean array
      */
-    public static boolean[] toBooleanArray(String[] arr)
-    {
+    public static boolean[] toBooleanArray(String[] arr) {
         boolean[] newArr = new boolean[arr.length];
-        for(int i = 0; i < arr.length; i++)
-        {
+        for(int i = 0; i < arr.length; i++) {
             newArr[i] = Boolean.parseBoolean(arr[i]);
         }
         return newArr;
@@ -183,8 +166,7 @@ public final class ArrayUtil
      * @param <T> The type to be used
      * @return The list of the array
      */
-    public static <T> List<T> toList(T[] arr)
-    {
+    public static <T> List<T> toList(T[] arr) {
         return Arrays.asList(arr);
     }
 
@@ -194,11 +176,9 @@ public final class ArrayUtil
      * @param arr Array to convert
      * @return A new Integer list containing data from array
      */
-    public static List<Integer> toIntList(String[] arr)
-    {
+    public static List<Integer> toIntList(String[] arr) {
         List<Integer> list = new ArrayList<>();
-        for(String str : arr)
-        {
+        for(String str : arr) {
             list.add(Integer.parseInt(str));
         }
         return list;
@@ -210,11 +190,9 @@ public final class ArrayUtil
      * @param arr Array to convert
      * @return A new Double list containing data from array
      */
-    public static List<Double> toDoubleList(String[] arr)
-    {
+    public static List<Double> toDoubleList(String[] arr) {
         List<Double> list = new ArrayList<>();
-        for(String str : arr)
-        {
+        for(String str : arr) {
             list.add(Double.parseDouble(str));
         }
         return list;
@@ -226,11 +204,9 @@ public final class ArrayUtil
      * @param arr Array to convert
      * @return A new Float list containing data from array
      */
-    public static List<Float> toFloatList(String[] arr)
-    {
+    public static List<Float> toFloatList(String[] arr) {
         List<Float> list = new ArrayList<>();
-        for(String str : arr)
-        {
+        for(String str : arr) {
             list.add(Float.parseFloat(str));
         }
         return list;
@@ -242,11 +218,9 @@ public final class ArrayUtil
      * @param arr Array to convert
      * @return A new Long list containing data from array
      */
-    public static List<Long> toLongList(String[] arr)
-    {
+    public static List<Long> toLongList(String[] arr) {
         List<Long> list = new ArrayList<>();
-        for(String str : arr)
-        {
+        for(String str : arr) {
             list.add(Long.parseLong(str));
         }
         return list;
@@ -258,11 +232,9 @@ public final class ArrayUtil
      * @param arr Array to convert
      * @return A new Boolean list containing data from array
      */
-    public static List<Boolean> toBooleanList(String[] arr)
-    {
+    public static List<Boolean> toBooleanList(String[] arr) {
         List<Boolean> list = new ArrayList<>();
-        for(String str : arr)
-        {
+        for(String str : arr) {
             list.add(Boolean.parseBoolean(str));
         }
         return list;
@@ -275,11 +247,9 @@ public final class ArrayUtil
      * @param <T> The type of the array
      * @return The 2D array as a list
      */
-    public static <T> List<T> toList(T[][] arr)
-    {
+    public static <T> List<T> toList(T[][] arr) {
         List<T> list = new ArrayList<>();
-        for(T[] ts : arr)
-        {
+        for(T[] ts : arr) {
             list.addAll(toList(ts));
         }
         return list;
@@ -292,8 +262,7 @@ public final class ArrayUtil
      * @param world The world to use when converting from vectors to locations
      * @return A new list of locations based off of the list of vectors
      */
-    public static List<Location> toLocationList(List<Vector> list, World world)
-    {
+    public static List<Location> toLocationList(List<Vector> list, World world) {
         List<Location> newList = new ArrayList<>();
         list.forEach(vector -> newList.add(vector.toLocation(world)));
         return newList;
@@ -305,8 +274,7 @@ public final class ArrayUtil
      * @param list List of locations that will be converted
      * @return A new list of vectors based off of the list of locations
      */
-    public static List<Vector> toVectorList(List<Location> list)
-    {
+    public static List<Vector> toVectorList(List<Location> list) {
         List<Vector> newList = new ArrayList<>();
         list.forEach(location -> newList.add(location.toVector()));
         return newList;
@@ -318,8 +286,7 @@ public final class ArrayUtil
      * @param senderList   The list which objects will be cloned
      * @param receiverList The list which will receiver the new objects
      */
-    public static void addClonedLocationsToList(List<Location> senderList, List<Location> receiverList)
-    {
+    public static void addClonedLocationsToList(List<Location> senderList, List<Location> receiverList) {
         senderList.forEach(cloneable -> receiverList.add(cloneable.clone()));
     }
 
@@ -329,8 +296,7 @@ public final class ArrayUtil
      * @param senderList   The list which objects will be cloned
      * @param receiverList The list which will receiver the new objects
      */
-    public static void addClonedVectorsToList(List<Vector> senderList, List<Vector> receiverList)
-    {
+    public static void addClonedVectorsToList(List<Vector> senderList, List<Vector> receiverList) {
         senderList.forEach(cloneable -> receiverList.add(cloneable.clone()));
     }
 }

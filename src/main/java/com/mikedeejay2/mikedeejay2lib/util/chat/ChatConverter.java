@@ -6,7 +6,6 @@ import net.md_5.bungee.api.chat.ClickEvent;
 import net.md_5.bungee.api.chat.HoverEvent;
 import net.md_5.bungee.api.chat.TextComponent;
 import net.md_5.bungee.api.chat.hover.content.Item;
-import net.md_5.bungee.api.chat.hover.content.Text;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
@@ -19,19 +18,16 @@ import java.util.Arrays;
  *
  * @author Mikedeejay2
  */
-public final class ChatConverter
-{
+public final class ChatConverter {
     /**
      * Converts strings into Bungee API {@link BaseComponent} arrays
      *
      * @param strings The strings that will be converted to base components
      * @return {@link BaseComponent} array of converted strings
      */
-    public static BaseComponent[] getBaseComponentArray(String... strings)
-    {
+    public static BaseComponent[] getBaseComponentArray(String... strings) {
         ArrayList<BaseComponent> baseComponents = new ArrayList<>();
-        for(String str : strings)
-        {
+        for(String str : strings) {
             baseComponents.addAll(Arrays.asList(TextComponent.fromLegacyText(Colors.format(str))));
         }
         return baseComponents.toArray(new BaseComponent[0]);
@@ -44,8 +40,7 @@ public final class ChatConverter
      * @param command The command to be used on the {@link ClickEvent}
      * @return A new {@link ClickEvent} that can be used with {@link BaseComponent}s
      */
-    public static ClickEvent getClickEvent(ClickEvent.Action action, String command)
-    {
+    public static ClickEvent getClickEvent(ClickEvent.Action action, String command) {
         return new ClickEvent(action, command);
     }
 
@@ -56,8 +51,7 @@ public final class ChatConverter
      * @param text   The string of text that will be used in the hover event
      * @return The {@link HoverEvent} that was created
      */
-    public static HoverEvent getHoverEvent(HoverEvent.Action action, String text)
-    {
+    public static HoverEvent getHoverEvent(HoverEvent.Action action, String text) {
         return new HoverEvent(action, getBaseComponentArray(text));
     }
 
@@ -68,8 +62,7 @@ public final class ChatConverter
      * @param item   The item that will be displayed
      * @return The {@link HoverEvent} that was created
      */
-    public static HoverEvent getHoverEvent(HoverEvent.Action action, ItemStack item)
-    {
+    public static HoverEvent getHoverEvent(HoverEvent.Action action, ItemStack item) {
         return new HoverEvent(action, getHoverItem(item));
     }
 
@@ -79,8 +72,7 @@ public final class ChatConverter
      * @param item Item to be converted
      * @return HoverEvent Item
      */
-    public static Item getHoverItem(ItemStack item)
-    {
+    public static Item getHoverItem(ItemStack item) {
         int itemAmount = item.getAmount();
         String itemId = item.getType().toString().toLowerCase();
         return new Item(itemId, itemAmount, null);
@@ -93,10 +85,8 @@ public final class ChatConverter
      * @param event      The {@link ClickEvent} to be added to the components
      * @return The same {@link BaseComponent}s array but with the click events applied
      */
-    public static BaseComponent[] setClickEvent(BaseComponent[] components, ClickEvent event)
-    {
-        for(BaseComponent component : components)
-        {
+    public static BaseComponent[] setClickEvent(BaseComponent[] components, ClickEvent event) {
+        for(BaseComponent component : components) {
             component.setClickEvent(event);
         }
         return components;
@@ -109,10 +99,8 @@ public final class ChatConverter
      * @param event      The {@link HoverEvent} to be added to the components
      * @return The same {@link BaseComponent}s array but with the hover events applied
      */
-    public static BaseComponent[] setHoverEvent(BaseComponent[] components, HoverEvent event)
-    {
-        for(BaseComponent component : components)
-        {
+    public static BaseComponent[] setHoverEvent(BaseComponent[] components, HoverEvent event) {
+        for(BaseComponent component : components) {
             component.setHoverEvent(event);
         }
         return components;
@@ -124,11 +112,9 @@ public final class ChatConverter
      * @param components An array of {@link BaseComponent}s arrays that will be combined into one base components array
      * @return A combined array of all {@link BaseComponent}s
      */
-    public static BaseComponent[] combineComponents(BaseComponent[]... components)
-    {
+    public static BaseComponent[] combineComponents(BaseComponent[]... components) {
         ArrayList<BaseComponent> componentsArrayList = new ArrayList<BaseComponent>();
-        for(BaseComponent[] componentsArr : components)
-        {
+        for(BaseComponent[] componentsArr : components) {
             componentsArrayList.addAll(Arrays.asList(componentsArr));
         }
         return componentsArrayList.toArray(new BaseComponent[0]);
@@ -140,8 +126,7 @@ public final class ChatConverter
      * @param sender     The CommandSender that will receive the message
      * @param components An Array of BaseComponents arrays that will be printed, Each BaseComponent array being 1 line
      */
-    public static void printComponents(CommandSender sender, BaseComponent[]... components)
-    {
+    public static void printComponents(CommandSender sender, BaseComponent[]... components) {
         sender.spigot().sendMessage(combineComponents(components));
     }
 
@@ -151,8 +136,7 @@ public final class ChatConverter
      * @param player     The Player that will receive the message
      * @param components An Array of BaseComponents arrays that will be printed, Each BaseComponent array being 1 line
      */
-    public static void printComponents(Player player, BaseComponent[]... components)
-    {
+    public static void printComponents(Player player, BaseComponent[]... components) {
         player.spigot().sendMessage(combineComponents(components));
     }
 
@@ -163,14 +147,10 @@ public final class ChatConverter
      * @param type       The ChatMessageType to display the components at
      * @param components An Array of BaseComponents arrays that will be printed, Each BaseComponent array being 1 line
      */
-    public static void printComponents(CommandSender sender, ChatMessageType type, BaseComponent[]... components)
-    {
-        if(sender instanceof Player)
-        {
+    public static void printComponents(CommandSender sender, ChatMessageType type, BaseComponent[]... components) {
+        if(sender instanceof Player) {
             ((Player)sender).spigot().sendMessage(type, combineComponents(components));
-        }
-        else
-        {
+        } else {
             sender.spigot().sendMessage(combineComponents(components));
         }
     }
@@ -182,8 +162,7 @@ public final class ChatConverter
      * @param type       The ChatMessageType to display the components at
      * @param components An Array of BaseComponents arrays that will be printed, Each BaseComponent array being 1 line
      */
-    public static void printComponents(Player player, ChatMessageType type, BaseComponent[]... components)
-    {
+    public static void printComponents(Player player, ChatMessageType type, BaseComponent[]... components) {
         player.spigot().sendMessage(type, combineComponents(components));
     }
 }

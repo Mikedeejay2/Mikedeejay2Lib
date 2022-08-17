@@ -13,8 +13,7 @@ package com.mikedeejay2.mikedeejay2lib.util.structure.tuple;
  *
  * @author Mikedeejay2
  */
-public class ImmutableTriple<L, M, R> extends Triple<L, M, R>
-{
+public class ImmutableTriple<L, M, R> extends Triple<L, M, R> {
     /**
      * Internal serial version unique ID
      */
@@ -41,8 +40,7 @@ public class ImmutableTriple<L, M, R> extends Triple<L, M, R>
      * @param middle The middle value
      * @param right The right value
      */
-    public ImmutableTriple(L left, M middle, R right)
-    {
+    public ImmutableTriple(L left, M middle, R right) {
         this.left = left;
         this.middle = middle;
         this.right = right;
@@ -54,8 +52,7 @@ public class ImmutableTriple<L, M, R> extends Triple<L, M, R>
      * @return The left value
      */
     @Override
-    public L getLeft()
-    {
+    public L getLeft() {
         return left;
     }
 
@@ -65,8 +62,7 @@ public class ImmutableTriple<L, M, R> extends Triple<L, M, R>
      * @return The middle value
      */
     @Override
-    public M getMiddle()
-    {
+    public M getMiddle() {
         return middle;
     }
 
@@ -76,8 +72,7 @@ public class ImmutableTriple<L, M, R> extends Triple<L, M, R>
      * @return The right value
      */
     @Override
-    public R getRight()
-    {
+    public R getRight() {
         return right;
     }
 }

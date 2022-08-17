@@ -11,8 +11,7 @@ import com.mikedeejay2.mikedeejay2lib.text.actionbar.ActionBarFrame;
  *
  * @author Mikedeejay2
  */
-public interface ActionBarModule
-{
+public interface ActionBarModule {
     /**
      * Called when an action bar is ticked
      *

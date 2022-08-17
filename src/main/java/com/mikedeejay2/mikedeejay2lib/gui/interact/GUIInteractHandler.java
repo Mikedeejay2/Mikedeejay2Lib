@@ -18,8 +18,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public abstract class GUIInteractHandler
-{
+public abstract class GUIInteractHandler {
     /**
      * A list of the GUIInteractionExecutors that this handler executes
      */
@@ -28,8 +27,7 @@ public abstract class GUIInteractHandler
     /**
      * Construct a new <code>GUIInteractHandler</code>
      */
-    public GUIInteractHandler()
-    {
+    public GUIInteractHandler() {
         this.executors = new ArrayList<>();
     }
 
@@ -46,8 +44,7 @@ public abstract class GUIInteractHandler
      *
      * @param executor The <code>GUIInteractExecutor</code> to add
      */
-    public void addExecutor(GUIInteractExecutor executor)
-    {
+    public void addExecutor(GUIInteractExecutor executor) {
         executors.add(executor);
     }
 
@@ -57,10 +54,8 @@ public abstract class GUIInteractHandler
      * @param executorClass The class of the <code>GUIInteractExecutor</code> to search for
      * @return Whether an executor of the specified class was found or not
      */
-    public boolean containsExecutor(Class<? extends GUIInteractExecutor> executorClass)
-    {
-        for(GUIInteractExecutor event : executors)
-        {
+    public boolean containsExecutor(Class<? extends GUIInteractExecutor> executorClass) {
+        for(GUIInteractExecutor event : executors) {
             if(executorClass == event.getClass()) return true;
         }
         return false;
@@ -72,8 +67,7 @@ public abstract class GUIInteractHandler
      * @param executor The executor to search for
      * @return Whether an executor of the specified instance was found or not
      */
-    public boolean containsExecutor(GUIInteractExecutor executor)
-    {
+    public boolean containsExecutor(GUIInteractExecutor executor) {
         return executors.contains(executor);
     }
 
@@ -82,10 +76,8 @@ public abstract class GUIInteractHandler
      *
      * @param executorClass The <code>GUIInteractExecutor</code> class to find and remove from the list
      */
-    public void removeExecutor(Class<? extends GUIInteractExecutor> executorClass)
-    {
-        for(GUIInteractExecutor executor : executors)
-        {
+    public void removeExecutor(Class<? extends GUIInteractExecutor> executorClass) {
+        for(GUIInteractExecutor executor : executors) {
             if(executorClass != executor.getClass()) continue;
             executors.remove(executor);
             return;
@@ -97,16 +89,14 @@ public abstract class GUIInteractHandler
      *
      * @param executor The <code>GUIInteractExecutor</code> object instance to find and remove from the list
      */
-    public void removeExecutor(GUIInteractExecutor executor)
-    {
+    public void removeExecutor(GUIInteractExecutor executor) {
         executors.remove(executor);
     }
 
     /**
      * Clear all {@link GUIInteractExecutor}s from this handler's executor list
      */
-    public void resetExecutors()
-    {
+    public void resetExecutors() {
         executors.clear();
     }
 
@@ -115,8 +105,7 @@ public abstract class GUIInteractHandler
      *
      * @return The list of <code>GUIInteractExecutors</code>
      */
-    public List<GUIInteractExecutor> getExecutors()
-    {
+    public List<GUIInteractExecutor> getExecutors() {
         return executors;
     }
 
@@ -127,10 +116,8 @@ public abstract class GUIInteractHandler
      * @param <T>           The type of <code>GUIInteractExecutor</code>, specified from the given class
      * @return The requested <code>GUIInteractExecutor</code>
      */
-    public <T extends GUIInteractExecutor> T getExecutor(Class<T> executorClass)
-    {
-        for(GUIInteractExecutor executor : executors)
-        {
+    public <T extends GUIInteractExecutor> T getExecutor(Class<T> executorClass) {
+        for(GUIInteractExecutor executor : executors) {
             if(executorClass == executor.getClass()) return executorClass.cast(executor);
         }
         return null;
@@ -147,10 +134,8 @@ public abstract class GUIInteractHandler
      * @param gui       The GUI that the action is being performed in
      * @param layer     The <code>GUILayer</code> that the action should be performed on
      */
-    public void executeAction(Player player, Inventory inventory, int slot, InventoryAction action, InventoryClickEvent event, GUIContainer gui, GUILayer layer)
-    {
-        switch(action)
-        {
+    public void executeAction(Player player, Inventory inventory, int slot, InventoryAction action, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
+        switch(action) {
             case NOTHING:                   executors.forEach(e -> e.executeNothing             (player, inventory, slot, event, gui, layer)); break;
             case PICKUP_ALL:                executors.forEach(e -> e.executePickupAll           (player, inventory, slot, event, gui, layer)); break;
             case PICKUP_SOME:               executors.forEach(e -> e.executePickupSome          (player, inventory, slot, event, gui, layer)); break;

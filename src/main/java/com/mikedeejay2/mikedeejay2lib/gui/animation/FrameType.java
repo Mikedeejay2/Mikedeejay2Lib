@@ -12,8 +12,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.animation;
  *
  * @author Mikedeejay2
  */
-public enum FrameType
-{
+public enum FrameType {
     /**
      * An item change frame
      */

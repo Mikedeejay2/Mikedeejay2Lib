@@ -10,8 +10,7 @@ import org.bukkit.command.CommandSender;
  *
  * @author Mikedeejay2
  */
-public interface ChatModule
-{
+public interface ChatModule {
     /**
      * Method that is called when the {@link ChatSection} is printed to a <code>CommandSender</code>
      *

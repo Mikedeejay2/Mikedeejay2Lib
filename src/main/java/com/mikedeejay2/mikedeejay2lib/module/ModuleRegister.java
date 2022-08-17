@@ -1,6 +1,5 @@
 package com.mikedeejay2.mikedeejay2lib.module;
 
-import com.google.common.collect.ImmutableSet;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Set;
@@ -13,8 +12,7 @@ import java.util.Set;
  *
  * @author Mikedeejay2
  */
-public interface ModuleRegister<T extends ModuleInterface>
-{
+public interface ModuleRegister<T extends ModuleInterface> {
     /**
      * Register a new {@link Module} to the registry
      *

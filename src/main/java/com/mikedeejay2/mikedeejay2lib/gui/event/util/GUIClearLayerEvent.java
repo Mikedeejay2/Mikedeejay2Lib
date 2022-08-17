@@ -5,7 +5,6 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -14,8 +13,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Mikedeejay2
  */
-public class GUIClearLayerEvent implements GUIEvent
-{
+public class GUIClearLayerEvent implements GUIEvent {
     /**
      * The layer name of the layer to clear. Null if <code>mode</code> is not {@link ClearLayerMode#LAYER_NAME}
      */
@@ -41,8 +39,7 @@ public class GUIClearLayerEvent implements GUIEvent
      *
      * @param layerName The layer name to clear
      */
-    public GUIClearLayerEvent(@NotNull String layerName)
-    {
+    public GUIClearLayerEvent(@NotNull String layerName) {
         this.layerName = layerName;
         this.mode = ClearLayerMode.LAYER_NAME;
     }
@@ -52,8 +49,7 @@ public class GUIClearLayerEvent implements GUIEvent
      *
      * @param index The index of the layer to clear
      */
-    public GUIClearLayerEvent(int index)
-    {
+    public GUIClearLayerEvent(int index) {
         this.index =  index;
         this.mode = ClearLayerMode.INDEX;
     }
@@ -63,8 +59,7 @@ public class GUIClearLayerEvent implements GUIEvent
      *
      * @param layer The layer to clear
      */
-    public GUIClearLayerEvent(@NotNull GUILayer layer)
-    {
+    public GUIClearLayerEvent(@NotNull GUILayer layer) {
         this.layer = layer;
         this.mode = ClearLayerMode.LAYER;
     }
@@ -75,14 +70,12 @@ public class GUIClearLayerEvent implements GUIEvent
      * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(GUIEventInfo info)
-    {
+    public void execute(GUIEventInfo info) {
         ClickType clickType = info.getClick();
         if(clickType != ClickType.LEFT) return;
         GUIContainer gui = info.getGUI();
         GUILayer layer = null;
-        switch(mode)
-        {
+        switch(mode) {
             case LAYER_NAME:
                 layer = gui.getLayer(layerName);
                 break;
@@ -102,8 +95,7 @@ public class GUIClearLayerEvent implements GUIEvent
      *
      * @author Mikedeejay2
      */
-    private enum ClearLayerMode
-    {
+    private enum ClearLayerMode {
         LAYER_NAME,
         INDEX,
         LAYER;

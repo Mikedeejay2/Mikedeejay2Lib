@@ -28,8 +28,7 @@ import java.util.*;
  *
  * @author Mikedeejay2
  */
-public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Cloneable
-{
+public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Cloneable {
     /**
      * The {@link Material} of the built item
      */
@@ -60,8 +59,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      *
      * @param item The reference item
      */
-    private ItemBuilder(ItemStack item)
-    {
+    private ItemBuilder(ItemStack item) {
         set(item);
         this.item = null;
         this.changed = true;
@@ -72,8 +70,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      *
      * @param material The starting material
      */
-    private ItemBuilder(Material material)
-    {
+    private ItemBuilder(Material material) {
         this.type = material;
         this.amount = 1;
         this.meta = Bukkit.getItemFactory().getItemMeta(type);
@@ -84,8 +81,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
     /**
      * Construct a new <code>ItemBuilder</code> with the default material of <code>STONE</code>
      */
-    private ItemBuilder()
-    {
+    private ItemBuilder() {
         this.type = Material.STONE;
         this.amount = 1;
         this.meta = Bukkit.getItemFactory().getItemMeta(type);
@@ -98,8 +94,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      *
      * @param base64 The base64 of the head
      */
-    private ItemBuilder(String base64)
-    {
+    private ItemBuilder(String base64) {
         this.type = Material.PLAYER_HEAD;
         this.amount = 1;
         this.meta = Bukkit.getItemFactory().getItemMeta(type);
@@ -113,8 +108,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      *
      * @param player The player reference
      */
-    private ItemBuilder(OfflinePlayer player)
-    {
+    private ItemBuilder(OfflinePlayer player) {
         this.type = Material.PLAYER_HEAD;
         this.amount = 1;
         this.meta = Bukkit.getItemFactory().getItemMeta(type);
@@ -129,11 +123,9 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The <code>ItemStack</code>
      */
     @Override
-    public ItemStack get()
-    {
+    public ItemStack get() {
         if(type == null) return null;
-        if(changed || item == null)
-        {
+        if(changed || item == null) {
             this.item = new ItemStack(type, amount);
             this.item.setItemMeta(meta);
             this.changed = false;
@@ -148,13 +140,11 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder set(ItemStack item)
-    {
+    public ItemBuilder set(ItemStack item) {
         this.type = item != null ? item.getType() : null;
         this.amount = item != null ? item.getAmount() : 0;
         this.meta = null;
-        if(item != null)
-        {
+        if(item != null) {
             if(item.hasItemMeta()) internalSetMeta(item.getItemMeta());
             else internalSetMeta(Bukkit.getItemFactory().getItemMeta(type));
         }
@@ -168,8 +158,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The <code>ItemMeta</code> of the item
      */
     @Override
-    public ItemMeta getMeta()
-    {
+    public ItemMeta getMeta() {
         return meta == null ? null : meta.clone();
     }
 
@@ -180,8 +169,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder setMeta(ItemMeta meta)
-    {
+    public ItemBuilder setMeta(ItemMeta meta) {
         internalSetMeta(meta);
         this.changed = true;
         return this;
@@ -193,8 +181,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The name of the item
      */
     @Override
-    public String getName()
-    {
+    public String getName() {
         return meta.getDisplayName();
     }
 
@@ -205,8 +192,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder setName(String name)
-    {
+    public ItemBuilder setName(String name) {
         this.meta.setDisplayName(Colors.addReset(Colors.format(name)));
         this.changed = true;
         return this;
@@ -218,8 +204,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The stack amount of the item
      */
     @Override
-    public int getAmount()
-    {
+    public int getAmount() {
         return amount;
     }
 
@@ -230,8 +215,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder setAmount(int amount)
-    {
+    public ItemBuilder setAmount(int amount) {
         this.amount = amount;
         this.changed = true;
         return this;
@@ -243,8 +227,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The material type of the item
      */
     @Override
-    public Material getType()
-    {
+    public Material getType() {
         return type;
     }
 
@@ -255,8 +238,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder setType(Material material)
-    {
+    public ItemBuilder setType(Material material) {
         this.type = material;
         if (this.meta != null) {
             this.meta = Bukkit.getItemFactory().asMetaFor(meta, material);
@@ -271,8 +253,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The String list of lore of the item
      */
     @Override
-    public List<String> getLore()
-    {
+    public List<String> getLore() {
         return meta.getLore();
     }
 
@@ -283,8 +264,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder setLore(List<String> lore)
-    {
+    public ItemBuilder setLore(List<String> lore) {
         this.meta.setLore(Colors.addReset(Colors.format(lore)));
         this.changed = true;
         return this;
@@ -297,8 +277,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder setLore(String... lore)
-    {
+    public ItemBuilder setLore(String... lore) {
         this.meta.setLore(Colors.addReset(Colors.format(Arrays.asList(lore))));
         this.changed = true;
         return this;
@@ -311,8 +290,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder addLore(List<String> lore)
-    {
+    public ItemBuilder addLore(List<String> lore) {
         List<String> curLore = this.meta.getLore();
         if(curLore == null) curLore = new ArrayList<>();
         curLore.addAll(Colors.addReset(Colors.format(lore)));
@@ -327,8 +305,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder addLore(String... lore)
-    {
+    public ItemBuilder addLore(String... lore) {
         List<String> curLore = this.meta.getLore();
         if(curLore == null) curLore = new ArrayList<>();
         curLore.addAll(Arrays.asList(Colors.addReset(Colors.format(lore))));
@@ -344,8 +321,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder addLore(int index, List<String> lore)
-    {
+    public ItemBuilder addLore(int index, List<String> lore) {
         List<String> curLore = this.meta.getLore();
         if(curLore == null) curLore = new ArrayList<>();
         curLore.addAll(index, Colors.addReset(Colors.format(lore)));
@@ -361,8 +337,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder addLore(int index, String... lore)
-    {
+    public ItemBuilder addLore(int index, String... lore) {
         List<String> curLore = this.meta.getLore();
         if(curLore == null) curLore = new ArrayList<>();
         curLore.addAll(index, Arrays.asList(Colors.addReset(Colors.format(lore))));
@@ -376,8 +351,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The map of enchantments of the item
      */
     @Override
-    public Map<Enchantment, Integer> getEnchants()
-    {
+    public Map<Enchantment, Integer> getEnchants() {
         return meta.getEnchants();
     }
 
@@ -388,8 +362,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return True if the item has the enchantment, false if it doesn't
      */
     @Override
-    public boolean hasEnchant(Enchantment enchantment)
-    {
+    public boolean hasEnchant(Enchantment enchantment) {
         return meta.hasEnchant(enchantment);
     }
 
@@ -400,8 +373,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The level of the specified enchantment of the item
      */
     @Override
-    public int getEnchant(Enchantment enchantment)
-    {
+    public int getEnchant(Enchantment enchantment) {
         return meta.getEnchantLevel(enchantment);
     }
 
@@ -412,8 +384,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder removeEnchant(Enchantment enchantment)
-    {
+    public ItemBuilder removeEnchant(Enchantment enchantment) {
         this.meta.removeEnchant(enchantment);
         this.changed = true;
         return this;
@@ -427,8 +398,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder addEnchant(Enchantment enchantment, int level)
-    {
+    public ItemBuilder addEnchant(Enchantment enchantment, int level) {
         this.meta.addEnchant(enchantment, level, true);
         this.changed = true;
         return this;
@@ -441,8 +411,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return True if the item has a conflicting enchantment, false if it doesn't
      */
     @Override
-    public boolean hasConflictingEnchant(Enchantment enchantment)
-    {
+    public boolean hasConflictingEnchant(Enchantment enchantment) {
         return this.meta.hasConflictingEnchant(enchantment);
     }
 
@@ -453,8 +422,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder addItemFlags(ItemFlag... flags)
-    {
+    public ItemBuilder addItemFlags(ItemFlag... flags) {
         this.meta.addItemFlags(flags);
         this.changed = true;
         return this;
@@ -467,8 +435,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder removeItemFlags(ItemFlag... flags)
-    {
+    public ItemBuilder removeItemFlags(ItemFlag... flags) {
         this.meta.removeItemFlags(flags);
         this.changed = true;
         return this;
@@ -481,8 +448,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return Whether the item has the item flag or not
      */
     @Override
-    public boolean hasItemFlag(ItemFlag flag)
-    {
+    public boolean hasItemFlag(ItemFlag flag) {
         return this.meta.hasItemFlag(flag);
     }
 
@@ -492,8 +458,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The {@link ItemFlag}s set
      */
     @Override
-    public Set<ItemFlag> getItemFlags()
-    {
+    public Set<ItemFlag> getItemFlags() {
         return this.meta.getItemFlags();
     }
 
@@ -504,8 +469,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder addItemFlag(ItemFlag flag)
-    {
+    public ItemBuilder addItemFlag(ItemFlag flag) {
         this.meta.addItemFlags(flag);
         this.changed = true;
         return this;
@@ -517,8 +481,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder addGlow()
-    {
+    public ItemBuilder addGlow() {
 
         this.addEnchant(GlowEnchantment.get(), 1);
         this.changed = true;
@@ -531,8 +494,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder removeGlow()
-    {
+    public ItemBuilder removeGlow() {
         this.removeEnchant(GlowEnchantment.get());
         this.changed = true;
         return this;
@@ -544,8 +506,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder setEmptyName()
-    {
+    public ItemBuilder setEmptyName() {
         this.meta.setDisplayName(GUIContainer.EMPTY_NAME);
         this.changed = true;
         return this;
@@ -558,8 +519,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder setUnbreakable(boolean unbreakable)
-    {
+    public ItemBuilder setUnbreakable(boolean unbreakable) {
         this.meta.setUnbreakable(unbreakable);
         this.changed = true;
         return this;
@@ -571,8 +531,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return Whether the item is unbreakable or not
      */
     @Override
-    public boolean isUnbreakable()
-    {
+    public boolean isUnbreakable() {
         return this.meta.isUnbreakable();
     }
 
@@ -582,8 +541,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The current head owner of the head item
      */
     @Override
-    public OfflinePlayer getHeadOwner()
-    {
+    public OfflinePlayer getHeadOwner() {
         SkullMeta skullMeta = (SkullMeta) meta;
         return skullMeta.getOwningPlayer();
     }
@@ -595,8 +553,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder setHeadOwner(OfflinePlayer player)
-    {
+    public ItemBuilder setHeadOwner(OfflinePlayer player) {
         SkullMeta skullMeta = (SkullMeta) meta;
         skullMeta.setOwningPlayer(player);
         this.changed = true;
@@ -609,27 +566,21 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The current base 64 String of the head item
      */
     @Override
-    public String getHeadBase64()
-    {
+    public String getHeadBase64() {
         SkullMeta skullMeta = (SkullMeta) meta;
         GameProfile profile;
-        try
-        {
+        try {
             Field profileField = skullMeta.getClass().getDeclaredField("profile");
             profileField.setAccessible(true);
             profile = (GameProfile) profileField.get(skullMeta);
-        }
-        catch(IllegalArgumentException | IllegalAccessException | NoSuchFieldException exception)
-        {
+        } catch(IllegalArgumentException | IllegalAccessException | NoSuchFieldException exception) {
             exception.printStackTrace();
             return null;
         }
         Collection<Property> properties = profile.getProperties().get("textures");
-        for(Property property : properties)
-        {
+        for(Property property : properties) {
             String value = property.getValue();
-            if(value.equals("textures"))
-            {
+            if(value.equals("textures")) {
                 return property.getName();
             }
         }
@@ -643,19 +594,15 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder setHeadBase64(String base64)
-    {
+    public ItemBuilder setHeadBase64(String base64) {
         SkullMeta skullMeta = (SkullMeta) meta;
         GameProfile profile = new GameProfile(UUID.randomUUID(), "");
         profile.getProperties().put("textures", new Property("textures", base64));
-        try
-        {
+        try {
             Field profileField = skullMeta.getClass().getDeclaredField("profile");
             profileField.setAccessible(true);
             profileField.set(skullMeta, profile);
-        }
-        catch(IllegalArgumentException | IllegalAccessException | NoSuchFieldException exception)
-        {
+        } catch(IllegalArgumentException | IllegalAccessException | NoSuchFieldException exception) {
             exception.printStackTrace();
             return this;
         }
@@ -669,8 +616,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return Whether the item has attribute modifiers
      */
     @Override
-    public boolean hasAttributeModifiers()
-    {
+    public boolean hasAttributeModifiers() {
         return this.meta.hasAttributeModifiers();
     }
 
@@ -680,8 +626,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A map of attributes for the item
      */
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers()
-    {
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
         return this.meta.getAttributeModifiers();
     }
 
@@ -692,8 +637,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A map of attributes for the item and equipment slot
      */
     @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot)
-    {
+    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
         return this.meta.getAttributeModifiers(slot);
     }
 
@@ -704,8 +648,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The collection of <code>AttributeModifiers</code>
      */
     @Override
-    public Collection<AttributeModifier> getAttributeModifiers(Attribute attribute)
-    {
+    public Collection<AttributeModifier> getAttributeModifiers(Attribute attribute) {
         return this.meta.getAttributeModifiers(attribute);
     }
 
@@ -717,8 +660,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder addAttributeModifier(Attribute attribute, AttributeModifier modifier)
-    {
+    public ItemBuilder addAttributeModifier(Attribute attribute, AttributeModifier modifier) {
         this.meta.addAttributeModifier(attribute, modifier);
         this.changed = true;
         return this;
@@ -732,10 +674,8 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder addAttributeModifiers(Attribute attribute, AttributeModifier... modifiers)
-    {
-        for(AttributeModifier modifier : modifiers)
-        {
+    public ItemBuilder addAttributeModifiers(Attribute attribute, AttributeModifier... modifiers) {
+        for(AttributeModifier modifier : modifiers) {
             this.meta.addAttributeModifier(attribute, modifier);
         }
         this.changed = true;
@@ -749,8 +689,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder setAttributeModifiers(Multimap<Attribute, AttributeModifier> attributeModifiers)
-    {
+    public ItemBuilder setAttributeModifiers(Multimap<Attribute, AttributeModifier> attributeModifiers) {
         this.meta.setAttributeModifiers(attributeModifiers);
         this.changed = true;
         return this;
@@ -763,8 +702,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder removeAttributeModifier(Attribute attribute)
-    {
+    public ItemBuilder removeAttributeModifier(Attribute attribute) {
         this.meta.removeAttributeModifier(attribute);
         this.changed = true;
         return this;
@@ -777,10 +715,8 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder removeAttributeModifiers(Attribute... attributes)
-    {
-        for(Attribute attribute : attributes)
-        {
+    public ItemBuilder removeAttributeModifiers(Attribute... attributes) {
+        for(Attribute attribute : attributes) {
             this.meta.removeAttributeModifier(attribute);
         }
         this.changed = true;
@@ -794,8 +730,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder removeAttributeModifier(EquipmentSlot slot)
-    {
+    public ItemBuilder removeAttributeModifier(EquipmentSlot slot) {
         this.meta.removeAttributeModifier(slot);
         this.changed = true;
         return this;
@@ -808,10 +743,8 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder removeAttributeModifiers(EquipmentSlot... slots)
-    {
-        for(EquipmentSlot slot : slots)
-        {
+    public ItemBuilder removeAttributeModifiers(EquipmentSlot... slots) {
+        for(EquipmentSlot slot : slots) {
             this.meta.removeAttributeModifier(slot);
         }
         this.changed = true;
@@ -826,8 +759,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder removeAttributeModifier(Attribute attribute, AttributeModifier modifier)
-    {
+    public ItemBuilder removeAttributeModifier(Attribute attribute, AttributeModifier modifier) {
         this.meta.removeAttributeModifier(attribute, modifier);
         this.changed = true;
         return this;
@@ -841,10 +773,8 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder removeAttributeModifiers(Attribute attribute, AttributeModifier... modifiers)
-    {
-        for(AttributeModifier modifier : modifiers)
-        {
+    public ItemBuilder removeAttributeModifiers(Attribute attribute, AttributeModifier... modifiers) {
+        for(AttributeModifier modifier : modifiers) {
             this.meta.removeAttributeModifier(attribute, modifier);
         }
         this.changed = true;
@@ -857,8 +787,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The <code>PersistentDataContainer</code>
      */
     @Override
-    public PersistentDataContainer getPersistentDataContainer()
-    {
+    public PersistentDataContainer getPersistentDataContainer() {
         return this.meta.getPersistentDataContainer();
     }
 
@@ -869,8 +798,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder setCustomModelData(Integer data)
-    {
+    public ItemBuilder setCustomModelData(Integer data) {
         this.meta.setCustomModelData(data);
         this.changed = true;
         return this;
@@ -882,8 +810,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The custom model data for the item
      */
     @Override
-    public int getCustomModelData()
-    {
+    public int getCustomModelData() {
         return this.meta.getCustomModelData();
     }
 
@@ -893,8 +820,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return Whether the item has custom model data
      */
     @Override
-    public boolean hasCustomModelData()
-    {
+    public boolean hasCustomModelData() {
         return this.meta.hasCustomModelData();
     }
 
@@ -905,8 +831,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder setLocalizedName(String name)
-    {
+    public ItemBuilder setLocalizedName(String name) {
         this.meta.setLocalizedName(Colors.addReset(Colors.format(name)));
         this.changed = true;
         return this;
@@ -918,8 +843,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The localized name of the item
      */
     @Override
-    public String getLocalizedName()
-    {
+    public String getLocalizedName() {
         return this.meta.getLocalizedName();
     }
 
@@ -929,8 +853,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return Whether the item has a localized name
      */
     @Override
-    public boolean hasLocalizedName()
-    {
+    public boolean hasLocalizedName() {
         return this.meta.hasLocalizedName();
     }
 
@@ -940,8 +863,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The display name of the item
      */
     @Override
-    public String getDisplayName()
-    {
+    public String getDisplayName() {
         return this.meta.getDisplayName();
     }
 
@@ -952,8 +874,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder setDisplayName(String name)
-    {
+    public ItemBuilder setDisplayName(String name) {
         this.setName(name);
         return this;
     }
@@ -964,8 +885,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return Whether the item has a display name
      */
     @Override
-    public boolean hasDisplayName()
-    {
+    public boolean hasDisplayName() {
         return this.meta.hasDisplayName();
     }
 
@@ -975,8 +895,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The durability of the item
      */
     @Override
-    public int getDurability()
-    {
+    public int getDurability() {
         return ((Damageable) this.meta).getDamage();
     }
 
@@ -987,8 +906,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder setDurability(int durability)
-    {
+    public ItemBuilder setDurability(int durability) {
         ((Damageable) this.meta).setDamage(durability);
         this.changed = true;
         return this;
@@ -1000,8 +918,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The maximum stack size
      */
     @Override
-    public int getMaxStackSize()
-    {
+    public int getMaxStackSize() {
         Material material = this.getType();
         if (material != null)  return material.getMaxStackSize();
         return -1;
@@ -1013,8 +930,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return Whether the item has a durability
      */
     @Override
-    public boolean hasDurability()
-    {
+    public boolean hasDurability() {
         return this.meta instanceof Damageable;
     }
 
@@ -1029,8 +945,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public <Y, Z> ItemBuilder setData(NamespacedKey key, PersistentDataType<Y, Z> type, Z value)
-    {
+    public <Y, Z> ItemBuilder setData(NamespacedKey key, PersistentDataType<Y, Z> type, Z value) {
         this.getPersistentDataContainer().set(key, type, value);
         this.changed = true;
         return this;
@@ -1048,8 +963,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public <Y, Z> ItemBuilder setData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z value)
-    {
+    public <Y, Z> ItemBuilder setData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z value) {
         this.setData(new NamespacedKey(plugin, key), type, value);
         return this;
     }
@@ -1064,8 +978,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public <Y, Z> boolean hasData(NamespacedKey key, PersistentDataType<Y, Z> type)
-    {
+    public <Y, Z> boolean hasData(NamespacedKey key, PersistentDataType<Y, Z> type) {
         return this.getPersistentDataContainer().has(key, type);
     }
 
@@ -1080,8 +993,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public <Y, Z> boolean hasData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type)
-    {
+    public <Y, Z> boolean hasData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type) {
         return this.hasData(new NamespacedKey(plugin, key), type);
     }
 
@@ -1095,8 +1007,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public <Y, Z> Z getData(NamespacedKey key, PersistentDataType<Y, Z> type)
-    {
+    public <Y, Z> Z getData(NamespacedKey key, PersistentDataType<Y, Z> type) {
         return this.getPersistentDataContainer().get(key, type);
     }
 
@@ -1111,8 +1022,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public <Y, Z> Z getData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type)
-    {
+    public <Y, Z> Z getData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type) {
         return this.getData(new NamespacedKey(plugin, key), type);
     }
 
@@ -1127,8 +1037,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public <Y, Z> Z getOrDefaultData(NamespacedKey key, PersistentDataType<Y, Z> type, Z defaultValue)
-    {
+    public <Y, Z> Z getOrDefaultData(NamespacedKey key, PersistentDataType<Y, Z> type, Z defaultValue) {
         return this.getPersistentDataContainer().getOrDefault(key, type, defaultValue);
     }
 
@@ -1144,8 +1053,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public <Y, Z> Z getOrDefaultData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z defaultValue)
-    {
+    public <Y, Z> Z getOrDefaultData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z defaultValue) {
         return this.getOrDefaultData(new NamespacedKey(plugin, key), type, defaultValue);
     }
 
@@ -1156,8 +1064,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return  A reference to this object
      */
     @Override
-    public ItemBuilder removeData(NamespacedKey key)
-    {
+    public ItemBuilder removeData(NamespacedKey key) {
         this.getPersistentDataContainer().remove(key);
         this.changed = true;
         return this;
@@ -1171,8 +1078,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder removeData(BukkitPlugin plugin, String key)
-    {
+    public ItemBuilder removeData(BukkitPlugin plugin, String key) {
         this.getPersistentDataContainer().remove(new NamespacedKey(plugin, key));
         this.changed = true;
         return this;
@@ -1185,11 +1091,9 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder removeData(NamespacedKey... keys)
-    {
+    public ItemBuilder removeData(NamespacedKey... keys) {
         PersistentDataContainer container = this.getPersistentDataContainer();
-        for(NamespacedKey key : keys)
-        {
+        for(NamespacedKey key : keys) {
             container.remove(key);
         }
         this.changed = true;
@@ -1204,11 +1108,9 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return A reference to this object
      */
     @Override
-    public ItemBuilder removeData(BukkitPlugin plugin, String... keys)
-    {
+    public ItemBuilder removeData(BukkitPlugin plugin, String... keys) {
         PersistentDataContainer container = this.getPersistentDataContainer();
-        for(String key : keys)
-        {
+        for(String key : keys) {
             container.remove(new NamespacedKey(plugin, key));
         }
         this.changed = true;
@@ -1221,8 +1123,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return Whether the item's data is empty
      */
     @Override
-    public boolean isDataEmpty()
-    {
+    public boolean isDataEmpty() {
         return this.getPersistentDataContainer().isEmpty();
     }
 
@@ -1232,25 +1133,21 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @param meta The reference {@link ItemMeta}
      */
     private void internalSetMeta(ItemMeta meta) {
-        if (meta == null)
-        {
+        if (meta == null) {
             this.meta = null;
             return;
         }
-        if (!Bukkit.getItemFactory().isApplicable(meta, type))
-        {
+        if (!Bukkit.getItemFactory().isApplicable(meta, type)) {
             return;
         }
         this.meta = Bukkit.getItemFactory().asMetaFor(meta, type);
 
         Material newType = Bukkit.getItemFactory().updateMaterial(this.meta, type);
-        if (this.type != newType)
-        {
+        if (this.type != newType) {
             this.type = newType;
         }
 
-        if (this.meta == meta)
-        {
+        if (this.meta == meta) {
             this.meta = meta.clone();
         }
     }
@@ -1261,8 +1158,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @param item The reference <code>ItemStack</code>
      * @return The new {@link ItemBuilder}
      */
-    public static ItemBuilder of(ItemStack item)
-    {
+    public static ItemBuilder of(ItemStack item) {
         return new ItemBuilder(item);
     }
 
@@ -1272,8 +1168,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @param builder The reference <code>ItemBuilder</code>
      * @return The new {@link ItemBuilder}
      */
-    public static ItemBuilder of(ItemBuilder builder)
-    {
+    public static ItemBuilder of(ItemBuilder builder) {
         return new ItemBuilder(builder.get());
     }
 
@@ -1283,8 +1178,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @param type The Material type to use
      * @return The new {@link ItemBuilder}
      */
-    public static ItemBuilder of(Material type)
-    {
+    public static ItemBuilder of(Material type) {
         return new ItemBuilder(type);
     }
 
@@ -1293,8 +1187,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      *
      * @return The new {@link ItemBuilder}
      */
-    public static ItemBuilder of()
-    {
+    public static ItemBuilder of() {
         return new ItemBuilder();
     }
 
@@ -1304,8 +1197,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @param base64 The base 64 head String to use
      * @return The new {@link ItemBuilder}
      */
-    public static ItemBuilder of(String base64)
-    {
+    public static ItemBuilder of(String base64) {
         return new ItemBuilder(base64);
     }
 
@@ -1315,8 +1207,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @param player The reference player
      * @return The new {@link ItemBuilder}
      */
-    public static ItemBuilder of(OfflinePlayer player)
-    {
+    public static ItemBuilder of(OfflinePlayer player) {
         return new ItemBuilder(player);
     }
 
@@ -1326,15 +1217,11 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @return The new cloned <code>ItemBuilder</code>
      */
     @Override
-    public ItemBuilder clone()
-    {
-        ItemBuilder cloned = null;
-        try
-        {
+    public ItemBuilder clone() {
+        ItemBuilder cloned;
+        try {
             cloned = (ItemBuilder) super.clone();
-        }
-        catch(CloneNotSupportedException e)
-        {
+        } catch(CloneNotSupportedException e) {
             e.printStackTrace();
             return null;
         }

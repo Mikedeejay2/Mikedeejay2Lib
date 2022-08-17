@@ -22,8 +22,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class ParticleSystem
-{
+public class ParticleSystem {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -98,8 +97,7 @@ public class ParticleSystem
      * @param tickRate   The tick rate (refresh rate) of the particle system
      * @param updateRate The update rate (rate at which transformations are updated) of the particle system
      */
-    public ParticleSystem(BukkitPlugin plugin, Location origin, long playTicks, long tickRate, long updateRate)
-    {
+    public ParticleSystem(BukkitPlugin plugin, Location origin, long playTicks, long tickRate, long updateRate) {
         this.plugin = plugin;
         this.effects = new ArrayList<>();
         this.scaleVec = new Vector(1, 1, 1);
@@ -121,8 +119,7 @@ public class ParticleSystem
      * @param playTicks  The amount of ticks that the particle will play for
      * @param tickRate   The tick rate (refresh rate) of the particle system
      */
-    public ParticleSystem(BukkitPlugin plugin, Location origin, long playTicks, long tickRate)
-    {
+    public ParticleSystem(BukkitPlugin plugin, Location origin, long playTicks, long tickRate) {
         this(plugin, origin, playTicks, tickRate, 0);
     }
 
@@ -133,8 +130,7 @@ public class ParticleSystem
      * @param origin     The origin location of this system (For global transformations)
      * @param playTicks  The amount of ticks that the particle will play for
      */
-    public ParticleSystem(BukkitPlugin plugin, Location origin, long playTicks)
-    {
+    public ParticleSystem(BukkitPlugin plugin, Location origin, long playTicks) {
         this(plugin, origin, playTicks, 0, 0);
     }
 
@@ -144,8 +140,7 @@ public class ParticleSystem
      *
      * @return A reference to this <code>ParticleSystem</code>
      */
-    public ParticleSystem display()
-    {
+    public ParticleSystem display() {
         this.runtime = new ParticleRuntime(this, updateRate);
         this.runtime.runTaskTimerCountedAsynchronously(plugin, tickRate, playTicks);
         return this;
@@ -159,8 +154,7 @@ public class ParticleSystem
      * @param module The module to add
      * @return A reference to this <code>ParticleSystem</code>
      */
-    public ParticleSystem addModule(ParticleSModule module)
-    {
+    public ParticleSystem addModule(ParticleSModule module) {
         modules.add(module);
         return this;
     }
@@ -172,8 +166,7 @@ public class ParticleSystem
      * @param index The index to add the module at
      * @return A reference to this <code>ParticleSystem</code>
      */
-    public ParticleSystem addModule(ParticleSModule module, int index)
-    {
+    public ParticleSystem addModule(ParticleSModule module, int index) {
         modules.add(index, module);
         return this;
     }
@@ -184,8 +177,7 @@ public class ParticleSystem
      * @param module The module to search for
      * @return Whether the module was found or not
      */
-    public boolean containsModule(ParticleSModule module)
-    {
+    public boolean containsModule(ParticleSModule module) {
         return modules.contains(module);
     }
 
@@ -195,10 +187,8 @@ public class ParticleSystem
      * @param moduleClass The module class to search for
      * @return Whether a module with that class was found or not
      */
-    public boolean containsModule(Class<? extends ParticleSModule> moduleClass)
-    {
-        for(ParticleSModule module : modules)
-        {
+    public boolean containsModule(Class<? extends ParticleSModule> moduleClass) {
+        for(ParticleSModule module : modules) {
             if(moduleClass == module.getClass()) return true;
         }
         return false;
@@ -210,8 +200,7 @@ public class ParticleSystem
      * @param index The index to remove from the list
      * @return A reference to this <code>ParticleSystem</code>
      */
-    public ParticleSystem removeModule(int index)
-    {
+    public ParticleSystem removeModule(int index) {
         modules.remove(index);
         return this;
     }
@@ -222,8 +211,7 @@ public class ParticleSystem
      * @param module The module to remove
      * @return A reference to this <code>ParticleSystem</code>
      */
-    public ParticleSystem removeModule(ParticleSModule module)
-    {
+    public ParticleSystem removeModule(ParticleSModule module) {
         modules.remove(module);
         return this;
     }
@@ -234,10 +222,8 @@ public class ParticleSystem
      * @param moduleClass The class of the module to remove
      * @return A reference to this <code>ParticleSystem</code>
      */
-    public ParticleSystem removeModule(Class<? extends ParticleSModule> moduleClass)
-    {
-        for(ParticleSModule module : modules)
-        {
+    public ParticleSystem removeModule(Class<? extends ParticleSModule> moduleClass) {
+        for(ParticleSModule module : modules) {
             if(moduleClass != module.getClass()) continue;
             modules.remove(module);
             return this;
@@ -251,8 +237,7 @@ public class ParticleSystem
      * @param index The module's index in the list
      * @return The requested <code>ParticleSModule</code>
      */
-    public ParticleSModule getModule(int index)
-    {
+    public ParticleSModule getModule(int index) {
         return modules.get(index);
     }
 
@@ -263,10 +248,8 @@ public class ParticleSystem
      * @param <T>         The module type
      * @return The requested <code>ParticleSModule</code>, null if not found
      */
-    public <T extends ParticleSModule> T getModule(Class<T> moduleClass)
-    {
-        for(ParticleSModule module : modules)
-        {
+    public <T extends ParticleSModule> T getModule(Class<T> moduleClass) {
+        for(ParticleSModule module : modules) {
             if(moduleClass == module.getClass()) return (T) module;
         }
         return null;
@@ -277,8 +260,7 @@ public class ParticleSystem
      *
      * @return A reference to this <code>ParticleSystem</code>
      */
-    public ParticleSystem resetModules()
-    {
+    public ParticleSystem resetModules() {
         modules.clear();
         return this;
     }
@@ -289,8 +271,7 @@ public class ParticleSystem
      * @param effect The effect to add
      * @return A reference to this <code>ParticleSystem</code>
      */
-    public ParticleSystem addParticleEffect(ParticleEffect effect)
-    {
+    public ParticleSystem addParticleEffect(ParticleEffect effect) {
         effects.add(effect);
         return this;
     }
@@ -302,8 +283,7 @@ public class ParticleSystem
      * @param index  The index to add the effect to
      * @return A reference to this <code>ParticleSystem</code>
      */
-    public ParticleSystem addParticleEffect(ParticleEffect effect, int index)
-    {
+    public ParticleSystem addParticleEffect(ParticleEffect effect, int index) {
         effects.add(index, effect);
         return this;
     }
@@ -314,8 +294,7 @@ public class ParticleSystem
      * @param effect The effect to search for
      * @return Whether the <code>ParticleEffect</code> was found or not
      */
-    public boolean containsParticleEffect(ParticleEffect effect)
-    {
+    public boolean containsParticleEffect(ParticleEffect effect) {
         return effects.contains(effect);
     }
 
@@ -325,10 +304,8 @@ public class ParticleSystem
      * @param effectClass The class of the effect to search for
      * @return Whether a <code>ParticleEffect</code> of the class was found
      */
-    public boolean containsParticleEffect(Class<? extends ParticleEffect> effectClass)
-    {
-        for(ParticleEffect effect : effects)
-        {
+    public boolean containsParticleEffect(Class<? extends ParticleEffect> effectClass) {
+        for(ParticleEffect effect : effects) {
             if(effectClass == effect.getClass()) return true;
         }
         return false;
@@ -340,8 +317,7 @@ public class ParticleSystem
      * @param index The index of the effect to remove
      * @return A reference to this <code>ParticleSystem</code>
      */
-    public ParticleSystem removeParticleEffect(int index)
-    {
+    public ParticleSystem removeParticleEffect(int index) {
         effects.remove(index);
         return this;
     }
@@ -352,8 +328,7 @@ public class ParticleSystem
      * @param effect The effect to remove
      * @return A reference to this <code>ParticleSystem</code>
      */
-    public ParticleSystem removeParticleEffect(ParticleEffect effect)
-    {
+    public ParticleSystem removeParticleEffect(ParticleEffect effect) {
         effects.remove(effect);
         return this;
     }
@@ -364,10 +339,8 @@ public class ParticleSystem
      * @param effectClass The class of the effect to remove
      * @return A reference to this <code>ParticleSystem</code>
      */
-    public ParticleSystem removeParticleEffect(Class<? extends ParticleEffect> effectClass)
-    {
-        for(ParticleEffect effect : effects)
-        {
+    public ParticleSystem removeParticleEffect(Class<? extends ParticleEffect> effectClass) {
+        for(ParticleEffect effect : effects) {
             if(effectClass != effect.getClass()) continue;
             effects.remove(effect);
             return this;
@@ -381,8 +354,7 @@ public class ParticleSystem
      * @param index The index to get the effect at
      * @return The requested <code>ParticleEffect</code>
      */
-    public ParticleEffect getParticleEffect(int index)
-    {
+    public ParticleEffect getParticleEffect(int index) {
         return effects.get(index);
     }
 
@@ -393,10 +365,8 @@ public class ParticleSystem
      * @param <T>         The particle effect type
      * @return The requested <code>ParticleEffect</code>, null if not found
      */
-    public <T extends ParticleEffect> T getParticleEffect(Class<T> effectClass)
-    {
-        for(ParticleEffect effect : effects)
-        {
+    public <T extends ParticleEffect> T getParticleEffect(Class<T> effectClass) {
+        for(ParticleEffect effect : effects) {
             if(effectClass == effect.getClass()) return (T) effect;
         }
         return null;
@@ -407,8 +377,7 @@ public class ParticleSystem
      *
      * @return A reference to this <code>ParticleSystem</code>
      */
-    public ParticleSystem resetEffects()
-    {
+    public ParticleSystem resetEffects() {
         effects.clear();
         return this;
     }
@@ -418,8 +387,7 @@ public class ParticleSystem
      *
      * @return The list of <code>ParticleEffects</code>
      */
-    public List<ParticleEffect> getEffects()
-    {
+    public List<ParticleEffect> getEffects() {
         return effects;
     }
 
@@ -428,8 +396,7 @@ public class ParticleSystem
      *
      * @return The global scaling vector
      */
-    public Vector getScaleVec()
-    {
+    public Vector getScaleVec() {
         return scaleVec;
     }
 
@@ -438,8 +405,7 @@ public class ParticleSystem
      *
      * @return The global rotation vector
      */
-    public Vector getRotationVec()
-    {
+    public Vector getRotationVec() {
         return rotationVec;
     }
 
@@ -448,8 +414,7 @@ public class ParticleSystem
      *
      * @return The global translation vector
      */
-    public Vector getTranslationVec()
-    {
+    public Vector getTranslationVec() {
         return translationVec;
     }
 
@@ -458,8 +423,7 @@ public class ParticleSystem
      *
      * @return The global origin location
      */
-    public Location getOrigin()
-    {
+    public Location getOrigin() {
         return origin;
     }
 
@@ -471,8 +435,7 @@ public class ParticleSystem
      *
      * @param scaleVec The new scale vector
      */
-    public void setScaleVec(Vector scaleVec)
-    {
+    public void setScaleVec(Vector scaleVec) {
         this.scaleVec = scaleVec;
         this.updated = false;
     }
@@ -485,8 +448,7 @@ public class ParticleSystem
      *
      * @param rotationVec The new rotation vector
      */
-    public void setRotationVec(Vector rotationVec)
-    {
+    public void setRotationVec(Vector rotationVec) {
         this.rotationVec = rotationVec;
         this.updated = false;
     }
@@ -499,8 +461,7 @@ public class ParticleSystem
      *
      * @param translationVec The new translation vector
      */
-    public void setTranslationVec(Vector translationVec)
-    {
+    public void setTranslationVec(Vector translationVec) {
         this.translationVec = translationVec;
         this.updated = false;
     }
@@ -513,8 +474,7 @@ public class ParticleSystem
      *
      * @param origin The new origin location
      */
-    public void setOrigin(Location origin)
-    {
+    public void setOrigin(Location origin) {
         this.origin = origin;
         this.updated = false;
     }
@@ -524,8 +484,7 @@ public class ParticleSystem
      *
      * @return Play time (in ticks)
      */
-    public long getPlayTicks()
-    {
+    public long getPlayTicks() {
         return playTicks;
     }
 
@@ -536,8 +495,7 @@ public class ParticleSystem
      *
      * @param playTicks The new play time (in ticks)
      */
-    public void setPlayTicks(long playTicks)
-    {
+    public void setPlayTicks(long playTicks) {
         this.playTicks = playTicks;
     }
 
@@ -546,8 +504,7 @@ public class ParticleSystem
      *
      * @return The tick rate (amount of ticks between displays/updates)
      */
-    public long getTickRate()
-    {
+    public long getTickRate() {
         return tickRate;
     }
 
@@ -558,8 +515,7 @@ public class ParticleSystem
      *
      * @param tickRate The new tick rate (amount of ticks between displays/updates)
      */
-    public void setTickRate(long tickRate)
-    {
+    public void setTickRate(long tickRate) {
         this.tickRate = tickRate;
     }
 
@@ -568,8 +524,7 @@ public class ParticleSystem
      *
      * @return The update rate (amount of time between transformation updates are displayed)
      */
-    public long getUpdateRate()
-    {
+    public long getUpdateRate() {
         return updateRate;
     }
 
@@ -580,8 +535,7 @@ public class ParticleSystem
      *
      * @param updateRate The new update rate (amount of time between transformation updates are displayed)
      */
-    public void setUpdateRate(long updateRate)
-    {
+    public void setUpdateRate(long updateRate) {
         this.updateRate = updateRate;
     }
 
@@ -590,8 +544,7 @@ public class ParticleSystem
      *
      * @return The list of <code>ParticleSModules</code>
      */
-    public List<ParticleSModule> getModules()
-    {
+    public List<ParticleSModule> getModules() {
         return modules;
     }
 
@@ -600,8 +553,7 @@ public class ParticleSystem
      *
      * @return Whether this system is updated
      */
-    public boolean isUpdated()
-    {
+    public boolean isUpdated() {
         return updated;
     }
 
@@ -612,8 +564,7 @@ public class ParticleSystem
      *
      * @param updated The new updated state
      */
-    public void setUpdated(boolean updated)
-    {
+    public void setUpdated(boolean updated) {
         this.updated = updated;
     }
 }

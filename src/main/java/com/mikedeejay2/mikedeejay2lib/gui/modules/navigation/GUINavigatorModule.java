@@ -13,7 +13,6 @@ import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import com.mikedeejay2.mikedeejay2lib.util.structure.NavigationHolder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
  * A module that adds a web browser style navigator to the GUI that
@@ -21,8 +20,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  *
  * @author Mikedeejay2
  */
-public class GUINavigatorModule implements GUIModule
-{
+public class GUINavigatorModule implements GUIModule {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -59,8 +57,7 @@ public class GUINavigatorModule implements GUIModule
      * @param plugin       The {@link BukkitPlugin} instance
      * @param navigationID The navigation ID to use
      */
-    public GUINavigatorModule(BukkitPlugin plugin, String navigationID)
-    {
+    public GUINavigatorModule(BukkitPlugin plugin, String navigationID) {
         this.plugin = plugin;
         this.navigationID = navigationID;
     }
@@ -72,34 +69,29 @@ public class GUINavigatorModule implements GUIModule
      * @param gui    The GUI
      */
     @Override
-    public void onOpenHead(Player player, GUIContainer gui)
-    {
+    public void onOpenHead(Player player, GUIContainer gui) {
         navigationCheck(player);
-        if(validBackItem == null)
-        {
+        if(validBackItem == null) {
             String backward = plugin.getLibLangManager().getText(player, "gui.modules.navigator.backward");
             this.validBackItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_LEFT_WHITE.get())
                                                      .setName("&f" + backward)
                                                      .get());
             validBackItem.addEvent(new GUINavBackEvent(plugin));
         }
-        if(validForwardItem == null)
-        {
+        if(validForwardItem == null) {
             String forward = plugin.getLibLangManager().getText(player, "gui.modules.navigator.forward");
             this.validForwardItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_RIGHT_WHITE.get())
                                                         .setName("&f" + forward)
                                                         .get());
             validForwardItem.addEvent(new GUINavForwardEvent(plugin));
         }
-        if(invalidBackItem == null)
-        {
+        if(invalidBackItem == null) {
             String backward = plugin.getLibLangManager().getText(player, "gui.modules.navigator.backward");
             this.invalidBackItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_LEFT_LIGHT_GRAY.get())
                                                        .setName("&7" + backward)
                                                        .get());
         }
-        if(invalidForwardItem == null)
-        {
+        if(invalidForwardItem == null) {
             String forward = plugin.getLibLangManager().getText(player, "gui.modules.navigator.forward");
             this.invalidForwardItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_RIGHT_LIGHT_GRAY.get())
                                                           .setName("&7" + forward)
@@ -111,19 +103,16 @@ public class GUINavigatorModule implements GUIModule
      * Checks whether the GUI is using a navigation system and if so calculate the forward
      * and back navigations.
      */
-    private void navigationCheck(Player player)
-    {
+    private void navigationCheck(Player player) {
         PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
         GUIContainer oldGUI = playerGUI.getGUI();
         String curID = getNavigationID();
         NavigationHolder<GUIContainer> system = playerGUI.getNavigation(curID);
-        if(system.isNavigationFlagged() || !playerGUI.isGuiOpened())
-        {
+        if(system.isNavigationFlagged() || !playerGUI.isGuiOpened()) {
             system.setNavigationFlag(false);
             return;
         }
-        if(oldGUI != null)
-        {
+        if(oldGUI != null) {
             if(!oldGUI.containsModule(GUINavigatorModule.class)) return;
             String oldID = oldGUI.getModule(GUINavigatorModule.class).getNavigationID();
             if(!curID.equals(oldID)) return;
@@ -141,33 +130,26 @@ public class GUINavigatorModule implements GUIModule
      * @param gui The GUI
      */
     @Override
-    public void onUpdateHead(Player player, GUIContainer gui)
-    {
+    public void onUpdateHead(Player player, GUIContainer gui) {
         NavigationHolder<GUIContainer> system = plugin.getGUIManager().getPlayer(player).getNavigation(navigationID);
         GUILayer layer = gui.getLayer("overlay", true);
 
-        if(system.hasBack())
-        {
+        if(system.hasBack()) {
             int backAmount = (int) system.backSize();
             if(backAmount == 0) { backAmount = 1; }
             else if(backAmount > 64) { backAmount = 64; }
             validBackItem.setAmountView(backAmount);
             layer.setItem(1, 1, validBackItem);
-        }
-        else
-        {
+        } else {
             layer.setItem(1, 1, invalidBackItem);
         }
-        if(system.hasForward())
-        {
+        if(system.hasForward()) {
             int forwardAmount = (int) system.forwardSize();
             if(forwardAmount == 0) { forwardAmount = 1; }
             else if(forwardAmount > 64) { forwardAmount = 64; }
             validForwardItem.setAmountView(forwardAmount);
             layer.setItem(1, 9, validForwardItem);
-        }
-        else
-        {
+        } else {
             layer.setItem(1, 9, invalidForwardItem);
         }
     }
@@ -177,8 +159,7 @@ public class GUINavigatorModule implements GUIModule
      *
      * @return The navigation ID
      */
-    public String getNavigationID()
-    {
+    public String getNavigationID() {
         return navigationID;
     }
 
@@ -187,8 +168,7 @@ public class GUINavigatorModule implements GUIModule
      *
      * @return The valid back item
      */
-    public GUIItem getValidBackItem()
-    {
+    public GUIItem getValidBackItem() {
         return validBackItem;
     }
 
@@ -197,8 +177,7 @@ public class GUINavigatorModule implements GUIModule
      *
      * @param validBackItem The new valid back item
      */
-    public void setValidBackItem(GUIItem validBackItem)
-    {
+    public void setValidBackItem(GUIItem validBackItem) {
         this.validBackItem = validBackItem;
     }
 
@@ -207,8 +186,7 @@ public class GUINavigatorModule implements GUIModule
      *
      * @return The valid forward item
      */
-    public GUIItem getValidForwardItem()
-    {
+    public GUIItem getValidForwardItem() {
         return validForwardItem;
     }
 
@@ -217,8 +195,7 @@ public class GUINavigatorModule implements GUIModule
      *
      * @param validForwardItem The new valid back item
      */
-    public void setValidForwardItem(GUIItem validForwardItem)
-    {
+    public void setValidForwardItem(GUIItem validForwardItem) {
         this.validForwardItem = validForwardItem;
     }
 
@@ -227,8 +204,7 @@ public class GUINavigatorModule implements GUIModule
      *
      * @return The invalid back item
      */
-    public GUIItem getInvalidBackItem()
-    {
+    public GUIItem getInvalidBackItem() {
         return invalidBackItem;
     }
 
@@ -237,8 +213,7 @@ public class GUINavigatorModule implements GUIModule
      *
      * @param invalidBackItem The new invalid back item
      */
-    public void setInvalidBackItem(GUIItem invalidBackItem)
-    {
+    public void setInvalidBackItem(GUIItem invalidBackItem) {
         this.invalidBackItem = invalidBackItem;
     }
 
@@ -247,8 +222,7 @@ public class GUINavigatorModule implements GUIModule
      *
      * @return The invalid forward item
      */
-    public GUIItem getInvalidForwardItem()
-    {
+    public GUIItem getInvalidForwardItem() {
         return invalidForwardItem;
     }
 
@@ -257,8 +231,7 @@ public class GUINavigatorModule implements GUIModule
      *
      * @param invalidForwardItem The new invalid forward item
      */
-    public void setInvalidForwardItem(GUIItem invalidForwardItem)
-    {
+    public void setInvalidForwardItem(GUIItem invalidForwardItem) {
         this.invalidForwardItem = invalidForwardItem;
     }
 
@@ -268,8 +241,7 @@ public class GUINavigatorModule implements GUIModule
      *
      * @author Mikedeejay2
      */
-    public static class GUINavBackEvent implements GUIEvent
-    {
+    public static class GUINavBackEvent implements GUIEvent {
         /**
          * The {@link BukkitPlugin} instance
          */
@@ -280,8 +252,7 @@ public class GUINavigatorModule implements GUIModule
          *
          * @param plugin The {@link BukkitPlugin} instance
          */
-        public GUINavBackEvent(BukkitPlugin plugin)
-        {
+        public GUINavBackEvent(BukkitPlugin plugin) {
             this.plugin = plugin;
         }
 
@@ -291,8 +262,7 @@ public class GUINavigatorModule implements GUIModule
          * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(GUIEventInfo info)
-        {
+        public void execute(GUIEventInfo info) {
             Player player = info.getPlayer();
             ClickType clickType = info.getClick();
             if(clickType != ClickType.LEFT) return;
@@ -313,8 +283,7 @@ public class GUINavigatorModule implements GUIModule
      *
      * @author Mikedeejay2
      */
-    public static class GUINavForwardEvent implements GUIEvent
-    {
+    public static class GUINavForwardEvent implements GUIEvent {
         /**
          * The {@link BukkitPlugin} instance
          */
@@ -325,8 +294,7 @@ public class GUINavigatorModule implements GUIModule
          *
          * @param plugin The {@link BukkitPlugin} instance
          */
-        public GUINavForwardEvent(BukkitPlugin plugin)
-        {
+        public GUINavForwardEvent(BukkitPlugin plugin) {
             this.plugin = plugin;
         }
 
@@ -336,8 +304,7 @@ public class GUINavigatorModule implements GUIModule
          * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(GUIEventInfo info)
-        {
+        public void execute(GUIEventInfo info) {
             Player player = info.getPlayer();
             ClickType clickType = info.getClick();
             if(clickType != ClickType.LEFT) return;

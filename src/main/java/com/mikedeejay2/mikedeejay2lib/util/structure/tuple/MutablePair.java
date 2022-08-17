@@ -12,8 +12,7 @@ package com.mikedeejay2.mikedeejay2lib.util.structure.tuple;
  *
  * @author Mikedeejay2
  */
-public class MutablePair<L, R> extends Pair<L, R>
-{
+public class MutablePair<L, R> extends Pair<L, R> {
     /**
      * Internal serial version unique ID
      */
@@ -29,8 +28,7 @@ public class MutablePair<L, R> extends Pair<L, R>
      */
     protected R right;
 
-    public MutablePair(L left, R right)
-    {
+    public MutablePair(L left, R right) {
         this.left = left;
         this.right = right;
     }
@@ -41,8 +39,7 @@ public class MutablePair<L, R> extends Pair<L, R>
      * @return The left value
      */
     @Override
-    public L getLeft()
-    {
+    public L getLeft() {
         return left;
     }
 
@@ -52,8 +49,7 @@ public class MutablePair<L, R> extends Pair<L, R>
      * @return The right value
      */
     @Override
-    public R getRight()
-    {
+    public R getRight() {
         return right;
     }
 
@@ -63,8 +59,7 @@ public class MutablePair<L, R> extends Pair<L, R>
      * @return The key
      */
     @Override
-    public L getKey()
-    {
+    public L getKey() {
         return left;
     }
 
@@ -74,8 +69,7 @@ public class MutablePair<L, R> extends Pair<L, R>
      * @return The value
      */
     @Override
-    public R getValue()
-    {
+    public R getValue() {
         return right;
     }
 
@@ -86,8 +80,7 @@ public class MutablePair<L, R> extends Pair<L, R>
      * @return The new value
      */
     @Override
-    public R setValue(R value)
-    {
+    public R setValue(R value) {
         this.right = value;
         return right;
     }
@@ -98,8 +91,7 @@ public class MutablePair<L, R> extends Pair<L, R>
      * @param left The new left value
      * @return The new left value
      */
-    public L setLeft(L left)
-    {
+    public L setLeft(L left) {
         this.left = left;
         return left;
     }
@@ -110,8 +102,7 @@ public class MutablePair<L, R> extends Pair<L, R>
      * @param right The new right value
      * @return The new right value
      */
-    public R setRight(R right)
-    {
+    public R setRight(R right) {
         this.right = right;
         return right;
     }

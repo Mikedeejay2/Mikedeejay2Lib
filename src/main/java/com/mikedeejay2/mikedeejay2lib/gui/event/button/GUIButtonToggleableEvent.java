@@ -12,8 +12,7 @@ import java.util.function.Consumer;
  *
  * @author Mikedeejay2
  */
-public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent
-{
+public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent {
     /**
      * The consumer that is run when the button is turned on
      */
@@ -37,8 +36,7 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent
      * @param initialState   The initial state (on/off) of the button
      * @param acceptedClicks The accepted {@link ClickType}s of the button
      */
-    public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer, boolean initialState, ClickType... acceptedClicks)
-    {
+    public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer, boolean initialState, ClickType... acceptedClicks) {
         super(acceptedClicks);
         Validate.notNull(onConsumer, "Button consumer can not be null");
         Validate.notNull(offConsumer, "Button consumer can not be null");
@@ -54,8 +52,7 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent
      * @param offConsumer    The consumer that is run when the button is turned off
      * @param acceptedClicks The accepted {@link ClickType}s of the button
      */
-    public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer, ClickType... acceptedClicks)
-    {
+    public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer, ClickType... acceptedClicks) {
         this(onConsumer, offConsumer, false, acceptedClicks);
     }
 
@@ -66,8 +63,7 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent
      * @param offConsumer    The consumer that is run when the button is turned off
      * @param initialState   The initial state (on/off) of the button
      */
-    public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer, boolean initialState)
-    {
+    public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer, boolean initialState) {
         this(onConsumer, offConsumer, initialState, ClickType.LEFT, ClickType.RIGHT, ClickType.MIDDLE, ClickType.SHIFT_LEFT, ClickType.SHIFT_RIGHT);
     }
 
@@ -77,8 +73,7 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent
      * @param onConsumer     The consumer that is run when the button is turned on
      * @param offConsumer    The consumer that is run when the button is turned off
      */
-    public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer)
-    {
+    public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer) {
         this(onConsumer, offConsumer, false);
     }
 
@@ -88,16 +83,12 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent
      * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(GUIEventInfo info)
-    {
+    public void execute(GUIEventInfo info) {
         if(!isValidClick(info.getClick())) return;
         state = !state;
-        if(state)
-        {
+        if(state) {
             onConsumer.accept(info);
-        }
-        else
-        {
+        } else {
             offConsumer.accept(info);
         }
     }
@@ -107,8 +98,7 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent
      *
      * @return The consumer that is run when the button is turned on
      */
-    public Consumer<GUIEventInfo> getOnConsumer()
-    {
+    public Consumer<GUIEventInfo> getOnConsumer() {
         return onConsumer;
     }
 
@@ -117,8 +107,7 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent
      *
      * @param consumer The new consumer
      */
-    public void setOnConsumer(Consumer<GUIEventInfo> consumer)
-    {
+    public void setOnConsumer(Consumer<GUIEventInfo> consumer) {
         Validate.notNull(consumer, "Button consumer can not be null");
         this.onConsumer = consumer;
     }
@@ -128,8 +117,7 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent
      *
      * @return The consumer that is run when the button is turned off
      */
-    public Consumer<GUIEventInfo> getOffConsumer()
-    {
+    public Consumer<GUIEventInfo> getOffConsumer() {
         return offConsumer;
     }
 
@@ -138,8 +126,7 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent
      *
      * @param consumer The new consumer
      */
-    public void setOffConsumer(Consumer<GUIEventInfo> consumer)
-    {
+    public void setOffConsumer(Consumer<GUIEventInfo> consumer) {
         Validate.notNull(consumer, "Button consumer can not be null");
         this.offConsumer = consumer;
     }
@@ -149,8 +136,7 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent
      *
      * @return Whether the button is on
      */
-    public boolean isOn()
-    {
+    public boolean isOn() {
         return state;
     }
 
@@ -159,8 +145,7 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent
      *
      * @return Whether the button is off
      */
-    public boolean isOff()
-    {
+    public boolean isOff() {
         return !state;
     }
 
@@ -169,8 +154,7 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent
      *
      * @param state The new state of the button
      */
-    public void setState(boolean state)
-    {
+    public void setState(boolean state) {
         this.state = state;
     }
 }

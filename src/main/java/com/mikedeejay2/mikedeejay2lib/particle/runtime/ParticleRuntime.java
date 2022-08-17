@@ -19,8 +19,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class ParticleRuntime extends EnhancedRunnable
-{
+public class ParticleRuntime extends EnhancedRunnable {
     /**
      * The particle system that this runtime is controlling
      */
@@ -47,8 +46,7 @@ public class ParticleRuntime extends EnhancedRunnable
      * @param system     The particle system that this runtime is controlling
      * @param updateRate The rate at which updates occur at the runtime
      */
-    public ParticleRuntime(ParticleSystem system, long updateRate)
-    {
+    public ParticleRuntime(ParticleSystem system, long updateRate) {
         super();
         this.system = system;
         this.effects = system.getEffects();
@@ -61,35 +59,29 @@ public class ParticleRuntime extends EnhancedRunnable
      * displaying a <code>ParticleSystem</code>. This should run asynchronously.
      */
     @Override
-    public void onRun()
-    {
+    public void onRun() {
         curUpdateRate += period;
         boolean shouldUpdate = curUpdateRate >= updateRate;
 
         system.getModules().forEach(module -> module.onUpdateHead(system));
-        for(ParticleEffect effect : effects)
-        {
-            if(!effect.isBaked())
-            {
+        for(ParticleEffect effect : effects) {
+            if(!effect.isBaked()) {
                 effect.bake();
             }
-            if(shouldUpdate)
-            {
+            if(shouldUpdate) {
                 effect.update();
                 effect.updateSystem(system);
             }
         }
         system.getModules().forEach(module -> module.onUpdateTail(system));
-        if(shouldUpdate)
-        {
+        if(shouldUpdate) {
             curUpdateRate = 0;
             system.setUpdated(true);
         }
 
         Bukkit.getScheduler().runTask(plugin, () -> {
             system.getModules().forEach(module -> module.onDisplayHead(system));
-            for(ParticleEffect effect : effects)
-            {
+            for(ParticleEffect effect : effects) {
                 long effectCount = effect.getCount();
                 long effectDelay = effect.getDelay();
                 if(effectCount > 0 && count >= (effectCount + effectDelay)) continue;

@@ -10,8 +10,7 @@ import org.bukkit.entity.Player;
  *
  * @author Mikedeejay2
  */
-public class GUIConfirmationModule implements GUIModule
-{
+public class GUIConfirmationModule implements GUIModule {
     /**
      * The confirm <code>GUIItem</code>
      */
@@ -27,8 +26,7 @@ public class GUIConfirmationModule implements GUIModule
      * @param confirmItem The confirm <code>GUIItem</code>
      * @param denyItem    The deny <code>GUIItem</code>
      */
-    public GUIConfirmationModule(GUIItem confirmItem, GUIItem denyItem)
-    {
+    public GUIConfirmationModule(GUIItem confirmItem, GUIItem denyItem) {
         this.confirmItem = confirmItem;
         this.denyItem = denyItem;
     }
@@ -40,8 +38,7 @@ public class GUIConfirmationModule implements GUIModule
      * @param gui    The GUI
      */
     @Override
-    public void onOpenHead(Player player, GUIContainer gui)
-    {
+    public void onOpenHead(Player player, GUIContainer gui) {
         int row = (int) Math.ceil(gui.getRows() / 2.0f);
         gui.setItem(row, 4, confirmItem);
         gui.setItem(row, 6, denyItem);
@@ -52,8 +49,7 @@ public class GUIConfirmationModule implements GUIModule
      *
      * @return The confirmation item
      */
-    public GUIItem getConfirmItem()
-    {
+    public GUIItem getConfirmItem() {
         return confirmItem;
     }
 
@@ -62,8 +58,7 @@ public class GUIConfirmationModule implements GUIModule
      *
      * @param confirmItem New confirmation Item
      */
-    public void setConfirmItem(GUIItem confirmItem)
-    {
+    public void setConfirmItem(GUIItem confirmItem) {
         this.confirmItem = confirmItem;
     }
 
@@ -72,8 +67,7 @@ public class GUIConfirmationModule implements GUIModule
      *
      * @return The deny item
      */
-    public GUIItem getDenyItem()
-    {
+    public GUIItem getDenyItem() {
         return denyItem;
     }
 
@@ -82,8 +76,7 @@ public class GUIConfirmationModule implements GUIModule
      *
      * @param denyItem New deny Item
      */
-    public void setDenyItem(GUIItem denyItem)
-    {
+    public void setDenyItem(GUIItem denyItem) {
         this.denyItem = denyItem;
     }
 }

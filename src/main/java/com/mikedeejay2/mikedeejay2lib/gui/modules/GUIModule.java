@@ -13,8 +13,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  * @author Mikedeejay2
  * @see GUIModule
  */
-public interface GUIModule
-{
+public interface GUIModule {
     /**
      * Called on the head of the update method in <code>GUIContainer</code>
      *

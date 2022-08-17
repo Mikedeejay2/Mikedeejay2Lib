@@ -12,8 +12,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class TitleRuntime extends EnhancedRunnable
-{
+public class TitleRuntime extends EnhancedRunnable {
     /**
      * The system that this runtime is controlling
      */
@@ -45,8 +44,7 @@ public class TitleRuntime extends EnhancedRunnable
      * @param system  The system that this runtime is controlling
      * @param players The array of players that this runtime is printing to
      */
-    public TitleRuntime(TitleSystem system, Player... players)
-    {
+    public TitleRuntime(TitleSystem system, Player... players) {
         this.system = system;
         this.firstRun = true;
         this.curIndex = 0;
@@ -58,15 +56,12 @@ public class TitleRuntime extends EnhancedRunnable
      * <code>onRun()</code> method that animates and displays the <code>TitleSystem</code>
      */
     @Override
-    public void onRun()
-    {
+    public void onRun() {
         List<TitleFrame> frames = system.getFrames();
         if(frames.size() == 0) return;
         wait += period;
-        if(firstRun)
-        {
-            if(wait > delay)
-            {
+        if(firstRun) {
+            if(wait > delay) {
                 if(curIndex < frames.size()) curIndex = 0;
                 firstRun = false;
                 TitleFrame curFrame = frames.get(curIndex);
@@ -76,8 +71,7 @@ public class TitleRuntime extends EnhancedRunnable
             }
             return;
         }
-        if(curIndex >= frames.size())
-        {
+        if(curIndex >= frames.size()) {
             this.cancel();
             return;
         }

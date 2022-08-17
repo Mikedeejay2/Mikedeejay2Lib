@@ -15,8 +15,7 @@ import java.lang.reflect.Field;
  *
  * @author Mikedeejay2 (Original idea from Spigot/Bukkit forums)
  */
-public final class GlowEnchantment extends Enchantment
-{
+public final class GlowEnchantment extends Enchantment {
     /**
      * The existing <code>GlowEnchantment</code> instance
      */
@@ -25,8 +24,7 @@ public final class GlowEnchantment extends Enchantment
     /**
      * Construct a new <code>GlowEnchantment</code>
      */
-    private GlowEnchantment()
-    {
+    private GlowEnchantment() {
         super(new NamespacedKey("mikedeejay2lib", "glow"));
     }
 
@@ -36,8 +34,7 @@ public final class GlowEnchantment extends Enchantment
      * @return null
      */
     @Override
-    public String getName()
-    {
+    public String getName() {
         return null;
     }
 
@@ -47,8 +44,7 @@ public final class GlowEnchantment extends Enchantment
      * @return 0
      */
     @Override
-    public int getMaxLevel()
-    {
+    public int getMaxLevel() {
         return 0;
     }
 
@@ -58,8 +54,7 @@ public final class GlowEnchantment extends Enchantment
      * @return 0
      */
     @Override
-    public int getStartLevel()
-    {
+    public int getStartLevel() {
         return 0;
     }
 
@@ -69,8 +64,7 @@ public final class GlowEnchantment extends Enchantment
      * @return null
      */
     @Override
-    public EnchantmentTarget getItemTarget()
-    {
+    public EnchantmentTarget getItemTarget() {
         return null;
     }
 
@@ -80,8 +74,7 @@ public final class GlowEnchantment extends Enchantment
      * @return false
      */
     @Override
-    public boolean isTreasure()
-    {
+    public boolean isTreasure() {
         return false;
     }
 
@@ -91,8 +84,7 @@ public final class GlowEnchantment extends Enchantment
      * @return false
      */
     @Override
-    public boolean isCursed()
-    {
+    public boolean isCursed() {
         return false;
     }
 
@@ -102,8 +94,7 @@ public final class GlowEnchantment extends Enchantment
      * @return false
      */
     @Override
-    public boolean conflictsWith(Enchantment other)
-    {
+    public boolean conflictsWith(Enchantment other) {
         return false;
     }
 
@@ -113,8 +104,7 @@ public final class GlowEnchantment extends Enchantment
      * @return false
      */
     @Override
-    public boolean canEnchantItem(ItemStack item)
-    {
+    public boolean canEnchantItem(ItemStack item) {
         return false;
     }
 
@@ -123,31 +113,22 @@ public final class GlowEnchantment extends Enchantment
      *
      * @param plugin A reference to the <code>BukkitPlugin</code> instance
      */
-    public static void registerGlow(BukkitPlugin plugin)
-    {
-        try
-        {
+    public static void registerGlow(BukkitPlugin plugin) {
+        try {
             Field acceptingNew = Enchantment.class.getDeclaredField("acceptingNew");
             acceptingNew.setAccessible(true);
             acceptingNew.set(null, true);
-        }
-        catch(IllegalAccessException | NoSuchFieldException exception)
-        {
+        } catch(IllegalAccessException | NoSuchFieldException exception) {
             plugin.getLogger().severe("Unable to register glow enchantment: Illegal or invalid field exception has occurred.");
         }
 
-        try
-        {
+        try {
             GlowEnchantment glow = new GlowEnchantment();
             enchant = glow;
             Enchantment.registerEnchantment(glow);
-        }
-        catch(IllegalArgumentException exception)
-        {
+        } catch(IllegalArgumentException exception) {
             // IllegalArgumentException is always ignored here as it is always thrown.
-        }
-        catch(Exception exception)
-        {
+        } catch(Exception exception) {
             plugin.getLogger().severe("Unable to register glow enchantment: Unknown exception occurred, stack trace below:");
             exception.printStackTrace();
         }
@@ -158,8 +139,7 @@ public final class GlowEnchantment extends Enchantment
      *
      * @return The <code>GlowEnchant</code> instance
      */
-    public static GlowEnchantment get()
-    {
+    public static GlowEnchantment get() {
         return enchant;
     }
 }

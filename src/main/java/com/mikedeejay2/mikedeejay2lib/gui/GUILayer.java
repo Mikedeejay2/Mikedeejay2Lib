@@ -16,8 +16,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class GUILayer
-{
+public class GUILayer {
     /**
      * The 2D array of items that this layer stores
      */
@@ -66,17 +65,13 @@ public class GUILayer
      * @param overlay          Whether this layer is an overlay layer or not
      * @param defaultMoveState The default move state of this layer
      */
-    public GUILayer(GUIContainer gui, String layerName, boolean overlay, boolean defaultMoveState)
-    {
+    public GUILayer(GUIContainer gui, String layerName, boolean overlay, boolean defaultMoveState) {
         this.gui = gui;
         this.overlay = overlay;
-        if(!overlay)
-        {
+        if(!overlay) {
             this.inventoryRows = gui.getRows();
             this.inventoryCols = gui.getCols();
-        }
-        else
-        {
+        } else {
             this.inventoryRows = GUIContainer.MAX_INVENTORY_ROWS;
             this.inventoryCols = GUIContainer.MAX_INVENTORY_COLS;
         }
@@ -96,8 +91,7 @@ public class GUILayer
      * @param displayName The display of the new item
      * @param loreString  The lores of the item
      */
-    public void setItem(int row, int col, Material material, int amount, String displayName, String... loreString)
-    {
+    public void setItem(int row, int col, Material material, int amount, String displayName, String... loreString) {
         setItem(row, col, ItemBuilder.of(material)
                 .setAmount(amount)
                 .setName(displayName)
@@ -112,10 +106,8 @@ public class GUILayer
      * @param col The column to get
      * @return The <code>GUIItem</code> that is contained in that slot
      */
-    public GUIItem getItem(int row, int col)
-    {
-        if(overlay)
-        {
+    public GUIItem getItem(int row, int col) {
+        if(overlay) {
             row -= gui.getRowOffset();
             col -= gui.getColOffset();
         }
@@ -128,8 +120,7 @@ public class GUILayer
      * @param row Row that should be removed
      * @param col Column that should be remove
      */
-    public void removeItem(int row, int col)
-    {
+    public void removeItem(int row, int col) {
         GUIItem item = getItem(row, col);
         setItem(row, col, (GUIItem)null);
         gui.getModules().forEach(module -> module.onItemRemove(gui, this, row, col, item));
@@ -140,12 +131,9 @@ public class GUILayer
      *
      * @param item The item that should be removed
      */
-    public void removeItem(GUIItem item)
-    {
-        for(int row = 1; row <= inventoryRows; ++row)
-        {
-            for(int col = 1; col <= inventoryCols; ++col)
-            {
+    public void removeItem(GUIItem item) {
+        for(int row = 1; row <= inventoryRows; ++row) {
+            for(int col = 1; col <= inventoryCols; ++col) {
                 if(getItem(row, col) != item) continue;
                 removeItem(row, col);
                 return;
@@ -163,8 +151,7 @@ public class GUILayer
      * @param displayName The display name of the item
      * @param loreString  The lore strings of the item
      */
-    public void setItem(int row, int col, String headStr, int amount, String displayName, String... loreString)
-    {
+    public void setItem(int row, int col, String headStr, int amount, String displayName, String... loreString) {
         setItem(row, col, ItemBuilder.of(headStr).setAmount(amount).setName(displayName).setLore(loreString).get());
     }
 
@@ -175,8 +162,7 @@ public class GUILayer
      * @param col   Column that should be set
      * @param stack The <code>ItemStack</code> to set the slot to
      */
-    public void setItem(int row, int col, ItemStack stack)
-    {
+    public void setItem(int row, int col, ItemStack stack) {
         GUIItem newItem = new GUIItem(stack);
         newItem.setMovable(defaultMoveState);
         setItem(row, col, newItem);
@@ -189,8 +175,7 @@ public class GUILayer
      * @param col  The column that should be set
      * @param item The GUIItem to use
      */
-    public void setItem(int row, int col, GUIItem item)
-    {
+    public void setItem(int row, int col, GUIItem item) {
         if(items[row - 1][col - 1] == item) return;
         items[row - 1][col - 1] = item;
         gui.getModules().forEach(module -> module.onItemSet(gui, this, row, col, item));
@@ -203,8 +188,7 @@ public class GUILayer
      * @param col     The column to set
      * @param movable Whether the item is movable or not
      */
-    public void setMoveState(int row, int col, boolean movable)
-    {
+    public void setMoveState(int row, int col, boolean movable) {
         GUIItem item = items[--row][--col];
         item.setMovable(movable);
     }
@@ -216,8 +200,7 @@ public class GUILayer
      * @param col The column to get
      * @return The events of the slot
      */
-    public GUIEventHandler getEventHandler(int row, int col)
-    {
+    public GUIEventHandler getEventHandler(int row, int col) {
         GUIItem item = items[--row][--col];
         return item == null ? null : item.getEvents();
     }
@@ -229,8 +212,7 @@ public class GUILayer
      * @param col    The column to set
      * @param events The events to set the slot to
      */
-    public void setEventHandler(int row, int col, GUIEventHandler events)
-    {
+    public void setEventHandler(int row, int col, GUIEventHandler events) {
         GUIItem item = items[--row][--col];
         item.setEvents(events);
     }
@@ -242,8 +224,7 @@ public class GUILayer
      * @param col   The column to set
      * @param event The GUIEvent to add
      */
-    public void addEvent(int row, int col, GUIEvent event)
-    {
+    public void addEvent(int row, int col, GUIEvent event) {
         GUIItem item = items[--row][--col];
         item.addEvent(event);
     }
@@ -255,8 +236,7 @@ public class GUILayer
      * @param col   The column to remove
      * @param event The GUIEvent to remove
      */
-    public void removeEvent(int row, int col, GUIEvent event)
-    {
+    public void removeEvent(int row, int col, GUIEvent event) {
         GUIItem item = items[--row][--col];
         if(item != null) item.removeEvent(event);
     }
@@ -268,8 +248,7 @@ public class GUILayer
      * @param col        The column to remove
      * @param eventClass The class of the GUIEvent that should be removed
      */
-    public void removeEvent(int row, int col, Class<? extends GUIEvent> eventClass)
-    {
+    public void removeEvent(int row, int col, Class<? extends GUIEvent> eventClass) {
         GUIItem item = items[--row][--col];
         if(item != null) item.removeEvent(eventClass);
     }
@@ -282,8 +261,7 @@ public class GUILayer
      * @param event The event that should be searched for
      * @return Whether the slot contains the event
      */
-    public boolean doesSlotContainEvent(int row, int col, GUIEvent event)
-    {
+    public boolean doesSlotContainEvent(int row, int col, GUIEvent event) {
         GUIItem item = items[--row][--col];
         return item != null && item.containsEvent(event);
     }
@@ -296,8 +274,7 @@ public class GUILayer
      * @param eventClass The class of the event that should be searched for
      * @return Whether the slot contains the event
      */
-    public boolean doesSlotContainEvent(int row, int col, Class<? extends GUIEvent> eventClass)
-    {
+    public boolean doesSlotContainEvent(int row, int col, Class<? extends GUIEvent> eventClass) {
         GUIItem item = items[--row][--col];
         return item != null && item.containsEvent(eventClass);
     }
@@ -308,8 +285,7 @@ public class GUILayer
      * @param row Row to remove events from
      * @param col Column to remove events from
      */
-    public void removeEventHandler(int row, int col)
-    {
+    public void removeEventHandler(int row, int col) {
         GUIItem item = items[--row][--col];
         if(item != null) item.resetEvents();
     }
@@ -321,8 +297,7 @@ public class GUILayer
      * @param col The column to get
      * @return Whether the slot is movable
      */
-    public boolean canSlotBeMoved(int row, int col)
-    {
+    public boolean canSlotBeMoved(int row, int col) {
         GUIItem item = items[--row][--col];
         return item == null ? defaultMoveState : item.isMovable();
     }
@@ -335,8 +310,7 @@ public class GUILayer
      * @param newRow Row 2
      * @param newCol Column 2
      */
-    public void swapItems(int row, int col, int newRow, int newCol)
-    {
+    public void swapItems(int row, int col, int newRow, int newCol) {
         --newRow; --newCol; --row; --col;
         GUIItem itemToMove = items[row][col];
         items[row][col] = items[newRow][newCol];
@@ -350,8 +324,7 @@ public class GUILayer
      * @param col The column to check
      * @return Whether the item exists or not
      */
-    public boolean itemExists(int row, int col)
-    {
+    public boolean itemExists(int row, int col) {
         return items[--row][--col] != null;
     }
 
@@ -360,8 +333,7 @@ public class GUILayer
      *
      * @return The amount of rows of this GUI
      */
-    public int getRows()
-    {
+    public int getRows() {
         return inventoryRows;
     }
 
@@ -370,8 +342,7 @@ public class GUILayer
      *
      * @return The amount of columns of this GUI
      */
-    public int getCols()
-    {
+    public int getCols() {
         return inventoryCols;
     }
 
@@ -380,8 +351,7 @@ public class GUILayer
      *
      * @return The default move state
      */
-    public boolean getDefaultMoveState()
-    {
+    public boolean getDefaultMoveState() {
         return defaultMoveState;
     }
 
@@ -390,8 +360,7 @@ public class GUILayer
      *
      * @param defaultMoveState The new default move state
      */
-    public void setDefaultMoveState(boolean defaultMoveState)
-    {
+    public void setDefaultMoveState(boolean defaultMoveState) {
         this.defaultMoveState = defaultMoveState;
     }
 
@@ -400,8 +369,7 @@ public class GUILayer
      *
      * @return A list of all GUI items
      */
-    public List<GUIItem> getItemsAsList()
-    {
+    public List<GUIItem> getItemsAsList() {
         return ArrayUtil.toList(items);
     }
 
@@ -410,8 +378,7 @@ public class GUILayer
      *
      * @return The 2D array of GUI Items
      */
-    public GUIItem[][] getItemsAsArray()
-    {
+    public GUIItem[][] getItemsAsArray() {
         return items;
     }
 
@@ -420,8 +387,7 @@ public class GUILayer
      *
      * @return The name of this layer
      */
-    public String getName()
-    {
+    public String getName() {
         return layerName;
     }
 
@@ -430,8 +396,7 @@ public class GUILayer
      *
      * @return The visibility of this layer
      */
-    public boolean isVisible()
-    {
+    public boolean isVisible() {
         return visible;
     }
 
@@ -441,8 +406,7 @@ public class GUILayer
      *
      * @param visibility Visibility to set this layer to
      */
-    public void setVisibility(boolean visibility)
-    {
+    public void setVisibility(boolean visibility) {
         this.visible = visibility;
     }
 
@@ -451,8 +415,7 @@ public class GUILayer
      *
      * @return Whether this layer is an overlay or not
      */
-    public boolean isOverlay()
-    {
+    public boolean isOverlay() {
         return overlay;
     }
 
@@ -463,8 +426,7 @@ public class GUILayer
      * @param col The column to use
      * @return The slot based off of the row and the column
      */
-    public int getSlotFromRowCol(int row, int col)
-    {
+    public int getSlotFromRowCol(int row, int col) {
         return (row * inventoryCols) + col;
     }
 
@@ -474,10 +436,8 @@ public class GUILayer
      * @param slot The slot to use
      * @return The row based off of the slot
      */
-    public int getRowFromSlot(int slot)
-    {
-        if(overlay)
-        {
+    public int getRowFromSlot(int slot) {
+        if(overlay) {
             return (slot / GUIContainer.MAX_INVENTORY_COLS) + 1;
         }
         return (slot / GUIContainer.MAX_INVENTORY_COLS) + 1 + gui.getRowOffset();
@@ -489,10 +449,8 @@ public class GUILayer
      * @param slot The slot to use
      * @return The column based off of the slot
      */
-    public int getColFromSlot(int slot)
-    {
-        if(overlay)
-        {
+    public int getColFromSlot(int slot) {
+        if(overlay) {
             return (slot % GUIContainer.MAX_INVENTORY_COLS) + 1;
         }
         return (slot % GUIContainer.MAX_INVENTORY_COLS) + 1 + gui.getColOffset();
@@ -503,8 +461,7 @@ public class GUILayer
      *
      * @return The parent GUI
      */
-    public GUIContainer getGUI()
-    {
+    public GUIContainer getGUI() {
         return gui;
     }
 
@@ -514,12 +471,9 @@ public class GUILayer
      * @param item The item to search for
      * @return Whether the item was found in the GUI or not
      */
-    public boolean containsItem(ItemStack item)
-    {
-        for(GUIItem[] arr : items)
-        {
-            for(GUIItem guiItem : arr)
-            {
+    public boolean containsItem(ItemStack item) {
+        for(GUIItem[] arr : items) {
+            for(GUIItem guiItem : arr) {
                 if(guiItem == null) continue;
                 ItemStack curItem = guiItem.getItemBase();
                 if(curItem == null) continue;
@@ -536,12 +490,9 @@ public class GUILayer
      * @param material The material to search for
      * @return Whether the material was found in the GUI or not
      */
-    public boolean containsMaterial(Material material)
-    {
-        for(GUIItem[] arr : items)
-        {
-            for(GUIItem guiItem : arr)
-            {
+    public boolean containsMaterial(Material material) {
+        for(GUIItem[] arr : items) {
+            for(GUIItem guiItem : arr) {
                 if(guiItem == null) continue;
                 ItemStack curItem = guiItem.getItemBase();
                 if(curItem == null) continue;
@@ -555,12 +506,9 @@ public class GUILayer
     /**
      * Clears all items from this layer
      */
-    public void clearLayer()
-    {
-        for(int row = 1; row <= inventoryRows; ++row)
-        {
-            for(int col = 1; col <= inventoryCols; ++col)
-            {
+    public void clearLayer() {
+        for(int row = 1; row <= inventoryRows; ++row) {
+            for(int col = 1; col <= inventoryCols; ++col) {
                 removeItem(row, col);
             }
         }

@@ -9,15 +9,14 @@ import com.mikedeejay2.mikedeejay2lib.util.enchant.GlowEnchantment;
  * Main class for Mikedeejay2Lib.
  * <p>
  * <code>BukkitPlugin</code> is a robust plugin class that extends {@link EnhancedJavaPlugin} to
- * add new functions. Check source code on Github to find all features, planned additions,
+ * add new functions. Check source code on GitHub to find all features, planned additions,
  * bugs, etc.
  * <p>
  * Source code: <a href="https://github.com/Mikedeejay2/Mikedeejay2Lib">https://github.com/Mikedeejay2/Mikedeejay2Lib</a>
  *
  * @author Mikedeejay2
  */
-public abstract class BukkitPlugin extends EnhancedJavaPlugin
-{
+public abstract class BukkitPlugin extends EnhancedJavaPlugin {
     /**
      * The Mikedeejay2Lib {@link LangManager}. Used for some miscellaneous texts.
      */
@@ -32,8 +31,7 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin
      * {@inheritDoc}
      */
     @Override
-    public void onEnable()
-    {
+    public void onEnable() {
         super.onEnable();
         this.libLangManager = new LangManager(this, "lang/lib");
         this.guiManager = new GUIManager(this);
@@ -49,8 +47,7 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin
      * {@inheritDoc}
      */
     @Override
-    public void onDisable()
-    {
+    public void onDisable() {
         this.guiManager.closeAllGuis();
         super.onDisable();
     }
@@ -60,8 +57,7 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin
      *
      * @return The GUI manager
      */
-    public GUIManager getGUIManager()
-    {
+    public GUIManager getGUIManager() {
         return guiManager;
     }
 
@@ -70,8 +66,7 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin
      *
      * @return Mikedeejay2Lib lang manager
      */
-    public LangManager getLibLangManager()
-    {
+    public LangManager getLibLangManager() {
         return libLangManager;
     }
 }

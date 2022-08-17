@@ -23,8 +23,7 @@ public class GUIFillModule implements GUIModule
      *
      * @param item The GUI item that will be used for the fill
      */
-    public GUIFillModule(GUIItem item)
-    {
+    public GUIFillModule(GUIItem item) {
         this.item = item;
     }
 
@@ -33,8 +32,7 @@ public class GUIFillModule implements GUIModule
      *
      * @return The <code>GUIItem</code> that will be used
      */
-    public GUIItem getItem()
-    {
+    public GUIItem getItem() {
         return item;
     }
 
@@ -43,8 +41,7 @@ public class GUIFillModule implements GUIModule
      *
      * @param item GUIItem for the fill to use
      */
-    public void setItem(GUIItem item)
-    {
+    public void setItem(GUIItem item) {
         this.item = item;
     }
 
@@ -53,8 +50,7 @@ public class GUIFillModule implements GUIModule
      *
      * @param fill ItemStack for the fill to use
      */
-    public void setItem(ItemStack fill)
-    {
+    public void setItem(ItemStack fill) {
         this.item = new GUIItem(fill);
     }
 
@@ -65,12 +61,9 @@ public class GUIFillModule implements GUIModule
      * @param gui    The GUI
      */
     @Override
-    public void onOpenHead(Player player, GUIContainer gui)
-    {
-        for(int row = 1; row <= gui.getRows(); ++row)
-        {
-            for(int col = 1; col <= gui.getCols(); ++col)
-            {
+    public void onOpenHead(Player player, GUIContainer gui) {
+        for(int row = 1; row <= gui.getRows(); ++row) {
+            for(int col = 1; col <= gui.getCols(); ++col) {
                 gui.setItem(row, col, item);
             }
         }

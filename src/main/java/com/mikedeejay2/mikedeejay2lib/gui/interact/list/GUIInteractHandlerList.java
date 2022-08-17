@@ -19,8 +19,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author Mikedeejay2
  */
-public class GUIInteractHandlerList extends GUIInteractHandler
-{
+public class GUIInteractHandlerList extends GUIInteractHandler {
     /**
      * The item stack limit, <code>-1</code> is default stack limit
      */
@@ -31,8 +30,7 @@ public class GUIInteractHandlerList extends GUIInteractHandler
      *
      * @param limit The item stack limit, <code>-1</code> is default stack limit
      */
-    public GUIInteractHandlerList(int limit)
-    {
+    public GUIInteractHandlerList(int limit) {
         super();
         this.limit = Math.min(limit, 64);
         executors.add(new GUIInteractExecutorDefaultInv(this.limit));
@@ -42,8 +40,7 @@ public class GUIInteractHandlerList extends GUIInteractHandler
     /**
      * Construct a new <code>GUIInteractHandlerList</code>
      */
-    public GUIInteractHandlerList()
-    {
+    public GUIInteractHandlerList() {
         super();
         this.limit = -1;
         executors.add(new GUIInteractExecutorDefaultInv(this.limit));
@@ -59,8 +56,7 @@ public class GUIInteractHandlerList extends GUIInteractHandler
      * @param gui   The GUI that the player interacted with
      */
     @Override
-    public void handleInteraction(InventoryClickEvent event, GUIContainer gui)
-    {
+    public void handleInteraction(InventoryClickEvent event, GUIContainer gui) {
         ClickType clickType = event.getClick();
         InventoryAction action = event.getAction();
         Player player = (Player) event.getWhoClicked();
@@ -73,75 +69,55 @@ public class GUIInteractHandlerList extends GUIInteractHandler
         ItemStack cursorItem = player.getItemOnCursor();
         if(cursorItem.getType() == Material.AIR) cursorItem = null;
         ItemStack bottomItem = null;
-        if(clickedInv == gui.getInventory())
-        {
+        if(clickedInv == gui.getInventory()) {
             int row = gui.getRowFromSlot(slot);
             int col = gui.getColFromSlot(slot);
             GUIItem guiItem = layer.getItem(row, col);
-            if(guiItem != null)
-            {
+            if(guiItem != null) {
                 bottomItem = guiItem.getItemBase();
             }
-        }
-        else if(slot >= 0)
-        {
+        } else if(slot >= 0) {
             bottomItem = playerInv.getItem(slot);
         }
 
-        if(limit == -1)
-        {
+        if(limit == -1) {
             executeAction(player, clickedInv, slot, action, event, gui, layer);
             return;
         }
 
-        switch(clickType)
-        {
-            case LEFT:
-            {
+        switch(clickType) {
+            case LEFT: {
                 if(clickedInv == null) break;
-                if(bottomItem != null && cursorItem != null)
-                {
+                if(bottomItem != null && cursorItem != null) {
                     int bottomAmount = bottomItem.getAmount();
                     int cursorAmount = cursorItem.getAmount();
                     if(bottomAmount + cursorAmount > limit) action = InventoryAction.PLACE_SOME;
                     else action = InventoryAction.PLACE_ALL;
-                }
-                else if(cursorItem != null)
-                {
+                } else if(cursorItem != null) {
                     action = InventoryAction.PLACE_ALL;
-                }
-                else if(bottomItem != null)
-                {
+                } else if(bottomItem != null) {
                     action = InventoryAction.PICKUP_ALL;
                 }
             }
             break;
-            case RIGHT:
-            {
+            case RIGHT: {
                 if(clickedInv == null) break;
-                if(bottomItem != null && cursorItem != null)
-                {
+                if(bottomItem != null && cursorItem != null) {
                     action = InventoryAction.PLACE_ONE;
-                }
-                else if(cursorItem != null)
-                {
+                } else if(cursorItem != null) {
                     action = InventoryAction.PLACE_ONE;
-                }
-                else if(bottomItem != null)
-                {
+                } else if(bottomItem != null) {
                     action = InventoryAction.PICKUP_HALF;
                 }
             }
             break;
-            case MIDDLE:
-            {
+            case MIDDLE: {
                 if(clickedInv == null) break;
                 action = InventoryAction.CLONE_STACK;
             }
             break;
             case SHIFT_LEFT:
-            case SHIFT_RIGHT:
-            {
+            case SHIFT_RIGHT: {
                 if(clickedInv == null) break;
                 if(bottomItem != null) action = InventoryAction.MOVE_TO_OTHER_INVENTORY;
             }
@@ -155,8 +131,7 @@ public class GUIInteractHandlerList extends GUIInteractHandler
      *
      * @return The limit
      */
-    public int getLimit()
-    {
+    public int getLimit() {
         return limit;
     }
 
@@ -165,8 +140,7 @@ public class GUIInteractHandlerList extends GUIInteractHandler
      *
      * @param limit The new limit to use
      */
-    public void setLimit(int limit)
-    {
+    public void setLimit(int limit) {
         this.limit = limit;
     }
 }

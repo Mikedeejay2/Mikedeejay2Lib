@@ -11,8 +11,7 @@ import java.util.regex.Pattern;
  *
  * @author Mikedeejay2
  */
-public final class MinecraftVersion
-{
+public final class MinecraftVersion {
     /**
      * Holds the version string like "1.16.3"
      */
@@ -33,8 +32,7 @@ public final class MinecraftVersion
      */
     private static final String versionNMS;
 
-    static
-    {
+    static {
         versionString = calcVersionString();
         versionLong = calcLongVersion();
         versionShort = calcShortVersion();
@@ -44,8 +42,7 @@ public final class MinecraftVersion
     /**
      * This class is static and should not be constructed
      */
-    private MinecraftVersion()
-    {
+    private MinecraftVersion() {
         throw new UnsupportedOperationException("Can not initialize static class MinecraftVersion");
     }
 
@@ -54,13 +51,11 @@ public final class MinecraftVersion
      *
      * @return The calculated version String
      */
-    private static String calcVersionString()
-    {
+    private static String calcVersionString() {
         String version = Bukkit.getServer().getVersion();
         Pattern pattern = Pattern.compile("(\\(MC: )([\\d\\.]+)(\\))");
         Matcher matcher = pattern.matcher(version);
-        if(matcher.find())
-        {
+        if(matcher.find()) {
             return matcher.group(2);
         }
         return null;
@@ -71,12 +66,10 @@ public final class MinecraftVersion
      *
      * @return A long array version
      */
-    private static int[] calcLongVersion()
-    {
+    private static int[] calcLongVersion() {
         String[] splitStr = versionString.split("\\.");
         int[] arr = new int[splitStr.length];
-        for(int i = 0; i < splitStr.length; ++i)
-        {
+        for(int i = 0; i < splitStr.length; ++i) {
             arr[i] = Integer.parseInt(splitStr[i]);
         }
         return arr;
@@ -87,8 +80,7 @@ public final class MinecraftVersion
      *
      * @return The short int version
      */
-    private static int calcShortVersion()
-    {
+    private static int calcShortVersion() {
         String[] splitStr = versionString.split("\\.");
         return Integer.parseInt(splitStr[1]);
     }
@@ -98,8 +90,7 @@ public final class MinecraftVersion
      *
      * @return The calculated NMS version String
      */
-    private static String calcVersionNMS()
-    {
+    private static String calcVersionNMS() {
         String raw = Bukkit.getServer().getClass().getPackage().getName();
         String[] split = raw.split("\\.");
         return split[split.length - 1];
@@ -110,8 +101,7 @@ public final class MinecraftVersion
      *
      * @return The version String
      */
-    public static String getVersionString()
-    {
+    public static String getVersionString() {
         return versionString;
     }
 
@@ -120,8 +110,7 @@ public final class MinecraftVersion
      *
      * @return The long version array
      */
-    public static int[] getVersionLong()
-    {
+    public static int[] getVersionLong() {
         return versionLong;
     }
 
@@ -130,8 +119,7 @@ public final class MinecraftVersion
      *
      * @return The short int version
      */
-    public static int getVersionShort()
-    {
+    public static int getVersionShort() {
         return versionShort;
     }
 
@@ -140,8 +128,7 @@ public final class MinecraftVersion
      *
      * @return The NMS String version
      */
-    public static String getVersionNMS()
-    {
+    public static String getVersionNMS() {
         return versionNMS;
     }
 }

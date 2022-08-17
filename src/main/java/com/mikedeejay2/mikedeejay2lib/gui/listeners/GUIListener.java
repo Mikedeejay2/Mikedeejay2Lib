@@ -19,8 +19,7 @@ import org.bukkit.inventory.Inventory;
  *
  * @author Mikedeejay2
  */
-public class GUIListener implements Listener
-{
+public class GUIListener implements Listener {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -31,8 +30,7 @@ public class GUIListener implements Listener
      *
      * @param plugin The {@link BukkitPlugin} instance
      */
-    public GUIListener(BukkitPlugin plugin)
-    {
+    public GUIListener(BukkitPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -42,8 +40,7 @@ public class GUIListener implements Listener
      * @param event The inventory click event to be processed
      */
     @EventHandler
-    public void onClick(InventoryClickEvent event)
-    {
+    public void onClick(InventoryClickEvent event) {
         Player player = (Player) event.getWhoClicked();
         GUIManager guiManager = plugin.getGUIManager();
         if(!guiManager.containsPlayer(player)) return;
@@ -55,8 +52,7 @@ public class GUIListener implements Listener
         Inventory    inventory        = event.getInventory();
         int          slot             = event.getSlot();
 
-        if(clickedInventory != inventory)
-        {
+        if(clickedInventory != inventory) {
             event.setCancelled(true);
             curGUI.onPlayerInteract(event);
             curGUI.update(player);
@@ -67,8 +63,7 @@ public class GUIListener implements Listener
         int col = curGUI.getColFromSlot(slot);
 
         event.setCancelled(true);
-        if(curGUI.canSlotBeMoved(row, col))
-        {
+        if(curGUI.canSlotBeMoved(row, col)) {
             curGUI.onPlayerInteract(event);
         }
         curGUI.onClicked(event);
@@ -81,16 +76,14 @@ public class GUIListener implements Listener
      * @param event The event to be processed
      */
     @EventHandler
-    public void onClose(InventoryCloseEvent event)
-    {
+    public void onClose(InventoryCloseEvent event) {
         Player player = (Player) event.getPlayer();
         GUIManager manager = plugin.getGUIManager();
         if(!manager.containsPlayer(player)) return;
         PlayerGUI playerGUI = manager.getPlayer(player);
         GUIContainer curGUI = playerGUI.getGUI();
         if(curGUI == null) return;
-        if(playerGUI.isGuiChange())
-        {
+        if(playerGUI.isGuiChange()) {
             playerGUI.setGuiChange(false);
             return;
         }
@@ -104,8 +97,7 @@ public class GUIListener implements Listener
      * @param event The event to be processed
      */
     @EventHandler
-    public void onOpen(InventoryOpenEvent event)
-    {
+    public void onOpen(InventoryOpenEvent event) {
         Player     player    = (Player) event.getPlayer();
         GUIManager manager   = plugin.getGUIManager();
         if(!manager.containsPlayer(player)) return;
@@ -122,8 +114,7 @@ public class GUIListener implements Listener
      * @param event The event to be processed
      */
     @EventHandler
-    public void onDrag(InventoryDragEvent event)
-    {
+    public void onDrag(InventoryDragEvent event) {
         Player player = (Player) event.getWhoClicked();
         if(!plugin.getGUIManager().containsPlayer(player)) return;
         GUIContainer curGUI = plugin.getGUIManager().getPlayer(player).getGUI();
@@ -140,8 +131,7 @@ public class GUIListener implements Listener
      * @param event The event to be processed
      */
     @EventHandler
-    public void onPlayerQuit(PlayerQuitEvent event)
-    {
+    public void onPlayerQuit(PlayerQuitEvent event) {
         Player player = event.getPlayer();
         plugin.getGUIManager().removePlayer(player);
     }

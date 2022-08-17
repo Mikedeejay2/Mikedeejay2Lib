@@ -7,6 +7,5 @@ import org.bukkit.command.CommandExecutor;
  *
  * @author Mikedeejay2
  */
-public interface CommandBase extends CommandExecutor, CommandInfo
-{
+public interface CommandBase extends CommandExecutor, CommandInfo {
 }

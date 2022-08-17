@@ -13,8 +13,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class ChatAnimRuntime extends EnhancedRunnable
-{
+public class ChatAnimRuntime extends EnhancedRunnable {
     /**
      * The chat system of this runnable
      */
@@ -51,8 +50,7 @@ public class ChatAnimRuntime extends EnhancedRunnable
      * @param system    The chat system of this runnable
      * @param receivers The list of command senders to receive the slides
      */
-    public ChatAnimRuntime(ChatSystem system, CommandSender... receivers)
-    {
+    public ChatAnimRuntime(ChatSystem system, CommandSender... receivers) {
         this.system = system;
         this.slides = system.getSlides();
         this.wait = 0;
@@ -65,14 +63,11 @@ public class ChatAnimRuntime extends EnhancedRunnable
      * Overridden <code>onRun()</code> method that animates through the slides
      */
     @Override
-    public void onRun()
-    {
+    public void onRun() {
         if(slides.size() == 0) return;
         wait += period;
-        if(firstRun)
-        {
-            if(wait > delay)
-            {
+        if(firstRun) {
+            if(wait > delay) {
                 if(index < slides.size()) index = 0;
                 firstRun = false;
                 ChatSlide slide = slides.get(index);
@@ -82,8 +77,7 @@ public class ChatAnimRuntime extends EnhancedRunnable
             }
             return;
         }
-        if(index >= slides.size())
-        {
+        if(index >= slides.size()) {
             this.cancel();
             return;
         }

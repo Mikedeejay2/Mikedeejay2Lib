@@ -16,8 +16,7 @@ import java.util.function.Predicate;
  *
  * @author Mikedeejay2
  */
-public class BlockIterator
-{
+public class BlockIterator {
     /**
      * Iterate through all blocks around a location in a square.
      *
@@ -29,16 +28,12 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <code>Predicate</code> condition
      */
-    public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
-    {
-        EnhancedRunnable iteration = new EnhancedRunnable()
-        {
+    public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate) {
+        EnhancedRunnable iteration = new EnhancedRunnable() {
             @Override
-            public void onRun()
-            {
+            public void onRun() {
                 List<Location> locs = MathUtil.getCubeFilledLocations(loc, xWidth, yWidth, zWidth, 1);
-                for(Location location : locs)
-                {
+                for(Location location : locs) {
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
@@ -59,8 +54,7 @@ public class BlockIterator
      * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin)
-    {
+    public static void iterateBlocks(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin) {
         iterateBlocks(loc, xWidth, yWidth, zWidth, consumer, plugin, null);
     }
 
@@ -69,20 +63,16 @@ public class BlockIterator
      *
      * @param loc1     The first location of the cube
      * @param loc2     The second location of the cube
-     * @param consumer The <code>BlockConsumer</code> that will be ran at each block
+     * @param consumer The <code>BlockConsumer</code> that will be run at each block
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <code>Predicate</code> condition
      */
-    public static void iterateBlocksHollow(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
-    {
-        EnhancedRunnable iteration = new EnhancedRunnable()
-        {
+    public static void iterateBlocksHollow(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate) {
+        EnhancedRunnable iteration = new EnhancedRunnable() {
             @Override
-            public void onRun()
-            {
+            public void onRun() {
                 List<Location> locs = MathUtil.getCubeHollowLocations(loc1, loc2, 1);
-                for(Location location : locs)
-                {
+                for(Location location : locs) {
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
@@ -101,8 +91,7 @@ public class BlockIterator
      * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksHollow(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin)
-    {
+    public static void iterateBlocksHollow(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin) {
         iterateBlocksHollow(loc1, loc2, consumer, plugin, null);
     }
 
@@ -115,16 +104,12 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <code>Predicate</code> condition
      */
-    public static void iterateBlocks(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
-    {
-        EnhancedRunnable iteration = new EnhancedRunnable()
-        {
+    public static void iterateBlocks(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate) {
+        EnhancedRunnable iteration = new EnhancedRunnable() {
             @Override
-            public void onRun()
-            {
+            public void onRun() {
                 List<Location> locs = MathUtil.getCubeFilledLocations(loc1, loc2, 1);
-                for(Location location : locs)
-                {
+                for(Location location : locs) {
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
@@ -143,8 +128,7 @@ public class BlockIterator
      * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocks(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin)
-    {
+    public static void iterateBlocks(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin) {
         iterateBlocks(loc1, loc2, consumer, plugin, null);
     }
 
@@ -159,16 +143,12 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <code>Predicate</code> condition
      */
-    public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
-    {
-        EnhancedRunnable iteration = new EnhancedRunnable()
-        {
+    public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate) {
+        EnhancedRunnable iteration = new EnhancedRunnable() {
             @Override
-            public void onRun()
-            {
+            public void onRun() {
                 List<Location> locs = MathUtil.getCubeHollowLocations(loc, xWidth, yWidth, zWidth, 1);
-                for(Location location : locs)
-                {
+                for(Location location : locs) {
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
@@ -189,8 +169,7 @@ public class BlockIterator
      * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin)
-    {
+    public static void iterateBlocksHollow(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin) {
         iterateBlocksHollow(loc, xWidth, yWidth, zWidth, consumer, plugin, null);
     }
 
@@ -205,16 +184,12 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <code>Predicate</code> condition
      */
-    public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
-    {
-        EnhancedRunnable iteration = new EnhancedRunnable()
-        {
+    public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate) {
+        EnhancedRunnable iteration = new EnhancedRunnable() {
             @Override
-            public void onRun()
-            {
+            public void onRun() {
                 List<Location> locs = MathUtil.getCubeOutlineLocations(loc, xWidth, yWidth, zWidth, 1);
-                for(Location location : locs)
-                {
+                for(Location location : locs) {
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
@@ -235,8 +210,7 @@ public class BlockIterator
      * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin)
-    {
+    public static void iterateBlocksOutline(Location loc, int xWidth, int yWidth, int zWidth, BlockConsumer consumer, BukkitPlugin plugin) {
         iterateBlocksOutline(loc, xWidth, yWidth, zWidth, consumer, plugin, null);
     }
 
@@ -250,16 +224,12 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <code>Predicate</code> condition
      */
-    public static void iterateBlocksOutline(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
-    {
-        EnhancedRunnable iteration = new EnhancedRunnable()
-        {
+    public static void iterateBlocksOutline(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate) {
+        EnhancedRunnable iteration = new EnhancedRunnable() {
             @Override
-            public void onRun()
-            {
+            public void onRun() {
                 List<Location> locs = MathUtil.getCubeOutlineLocations(loc1, loc2, 1);
-                for(Location location : locs)
-                {
+                for(Location location : locs) {
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
@@ -278,8 +248,7 @@ public class BlockIterator
      * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksOutline(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin)
-    {
+    public static void iterateBlocksOutline(Location loc1, Location loc2, BlockConsumer consumer, BukkitPlugin plugin) {
         iterateBlocksOutline(loc1, loc2, consumer, plugin, null);
     }
 
@@ -292,16 +261,12 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <code>Predicate</code> condition
      */
-    public static void iterateBlocksSphere(Location loc, double radius, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
-    {
-        EnhancedRunnable iteration = new EnhancedRunnable()
-        {
+    public static void iterateBlocksSphere(Location loc, double radius, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate) {
+        EnhancedRunnable iteration = new EnhancedRunnable() {
             @Override
-            public void onRun()
-            {
+            public void onRun() {
                 List<Location> locs = MathUtil.getSphereFilledLocations(loc, radius, 1);
-                for(Location location : locs)
-                {
+                for(Location location : locs) {
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
@@ -320,8 +285,7 @@ public class BlockIterator
      * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksSphere(Location loc, double radius, BlockConsumer consumer, BukkitPlugin plugin)
-    {
+    public static void iterateBlocksSphere(Location loc, double radius, BlockConsumer consumer, BukkitPlugin plugin) {
         iterateBlocksSphere(loc, radius, consumer, plugin, null);
     }
 
@@ -334,16 +298,12 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <code>Predicate</code> condition
      */
-    public static void iterateBlocksSphereHollow(Location loc, double radius, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
-    {
-        EnhancedRunnable iteration = new EnhancedRunnable()
-        {
+    public static void iterateBlocksSphereHollow(Location loc, double radius, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate) {
+        EnhancedRunnable iteration = new EnhancedRunnable() {
             @Override
-            public void onRun()
-            {
+            public void onRun() {
                 List<Location> locs = MathUtil.getSphereHollowLocations(loc, radius, 1);
-                for(Location location : locs)
-                {
+                for(Location location : locs) {
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
@@ -362,8 +322,7 @@ public class BlockIterator
      * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocksSphereHollow(Location loc, double radius, BlockConsumer consumer, BukkitPlugin plugin)
-    {
+    public static void iterateBlocksSphereHollow(Location loc, double radius, BlockConsumer consumer, BukkitPlugin plugin) {
         iterateBlocksSphereHollow(loc, radius, consumer, plugin, null);
     }
 
@@ -375,15 +334,11 @@ public class BlockIterator
      * @param plugin   The plugin's instance to use
      * @param typePredicate The <code>Predicate</code> condition
      */
-    public static void iterateBlocks(List<Location> locs, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate)
-    {
-        EnhancedRunnable iteration = new EnhancedRunnable()
-        {
+    public static void iterateBlocks(List<Location> locs, BlockConsumer consumer, BukkitPlugin plugin, Predicate<Material> typePredicate) {
+        EnhancedRunnable iteration = new EnhancedRunnable() {
             @Override
-            public void onRun()
-            {
-                for(Location location : locs)
-                {
+            public void onRun() {
+                for(Location location : locs) {
                     Block block = location.getBlock();
                     Material material = block.getType();
                     if(typePredicate != null && !typePredicate.test(material)) continue;
@@ -401,8 +356,7 @@ public class BlockIterator
      * @param consumer The <code>BlockConsumer</code> that will be ran at each block
      * @param plugin   The plugin's instance to use
      */
-    public static void iterateBlocks(List<Location> locs, BlockConsumer consumer, BukkitPlugin plugin)
-    {
+    public static void iterateBlocks(List<Location> locs, BlockConsumer consumer, BukkitPlugin plugin) {
         iterateBlocks(locs, consumer, plugin, null);
     }
 
@@ -413,8 +367,7 @@ public class BlockIterator
      * @author Mikedeejay2
      */
     @FunctionalInterface
-    public interface BlockConsumer
-    {
+    public interface BlockConsumer {
         /**
          * Accept a block and a location
          *

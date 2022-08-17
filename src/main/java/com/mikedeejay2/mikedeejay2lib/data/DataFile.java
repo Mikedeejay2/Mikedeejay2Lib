@@ -12,8 +12,7 @@ import java.io.File;
  *
  * @author Mikedeejay2
  */
-public abstract class DataFile implements DataObject
-{
+public abstract class DataFile implements DataObject {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -38,8 +37,7 @@ public abstract class DataFile implements DataObject
      * @param filePath Path from the plugins folder to the file.
      *                 (This DOES NOT include <code>plugin.getDataFolder()</code>)
      */
-    public DataFile(BukkitPlugin plugin, String filePath)
-    {
+    public DataFile(BukkitPlugin plugin, String filePath) {
         this.plugin = plugin;
         this.filePath = filePath;
         this.file = new File(plugin.getDataFolder(), filePath);
@@ -51,8 +49,7 @@ public abstract class DataFile implements DataObject
      *
      * @return This file's filePath
      */
-    public String getFilePath()
-    {
+    public String getFilePath() {
         return filePath;
     }
 
@@ -61,8 +58,7 @@ public abstract class DataFile implements DataObject
      *
      * @return This file's java.io.File
      */
-    public File getFile()
-    {
+    public File getFile() {
         return file;
     }
 
@@ -71,8 +67,7 @@ public abstract class DataFile implements DataObject
      *
      * @return If this file is on disk or not
      */
-    public boolean fileExists()
-    {
+    public boolean fileExists() {
         return file.exists();
     }
 
@@ -81,8 +76,7 @@ public abstract class DataFile implements DataObject
      *
      * @return If this file is loaded
      */
-    public boolean isLoaded()
-    {
+    public boolean isLoaded() {
         return isLoaded;
     }
 
@@ -101,8 +95,7 @@ public abstract class DataFile implements DataObject
      * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
      */
-    public boolean resetFromJar(boolean throwErrors)
-    {
+    public boolean resetFromJar(boolean throwErrors) {
         if(!delete(throwErrors)) return false;
         if(!loadFromJar(throwErrors)) return false;
         if(!saveToDisk(throwErrors)) return false;
@@ -122,8 +115,7 @@ public abstract class DataFile implements DataObject
      * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
      */
-    public boolean resetFromNew(boolean throwErrors)
-    {
+    public boolean resetFromNew(boolean throwErrors) {
         if(!delete(throwErrors)) return false;
         if(!loadFromDisk(throwErrors)) return false;
         if(!saveToDisk(throwErrors)) return false;
@@ -137,8 +129,7 @@ public abstract class DataFile implements DataObject
      * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
      */
-    public boolean reload(boolean throwErrors)
-    {
+    public boolean reload(boolean throwErrors) {
         return loadFromDisk(throwErrors);
     }
 
@@ -174,8 +165,7 @@ public abstract class DataFile implements DataObject
      * @param throwErrors Silence any errors that this operation might produce
      * @return If this operation was successful or not
      */
-    public boolean delete(boolean throwErrors)
-    {
+    public boolean delete(boolean throwErrors) {
         isLoaded = !FileIO.deleteFile(file);
         return !isLoaded;
     }

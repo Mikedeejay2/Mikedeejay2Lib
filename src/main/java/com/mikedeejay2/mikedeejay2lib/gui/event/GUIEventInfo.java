@@ -7,7 +7,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -15,8 +14,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author Mikedeejay2
  */
-public final class GUIEventInfo
-{
+public final class GUIEventInfo {
     /**
      * The original {@link InventoryClickEvent} called
      */
@@ -55,8 +53,7 @@ public final class GUIEventInfo
     /**
      * Construct a new <code>GUIEventInfo</code>
      */
-    public GUIEventInfo(InventoryClickEvent event, GUIContainer gui)
-    {
+    public GUIEventInfo(InventoryClickEvent event, GUIContainer gui) {
         this.event = event;
         this.player = (Player) event.getWhoClicked();
         this.gui = gui;
@@ -71,8 +68,7 @@ public final class GUIEventInfo
      *
      * @return The <code>Player</code>
      */
-    public Player getPlayer()
-    {
+    public Player getPlayer() {
         return player;
     }
 
@@ -81,8 +77,7 @@ public final class GUIEventInfo
      *
      * @return The <code>Player</code>
      */
-    public Player getWhoClicked()
-    {
+    public Player getWhoClicked() {
         return player;
     }
 
@@ -91,8 +86,7 @@ public final class GUIEventInfo
      *
      * @return The GUI instance
      */
-    public GUIContainer getGUI()
-    {
+    public GUIContainer getGUI() {
         return gui;
     }
 
@@ -101,8 +95,7 @@ public final class GUIEventInfo
      *
      * @return The GUI layer
      */
-    public GUILayer getLayer()
-    {
+    public GUILayer getLayer() {
         return layer;
     }
 
@@ -111,8 +104,7 @@ public final class GUIEventInfo
      *
      * @return The GUI item
      */
-    public GUIItem getGUIItem()
-    {
+    public GUIItem getGUIItem() {
         return item;
     }
 
@@ -121,8 +113,7 @@ public final class GUIEventInfo
      *
      * @return The current item
      */
-    public ItemStack getCurrentItem()
-    {
+    public ItemStack getCurrentItem() {
         return item.getItem();
     }
 
@@ -131,8 +122,7 @@ public final class GUIEventInfo
      *
      * @return The view item
      */
-    public ItemStack getViewItem()
-    {
+    public ItemStack getViewItem() {
         return item.getItemView();
     }
 
@@ -141,8 +131,7 @@ public final class GUIEventInfo
      *
      * @return The base item
      */
-    public ItemStack getBaseItem()
-    {
+    public ItemStack getBaseItem() {
         return item.getItemBase();
     }
 
@@ -151,8 +140,7 @@ public final class GUIEventInfo
      *
      * @return The cursor item
      */
-    public ItemStack getCursor()
-    {
+    public ItemStack getCursor() {
         return event.getCursor();
     }
 
@@ -161,8 +149,7 @@ public final class GUIEventInfo
      *
      * @param item The <code>ItemStack</code> to set
      */
-    public void setCursor(ItemStack item)
-    {
+    public void setCursor(ItemStack item) {
         event.setCursor(item);
     }
 
@@ -171,8 +158,7 @@ public final class GUIEventInfo
      *
      * @param item The <code>ItemStack</code> to use
      */
-    public void setCurrentItem(ItemStack item)
-    {
+    public void setCurrentItem(ItemStack item) {
         this.item.set(item);
     }
 
@@ -181,8 +167,7 @@ public final class GUIEventInfo
      *
      * @param item The <code>ItemStack</code> to use
      */
-    public void setViewItem(ItemStack item)
-    {
+    public void setViewItem(ItemStack item) {
         this.item.setViewItem(item);
     }
 
@@ -191,8 +176,7 @@ public final class GUIEventInfo
      *
      * @param item The <code>ItemStack</code> to use
      */
-    public void setBaseItem(ItemStack item)
-    {
+    public void setBaseItem(ItemStack item) {
         this.item.setBaseItem(item);
     }
 
@@ -201,8 +185,7 @@ public final class GUIEventInfo
      *
      * @param item The <code>GUIItem</code> to use
      */
-    public void setGUIItem(GUIItem item)
-    {
+    public void setGUIItem(GUIItem item) {
         this.layer.setItem(row, column, item);
     }
 
@@ -211,8 +194,7 @@ public final class GUIEventInfo
      *
      * @return The inventory slot
      */
-    public int getSlot()
-    {
+    public int getSlot() {
         return event.getSlot();
     }
 
@@ -221,8 +203,7 @@ public final class GUIEventInfo
      *
      * @return The row
      */
-    public int getRow()
-    {
+    public int getRow() {
         return row;
     }
 
@@ -231,8 +212,7 @@ public final class GUIEventInfo
      *
      * @return The column
      */
-    public int getColumn()
-    {
+    public int getColumn() {
         return column;
     }
 
@@ -241,8 +221,7 @@ public final class GUIEventInfo
      *
      * @return If right click or not
      */
-    public boolean isRightClick()
-    {
+    public boolean isRightClick() {
         return event.isRightClick();
     }
 
@@ -251,8 +230,7 @@ public final class GUIEventInfo
      *
      * @return If left click or not
      */
-    public boolean isLeftClick()
-    {
+    public boolean isLeftClick() {
         return event.isLeftClick();
     }
 
@@ -261,8 +239,7 @@ public final class GUIEventInfo
      *
      * @return If shift click or not
      */
-    public boolean isShiftClick()
-    {
+    public boolean isShiftClick() {
         return event.isShiftClick();
     }
 
@@ -271,8 +248,7 @@ public final class GUIEventInfo
      *
      * @return If keyboard click or not
      */
-    public boolean isKeyboardClick()
-    {
+    public boolean isKeyboardClick() {
         return event.getClick().isKeyboardClick();
     }
 
@@ -281,8 +257,7 @@ public final class GUIEventInfo
      *
      * @return The hotbar button
      */
-    public int getHotbarButton()
-    {
+    public int getHotbarButton() {
         return event.getHotbarButton();
     }
 
@@ -291,8 +266,7 @@ public final class GUIEventInfo
      *
      * @return The <code>InventoryAction</code>
      */
-    public InventoryAction getAction()
-    {
+    public InventoryAction getAction() {
         return event.getAction();
     }
 
@@ -301,8 +275,7 @@ public final class GUIEventInfo
      *
      * @return The <code>ClickType</code>
      */
-    public ClickType getClick()
-    {
+    public ClickType getClick() {
         return event.getClick();
     }
 
@@ -311,8 +284,7 @@ public final class GUIEventInfo
      *
      * @return The underlying click event
      */
-    public InventoryClickEvent getEvent()
-    {
+    public InventoryClickEvent getEvent() {
         return event;
     }
 }

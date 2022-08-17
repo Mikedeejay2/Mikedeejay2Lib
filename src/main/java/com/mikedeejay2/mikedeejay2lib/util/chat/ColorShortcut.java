@@ -8,8 +8,7 @@ import org.bukkit.ChatColor;
  *
  * @author Mikedeejay2
  */
-public enum ColorShortcut
-{
+public enum ColorShortcut {
     /**
      * Dark Red:
      * <ul>
@@ -249,8 +248,7 @@ public enum ColorShortcut
      * @param allNames All shortcut names associated with this color
      * @param chatColor The {@link ChatColor} associated with this color
      */
-    ColorShortcut(ChatColor chatColor, String... allNames)
-    {
+    ColorShortcut(ChatColor chatColor, String... allNames) {
         this.names = allNames;
         this.chatColor = chatColor;
     }
@@ -260,8 +258,7 @@ public enum ColorShortcut
      *
      * @return All shortcut names associated with this color
      */
-    public String[] getNames()
-    {
+    public String[] getNames() {
         return names;
     }
 
@@ -270,8 +267,7 @@ public enum ColorShortcut
      *
      * @return The {@link ChatColor} associated with this color
      */
-    public ChatColor getChatColor()
-    {
+    public ChatColor getChatColor() {
         return chatColor;
     }
 
@@ -281,13 +277,10 @@ public enum ColorShortcut
      * @param shortcut The shortcut name to find
      * @return The located {@link ColorShortcut}, null if not found
      */
-    public static ColorShortcut getShortcut(String shortcut)
-    {
-        for(ColorShortcut cur : ColorShortcut.values())
-        {
+    public static ColorShortcut getShortcut(String shortcut) {
+        for(ColorShortcut cur : ColorShortcut.values()) {
             String[] aliases = cur.getNames();
-            for(String alias : aliases)
-            {
+            for(String alias : aliases) {
                 if(shortcut.equals(alias)) return cur;
             }
         }

@@ -7,6 +7,5 @@ import org.bukkit.command.TabExecutor;
  *
  * @author Mikedeejay2
  */
-public interface TabBase extends TabExecutor, CommandInfo
-{
+public interface TabBase extends TabExecutor, CommandInfo {
 }

@@ -12,8 +12,7 @@ import java.util.Map;
  *
  * @author Mikedeejay2
  */
-public class GUIManager
-{
+public class GUIManager {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -29,8 +28,7 @@ public class GUIManager
      *
      * @param plugin The {@link BukkitPlugin} instance
      */
-    public GUIManager(BukkitPlugin plugin)
-    {
+    public GUIManager(BukkitPlugin plugin) {
         this.plugin = plugin;
         this.playerGUIs = new HashMap<>();
     }
@@ -43,8 +41,7 @@ public class GUIManager
      * @param player Player to get
      * @return The player's <code>PlayerGUI</code>
      */
-    public PlayerGUI getPlayer(Player player)
-    {
+    public PlayerGUI getPlayer(Player player) {
         validCheck(player);
         return playerGUIs.get(player);
     }
@@ -56,8 +53,7 @@ public class GUIManager
      *
      * @param player The player to check for
      */
-    public void validCheck(Player player)
-    {
+    public void validCheck(Player player) {
         if(containsPlayer(player)) return;
         playerGUIs.put(player, new PlayerGUI(plugin, player));
     }
@@ -67,8 +63,7 @@ public class GUIManager
      *
      * @param player The player to remove
      */
-    public void removePlayer(Player player)
-    {
+    public void removePlayer(Player player) {
         if(!containsPlayer(player)) return;
         PlayerGUI gui = playerGUIs.get(player);
         gui.getGUI().close(player);
@@ -81,8 +76,7 @@ public class GUIManager
      * @param player The player to check for
      * @return Whether the player exists in this manager or not
      */
-    public boolean containsPlayer(Player player)
-    {
+    public boolean containsPlayer(Player player) {
         return playerGUIs.containsKey(player);
     }
 

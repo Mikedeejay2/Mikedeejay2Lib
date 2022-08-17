@@ -7,8 +7,7 @@ import org.bukkit.command.CommandSender;
  *
  * @author Mikedeejay2
  */
-public interface SubCommand extends CommandInfo
-{
+public interface SubCommand extends CommandInfo {
     /**
      * When this subcommand is run, onCommand is run
      *

@@ -13,8 +13,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class GUITreeNode
-{
+public class GUITreeNode {
     /**
      * A list of the node children
      */
@@ -53,8 +52,7 @@ public class GUITreeNode
      * @param col The column to display this node at - relative if a child node
      * @param type The {@link BranchType} to display
      */
-    public GUITreeNode(GUIItem item, int row, int col, BranchType type)
-    {
+    public GUITreeNode(GUIItem item, int row, int col, BranchType type) {
         this.children = new ArrayList<>();
         this.item = item;
         this.branchItem = new GUIItem(ItemBuilder.of(Material.GRAY_STAINED_GLASS_PANE).setEmptyName().get());
@@ -68,8 +66,7 @@ public class GUITreeNode
      *
      * @return The node item
      */
-    public GUIItem getItem()
-    {
+    public GUIItem getItem() {
         return item;
     }
 
@@ -78,8 +75,7 @@ public class GUITreeNode
      *
      * @param item The new item to set the node to
      */
-    public void setItem(GUIItem item)
-    {
+    public void setItem(GUIItem item) {
         this.item = item;
     }
 
@@ -88,8 +84,7 @@ public class GUITreeNode
      *
      * @return The branch item
      */
-    public GUIItem getBranchItem()
-    {
+    public GUIItem getBranchItem() {
         return branchItem;
     }
 
@@ -98,8 +93,7 @@ public class GUITreeNode
      *
      * @param branchItem The new branch item to set to
      */
-    public void setBranchItem(GUIItem branchItem)
-    {
+    public void setBranchItem(GUIItem branchItem) {
         this.branchItem = branchItem;
     }
 
@@ -108,8 +102,7 @@ public class GUITreeNode
      *
      * @return The list of children
      */
-    public List<GUITreeNode> getChildren()
-    {
+    public List<GUITreeNode> getChildren() {
         return children;
     }
 
@@ -118,8 +111,7 @@ public class GUITreeNode
      *
      * @param children The new list of items
      */
-    public void setChildren(List<GUITreeNode> children)
-    {
+    public void setChildren(List<GUITreeNode> children) {
         this.children = children;
     }
 
@@ -128,8 +120,7 @@ public class GUITreeNode
      *
      * @param node The node to add
      */
-    public void addChild(GUITreeNode node)
-    {
+    public void addChild(GUITreeNode node) {
         children.add(node);
     }
 
@@ -138,8 +129,7 @@ public class GUITreeNode
      *
      * @param node The node to remove
      */
-    public void removeChild(GUITreeNode node)
-    {
+    public void removeChild(GUITreeNode node) {
         children.remove(node);
     }
 
@@ -149,8 +139,7 @@ public class GUITreeNode
      * @param node The node to see if it
      * @return Whether this node contains the child node
      */
-    public boolean containsChild(GUITreeNode node)
-    {
+    public boolean containsChild(GUITreeNode node) {
         return children.contains(node);
     }
 
@@ -159,8 +148,7 @@ public class GUITreeNode
      *
      * @return The row
      */
-    public int getRow()
-    {
+    public int getRow() {
         return row;
     }
 
@@ -169,8 +157,7 @@ public class GUITreeNode
      *
      * @param row The new row
      */
-    public void setRow(int row)
-    {
+    public void setRow(int row) {
         this.row = row;
     }
 
@@ -179,8 +166,7 @@ public class GUITreeNode
      *
      * @return The column
      */
-    public int getCol()
-    {
+    public int getCol() {
         return col;
     }
 
@@ -189,8 +175,7 @@ public class GUITreeNode
      *
      * @param col The new column
      */
-    public void setCol(int col)
-    {
+    public void setCol(int col) {
         this.col = col;
     }
 
@@ -201,10 +186,8 @@ public class GUITreeNode
      * @param curRow The current row of this node
      * @param curCol The current column of this node
      */
-    public void buildChildren(GUILayer layer, int curRow, int curCol)
-    {
-        for(GUITreeNode node : children)
-        {
+    public void buildChildren(GUILayer layer, int curRow, int curCol) {
+        for(GUITreeNode node : children) {
             GUIItem nodeItem = node.getItem();
             int nodeRow = curRow + node.getRow();
             int nodeCol = curCol + node.getCol();
@@ -217,28 +200,21 @@ public class GUITreeNode
             int startCol = Math.min(curCol, nodeCol);
             int endCol   = Math.max(curCol, nodeCol);
 
-            switch(nodeBranchType)
-            {
-                case HORIZONTAL_FIRST:
-                {
-                    for(int i = startCol + 1; i < endCol; i++)
-                    {
+            switch(nodeBranchType) {
+                case HORIZONTAL_FIRST: {
+                    for(int i = startCol + 1; i < endCol; i++) {
                         layer.setItem(curRow, i, nodeBranchItem);
                     }
-                    for(int i = startRow; i < endRow; i++)
-                    {
+                    for(int i = startRow; i < endRow; i++) {
                         layer.setItem(i, nodeCol, nodeBranchItem);
                     }
                     break;
                 }
-                case VERTICAL_FIRST:
-                {
-                    for(int i = startRow; i < endRow; i++)
-                    {
+                case VERTICAL_FIRST: {
+                    for(int i = startRow; i < endRow; i++) {
                         layer.setItem(i, curCol, nodeBranchItem);
                     }
-                    for(int i = startCol + 1; i < endCol; i++)
-                    {
+                    for(int i = startCol + 1; i < endCol; i++) {
                         layer.setItem(nodeRow, i, nodeBranchItem);
                     }
                     break;
@@ -254,8 +230,7 @@ public class GUITreeNode
      *
      * @return The branch type
      */
-    public BranchType getBranchType()
-    {
+    public BranchType getBranchType() {
         return branchType;
     }
 
@@ -264,8 +239,7 @@ public class GUITreeNode
      *
      * @param branchType The new branch type
      */
-    public void setBranchType(BranchType branchType)
-    {
+    public void setBranchType(BranchType branchType) {
         this.branchType = branchType;
     }
 }

@@ -3,7 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.item;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 
 /**
- * Holds properties relating to an {@link AnimatedGUIItem}, such as it's frame index, wait times, position, and layer.
+ * Holds properties relating to an {@link AnimatedGUIItem}, such as its frame index, wait times, position, and layer.
  *
  * @author Mikedeejay2
  */
@@ -20,7 +20,7 @@ public class AnimatedGUIItemProperties
     protected long wait;
 
     /**
-     * Whether or not it is this item's first run or not
+     * Whether it is this item's first run or not
      */
     protected boolean firstRun;
 
@@ -47,8 +47,7 @@ public class AnimatedGUIItemProperties
      * @param col The column that this item is located on
      * @param layer The name of the layer that the item was added on
      */
-    public AnimatedGUIItemProperties(int startingIndex, int row, int col, GUILayer layer)
-    {
+    public AnimatedGUIItemProperties(int startingIndex, int row, int col, GUILayer layer) {
         this.index = startingIndex;
         this.wait = 0;
         this.firstRun = true;
@@ -62,8 +61,7 @@ public class AnimatedGUIItemProperties
      *
      * @return The current index
      */
-    public int getIndex()
-    {
+    public int getIndex() {
         return index;
     }
 
@@ -72,8 +70,7 @@ public class AnimatedGUIItemProperties
      *
      * @param index The new index to use
      */
-    public void setIndex(int index)
-    {
+    public void setIndex(int index) {
         this.index = index;
     }
 
@@ -82,8 +79,7 @@ public class AnimatedGUIItemProperties
      *
      * @return The current wait time
      */
-    public long getWait()
-    {
+    public long getWait() {
         return wait;
     }
 
@@ -92,8 +88,7 @@ public class AnimatedGUIItemProperties
      *
      * @param wait The new wait time
      */
-    public void setWait(long wait)
-    {
+    public void setWait(long wait) {
         this.wait = wait;
     }
 
@@ -102,8 +97,7 @@ public class AnimatedGUIItemProperties
      *
      * @return Whether this property is on first run or not
      */
-    public boolean isFirstRun()
-    {
+    public boolean isFirstRun() {
         return firstRun;
     }
 
@@ -112,8 +106,7 @@ public class AnimatedGUIItemProperties
      *
      * @param firstRun First run state
      */
-    public void setFirstRun(boolean firstRun)
-    {
+    public void setFirstRun(boolean firstRun) {
         this.firstRun = firstRun;
     }
 
@@ -122,8 +115,7 @@ public class AnimatedGUIItemProperties
      *
      * @return The layer of this item
      */
-    public GUILayer getLayer()
-    {
+    public GUILayer getLayer() {
         return layer;
     }
 
@@ -132,8 +124,7 @@ public class AnimatedGUIItemProperties
      *
      * @param layer The new layer of this item
      */
-    public void setLayer(GUILayer layer)
-    {
+    public void setLayer(GUILayer layer) {
         this.layer = layer;
     }
 
@@ -142,8 +133,7 @@ public class AnimatedGUIItemProperties
      *
      * @param row The row that this item is on
      */
-    public void setRow(int row)
-    {
+    public void setRow(int row) {
         this.row = row;
     }
 
@@ -152,8 +142,7 @@ public class AnimatedGUIItemProperties
      *
      * @param col the column that this item is on
      */
-    public void setCol(int col)
-    {
+    public void setCol(int col) {
         this.col = col;
     }
 
@@ -162,8 +151,7 @@ public class AnimatedGUIItemProperties
      *
      * @return The row
      */
-    public int getRow()
-    {
+    public int getRow() {
         return row;
     }
 
@@ -172,8 +160,7 @@ public class AnimatedGUIItemProperties
      *
      * @return The column
      */
-    public int getCol()
-    {
+    public int getCol() {
         return col;
     }
 }

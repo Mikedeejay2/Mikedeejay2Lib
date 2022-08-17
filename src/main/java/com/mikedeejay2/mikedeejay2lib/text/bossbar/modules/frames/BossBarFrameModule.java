@@ -15,8 +15,7 @@ import java.util.Map;
  *
  * @param <T> The data type of the frame
  */
-public abstract class BossBarFrameModule<T> implements BossBarModule
-{
+public abstract class BossBarFrameModule<T> implements BossBarModule {
     /**
      * The list of map entries of frames
      */
@@ -42,8 +41,7 @@ public abstract class BossBarFrameModule<T> implements BossBarModule
      *
      * @param loop Whether this module should loop the frames or not
      */
-    public BossBarFrameModule(boolean loop)
-    {
+    public BossBarFrameModule(boolean loop) {
         this.frames = new ArrayList<>();
         this.loop = loop;
     }
@@ -57,16 +55,12 @@ public abstract class BossBarFrameModule<T> implements BossBarModule
      * @param system The <code>BossBarSystem</code> being ticked
      */
     @Override
-    public final void onTick(BossBarSystem system)
-    {
+    public final void onTick(BossBarSystem system) {
         ++wait;
-        if(curIndex >= frames.size())
-        {
-            if(loop)
-            {
+        if(curIndex >= frames.size()) {
+            if(loop) {
                 curIndex = 0;
-            }
-            else return;
+            } else return;
         }
         long curWait = frames.get(curIndex - 1 < 0 ? frames.size() - 1 : curIndex - 1).getKey();
         if(wait < curWait) return;
@@ -95,8 +89,7 @@ public abstract class BossBarFrameModule<T> implements BossBarModule
      * @param index  The index to add the module to
      * @return The current <code>BossBarFrameModule</code>
      */
-    public BossBarFrameModule<T> addFrame(long period, T value, int index)
-    {
+    public BossBarFrameModule<T> addFrame(long period, T value, int index) {
         frames.add(index, new AbstractMap.SimpleEntry<>(period, value));
         return this;
     }
@@ -108,8 +101,7 @@ public abstract class BossBarFrameModule<T> implements BossBarModule
      * @param value The value of the frame (Different depending on the module)
      * @return The current <code>BossBarFrameModule</code>
      */
-    public BossBarFrameModule<T> addFrame(long period, T value)
-    {
+    public BossBarFrameModule<T> addFrame(long period, T value) {
         frames.add(new AbstractMap.SimpleEntry<>(period, value));
         return this;
     }
@@ -120,8 +112,7 @@ public abstract class BossBarFrameModule<T> implements BossBarModule
      * @param index The index to remove the frame at
      * @return The current <code>BossBarFrameModule</code>
      */
-    public BossBarFrameModule<T> removeFrame(int index)
-    {
+    public BossBarFrameModule<T> removeFrame(int index) {
         frames.remove(index);
         return this;
     }
@@ -132,10 +123,8 @@ public abstract class BossBarFrameModule<T> implements BossBarModule
      * @param value The value of the frame to remove
      * @return The current <code>BossBarFrameModule</code>
      */
-    public BossBarFrameModule<T> removeFrame(T value)
-    {
-        for(Map.Entry<Long, T> entry : frames)
-        {
+    public BossBarFrameModule<T> removeFrame(T value) {
+        for(Map.Entry<Long, T> entry : frames) {
             T curValue = entry.getValue();
             if(!curValue.equals(value)) continue;
             frames.remove(entry);
@@ -149,8 +138,7 @@ public abstract class BossBarFrameModule<T> implements BossBarModule
      *
      * @return The list of frames
      */
-    public List<Map.Entry<Long, T>> getFrames()
-    {
+    public List<Map.Entry<Long, T>> getFrames() {
         return frames;
     }
 }

@@ -9,8 +9,7 @@ import java.lang.reflect.Modifier;
  * @param <T> The parent class type
  * @author Mikedeejay2
  */
-public class ReflectorField<T>
-{
+public class ReflectorField<T> {
     /**
      * The parent {@link ReflectorClass}
      */
@@ -27,8 +26,7 @@ public class ReflectorField<T>
      * @param clazz The parent {@link ReflectorClass}
      * @param field The reference {@link Field}
      */
-    public ReflectorField(ReflectorClass<T> clazz, Field field)
-    {
+    public ReflectorField(ReflectorClass<T> clazz, Field field) {
         this.clazz = clazz;
         this.field = field;
         field.setAccessible(true);
@@ -40,17 +38,13 @@ public class ReflectorField<T>
      * @param clazz The parent {@link ReflectorClass}
      * @param name The name of the field
      */
-    public ReflectorField(ReflectorClass<T> clazz, String name)
-    {
+    public ReflectorField(ReflectorClass<T> clazz, String name) {
         this.clazz = clazz;
         Field field;
-        try
-        {
+        try {
             field = clazz.get().getDeclaredField(name);
             field.setAccessible(true);
-        }
-        catch(NoSuchFieldException e)
-        {
+        } catch(NoSuchFieldException e) {
             field = null;
             e.printStackTrace();
         }
@@ -65,14 +59,10 @@ public class ReflectorField<T>
      * @param <R>  The type to cast the object to
      * @return The value of the field from the specified object
      */
-    public <R> R get(Object obj, Class<R> type)
-    {
-        try
-        {
+    public <R> R get(Object obj, Class<R> type) {
+        try {
             return type.cast(field.get(obj));
-        }
-        catch(IllegalAccessException e)
-        {
+        } catch(IllegalAccessException e) {
             e.printStackTrace();
         }
         return null;
@@ -84,14 +74,10 @@ public class ReflectorField<T>
      * @param obj The object instance, null for static
      * @return The value of the field from the specified object
      */
-    public Object get(Object obj)
-    {
-        try
-        {
+    public Object get(Object obj) {
+        try {
             return field.get(obj);
-        }
-        catch(IllegalAccessException e)
-        {
+        } catch(IllegalAccessException e) {
             e.printStackTrace();
         }
         return null;
@@ -104,14 +90,10 @@ public class ReflectorField<T>
      * @param value The value of the field to set
      * @return This object
      */
-    public ReflectorField<T> set(Object obj, Object value)
-    {
-        try
-        {
+    public ReflectorField<T> set(Object obj, Object value) {
+        try {
             field.set(obj, value);
-        }
-        catch(IllegalAccessException e)
-        {
+        } catch(IllegalAccessException e) {
             e.printStackTrace();
         }
         return this;
@@ -124,14 +106,10 @@ public class ReflectorField<T>
      * @param value The value of the field to set
      * @return This object
      */
-    public ReflectorField<T> set(Object obj, boolean value)
-    {
-        try
-        {
+    public ReflectorField<T> set(Object obj, boolean value) {
+        try {
             field.setBoolean(obj, value);
-        }
-        catch(IllegalAccessException e)
-        {
+        } catch(IllegalAccessException e) {
             e.printStackTrace();
         }
         return this;
@@ -144,14 +122,10 @@ public class ReflectorField<T>
      * @param value The value of the field to set
      * @return This object
      */
-    public ReflectorField<T> set(Object obj, byte value)
-    {
-        try
-        {
+    public ReflectorField<T> set(Object obj, byte value) {
+        try {
             field.setByte(obj, value);
-        }
-        catch(IllegalAccessException e)
-        {
+        } catch(IllegalAccessException e) {
             e.printStackTrace();
         }
         return this;
@@ -164,14 +138,10 @@ public class ReflectorField<T>
      * @param value The value of the field to set
      * @return This object
      */
-    public ReflectorField<T> set(Object obj, char value)
-    {
-        try
-        {
+    public ReflectorField<T> set(Object obj, char value) {
+        try {
             field.setChar(obj, value);
-        }
-        catch(IllegalAccessException e)
-        {
+        } catch(IllegalAccessException e) {
             e.printStackTrace();
         }
         return this;
@@ -184,14 +154,10 @@ public class ReflectorField<T>
      * @param value The value of the field to set
      * @return This object
      */
-    public ReflectorField<T> set(Object obj, short value)
-    {
-        try
-        {
+    public ReflectorField<T> set(Object obj, short value) {
+        try {
             field.setShort(obj, value);
-        }
-        catch(IllegalAccessException e)
-        {
+        } catch(IllegalAccessException e) {
             e.printStackTrace();
         }
         return this;
@@ -204,14 +170,10 @@ public class ReflectorField<T>
      * @param value The value of the field to set
      * @return This object
      */
-    public ReflectorField<T> set(Object obj, int value)
-    {
-        try
-        {
+    public ReflectorField<T> set(Object obj, int value) {
+        try {
             field.setInt(obj, value);
-        }
-        catch(IllegalAccessException e)
-        {
+        } catch(IllegalAccessException e) {
             e.printStackTrace();
         }
         return this;
@@ -224,14 +186,10 @@ public class ReflectorField<T>
      * @param value The value of the field to set
      * @return This object
      */
-    public ReflectorField<T> set(Object obj, float value)
-    {
-        try
-        {
+    public ReflectorField<T> set(Object obj, float value) {
+        try {
             field.setFloat(obj, value);
-        }
-        catch(IllegalAccessException e)
-        {
+        } catch(IllegalAccessException e) {
             e.printStackTrace();
         }
         return this;
@@ -244,14 +202,10 @@ public class ReflectorField<T>
      * @param value The value of the field to set
      * @return This object
      */
-    public ReflectorField<T> set(Object obj, double value)
-    {
-        try
-        {
+    public ReflectorField<T> set(Object obj, double value) {
+        try {
             field.setDouble(obj, value);
-        }
-        catch(IllegalAccessException e)
-        {
+        } catch(IllegalAccessException e) {
             e.printStackTrace();
         }
         return this;
@@ -264,14 +218,10 @@ public class ReflectorField<T>
      * @param value The value of the field to set
      * @return This object
      */
-    public ReflectorField<T> set(Object obj, long value)
-    {
-        try
-        {
+    public ReflectorField<T> set(Object obj, long value) {
+        try {
             field.setLong(obj, value);
-        }
-        catch(IllegalAccessException e)
-        {
+        } catch(IllegalAccessException e) {
             e.printStackTrace();
         }
         return this;
@@ -282,8 +232,7 @@ public class ReflectorField<T>
      *
      * @return The <code>Field</code>
      */
-    public Field get()
-    {
+    public Field get() {
         return field;
     }
 
@@ -292,8 +241,7 @@ public class ReflectorField<T>
      *
      * @return The parent <code>ReflectorClass</code>
      */
-    public ReflectorClass<T> parentClass()
-    {
+    public ReflectorClass<T> parentClass() {
         return clazz;
     }
 
@@ -304,16 +252,12 @@ public class ReflectorField<T>
      *
      * @return This object
      */
-    public ReflectorField<T> removeModifier(int modifier)
-    {
-        try
-        {
+    public ReflectorField<T> removeModifier(int modifier) {
+        try {
             Field modifiersField = Field.class.getDeclaredField("modifiers");
             modifiersField.setAccessible(true);
             modifiersField.setInt(field, field.getModifiers() & ~modifier);
-        }
-        catch(NoSuchFieldException | IllegalAccessException e)
-        {
+        } catch(NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return this;
@@ -326,16 +270,12 @@ public class ReflectorField<T>
      *
      * @return This object
      */
-    public ReflectorField<T> addModifier(int modifier)
-    {
-        try
-        {
+    public ReflectorField<T> addModifier(int modifier) {
+        try {
             Field modifiersField = Field.class.getDeclaredField("modifiers");
             modifiersField.setAccessible(true);
             modifiersField.setInt(field, field.getModifiers() & modifier);
-        }
-        catch(NoSuchFieldException | IllegalAccessException e)
-        {
+        } catch(NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return this;

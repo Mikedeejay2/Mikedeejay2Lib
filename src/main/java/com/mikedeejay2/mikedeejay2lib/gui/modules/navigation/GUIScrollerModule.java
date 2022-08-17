@@ -12,15 +12,13 @@ import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
  * A module that allows for the scrolling of large GUIs.
  *
  * @author Mikedeejay2
  */
-public class GUIScrollerModule implements GUIModule
-{
+public class GUIScrollerModule implements GUIModule {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -51,8 +49,7 @@ public class GUIScrollerModule implements GUIModule
      *
      * @param plugin The {@link BukkitPlugin} instance
      */
-    public GUIScrollerModule(BukkitPlugin plugin)
-    {
+    public GUIScrollerModule(BukkitPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -63,10 +60,8 @@ public class GUIScrollerModule implements GUIModule
      * @param gui    The GUI
      */
     @Override
-    public void onOpenHead(Player player, GUIContainer gui)
-    {
-        if(upItem == null)
-        {
+    public void onOpenHead(Player player, GUIContainer gui) {
+        if(upItem == null) {
             String name = plugin.getLibLangManager().getText(player, "gui.modules.scroller.up");
             this.upItem = new AnimatedGUIItem(ItemBuilder.of(Base64Head.ARROW_UP_WHITE.get()).setName("&f" + name).get(), false, 1, true);
             upItem.addEvent(new GUIScrollEvent(-1, 0));
@@ -76,8 +71,7 @@ public class GUIScrollerModule implements GUIModule
             upItemAnim.setStartingIndex(1);
         }
 
-        if(downItem == null)
-        {
+        if(downItem == null) {
             String name = plugin.getLibLangManager().getText(player, "gui.modules.scroller.down");
             this.downItem = new AnimatedGUIItem(ItemBuilder.of(Base64Head.ARROW_DOWN_WHITE.get()).setName("&f" + name).get(), false, 1, true);
             downItem.addEvent(new GUIScrollEvent(1, 0));
@@ -87,8 +81,7 @@ public class GUIScrollerModule implements GUIModule
             downItemAnim.setStartingIndex(1);
         }
 
-        if(leftItem == null)
-        {
+        if(leftItem == null) {
             String name = plugin.getLibLangManager().getText(player, "gui.modules.scroller.left");
             this.leftItem = new AnimatedGUIItem(ItemBuilder.of(Base64Head.ARROW_LEFT_WHITE.get()).setName("&f" + name).get(), false, 1, true);
             leftItem.addEvent(new GUIScrollEvent(0, -1));
@@ -98,8 +91,7 @@ public class GUIScrollerModule implements GUIModule
             leftItemAnim.setStartingIndex(1);
         }
 
-        if(rightItem == null)
-        {
+        if(rightItem == null) {
             String name = plugin.getLibLangManager().getText(player, "gui.modules.scroller.right");
             this.rightItem = new AnimatedGUIItem(ItemBuilder.of(Base64Head.ARROW_RIGHT_WHITE.get()).setName("&f" + name).get(), false, 1, true);
             rightItem.addEvent(new GUIScrollEvent(0, 1));
@@ -117,8 +109,7 @@ public class GUIScrollerModule implements GUIModule
      * @param gui    The GUI
      */
     @Override
-    public void onUpdateHead(Player player, GUIContainer gui)
-    {
+    public void onUpdateHead(Player player, GUIContainer gui) {
         GUILayer layer = gui.getLayer("overlay", true);
         int row = Math.min(gui.getRows(), GUIContainer.MAX_INVENTORY_ROWS);
         layer.setItem(row, 6, leftItem);
@@ -133,8 +124,7 @@ public class GUIScrollerModule implements GUIModule
      *
      * @author Mikedeejay2
      */
-    public static class GUIScrollEvent implements GUIEvent
-    {
+    public static class GUIScrollEvent implements GUIEvent {
         /**
          * The row amount to scroll on click
          */
@@ -151,8 +141,7 @@ public class GUIScrollerModule implements GUIModule
          * @param rowAmt The row amount to scroll on click
          * @param colAmt The column amount to scroll on click
          */
-        public GUIScrollEvent(int rowAmt, int colAmt)
-        {
+        public GUIScrollEvent(int rowAmt, int colAmt) {
             this.rowAmt = rowAmt;
             this.colAmt = colAmt;
         }
@@ -163,8 +152,7 @@ public class GUIScrollerModule implements GUIModule
          * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(GUIEventInfo info)
-        {
+        public void execute(GUIEventInfo info) {
             ClickType clickType = info.getClick();
             if(clickType != ClickType.LEFT) return;
             GUIContainer gui = info.getGUI();
@@ -172,12 +160,10 @@ public class GUIScrollerModule implements GUIModule
             int colOffset = gui.getColOffset();
             int totalRow  = rowOffset + Math.min(GUIContainer.MAX_INVENTORY_ROWS, gui.getRows());
             int totalCol  = colOffset + GUIContainer.MAX_INVENTORY_COLS;
-            if(gui.getRows() >= totalRow + rowAmt && rowOffset + rowAmt >= 0)
-            {
+            if(gui.getRows() >= totalRow + rowAmt && rowOffset + rowAmt >= 0) {
                 gui.addRowOffset(rowAmt);
             }
-            if(gui.getCols() >= totalCol + colAmt && colOffset + colAmt >= 0)
-            {
+            if(gui.getCols() >= totalCol + colAmt && colOffset + colAmt >= 0) {
                 gui.addColOffset(colAmt);
             }
         }

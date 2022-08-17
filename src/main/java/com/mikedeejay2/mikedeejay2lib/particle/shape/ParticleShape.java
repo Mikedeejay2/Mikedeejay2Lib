@@ -10,8 +10,7 @@ import java.util.List;
  * @author Mikedeejay2
  */
 @FunctionalInterface
-public interface ParticleShape
-{
+public interface ParticleShape {
     /**
      * Get a list of vectors that represent the selected shape
      *

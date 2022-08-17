@@ -9,13 +9,11 @@ import org.jetbrains.annotations.Nullable;
  * @see Reflector#of(Class)
  * @author Mikedeejay2
  */
-public final class Reflector
-{
+public final class Reflector {
     /**
      * Reflector cannot be constructed, it is a static class.
      */
-    private Reflector()
-    {
+    private Reflector() {
         throw new UnsupportedOperationException("Cannot initialize static class Reflector");
     }
 
@@ -26,8 +24,7 @@ public final class Reflector
      * @param <T>   The class type
      * @return A new {@link ReflectorClass}
      */
-    public static <T> ReflectorClass<T> of(Class<T> clazz)
-    {
+    public static <T> ReflectorClass<T> of(Class<T> clazz) {
         return new ReflectorClass<>(clazz);
     }
 
@@ -38,8 +35,7 @@ public final class Reflector
      * @param className The fully qualified name of the class to get
      * @return A new {@link ReflectorClass}
      */
-    public static ReflectorClass<?> of(String className)
-    {
+    public static ReflectorClass<?> of(String className) {
         Class<?> clazz = classForName(className);
         return clazz == null ? null : of(clazz);
     }
@@ -51,15 +47,11 @@ public final class Reflector
      * @return The requested <code>Class</code>
      */
     @Nullable
-    public static Class<?> classForName(String className)
-    {
+    public static Class<?> classForName(String className) {
         Class<?> clazz;
-        try
-        {
+        try {
             clazz = Class.forName(className);
-        }
-        catch(ClassNotFoundException e)
-        {
+        } catch(ClassNotFoundException e) {
             e.printStackTrace();
             return null;
         }

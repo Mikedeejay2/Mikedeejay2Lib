@@ -6,8 +6,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.interact;
  *
  * @author Mikedeejay2
  */
-public enum GUIInteractType
-{
+public enum GUIInteractType {
     /**
      * The default interaction type, matches vanilla movement
      */

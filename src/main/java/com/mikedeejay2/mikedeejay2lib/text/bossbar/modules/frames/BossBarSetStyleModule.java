@@ -8,15 +8,13 @@ import org.bukkit.boss.BarStyle;
  *
  * @author Mikedeejay2
  */
-public class BossBarSetStyleModule extends BossBarFrameModule<BarStyle>
-{
+public class BossBarSetStyleModule extends BossBarFrameModule<BarStyle> {
     /**
      * Construct a new <code>BossBarSetStyleModule</code>
      *
      * @param loop Whether this module should loop the frames or not
      */
-    public BossBarSetStyleModule(boolean loop)
-    {
+    public BossBarSetStyleModule(boolean loop) {
         super(loop);
     }
 
@@ -28,8 +26,7 @@ public class BossBarSetStyleModule extends BossBarFrameModule<BarStyle>
      * @param value  The value of the frame
      */
     @Override
-    public void onFrame(BossBarSystem system, long period, BarStyle value)
-    {
+    public void onFrame(BossBarSystem system, long period, BarStyle value) {
         system.setStyle(value);
     }
 }

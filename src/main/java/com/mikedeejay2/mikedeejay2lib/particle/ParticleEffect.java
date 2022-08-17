@@ -18,8 +18,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class ParticleEffect
-{
+public class ParticleEffect {
     /**
      * The list of particle shapes
      */
@@ -96,8 +95,7 @@ public class ParticleEffect
      * @param origin       The origin location
      * @param particleData The particle data for displaying the particles
      */
-    public ParticleEffect(Location origin, ParticleData particleData)
-    {
+    public ParticleEffect(Location origin, ParticleData particleData) {
         this.shapes = new ArrayList<>();
         this.untranslatedVecs = new ArrayList<>();
         this.translatedVecs = new ArrayList<>();
@@ -120,8 +118,7 @@ public class ParticleEffect
      * @param shape The shape to add
      * @return A reference to this <code>ParticleEffect</code>
      */
-    public ParticleEffect addShape(ParticleShape shape)
-    {
+    public ParticleEffect addShape(ParticleShape shape) {
         shapes.add(shape);
         return this;
     }
@@ -132,8 +129,7 @@ public class ParticleEffect
      * @param shape The shape to search for
      * @return Whether the shape was found or not
      */
-    public boolean containsShape(ParticleShape shape)
-    {
+    public boolean containsShape(ParticleShape shape) {
         return shapes.contains(shape);
     }
 
@@ -144,10 +140,8 @@ public class ParticleEffect
      * @param shapeClass The class of the shape to search for
      * @return Whether a shape with the class was found or not
      */
-    public boolean containsShape(Class<? extends ParticleShape> shapeClass)
-    {
-        for(ParticleShape shape : shapes)
-        {
+    public boolean containsShape(Class<? extends ParticleShape> shapeClass) {
+        for(ParticleShape shape : shapes) {
             if(shapeClass == shape.getClass()) return true;
         }
         return false;
@@ -159,8 +153,7 @@ public class ParticleEffect
      * @param index The index to get the shape from
      * @return The requested <code>ParticleShape</code>
      */
-    public ParticleShape getShape(int index)
-    {
+    public ParticleShape getShape(int index) {
         return shapes.get(index);
     }
 
@@ -171,10 +164,8 @@ public class ParticleEffect
      * @param <T>        The shape type
      * @return The requested <code>ParticleShape</code>, null if not found
      */
-    public <T extends ParticleShape> T getShape(Class<T> shapeClass)
-    {
-        for(ParticleShape shape : shapes)
-        {
+    public <T extends ParticleShape> T getShape(Class<T> shapeClass) {
+        for(ParticleShape shape : shapes) {
             if(shapeClass == shape.getClass()) return (T) shape;
         }
         return null;
@@ -186,8 +177,7 @@ public class ParticleEffect
      * @param index The index to remove the shape at
      * @return A reference to this <code>ParticleEffect</code>
      */
-    public ParticleEffect removeShape(int index)
-    {
+    public ParticleEffect removeShape(int index) {
         shapes.remove(index);
         return this;
     }
@@ -198,8 +188,7 @@ public class ParticleEffect
      * @param shape The shape to remove
      * @return A reference to this <code>ParticleEffect</code>
      */
-    public ParticleEffect removeShape(ParticleShape shape)
-    {
+    public ParticleEffect removeShape(ParticleShape shape) {
         shapes.remove(shape);
         return this;
     }
@@ -210,8 +199,7 @@ public class ParticleEffect
      * @param module The module to add
      * @return A reference to this <code>ParticleEffect</code>
      */
-    public ParticleEffect addModule(ParticleEModule module)
-    {
+    public ParticleEffect addModule(ParticleEModule module) {
         modules.add(module);
         return this;
     }
@@ -223,8 +211,7 @@ public class ParticleEffect
      * @param index  The index to add the module at
      * @return A reference to this <code>ParticleEffect</code>
      */
-    public ParticleEffect addModule(ParticleEModule module, int index)
-    {
+    public ParticleEffect addModule(ParticleEModule module, int index) {
         modules.add(index, module);
         return this;
     }
@@ -235,8 +222,7 @@ public class ParticleEffect
      * @param module The module to search for
      * @return Whether the <code>ParticleEModule</code> was found or not
      */
-    public boolean containsModule(ParticleEModule module)
-    {
+    public boolean containsModule(ParticleEModule module) {
         return modules.contains(module);
     }
 
@@ -247,10 +233,8 @@ public class ParticleEffect
      * @param moduleClass The class of the module to search for
      * @return Whether the <code>ParticleEModule</code> was found or not
      */
-    public boolean containsModule(Class<? extends ParticleEModule> moduleClass)
-    {
-        for(ParticleEModule module : modules)
-        {
+    public boolean containsModule(Class<? extends ParticleEModule> moduleClass) {
+        for(ParticleEModule module : modules) {
             if(moduleClass == module.getClass()) return true;
         }
         return false;
@@ -262,8 +246,7 @@ public class ParticleEffect
      * @param index The index to remove the module at
      * @return A reference to this <code>ParticleEffect</code>
      */
-    public ParticleEffect removeModule(int index)
-    {
+    public ParticleEffect removeModule(int index) {
         modules.remove(index);
         return this;
     }
@@ -274,8 +257,7 @@ public class ParticleEffect
      * @param module The module to remove
      * @return A reference to this <code>ParticleEffect</code>
      */
-    public ParticleEffect removeModule(ParticleEModule module)
-    {
+    public ParticleEffect removeModule(ParticleEModule module) {
         modules.remove(module);
         return this;
     }
@@ -286,10 +268,8 @@ public class ParticleEffect
      * @param moduleClass The class of the module to remove
      * @return A reference to this <code>ParticleEffect</code>
      */
-    public ParticleEffect removeModule(Class<? extends ParticleEModule> moduleClass)
-    {
-        for(ParticleEModule module : modules)
-        {
+    public ParticleEffect removeModule(Class<? extends ParticleEModule> moduleClass) {
+        for(ParticleEModule module : modules) {
             if(moduleClass != module.getClass()) continue;
             modules.remove(module);
             break;
@@ -303,8 +283,7 @@ public class ParticleEffect
      * @param index The index to get the module from
      * @return The requested <code>ParticleEModule</code>
      */
-    public ParticleEModule getModule(int index)
-    {
+    public ParticleEModule getModule(int index) {
         return modules.get(index);
     }
 
@@ -315,10 +294,8 @@ public class ParticleEffect
      * @param <T>         The type of particle module
      * @return The requested <code>ParticleEModule</code>, null if not found
      */
-    public <T extends ParticleEModule> T getModule(Class<T> moduleClass)
-    {
-        for(ParticleEModule module : modules)
-        {
+    public <T extends ParticleEModule> T getModule(Class<T> moduleClass) {
+        for(ParticleEModule module : modules) {
             if(moduleClass == module.getClass()) return (T) module;
         }
         return null;
@@ -329,8 +306,7 @@ public class ParticleEffect
      *
      * @return A reference to this <code>ParticleEffect</code>
      */
-    public ParticleEffect resetModules()
-    {
+    public ParticleEffect resetModules() {
         modules.clear();
         return this;
     }
@@ -347,12 +323,10 @@ public class ParticleEffect
      *
      * @return A reference to this <code>ParticleEffect</code>
      */
-    public ParticleEffect bake()
-    {
+    public ParticleEffect bake() {
         modules.forEach(module -> module.onBakeHead(this));
         List<Vector> newList = new ArrayList<>();
-        for(ParticleShape shape : shapes)
-        {
+        for(ParticleShape shape : shapes) {
             newList.addAll(shape.getShape());
         }
         untranslatedVecs = newList;
@@ -367,8 +341,7 @@ public class ParticleEffect
      *
      * @return A reference to this <code>ParticleEffect</code>
      */
-    public ParticleEffect update()
-    {
+    public ParticleEffect update() {
         modules.forEach(module -> module.onUpdateHead(this));
         if(updated) return this;
         List<Vector> newList = new ArrayList<>();
@@ -376,21 +349,17 @@ public class ParticleEffect
         double rotX      = rotationVec.getX();
         double rotY      = rotationVec.getY();
         double rotZ      = rotationVec.getZ();
-        for(Vector vector : untranslatedVecs)
-        {
+        for(Vector vector : untranslatedVecs) {
             Vector newVec = vector.clone();
-            if(scaleVec.getX() != 1.0 || scaleVec.getY() != 1.0 || scaleVec.getZ() != 1.0)
-            {
+            if(scaleVec.getX() != 1.0 || scaleVec.getY() != 1.0 || scaleVec.getZ() != 1.0) {
                 newVec.subtract(originVec);
                 newVec.multiply(scaleVec);
                 newVec.add(originVec);
             }
-            if(rotX != 1.0 || rotY != 1.0 || rotZ != 1.0)
-            {
+            if(rotX != 1.0 || rotY != 1.0 || rotZ != 1.0) {
                 MathUtil.rotateAroundOrigin(originVec, newVec, rotX, rotY, rotZ);
             }
-            if(translationVec.getX() != 1.0 || translationVec.getY() != 1.0 || translationVec.getZ() != 1.0)
-            {
+            if(translationVec.getX() != 1.0 || translationVec.getY() != 1.0 || translationVec.getZ() != 1.0) {
                 newVec.add(translationVec);
             }
             newList.add(newVec);
@@ -409,8 +378,7 @@ public class ParticleEffect
      * @param system The parent <code>ParticleSystem</code>
      * @return A reference to this <code>ParticleEffect</code>
      */
-    public ParticleEffect updateSystem(ParticleSystem system)
-    {
+    public ParticleEffect updateSystem(ParticleSystem system) {
         if(system.isUpdated()) return this;
         Vector originVec         = system.getOrigin().toVector();
         Vector sysScaleVec       = system.getScaleVec();
@@ -419,20 +387,16 @@ public class ParticleEffect
         double rotX = sysRotationVec.getX();
         double rotY = sysRotationVec.getY();
         double rotZ = sysRotationVec.getZ();
-        for(Vector vector : translatedVecs)
-        {
-            if(sysScaleVec.getX() != 1.0 || sysScaleVec.getY() != 1.0 || sysScaleVec.getZ() != 1.0)
-            {
+        for(Vector vector : translatedVecs) {
+            if(sysScaleVec.getX() != 1.0 || sysScaleVec.getY() != 1.0 || sysScaleVec.getZ() != 1.0) {
                 vector.subtract(originVec);
                 vector.multiply(scaleVec);
                 vector.add(originVec);
             }
-            if(rotX != 1.0 || rotY != 1.0 || rotZ != 1.0)
-            {
+            if(rotX != 1.0 || rotY != 1.0 || rotZ != 1.0) {
                 MathUtil.rotateAroundOrigin(originVec, vector, rotX, rotY, rotZ);
             }
-            if(sysTranslationVec.getX() != 1.0 || sysTranslationVec.getY() != 1.0 || sysTranslationVec.getZ() != 1.0)
-            {
+            if(sysTranslationVec.getX() != 1.0 || sysTranslationVec.getY() != 1.0 || sysTranslationVec.getZ() != 1.0) {
                 vector.add(translationVec);
             }
         }
@@ -444,17 +408,14 @@ public class ParticleEffect
      *
      * @return A reference to this <code>ParticleEffect</code>
      */
-    public ParticleEffect display()
-    {
+    public ParticleEffect display() {
         modules.forEach(module -> module.onDisplayHead(this));
-        for(int i = 0; i < translatedVecs.size(); ++i)
-        {
-            Vector vector = translatedVecs.get(i);
+        for(Vector vector : translatedVecs) {
             Location location = vector.toLocation(world);
             world.spawnParticle(
-                    particleData.getParticle(), location, particleData.getCount(),
-                    particleData.getOffsetX(), particleData.getOffsetY(), particleData.getOffsetZ(),
-                    particleData.getSpeed(), particleData.getData(), particleData.isForce());
+                particleData.getParticle(), location, particleData.getCount(),
+                particleData.getOffsetX(), particleData.getOffsetY(), particleData.getOffsetZ(),
+                particleData.getSpeed(), particleData.getData(), particleData.isForce());
         }
         modules.forEach(module -> module.onDisplayTail(this));
         return this;
@@ -465,8 +426,7 @@ public class ParticleEffect
      *
      * @return The list of shapes
      */
-    public List<ParticleShape> getShapes()
-    {
+    public List<ParticleShape> getShapes() {
         return shapes;
     }
 
@@ -478,8 +438,7 @@ public class ParticleEffect
      *
      * @return The untranslated vectors list
      */
-    public List<Vector> getUntranslatedVecs()
-    {
+    public List<Vector> getUntranslatedVecs() {
         return untranslatedVecs;
     }
 
@@ -491,8 +450,7 @@ public class ParticleEffect
      *
      * @return The translated vectors list
      */
-    public List<Vector> getTranslatedVecs()
-    {
+    public List<Vector> getTranslatedVecs() {
         return translatedVecs;
     }
 
@@ -501,8 +459,7 @@ public class ParticleEffect
      *
      * @return The particle data of this effect
      */
-    public ParticleData getParticleData()
-    {
+    public ParticleData getParticleData() {
         return particleData;
     }
 
@@ -514,8 +471,7 @@ public class ParticleEffect
      *
      * @return The scale vector
      */
-    public Vector getScaleVec()
-    {
+    public Vector getScaleVec() {
         return scaleVec;
     }
 
@@ -527,8 +483,7 @@ public class ParticleEffect
      *
      * @return The rotation vector
      */
-    public Vector getRotationVec()
-    {
+    public Vector getRotationVec() {
         return rotationVec;
     }
 
@@ -540,8 +495,7 @@ public class ParticleEffect
      *
      * @return The translation vector
      */
-    public Vector getTranslationVec()
-    {
+    public Vector getTranslationVec() {
         return translationVec;
     }
 
@@ -553,8 +507,7 @@ public class ParticleEffect
      *
      * @return The origin location
      */
-    public Location getOrigin()
-    {
+    public Location getOrigin() {
         return origin;
     }
 
@@ -563,8 +516,7 @@ public class ParticleEffect
      *
      * @return Whether baking has occurred or not
      */
-    public boolean isBaked()
-    {
+    public boolean isBaked() {
         return baked;
     }
 
@@ -574,8 +526,7 @@ public class ParticleEffect
      *
      * @return Whether this effect is updated or not
      */
-    public boolean isUpdated()
-    {
+    public boolean isUpdated() {
         return updated;
     }
 
@@ -584,8 +535,7 @@ public class ParticleEffect
      *
      * @param particleData The new <code>ParticleData</code> to use
      */
-    public void setParticleData(ParticleData particleData)
-    {
+    public void setParticleData(ParticleData particleData) {
         this.particleData = particleData;
     }
 
@@ -597,8 +547,7 @@ public class ParticleEffect
      *
      * @param scaleVec The new scale vector
      */
-    public void setScaleVec(Vector scaleVec)
-    {
+    public void setScaleVec(Vector scaleVec) {
         this.scaleVec = scaleVec;
         updated = false;
     }
@@ -611,8 +560,7 @@ public class ParticleEffect
      *
      * @param rotationVec The new rotation vector
      */
-    public void setRotationVec(Vector rotationVec)
-    {
+    public void setRotationVec(Vector rotationVec) {
         this.rotationVec = rotationVec;
         updated = false;
     }
@@ -625,8 +573,7 @@ public class ParticleEffect
      *
      * @param translationVec The new translation vector
      */
-    public void setTranslationVec(Vector translationVec)
-    {
+    public void setTranslationVec(Vector translationVec) {
         this.translationVec = translationVec;
         updated = false;
     }
@@ -639,8 +586,7 @@ public class ParticleEffect
      *
      * @param origin The new origin location
      */
-    public void setOrigin(Location origin)
-    {
+    public void setOrigin(Location origin) {
         this.origin = origin;
         updated = false;
     }
@@ -650,8 +596,7 @@ public class ParticleEffect
      *
      * @return The delay
      */
-    public long getDelay()
-    {
+    public long getDelay() {
         return delay;
     }
 
@@ -660,8 +605,7 @@ public class ParticleEffect
      *
      * @param delay The new delay
      */
-    public void setDelay(long delay)
-    {
+    public void setDelay(long delay) {
         this.delay = delay;
     }
 
@@ -670,8 +614,7 @@ public class ParticleEffect
      *
      * @return The count
      */
-    public long getCount()
-    {
+    public long getCount() {
         return count;
     }
 
@@ -680,8 +623,7 @@ public class ParticleEffect
      *
      * @param count The new count
      */
-    public void setCount(long count)
-    {
+    public void setCount(long count) {
         this.count = count;
     }
 
@@ -690,8 +632,7 @@ public class ParticleEffect
      *
      * @return The list of modules
      */
-    public List<ParticleEModule> getModules()
-    {
+    public List<ParticleEModule> getModules() {
         return modules;
     }
 }

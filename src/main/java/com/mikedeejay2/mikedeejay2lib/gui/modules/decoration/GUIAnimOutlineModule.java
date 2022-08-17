@@ -12,8 +12,7 @@ import org.bukkit.entity.Player;
  *
  * @author Mikedeejay2
  */
-public class GUIAnimOutlineModule implements GUIModule
-{
+public class GUIAnimOutlineModule implements GUIModule {
     /**
      * The animation pattern to use
      */
@@ -30,8 +29,7 @@ public class GUIAnimOutlineModule implements GUIModule
      * @param outlineItem The GUI item that will be used for the border
      * @param pattern     The animation pattern to use
      */
-    public GUIAnimOutlineModule(AnimatedGUIItem outlineItem, GUIAnimPattern pattern)
-    {
+    public GUIAnimOutlineModule(AnimatedGUIItem outlineItem, GUIAnimPattern pattern) {
         this.pattern = pattern;
         this.outlineItem = outlineItem;
     }
@@ -41,8 +39,7 @@ public class GUIAnimOutlineModule implements GUIModule
      *
      * @param outlineItem The GUI item that will be used for the border
      */
-    public GUIAnimOutlineModule(AnimatedGUIItem outlineItem)
-    {
+    public GUIAnimOutlineModule(AnimatedGUIItem outlineItem) {
         this(outlineItem, GUIAnimPattern.TOP_LEFT_DIAGONAL);
     }
 
@@ -53,17 +50,14 @@ public class GUIAnimOutlineModule implements GUIModule
      * @param gui    The GUI
      */
     @Override
-    public void onOpenHead(Player player, GUIContainer gui)
-    {
+    public void onOpenHead(Player player, GUIContainer gui) {
         int maxRow = gui.getRows();
         int maxCol = gui.getCols();
-        for(int i = 1; i <= gui.getCols(); i++)
-        {
+        for(int i = 1; i <= gui.getCols(); i++) {
             gui.setItem(1, i, pattern.getItemFor(outlineItem, 1, i, maxRow, maxCol));
             gui.setItem(gui.getRows(), i, pattern.getItemFor(outlineItem, gui.getRows(), i, maxRow, maxCol));
         }
-        for(int i = 1; i <= gui.getRows() - 1; i++)
-        {
+        for(int i = 1; i <= gui.getRows() - 1; i++) {
             gui.setItem(i, 1,  pattern.getItemFor(outlineItem, i, 1, maxRow, maxCol));
             gui.setItem(i, gui.getCols(),  pattern.getItemFor(outlineItem, i, gui.getCols(), maxRow, maxCol));
         }
@@ -74,8 +68,7 @@ public class GUIAnimOutlineModule implements GUIModule
      *
      * @return The <code>GUIItem</code> that will be used
      */
-    public AnimatedGUIItem getOutlineItem()
-    {
+    public AnimatedGUIItem getOutlineItem() {
         return outlineItem;
     }
 
@@ -84,8 +77,7 @@ public class GUIAnimOutlineModule implements GUIModule
      *
      * @param outlineItem GUIItem for the outline to use
      */
-    public void setOutlineItem(AnimatedGUIItem outlineItem)
-    {
+    public void setOutlineItem(AnimatedGUIItem outlineItem) {
         this.outlineItem = outlineItem;
     }
 
@@ -94,8 +86,7 @@ public class GUIAnimOutlineModule implements GUIModule
      *
      * @return The current animation pattern
      */
-    public GUIAnimPattern getPattern()
-    {
+    public GUIAnimPattern getPattern() {
         return pattern;
     }
 
@@ -104,8 +95,7 @@ public class GUIAnimOutlineModule implements GUIModule
      *
      * @param pattern The new animation pattern
      */
-    public void setPattern(GUIAnimPattern pattern)
-    {
+    public void setPattern(GUIAnimPattern pattern) {
         this.pattern = pattern;
     }
 }

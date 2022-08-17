@@ -16,13 +16,12 @@ import java.util.regex.Pattern;
 /**
  * A plugin logger to act similar to a {@link org.bukkit.plugin.PluginLogger} but avoid immutable
  * or invalid prefix names for a Spigot or Paper server.
- *
+ * <p>
  * Largely based off of ColouredConsoleSender
  *
  * @author CraftBukkit, Mikedeejay2
  */
-public class EnhancedPluginLogger extends PluginLogger
-{
+public class EnhancedPluginLogger extends PluginLogger {
     /**
      * The global logger
      */
@@ -58,8 +57,7 @@ public class EnhancedPluginLogger extends PluginLogger
      *
      * @param plugin A reference to the plugin
      */
-    public EnhancedPluginLogger(Plugin plugin)
-    {
+    public EnhancedPluginLogger(Plugin plugin) {
         super(plugin);
         this.logger = Logger.getGlobal();
         this.replacements = new EnumMap<>(ChatColor.class);
@@ -97,8 +95,7 @@ public class EnhancedPluginLogger extends PluginLogger
      * @param logRecord The <code>LogRecord</code> to log
      */
     @Override
-    public void log(LogRecord logRecord)
-    {
+    public void log(LogRecord logRecord) {
         String message = prefix + logRecord.getMessage();
         String result = convertRGBColors(message);
         result = convertColorCodes(result);
@@ -127,8 +124,7 @@ public class EnhancedPluginLogger extends PluginLogger
      *
      * @return The prefix of this logger
      */
-    public String getPrefix()
-    {
+    public String getPrefix() {
         return prefix;
     }
 
@@ -138,8 +134,7 @@ public class EnhancedPluginLogger extends PluginLogger
      *
      * @param prefix The new prefix for the logger to use
      */
-    public void setPrefix(String prefix)
-    {
+    public void setPrefix(String prefix) {
         this.prefix = prefix;
     }
 

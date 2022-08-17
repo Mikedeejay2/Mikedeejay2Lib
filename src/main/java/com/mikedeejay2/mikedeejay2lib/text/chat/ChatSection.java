@@ -18,8 +18,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class ChatSection
-{
+public class ChatSection {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -50,8 +49,7 @@ public class ChatSection
      *
      * @param plugin The {@link BukkitPlugin} instance
      */
-    public ChatSection(BukkitPlugin plugin)
-    {
+    public ChatSection(BukkitPlugin plugin) {
         this.plugin = plugin;
         this.modules = new ArrayList<>();
         this.text = "";
@@ -64,8 +62,7 @@ public class ChatSection
      * @param module The <code>ChatModule</code> to add
      * @return The current <code>ChatSection</code>
      */
-    public ChatSection addModule(ChatModule module)
-    {
+    public ChatSection addModule(ChatModule module) {
         modules.add(module);
         baked = false;
         return this;
@@ -77,8 +74,7 @@ public class ChatSection
      * @param index The index to remove the module at
      * @return The current <code>ChatSection</code>
      */
-    public ChatSection removeModule(int index)
-    {
+    public ChatSection removeModule(int index) {
         modules.remove(index);
         return this;
     }
@@ -89,10 +85,8 @@ public class ChatSection
      * @param moduleClass The class of the module to remove
      * @return The current <code>ChatSection</code>
      */
-    public ChatSection removeModule(Class<? extends ChatModule> moduleClass)
-    {
-        for(ChatModule module : modules)
-        {
+    public ChatSection removeModule(Class<? extends ChatModule> moduleClass) {
+        for(ChatModule module : modules) {
             if(moduleClass != module.getClass()) continue;
             modules.remove(module);
             return this;
@@ -106,8 +100,7 @@ public class ChatSection
      * @param module The <code>ChatModule</code> to remove
      * @return The current <code>ChatSection</code>
      */
-    public ChatSection removeModule(ChatModule module)
-    {
+    public ChatSection removeModule(ChatModule module) {
         modules.remove(module);
         return this;
     }
@@ -118,8 +111,7 @@ public class ChatSection
      * @param module The <code>ChatModule</code> to search for
      * @return Whether the specified module was found or not
      */
-    public boolean containsModule(ChatModule module)
-    {
+    public boolean containsModule(ChatModule module) {
         return modules.contains(module);
     }
 
@@ -130,10 +122,8 @@ public class ChatSection
      * @param moduleClass The class of the module to search for
      * @return Whether a module of the specified class was found or not
      */
-    public boolean containsModule(Class<? extends ChatModule> moduleClass)
-    {
-        for(ChatModule module : modules)
-        {
+    public boolean containsModule(Class<? extends ChatModule> moduleClass) {
+        for(ChatModule module : modules) {
             if(moduleClass == module.getClass()) return true;
         }
         return false;
@@ -146,10 +136,8 @@ public class ChatSection
      * @param <T>         The class type
      * @return The requested <code>ChatModule</code>, null if not found
      */
-    public <T extends ChatModule> T getModule(Class<T> moduleClass)
-    {
-        for(ChatModule module : modules)
-        {
+    public <T extends ChatModule> T getModule(Class<T> moduleClass) {
+        for(ChatModule module : modules) {
             if(moduleClass == module.getClass()) return (T) module;
         }
         return null;
@@ -161,8 +149,7 @@ public class ChatSection
      * @param index The index to get the module from
      * @return The requested module
      */
-    public ChatModule getModule(int index)
-    {
+    public ChatModule getModule(int index) {
         return modules.get(index);
     }
 
@@ -172,8 +159,7 @@ public class ChatSection
      * @param text The String of text to add
      * @return The current <code>ChatSection</code>
      */
-    public ChatSection addText(String text)
-    {
+    public ChatSection addText(String text) {
         this.text += Colors.format(text);
         baked = false;
         return this;
@@ -185,8 +171,7 @@ public class ChatSection
      * @param text The String of text to set
      * @return The current <code>ChatSection</code>
      */
-    public ChatSection setText(String text)
-    {
+    public ChatSection setText(String text) {
         this.text = text;
         baked = false;
         return this;
@@ -197,8 +182,7 @@ public class ChatSection
      *
      * @return The current <code>ChatSection</code>
      */
-    public ChatSection clearText()
-    {
+    public ChatSection clearText() {
         this.text = "";
         baked = false;
         return this;
@@ -207,8 +191,7 @@ public class ChatSection
     /**
      * Bake this <code>ChatSection</code> into Bungee's chat API
      */
-    protected void bake()
-    {
+    protected void bake() {
         components = ChatConverter.getBaseComponentArray(text);
         modules.forEach(module -> module.onBake(this, components));
         baked = true;
@@ -220,8 +203,7 @@ public class ChatSection
      * @param sender The <code>CommandSender</code> that will receive the text
      * @return The current <code>ChatSection</code>
      */
-    public ChatSection print(CommandSender sender)
-    {
+    public ChatSection print(CommandSender sender) {
         if(!baked) bake();
         modules.forEach(module -> module.onPrint(this, sender));
         sender.spigot().sendMessage(components);

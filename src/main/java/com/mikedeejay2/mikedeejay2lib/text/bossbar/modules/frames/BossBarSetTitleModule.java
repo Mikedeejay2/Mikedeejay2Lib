@@ -7,15 +7,13 @@ import com.mikedeejay2.mikedeejay2lib.text.bossbar.BossBarSystem;
  *
  * @author Mikedeejay2
  */
-public class BossBarSetTitleModule extends BossBarFrameModule<String>
-{
+public class BossBarSetTitleModule extends BossBarFrameModule<String> {
     /**
      * Construct a new <code>BossBarSetTitleModule</code>
      *
      * @param loop Whether this module should loop the frames or not
      */
-    public BossBarSetTitleModule(boolean loop)
-    {
+    public BossBarSetTitleModule(boolean loop) {
         super(loop);
     }
 
@@ -27,8 +25,7 @@ public class BossBarSetTitleModule extends BossBarFrameModule<String>
      * @param value  The value of the frame
      */
     @Override
-    public void onFrame(BossBarSystem system, long period, String value)
-    {
+    public void onFrame(BossBarSystem system, long period, String value) {
         system.setTitle(value);
     }
 }

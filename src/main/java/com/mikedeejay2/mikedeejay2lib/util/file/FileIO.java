@@ -14,21 +14,18 @@ import java.util.logging.Level;
  *
  * @author Mikedeejay2
  */
-public final class FileIO
-{
+public final class FileIO {
     /**
-     * Get an input stream to an internal file inside of the plugin's jar
+     * Get an input stream to an internal file inside the plugin's jar
      *
      * @param filePath Path to file
      * @param classLoader The <code>ClassLoader</code> to get the resource from
      * @return The requested InputStream
      */
-    public static InputStream getInputStreamFromJar(String filePath, ClassLoader classLoader)
-    {
+    public static InputStream getInputStreamFromJar(String filePath, ClassLoader classLoader) {
         Validate.notNull(filePath, "Filename cannot be null");
 
-        try
-        {
+        try {
             URL url = classLoader.getResource(filePath);
 
             if (url == null) return null;
@@ -36,9 +33,7 @@ public final class FileIO
             URLConnection connection = url.openConnection();
             connection.setUseCaches(false);
             return connection.getInputStream();
-        }
-        catch (IOException exception)
-        {
+        } catch (IOException exception) {
             // Ignored
         }
         return null;
@@ -52,8 +47,7 @@ public final class FileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested InputStream
      */
-    public static InputStream getInputStreamFromDisk(File folder, String filePath, boolean throwErrors)
-    {
+    public static InputStream getInputStreamFromDisk(File folder, String filePath, boolean throwErrors) {
         return getInputStreamFromDisk(new File(folder, filePath), throwErrors);
     }
 
@@ -65,8 +59,7 @@ public final class FileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested Reader
      */
-    public static Reader getReaderFromDisk(File folder, String filePath, boolean throwErrors)
-    {
+    public static Reader getReaderFromDisk(File folder, String filePath, boolean throwErrors) {
         return getReaderFromDisk(new File(folder, filePath), throwErrors);
     }
 
@@ -78,15 +71,11 @@ public final class FileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested Reader
      */
-    public static Reader getReaderFromJar(String filePath, ClassLoader classLoader, boolean throwErrors)
-    {
+    public static Reader getReaderFromJar(String filePath, ClassLoader classLoader, boolean throwErrors) {
         InputStreamReader reader = null;
-        try
-        {
+        try {
             reader = new InputStreamReader(getInputStreamFromJar(filePath, classLoader), StandardCharsets.UTF_8);
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             if(throwErrors) logFileCouldNotBeLoaded(filePath, e);
         }
         return reader;
@@ -99,15 +88,11 @@ public final class FileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested reader
      */
-    public static Reader getReaderFromDisk(File file, boolean throwErrors)
-    {
+    public static Reader getReaderFromDisk(File file, boolean throwErrors) {
         InputStreamReader reader = null;
-        try
-        {
+        try {
             reader = new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8);
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             if(throwErrors) logFileCouldNotBeLoaded(file.getPath(), e);
         }
         return reader;
@@ -120,16 +105,12 @@ public final class FileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested InputStream
      */
-    public static InputStream getInputStreamFromDisk(File file, boolean throwErrors)
-    {
+    public static InputStream getInputStreamFromDisk(File file, boolean throwErrors) {
         FileInputStream inputStream = null;
-        try
-        {
+        try {
             if(!file.exists()) file.createNewFile();
             inputStream = new FileInputStream(file);
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             if(throwErrors) logFileCouldNotBeLoaded(file.getPath(), e);
         }
         return inputStream;
@@ -145,8 +126,7 @@ public final class FileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return If save was successful or not
      */
-    public static boolean saveFileFromJar(File folder, String filePath, ClassLoader classLoader, boolean replace, boolean throwErrors)
-    {
+    public static boolean saveFileFromJar(File folder, String filePath, ClassLoader classLoader, boolean replace, boolean throwErrors) {
         InputStream inputStream = getInputStreamFromJar(filePath, classLoader);
         File file = new File(folder, filePath);
         return saveFile(file, inputStream, replace, throwErrors);
@@ -162,8 +142,7 @@ public final class FileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return If save was successful or not
      */
-    public static boolean saveFile(File folder, String filePath, InputStream input, boolean replace, boolean throwErrors)
-    {
+    public static boolean saveFile(File folder, String filePath, InputStream input, boolean replace, boolean throwErrors) {
         return saveFile(new File(folder, filePath), input, replace, throwErrors);
     }
 
@@ -176,28 +155,22 @@ public final class FileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return If the save was successful or not
      */
-    public static boolean saveFile(File file, InputStream input, boolean replace, boolean throwErrors)
-    {
+    public static boolean saveFile(File file, InputStream input, boolean replace, boolean throwErrors) {
         if (!file.exists()) file.getParentFile().mkdirs();
 
-        try
-        {
-            if (!file.exists() || replace)
-            {
+        try {
+            if (!file.exists() || replace) {
                 if(!file.exists()) file.createNewFile();
                 OutputStream output = new FileOutputStream(file);
                 byte[] buffer = new byte[1024];
                 int length;
-                while ((length = input.read(buffer)) > 0)
-                {
+                while ((length = input.read(buffer)) > 0) {
                     output.write(buffer, 0, length);
                 }
                 output.close();
                 input.close();
             }
-        }
-        catch (IOException ex)
-        {
+        } catch (IOException ex) {
             if(throwErrors) logFileCouldNotBeSaved(file.getPath(), ex);
             return false;
         }
@@ -210,8 +183,7 @@ public final class FileIO
      * @param filePath  Path to print
      * @param exception The exception that was thrown
      */
-    public static void logFileCouldNotBeLoaded(String filePath, Exception exception)
-    {
+    public static void logFileCouldNotBeLoaded(String filePath, Exception exception) {
         Bukkit.getLogger().log(Level.SEVERE, "The file \"" + filePath + "\" could not be loaded!", exception);
     }
 
@@ -221,8 +193,7 @@ public final class FileIO
      * @param filePath  Path to print
      * @param exception The exception that was thrown
      */
-    public static void logFileCouldNotBeSaved(String filePath, Exception exception)
-    {
+    public static void logFileCouldNotBeSaved(String filePath, Exception exception) {
         Bukkit.getLogger().log(Level.SEVERE, "The file \"" + filePath + "\" could not be saved!", exception);
     }
 
@@ -233,8 +204,7 @@ public final class FileIO
      * @param filePath Path to the file. This should NOT include plugin.getDataFolder()
      * @return Whether deletion was successful or not
      */
-    public static boolean deleteFile(File folder, String filePath)
-    {
+    public static boolean deleteFile(File folder, String filePath) {
         return deleteFile(new File(folder, filePath));
     }
 
@@ -244,8 +214,7 @@ public final class FileIO
      * @param file File to delete
      * @return Whether deletion was successful or not
      */
-    public static boolean deleteFile(File file)
-    {
+    public static boolean deleteFile(File file) {
         return file.delete();
     }
 }

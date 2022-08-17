@@ -20,8 +20,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author Mikedeejay2 (With some help from Spigot resources)
  */
-public final class MathUtil
-{
+public final class MathUtil {
     /**
      * The time in minutes that the cache should hold values
      */
@@ -52,8 +51,7 @@ public final class MathUtil
      */
     private static final Cache<Double, List<Vector>> sphereFilledCache;
 
-    static
-    {
+    static {
         CacheBuilder<Object, Object> loader = CacheBuilder.newBuilder()
                 .maximumSize(CACHE_SIZE)
                 .expireAfterWrite(CACHE_TIME, TimeUnit.MINUTES);
@@ -76,32 +74,25 @@ public final class MathUtil
      * @param density The density of the vectors
      * @return The list
      */
-    private static List<Vector> xyzLoop(List<Vector> list, double xStart, double yStart, double zStart, double xEnd, double yEnd, double zEnd, double density)
-    {
-        if(xStart > xEnd)
-        {
+    private static List<Vector> xyzLoop(List<Vector> list, double xStart, double yStart, double zStart, double xEnd, double yEnd, double zEnd, double density) {
+        if(xStart > xEnd) {
             double temp = xStart;
             xStart = xEnd;
             xEnd = temp;
         }
-        if(yStart > yEnd)
-        {
+        if(yStart > yEnd) {
             double temp = yStart;
             yStart = yEnd;
             yEnd = temp;
         }
-        if(zStart > zEnd)
-        {
+        if(zStart > zEnd) {
             double temp = zStart;
             zStart = zEnd;
             zEnd = temp;
         }
-        for(double x = xStart; x <= xEnd; x += 1.0 / density)
-        {
-            for(double y = yStart; y <= yEnd; y += 1.0 / density)
-            {
-                for(double z = zStart; z <= zEnd; z += 1.0 / density)
-                {
+        for(double x = xStart; x <= xEnd; x += 1.0 / density) {
+            for(double y = yStart; y <= yEnd; y += 1.0 / density) {
+                for(double z = zStart; z <= zEnd; z += 1.0 / density) {
                     list.add(new Vector(x, y, z));
                 }
             }
@@ -118,13 +109,11 @@ public final class MathUtil
      * @param angleInRadian The angle in radians around the circle
      * @return The location of the angle around the circle
      */
-    public static Vector getVectorAroundCircle(Location center, double radius, double angleInRadian)
-    {
+    public static Vector getVectorAroundCircle(Location center, double radius, double angleInRadian) {
         angleInRadian = angleInRadian % (Math.PI * 2);
 
         Vector cached = circleCache.getIfPresent(angleInRadian);
-        if(cached != null)
-        {
+        if(cached != null) {
             return cached.clone().multiply(radius).add(center.toVector());
         }
 
@@ -144,11 +133,9 @@ public final class MathUtil
      * @param density The density of the circle (The amount of points around the circle that will be mapped)
      * @return The list of vectors of the circle
      */
-    public static List<Vector> getCircleVectors(Location loc, double radius, double density)
-    {
+    public static List<Vector> getCircleVectors(Location loc, double radius, double density) {
         List<Vector> list = new ArrayList<>();
-        for(double i = 0; i < 360; i += 1.0 / density)
-        {
+        for(double i = 0; i < 360; i += 1.0 / density) {
             Vector vector = getVectorAroundCircle(loc, radius, Math.toRadians(i));
             list.add(vector);
         }
@@ -163,8 +150,7 @@ public final class MathUtil
      * @param density The density of the circle (The amount of points around the circle that will be mapped)
      * @return The list of locations of the circle
      */
-    public static List<Location> getCircleLocations(Location loc, double radius, double density)
-    {
+    public static List<Location> getCircleLocations(Location loc, double radius, double density) {
         World world = loc.getWorld();
         List<Vector> vectorList = getCircleVectors(loc, radius, density);
         return ArrayUtil.toLocationList(vectorList, world);
@@ -178,21 +164,17 @@ public final class MathUtil
      * @param density The density of the circle (The amount of points around the circle that will be mapped)
      * @return The list of vectors of the circle
      */
-    public static List<Vector> getCircleFilledVectors(Location loc, double radius, double density)
-    {
+    public static List<Vector> getCircleFilledVectors(Location loc, double radius, double density) {
         density = density * radius;
         List<Vector> cached = circleFilledCache.getIfPresent(density);
-        if(cached != null)
-        {
+        if(cached != null) {
             List<Vector> translatedList = new ArrayList<>();
             cached.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
             return offsetVectors(translatedList, loc);
         }
         List<Vector> list = new ArrayList<>();
-        for(double x = -1; x <= 1; x += 1.0 / density)
-        {
-            for(double z = -1; z <= 1; z += 1.0 / density)
-            {
+        for(double x = -1; x <= 1; x += 1.0 / density) {
+            for(double z = -1; z <= 1; z += 1.0 / density) {
                 if(!(Math.sqrt((x * x) + (z * z)) <= 1)) continue;
                 list.add(new Vector(x, 0, z));
             }
@@ -212,8 +194,7 @@ public final class MathUtil
      * @param density The density of the circle (The amount of points around the circle that will be mapped)
      * @return The list of locations of the circle
      */
-    public static List<Location> getCircleFilledLocations(Location loc, double radius, double density)
-    {
+    public static List<Location> getCircleFilledLocations(Location loc, double radius, double density) {
         World world = loc.getWorld();
         List<Vector> vectorList = getCircleFilledVectors(loc, radius, density);
         return ArrayUtil.toLocationList(vectorList, world);
@@ -229,8 +210,7 @@ public final class MathUtil
      * @param degZ   The degrees in Z to rotate the vector
      * @return The new rotated vector
      */
-    public static Vector rotateAroundOrigin(Vector origin, Vector vector, double degX, double degY, double degZ)
-    {
+    public static Vector rotateAroundOrigin(Vector origin, Vector vector, double degX, double degY, double degZ) {
         Vector newVec = vector.subtract(origin);
         newVec.rotateAroundX(Math.toRadians(degX));
         newVec.rotateAroundY(Math.toRadians(degY));
@@ -246,8 +226,7 @@ public final class MathUtil
      * @param multiplier  The speed multiplier
      * @return The new velocity vector
      */
-    public static Vector getFacingVector(Location current, Location destination, float multiplier)
-    {
+    public static Vector getFacingVector(Location current, Location destination, float multiplier) {
         Vector newVec = current.toVector().subtract(destination.toVector());
         newVec.normalize().multiply(-multiplier);
         return newVec;
@@ -261,8 +240,7 @@ public final class MathUtil
      * @param multiplier  The speed multiplier
      * @return The new velocity vector
      */
-    public static Vector getFacingVector(Vector current, Vector destination, float multiplier)
-    {
+    public static Vector getFacingVector(Vector current, Vector destination, float multiplier) {
         Vector newVec = current.clone().subtract(destination);
         newVec.normalize().multiply(-multiplier);
         return newVec;
@@ -276,12 +254,10 @@ public final class MathUtil
      * @param density The density of the points of the sphere
      * @return A new list of vectors that create a sphere outline shape
      */
-    public static List<Vector> getSphereHollowVectors(Location loc, double radius, double density)
-    {
+    public static List<Vector> getSphereHollowVectors(Location loc, double radius, double density) {
         density = (density * Math.PI) * radius;
         List<Vector> cached = sphereHollowCache.getIfPresent(density);
-        if(cached != null)
-        {
+        if(cached != null) {
             List<Vector> translatedList = new ArrayList<>();
             cached.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
             return offsetVectors(translatedList, loc);
@@ -289,13 +265,11 @@ public final class MathUtil
 
         List<Vector> list = new ArrayList<>();
 
-        for(double yLoop = 0; yLoop <= Math.PI; yLoop += Math.PI / density)
-        {
+        for(double yLoop = 0; yLoop <= Math.PI; yLoop += Math.PI / density) {
             double tempRadius = Math.sin(yLoop);
             double y = Math.cos(yLoop);
 
-            for(double xLoop = 0; xLoop < Math.PI * 2.0D; xLoop += Math.PI / density)
-            {
+            for(double xLoop = 0; xLoop < Math.PI * 2.0D; xLoop += Math.PI / density) {
                 double x = Math.cos(xLoop) * tempRadius;
                 double z = Math.sin(xLoop) * tempRadius;
 
@@ -317,8 +291,7 @@ public final class MathUtil
      * @param density The density of the points of the sphere
      * @return A new list of locations that create a sphere outline shape
      */
-    public static List<Location> getSphereHollowLocations(Location loc, double radius, double density)
-    {
+    public static List<Location> getSphereHollowLocations(Location loc, double radius, double density) {
         World world = loc.getWorld();
         List<Vector> vectorList = getSphereHollowVectors(loc, radius, density);
         return ArrayUtil.toLocationList(vectorList, world);
@@ -332,23 +305,18 @@ public final class MathUtil
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <code>List</code> of vectors that create a filled sphere
      */
-    public static List<Vector> getSphereFilledVectors(Location loc, double radius, double density)
-    {
+    public static List<Vector> getSphereFilledVectors(Location loc, double radius, double density) {
         density = density * radius;
         List<Vector> cached = sphereFilledCache.getIfPresent(density);
-        if(cached != null)
-        {
+        if(cached != null) {
             List<Vector> translatedList = new ArrayList<>();
             cached.forEach(vector -> translatedList.add(vector.clone().multiply(radius)));
             return offsetVectors(translatedList, loc);
         }
         List<Vector> list = new ArrayList<>();
-        for(double x = -1; x <= 1; x += 1.0 / density)
-        {
-            for(double y = -1; y <= 1; y += 1.0 / density)
-            {
-                for(double z = -1; z <= 1; z += 1.0 / density)
-                {
+        for(double x = -1; x <= 1; x += 1.0 / density) {
+            for(double y = -1; y <= 1; y += 1.0 / density) {
+                for(double z = -1; z <= 1; z += 1.0 / density) {
                     if(!(Math.sqrt((x * x) + (y * y) + (z * z)) <= 1)) continue;
                     list.add(new Vector(x, y, z));
                 }
@@ -369,8 +337,7 @@ public final class MathUtil
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <code>List</code> of locations that create a filled sphere
      */
-    public static List<Location> getSphereFilledLocations(Location loc, double radius, double density)
-    {
+    public static List<Location> getSphereFilledLocations(Location loc, double radius, double density) {
         World world = loc.getWorld();
         List<Vector> vectorList = getSphereFilledVectors(loc, radius, density);
         return ArrayUtil.toLocationList(vectorList, world);
@@ -386,8 +353,7 @@ public final class MathUtil
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <code>List</code> of vectors that create a filled cube
      */
-    public static List<Vector> getCubeFilledVectors(Location loc, double xWidth, double yWidth, double zWidth, double density)
-    {
+    public static List<Vector> getCubeFilledVectors(Location loc, double xWidth, double yWidth, double zWidth, double density) {
         List<Vector> list = new ArrayList<>();
         xWidth = xWidth / 2.0;
         yWidth = yWidth / 2.0;
@@ -412,8 +378,7 @@ public final class MathUtil
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <code>List</code> of locations that create a filled cube
      */
-    public static List<Location> getCubeFilledLocations(Location loc, double xWidth, double yWidth, double zWidth, double density)
-    {
+    public static List<Location> getCubeFilledLocations(Location loc, double xWidth, double yWidth, double zWidth, double density) {
         World world = loc.getWorld();
         List<Vector> vectorList = getCubeFilledVectors(loc, xWidth, yWidth, zWidth, density);
         return ArrayUtil.toLocationList(vectorList, world);
@@ -429,8 +394,7 @@ public final class MathUtil
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <code>List</code> of vectors that create a hollow cube
      */
-    public static List<Vector> getCubeHollowVectors(Location loc, double xWidth, double yWidth, double zWidth, double density)
-    {
+    public static List<Vector> getCubeHollowVectors(Location loc, double xWidth, double yWidth, double zWidth, double density) {
         List<Vector> list = new ArrayList<>();
         xWidth = xWidth / 2.0;
         yWidth = yWidth / 2.0;
@@ -469,8 +433,7 @@ public final class MathUtil
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <code>List</code> of locations that create a hollow cube
      */
-    public static List<Location> getCubeHollowLocations(Location loc, double xWidth, double yWidth, double zWidth, double density)
-    {
+    public static List<Location> getCubeHollowLocations(Location loc, double xWidth, double yWidth, double zWidth, double density) {
         World world = loc.getWorld();
         List<Vector> vectorList = getCubeHollowVectors(loc, xWidth, yWidth, zWidth, density);
         return ArrayUtil.toLocationList(vectorList, world);
@@ -486,8 +449,7 @@ public final class MathUtil
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <code>List</code> of vectors that create an outline of a cube
      */
-    public static List<Vector> getCubeOutlineVectors(Location loc, double xWidth, double yWidth, double zWidth, double density)
-    {
+    public static List<Vector> getCubeOutlineVectors(Location loc, double xWidth, double yWidth, double zWidth, double density) {
         List<Vector> list = new ArrayList<>();
         xWidth = xWidth / 2.0;
         yWidth = yWidth / 2.0;
@@ -537,8 +499,7 @@ public final class MathUtil
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <code>List</code> of locations that create an outline of a cube
      */
-    public static List<Location> getCubeOutlineLocations(Location loc, double xWidth, double yWidth, double zWidth, double density)
-    {
+    public static List<Location> getCubeOutlineLocations(Location loc, double xWidth, double yWidth, double zWidth, double density) {
         World world = loc.getWorld();
         List<Vector> vectorList = getCubeOutlineVectors(loc, xWidth, yWidth, zWidth, density);
         return ArrayUtil.toLocationList(vectorList, world);
@@ -552,8 +513,7 @@ public final class MathUtil
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <code>List</code> of vectors that create a filled cube
      */
-    public static List<Vector> getCubeFilledVectors(Location loc1, Location loc2, double density)
-    {
+    public static List<Vector> getCubeFilledVectors(Location loc1, Location loc2, double density) {
         List<Vector> list = new ArrayList<>();
         double startX = loc1.getX();
         double startY = loc1.getY();
@@ -573,8 +533,7 @@ public final class MathUtil
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <code>List</code> of locations that create a filled cube
      */
-    public static List<Location> getCubeFilledLocations(Location loc1, Location loc2, double density)
-    {
+    public static List<Location> getCubeFilledLocations(Location loc1, Location loc2, double density) {
         World world = loc1.getWorld();
         List<Vector> vectorList = getCubeFilledVectors(loc1, loc2, density);
         return ArrayUtil.toLocationList(vectorList, world);
@@ -588,8 +547,7 @@ public final class MathUtil
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <code>List</code> of vectors that create a hollow cube
      */
-    public static List<Vector> getCubeHollowVectors(Location loc1, Location loc2, double density)
-    {
+    public static List<Vector> getCubeHollowVectors(Location loc1, Location loc2, double density) {
         List<Vector> list = new ArrayList<>();
 
         double loc1X = loc1.getX();
@@ -617,8 +575,7 @@ public final class MathUtil
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <code>List</code> of locations that create a hollow cube
      */
-    public static List<Location> getCubeHollowLocations(Location loc1, Location loc2, double density)
-    {
+    public static List<Location> getCubeHollowLocations(Location loc1, Location loc2, double density) {
         World world = loc1.getWorld();
         List<Vector> vectorList = getCubeHollowVectors(loc1, loc2, density);
         return ArrayUtil.toLocationList(vectorList, world);
@@ -632,8 +589,7 @@ public final class MathUtil
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <code>List</code> of vectors that create an outline of a cube
      */
-    public static List<Vector> getCubeOutlineVectors(Location loc1, Location loc2, double density)
-    {
+    public static List<Vector> getCubeOutlineVectors(Location loc1, Location loc2, double density) {
 
         List<Vector> list = new ArrayList<>();
 
@@ -673,8 +629,7 @@ public final class MathUtil
      * @param density The density of the sphere (1 per block, only do more if you're using particles or something that needs extra precision)
      * @return A new <code>List</code> of locations that create an outline of a cube
      */
-    public static List<Location> getCubeOutlineLocations(Location loc1, Location loc2, double density)
-    {
+    public static List<Location> getCubeOutlineLocations(Location loc1, Location loc2, double density) {
         World world = loc1.getWorld();
         List<Vector> vectorList = getCubeOutlineVectors(loc1, loc2, density);
         return ArrayUtil.toLocationList(vectorList, world);
@@ -688,15 +643,13 @@ public final class MathUtil
      * @param density The density of the line
      * @return The list of vectors that represent the line
      */
-    public static List<Vector> getLine(Vector start, Vector end, double density)
-    {
+    public static List<Vector> getLine(Vector start, Vector end, double density) {
         List<Vector> lines = new ArrayList<>();
         Vector curVec = start.clone();
         Vector lookVec = getFacingVector(start, end, 1);
         double length = Math.abs(start.distance(end));
 
-        for(double i = 0; i < length; i += 1.0 / density)
-        {
+        for(double i = 0; i < length; i += 1.0 / density) {
             Vector newVec = lookVec.clone();
             newVec.multiply(i);
             curVec.add(newVec);
@@ -716,15 +669,13 @@ public final class MathUtil
      * @param density The density of the line
      * @return The list of locations that represent the line
      */
-    public static List<Location> getLine(Location start, Location end, double density)
-    {
+    public static List<Location> getLine(Location start, Location end, double density) {
         List<Location> lines = new ArrayList<>();
         Location curLoc = start.clone();
         Vector lookVec = start.getDirection().clone();
         double length = Math.abs(start.distance(end));
 
-        for(double i = 0; i < length; i += 1.0 / density)
-        {
+        for(double i = 0; i < length; i += 1.0 / density) {
             Vector newVec = lookVec.clone();
             newVec.multiply(i);
             curLoc.add(newVec);
@@ -745,21 +696,18 @@ public final class MathUtil
      * @param points   The amount of points of the star
      * @return A new <code>List</code> of locations that create a star
      */
-    public static List<Vector> getStarVectors(Location location, double size, double density, int points)
-    {
+    public static List<Vector> getStarVectors(Location location, double size, double density, int points) {
         List<Vector> star      = new ArrayList<>();
         List<Vector> starEdge  = new ArrayList<>();
         double       edgeAngle = 180.0 / points;
         double       curAngle  = 0;
-        for(int i = 0; i < points; ++i)
-        {
+        for(int i = 0; i < points; ++i) {
             double newAngle = i % 2 == 0 ? curAngle : curAngle + 180;
             Vector curVec = getVectorAroundCircle(location, size, Math.toRadians(newAngle));
             starEdge.add(curVec);
             curAngle += edgeAngle;
         }
-        for(int i = 0; i < starEdge.size(); ++i)
-        {
+        for(int i = 0; i < starEdge.size(); ++i) {
             Vector curVec = starEdge.get(i);
             Vector nextVec = i == starEdge.size() - 1 ? starEdge.get(0) : starEdge.get(i + 1);
             List<Vector> curLine = getLine(curVec, nextVec, density);
@@ -777,8 +725,7 @@ public final class MathUtil
      * @param points   The amount of points of the star
      * @return A new <code>List</code> of locations that create a star
      */
-    public static List<Location> getStarLocations(Location location, double size, double density, int points)
-    {
+    public static List<Location> getStarLocations(Location location, double size, double density, int points) {
         World world = location.getWorld();
         List<Vector> vectorList = getStarVectors(location, size, density, points);
         return ArrayUtil.toLocationList(vectorList, world);
@@ -793,20 +740,17 @@ public final class MathUtil
      * @param edges    The amount of edges on the shape
      * @return A new <code>List</code> of locations that create a shape
      */
-    public static List<Vector> getShapeVectors(Location location, double size, double density, int edges)
-    {
+    public static List<Vector> getShapeVectors(Location location, double size, double density, int edges) {
         List<Vector> shape = new ArrayList<>();
         List<Vector> shapeEdge = new ArrayList<>();
         double edgeAngle = 360.0 / edges;
         double curAngle = 0;
-        for(int i = 0; i < edges; ++i)
-        {
+        for(int i = 0; i < edges; ++i) {
             Vector curVec = getVectorAroundCircle(location, size, Math.toRadians(curAngle));
             shapeEdge.add(curVec);
             curAngle += edgeAngle;
         }
-        for(int i = 0; i < shapeEdge.size(); ++i)
-        {
+        for(int i = 0; i < shapeEdge.size(); ++i) {
             Vector curVec = shapeEdge.get(i);
             Vector nextVec = i == shapeEdge.size() - 1 ? shapeEdge.get(0) : shapeEdge.get(i + 1);
             List<Vector> curLine = getLine(curVec, nextVec, density);
@@ -824,8 +768,7 @@ public final class MathUtil
      * @param edges    The amount of edges of the shape
      * @return A new <code>List</code> of locations that create a shape
      */
-    public static List<Location> getShapeLocations(Location location, double size, double density, int edges)
-    {
+    public static List<Location> getShapeLocations(Location location, double size, double density, int edges) {
         World world = location.getWorld();
         List<Vector> vectorList = getShapeVectors(location, size, density, edges);
         return ArrayUtil.toLocationList(vectorList, world);
@@ -841,14 +784,12 @@ public final class MathUtil
      * @param heightDensity The density of particles in relation to the height
      * @return A new <code>List</code> of locations that create a cylinder
      */
-    public static List<Vector> getCylinderHollowVectors(Location center, double height, double radius, double radiusDensity, double heightDensity)
-    {
+    public static List<Vector> getCylinderHollowVectors(Location center, double height, double radius, double radiusDensity, double heightDensity) {
         List<Vector> cylinder = new ArrayList<>();
         List<Vector> circle = getCircleVectors(center, radius, radiusDensity);
         Vector transVec = new Vector(0, 1.0 / heightDensity, 0);
 
-        for(double y = 0; y < height; y += 1.0 / heightDensity)
-        {
+        for(double y = 0; y < height; y += 1.0 / heightDensity) {
             ArrayUtil.addClonedVectorsToList(circle, cylinder);
             addVectors(circle, transVec);
         }
@@ -865,8 +806,7 @@ public final class MathUtil
      * @param heightDensity The density of particles in relation to the height
      * @return A new <code>List</code> of locations that create a cylinder
      */
-    public static List<Location> getCylinderHollowLocations(Location center, double height, double radius, double radiusDensity, double heightDensity)
-    {
+    public static List<Location> getCylinderHollowLocations(Location center, double height, double radius, double radiusDensity, double heightDensity) {
         World world = center.getWorld();
         List<Vector> vectorList = getCylinderHollowVectors(center, height, radius, radiusDensity, heightDensity);
         return ArrayUtil.toLocationList(vectorList, world);
@@ -882,14 +822,12 @@ public final class MathUtil
      * @param heightDensity The density of particles in relation to the height
      * @return A new <code>List</code> of locations that create a cylinder
      */
-    public static List<Vector> getCylinderFilledVectors(Location center, double height, double radius, double radiusDensity, double heightDensity)
-    {
+    public static List<Vector> getCylinderFilledVectors(Location center, double height, double radius, double radiusDensity, double heightDensity) {
         List<Vector> cylinder = new ArrayList<>();
         List<Vector> circle = getCircleFilledVectors(center, radius, radiusDensity);
         Vector transVec = new Vector(0, 1.0 / heightDensity, 0);
 
-        for(double y = 0; y < height; y += 1.0 / heightDensity)
-        {
+        for(double y = 0; y < height; y += 1.0 / heightDensity) {
             ArrayUtil.addClonedVectorsToList(circle, cylinder);
             addVectors(circle, transVec);
         }
@@ -906,8 +844,7 @@ public final class MathUtil
      * @param heightDensity The density of particles in relation to the height
      * @return A new <code>List</code> of locations that create a cylinder
      */
-    public static List<Location> getCylinderFilledLocations(Location center, double height, double radius, double radiusDensity, double heightDensity)
-    {
+    public static List<Location> getCylinderFilledLocations(Location center, double height, double radius, double radiusDensity, double heightDensity) {
         World world = center.getWorld();
         List<Vector> vectorList = getCylinderFilledVectors(center, height, radius, radiusDensity, heightDensity);
         return ArrayUtil.toLocationList(vectorList, world);
@@ -920,8 +857,7 @@ public final class MathUtil
      * @param offset  The vector to use that will offset the list of vectors
      * @return The new list of offset vectors
      */
-    public static List<Vector> offsetVectors(List<Vector> vectors, Vector offset)
-    {
+    public static List<Vector> offsetVectors(List<Vector> vectors, Vector offset) {
         List<Vector> newVecs = new ArrayList<>();
         vectors.forEach(vector -> newVecs.add(vector.add(offset)));
         return newVecs;
@@ -934,8 +870,7 @@ public final class MathUtil
      * @param offset    The location to use that will offset the list of locations
      * @return The new list of offset locations
      */
-    public static List<Location> offsetLocations(List<Location> locations, Location offset)
-    {
+    public static List<Location> offsetLocations(List<Location> locations, Location offset) {
         List<Location> newLocs = new ArrayList<>();
         locations.forEach(location -> newLocs.add(location.add(offset)));
         return newLocs;
@@ -948,8 +883,7 @@ public final class MathUtil
      * @param offset  The location to use that will offset the list of vectors
      * @return The new list of offset vectors
      */
-    public static List<Vector> offsetVectors(List<Vector> vectors, Location offset)
-    {
+    public static List<Vector> offsetVectors(List<Vector> vectors, Location offset) {
         List<Vector> newVecs = new ArrayList<>();
         vectors.forEach(vector -> newVecs.add(vector.add(offset.toVector())));
         return newVecs;
@@ -962,8 +896,7 @@ public final class MathUtil
      * @param offset    The vector to use that will offset the list of locations
      * @return The new list of offset locations
      */
-    public static List<Location> offsetLocations(List<Location> locations, Vector offset)
-    {
+    public static List<Location> offsetLocations(List<Location> locations, Vector offset) {
         List<Location> newLocs = new ArrayList<>();
         locations.forEach(location -> newLocs.add(location.add(offset)));
         return newLocs;
@@ -975,8 +908,7 @@ public final class MathUtil
      * @param locations   The list of <code>Locations</code> to translate
      * @param translation The translation <code>Vector</code> to use
      */
-    public static void addLocations(List<Location> locations, Vector translation)
-    {
+    public static void addLocations(List<Location> locations, Vector translation) {
         locations.forEach(location -> location.add(translation));
     }
 
@@ -986,8 +918,7 @@ public final class MathUtil
      * @param locations   The list of <code>Locations</code> to translate
      * @param translation The translation <code>Vector</code> to use
      */
-    public static void subLocations(List<Location> locations, Vector translation)
-    {
+    public static void subLocations(List<Location> locations, Vector translation) {
         locations.forEach(location -> location.subtract(translation));
     }
 
@@ -997,8 +928,7 @@ public final class MathUtil
      * @param locations   The list of <code>Locations</code> to translate
      * @param translation The translation <code>Location</code> to use
      */
-    public static void addLocations(List<Location> locations, Location translation)
-    {
+    public static void addLocations(List<Location> locations, Location translation) {
         locations.forEach(location -> location.add(translation));
     }
 
@@ -1008,8 +938,7 @@ public final class MathUtil
      * @param locations   The list of <code>Locations</code> to translate
      * @param translation The translation <code>Location</code> to use
      */
-    public static void subLocations(List<Location> locations, Location translation)
-    {
+    public static void subLocations(List<Location> locations, Location translation) {
         locations.forEach(location -> location.subtract(translation));
     }
 
@@ -1019,8 +948,7 @@ public final class MathUtil
      * @param locations   The list of <code>Locations</code> to translate
      * @param translation The multiplier
      */
-    public static void mulLocations(List<Location> locations, double translation)
-    {
+    public static void mulLocations(List<Location> locations, double translation) {
         locations.forEach(location -> location.multiply(translation));
     }
 
@@ -1030,8 +958,7 @@ public final class MathUtil
      * @param vectors     The list of <code>Vectors</code> to translate
      * @param translation The translation <code>Vector</code> to use
      */
-    public static void addVectors(List<Vector> vectors, Vector translation)
-    {
+    public static void addVectors(List<Vector> vectors, Vector translation) {
         vectors.forEach(vector -> vector.add(translation));
     }
 
@@ -1041,8 +968,7 @@ public final class MathUtil
      * @param vectors     The list of <code>Vectors</code> to translate
      * @param translation The translation <code>Vector</code> to use
      */
-    public static void subVectors(List<Vector> vectors, Vector translation)
-    {
+    public static void subVectors(List<Vector> vectors, Vector translation) {
         vectors.forEach(vector -> vector.subtract(translation));
     }
 
@@ -1052,8 +978,7 @@ public final class MathUtil
      * @param vectors     The list of <code>Vectors</code> to translate
      * @param translation The multiplier
      */
-    public static void mulVectors(List<Vector> vectors, double translation)
-    {
+    public static void mulVectors(List<Vector> vectors, double translation) {
         vectors.forEach(vector -> vector.multiply(translation));
     }
 
@@ -1062,8 +987,7 @@ public final class MathUtil
      *
      * @param vectors The list of <code>Vectors</code> to normalize
      */
-    public static void normalizeList(List<Vector> vectors)
-    {
+    public static void normalizeList(List<Vector> vectors) {
         vectors.forEach(Vector::normalize);
     }
 
@@ -1073,15 +997,12 @@ public final class MathUtil
      * @param location The location to compare
      * @return The nearest player
      */
-    public static Player getNearestPlayer(Location location)
-    {
+    public static Player getNearestPlayer(Location location) {
         double previousDistance = Double.MAX_VALUE;
         Player result = null;
-        for(Player player : location.getWorld().getPlayers())
-        {
+        for(Player player : location.getWorld().getPlayers()) {
             double newDistance = player.getLocation().distanceSquared(location);
-            if(newDistance < previousDistance)
-            {
+            if(newDistance < previousDistance) {
                 previousDistance = newDistance;
                 result = player;
             }
@@ -1095,15 +1016,12 @@ public final class MathUtil
      * @param locations The list of locations to compare
      * @return The nearest location
      */
-    public static Location getNearestLocation(List<Location> locations)
-    {
+    public static Location getNearestLocation(List<Location> locations) {
         double previousDistance = Double.MAX_VALUE;
         Location result = null;
-        for(Location location : locations)
-        {
+        for(Location location : locations) {
             double newDistance = location.distanceSquared(location);
-            if(newDistance < previousDistance)
-            {
+            if(newDistance < previousDistance) {
                 previousDistance = newDistance;
                 result = location;
             }
@@ -1117,15 +1035,12 @@ public final class MathUtil
      * @param vectors The list of locations to compare
      * @return The nearest location
      */
-    public static Vector getNearestVector(List<Vector> vectors)
-    {
+    public static Vector getNearestVector(List<Vector> vectors) {
         double previousDistance = Double.MAX_VALUE;
         Vector result = null;
-        for(Vector location : vectors)
-        {
+        for(Vector location : vectors) {
             double newDistance = location.distanceSquared(location);
-            if(newDistance < previousDistance)
-            {
+            if(newDistance < previousDistance) {
                 previousDistance = newDistance;
                 result = location;
             }

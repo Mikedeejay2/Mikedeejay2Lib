@@ -11,8 +11,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class ParticleShapeStar implements ParticleShape
-{
+public class ParticleShapeStar implements ParticleShape {
     /**
      * The center location
      */
@@ -41,8 +40,7 @@ public class ParticleShapeStar implements ParticleShape
      * @param density  The density of particles
      * @param points   The amount of points on the star
      */
-    public ParticleShapeStar(Location location, double radius, double density, int points)
-    {
+    public ParticleShapeStar(Location location, double radius, double density, int points) {
         this.location = location;
         this.density = density;
         this.points = points;
@@ -55,8 +53,7 @@ public class ParticleShapeStar implements ParticleShape
      * @return The vector list
      */
     @Override
-    public List<Vector> getShape()
-    {
+    public List<Vector> getShape() {
         return MathUtil.getStarVectors(location, radius, density, points);
     }
 }

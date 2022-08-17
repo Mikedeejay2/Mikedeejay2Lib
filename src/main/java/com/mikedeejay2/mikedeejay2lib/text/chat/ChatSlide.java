@@ -13,8 +13,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class ChatSlide
-{
+public class ChatSlide {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -35,8 +34,7 @@ public class ChatSlide
      *
      * @param plugin The {@link BukkitPlugin} instance
      */
-    public ChatSlide(BukkitPlugin plugin)
-    {
+    public ChatSlide(BukkitPlugin plugin) {
         this.plugin = plugin;
         this.sections = new ArrayList<>();
     }
@@ -47,8 +45,7 @@ public class ChatSlide
      * @param plugin The {@link BukkitPlugin} instance
      * @param period The length of time between this slide and the next slide
      */
-    public ChatSlide(BukkitPlugin plugin, long period)
-    {
+    public ChatSlide(BukkitPlugin plugin, long period) {
         this(plugin);
         this.period = period;
     }
@@ -59,8 +56,7 @@ public class ChatSlide
      * @param section The <code>ChatSection</code> to add
      * @return The current <code>ChatSlide</code>
      */
-    public ChatSlide addSection(ChatSection section)
-    {
+    public ChatSlide addSection(ChatSection section) {
         sections.add(section);
         return this;
     }
@@ -72,8 +68,7 @@ public class ChatSlide
      * @param index   The index to add to
      * @return The current <code>ChatSlide</code>
      */
-    public ChatSlide addSection(ChatSection section, int index)
-    {
+    public ChatSlide addSection(ChatSection section, int index) {
         sections.add(index, section);
         return this;
     }
@@ -83,8 +78,7 @@ public class ChatSlide
      *
      * @return The newly created <code>ChatSection</code>
      */
-    public ChatSection createSection()
-    {
+    public ChatSection createSection() {
         ChatSection section = new ChatSection(plugin);
         sections.add(section);
         return section;
@@ -96,8 +90,7 @@ public class ChatSlide
      * @param index The index of the section to get
      * @return The requested section
      */
-    public ChatSection getSection(int index)
-    {
+    public ChatSection getSection(int index) {
         return sections.get(index);
     }
 
@@ -107,8 +100,7 @@ public class ChatSlide
      * @param index The index to add the new <code>ChatSection</code> to
      * @return The newly created <code>ChatSection</code>
      */
-    public ChatSection createSection(int index)
-    {
+    public ChatSection createSection(int index) {
         ChatSection section = new ChatSection(plugin);
         sections.add(index, section);
         return section;
@@ -120,8 +112,7 @@ public class ChatSlide
      *
      * @return The period of this <code>ChatSlide</code>
      */
-    public long getPeriod()
-    {
+    public long getPeriod() {
         return period;
     }
 
@@ -132,8 +123,7 @@ public class ChatSlide
      * @param period The new period to use
      * @return The current <code>ChatSlide</code>
      */
-    public ChatSlide setPeriod(long period)
-    {
+    public ChatSlide setPeriod(long period) {
         this.period = period;
         return this;
     }
@@ -144,10 +134,8 @@ public class ChatSlide
      * @param receivers The array of <code>CommandSenders</code> that will receive this message
      * @return The current <code>ChatSlide</code>
      */
-    public ChatSlide print(CommandSender... receivers)
-    {
-        for(ChatSection section : sections)
-        {
+    public ChatSlide print(CommandSender... receivers) {
+        for(ChatSection section : sections) {
             for(CommandSender receiver : receivers) section.print(receiver);
         }
         return this;
@@ -158,8 +146,7 @@ public class ChatSlide
      *
      * @return The current <code>ChatSlide</code>
      */
-    public ChatSlide broadcast()
-    {
+    public ChatSlide broadcast() {
         this.print(Bukkit.getOnlinePlayers().toArray(new Player[0]));
         return this;
     }
@@ -169,8 +156,7 @@ public class ChatSlide
      *
      * @return The current <code>ChatSlide</code>
      */
-    public ChatSlide printToConsole()
-    {
+    public ChatSlide printToConsole() {
         this.print(Bukkit.getConsoleSender());
         return this;
     }

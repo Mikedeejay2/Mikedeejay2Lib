@@ -9,8 +9,7 @@ import com.mikedeejay2.mikedeejay2lib.particle.ParticleEffect;
  *
  * @author Mikedeejay2
  */
-public interface ParticleEModule
-{
+public interface ParticleEModule {
     /**
      * Called on the head of display of particles in {@link ParticleEffect#display()}
      *

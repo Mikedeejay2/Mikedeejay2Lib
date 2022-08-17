@@ -19,8 +19,7 @@ import java.util.Random;
  *
  * @author Mikedeejay2
  */
-public final class CommandSelectors
-{
+public final class CommandSelectors {
     /**
      * The random being used for @r
      */
@@ -29,8 +28,7 @@ public final class CommandSelectors
     /**
      * This class can not be constructed
      */
-    private CommandSelectors()
-    {
+    private CommandSelectors() {
         throw new UnsupportedOperationException("PlayerSelectorUtil can not be initialized as an object");
     }
 
@@ -43,22 +41,17 @@ public final class CommandSelectors
      * @param value The input value, either a player's name or a player selector
      * @return The list of retrieved players
      */
-    public static List<Player> getPlayers(String value, CommandSender sender)
-    {
-        switch(value.toLowerCase())
-        {
+    public static List<Player> getPlayers(String value, CommandSender sender) {
+        switch(value.toLowerCase()) {
             case "@p":
                 Location location;
-                if(sender instanceof Entity)
-                {
+                if(sender instanceof Entity) {
                     location = ((LivingEntity) sender).getLocation();
                 }
-                else if(sender instanceof BlockCommandSender)
-                {
+                else if(sender instanceof BlockCommandSender) {
                     location = ((BlockCommandSender) sender).getBlock().getLocation();
                 }
-                else
-                {
+                else {
                     location = new Location(Bukkit.getWorlds().get(0), 0, 0, 0);
                 }
                 return Collections.singletonList(MathUtil.getNearestPlayer(location));

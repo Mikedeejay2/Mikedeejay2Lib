@@ -23,8 +23,7 @@ import java.util.Set;
  *
  * @author Mikedeejay2
  */
-public class YamlAccessor extends SectionAccessor<YamlFile, Object>
-{
+public class YamlAccessor extends SectionAccessor<YamlFile, Object> {
     /**
      * The ConfigurationSection that this SectionAccessor is accessing
      */
@@ -36,8 +35,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param dataFile The {@link YamlFile} to reference
      * @param section  The <code>ConfigurationSection</code> to reference
      */
-    public YamlAccessor(YamlFile dataFile, ConfigurationSection section)
-    {
+    public YamlAccessor(YamlFile dataFile, ConfigurationSection section) {
         super(dataFile);
         this.yaml = section;
     }
@@ -49,8 +47,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested object
      */
     @Override
-    public Object get(String name)
-    {
+    public Object get(String name) {
         return yaml.get(name);
     }
 
@@ -61,8 +58,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param object The object that will be set
      */
     @Override
-    public void set(String name, Object object)
-    {
+    public void set(String name, Object object) {
         yaml.set(name, object);
     }
 
@@ -73,8 +69,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return Whether this section contains the name or not
      */
     @Override
-    public boolean contains(String name)
-    {
+    public boolean contains(String name) {
         return yaml.contains(name);
     }
 
@@ -84,8 +79,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param name Name of object to delete
      */
     @Override
-    public void delete(String name)
-    {
+    public void delete(String name) {
         yaml.set(name, null);
     }
 
@@ -96,10 +90,8 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested <code>SectionAccessor</code>
      */
     @Override
-    public YamlAccessor getSection(String name)
-    {
-        if(!yaml.isConfigurationSection(name))
-        {
+    public YamlAccessor getSection(String name) {
+        if(!yaml.isConfigurationSection(name)) {
             yaml.createSection(name);
         }
         return new YamlAccessor(dataFile, yaml.getConfigurationSection(name));
@@ -112,8 +104,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested keys
      */
     @Override
-    public Set<String> getKeys(boolean deep)
-    {
+    public Set<String> getKeys(boolean deep) {
         return yaml.getKeys(deep);
     }
 
@@ -124,8 +115,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested values
      */
     @Override
-    public Set<Object> getValues(boolean deep)
-    {
+    public Set<Object> getValues(boolean deep) {
         return new HashSet<>(yaml.getValues(deep).values());
     }
 
@@ -136,8 +126,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested key-value pairs
      */
     @Override
-    public Map<String, Object> getKeyValuePairs(boolean deep)
-    {
+    public Map<String, Object> getKeyValuePairs(boolean deep) {
         return yaml.getValues(deep);
     }
 
@@ -148,8 +137,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public boolean getBoolean(String name)
-    {
+    public boolean getBoolean(String name) {
         return yaml.getBoolean(name);
     }
 
@@ -160,8 +148,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public int getInt(String name)
-    {
+    public int getInt(String name) {
         return yaml.getInt(name);
     }
 
@@ -172,8 +159,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public float getFloat(String name)
-    {
+    public float getFloat(String name) {
         return (float)yaml.getDouble(name);
     }
 
@@ -184,8 +170,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public double getDouble(String name)
-    {
+    public double getDouble(String name) {
         return yaml.getDouble(name);
     }
 
@@ -196,8 +181,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public long getLong(String name)
-    {
+    public long getLong(String name) {
         return yaml.getLong(name);
     }
 
@@ -208,8 +192,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public String getString(String name)
-    {
+    public String getString(String name) {
         return yaml.getString(name);
     }
 
@@ -220,8 +203,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public ItemStack getItemStack(String name)
-    {
+    public ItemStack getItemStack(String name) {
         return yaml.getItemStack(name);
     }
 
@@ -232,8 +214,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public Location getLocation(String name)
-    {
+    public Location getLocation(String name) {
         return yaml.getLocation(name);
     }
 
@@ -244,8 +225,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public Vector getVector(String name)
-    {
+    public Vector getVector(String name) {
         return yaml.getVector(name);
     }
 
@@ -256,8 +236,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public ItemMeta getItemMeta(String name)
-    {
+    public ItemMeta getItemMeta(String name) {
         return (ItemMeta) yaml.get(name);
     }
 
@@ -268,8 +247,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public OfflinePlayer getPlayer(String name)
-    {
+    public OfflinePlayer getPlayer(String name) {
         return yaml.getOfflinePlayer(name);
     }
 
@@ -280,8 +258,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public AttributeModifier getAttributeModifier(String name)
-    {
+    public AttributeModifier getAttributeModifier(String name) {
         return (AttributeModifier) yaml.get(name);
     }
 
@@ -292,8 +269,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public BlockVector getBlockVector(String name)
-    {
+    public BlockVector getBlockVector(String name) {
         return (BlockVector) yaml.get(name);
     }
 
@@ -304,8 +280,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public BoundingBox getBoundingBox(String name)
-    {
+    public BoundingBox getBoundingBox(String name) {
         return (BoundingBox) yaml.get(name);
     }
 
@@ -316,8 +291,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public Color getColor(String name)
-    {
+    public Color getColor(String name) {
         return (Color) yaml.get(name);
     }
 
@@ -328,8 +302,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public FireworkEffect getFireworkEffect(String name)
-    {
+    public FireworkEffect getFireworkEffect(String name) {
         return (FireworkEffect) yaml.get(name);
     }
 
@@ -340,8 +313,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public Pattern getPattern(String name)
-    {
+    public Pattern getPattern(String name) {
         return (Pattern) yaml.get(name);
     }
 
@@ -352,8 +324,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public PotionEffect getPotionEffect(String name)
-    {
+    public PotionEffect getPotionEffect(String name) {
         return (PotionEffect) yaml.get(name);
     }
 
@@ -364,8 +335,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public Material getMaterial(String name)
-    {
+    public Material getMaterial(String name) {
         return (Material) yaml.get(name);
     }
 
@@ -376,8 +346,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public ConfigurationSerializable getSerialized(String name)
-    {
+    public ConfigurationSerializable getSerialized(String name) {
         return (ConfigurationSerializable) yaml.get(name);
     }
 
@@ -390,8 +359,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested value
      */
     @Override
-    public <C extends ConfigurationSerializable> C getSerialized(String name, Class<C> clazz)
-    {
+    public <C extends ConfigurationSerializable> C getSerialized(String name, Class<C> clazz) {
         return clazz.cast(yaml.get(name));
     }
 
@@ -402,8 +370,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<Boolean> getBooleanList(String name)
-    {
+    public List<Boolean> getBooleanList(String name) {
         return yaml.getBooleanList(name);
     }
 
@@ -414,8 +381,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<Integer> getIntList(String name)
-    {
+    public List<Integer> getIntList(String name) {
         return yaml.getIntegerList(name);
     }
 
@@ -426,8 +392,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<Float> getFloatList(String name)
-    {
+    public List<Float> getFloatList(String name) {
         return yaml.getFloatList(name);
     }
 
@@ -438,8 +403,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<Double> getDoubleList(String name)
-    {
+    public List<Double> getDoubleList(String name) {
         return yaml.getDoubleList(name);
     }
 
@@ -450,8 +414,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<Long> getLongList(String name)
-    {
+    public List<Long> getLongList(String name) {
         return yaml.getLongList(name);
     }
 
@@ -462,8 +425,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<String> getStringList(String name)
-    {
+    public List<String> getStringList(String name) {
         return yaml.getStringList(name);
     }
 
@@ -474,8 +436,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<ItemStack> getItemStackList(String name)
-    {
+    public List<ItemStack> getItemStackList(String name) {
         return (List<ItemStack>) yaml.getList(name);
     }
 
@@ -486,8 +447,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<Location> getLocationList(String name)
-    {
+    public List<Location> getLocationList(String name) {
         return (List<Location>) yaml.getList(name);
     }
 
@@ -498,8 +458,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<Vector> getVectorList(String name)
-    {
+    public List<Vector> getVectorList(String name) {
         return (List<Vector>) yaml.getList(name);
     }
 
@@ -510,8 +469,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<OfflinePlayer> getPlayerList(String name)
-    {
+    public List<OfflinePlayer> getPlayerList(String name) {
         return (List<OfflinePlayer>) yaml.getList(name);
     }
 
@@ -522,8 +480,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<AttributeModifier> getAttributeModifierList(String name)
-    {
+    public List<AttributeModifier> getAttributeModifierList(String name) {
         return (List<AttributeModifier>) yaml.getList(name);
     }
 
@@ -534,8 +491,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<BlockVector> getBlockVectorList(String name)
-    {
+    public List<BlockVector> getBlockVectorList(String name) {
         return (List<BlockVector>) yaml.getList(name);
     }
 
@@ -546,8 +502,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<BoundingBox> getBoundingBoxList(String name)
-    {
+    public List<BoundingBox> getBoundingBoxList(String name) {
         return (List<BoundingBox>) yaml.getList(name);
     }
 
@@ -558,8 +513,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<Color> getColorList(String name)
-    {
+    public List<Color> getColorList(String name) {
         return (List<Color>) yaml.getList(name);
     }
 
@@ -570,8 +524,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<FireworkEffect> getFireworkEffectList(String name)
-    {
+    public List<FireworkEffect> getFireworkEffectList(String name) {
         return (List<FireworkEffect>) yaml.getList(name);
     }
 
@@ -582,8 +535,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<Pattern> getPatternList(String name)
-    {
+    public List<Pattern> getPatternList(String name) {
         return (List<Pattern>) yaml.getList(name);
     }
 
@@ -594,8 +546,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<PotionEffect> getPotionEffectList(String name)
-    {
+    public List<PotionEffect> getPotionEffectList(String name) {
         return (List<PotionEffect>) yaml.getList(name);
     }
 
@@ -606,8 +557,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<Material> getMaterialList(String name)
-    {
+    public List<Material> getMaterialList(String name) {
         return (List<Material>) yaml.getList(name);
     }
 
@@ -618,8 +568,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public List<ConfigurationSerializable> getSerializedList(String name)
-    {
+    public List<ConfigurationSerializable> getSerializedList(String name) {
         return (List<ConfigurationSerializable>) yaml.getList(name);
     }
 
@@ -632,8 +581,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @return The requested list
      */
     @Override
-    public <C extends ConfigurationSerializable> List<C> getSerializedList(String name, Class<C> clazz)
-    {
+    public <C extends ConfigurationSerializable> List<C> getSerializedList(String name, Class<C> clazz) {
         return (List<C>) yaml.getList(name);
     }
 
@@ -644,8 +592,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setBoolean(String name, boolean data)
-    {
+    public void setBoolean(String name, boolean data) {
         yaml.set(name, data);
     }
 
@@ -656,8 +603,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setInt(String name, int data)
-    {
+    public void setInt(String name, int data) {
         yaml.set(name, data);
     }
 
@@ -668,8 +614,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setFloat(String name, float data)
-    {
+    public void setFloat(String name, float data) {
         yaml.set(name, data);
     }
 
@@ -680,8 +625,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setDouble(String name, double data)
-    {
+    public void setDouble(String name, double data) {
         yaml.set(name, data);
     }
 
@@ -692,8 +636,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setLong(String name, long data)
-    {
+    public void setLong(String name, long data) {
         yaml.set(name, data);
     }
 
@@ -704,8 +647,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setString(String name, String data)
-    {
+    public void setString(String name, String data) {
         yaml.set(name, data);
     }
 
@@ -716,8 +658,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setItemStack(String name, ItemStack data)
-    {
+    public void setItemStack(String name, ItemStack data) {
         yaml.set(name, data);
     }
 
@@ -728,8 +669,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setLocation(String name, Location data)
-    {
+    public void setLocation(String name, Location data) {
         yaml.set(name, data);
     }
 
@@ -740,8 +680,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setVector(String name, Vector data)
-    {
+    public void setVector(String name, Vector data) {
         yaml.set(name, data);
     }
 
@@ -752,8 +691,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setPlayer(String name, OfflinePlayer data)
-    {
+    public void setPlayer(String name, OfflinePlayer data) {
         yaml.set(name, data);
     }
 
@@ -764,8 +702,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setAttributeModifier(String name, AttributeModifier data)
-    {
+    public void setAttributeModifier(String name, AttributeModifier data) {
         yaml.set(name, data);
     }
 
@@ -776,8 +713,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setBlockVector(String name, BlockVector data)
-    {
+    public void setBlockVector(String name, BlockVector data) {
         yaml.set(name, data);
     }
 
@@ -788,8 +724,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setBoundingBox(String name, BoundingBox data)
-    {
+    public void setBoundingBox(String name, BoundingBox data) {
         yaml.set(name, data);
     }
 
@@ -800,8 +735,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setColor(String name, Color data)
-    {
+    public void setColor(String name, Color data) {
         yaml.set(name, data);
     }
 
@@ -812,8 +746,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setFireworkEffect(String name, FireworkEffect data)
-    {
+    public void setFireworkEffect(String name, FireworkEffect data) {
         yaml.set(name, data);
     }
 
@@ -824,8 +757,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setPattern(String name, Pattern data)
-    {
+    public void setPattern(String name, Pattern data) {
         yaml.set(name, data);
     }
 
@@ -836,8 +768,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setPotionEffect(String name, PotionEffect data)
-    {
+    public void setPotionEffect(String name, PotionEffect data) {
         yaml.set(name, data);
     }
 
@@ -848,8 +779,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setMaterial(String name, Material data)
-    {
+    public void setMaterial(String name, Material data) {
         yaml.set(name, data);
     }
 
@@ -860,8 +790,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The data to set to the key
      */
     @Override
-    public void setSerialized(String name, ConfigurationSerializable data)
-    {
+    public void setSerialized(String name, ConfigurationSerializable data) {
         yaml.set(name, data);
     }
 
@@ -872,8 +801,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setBooleanList(String name, List<Boolean> data)
-    {
+    public void setBooleanList(String name, List<Boolean> data) {
         yaml.set(name, data);
     }
 
@@ -884,8 +812,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setIntList(String name, List<Integer> data)
-    {
+    public void setIntList(String name, List<Integer> data) {
         yaml.set(name, data);
     }
 
@@ -896,8 +823,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setFloatList(String name, List<Float> data)
-    {
+    public void setFloatList(String name, List<Float> data) {
         yaml.set(name, data);
     }
 
@@ -908,8 +834,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setDoubleList(String name, List<Double> data)
-    {
+    public void setDoubleList(String name, List<Double> data) {
         yaml.set(name, data);
     }
 
@@ -920,8 +845,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setLongList(String name, List<Long> data)
-    {
+    public void setLongList(String name, List<Long> data) {
         yaml.set(name, data);
     }
 
@@ -932,8 +856,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setStringList(String name, List<String> data)
-    {
+    public void setStringList(String name, List<String> data) {
         yaml.set(name, data);
     }
 
@@ -944,8 +867,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setItemStackList(String name, List<ItemStack> data)
-    {
+    public void setItemStackList(String name, List<ItemStack> data) {
         yaml.set(name, data);
     }
 
@@ -956,8 +878,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setLocationList(String name, List<Location> data)
-    {
+    public void setLocationList(String name, List<Location> data) {
         yaml.set(name, data);
     }
 
@@ -968,8 +889,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setVectorList(String name, List<Vector> data)
-    {
+    public void setVectorList(String name, List<Vector> data) {
         yaml.set(name, data);
     }
 
@@ -980,8 +900,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setPlayerList(String name, List<OfflinePlayer> data)
-    {
+    public void setPlayerList(String name, List<OfflinePlayer> data) {
         yaml.set(name, data);
     }
 
@@ -992,8 +911,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setAttributeModifierList(String name, List<AttributeModifier> data)
-    {
+    public void setAttributeModifierList(String name, List<AttributeModifier> data) {
         yaml.set(name, data);
     }
 
@@ -1004,8 +922,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setBlockVectorList(String name, List<BlockVector> data)
-    {
+    public void setBlockVectorList(String name, List<BlockVector> data) {
         yaml.set(name, data);
     }
 
@@ -1016,8 +933,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setBoundingBoxList(String name, List<BoundingBox> data)
-    {
+    public void setBoundingBoxList(String name, List<BoundingBox> data) {
         yaml.set(name, data);
     }
 
@@ -1028,8 +944,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setColorList(String name, List<Color> data)
-    {
+    public void setColorList(String name, List<Color> data) {
         yaml.set(name, data);
     }
 
@@ -1040,8 +955,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setFireworkEffectList(String name, List<FireworkEffect> data)
-    {
+    public void setFireworkEffectList(String name, List<FireworkEffect> data) {
         yaml.set(name, data);
     }
 
@@ -1052,8 +966,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setPatternList(String name, List<Pattern> data)
-    {
+    public void setPatternList(String name, List<Pattern> data) {
         yaml.set(name, data);
     }
 
@@ -1064,8 +977,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setPotionEffectList(String name, List<PotionEffect> data)
-    {
+    public void setPotionEffectList(String name, List<PotionEffect> data) {
         yaml.set(name, data);
     }
 
@@ -1076,8 +988,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setMaterialList(String name, List<Material> data)
-    {
+    public void setMaterialList(String name, List<Material> data) {
         yaml.set(name, data);
     }
 
@@ -1088,8 +999,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object>
      * @param data The <code>List</code> of data to set to the key
      */
     @Override
-    public void setSerializedList(String name, List<ConfigurationSerializable> data)
-    {
+    public void setSerializedList(String name, List<ConfigurationSerializable> data) {
         yaml.set(name, data);
     }
 }

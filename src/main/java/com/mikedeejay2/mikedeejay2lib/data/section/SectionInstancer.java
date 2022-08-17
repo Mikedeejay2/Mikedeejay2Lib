@@ -11,8 +11,7 @@ import com.mikedeejay2.mikedeejay2lib.data.DataFile;
  *
  * @author Mikedeejay2
  */
-public interface SectionInstancer<R extends SectionAccessor<D, T>, D extends DataFile, T>
-{
+public interface SectionInstancer<R extends SectionAccessor<D, T>, D extends DataFile, T> {
     /**
      * Retrieve a {@link SectionAccessor} of a specified key name
      *

@@ -15,7 +15,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * A util class for creating items.
+ * An util class for creating items.
  * <p>
  * This is not recommended for use and is deprecated. Instead of using <code>ItemCreator</code>,
  * please instead use {@link ItemBuilder}, as it's much more flexible and thought out.
@@ -29,8 +29,7 @@ import java.util.UUID;
  * @author Mikedeejay2
  */
 @Deprecated
-public final class ItemCreator
-{
+public final class ItemCreator {
     /**
      * Create an item based off of several arguments
      *
@@ -41,15 +40,13 @@ public final class ItemCreator
      * @return The new ItemStack
      */
     @Deprecated
-    public static ItemStack createItem(Material material, int amount, String displayName, String... loreString)
-    {
+    public static ItemStack createItem(Material material, int amount, String displayName, String... loreString) {
         ItemStack item;
         List<String> lore = new ArrayList<>();
         item = new ItemStack(material, amount);
         ItemMeta meta = item.getItemMeta();
         meta.setDisplayName(Colors.format(displayName));
-        for(String s : loreString)
-        {
+        for(String s : loreString) {
             lore.add(Colors.format(s));
         }
         meta.setLore(lore);
@@ -67,8 +64,7 @@ public final class ItemCreator
      * @return The new head ItemStack
      */
     @Deprecated
-    public static ItemStack createHeadItem(String base64Head, int amount, String displayName, String... loreString)
-    {
+    public static ItemStack createHeadItem(String base64Head, int amount, String displayName, String... loreString) {
         ItemStack item;
         List<String> lore = new ArrayList<>();
         item = new ItemStack(Material.PLAYER_HEAD, amount);
@@ -76,18 +72,14 @@ public final class ItemCreator
         GameProfile profile = new GameProfile(UUID.randomUUID(), "");
         profile.getProperties().put("textures", new Property("textures", base64Head));
         Field profileField = null;
-        try
-        {
+        try {
             profileField = skullMeta.getClass().getDeclaredField("profile");
             profileField.setAccessible(true);
             profileField.set(skullMeta, profile);
-        }
-        catch(IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e)
-        {
+        } catch(IllegalArgumentException | IllegalAccessException | NoSuchFieldException | SecurityException e) {
             e.printStackTrace();
         }
-        for(String s : loreString)
-        {
+        for(String s : loreString) {
             lore.add(Colors.format(s));
         }
         item.setItemMeta(skullMeta);

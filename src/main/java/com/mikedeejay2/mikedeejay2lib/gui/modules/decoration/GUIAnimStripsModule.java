@@ -23,8 +23,7 @@ public class GUIAnimStripsModule implements GUIModule
      *
      * @param item The item that will be used for the strips
      */
-    public GUIAnimStripsModule(AnimatedGUIItem item)
-    {
+    public GUIAnimStripsModule(AnimatedGUIItem item) {
         this.item = item;
     }
 
@@ -35,11 +34,9 @@ public class GUIAnimStripsModule implements GUIModule
      * @param gui    The GUI
      */
     @Override
-    public void onOpenHead(Player player, GUIContainer gui)
-    {
+    public void onOpenHead(Player player, GUIContainer gui) {
         GUILayer layer = gui.getLayer(0);
-        for(int row = 1; row <= gui.getRows(); ++row)
-        {
+        for(int row = 1; row <= gui.getRows(); ++row) {
             AnimatedGUIItem curItem = (AnimatedGUIItem) item.clone();
             curItem.setDelay(gui.getRows() - (row - 1));
             layer.setItem(row, 1, curItem);
@@ -52,8 +49,7 @@ public class GUIAnimStripsModule implements GUIModule
      *
      * @return The {@link AnimatedGUIItem} being used
      */
-    public AnimatedGUIItem getItem()
-    {
+    public AnimatedGUIItem getItem() {
         return item;
     }
 
@@ -62,8 +58,7 @@ public class GUIAnimStripsModule implements GUIModule
      *
      * @param item The new item
      */
-    public void setItem(AnimatedGUIItem item)
-    {
+    public void setItem(AnimatedGUIItem item) {
         this.item = item;
     }
 }

@@ -24,8 +24,7 @@ import java.util.Set;
  * @param <T> The default return type of the Section Accessor, see <code>get</code> and <code>set</code> methods
  * @author Mikedeejay2
  */
-public abstract class SectionAccessor<D extends DataFile, T>
-{
+public abstract class SectionAccessor<D extends DataFile, T> {
 
     /**
      * The parent {@link DataFile} that this <code>SectionAccessor</code> is accessing
@@ -41,8 +40,7 @@ public abstract class SectionAccessor<D extends DataFile, T>
      *
      * @param dataFile The {@link DataFile} that this <code>SectionAccessor</code> references
      */
-    public SectionAccessor(D dataFile)
-    {
+    public SectionAccessor(D dataFile) {
         Validate.notNull(dataFile, "dataFile cannot be null");
         this.dataFile = dataFile;
         this.filePath = dataFile.getFilePath();
@@ -755,8 +753,7 @@ public abstract class SectionAccessor<D extends DataFile, T>
      *
      * @return The <code>DataFile</code> of this accessor
      */
-    public D getDataFile()
-    {
+    public D getDataFile() {
         return dataFile;
     }
 
@@ -766,8 +763,7 @@ public abstract class SectionAccessor<D extends DataFile, T>
      *
      * @return The current path
      */
-    public String getCurrentPath()
-    {
+    public String getCurrentPath() {
         return filePath;
     }
 }

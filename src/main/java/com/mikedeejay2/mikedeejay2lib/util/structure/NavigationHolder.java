@@ -1,7 +1,12 @@
 package com.mikedeejay2.mikedeejay2lib.util.structure;
 
-public class NavigationHolder<T> extends HistoryHolder<T> implements IdentityHolder<String>
-{
+/**
+ * A {@link HistoryHolder} implementing an {@link IdentityHolder} intended to hold the history of a navigable system.
+ *
+ * @param <T> The data being stored
+ * @author Mikedeejay2
+ */
+public class NavigationHolder<T> extends HistoryHolder<T> implements IdentityHolder<String> {
     /**
      * The navigation ID
      */
@@ -17,8 +22,7 @@ public class NavigationHolder<T> extends HistoryHolder<T> implements IdentityHol
      *
      * @param navigationID The navigation ID
      */
-    public NavigationHolder(String navigationID)
-    {
+    public NavigationHolder(String navigationID) {
         this.navigationID = navigationID;
         this.hasNavigated = false;
     }
@@ -29,8 +33,7 @@ public class NavigationHolder<T> extends HistoryHolder<T> implements IdentityHol
      * @return The ID
      */
     @Override
-    public String getID()
-    {
+    public String getID() {
         return navigationID;
     }
 
@@ -39,8 +42,7 @@ public class NavigationHolder<T> extends HistoryHolder<T> implements IdentityHol
      *
      * @param id The new ID
      */
-    public void setID(String id)
-    {
+    public void setID(String id) {
         this.navigationID = id;
     }
 
@@ -50,8 +52,7 @@ public class NavigationHolder<T> extends HistoryHolder<T> implements IdentityHol
      *
      * @return The navigation flag
      */
-    public boolean isNavigationFlagged()
-    {
+    public boolean isNavigationFlagged() {
         return hasNavigated;
     }
 
@@ -61,8 +62,7 @@ public class NavigationHolder<T> extends HistoryHolder<T> implements IdentityHol
      *
      * @param hasNavigated The new navigation flag
      */
-    public void setNavigationFlag(boolean hasNavigated)
-    {
+    public void setNavigationFlag(boolean hasNavigated) {
         this.hasNavigated = hasNavigated;
     }
 }

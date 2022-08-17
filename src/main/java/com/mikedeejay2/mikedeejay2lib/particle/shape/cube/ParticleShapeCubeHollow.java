@@ -12,8 +12,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class ParticleShapeCubeHollow implements ParticleShape
-{
+public class ParticleShapeCubeHollow implements ParticleShape {
     /**
      * The center location
      */
@@ -65,8 +64,7 @@ public class ParticleShapeCubeHollow implements ParticleShape
      * @param zWidth   The Z width
      * @param density  The density of particles
      */
-    public ParticleShapeCubeHollow(Location location, double xWidth, double yWidth, double zWidth, double density)
-    {
+    public ParticleShapeCubeHollow(Location location, double xWidth, double yWidth, double zWidth, double density) {
         this.location = location;
         this.density = density;
         this.xWidth = xWidth;
@@ -82,8 +80,7 @@ public class ParticleShapeCubeHollow implements ParticleShape
      * @param loc2    Second location
      * @param density The density of particles
      */
-    public ParticleShapeCubeHollow(Location loc1, Location loc2, double density)
-    {
+    public ParticleShapeCubeHollow(Location loc1, Location loc2, double density) {
         this.loc1 = loc1;
         this.loc2 = loc2;
         this.density = density;
@@ -96,10 +93,8 @@ public class ParticleShapeCubeHollow implements ParticleShape
      * @return The vector list
      */
     @Override
-    public List<Vector> getShape()
-    {
-        if(mode)
-        {
+    public List<Vector> getShape() {
+        if(mode) {
             return MathUtil.getCubeHollowVectors(loc1, loc2, density);
         }
         return MathUtil.getCubeHollowVectors(location, xWidth, yWidth, zWidth, density);

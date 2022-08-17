@@ -6,7 +6,6 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -16,8 +15,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Mikedeejay2
  */
-public class GUIOpenNewEvent implements GUIEvent
-{
+public class GUIOpenNewEvent implements GUIEvent {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -42,8 +40,7 @@ public class GUIOpenNewEvent implements GUIEvent
      * @param plugin      The {@link BukkitPlugin} instance
      * @param constructor The {@link GUIConstructor} used for constructing the new GUI
      */
-    public GUIOpenNewEvent(BukkitPlugin plugin, GUIConstructor constructor)
-    {
+    public GUIOpenNewEvent(BukkitPlugin plugin, GUIConstructor constructor) {
         this.plugin = plugin;
         this.constructor = constructor;
         this.gui = null;
@@ -56,8 +53,7 @@ public class GUIOpenNewEvent implements GUIEvent
      * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(GUIEventInfo info)
-    {
+    public void execute(GUIEventInfo info) {
         ClickType clickType = info.getClick();
         if(clickType != ClickType.LEFT) return;
         construct();
@@ -69,8 +65,7 @@ public class GUIOpenNewEvent implements GUIEvent
      *
      * @return The <code>GUIConstructor</code>
      */
-    public GUIConstructor getConstructor()
-    {
+    public GUIConstructor getConstructor() {
         return constructor;
     }
 
@@ -79,8 +74,7 @@ public class GUIOpenNewEvent implements GUIEvent
      *
      * @param constructor The new <code>GUIConstructor</code>
      */
-    public void setConstructor(GUIConstructor constructor)
-    {
+    public void setConstructor(GUIConstructor constructor) {
         this.constructor = constructor;
     }
 
@@ -89,8 +83,7 @@ public class GUIOpenNewEvent implements GUIEvent
      *
      * @return The <code>GUIContainer</code>
      */
-    public GUIContainer getGUI()
-    {
+    public GUIContainer getGUI() {
         construct();
         return gui;
     }
@@ -98,10 +91,8 @@ public class GUIOpenNewEvent implements GUIEvent
     /**
      * Force the construction of the {@link GUIContainer}
      */
-    public void construct()
-    {
-        if(this.event == null)
-        {
+    public void construct() {
+        if(this.event == null) {
             this.gui = constructor.get();
             this.event = new GUIOpenEvent(plugin, this.gui);
         }

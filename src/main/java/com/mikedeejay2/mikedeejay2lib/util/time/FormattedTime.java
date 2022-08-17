@@ -8,8 +8,7 @@ import java.time.format.DateTimeFormatter;
  *
  * @author Mikedeejay2
  */
-public final class FormattedTime
-{
+public final class FormattedTime {
     /**
      * The formatter that will format the current time
      */
@@ -25,8 +24,7 @@ public final class FormattedTime
      *
      * @return The current formatted time
      */
-    public static String getTime()
-    {
+    public static String getTime() {
         return formatter.format(now);
     }
 }

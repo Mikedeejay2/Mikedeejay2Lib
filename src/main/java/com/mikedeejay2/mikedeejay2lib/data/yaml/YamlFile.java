@@ -2,18 +2,16 @@ package com.mikedeejay2.mikedeejay2lib.data.yaml;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.data.DataFile;
-import com.mikedeejay2.mikedeejay2lib.data.section.SectionAccessor;
 import com.mikedeejay2.mikedeejay2lib.data.section.SectionInstancer;
 import com.mikedeejay2.mikedeejay2lib.util.file.YamlFileIO;
 
 /**
- * A <code>YamlFile</code> is inherited from DataFile and it actually makes working with Yaml files slightly
+ * A <code>YamlFile</code> is inherited from DataFile, and it actually makes working with Yaml files slightly
  * easier to work with.
  *
  * @author Mikedeejay2
  */
-public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor, YamlFile, Object>
-{
+public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor, YamlFile, Object> {
     /**
      * The {@link EnhancedYaml} object that the <code>YamlFile</code> is accessing
      */
@@ -29,8 +27,7 @@ public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor,
      * @param plugin   The {@link BukkitPlugin} instance
      * @param filePath The path to the file
      */
-    public YamlFile(BukkitPlugin plugin, String filePath)
-    {
+    public YamlFile(BukkitPlugin plugin, String filePath) {
         super(plugin, filePath);
         yamlFile = new EnhancedYaml();
         accessor = new YamlAccessor(this, yamlFile);
@@ -41,8 +38,7 @@ public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor,
      *
      * @return An <code>EnhancedYaml</code> file
      */
-    public EnhancedYaml getYamlConfig()
-    {
+    public EnhancedYaml getYamlConfig() {
         return yamlFile;
     }
 
@@ -53,8 +49,7 @@ public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor,
      * @return If this operation was successful or not
      */
     @Override
-    public boolean loadFromDisk(boolean throwErrors)
-    {
+    public boolean loadFromDisk(boolean throwErrors) {
         isLoaded = YamlFileIO.loadIntoYamlConfig(yamlFile, file, throwErrors);
         return isLoaded;
     }
@@ -66,8 +61,7 @@ public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor,
      * @return If this operation was successful or not
      */
     @Override
-    public boolean loadFromJar(boolean throwErrors)
-    {
+    public boolean loadFromJar(boolean throwErrors) {
         isLoaded = YamlFileIO.loadYamlConfigFromJar(yamlFile, filePath, plugin.classLoader(), throwErrors);
         return isLoaded;
     }
@@ -79,8 +73,7 @@ public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor,
      * @return If this operation was successful or not
      */
     @Override
-    public boolean saveToDisk(boolean throwErrors)
-    {
+    public boolean saveToDisk(boolean throwErrors) {
         return YamlFileIO.saveYamlConfig(yamlFile, file, throwErrors);
     }
 
@@ -91,8 +84,7 @@ public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor,
      * @return If this operation was successful or not
      */
     @Override
-    public boolean updateFromJar(boolean throwErrors)
-    {
+    public boolean updateFromJar(boolean throwErrors) {
         return yamlFile.updateFromJar(filePath, plugin.classLoader());
     }
 
@@ -103,8 +95,7 @@ public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor,
      * @return The <code>SectionAccessor</code> of the requested section
      */
     @Override
-    public YamlAccessor getAccessor(String name)
-    {
+    public YamlAccessor getAccessor(String name) {
         return accessor.getSection(name);
     }
 
@@ -114,8 +105,7 @@ public class YamlFile extends DataFile implements SectionInstancer<YamlAccessor,
      * @return The root <code>SectionAccessor</code>
      */
     @Override
-    public YamlAccessor getAccessor()
-    {
+    public YamlAccessor getAccessor() {
         return accessor;
     }
 }

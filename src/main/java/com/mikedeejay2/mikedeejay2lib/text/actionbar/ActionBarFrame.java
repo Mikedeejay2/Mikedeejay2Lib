@@ -14,8 +14,7 @@ import org.bukkit.entity.Player;
  *
  * @author Mikedeejay2
  */
-public class ActionBarFrame
-{
+public class ActionBarFrame {
     /**
      * The String of text that this frame holds
      */
@@ -32,8 +31,7 @@ public class ActionBarFrame
      * @param text   The String of text that this frame holds
      * @param period The period (in ticks) of this frame
      */
-    public ActionBarFrame(String text, long period)
-    {
+    public ActionBarFrame(String text, long period) {
         this.text = Colors.format(text);
         this.period = Math.max(1, period);
     }
@@ -43,11 +41,9 @@ public class ActionBarFrame
      *
      * @param players The array of players to display this frame to
      */
-    public void display(Player... players)
-    {
+    public void display(Player... players) {
         BaseComponent[] components = TextComponent.fromLegacyText(text);
-        for(Player player : players)
-        {
+        for(Player player : players) {
             player.spigot().sendMessage(ChatMessageType.ACTION_BAR, components);
         }
     }
@@ -57,8 +53,7 @@ public class ActionBarFrame
      *
      * @return The text of this frame
      */
-    public String getText()
-    {
+    public String getText() {
         return text;
     }
 
@@ -67,8 +62,7 @@ public class ActionBarFrame
      *
      * @param text The new text for this frame
      */
-    public void setText(String text)
-    {
+    public void setText(String text) {
         this.text = Colors.format(text);
     }
 
@@ -77,8 +71,7 @@ public class ActionBarFrame
      *
      * @return The period of this frame
      */
-    public long getPeriod()
-    {
+    public long getPeriod() {
         return period;
     }
 
@@ -87,8 +80,7 @@ public class ActionBarFrame
      *
      * @param period The new period of this frame
      */
-    public void setPeriod(long period)
-    {
+    public void setPeriod(long period) {
         this.period = Math.max(1, period);
     }
 }

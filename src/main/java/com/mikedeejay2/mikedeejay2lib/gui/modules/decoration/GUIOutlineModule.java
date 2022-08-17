@@ -12,8 +12,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author Mikedeejay2
  */
-public class GUIOutlineModule implements GUIModule
-{
+public class GUIOutlineModule implements GUIModule {
 
     /**
      * The GUI item that will be used for the border
@@ -25,8 +24,7 @@ public class GUIOutlineModule implements GUIModule
      *
      * @param outlineItem The <code>GUIItem</code> to use
      */
-    public GUIOutlineModule(GUIItem outlineItem)
-    {
+    public GUIOutlineModule(GUIItem outlineItem) {
         this.outlineItem = outlineItem;
     }
 
@@ -35,8 +33,7 @@ public class GUIOutlineModule implements GUIModule
      *
      * @return The <code>GUIItem</code> that will be used
      */
-    public GUIItem getOutlineItem()
-    {
+    public GUIItem getOutlineItem() {
         return outlineItem;
     }
 
@@ -45,8 +42,7 @@ public class GUIOutlineModule implements GUIModule
      *
      * @param outlineItem GUIItem for the outline to use
      */
-    public void setOutlineItem(GUIItem outlineItem)
-    {
+    public void setOutlineItem(GUIItem outlineItem) {
         this.outlineItem = outlineItem;
     }
 
@@ -55,8 +51,7 @@ public class GUIOutlineModule implements GUIModule
      *
      * @param outlineItem ItemStack for the outline to use
      */
-    public void setOutlineItem(ItemStack outlineItem)
-    {
+    public void setOutlineItem(ItemStack outlineItem) {
         this.outlineItem = new GUIItem(outlineItem);
     }
 
@@ -67,15 +62,12 @@ public class GUIOutlineModule implements GUIModule
      * @param gui    The GUI
      */
     @Override
-    public void onOpenHead(Player player, GUIContainer gui)
-    {
-        for(int i = 1; i <= gui.getCols(); i++)
-        {
+    public void onOpenHead(Player player, GUIContainer gui) {
+        for(int i = 1; i <= gui.getCols(); i++) {
             gui.setItem(1, i, outlineItem);
             gui.setItem(gui.getRows(), i, outlineItem);
         }
-        for(int i = 1; i <= gui.getRows() - 1; i++)
-        {
+        for(int i = 1; i <= gui.getRows() - 1; i++) {
             gui.setItem(i, 1, outlineItem);
             gui.setItem(i, gui.getCols(), outlineItem);
         }

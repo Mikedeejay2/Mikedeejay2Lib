@@ -13,8 +13,7 @@ import java.util.function.Supplier;
  *
  * @author Mikedeejay2
  */
-public class ItemFolderSupplied implements ItemFolder
-{
+public class ItemFolderSupplied implements ItemFolder {
     /**
      * The name of the folder
      */
@@ -44,8 +43,7 @@ public class ItemFolderSupplied implements ItemFolder
      *                        folder
      * @param itemGenerator   The supplier used to generate the list of {@link GUIItem GUIItems} inside of this folder
      */
-    public ItemFolderSupplied(String name, ItemStack folderItem, Supplier<List<ItemFolder>> folderGenerator, Supplier<List<GUIItem>> itemGenerator)
-    {
+    public ItemFolderSupplied(String name, ItemStack folderItem, Supplier<List<ItemFolder>> folderGenerator, Supplier<List<GUIItem>> itemGenerator) {
         this.name = name;
         this.folderItem = folderItem;
         this.folderGenerator = folderGenerator;
@@ -58,13 +56,11 @@ public class ItemFolderSupplied implements ItemFolder
      * @return The name of the folder
      */
     @Override
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 
@@ -74,13 +70,11 @@ public class ItemFolderSupplied implements ItemFolder
      * @return The display item of the folder
      */
     @Override
-    public ItemStack getFolderItem()
-    {
+    public ItemStack getFolderItem() {
         return folderItem;
     }
 
-    public void setFolderItem(ItemStack folderItem)
-    {
+    public void setFolderItem(ItemStack folderItem) {
         this.folderItem = folderItem;
     }
 
@@ -91,8 +85,7 @@ public class ItemFolderSupplied implements ItemFolder
      * @return The list of {@link ItemFolder}s
      */
     @Override
-    public List<ItemFolder> getFolders()
-    {
+    public List<ItemFolder> getFolders() {
         return folderGenerator.get();
     }
 
@@ -103,8 +96,7 @@ public class ItemFolderSupplied implements ItemFolder
      * @return The list of {@link ItemFolder}s
      */
     @Override
-    public List<GUIItem> getItems()
-    {
+    public List<GUIItem> getItems() {
         return itemGenerator.get();
     }
 }

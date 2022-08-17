@@ -8,8 +8,7 @@ import com.mikedeejay2.mikedeejay2lib.text.bossbar.BossBarSystem;
  *
  * @author Mikedeejay2
  */
-public interface BossBarModule
-{
+public interface BossBarModule {
     /**
      * Method that is called when a boss bar is ticked
      *

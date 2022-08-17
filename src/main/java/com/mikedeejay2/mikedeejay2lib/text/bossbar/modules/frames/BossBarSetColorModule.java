@@ -8,15 +8,13 @@ import org.bukkit.boss.BarColor;
  *
  * @author Mikedeejay2
  */
-public class BossBarSetColorModule extends BossBarFrameModule<BarColor>
-{
+public class BossBarSetColorModule extends BossBarFrameModule<BarColor> {
     /**
      * Construct a new <code>BossBarSetColorModule</code>
      *
      * @param loop Whether this module should loop the frames or not
      */
-    public BossBarSetColorModule(boolean loop)
-    {
+    public BossBarSetColorModule(boolean loop) {
         super(loop);
     }
 
@@ -28,8 +26,7 @@ public class BossBarSetColorModule extends BossBarFrameModule<BarColor>
      * @param value  The value of the frame
      */
     @Override
-    public void onFrame(BossBarSystem system, long period, BarColor value)
-    {
+    public void onFrame(BossBarSystem system, long period, BarColor value) {
         system.setColor(value);
     }
 }

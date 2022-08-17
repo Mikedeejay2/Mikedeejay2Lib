@@ -8,8 +8,7 @@ import java.util.Map;
  *
  * @author Mikedeejay2
  */
-public class DataManager
-{
+public class DataManager {
     /**
      * The map of file paths to DataFiles
      */
@@ -18,8 +17,7 @@ public class DataManager
     /**
      * Construct a new <code>DataManager</code>
      */
-    public DataManager()
-    {
+    public DataManager() {
         this.data = new LinkedHashMap<>();
     }
 
@@ -29,8 +27,7 @@ public class DataManager
      * @param object The object to check for
      * @return If the object was found or not
      */
-    public boolean containsData(Object object)
-    {
+    public boolean containsData(Object object) {
         return data.containsValue(object);
     }
 
@@ -40,8 +37,7 @@ public class DataManager
      * @param identifier The identifier to check for
      * @return If the identifier was found or not
      */
-    public boolean containsIdentifier(String identifier)
-    {
+    public boolean containsIdentifier(String identifier) {
         return data.containsKey(identifier);
     }
 
@@ -51,8 +47,7 @@ public class DataManager
      * @param object The object to add to this manager
      * @param identifier The identifier String used for retrieving the object
      */
-    public void addData(Object object, String identifier)
-    {
+    public void addData(Object object, String identifier) {
         data.put(identifier, object);
     }
 
@@ -61,8 +56,7 @@ public class DataManager
      *
      * @param file The <code>DataFile</code> to add
      */
-    public void addFile(DataFile file)
-    {
+    public void addFile(DataFile file) {
         data.put(file.getFilePath(), file);
     }
 
@@ -71,11 +65,9 @@ public class DataManager
      *
      * @param object The object to remove
      */
-    public void removeData(Object object)
-    {
+    public void removeData(Object object) {
         String identifier = null;
-        for(Map.Entry<String, Object> entry : data.entrySet())
-        {
+        for(Map.Entry<String, Object> entry : data.entrySet()) {
             String curIdentifier = entry.getKey();
             Object curObj = entry.getValue();
             if(!object.equals(curObj)) continue;
@@ -90,8 +82,7 @@ public class DataManager
      *
      * @param identifier The identifier to remove
      */
-    public void removeData(String identifier)
-    {
+    public void removeData(String identifier) {
         data.remove(identifier);
     }
 
@@ -100,8 +91,7 @@ public class DataManager
      *
      * @param file The <code>DataFile</code> to remove
      */
-    public void removeFile(DataFile file)
-    {
+    public void removeFile(DataFile file) {
         data.remove(file.getFilePath());
     }
 
@@ -111,8 +101,7 @@ public class DataManager
      * @param identifier The identifier used to get the object
      * @return The requested Object
      */
-    public Object getData(String identifier)
-    {
+    public Object getData(String identifier) {
         return data.get(identifier);
     }
 
@@ -124,8 +113,7 @@ public class DataManager
      * @param <T>        The data type of the object
      * @return The requested Object casted to the <code>dataClass</code>
      */
-    public <T> T getData(String identifier, Class<T> dataClass)
-    {
+    public <T> T getData(String identifier, Class<T> dataClass) {
         return dataClass.cast(data.get(identifier));
     }
 
@@ -135,8 +123,7 @@ public class DataManager
      * @param path The path to the file including name
      * @return The requested <code>DataFile</code>
      */
-    public DataFile getFile(String path)
-    {
+    public DataFile getFile(String path) {
         return (DataFile) data.get(path);
     }
 
@@ -145,8 +132,7 @@ public class DataManager
      *
      * @return The data count
      */
-    public int getDataCount()
-    {
+    public int getDataCount() {
         return data.size();
     }
 }

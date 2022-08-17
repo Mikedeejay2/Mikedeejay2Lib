@@ -5,8 +5,7 @@ package com.mikedeejay2.mikedeejay2lib.util.time;
  *
  * @author Mikedeejay2
  */
-public enum TimeType
-{
+public enum TimeType {
     /**
      * A single tick. 1/20 of a second.
      */
@@ -32,10 +31,8 @@ public enum TimeType
      *
      * @return return this TimeType's tick length
      */
-    public long tickToType()
-    {
-        switch(this)
-        {
+    public long tickToType() {
+        switch(this) {
             case TICK: return 1;
             case SECOND: return 20;
             case MINUTE: return 1200;
@@ -49,10 +46,8 @@ public enum TimeType
      *
      * @return The next shortest TimeType (<code>TICK to SECOND to MINUTE</code>...etc)
      */
-    public TimeType getNextType()
-    {
-        switch(this)
-        {
+    public TimeType getNextType() {
+        switch(this) {
             case TICK: return SECOND;
             case SECOND: return MINUTE;
             case MINUTE: return HOUR;
@@ -66,10 +61,8 @@ public enum TimeType
      *
      * @return A formatted String that looks all nice and is capitalized.
      */
-    public String getFormattedString()
-    {
-        switch(this)
-        {
+    public String getFormattedString() {
+        switch(this) {
             case TICK: return "Tick";
             case SECOND: return "Second";
             case MINUTE: return "Minute";

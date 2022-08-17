@@ -15,9 +15,9 @@ import java.io.Reader;
 import java.net.URL;
 
 /**
- * An update checker that checks for a plugin for updates based off of its Github repository.
+ * An update checker that checks for a plugin for updates based off of its GitHub repository.
  * <p>
- * This class accesses the website <code>api.github.com</code>, if the Github API is down this update checker
+ * This class accesses the website <code>api.github.com</code>, if the GitHub API is down this update checker
  * won't work.
  * <p>
  * The update checker must be initialized using the {@link UpdateChecker#init(String, String)} method.
@@ -28,8 +28,7 @@ import java.net.URL;
  *
  * @author Mikedeejay2
  */
-public class UpdateChecker
-{
+public class UpdateChecker {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -61,7 +60,7 @@ public class UpdateChecker
     protected String versionName;
 
     /**
-     * The relase time from the API
+     * The release time from the API
      */
     protected String releasedTime;
 
@@ -80,8 +79,7 @@ public class UpdateChecker
      *
      * @param plugin The {@link BukkitPlugin} instance
      */
-    public UpdateChecker(BukkitPlugin plugin)
-    {
+    public UpdateChecker(BukkitPlugin plugin) {
         this.plugin = plugin;
     }
 
@@ -92,25 +90,18 @@ public class UpdateChecker
      * @param userName The username of the Github profile to get the repository from
      * @param repoName The name of the repository that should be gotten
      */
-    public void init(String userName, String repoName)
-    {
+    public void init(String userName, String repoName) {
         this.userName = userName;
         this.repoName = repoName;
-        if(plugin.getDescription().getVersion().contains("-SNAPSHOT"))
-        {
+        if(plugin.getDescription().getVersion().contains("-SNAPSHOT")) {
             return;
         }
-        new BukkitRunnable()
-        {
+        new BukkitRunnable() {
             @Override
-            public void run()
-            {
-                try
-                {
+            public void run() {
+                try {
                     url = new URL("https://api.github.com/repos/" + userName + "/" + repoName + "/releases/latest");
-                }
-                catch(Exception e)
-                {
+                } catch(Exception e) {
                     plugin.getLogger().severe(plugin.getLibLangManager().getText("update_checker.error.invalid_url"));
                     return;
                 }
@@ -118,23 +109,17 @@ public class UpdateChecker
                 Gson gson = builder.create();
                 InputStream stream = null;
 
-                try
-                {
+                try {
                     stream = url.openStream();
-                }
-                catch(Exception e)
-                {
+                } catch(Exception e) {
                     plugin.getLogger().severe(plugin.getLibLangManager().getText("update_checker.error.cant_open"));
                     return;
                 }
                 Reader reader = new InputStreamReader(stream);
                 json = gson.fromJson(reader, JsonObject.class);
-                try
-                {
+                try {
                     stream.close();
-                }
-                catch(IOException e)
-                {
+                } catch(IOException e) {
                     plugin.getLogger().severe(plugin.getLibLangManager().getText("update_checker.error.cant_close"));
                     return;
                 }
@@ -157,13 +142,10 @@ public class UpdateChecker
      *
      * @param delay Delay before the updates are checked in seconds.
      */
-    public void checkForUpdates(int delay)
-    {
-        new BukkitRunnable()
-        {
+    public void checkForUpdates(int delay) {
+        new BukkitRunnable() {
             @Override
-            public void run()
-            {
+            public void run() {
                 if(version == null) return;
                 PluginDescriptionFile description = plugin.getDescription();
                 String currentVersion = description.getVersion();

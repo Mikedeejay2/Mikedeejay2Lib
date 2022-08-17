@@ -5,7 +5,5 @@ package com.mikedeejay2.mikedeejay2lib.data;
  *
  * @author Mikedeejay2
  */
-public interface DataObject
-{
-
+public interface DataObject {
 }

@@ -8,8 +8,7 @@ import org.bukkit.entity.Player;
  *
  * @author Mikedeejay2
  */
-public class TitleFrame
-{
+public class TitleFrame {
     /**
      * The title String of the frame
      */
@@ -50,8 +49,7 @@ public class TitleFrame
      * @param fadeOut  The fade out time of the frame
      * @param period   The maximum period of ticks that the frame is displayed
      */
-    public TitleFrame(String title, String subtitle, int fadeIn, int stay, int fadeOut, long period)
-    {
+    public TitleFrame(String title, String subtitle, int fadeIn, int stay, int fadeOut, long period) {
         this.title = Colors.format(title);
         this.subtitle = Colors.format(subtitle);
         this.fadeIn = fadeIn;
@@ -65,10 +63,8 @@ public class TitleFrame
      *
      * @param players The players to display this frame to
      */
-    public void display(Player... players)
-    {
-        for(Player player : players)
-        {
+    public void display(Player... players) {
+        for(Player player : players) {
             player.sendTitle(title, subtitle, fadeIn, stay, fadeOut);
         }
     }
@@ -78,8 +74,7 @@ public class TitleFrame
      *
      * @return The title String
      */
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
@@ -88,8 +83,7 @@ public class TitleFrame
      *
      * @param title The new title String
      */
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         this.title = title;
     }
 
@@ -98,8 +92,7 @@ public class TitleFrame
      *
      * @return The subtitle String
      */
-    public String getSubtitle()
-    {
+    public String getSubtitle() {
         return subtitle;
     }
 
@@ -108,8 +101,7 @@ public class TitleFrame
      *
      * @param subtitle The new subtitle String
      */
-    public void setSubtitle(String subtitle)
-    {
+    public void setSubtitle(String subtitle) {
         this.subtitle = subtitle;
     }
 
@@ -118,8 +110,7 @@ public class TitleFrame
      *
      * @return The fade in length of this frame
      */
-    public int getFadeIn()
-    {
+    public int getFadeIn() {
         return fadeIn;
     }
 
@@ -128,8 +119,7 @@ public class TitleFrame
      *
      * @param fadeIn The new fade in length
      */
-    public void setFadeIn(int fadeIn)
-    {
+    public void setFadeIn(int fadeIn) {
         this.fadeIn = fadeIn;
     }
 
@@ -138,8 +128,7 @@ public class TitleFrame
      *
      * @return The stay length
      */
-    public int getStay()
-    {
+    public int getStay() {
         return stay;
     }
 
@@ -148,8 +137,7 @@ public class TitleFrame
      *
      * @param stay The new stay length
      */
-    public void setStay(int stay)
-    {
+    public void setStay(int stay) {
         this.stay = stay;
     }
 
@@ -158,8 +146,7 @@ public class TitleFrame
      *
      * @return The fade out length
      */
-    public int getFadeOut()
-    {
+    public int getFadeOut() {
         return fadeOut;
     }
 
@@ -168,8 +155,7 @@ public class TitleFrame
      *
      * @param fadeOut The new fade out length
      */
-    public void setFadeOut(int fadeOut)
-    {
+    public void setFadeOut(int fadeOut) {
         this.fadeOut = fadeOut;
     }
 
@@ -178,8 +164,7 @@ public class TitleFrame
      *
      * @return The period
      */
-    public long getPeriod()
-    {
+    public long getPeriod() {
         return period;
     }
 
@@ -188,8 +173,7 @@ public class TitleFrame
      *
      * @param period The new period
      */
-    public void setPeriod(long period)
-    {
+    public void setPeriod(long period) {
         this.period = period;
     }
 }

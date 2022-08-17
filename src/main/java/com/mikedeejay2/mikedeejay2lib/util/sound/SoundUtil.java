@@ -10,8 +10,7 @@ import org.bukkit.entity.Player;
  *
  * @author Mikedeejay2
  */
-public final class SoundUtil
-{
+public final class SoundUtil {
     /**
      * Play a sound to a player based off of different parameters
      *
@@ -21,8 +20,7 @@ public final class SoundUtil
      * @param pitch    The pitch to play the sound at
      * @param category The <code>SoundCategory</code> to play the sound in
      */
-    public static void playSound(Player player, Sound sound, float volume, float pitch, SoundCategory category)
-    {
+    public static void playSound(Player player, Sound sound, float volume, float pitch, SoundCategory category) {
         player.playSound(player.getLocation(), sound, category, volume, pitch);
     }
 
@@ -34,8 +32,7 @@ public final class SoundUtil
      * @param volume The volume to play the sound at
      * @param pitch  The pitch to play the sound at
      */
-    public static void playSound(Player player, Sound sound, float volume, float pitch)
-    {
+    public static void playSound(Player player, Sound sound, float volume, float pitch) {
         playSound(player, sound, volume, pitch, SoundCategory.MASTER);
     }
 
@@ -46,8 +43,7 @@ public final class SoundUtil
      * @param sound  The sound the play to the player
      * @param volume The volume to play the sound at
      */
-    public static void playSound(Player player, Sound sound, float volume)
-    {
+    public static void playSound(Player player, Sound sound, float volume) {
         playSound(player, sound, volume, 1.0f, SoundCategory.MASTER);
     }
 
@@ -57,8 +53,7 @@ public final class SoundUtil
      * @param player The player to play the sound to
      * @param sound  The sound the play to the player
      */
-    public static void playSound(Player player, Sound sound)
-    {
+    public static void playSound(Player player, Sound sound) {
         playSound(player, sound, 1.0f, 1.0f, SoundCategory.MASTER);
     }
 
@@ -71,8 +66,7 @@ public final class SoundUtil
      * @param pitch    The pitch to play the sound at
      * @param category The <code>SoundCategory</code> to play the sound in
      */
-    public static void playSound(Location location, Sound sound, float volume, float pitch, SoundCategory category)
-    {
+    public static void playSound(Location location, Sound sound, float volume, float pitch, SoundCategory category) {
         World world = location.getWorld();
         world.playSound(location, sound, category, volume, pitch);
     }
@@ -85,8 +79,7 @@ public final class SoundUtil
      * @param volume   The volume to play the sound at
      * @param pitch    The pitch to play the sound at
      */
-    public static void playSound(Location location, Sound sound, float volume, float pitch)
-    {
+    public static void playSound(Location location, Sound sound, float volume, float pitch) {
         playSound(location, sound, volume, pitch, SoundCategory.MASTER);
     }
 
@@ -97,8 +90,7 @@ public final class SoundUtil
      * @param sound    The sound to play at the location
      * @param volume   The volume to play the sound at
      */
-    public static void playSound(Location location, Sound sound, float volume)
-    {
+    public static void playSound(Location location, Sound sound, float volume) {
         playSound(location, sound, volume, 1.0f, SoundCategory.MASTER);
     }
 
@@ -108,8 +100,7 @@ public final class SoundUtil
      * @param location The location to play the sound at
      * @param sound    The sound to play at the location
      */
-    public static void playSound(Location location, Sound sound)
-    {
+    public static void playSound(Location location, Sound sound) {
         playSound(location, sound, 1.0f, 1.0f, SoundCategory.MASTER);
     }
 
@@ -124,10 +115,8 @@ public final class SoundUtil
      * @param pitch    The pitch to play the sound at
      * @param category The <code>SoundCategory</code> to play the sound in
      */
-    public static void broadcastSound(Sound sound, float volume, float pitch, SoundCategory category)
-    {
-        for(Player player : Bukkit.getOnlinePlayers())
-        {
+    public static void broadcastSound(Sound sound, float volume, float pitch, SoundCategory category) {
+        for(Player player : Bukkit.getOnlinePlayers()) {
             playSound(player, sound, volume, pitch, category);
         }
     }
@@ -142,8 +131,7 @@ public final class SoundUtil
      * @param volume The volume to play the sound at
      * @param pitch  The pitch to play the sound at
      */
-    public static void broadcastSound(Sound sound, float volume, float pitch)
-    {
+    public static void broadcastSound(Sound sound, float volume, float pitch) {
         broadcastSound(sound, volume, pitch, SoundCategory.MASTER);
     }
 
@@ -156,8 +144,7 @@ public final class SoundUtil
      * @param sound  The sound to play at the location
      * @param volume The volume to play the sound at
      */
-    public static void broadcastSound(Sound sound, float volume)
-    {
+    public static void broadcastSound(Sound sound, float volume) {
         broadcastSound(sound, volume, 1.0f, SoundCategory.MASTER);
     }
 
@@ -169,8 +156,7 @@ public final class SoundUtil
      *
      * @param sound The sound to play at the location
      */
-    public static void broadcastSound(Sound sound)
-    {
+    public static void broadcastSound(Sound sound) {
         broadcastSound(sound, 1.0f, 1.0f, SoundCategory.MASTER);
     }
 }

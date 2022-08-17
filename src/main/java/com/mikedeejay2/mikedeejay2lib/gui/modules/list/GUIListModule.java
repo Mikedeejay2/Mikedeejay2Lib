@@ -32,8 +32,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class GUIListModule implements GUIModule
-{
+public class GUIListModule implements GUIModule {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -171,8 +170,7 @@ public class GUIListModule implements GUIModule
      * @param layerName The name of the <code>GUILayer</code> that will be used,
      *                  useful for if there are multiple lists in one GUI
      */
-    public GUIListModule(BukkitPlugin plugin, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol, String layerName)
-    {
+    public GUIListModule(BukkitPlugin plugin, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol, String layerName) {
         this.plugin = plugin;
         this.list = new ArrayList<>();
         this.searchList = new ArrayList<>();
@@ -180,18 +178,15 @@ public class GUIListModule implements GUIModule
 
         curLoc = 1;
         endItems = new ArrayList<>();
-        switch(viewMode)
-        {
-            case SCROLL:
-            {
+        switch(viewMode) {
+            case SCROLL: {
                 this.backItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_UP_WHITE.get()).setEmptyName().get());
                 this.forwardItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_DOWN_WHITE.get()).setEmptyName().get());
                 backItem.addEvent(new GUISwitchListLocEvent());
                 forwardItem.addEvent(new GUISwitchListLocEvent());
             } break;
             case PAGED:
-            default:
-            {
+            default: {
                 this.backItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_BACKWARD_WHITE.get()).setEmptyName().get());
                 this.forwardItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_FORWARD_WHITE.get()).setEmptyName().get());
                 backItem.addEvent(new GUISwitchListLocEvent());
@@ -225,8 +220,7 @@ public class GUIListModule implements GUIModule
      * @param leftCol   The left column of the list's bounding box
      * @param rightCol  The right column of the list's bounding box
      */
-    public GUIListModule(BukkitPlugin plugin, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol)
-    {
+    public GUIListModule(BukkitPlugin plugin, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol) {
         this(plugin, viewMode, topRow, bottomRow, leftCol, rightCol, "list");
     }
 
@@ -239,8 +233,7 @@ public class GUIListModule implements GUIModule
      * @param leftCol   The left column of the list's bounding box
      * @param rightCol  The right column of the list's bounding box
      */
-    public GUIListModule(BukkitPlugin plugin, int topRow, int bottomRow, int leftCol, int rightCol)
-    {
+    public GUIListModule(BukkitPlugin plugin, int topRow, int bottomRow, int leftCol, int rightCol) {
         this(plugin, ListViewMode.PAGED, topRow, bottomRow, leftCol, rightCol, "list");
     }
 
@@ -251,18 +244,15 @@ public class GUIListModule implements GUIModule
      * @param gui    The GUI
      */
     @Override
-    public void onOpenHead(Player player, GUIContainer gui)
-    {
-        if(searchItem == null)
-        {
+    public void onOpenHead(Player player, GUIContainer gui) {
+        if(searchItem == null) {
             this.searchItem = new GUIItem(
                 ItemBuilder.of(Material.COMPASS)
                     .setName(searchPreName + plugin.getLibLangManager().getText(player, "gui.modules.list.search"))
                     .get());
             searchItem.addEvent(new GUIListSearchEvent(plugin));
         }
-        if(searchOffItem == null)
-        {
+        if(searchOffItem == null) {
             this.searchOffItem = new GUIItem(
                 ItemBuilder.of(Material.BOOK)
                     .setName(searchOffPreName + plugin.getLibLangManager().getText(player, "gui.modules.list.search_off"))
@@ -278,17 +268,14 @@ public class GUIListModule implements GUIModule
      * @param gui    The GUI
      */
     @Override
-    public void onUpdateHead(Player player, GUIContainer gui)
-    {
+    public void onUpdateHead(Player player, GUIContainer gui) {
         GUILayer layer = gui.getLayer(layerName, false);
 
-        if(sorter != null)
-        {
+        if(sorter != null) {
             list.sort(sorter);
         }
 
-        if(searchMode)
-        {
+        if(searchMode) {
             searchThroughList();
         }
         updateListControls(layer, player);
@@ -304,8 +291,7 @@ public class GUIListModule implements GUIModule
      *
      * @param endItem The item that will be added to the end of the list
      */
-    public void addEndItem(GUIItem endItem)
-    {
+    public void addEndItem(GUIItem endItem) {
         endItems.add(endItem);
         changed = true;
     }
@@ -315,8 +301,7 @@ public class GUIListModule implements GUIModule
      *
      * @param endItem End item to remove
      */
-    public void removeEndItem(GUIItem endItem)
-    {
+    public void removeEndItem(GUIItem endItem) {
         endItems.remove(endItem);
         changed = true;
     }
@@ -324,8 +309,7 @@ public class GUIListModule implements GUIModule
     /**
      * Reset the end items to have no appended end items.
      */
-    public void resetEndItems()
-    {
+    public void resetEndItems() {
         endItems.clear();
         changed = true;
     }
@@ -333,8 +317,7 @@ public class GUIListModule implements GUIModule
     /**
      * Reset the end items to have no appended end items.
      */
-    public void resetList()
-    {
+    public void resetList() {
         list.clear();
         searchList.clear();
         changed = true;
@@ -345,8 +328,7 @@ public class GUIListModule implements GUIModule
      *
      * @param layer The layer to update the view on
      */
-    private void updateView(GUILayer layer)
-    {
+    private void updateView(GUILayer layer) {
         int topRow = topLeft.getKey();
         int leftCol = topLeft.getValue();
         int colDif = getSlotsPerCol();
@@ -354,8 +336,7 @@ public class GUIListModule implements GUIModule
         int viewSize = getViewSize();
         int listSize = getCurSize();
         int viewOffset = getViewOffset();
-        for(int i = 0; i < viewSize; i++)
-        {
+        for(int i = 0; i < viewSize; i++) {
             // This algorithm calculates the normalized slot index based off of the bounding box of the list
             int slotIndex = ((topRow-1) * (layer.getCols() * ((int)(i / colDif)+1))) + (leftCol) + (i % colDif);
             --slotIndex;
@@ -364,17 +345,13 @@ public class GUIListModule implements GUIModule
             // If a change has occurred all previous items have to be removed from the view first
             if(changed) layer.removeItem(row, col);
 
-            if(listSize >= (i+1) + viewOffset) // List items
-            {
+            if(listSize >= (i+1) + viewOffset) { // List items
                 GUIItem item = searchMode ? searchList.get(i + viewOffset).getKey() : list.get(i + viewOffset);
                 layer.setItem(row, col, item);
-            }
-            else if((i + 1) + viewOffset > listSize && !searchMode) // End items
-            {
+            } else if((i + 1) + viewOffset > listSize && !searchMode) { // End items
                 int index = (i + viewOffset) - listSize;
 
-                if(endItems.size() > index)
-                {
+                if(endItems.size() > index) {
                     GUIItem item = endItems.get(index);
                     layer.setItem(row, col, item);
                 }
@@ -388,21 +365,18 @@ public class GUIListModule implements GUIModule
      *
      * @param layer The layer to update the controls on
      */
-    private void updateListControls(GUILayer layer, Player player)
-    {
+    private void updateListControls(GUILayer layer, Player player) {
         int maxViews = getMaxViews();
 
         // Remove previous forward items
-        for(Pair<Integer, Integer> entry : forwards)
-        {
+        for(Pair<Integer, Integer> entry : forwards) {
             int row = entry.getKey();
             int col = entry.getValue();
             layer.removeItem(row, col);
         }
 
         // Remove previous back items
-        for(Pair<Integer, Integer> entry : backs)
-        {
+        for(Pair<Integer, Integer> entry : backs) {
             int row = entry.getKey();
             int col = entry.getValue();
             layer.removeItem(row, col);
@@ -411,16 +385,14 @@ public class GUIListModule implements GUIModule
         int forwardSize = forwards.size();
         int backwardSize = backs.size();
 
-        for(int i = curLoc + 1; i <= curLoc + forwardSize; ++i)
-        {
+        for(int i = curLoc + 1; i <= curLoc + forwardSize; ++i) {
             if(i > maxViews || i <= 0) continue;
             int index = Math.abs(i - curLoc) - 1;
             Pair<Integer, Integer> entry = forwards.get(index);
             int row = entry.getKey();
             int col = entry.getValue();
             GUIItem curItem = forwardItem.clone();
-            switch(viewMode)
-            {
+            switch(viewMode) {
                 case SCROLL:
                     curItem.setNameView(Colors.format(scrollChangePreName + plugin.getLibLangManager().getText(
                             player, "gui.modules.list.scroll_forward")));
@@ -436,16 +408,14 @@ public class GUIListModule implements GUIModule
             }
             layer.setItem(row, col, curItem);
         }
-        for(int i = curLoc - 1; i >= curLoc - backwardSize; --i)
-        {
+        for(int i = curLoc - 1; i >= curLoc - backwardSize; --i) {
             if(i > maxViews || i <= 0) continue;
             int index = Math.abs(i - curLoc) - 1;
             Pair<Integer, Integer> entry = backs.get(index);
             int row = entry.getKey();
             int col = entry.getValue();
             GUIItem curItem = backItem.clone();
-            switch(viewMode)
-            {
+            switch(viewMode) {
                 case SCROLL:
                     curItem.setNameView(Colors.format(scrollChangePreName + plugin.getLibLangManager().getText(
                             player, "gui.modules.list.scroll_back")));
@@ -462,12 +432,10 @@ public class GUIListModule implements GUIModule
             layer.setItem(row, col, curItem);
         }
 
-        if(searchEnabled)
-        {
+        if(searchEnabled) {
             layer.setItem(search.getKey(), search.getValue(), searchItem);
 
-            if(searchMode)
-            {
+            if(searchMode) {
                 layer.setItem(search.getKey(), search.getValue(), searchOffItem);
             }
         }
@@ -478,8 +446,7 @@ public class GUIListModule implements GUIModule
      *
      * @param item The item that will be added to the list
      */
-    public void addListItem(GUIItem item)
-    {
+    public void addListItem(GUIItem item) {
         list.add(item);
         changed = true;
     }
@@ -492,8 +459,7 @@ public class GUIListModule implements GUIModule
      * @param gui  The <code>GUIContainer</code> that this list is located in
      * @param item The <code>GUIItem</code> to be added
      */
-    public void addListItem(int row, int col, GUIContainer gui, GUIItem item)
-    {
+    public void addListItem(int row, int col, GUIContainer gui, GUIItem item) {
         int index = getListItemIndex(row, col, gui);
         list.add(index, item);
         changed = true;
@@ -505,8 +471,7 @@ public class GUIListModule implements GUIModule
      * @param index The index to add the item at
      * @param item The item that will be added to the list
      */
-    public void addListItem(int index, GUIItem item)
-    {
+    public void addListItem(int index, GUIItem item) {
         list.add(index, item);
         changed = true;
     }
@@ -520,8 +485,7 @@ public class GUIListModule implements GUIModule
      * @param col  The column to replace
      * @param gui  The GUI to update
      */
-    public void changeGUIItem(GUIItem item, int row, int col, GUIContainer gui)
-    {
+    public void changeGUIItem(GUIItem item, int row, int col, GUIContainer gui) {
         int viewOffset = getViewOffset();
         int index = gui.getSlotFromRowCol(row-2, col-1) + viewOffset;
         list.set(index, item);
@@ -533,8 +497,7 @@ public class GUIListModule implements GUIModule
      *
      * @param items The list of items to set this list to
      */
-    public void setGUIItems(List<GUIItem> items)
-    {
+    public void setGUIItems(List<GUIItem> items) {
         this.list = items;
         changed = true;
     }
@@ -544,8 +507,7 @@ public class GUIListModule implements GUIModule
      *
      * @param index The index to the item that will be removed
      */
-    public void removeGUIItem(int index)
-    {
+    public void removeGUIItem(int index) {
         list.remove(index);
         changed = true;
     }
@@ -555,8 +517,7 @@ public class GUIListModule implements GUIModule
      *
      * @param item The item to remove from this list
      */
-    public void removeGUIItem(GUIItem item)
-    {
+    public void removeGUIItem(GUIItem item) {
         list.remove(item);
         changed = true;
     }
@@ -570,12 +531,10 @@ public class GUIListModule implements GUIModule
      * @param gui The GUI to get the index from
      * @return The index based off of the row and column
      */
-    public int getListItemIndex(int row, int col, GUIContainer gui)
-    {
+    public int getListItemIndex(int row, int col, GUIContainer gui) {
         int viewOffset = getViewOffset();
         int index = gui.getSlotFromRowCol(row-2, col-1) + viewOffset;
-        if(searchMode)
-        {
+        if(searchMode) {
             index = searchList.get(index).getValue();
         }
         return index;
@@ -590,8 +549,7 @@ public class GUIListModule implements GUIModule
      * @param gui The <code>GUIContainer</code> that this list is located in
      * @return The <code>GUIItem</code> at the location.
      */
-    public GUIItem getItem(int row, int col, GUIContainer gui)
-    {
+    public GUIItem getItem(int row, int col, GUIContainer gui) {
         int index = getListItemIndex(row, col, gui);
         if(index >= list.size()) return null;
         return list.get(index);
@@ -603,8 +561,7 @@ public class GUIListModule implements GUIModule
      * @param slot The slot to get the item from
      * @return The <code>GUIItem</code> of the slot
      */
-    public GUIItem getItem(int slot)
-    {
+    public GUIItem getItem(int slot) {
         return list.get(slot);
     }
 
@@ -616,8 +573,7 @@ public class GUIListModule implements GUIModule
      * @param col The column to remove the item from
      * @param gui The <code>GUIContainer</code> that this list is located in
      */
-    public void removeListItem(int row, int col, GUIContainer gui)
-    {
+    public void removeListItem(int row, int col, GUIContainer gui) {
         int index = getListItemIndex(row, col, gui);
         List<GUIItem> list = this.list;
         list.remove(index);
@@ -629,8 +585,7 @@ public class GUIListModule implements GUIModule
      *
      * @param location The new location
      */
-    public void setListLoc(int location)
-    {
+    public void setListLoc(int location) {
         curLoc = location;
         changed = true;
     }
@@ -640,8 +595,7 @@ public class GUIListModule implements GUIModule
      *
      * @param search The search term that has been searched
      */
-    public void enableSearchMode(String search)
-    {
+    public void enableSearchMode(String search) {
         this.searchMode = true;
         this.searchTerm = search;
         changed = true;
@@ -650,8 +604,7 @@ public class GUIListModule implements GUIModule
     /**
      * Disable search mode in this list
      */
-    public void disableSearchMode()
-    {
+    public void disableSearchMode() {
         this.searchMode = false;
         this.searchTerm = null;
         changed = true;
@@ -661,12 +614,10 @@ public class GUIListModule implements GUIModule
      * Search through this entire list, called in {@link GUIListModule#onUpdateHead(Player, GUIContainer)}
      * if search mode is enabled.
      */
-    protected void searchThroughList()
-    {
+    protected void searchThroughList() {
         searchMode = true;
         searchList.clear();
-        for(int i = 0; i < list.size(); ++i)
-        {
+        for(int i = 0; i < list.size(); ++i) {
             GUIItem item = list.get(i);
             if(!SearchUtil.searchMetaFuzzy(item.getMetaView(), searchTerm)) continue;
             searchList.add(new MutablePair<>(item, i));
@@ -678,8 +629,7 @@ public class GUIListModule implements GUIModule
      *
      * @return The back item
      */
-    public GUIItem getBackItem()
-    {
+    public GUIItem getBackItem() {
         return backItem;
     }
 
@@ -688,8 +638,7 @@ public class GUIListModule implements GUIModule
      *
      * @param backItem The new back item
      */
-    public void setBackItem(GUIItem backItem)
-    {
+    public void setBackItem(GUIItem backItem) {
         this.backItem = backItem;
     }
 
@@ -698,8 +647,7 @@ public class GUIListModule implements GUIModule
      *
      * @return The forward button
      */
-    public GUIItem getForwardItem()
-    {
+    public GUIItem getForwardItem() {
         return forwardItem;
     }
 
@@ -708,8 +656,7 @@ public class GUIListModule implements GUIModule
      *
      * @param forwardItem The new forward item
      */
-    public void setForwardItem(GUIItem forwardItem)
-    {
+    public void setForwardItem(GUIItem forwardItem) {
         this.forwardItem = forwardItem;
     }
 
@@ -718,8 +665,7 @@ public class GUIListModule implements GUIModule
      *
      * @return Whether search mode is enabled for this list or not
      */
-    public boolean isSearchEnabled()
-    {
+    public boolean isSearchEnabled() {
         return searchEnabled;
     }
 
@@ -728,8 +674,7 @@ public class GUIListModule implements GUIModule
      *
      * @return The current search term
      */
-    public String getSearchTerm()
-    {
+    public String getSearchTerm() {
         return searchTerm;
     }
 
@@ -738,8 +683,7 @@ public class GUIListModule implements GUIModule
      *
      * @param searchTerm The new search term
      */
-    public void setSearchTerm(String searchTerm)
-    {
+    public void setSearchTerm(String searchTerm) {
         this.searchTerm = searchTerm;
     }
 
@@ -748,8 +692,7 @@ public class GUIListModule implements GUIModule
      *
      * @return The search item
      */
-    public GUIItem getSearchItem()
-    {
+    public GUIItem getSearchItem() {
         return searchItem;
     }
 
@@ -758,8 +701,7 @@ public class GUIListModule implements GUIModule
      *
      * @param searchItem The new search item
      */
-    public void setSearchItem(GUIItem searchItem)
-    {
+    public void setSearchItem(GUIItem searchItem) {
         this.searchItem = searchItem;
     }
 
@@ -768,8 +710,7 @@ public class GUIListModule implements GUIModule
      *
      * @return The search off item
      */
-    public GUIItem getSearchOffItem()
-    {
+    public GUIItem getSearchOffItem() {
         return searchOffItem;
     }
 
@@ -778,8 +719,7 @@ public class GUIListModule implements GUIModule
      *
      * @param searchOffItem The new search off item
      */
-    public void setSearchOffItem(GUIItem searchOffItem)
-    {
+    public void setSearchOffItem(GUIItem searchOffItem) {
         this.searchOffItem = searchOffItem;
     }
 
@@ -788,8 +728,7 @@ public class GUIListModule implements GUIModule
      *
      * @return All items that this list is holding
      */
-    public List<GUIItem> getList()
-    {
+    public List<GUIItem> getList() {
         return list;
     }
 
@@ -799,8 +738,7 @@ public class GUIListModule implements GUIModule
      *
      * @return All items that are in the search list
      */
-    public List<Pair<GUIItem, Integer>> getSearchMap()
-    {
+    public List<Pair<GUIItem, Integer>> getSearchMap() {
         return searchList;
     }
 
@@ -809,8 +747,7 @@ public class GUIListModule implements GUIModule
      *
      * @return The current view location
      */
-    public int getCurLoc()
-    {
+    public int getCurLoc() {
         return curLoc;
     }
 
@@ -819,8 +756,7 @@ public class GUIListModule implements GUIModule
      *
      * @return All end items of this list
      */
-    public List<GUIItem> getEndItems()
-    {
+    public List<GUIItem> getEndItems() {
         return endItems;
     }
 
@@ -829,8 +765,7 @@ public class GUIListModule implements GUIModule
      *
      * @return The size of the list
      */
-    public int getSize()
-    {
+    public int getSize() {
         return list.size();
     }
 
@@ -840,10 +775,8 @@ public class GUIListModule implements GUIModule
      * @param item The item to search for
      * @return Whether the item was found in the list or not
      */
-    public boolean containsItem(ItemStack item)
-    {
-        for(GUIItem guiItem : list)
-        {
+    public boolean containsItem(ItemStack item) {
+        for(GUIItem guiItem : list) {
             ItemStack curItem = guiItem.getItemBase();
             if(curItem == null) continue;
             if(!ItemComparison.equalsEachOther(item, curItem)) continue;
@@ -858,10 +791,8 @@ public class GUIListModule implements GUIModule
      * @param material The material to search for
      * @return Whether the material was found in the list or not
      */
-    public boolean containsMaterial(Material material)
-    {
-        for(GUIItem guiItem : list)
-        {
+    public boolean containsMaterial(Material material) {
+        for(GUIItem guiItem : list) {
             ItemStack curItem = guiItem.getItemBase();
             if(curItem == null) continue;
             if(curItem.getType() != material) continue;
@@ -879,8 +810,7 @@ public class GUIListModule implements GUIModule
      *
      * @return The current view size (area)
      */
-    public int getViewSize()
-    {
+    public int getViewSize() {
         return getSlotsPerRow() * getSlotsPerCol();
     }
 
@@ -890,10 +820,8 @@ public class GUIListModule implements GUIModule
      *
      * @return The view offset
      */
-    public int getViewOffset()
-    {
-        switch(viewMode)
-        {
+    public int getViewOffset() {
+        switch(viewMode) {
             case SCROLL:
                 return ((curLoc-1) * getSlotsPerCol());
             case PAGED:
@@ -912,10 +840,8 @@ public class GUIListModule implements GUIModule
      *
      * @return The maximum views
      */
-    public int getMaxViews()
-    {
-        switch(viewMode)
-        {
+    public int getMaxViews() {
+        switch(viewMode) {
             case SCROLL:
                 return (int)Math.ceil((double)((getCurSize() + endItems.size()) - getViewSize()) / ((double)getSlotsPerCol())) + 1;
             case PAGED:
@@ -929,8 +855,7 @@ public class GUIListModule implements GUIModule
      *
      * @return The size of the currently selected list
      */
-    public int getCurSize()
-    {
+    public int getCurSize() {
         return (searchMode ? searchList.size() : list.size());
     }
 
@@ -941,8 +866,7 @@ public class GUIListModule implements GUIModule
      *
      * @return The amount of slots per row
      */
-    public int getSlotsPerRow()
-    {
+    public int getSlotsPerRow() {
         int topRow = topLeft.getKey();
         int bottomRow = bottomRight.getKey();
         return (bottomRow - topRow) + 1;
@@ -955,8 +879,7 @@ public class GUIListModule implements GUIModule
      *
      * @return The amount of slots per column
      */
-    public int getSlotsPerCol()
-    {
+    public int getSlotsPerCol() {
         int leftCol = topLeft.getValue();
         int rightCol = bottomRight.getValue();
         return (rightCol - leftCol) + 1;
@@ -969,8 +892,7 @@ public class GUIListModule implements GUIModule
      * @param col The column of the top left corner
      * @return A reference to this <code>GUIListModule</code>
      */
-    public GUIListModule setTopLeft(int row, int col)
-    {
+    public GUIListModule setTopLeft(int row, int col) {
         this.topLeft = new MutablePair<>(row, col);
         return this;
     }
@@ -982,8 +904,7 @@ public class GUIListModule implements GUIModule
      * @param col The column of the bottom right corner
      * @return A reference to this <code>GUIListModule</code>
      */
-    public GUIListModule setBottomRight(int row, int col)
-    {
+    public GUIListModule setBottomRight(int row, int col) {
         this.bottomRight = new MutablePair<>(row, col);
         return this;
     }
@@ -995,8 +916,7 @@ public class GUIListModule implements GUIModule
      * @param col The column
      * @return A reference to this <code>GUIListModule</code>
      */
-    public GUIListModule setSearch(int row, int col)
-    {
+    public GUIListModule setSearch(int row, int col) {
         this.search = new MutablePair<>(row, col);
         return this;
     }
@@ -1011,8 +931,7 @@ public class GUIListModule implements GUIModule
      * @param col The column of the button
      * @return A reference to this <code>GUIListModule</code>
      */
-    public GUIListModule addForward(int row, int col)
-    {
+    public GUIListModule addForward(int row, int col) {
         this.forwards.add(new MutablePair<>(row, col));
         return this;
     }
@@ -1028,8 +947,7 @@ public class GUIListModule implements GUIModule
      * @param col The column of the button
      * @return A reference to this <code>GUIListModule</code>
      */
-    public GUIListModule addForward(int index, int row, int col)
-    {
+    public GUIListModule addForward(int index, int row, int col) {
         this.forwards.add(index, new MutablePair<>(row, col));
         return this;
     }
@@ -1044,8 +962,7 @@ public class GUIListModule implements GUIModule
      * @param col The column of the button
      * @return A reference to this <code>GUIListModule</code>
      */
-    public GUIListModule addBack(int row, int col)
-    {
+    public GUIListModule addBack(int row, int col) {
         this.backs.add(new MutablePair<>(row, col));
         return this;
     }
@@ -1061,8 +978,7 @@ public class GUIListModule implements GUIModule
      * @param col The column of the button
      * @return A reference to this <code>GUIListModule</code>
      */
-    public GUIListModule addBack(int index, int row, int col)
-    {
+    public GUIListModule addBack(int index, int row, int col) {
         this.backs.add(index, new MutablePair<>(row, col));
         return this;
     }
@@ -1072,8 +988,7 @@ public class GUIListModule implements GUIModule
      *
      * @return A reference to this <code>GUIListModule</code>
      */
-    public GUIListModule clearForwards()
-    {
+    public GUIListModule clearForwards() {
         this.forwards.clear();
         return this;
     }
@@ -1083,8 +998,7 @@ public class GUIListModule implements GUIModule
      *
      * @return A reference to this <code>GUIListModule</code>
      */
-    public GUIListModule clearBacks()
-    {
+    public GUIListModule clearBacks() {
         this.backs.clear();
         return this;
     }
@@ -1095,8 +1009,7 @@ public class GUIListModule implements GUIModule
      * @param index The index to remove
      * @return A reference to this <code>GUIListModule</code>
      */
-    public GUIListModule removeForward(int index)
-    {
+    public GUIListModule removeForward(int index) {
         this.forwards.remove(index);
         return this;
     }
@@ -1107,8 +1020,7 @@ public class GUIListModule implements GUIModule
      * @param index The index to remove
      * @return A reference to this <code>GUIListModule</code>
      */
-    public GUIListModule removeBack(int index)
-    {
+    public GUIListModule removeBack(int index) {
         this.backs.remove(index);
         return this;
     }
@@ -1118,8 +1030,7 @@ public class GUIListModule implements GUIModule
      *
      * @return An <code>Entry</code> holding the row in the key and column in the value
      */
-    public Pair<Integer, Integer> getTopLeft()
-    {
+    public Pair<Integer, Integer> getTopLeft() {
         return topLeft;
     }
 
@@ -1128,8 +1039,7 @@ public class GUIListModule implements GUIModule
      *
      * @return An <code>Entry</code> holding the row in the key and column in the value
      */
-    public Pair<Integer, Integer> getBottomRight()
-    {
+    public Pair<Integer, Integer> getBottomRight() {
         return bottomRight;
     }
 
@@ -1138,8 +1048,7 @@ public class GUIListModule implements GUIModule
      *
      * @return An <code>Entry</code> holding the row in the key and column in the value
      */
-    public Pair<Integer, Integer> getSearch()
-    {
+    public Pair<Integer, Integer> getSearch() {
         return search;
     }
 
@@ -1148,8 +1057,7 @@ public class GUIListModule implements GUIModule
      *
      * @return An <code>Entry</code> holding the row in the key and column in the value
      */
-    public List<Pair<Integer, Integer>> getForwards()
-    {
+    public List<Pair<Integer, Integer>> getForwards() {
         return forwards;
     }
 
@@ -1158,8 +1066,7 @@ public class GUIListModule implements GUIModule
      *
      * @return A list of entries containing the row in the key and column in the value
      */
-    public List<Pair<Integer, Integer>> getBacks()
-    {
+    public List<Pair<Integer, Integer>> getBacks() {
         return backs;
     }
 
@@ -1168,8 +1075,7 @@ public class GUIListModule implements GUIModule
      *
      * @return The layer name
      */
-    public String getLayerName()
-    {
+    public String getLayerName() {
         return layerName;
     }
 
@@ -1178,8 +1084,7 @@ public class GUIListModule implements GUIModule
      *
      * @return Page change prefix
      */
-    public String getPageChangePreName()
-    {
+    public String getPageChangePreName() {
         return pageChangePreName;
     }
 
@@ -1188,8 +1093,7 @@ public class GUIListModule implements GUIModule
      *
      * @param pageChangePreName The new page change prefix
      */
-    public void setPageChangePreName(String pageChangePreName)
-    {
+    public void setPageChangePreName(String pageChangePreName) {
         this.pageChangePreName = pageChangePreName;
     }
 
@@ -1198,8 +1102,7 @@ public class GUIListModule implements GUIModule
      *
      * @return Scroll change prefix
      */
-    public String getScrollChangePreName()
-    {
+    public String getScrollChangePreName() {
         return scrollChangePreName;
     }
 
@@ -1208,8 +1111,7 @@ public class GUIListModule implements GUIModule
      *
      * @param scrollChangePreName The new scroll change prefix
      */
-    public void setScrollChangePreName(String scrollChangePreName)
-    {
+    public void setScrollChangePreName(String scrollChangePreName) {
         this.scrollChangePreName = scrollChangePreName;
     }
 
@@ -1218,8 +1120,7 @@ public class GUIListModule implements GUIModule
      *
      * @return The comparator for sorting items
      */
-    public @Nullable Comparator<? super GUIItem> getSorter()
-    {
+    public @Nullable Comparator<? super GUIItem> getSorter() {
         return sorter;
     }
 
@@ -1228,8 +1129,7 @@ public class GUIListModule implements GUIModule
      *
      * @param sorter The new {@link Comparator}
      */
-    public void setSorter(@Nullable Comparator<? super GUIItem> sorter)
-    {
+    public void setSorter(@Nullable Comparator<? super GUIItem> sorter) {
         this.sorter = sorter;
     }
 
@@ -1238,8 +1138,7 @@ public class GUIListModule implements GUIModule
      *
      * @author Mikedeejay2
      */
-    public static class GUIListSearchEvent implements GUIEvent
-    {
+    public static class GUIListSearchEvent implements GUIEvent {
         /**
          * The {@link BukkitPlugin} instance
          */
@@ -1250,8 +1149,7 @@ public class GUIListModule implements GUIModule
          *
          * @param plugin The {@link BukkitPlugin} instance
          */
-        public GUIListSearchEvent(BukkitPlugin plugin)
-        {
+        public GUIListSearchEvent(BukkitPlugin plugin) {
             this.plugin = plugin;
         }
 
@@ -1261,8 +1159,7 @@ public class GUIListModule implements GUIModule
          * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(GUIEventInfo info)
-        {
+        public void execute(GUIEventInfo info) {
             Player player = info.getPlayer();
             ClickType clickType = info.getClick();
             if(clickType != ClickType.LEFT) return;
@@ -1280,16 +1177,14 @@ public class GUIListModule implements GUIModule
      *
      * @author Mikedeejay2
      */
-    public static class GUIListSearchOffEvent implements GUIEvent
-    {
+    public static class GUIListSearchOffEvent implements GUIEvent {
         /**
          * Execute disabling search mode on the GUI
          *
          * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(GUIEventInfo info)
-        {
+        public void execute(GUIEventInfo info) {
             ClickType clickType = info.getClick();
             if(clickType != ClickType.LEFT) return;
             info.getGUI().getModule(GUIListModule.class).disableSearchMode();
@@ -1301,16 +1196,14 @@ public class GUIListModule implements GUIModule
      *
      * @author Mikedeejay2
      */
-    public static class GUISwitchListLocEvent implements GUIEvent
-    {
+    public static class GUISwitchListLocEvent implements GUIEvent {
         /**
          * Execute the modification of a list location switch (Moving what is being viewed on the list)
          *
          * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(GUIEventInfo info)
-        {
+        public void execute(GUIEventInfo info) {
             ClickType clickType = info.getClick();
             int slot = info.getSlot();
             GUIContainer gui = info.getGUI();
@@ -1327,30 +1220,26 @@ public class GUIListModule implements GUIModule
 
             int relative = 0;
 
-            for(int i = 0; i < forwards.size(); ++i)
-            {
+            for(int i = 0; i < forwards.size(); ++i) {
                 Pair<Integer, Integer> entry = forwards.get(i);
                 if(entry.getKey() != row || entry.getValue() != col) continue;
                 relative = i + 1;
                 break;
             }
 
-            if(relative != 0)
-            {
+            if(relative != 0) {
                 module.setListLoc(module.getCurLoc() + relative);
                 return;
             }
 
-            for(int i = 0; i < backs.size(); ++i)
-            {
+            for(int i = 0; i < backs.size(); ++i) {
                 Pair<Integer, Integer> entry = backs.get(i);
                 if(entry.getKey() != row || entry.getValue() != col) continue;
                 relative = -(i + 1);
                 break;
             }
 
-            if(relative != 0)
-            {
+            if(relative != 0) {
                 module.setListLoc(module.getCurLoc() + relative);
             }
         }
@@ -1361,8 +1250,7 @@ public class GUIListModule implements GUIModule
      *
      * @author Mikedeejay2
      */
-    public enum ListViewMode
-    {
+    public enum ListViewMode {
         /**
          * Paged mode, the view of the list acts as pages, showing an entirely new page each time
          */

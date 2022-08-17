@@ -5,19 +5,16 @@ package com.mikedeejay2.mikedeejay2lib.util.head;
  *
  * @author Mikedeejay2
  */
-public final class HeadUtil
-{
+public final class HeadUtil {
     /**
      * Get a {@link Base64Head} from a file extension. This is based off of
-     * many different types of file types in a large switch statement.
+     * many types of file types in a large switch statement.
      *
      * @param fileType The file type to search for
      * @return The <code>Base64Head</code> that was found
      */
-    public static Base64Head getHeadFromFileExtension(String fileType)
-    {
-        switch(fileType.toLowerCase())
-        {
+    public static Base64Head getHeadFromFileExtension(String fileType) {
+        switch(fileType.toLowerCase()) {
             case "a":
             case "ar":
             case "cpio":

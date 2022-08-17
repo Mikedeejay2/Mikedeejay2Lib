@@ -19,8 +19,7 @@ import java.util.function.Predicate;
  *
  * @author Mikedeejay2
  */
-public class ModuleRegistry implements ModuleRegister<Module>
-{
+public class ModuleRegistry implements ModuleRegister<Module> {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -43,13 +42,11 @@ public class ModuleRegistry implements ModuleRegister<Module>
      *                        was found in a list or something similar.
      * @param plugin          A reference to the plugin
      */
-    public ModuleRegistry(@Nullable Predicate<Module> enablePredicate, BukkitPlugin plugin)
-    {
+    public ModuleRegistry(@Nullable Predicate<Module> enablePredicate, BukkitPlugin plugin) {
         this.plugin = plugin;
         this.modules = new LinkedHashSet<>();
 
-        if(enablePredicate == null)
-        {
+        if(enablePredicate == null) {
             enablePredicate = (module) -> true;
         }
         this.enablePredicate = enablePredicate;
@@ -63,19 +60,16 @@ public class ModuleRegistry implements ModuleRegister<Module>
      * @return The registered module, null if not registered
      */
     @Override
-    public <T extends Module> T register(@NotNull T module)
-    {
+    public <T extends Module> T register(@NotNull T module) {
         Validate.notNull(module, "Cannot register null module");
-        if(!enablePredicate.test(module))
-        {
+        if(!enablePredicate.test(module)) {
             plugin.sendInfo(String.format("%s module is disabled in the config. Skipping initialization.", module.getName()));
             return null;
         }
         Validate.isTrue(!module.isEnabled(), String.format("%s module is already enabled but is attempting to be registered", module.getName()));
 
         T registeredModule = enableModule(module);
-        if(registeredModule != null)
-        {
+        if(registeredModule != null) {
             addModule(module);
         }
         return registeredModule;
@@ -89,8 +83,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
      * @param name The name of module to unregister
      */
     @Override
-    public void unregister(@NotNull final String name)
-    {
+    public void unregister(@NotNull final String name) {
         Validate.notNull(name, "Cannot unregister null named module");
         Validate.isTrue(containsModule(name), String.format("Cannot unregister module %s that doesn't exist in the registry", name));
 
@@ -108,8 +101,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
      * @param moduleClass The class of the module to be unregistered
      */
     @Override
-    public void unregister(@NotNull Class<Module> moduleClass)
-    {
+    public void unregister(@NotNull Class<Module> moduleClass) {
         Validate.notNull(moduleClass, "Cannot unregister null class module");
         Validate.isTrue(containsModule(moduleClass), String.format("Cannot unregister module of class %s that doesn't exist in the registry", moduleClass.getName()));
 
@@ -125,8 +117,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
      * @param module The module instance ot remove
      */
     @Override
-    public void unregister(@NotNull Module module)
-    {
+    public void unregister(@NotNull Module module) {
         Validate.notNull(module, "Cannot unregister null module");
         Validate.isTrue(module.isEnabled(), String.format("%s module is already disabled but is attempting to be unregistered", module.getName()));
         disableModule(module);
@@ -143,17 +134,13 @@ public class ModuleRegistry implements ModuleRegister<Module>
      * @return The enabled module, null if enable failed
      */
     @Override
-    public <T extends Module> T enableModule(@NotNull T module)
-    {
+    public <T extends Module> T enableModule(@NotNull T module) {
         plugin.sendInfo(String.format("&eEnabling %s module...", module.getName()));
-        try
-        {
+        try {
             Method method = Module.class.getDeclaredMethod("enable");
             method.setAccessible(true);
             method.invoke(module);
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             plugin.sendSevere(String.format("The module %s encountered an exception while enabling", module.getName()));
             e.printStackTrace();
             return null;
@@ -172,17 +159,13 @@ public class ModuleRegistry implements ModuleRegister<Module>
      * @param module The module to disable
      */
     @Override
-    public void disableModule(@NotNull Module module)
-    {
+    public void disableModule(@NotNull Module module) {
         plugin.sendInfo(String.format("&eDisabling %s module...", module.getName()));
-        try
-        {
+        try {
             Method method = Module.class.getDeclaredMethod("disable");
             method.setAccessible(true);
             method.invoke(module);
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             plugin.sendSevere(String.format("The module %s encountered an exception while disabling", module.getName()));
             e.printStackTrace();
         }
@@ -198,17 +181,14 @@ public class ModuleRegistry implements ModuleRegister<Module>
      * @return The requested module
      */
     @Override
-    public <T extends Module> T getModule(@NotNull final String name, @NotNull Class<T> moduleClass)
-    {
+    public <T extends Module> T getModule(@NotNull final String name, @NotNull Class<T> moduleClass) {
         Validate.notNull(name, "Cannot get module with a null name");
         Validate.notNull(moduleClass, "Cannot get module with a null class");
-        if(!containsModule(name))
-        {
+        if(!containsModule(name)) {
             return null;
         }
         Module module = getModule(name);
-        if(module.getClass() != moduleClass)
-        {
+        if(module.getClass() != moduleClass) {
             return null;
         }
         return moduleClass.cast(module);
@@ -221,16 +201,12 @@ public class ModuleRegistry implements ModuleRegister<Module>
      * @return The requested module
      */
     @Override
-    public Module getModule(@NotNull final String name)
-    {
-        if(!containsModule(name))
-        {
+    public Module getModule(@NotNull final String name) {
+        if(!containsModule(name)) {
             return null;
         }
-        for(Module module : modules)
-        {
-            if(name.equals(module.getName()))
-            {
+        for(Module module : modules) {
+            if(name.equals(module.getName())) {
                 return module;
             }
         }
@@ -245,13 +221,10 @@ public class ModuleRegistry implements ModuleRegister<Module>
      * @return The requested module
      */
     @Override
-    public <T extends Module> T getModule(@NotNull Class<T> moduleClass)
-    {
+    public <T extends Module> T getModule(@NotNull Class<T> moduleClass) {
         Validate.notNull(moduleClass, "Cannot get module with a null class");
-        for(Module module : modules)
-        {
-            if(module.getClass() == moduleClass)
-            {
+        for(Module module : modules) {
+            if(module.getClass() == moduleClass) {
                 return moduleClass.cast(module);
             }
         }
@@ -265,10 +238,8 @@ public class ModuleRegistry implements ModuleRegister<Module>
      * @return Whether this registry contains a module of the specified name or not
      */
     @Override
-    public boolean containsModule(@NotNull final String name)
-    {
-        for(Module module : modules)
-        {
+    public boolean containsModule(@NotNull final String name) {
+        for(Module module : modules) {
             if(name.equals(module.getName())) return true;
         }
         return false;
@@ -281,12 +252,9 @@ public class ModuleRegistry implements ModuleRegister<Module>
      * @return Whether this registry contains a module of the specified class or not
      */
     @Override
-    public boolean containsModule(@NotNull Class<?> moduleClass)
-    {
-        for(Module module : modules)
-        {
-            if(module.getClass() == moduleClass)
-            {
+    public boolean containsModule(@NotNull Class<?> moduleClass) {
+        for(Module module : modules) {
+            if(module.getClass() == moduleClass) {
                 return true;
             }
         }
@@ -302,10 +270,8 @@ public class ModuleRegistry implements ModuleRegister<Module>
      */
     @Override
     public boolean containsModule(@NotNull final String name, @NotNull Class<?> moduleClass) {
-        for(Module module : modules)
-        {
-            if(module.getClass() == moduleClass && name.equals(module.getName()))
-            {
+        for(Module module : modules) {
+            if(module.getClass() == moduleClass && name.equals(module.getName())) {
                 return true;
             }
         }
@@ -318,8 +284,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
      * @param module The module to add
      * @param <T>    The data type of the module
      */
-    private <T extends Module> void addModule(@NotNull T module)
-    {
+    private <T extends Module> void addModule(@NotNull T module) {
         modules.add(module);
     }
 
@@ -328,8 +293,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
      *
      * @param module The module to remove
      */
-    private void removeModule(@NotNull Module module)
-    {
+    private void removeModule(@NotNull Module module) {
         modules.remove(module);
     }
 
@@ -339,8 +303,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
      */
     @Override
     public void unregisterAll() {
-        for(Iterator<Module> iterator = modules.iterator(); iterator.hasNext();)
-        {
+        for(Iterator<Module> iterator = modules.iterator(); iterator.hasNext();) {
             Module module = iterator.next();
             Validate.notNull(module, "Cannot unregister null module");
             Validate.isTrue(module.isEnabled(), String.format("%s module is already disabled but is attempting to be unregistered", module.getName()));
@@ -355,8 +318,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
      * @return A set of all modules
      */
     @Override
-    public Set<Module> getModules()
-    {
+    public Set<Module> getModules() {
         return ImmutableSet.copyOf(modules);
     }
 
@@ -366,8 +328,7 @@ public class ModuleRegistry implements ModuleRegister<Module>
      * @return The registry size
      */
     @Override
-    public int registrySize()
-    {
+    public int registrySize() {
         return modules.size();
     }
 }

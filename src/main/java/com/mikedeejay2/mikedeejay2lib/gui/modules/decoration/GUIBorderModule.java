@@ -12,8 +12,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author Mikedeejay2
  */
-public class GUIBorderModule implements GUIModule
-{
+public class GUIBorderModule implements GUIModule {
     /**
      * The GUI item that will be used for the border
      */
@@ -24,8 +23,7 @@ public class GUIBorderModule implements GUIModule
      *
      * @param borderItem The GUI item that will be used for the border
      */
-    public GUIBorderModule(GUIItem borderItem)
-    {
+    public GUIBorderModule(GUIItem borderItem) {
         this.borderItem = borderItem;
     }
 
@@ -34,8 +32,7 @@ public class GUIBorderModule implements GUIModule
      *
      * @return The <code>GUIItem</code> that will be used
      */
-    public GUIItem getBorderItem()
-    {
+    public GUIItem getBorderItem() {
         return borderItem;
     }
 
@@ -44,8 +41,7 @@ public class GUIBorderModule implements GUIModule
      *
      * @param borderItem GUIItem for the border to use
      */
-    public void setBorderItem(GUIItem borderItem)
-    {
+    public void setBorderItem(GUIItem borderItem) {
         this.borderItem = borderItem;
     }
 
@@ -54,8 +50,7 @@ public class GUIBorderModule implements GUIModule
      *
      * @param borderItem ItemStack for the border to use
      */
-    public void setBorderItem(ItemStack borderItem)
-    {
+    public void setBorderItem(ItemStack borderItem) {
         this.borderItem = new GUIItem(borderItem);
     }
 
@@ -66,10 +61,8 @@ public class GUIBorderModule implements GUIModule
      * @param gui    The GUI
      */
     @Override
-    public void onOpenHead(Player player, GUIContainer gui)
-    {
-        for(int i = 1; i <= gui.getCols(); i++)
-        {
+    public void onOpenHead(Player player, GUIContainer gui) {
+        for(int i = 1; i <= gui.getCols(); i++) {
             gui.setItem(1, i, borderItem);
             gui.setItem(gui.getRows(), i, borderItem);
         }

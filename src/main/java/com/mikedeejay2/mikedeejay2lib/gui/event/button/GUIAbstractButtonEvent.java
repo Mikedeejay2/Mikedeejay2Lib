@@ -12,8 +12,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public abstract class GUIAbstractButtonEvent implements GUIEvent
-{
+public abstract class GUIAbstractButtonEvent implements GUIEvent {
     /**
      * A List of the accepted {@link ClickType}s that will activate the button.
      */
@@ -24,8 +23,7 @@ public abstract class GUIAbstractButtonEvent implements GUIEvent
      *
      * @param acceptedClicks The accepted {@link ClickType}s of the button
      */
-    public GUIAbstractButtonEvent(ClickType... acceptedClicks)
-    {
+    public GUIAbstractButtonEvent(ClickType... acceptedClicks) {
         this.acceptedClicks = new ArrayList<>(Arrays.asList(acceptedClicks));
     }
 
@@ -34,8 +32,7 @@ public abstract class GUIAbstractButtonEvent implements GUIEvent
      *
      * @return The list of <code>ClickTypes</code>
      */
-    public List<ClickType> getAcceptedClicks()
-    {
+    public List<ClickType> getAcceptedClicks() {
         return acceptedClicks;
     }
 
@@ -44,8 +41,7 @@ public abstract class GUIAbstractButtonEvent implements GUIEvent
      *
      * @param click The <code>ClickType</code> to add
      */
-    public void addClick(ClickType click)
-    {
+    public void addClick(ClickType click) {
         acceptedClicks.add(click);
     }
 
@@ -54,8 +50,7 @@ public abstract class GUIAbstractButtonEvent implements GUIEvent
      *
      * @param clicks The <code>ClickTypes</code> to add
      */
-    public void addClicks(ClickType... clicks)
-    {
+    public void addClicks(ClickType... clicks) {
         acceptedClicks.addAll(Arrays.asList(clicks));
     }
 
@@ -64,8 +59,7 @@ public abstract class GUIAbstractButtonEvent implements GUIEvent
      *
      * @param click The <code>ClickType</code> to remove
      */
-    public void removeClick(ClickType click)
-    {
+    public void removeClick(ClickType click) {
         acceptedClicks.remove(click);
     }
 
@@ -74,8 +68,7 @@ public abstract class GUIAbstractButtonEvent implements GUIEvent
      *
      * @param clicks The <code>ClickTypes</code> to remove
      */
-    public void removeClicks(ClickType... clicks)
-    {
+    public void removeClicks(ClickType... clicks) {
         acceptedClicks.removeAll(Arrays.asList(clicks));
     }
 
@@ -85,8 +78,7 @@ public abstract class GUIAbstractButtonEvent implements GUIEvent
      * @param click The <code>ClickType</code> to test
      * @return Whether the <code>ClickType</code> is an accepted click
      */
-    public boolean isValidClick(ClickType click)
-    {
+    public boolean isValidClick(ClickType click) {
         return acceptedClicks.contains(click);
     }
 }

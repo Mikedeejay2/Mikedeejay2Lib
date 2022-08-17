@@ -1,8 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event;
 
-import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
-import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
  * An event that is called when a {@link GUIItem} is called
@@ -17,8 +15,7 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  * @author Mikedeejay2
  */
 @FunctionalInterface
-public interface GUIEvent
-{
+public interface GUIEvent {
     /**
      * Executes when the item that this event has been appended to is clicked on
      *

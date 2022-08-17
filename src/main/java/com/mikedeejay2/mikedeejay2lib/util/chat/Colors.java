@@ -1,6 +1,5 @@
 package com.mikedeejay2.mikedeejay2lib.util.chat;
 
-import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
 import org.bukkit.ChatColor;
 
@@ -27,8 +26,7 @@ import java.util.regex.Pattern;
  * 
  * @author Mikedeejay2
  */
-public final class Colors
-{
+public final class Colors {
     /**
      * Pattern to find hex codes in a message
      */
@@ -52,8 +50,7 @@ public final class Colors
      * @param message The input string to be formatted
      * @return The string formatted with Minecraft color codes
      */
-    public static String format(String message)
-    {
+    public static String format(String message) {
         return ChatColor.translateAlternateColorCodes('&', message);
     }
 
@@ -65,11 +62,9 @@ public final class Colors
      * @param messages The input array of strings to be formatted
      * @return The string array formatted with Minecraft color codes
      */
-    public static String[] format(String... messages)
-    {
+    public static String[] format(String... messages) {
         String[] result = new String[messages.length];
-        for(int i = 0; i < messages.length; ++i)
-        {
+        for(int i = 0; i < messages.length; ++i) {
             result[i] = format(messages[i]);
         }
         return result;
@@ -83,11 +78,9 @@ public final class Colors
      * @param messages The input list of strings to be formatted
      * @return The string list formatted with Minecraft color codes
      */
-    public static List<String> format(List<String> messages)
-    {
+    public static List<String> format(List<String> messages) {
         List<String> result = new ArrayList<>();
-        for(String message : messages)
-        {
+        for(String message : messages) {
             result.add(format(message));
         }
         return result;
@@ -106,19 +99,16 @@ public final class Colors
      * @param message The message to have hex codes translated into their respective colors
      * @return The formatted message
      */
-    public static String formatHexCodes(String message)
-    {
+    public static String formatHexCodes(String message) {
         boolean hexSupported = MinecraftVersion.getVersionShort() >= 16;
         Matcher match1 = pattern1.matcher(message);
-        while(match1.find())
-        {
+        while(match1.find()) {
             String curColor = message.substring(match1.start(), match1.end());
             message = message.replace(curColor, hexSupported ? net.md_5.bungee.api.ChatColor.of(curColor) + "" : "");
             match1 = pattern1.matcher(message);
         }
         Matcher match2 = pattern2.matcher(message);
-        while(match2.find())
-        {
+        while(match2.find()) {
             String preColor = message.substring(match2.start(), match2.end());
             String curColor = "#" + preColor.substring(1, preColor.length() - 1);
             message = message.replace(preColor, hexSupported ? net.md_5.bungee.api.ChatColor.of(curColor) + "" : "");
@@ -138,11 +128,9 @@ public final class Colors
      * @param message The message to have color shortcuts translated into their respective colors
      * @return The formatted message
      */
-    public static String formatShortcuts(String message)
-    {
+    public static String formatShortcuts(String message) {
         Matcher match3 = pattern3.matcher(message);
-        while(match3.find())
-        {
+        while(match3.find()) {
             String preColor = message.substring(match3.start(), match3.end());
             String curColor = preColor.substring(1, preColor.length() - 1);
             ColorShortcut shortcut = ColorShortcut.getShortcut(curColor);
@@ -168,8 +156,7 @@ public final class Colors
      * @param message The message to have all color codes translated into their respective colors
      * @return The formatted message
      */
-    public static String formatAll(String message)
-    {
+    public static String formatAll(String message) {
         message = formatHexCodes(message);
         message = formatShortcuts(message);
         message = format(message);
@@ -190,11 +177,9 @@ public final class Colors
      * @param messages The array of messages to have all color codes translated into their respective colors
      * @return The formatted array
      */
-    public static String[] formatAll(String... messages)
-    {
+    public static String[] formatAll(String... messages) {
         String[] result = new String[messages.length];
-        for(int i = 0; i < messages.length; ++i)
-        {
+        for(int i = 0; i < messages.length; ++i) {
             result[i] = formatAll(messages[i]);
         }
         return result;
@@ -214,11 +199,9 @@ public final class Colors
      * @param messages The array of messages to have all color codes translated into their respective colors
      * @return The formatted array
      */
-    public static List<String> formatAll(List<String> messages)
-    {
+    public static List<String> formatAll(List<String> messages) {
         List<String> result = new ArrayList<>();
-        for(String message : messages)
-        {
+        for(String message : messages) {
             result.add(formatAll(message));
         }
         return result;
@@ -230,8 +213,7 @@ public final class Colors
      * @param message The input string to be formatted
      * @return The string formatted with the reset color
      */
-    public static String addReset(String message)
-    {
+    public static String addReset(String message) {
         return ChatColor.RESET + message;
     }
 
@@ -242,11 +224,9 @@ public final class Colors
      * @param messages The input array of strings to be formatted
      * @return The string array formatted with the reset color
      */
-    public static String[] addReset(String... messages)
-    {
+    public static String[] addReset(String... messages) {
         String[] result = new String[messages.length];
-        for(int i = 0; i < messages.length; ++i)
-        {
+        for(int i = 0; i < messages.length; ++i) {
             result[i] = addReset(messages[i]);
         }
         return result;
@@ -259,11 +239,9 @@ public final class Colors
      * @param messages The input list of strings to be formatted
      * @return The string list formatted with the reset color
      */
-    public static List<String> addReset(List<String> messages)
-    {
+    public static List<String> addReset(List<String> messages) {
         List<String> result = new ArrayList<>();
-        for(String message : messages)
-        {
+        for(String message : messages) {
             result.add(addReset(message));
         }
         return result;

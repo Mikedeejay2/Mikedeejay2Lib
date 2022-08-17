@@ -11,8 +11,7 @@ import java.util.*;
  *
  * @author Mikedeejay2
  */
-public final class DebugTimer
-{
+public final class DebugTimer {
     /**
      * The time that the debug timer was started
      */
@@ -38,8 +37,7 @@ public final class DebugTimer
      *
      * @param name The name of this timer
      */
-    public DebugTimer(String name)
-    {
+    public DebugTimer(String name) {
         this.name = name;
         this.entries = new ArrayList<>();
         this.overallDifference = 0;
@@ -51,8 +49,7 @@ public final class DebugTimer
      *
      * @param pointName The name of the point
      */
-    public void addPrintPoint(String pointName)
-    {
+    public void addPrintPoint(String pointName) {
         long startTime = System.nanoTime();
         TimerEntry entry = new TimerEntry(pointName, startTime);
         entries.add(entry);
@@ -68,8 +65,7 @@ public final class DebugTimer
      *
      * @param decimalPlaces The amount of decimal places to print
      */
-    public void printReport(int decimalPlaces)
-    {
+    public void printReport(int decimalPlaces) {
         long endTime = System.nanoTime();
         ConsoleCommandSender printer = Bukkit.getConsoleSender();
         double multiplier = Math.pow(10.0, decimalPlaces);
@@ -82,8 +78,7 @@ public final class DebugTimer
                 overallTick + " times a tick, " +
                 overallSecond + " times a second.");
 
-        for(int i = 0; i < entries.size(); i++)
-        {
+        for(int i = 0; i < entries.size(); i++) {
             TimerEntry entry = entries.get(i);
             long curStart = i == 0 ? startTime : entries.get(i - 1).getTime();
             long curEnd = entry.getTime();
@@ -105,8 +100,7 @@ public final class DebugTimer
      * @param decimalPlaces The decimal places to return
      * @return The end time of the timer
      */
-    public double getEndTime(int decimalPlaces)
-    {
+    public double getEndTime(int decimalPlaces) {
         long endTime = System.nanoTime();
         double overallNonRounded = ((endTime - startTime) / 1000000.0);
         double multiplier = Math.pow(10.0, decimalPlaces);
@@ -116,8 +110,7 @@ public final class DebugTimer
     /**
      * Print the report for this debug timer with the default 2 decimal places
      */
-    public void printReport()
-    {
+    public void printReport() {
         printReport(2);
     }
 
@@ -127,8 +120,7 @@ public final class DebugTimer
      *
      * @author Mikedeejay2
      */
-    private static class TimerEntry
-    {
+    private static class TimerEntry {
         /**
          * The time of the entry
          */
@@ -145,8 +137,7 @@ public final class DebugTimer
          * @param name The name of the entry
          * @param time The time of the entry
          */
-        public TimerEntry(String name, long time)
-        {
+        public TimerEntry(String name, long time) {
             this.time = time;
             this.name = name;
         }
@@ -156,8 +147,7 @@ public final class DebugTimer
          *
          * @return The time
          */
-        public long getTime()
-        {
+        public long getTime() {
             return time;
         }
 
@@ -166,8 +156,7 @@ public final class DebugTimer
          *
          * @return The name
          */
-        public String getName()
-        {
+        public String getName() {
             return name;
         }
 
@@ -176,8 +165,7 @@ public final class DebugTimer
          *
          * @param time The new time
          */
-        public void setTime(long time)
-        {
+        public void setTime(long time) {
             this.time = time;
         }
 
@@ -186,8 +174,7 @@ public final class DebugTimer
          *
          * @param name The new name
          */
-        public void setName(String name)
-        {
+        public void setName(String name) {
             this.name = name;
         }
     }

@@ -21,8 +21,7 @@ import org.bukkit.plugin.Plugin;
  * 
  * @author Mikedeejay2
  */
-public interface EnhancedPlugin extends Plugin
-{
+public interface EnhancedPlugin extends Plugin {
     /**
      * Get the prefix name of this plugin. This CAN include color formatting,
      * custom names, or really anything since there are no restraints placed

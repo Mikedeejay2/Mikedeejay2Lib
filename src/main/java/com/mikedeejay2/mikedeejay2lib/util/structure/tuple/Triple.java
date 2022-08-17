@@ -15,8 +15,7 @@ import java.io.Serializable;
  *
  * @author Mikedeejay2
  */
-public abstract class Triple<L, M, R> implements Comparable<Triple<L, M, R>>, Serializable
-{
+public abstract class Triple<L, M, R> implements Comparable<Triple<L, M, R>>, Serializable {
     /**
      * Internal serial version unique ID
      */
@@ -50,8 +49,7 @@ public abstract class Triple<L, M, R> implements Comparable<Triple<L, M, R>>, Se
      * @return The comparison result
      */
     @Override
-    public int compareTo(Triple<L, M, R> other)
-    {
+    public int compareTo(Triple<L, M, R> other) {
         if(this == other) return 0;
         if(this.getLeft() == other.getLeft() &&
                 this.getMiddle() == other.getMiddle() &&
@@ -75,33 +73,26 @@ public abstract class Triple<L, M, R> implements Comparable<Triple<L, M, R>>, Se
      * @return true if this object is the same as the obj argument; false otherwise.
      */
     @Override
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         if(this == obj) return true;
         if(!(obj instanceof Triple<?, ?, ?>)) return false;
         Triple<?, ?, ?> other = (Triple<?, ?, ?>) obj;
-        if((this.getLeft() == null && other.getLeft() != null) || (this.getLeft() != null && other.getLeft() == null))
-        {
+        if((this.getLeft() == null && other.getLeft() != null) || (this.getLeft() != null && other.getLeft() == null)) {
             return false;
         }
-        if((this.getMiddle() == null && other.getMiddle() != null) || (this.getMiddle() != null && other.getMiddle() == null))
-        {
+        if((this.getMiddle() == null && other.getMiddle() != null) || (this.getMiddle() != null && other.getMiddle() == null)) {
             return false;
         }
-        if((this.getRight() == null && other.getRight() != null) || (this.getRight() != null && other.getRight() == null))
-        {
+        if((this.getRight() == null && other.getRight() != null) || (this.getRight() != null && other.getRight() == null)) {
             return false;
         }
-        if(this.getLeft() != null && !this.getLeft().equals(other.getLeft()))
-        {
+        if(this.getLeft() != null && !this.getLeft().equals(other.getLeft())) {
             return false;
         }
-        if(this.getMiddle() != null && !this.getMiddle().equals(other.getMiddle()))
-        {
+        if(this.getMiddle() != null && !this.getMiddle().equals(other.getMiddle())) {
             return false;
         }
-        if(this.getRight() != null && !this.getRight().equals(other.getRight()))
-        {
+        if(this.getRight() != null && !this.getRight().equals(other.getRight())) {
             return false;
         }
         return true;
@@ -113,8 +104,7 @@ public abstract class Triple<L, M, R> implements Comparable<Triple<L, M, R>>, Se
      * @return The generated String
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "(" + getLeft() + ", " + getMiddle() + ", " + getRight() + ")";
     }
 }

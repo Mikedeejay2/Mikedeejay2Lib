@@ -1,6 +1,5 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.item;
 
-import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
@@ -8,10 +7,8 @@ import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.InventoryView;
 import org.bukkit.inventory.ItemStack;
-import org.bukkit.inventory.PlayerInventory;
 
 import java.util.function.Supplier;
 
@@ -20,8 +17,7 @@ import java.util.function.Supplier;
  *
  * @author Mikedeejay2
  */
-public class GUICreativeMoveEvent implements GUIEvent
-{
+public class GUICreativeMoveEvent implements GUIEvent {
     /**
      * The item that will be copied to the player's cursor upon click
      */
@@ -32,8 +28,7 @@ public class GUICreativeMoveEvent implements GUIEvent
      *
      * @param itemStack The item that will be copied to the player's cursor upon click
      */
-    public GUICreativeMoveEvent(ItemStack itemStack)
-    {
+    public GUICreativeMoveEvent(ItemStack itemStack) {
         this.itemStack = () -> itemStack;
     }
 
@@ -42,8 +37,7 @@ public class GUICreativeMoveEvent implements GUIEvent
      *
      * @param builder The item that will be copied to the player's cursor upon click
      */
-    public GUICreativeMoveEvent(ItemBuilder builder)
-    {
+    public GUICreativeMoveEvent(ItemBuilder builder) {
         this.itemStack = builder::get;
     }
 
@@ -52,8 +46,7 @@ public class GUICreativeMoveEvent implements GUIEvent
      *
      * @param supplier The supplier that will generate the item that will be copied to the player's cursor upon click
      */
-    public GUICreativeMoveEvent(Supplier<ItemStack> supplier)
-    {
+    public GUICreativeMoveEvent(Supplier<ItemStack> supplier) {
         this.itemStack = supplier;
     }
 
@@ -63,13 +56,11 @@ public class GUICreativeMoveEvent implements GUIEvent
      * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(GUIEventInfo info)
-    {
+    public void execute(GUIEventInfo info) {
         Player player = info.getPlayer();
         InventoryView inventory = player.getOpenInventory();
         ItemStack item = itemStack.get().clone();
-        switch(info.getAction())
-        {
+        switch(info.getAction()) {
             case PICKUP_ALL:
                 inventory.setCursor(item);
                 break;
@@ -92,8 +83,7 @@ public class GUICreativeMoveEvent implements GUIEvent
                 item.setAmount(item.getMaxStackSize());
                 inventory.getBottomInventory().setItem(info.getHotbarButton(), item);
                 break;
-            case DROP_ALL_SLOT:
-            {
+            case DROP_ALL_SLOT: {
                 item.setAmount(item.getMaxStackSize());
                 Location location = player.getEyeLocation();
                 World world = location.getWorld();
@@ -101,8 +91,7 @@ public class GUICreativeMoveEvent implements GUIEvent
                 droppedItem.setVelocity(location.getDirection().multiply(1.0 / 3.0));
                 break;
             }
-            case DROP_ONE_SLOT:
-            {
+            case DROP_ONE_SLOT: {
                 item.setAmount(1);
                 Location location = player.getEyeLocation();
                 World world = location.getWorld();
@@ -121,8 +110,7 @@ public class GUICreativeMoveEvent implements GUIEvent
      *
      * @return The <code>ItemStack</code> that will be copied to the player's cursor upon click
      */
-    public ItemStack getItemStack()
-    {
+    public ItemStack getItemStack() {
         return itemStack.get();
     }
 
@@ -131,8 +119,7 @@ public class GUICreativeMoveEvent implements GUIEvent
      *
      * @param itemStack The new <code>ItemStack</code>
      */
-    public void setItemStack(ItemStack itemStack)
-    {
+    public void setItemStack(ItemStack itemStack) {
         this.itemStack = () -> itemStack;
     }
 
@@ -141,8 +128,7 @@ public class GUICreativeMoveEvent implements GUIEvent
      *
      * @param function The function that will generate the item that will be copied to the player's cursor upon click
      */
-    public void setItemStack(Supplier<ItemStack> function)
-    {
+    public void setItemStack(Supplier<ItemStack> function) {
         this.itemStack = function;
     }
 }

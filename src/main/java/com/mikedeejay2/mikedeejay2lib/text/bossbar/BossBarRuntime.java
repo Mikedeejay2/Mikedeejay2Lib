@@ -14,8 +14,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class BossBarRuntime extends EnhancedRunnable
-{
+public class BossBarRuntime extends EnhancedRunnable {
     /**
      * The boss bar system that this runtime controls
      */
@@ -36,8 +35,7 @@ public class BossBarRuntime extends EnhancedRunnable
      *
      * @param bar The boss bar object
      */
-    public BossBarRuntime(BossBarSystem bar)
-    {
+    public BossBarRuntime(BossBarSystem bar) {
         this.system = bar;
         this.bar = system.getBar();
         this.modules = system.getModules();
@@ -47,8 +45,7 @@ public class BossBarRuntime extends EnhancedRunnable
      * Run the onTick for all of the <code>BossBarModules</code>
      */
     @Override
-    public void onRun()
-    {
+    public void onRun() {
         modules.forEach(module -> module.onTick(system));
     }
 
@@ -56,8 +53,7 @@ public class BossBarRuntime extends EnhancedRunnable
      * Remove visibility of the boss bars on their last run to prevent stuck boss bars
      */
     @Override
-    public void onLastRun()
-    {
+    public void onLastRun() {
         system.setVisible(false);
     }
 }

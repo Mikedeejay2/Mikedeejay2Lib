@@ -16,8 +16,7 @@ import java.util.Map;
  *
  * @author Mikedeejay2
  */
-public final class InventoryIdentifiers
-{
+public final class InventoryIdentifiers {
     /**
      * The slot of the offhand (Regular slot)
      */
@@ -49,10 +48,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is a shulker box or not
      */
-    public static boolean isShulkerBox(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isShulkerBox(Material material) {
+        switch(material) {
             case SHULKER_BOX:
             case WHITE_SHULKER_BOX:
             case ORANGE_SHULKER_BOX:
@@ -82,8 +79,7 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is an armor piece or not
      */
-    public static boolean isArmor(Material material)
-    {
+    public static boolean isArmor(Material material) {
         return isHelmet(material) || isChestplate(material) || isLeggings(material) || isBoots(material);
     }
 
@@ -93,10 +89,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is a helmet or not
      */
-    public static boolean isHelmet(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isHelmet(Material material) {
+        switch(material) {
             case LEATHER_HELMET:
             case CHAINMAIL_HELMET:
             case IRON_HELMET:
@@ -120,10 +114,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is a chestplate or not
      */
-    public static boolean isChestplate(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isChestplate(Material material) {
+        switch(material) {
             case LEATHER_CHESTPLATE:
             case CHAINMAIL_CHESTPLATE:
             case IRON_CHESTPLATE:
@@ -143,10 +135,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is leggings or not
      */
-    public static boolean isLeggings(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isLeggings(Material material) {
+        switch(material) {
             case LEATHER_LEGGINGS:
             case CHAINMAIL_LEGGINGS:
             case IRON_LEGGINGS:
@@ -165,10 +155,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is boots or not
      */
-    public static boolean isBoots(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isBoots(Material material) {
+        switch(material) {
             case LEATHER_BOOTS:
             case CHAINMAIL_BOOTS:
             case IRON_BOOTS:
@@ -187,10 +175,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material shift clicks into the offhand or not
      */
-    public static boolean isOffhand(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isOffhand(Material material) {
+        switch(material) {
             case SHIELD:
                 return true;
             default:
@@ -204,8 +190,7 @@ public final class InventoryIdentifiers
      * @param slot The slot to check
      * @return Whether the slot is the off hand or not
      */
-    public static boolean isOffhandSlot(int slot)
-    {
+    public static boolean isOffhandSlot(int slot) {
         return slot == OFFHAND_SLOT;
     }
 
@@ -215,8 +200,7 @@ public final class InventoryIdentifiers
      * @param slot The slot to check
      * @return Whether the slot is an armor slot or not
      */
-    public static boolean isArmorSlot(int slot)
-    {
+    public static boolean isArmorSlot(int slot) {
         return slot <= HELMET_SLOT && slot >= BOOTS_SLOT;
     }
 
@@ -232,18 +216,14 @@ public final class InventoryIdentifiers
      *     <li>Boolean (Right) - Whether the item has the ability to be in that slot, regardless of whether it should be</li>
      * </ol>
      */
-    public static Pair<Boolean, Boolean> applicableForSlot(int rawSlot, InventoryView invView, Material material)
-    {
+    public static Pair<Boolean, Boolean> applicableForSlot(int rawSlot, InventoryView invView, Material material) {
         InventoryType.SlotType slotType = invView.getSlotType(rawSlot);
         InventoryType          invType  = invView.getType();
         int                    slot     = invView.convertSlot(rawSlot);
 
-        switch(invType)
-        {
-            case LOOM:
-            {
-                switch(rawSlot)
-                {
+        switch(invType) {
+            case LOOM: {
+                switch(rawSlot) {
                     case 0:
                         return new MutablePair<>(isBanner(material), false);
                     case 1:
@@ -253,10 +233,8 @@ public final class InventoryIdentifiers
                 }
             }
             break;
-            case BREWING:
-            {
-                switch(rawSlot)
-                {
+            case BREWING: {
+                switch(rawSlot) {
                     case 0:
                     case 1:
                     case 2:
@@ -268,10 +246,8 @@ public final class InventoryIdentifiers
                 }
             }
             break;
-            case CARTOGRAPHY:
-            {
-                switch(rawSlot)
-                {
+            case CARTOGRAPHY: {
+                switch(rawSlot) {
                     case 0:
                         return new MutablePair<>(material == Material.FILLED_MAP, false);
                     case 1:
@@ -279,31 +255,24 @@ public final class InventoryIdentifiers
                 }
             }
             break;
-            case ENCHANTING:
-            {
-                switch(rawSlot)
-                {
+            case ENCHANTING: {
+                switch(rawSlot) {
                     case 1: return new MutablePair<>(material == Material.LAPIS_LAZULI, false);
                     case 0:return new MutablePair<>(material != Material.LAPIS_LAZULI, true);
                 }
             }
             break;
-            case GRINDSTONE:
-            {
-                if(rawSlot == 0 || rawSlot == 1)
-                {
+            case GRINDSTONE: {
+                if(rawSlot == 0 || rawSlot == 1) {
                     return new MutablePair<>(isTool(material), false);
                 }
             }
             break;
-            case SHULKER_BOX:
-            {
+            case SHULKER_BOX: {
                 return new MutablePair<>(!isShulkerBox(material), false);
             }
-            case FURNACE:
-            {
-                switch(rawSlot)
-                {
+            case FURNACE: {
+                switch(rawSlot) {
                     case 0:
                         return new MutablePair<>(RecipeUtil.isFurnaceInput(material), true);
                     case 1:
@@ -311,54 +280,42 @@ public final class InventoryIdentifiers
                 }
 
             }
-            case BLAST_FURNACE:
-            {
-                if(rawSlot == 0)
-                {
+            case BLAST_FURNACE: {
+                if(rawSlot == 0) {
                     return new MutablePair<>(RecipeUtil.isBlastingInput(material), true);
                 }
             }
-            case SMOKER:
-            {
-                if(rawSlot == 0)
-                {
+            case SMOKER: {
+                if(rawSlot == 0) {
                     return new MutablePair<>(RecipeUtil.isSmokingInput(material), true);
                 }
             }
-            case BEACON:
-            {
-                if(rawSlot == 0)
-                {
+            case BEACON: {
+                if(rawSlot == 0) {
                     return new MutablePair<>(isApplicableForBeacon(material), false);
                 }
             }
         }
 
         Inventory topInv = invView.getTopInventory();
-        if(topInv instanceof HorseInventory)
-        {
-            switch(rawSlot)
-            {
+        if(topInv instanceof HorseInventory) {
+            switch(rawSlot) {
                 case 0:
                     return new MutablePair<>(material == Material.SADDLE, false);
                 case 1:
                     return new MutablePair<>(isHorseArmor(material), false);
             }
         }
-        else if(topInv instanceof LlamaInventory)
-        {
-            switch(rawSlot)
-            {
+        else if(topInv instanceof LlamaInventory) {
+            switch(rawSlot) {
                 case 0:
                     return new MutablePair<>(false, false);
                 case 1:
                     return new MutablePair<>(isCarpet(material), false);
             }
         }
-        else if(topInv instanceof AbstractHorseInventory)
-        {
-            switch(rawSlot)
-            {
+        else if(topInv instanceof AbstractHorseInventory) {
+            switch(rawSlot) {
                 case 0:
                     return new MutablePair<>(material == Material.SADDLE, false);
                 case 1:
@@ -366,20 +323,17 @@ public final class InventoryIdentifiers
             }
         }
 
-        switch(slotType)
-        {
+        switch(slotType) {
             case RESULT:
                 return new MutablePair<>(false, false);
-            case ARMOR:
-            {
+            case ARMOR: {
                 if(slot == BOOTS_SLOT && !isBoots(material)) return new MutablePair<>(true, false);
                 if(slot == LEGGINGS_SLOT && !isLeggings(material)) return new MutablePair<>(true, false);
                 if(slot == CHESTPLATE_SLOT && !isChestplate(material)) return new MutablePair<>(true, false);
                 if(slot == HELMET_SLOT && !isHelmet(material)) return new MutablePair<>(true, false);
                 return new MutablePair<>(false, false);
             }
-            case FUEL:
-            {
+            case FUEL: {
                 return new MutablePair<>(material.isFuel(), true);
             }
             case QUICKBAR:
@@ -398,16 +352,12 @@ public final class InventoryIdentifiers
      * @param invView  The <code>InventoryView</code> to use as a reference
      * @return A boolean representing whether the slot is or is not a singleton slot
      */
-    public static boolean singletonSlot(int rawSlot, InventoryView invView)
-    {
+    public static boolean singletonSlot(int rawSlot, InventoryView invView) {
         InventoryType invType = invView.getType();
 
-        switch(invType)
-        {
-            case LOOM:
-            {
-                switch(rawSlot)
-                {
+        switch(invType) {
+            case LOOM: {
+                switch(rawSlot) {
                     case 0:
                     case 1:
                         return false;
@@ -416,10 +366,8 @@ public final class InventoryIdentifiers
                 }
             }
             break;
-            case BREWING:
-            {
-                switch(rawSlot)
-                {
+            case BREWING: {
+                switch(rawSlot) {
                     case 0:
                     case 1:
                     case 2:
@@ -430,28 +378,23 @@ public final class InventoryIdentifiers
                 }
             }
             break;
-            case CARTOGRAPHY:
-            {
-                if(rawSlot == 0 || rawSlot == 1)
-                {
+            case CARTOGRAPHY: {
+                if(rawSlot == 0 || rawSlot == 1) {
                     return false;
                 }
             }
             break;
-            case GRINDSTONE:
-            {
+            case GRINDSTONE: {
                 return rawSlot == 0 || rawSlot == 1;
             }
             case ENCHANTING:
-            case BEACON:
-            {
+            case BEACON: {
                 return rawSlot == 0;
             }
         }
 
         Inventory topInv = invView.getTopInventory();
-        if(topInv instanceof AbstractHorseInventory)
-        {
+        if(topInv instanceof AbstractHorseInventory) {
             return rawSlot == 0 || rawSlot == 1;
         }
 
@@ -464,10 +407,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is a banner or not
      */
-    public static boolean isBanner(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isBanner(Material material) {
+        switch(material) {
             case WHITE_BANNER:
             case ORANGE_BANNER:
             case MAGENTA_BANNER:
@@ -496,10 +437,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is a dye or not
      */
-    public static boolean isDye(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isDye(Material material) {
+        switch(material) {
             case WHITE_DYE:
             case ORANGE_DYE:
             case MAGENTA_DYE:
@@ -528,10 +467,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is a pattern or not
      */
-    public static boolean isPattern(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isPattern(Material material) {
+        switch(material) {
             case FLOWER_BANNER_PATTERN:
             case CREEPER_BANNER_PATTERN:
             case SKULL_BANNER_PATTERN:
@@ -550,8 +487,7 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is a tool or not
      */
-    public static boolean isTool(Material material)
-    {
+    public static boolean isTool(Material material) {
         return isWeapon(material) ||
                 isArmor(material) ||
                 isPickaxe(material) ||
@@ -570,8 +506,7 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is a weapon or not
      */
-    public static boolean isWeapon(Material material)
-    {
+    public static boolean isWeapon(Material material) {
         return isBow(material) || isSword(material) || material == Material.TRIDENT;
     }
 
@@ -581,10 +516,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is a bow or not
      */
-    public static boolean isBow(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isBow(Material material) {
+        switch(material) {
             case BOW:
             case CROSSBOW:
                 return true;
@@ -599,10 +532,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is a sword or not
      */
-    public static boolean isSword(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isSword(Material material) {
+        switch(material) {
             case WOODEN_SWORD:
             case STONE_SWORD:
             case IRON_SWORD:
@@ -621,10 +552,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is a pickaxe or not
      */
-    public static boolean isPickaxe(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isPickaxe(Material material) {
+        switch(material) {
             case WOODEN_PICKAXE:
             case STONE_PICKAXE:
             case IRON_PICKAXE:
@@ -643,10 +572,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is a hoe or not
      */
-    public static boolean isHoe(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isHoe(Material material) {
+        switch(material) {
             case WOODEN_HOE:
             case STONE_HOE:
             case IRON_HOE:
@@ -665,10 +592,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is a shovel or not
      */
-    public static boolean isShovel(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isShovel(Material material) {
+        switch(material) {
             case WOODEN_SHOVEL:
             case STONE_SHOVEL:
             case IRON_SHOVEL:
@@ -687,10 +612,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is an axe or not
      */
-    public static boolean isAxe(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isAxe(Material material) {
+        switch(material) {
             case WOODEN_AXE:
             case STONE_AXE:
             case IRON_AXE:
@@ -709,10 +632,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is applicable for a beacon or not
      */
-    public static boolean isApplicableForBeacon(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isApplicableForBeacon(Material material) {
+        switch(material) {
             case IRON_INGOT:
             case GOLD_INGOT:
             case DIAMOND:
@@ -730,10 +651,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is a bottle or not
      */
-    public static boolean isBottle(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isBottle(Material material) {
+        switch(material) {
             case GLASS_BOTTLE:
             case POTION:
             case LINGERING_POTION:
@@ -750,10 +669,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is applicable for brewing or not
      */
-    public static boolean isApplicableForBrewing(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isApplicableForBrewing(Material material) {
+        switch(material) {
             case NETHER_WART:
             case GUNPOWDER:
             case SPIDER_EYE:
@@ -782,10 +699,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is horse armor or not
      */
-    public static boolean isHorseArmor(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isHorseArmor(Material material) {
+        switch(material) {
             case LEATHER_HORSE_ARMOR:
             case IRON_HORSE_ARMOR:
             case GOLDEN_HORSE_ARMOR:
@@ -802,10 +717,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is carpet or not
      */
-    public static boolean isCarpet(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isCarpet(Material material) {
+        switch(material) {
             case WHITE_CARPET:
             case ORANGE_CARPET:
             case MAGENTA_CARPET:
@@ -834,10 +747,8 @@ public final class InventoryIdentifiers
      * @param action The action to check
      * @return Whether the item will be taken or not
      */
-    public static boolean takeResult(InventoryAction action)
-    {
-        switch(action)
-        {
+    public static boolean takeResult(InventoryAction action) {
+        switch(action) {
             case PICKUP_ALL:
             case PICKUP_HALF:
             case PICKUP_ONE:
@@ -855,10 +766,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is a type of soup or stew
      */
-    public static boolean isSoup(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isSoup(Material material) {
+        switch(material) {
             case BEETROOT_SOUP:
             case SUSPICIOUS_STEW:
             case MUSHROOM_STEW:
@@ -875,10 +784,8 @@ public final class InventoryIdentifiers
      * @param material The material to check
      * @return Whether the material is a type of bucket or not
      */
-    public static boolean isBucket(Material material)
-    {
-        switch(material)
-        {
+    public static boolean isBucket(Material material) {
+        switch(material) {
             case BUCKET:
             case COD_BUCKET:
             case LAVA_BUCKET:

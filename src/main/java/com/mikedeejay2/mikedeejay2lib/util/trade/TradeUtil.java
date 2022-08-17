@@ -9,16 +9,14 @@ import org.bukkit.inventory.MerchantRecipe;
  *
  * @author Mikedeejay2
  */
-public final class TradeUtil
-{
+public final class TradeUtil {
     /**
      * Calculate the amount of XP as the result of a successful trade for a villager.
      * This XP amount will automatically be added to the villager's XP amount.
      *
      * @param villager The villager to increment the XP amount
      */
-    public static void calcTradeXP(Villager villager)
-    {
+    public static void calcTradeXP(Villager villager) {
         MerchantInventory inventory = (MerchantInventory) villager.getInventory();
         MerchantRecipe    recipe    = inventory.getSelectedRecipe();
         if(recipe == null) return;

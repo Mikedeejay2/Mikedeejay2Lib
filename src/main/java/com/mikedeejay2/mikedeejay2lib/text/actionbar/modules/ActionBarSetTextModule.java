@@ -19,8 +19,7 @@ public class ActionBarSetTextModule implements ActionBarModule
     /**
      * @param text The String of text that the action bar will be changed to
      */
-    public ActionBarSetTextModule(String text)
-    {
+    public ActionBarSetTextModule(String text) {
         this.text = text;
     }
 
@@ -31,8 +30,7 @@ public class ActionBarSetTextModule implements ActionBarModule
      * @param frame The frame that the action bar is on
      */
     @Override
-    public void onTick(ActionBar bar, ActionBarFrame frame)
-    {
+    public void onTick(ActionBar bar, ActionBarFrame frame) {
         frame.setText(text);
     }
 
@@ -41,8 +39,7 @@ public class ActionBarSetTextModule implements ActionBarModule
      *
      * @return The text of this module
      */
-    public String getText()
-    {
+    public String getText() {
         return text;
     }
 
@@ -51,8 +48,7 @@ public class ActionBarSetTextModule implements ActionBarModule
      *
      * @param text The new text
      */
-    public void setText(String text)
-    {
+    public void setText(String text) {
         this.text = text;
     }
 }

@@ -10,8 +10,7 @@ import java.io.Reader;
  *
  * @author Mikedeejay2
  */
-public final class YamlFileIO
-{
+public final class YamlFileIO {
     /**
      * Load a File into a YamlConfiguration
      *
@@ -20,14 +19,10 @@ public final class YamlFileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return Whether load was successful or not
      */
-    public static boolean loadIntoYamlConfig(EnhancedYaml config, File file, boolean throwErrors)
-    {
-        try
-        {
+    public static boolean loadIntoYamlConfig(EnhancedYaml config, File file, boolean throwErrors) {
+        try {
             config.load(file);
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             if(throwErrors) FileIO.logFileCouldNotBeLoaded(file.getPath(), e);
             return false;
         }
@@ -43,15 +38,11 @@ public final class YamlFileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return Whether load was successful or not
      */
-    public static boolean loadYamlConfigFromJar(EnhancedYaml config, String filePath, ClassLoader classLoader, boolean throwErrors)
-    {
+    public static boolean loadYamlConfigFromJar(EnhancedYaml config, String filePath, ClassLoader classLoader, boolean throwErrors) {
         Reader reader = FileIO.getReaderFromJar(filePath, classLoader, throwErrors);
-        try
-        {
+        try {
             config.load(reader);
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             if(throwErrors) FileIO.logFileCouldNotBeLoaded(filePath, e);
             return false;
         }
@@ -66,14 +57,10 @@ public final class YamlFileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return Whether load was successful or not
      */
-    public static boolean saveYamlConfig(EnhancedYaml config, File file, boolean throwErrors)
-    {
-        try
-        {
+    public static boolean saveYamlConfig(EnhancedYaml config, File file, boolean throwErrors) {
+        try {
             config.save(file);
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             if(throwErrors) FileIO.logFileCouldNotBeSaved(file.getPath(), e);
             return false;
         }

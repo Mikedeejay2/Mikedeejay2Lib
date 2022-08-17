@@ -8,8 +8,7 @@ import org.bstats.bukkit.Metrics;
  *
  * @author Mikedeejay2
  */
-public class BStats
-{
+public class BStats {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -30,8 +29,7 @@ public class BStats
      *
      * @param plugin The {@link BukkitPlugin} instance
      */
-    public BStats(BukkitPlugin plugin)
-    {
+    public BStats(BukkitPlugin plugin) {
         this.plugin = plugin;
         this.id = -1;
     }
@@ -41,8 +39,7 @@ public class BStats
      *
      * @param id The ID of the plugin
      */
-    public void init(int id)
-    {
+    public void init(int id) {
         this.id = id;
         this.bStats = new Metrics(plugin, id);
     }
@@ -52,8 +49,7 @@ public class BStats
      *
      * @return The BStats ID of this plugin
      */
-    public int getId()
-    {
+    public int getId() {
         return id;
     }
 
@@ -62,8 +58,7 @@ public class BStats
      *
      * @return BStats metrics
      */
-    public Metrics getBStats()
-    {
+    public Metrics getBStats() {
         return bStats;
     }
 }

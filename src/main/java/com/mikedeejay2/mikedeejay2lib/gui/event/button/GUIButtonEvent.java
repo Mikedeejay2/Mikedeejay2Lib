@@ -12,8 +12,7 @@ import java.util.function.Consumer;
  *
  * @author Mikedeejay2
  */
-public class GUIButtonEvent extends GUIAbstractButtonEvent
-{
+public class GUIButtonEvent extends GUIAbstractButtonEvent {
     /**
      * The consumer that is run when the button is clicked
      */
@@ -25,8 +24,7 @@ public class GUIButtonEvent extends GUIAbstractButtonEvent
      * @param consumer       The consumer that is run when the button is clicked
      * @param acceptedClicks The accepted {@link ClickType}s of the button
      */
-    public GUIButtonEvent(@NotNull Consumer<GUIEventInfo> consumer, ClickType... acceptedClicks)
-    {
+    public GUIButtonEvent(@NotNull Consumer<GUIEventInfo> consumer, ClickType... acceptedClicks) {
         super(acceptedClicks);
         Validate.notNull(consumer, "Button consumer can not be null");
         this.consumer = consumer;
@@ -37,8 +35,7 @@ public class GUIButtonEvent extends GUIAbstractButtonEvent
      *
      * @param consumer The consumer that is run when the button is clicked
      */
-    public GUIButtonEvent(@NotNull Consumer<GUIEventInfo> consumer)
-    {
+    public GUIButtonEvent(@NotNull Consumer<GUIEventInfo> consumer) {
         this(consumer, ClickType.LEFT, ClickType.RIGHT, ClickType.MIDDLE, ClickType.SHIFT_LEFT, ClickType.SHIFT_RIGHT);
     }
 
@@ -48,8 +45,7 @@ public class GUIButtonEvent extends GUIAbstractButtonEvent
      * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(GUIEventInfo info)
-    {
+    public void execute(GUIEventInfo info) {
         if(!isValidClick(info.getClick())) return;
         consumer.accept(info);
     }
@@ -59,8 +55,7 @@ public class GUIButtonEvent extends GUIAbstractButtonEvent
      *
      * @return The consumer for the button click
      */
-    public Consumer<GUIEventInfo> getConsumer()
-    {
+    public Consumer<GUIEventInfo> getConsumer() {
         return consumer;
     }
 
@@ -69,8 +64,7 @@ public class GUIButtonEvent extends GUIAbstractButtonEvent
      *
      * @param consumer The new consumer
      */
-    public void setConsumer(@NotNull Consumer<GUIEventInfo> consumer)
-    {
+    public void setConsumer(@NotNull Consumer<GUIEventInfo> consumer) {
         Validate.notNull(consumer, "Button consumer can not be null");
         this.consumer = consumer;
     }

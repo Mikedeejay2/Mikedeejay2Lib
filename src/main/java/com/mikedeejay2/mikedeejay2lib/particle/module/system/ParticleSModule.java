@@ -10,8 +10,7 @@ import com.mikedeejay2.mikedeejay2lib.particle.runtime.ParticleRuntime;
  *
  * @author Mikedeejay2
  */
-public interface ParticleSModule
-{
+public interface ParticleSModule {
     /**
      * Called on the head of display of particles in {@link ParticleRuntime#onRun()}
      *

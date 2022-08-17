@@ -7,15 +7,13 @@ import com.mikedeejay2.mikedeejay2lib.text.bossbar.BossBarSystem;
  *
  * @author Mikedeejay2
  */
-public class BossBarSetVisibleModule extends BossBarFrameModule<Boolean>
-{
+public class BossBarSetVisibleModule extends BossBarFrameModule<Boolean> {
     /**
      * Construct a new <code>BossBarSetVisibleModule</code>
      *
      * @param loop Whether this module should loop the frames or not
      */
-    public BossBarSetVisibleModule(boolean loop)
-    {
+    public BossBarSetVisibleModule(boolean loop) {
         super(loop);
     }
 
@@ -27,8 +25,7 @@ public class BossBarSetVisibleModule extends BossBarFrameModule<Boolean>
      * @param value  The value of the frame
      */
     @Override
-    public void onFrame(BossBarSystem system, long period, Boolean value)
-    {
+    public void onFrame(BossBarSystem system, long period, Boolean value) {
         system.setVisible(value);
     }
 }

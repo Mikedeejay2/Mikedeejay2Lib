@@ -11,8 +11,7 @@ import net.md_5.bungee.api.chat.ClickEvent;
  *
  * @author Mikedeejay2
  */
-public class ChatClickModule implements ChatModule
-{
+public class ChatClickModule implements ChatModule {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -35,8 +34,7 @@ public class ChatClickModule implements ChatModule
      * @param action    The action of the click event
      * @param plugin    The {@link BukkitPlugin} instance
      */
-    public ChatClickModule(String clickText, ClickEvent.Action action, BukkitPlugin plugin)
-    {
+    public ChatClickModule(String clickText, ClickEvent.Action action, BukkitPlugin plugin) {
         this.clickText = clickText;
         this.action = action;
         this.plugin = plugin;
@@ -49,8 +47,7 @@ public class ChatClickModule implements ChatModule
      * @param components The current array of <code>BaseComonents</code> that have been baked
      */
     @Override
-    public void onBake(ChatSection section, BaseComponent[] components)
-    {
+    public void onBake(ChatSection section, BaseComponent[] components) {
         ClickEvent clickEvent = ChatConverter.getClickEvent(action, clickText);
         ChatConverter.setClickEvent(components, clickEvent);
     }

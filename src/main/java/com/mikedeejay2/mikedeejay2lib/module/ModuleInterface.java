@@ -7,8 +7,7 @@ package com.mikedeejay2.mikedeejay2lib.module;
  *
  * @author Mikedeejay2
  */
-public interface ModuleInterface
-{
+public interface ModuleInterface {
     /**
      * Called when this module is enabled
      */

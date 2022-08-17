@@ -13,8 +13,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class ActionBar
-{
+public class ActionBar {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -45,8 +44,7 @@ public class ActionBar
      *
      * @param plugin The {@link BukkitPlugin} instance
      */
-    public ActionBar(BukkitPlugin plugin)
-    {
+    public ActionBar(BukkitPlugin plugin) {
         this.plugin = plugin;
         this.frames = new ArrayList<>();
         this.modules = new ArrayList<>();
@@ -58,8 +56,7 @@ public class ActionBar
      * @param plugin The {@link BukkitPlugin} instance
      * @param loop   Whether the frames of the action bar will loop or not
      */
-    public ActionBar(BukkitPlugin plugin, boolean loop)
-    {
+    public ActionBar(BukkitPlugin plugin, boolean loop) {
         this.plugin = plugin;
         this.loop = loop;
         this.frames = new ArrayList<>();
@@ -72,8 +69,7 @@ public class ActionBar
      * @param period  The update period (in ticks) of the action bar
      * @param players The players to display the action bar to
      */
-    public void display(long period, Player... players)
-    {
+    public void display(long period, Player... players) {
         this.runtime = new ActionBarRuntime(this, players);
         runtime.runTaskTimerAsynchronously(plugin, period);
     }
@@ -83,8 +79,7 @@ public class ActionBar
      *
      * @param players The players to display the action bar to
      */
-    public void display(Player... players)
-    {
+    public void display(Player... players) {
         this.display(1, players);
     }
 
@@ -95,8 +90,7 @@ public class ActionBar
      * @param count   The amount of ticks before the action bar stops playing
      * @param players The players to display the action bar to
      */
-    public void displayCount(long period, long count, Player... players)
-    {
+    public void displayCount(long period, long count, Player... players) {
         this.runtime = new ActionBarRuntime(this, players);
         runtime.runTaskTimerCounted(plugin, period, count);
     }
@@ -107,8 +101,7 @@ public class ActionBar
      * @param count   The amount of ticks before the action bar stops playing
      * @param players The players to display the action bar to
      */
-    public void displayCount(long count, Player... players)
-    {
+    public void displayCount(long count, Player... players) {
         this.displayCount(1, count, players);
     }
 
@@ -119,8 +112,7 @@ public class ActionBar
      * @param delay The delay between this frame and the next frame
      * @return The current <code>ActionBar</code>
      */
-    public ActionBar addFrame(String text, long delay)
-    {
+    public ActionBar addFrame(String text, long delay) {
         ActionBarFrame frame = new ActionBarFrame(text, delay);
         frames.add(frame);
         return this;
@@ -132,8 +124,7 @@ public class ActionBar
      * @param frame The <code>ActionBarFrame</code> to add
      * @return The current <code>ActionBar</code>
      */
-    public ActionBar addFrame(ActionBarFrame frame)
-    {
+    public ActionBar addFrame(ActionBarFrame frame) {
         frames.add(frame);
         return this;
     }
@@ -144,8 +135,7 @@ public class ActionBar
      * @param index The index to remove the frame from
      * @return The current <code>ActionBar</code>
      */
-    public ActionBar removeFrame(int index)
-    {
+    public ActionBar removeFrame(int index) {
         frames.remove(index);
         return this;
     }
@@ -156,8 +146,7 @@ public class ActionBar
      * @param frame The <code>ActionBarFrame</code> to remove
      * @return The current <code>ActionBar</code>
      */
-    public ActionBar removeFrame(ActionBarFrame frame)
-    {
+    public ActionBar removeFrame(ActionBarFrame frame) {
         frames.remove(frame);
         return this;
     }
@@ -168,8 +157,7 @@ public class ActionBar
      * @param frame The <code>ActionBarFrame</code> to search for
      * @return Whether the specified frame was found or not
      */
-    public boolean containsFrame(ActionBarFrame frame)
-    {
+    public boolean containsFrame(ActionBarFrame frame) {
         return frames.contains(frame);
     }
 
@@ -178,8 +166,7 @@ public class ActionBar
      *
      * @return The current <code>ActionBar</code>
      */
-    public ActionBar resetFrames()
-    {
+    public ActionBar resetFrames() {
         frames.clear();
         return this;
     }
@@ -190,8 +177,7 @@ public class ActionBar
      * @param index The index to get the frame from
      * @return The requested frame
      */
-    public ActionBarFrame getFrame(int index)
-    {
+    public ActionBarFrame getFrame(int index) {
         return frames.get(index);
     }
 
@@ -200,8 +186,7 @@ public class ActionBar
      *
      * @return The list of all frames
      */
-    public List<ActionBarFrame> getFrames()
-    {
+    public List<ActionBarFrame> getFrames() {
         return frames;
     }
 
@@ -210,8 +195,7 @@ public class ActionBar
      *
      * @return Loop state
      */
-    public boolean shouldLoop()
-    {
+    public boolean shouldLoop() {
         return loop;
     }
 
@@ -220,8 +204,7 @@ public class ActionBar
      *
      * @param loop The new loop state
      */
-    public void setLoop(boolean loop)
-    {
+    public void setLoop(boolean loop) {
         this.loop = loop;
     }
 
@@ -229,8 +212,7 @@ public class ActionBar
      * Cancel the displaying of this <code>ActionBar</code>. This will do nothing
      * if no runtime is currently running.
      */
-    public void cancelDisplay()
-    {
+    public void cancelDisplay() {
         if(runtime == null || runtime.isCancelled()) return;
         runtime.cancel();
     }
@@ -241,8 +223,7 @@ public class ActionBar
      * @param module The {@link ActionBarModule} to add
      * @return The current <code>ActionBar</code>
      */
-    public ActionBar addModule(ActionBarModule module)
-    {
+    public ActionBar addModule(ActionBarModule module) {
         modules.add(module);
         return this;
     }
@@ -254,8 +235,7 @@ public class ActionBar
      * @param index  The index to add the module at
      * @return The current <code>ActionBar</code>
      */
-    public ActionBar addModule(ActionBarModule module, int index)
-    {
+    public ActionBar addModule(ActionBarModule module, int index) {
         modules.add(index, module);
         return this;
     }
@@ -266,8 +246,7 @@ public class ActionBar
      * @param module The module to remove
      * @return The current <code>ActionBar</code>
      */
-    public ActionBar removeModule(ActionBarModule module)
-    {
+    public ActionBar removeModule(ActionBarModule module) {
         modules.remove(module);
         return this;
     }
@@ -278,8 +257,7 @@ public class ActionBar
      * @param index The index of the module to remove
      * @return The current <code>ActionBar</code>
      */
-    public ActionBar removeModule(int index)
-    {
+    public ActionBar removeModule(int index) {
         modules.remove(index);
         return this;
     }
@@ -290,8 +268,7 @@ public class ActionBar
      * @param module The {@link ActionBarModule} to search for
      * @return Whether the {@link ActionBarModule} was found or not
      */
-    public boolean containsModule(ActionBarModule module)
-    {
+    public boolean containsModule(ActionBarModule module) {
         return modules.contains(module);
     }
 
@@ -301,10 +278,8 @@ public class ActionBar
      * @param moduleClass The class of the module to search for
      * @return Whether the {@link ActionBarModule} was found or not
      */
-    public boolean containsModule(Class<? extends ActionBarModule> moduleClass)
-    {
-        for(ActionBarModule module : modules)
-        {
+    public boolean containsModule(Class<? extends ActionBarModule> moduleClass) {
+        for(ActionBarModule module : modules) {
             if(moduleClass == module.getClass()) return true;
         }
         return false;
@@ -316,8 +291,7 @@ public class ActionBar
      * @param index The index to get the module from
      * @return The requested {@link ActionBarModule}
      */
-    public ActionBarModule getModule(int index)
-    {
+    public ActionBarModule getModule(int index) {
         return modules.get(index);
     }
 
@@ -328,10 +302,8 @@ public class ActionBar
      * @param <T>         The class type of the module
      * @return The a {@link ActionBarModule} of the specified class, null if not found
      */
-    public <T extends ActionBarModule> T getModule(Class<? extends ActionBarModule> moduleClass)
-    {
-        for(ActionBarModule module : modules)
-        {
+    public <T extends ActionBarModule> T getModule(Class<? extends ActionBarModule> moduleClass) {
+        for(ActionBarModule module : modules) {
             if(moduleClass == module.getClass()) return (T) module;
         }
         return null;
@@ -342,8 +314,7 @@ public class ActionBar
      *
      * @return The list of all <code>ActionBarModules</code>
      */
-    public List<ActionBarModule> getModules()
-    {
+    public List<ActionBarModule> getModules() {
         return modules;
     }
 
@@ -352,8 +323,7 @@ public class ActionBar
      *
      * @return The current <code>ActionBar</code>
      */
-    public ActionBar resetModules()
-    {
+    public ActionBar resetModules() {
         modules.clear();
         return this;
     }

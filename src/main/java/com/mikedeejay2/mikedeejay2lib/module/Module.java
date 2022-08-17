@@ -6,8 +6,7 @@ package com.mikedeejay2.mikedeejay2lib.module;
  *
  * @author Mikedeejay2
  */
-public abstract class Module implements ModuleInterface
-{
+public abstract class Module implements ModuleInterface {
     /**
      * Whether the module is enabled or not
      */
@@ -16,16 +15,14 @@ public abstract class Module implements ModuleInterface
     /**
      * Internal constructor for setting the enabled state to false by default
      */
-    public Module()
-    {
+    public Module() {
         this.isEnabled = false;
     }
 
     /**
      * Internal method for enabling the module and calling {@link Module#onEnable()}
      */
-    private void enable()
-    {
+    private void enable() {
         this.isEnabled = true;
         this.onEnable();
     }
@@ -33,8 +30,7 @@ public abstract class Module implements ModuleInterface
     /**
      * Internal method for disabling the module and calling {@link Module#onDisable()}
      */
-    private void disable()
-    {
+    private void disable() {
         this.isEnabled = false;
         this.onDisable();
     }
@@ -45,8 +41,7 @@ public abstract class Module implements ModuleInterface
      * @return The current enabled state
      */
     @Override
-    public boolean isEnabled()
-    {
+    public boolean isEnabled() {
         return isEnabled;
     }
 }

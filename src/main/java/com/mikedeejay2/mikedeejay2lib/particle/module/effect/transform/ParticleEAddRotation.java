@@ -9,8 +9,7 @@ import org.bukkit.util.Vector;
  *
  * @author Mikedeejay2
  */
-public class ParticleEAddRotation implements ParticleEModule
-{
+public class ParticleEAddRotation implements ParticleEModule {
     /**
      * The rotation <code>Vector</code>
      */
@@ -21,8 +20,7 @@ public class ParticleEAddRotation implements ParticleEModule
      *
      * @param vector The rotation <code>Vector</code>
      */
-    public ParticleEAddRotation(Vector vector)
-    {
+    public ParticleEAddRotation(Vector vector) {
         this.vector = vector;
     }
 
@@ -32,8 +30,7 @@ public class ParticleEAddRotation implements ParticleEModule
      * @param effect The <code>ParticleEffect</code>
      */
     @Override
-    public void onUpdateHead(ParticleEffect effect)
-    {
+    public void onUpdateHead(ParticleEffect effect) {
         Vector curVec = effect.getRotationVec();
         curVec.add(vector);
         effect.setRotationVec(curVec);

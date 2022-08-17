@@ -21,8 +21,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.animation;
  *
  * @author Mikedeejay2
  */
-public enum MovementType
-{
+public enum MovementType {
     /**
      * Override the item that the current item is being moved to.
      * If an item is currently in the slot that this item is being moved to, override it.

@@ -39,8 +39,7 @@ import java.util.logging.Logger;
  *
  * @author Mikedeejay2
  */
-public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedPlugin
-{
+public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedPlugin {
     /**
      * The plugin prefix. Used in the plugin's logger.
      */
@@ -57,17 +56,13 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * the legacy Bukkit {@link PluginLogger}. The name of the logger must also
      * be set to an empty String in order to remove the class prefix.
      */
-    private void forceColorfulLogger()
-    {
+    private void forceColorfulLogger() {
         Logger logger = new EnhancedPluginLogger(this);
-        try
-        {
+        try {
             Field logField = JavaPlugin.class.getDeclaredField("logger");
             logField.setAccessible(true);
             logField.set(this, logger);
-        }
-        catch(IllegalAccessException | NoSuchFieldException e)
-        {
+        } catch(IllegalAccessException | NoSuchFieldException e) {
             getLogger().warning("Could not create a new plugin logger for " + this.getDescription().getName());
             e.printStackTrace();
         }
@@ -77,8 +72,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * {@inheritDoc}
      */
     @Override
-    public void onEnable()
-    {
+    public void onEnable() {
         super.onEnable();
         forceColorfulLogger();
         this.classLoader =  retrieveClassLoader();
@@ -91,8 +85,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * {@inheritDoc}
      */
     @Override
-    public void onDisable()
-    {
+    public void onDisable() {
         super.onDisable();
     }
 
@@ -104,8 +97,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @return The prefix name of this plugin
      */
     @Override
-    public String getPrefix()
-    {
+    public String getPrefix() {
         return prefix;
     }
 
@@ -117,8 +109,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param prefix The new prefix name of this plugin
      */
     @Override
-    public void setPrefix(String prefix)
-    {
+    public void setPrefix(String prefix) {
         this.prefix = Colors.format(prefix);
         EnhancedPluginLogger logger = (EnhancedPluginLogger) this.getLogger();
         logger.setPrefix(this.prefix);
@@ -130,8 +121,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param message The input string
      */
     @Override
-    public void sendMessage(String message)
-    {
+    public void sendMessage(String message) {
         Bukkit.getConsoleSender().sendMessage(Colors.format(getPrefix() + message));
     }
 
@@ -142,8 +132,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param message The message to be printed (will be formatted with colors)
      */
     @Override
-    public void sendMessage(Player player, String message)
-    {
+    public void sendMessage(Player player, String message) {
         player.sendMessage(Colors.format(getPrefix() + message));
     }
 
@@ -154,8 +143,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param message The message to be printed (will be formatted with colors)
      */
     @Override
-    public void sendMessage(CommandSender sender, String message)
-    {
+    public void sendMessage(CommandSender sender, String message) {
         sender.sendMessage(Colors.format(getPrefix() + message));
     }
 
@@ -165,8 +153,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param message The message to broadcast to players
      */
     @Override
-    public void broadcastMessage(String message)
-    {
+    public void broadcastMessage(String message) {
         Bukkit.broadcastMessage(Colors.format(getPrefix() + message));
     }
 
@@ -176,8 +163,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param message The message to be logged
      */
     @Override
-    public void sendInfo(String message)
-    {
+    public void sendInfo(String message) {
         this.getLogger().info(Colors.format(message));
     }
 
@@ -187,8 +173,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param message The message to be logged
      */
     @Override
-    public void sendWarning(String message)
-    {
+    public void sendWarning(String message) {
         this.getLogger().warning(Colors.format(message));
     }
 
@@ -198,8 +183,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param message The message to be logged
      */
     @Override
-    public void sendSevere(String message)
-    {
+    public void sendSevere(String message) {
         this.getLogger().severe(Colors.format(message));
     }
 
@@ -209,8 +193,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param listener The listener to register
      */
     @Override
-    public void registerEvent(Listener listener)
-    {
+    public void registerEvent(Listener listener) {
         this.getServer().getPluginManager().registerEvents(listener, this);
     }
 
@@ -220,10 +203,8 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param listeners The variable amount of event listeners to register
      */
     @Override
-    public void registerEvents(Listener... listeners)
-    {
-        for(Listener listener : listeners)
-        {
+    public void registerEvents(Listener... listeners) {
+        for(Listener listener : listeners) {
             registerEvent(listener);
         }
     }
@@ -235,10 +216,8 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param listener The listener to register
      */
     @Override
-    public void registerEvent(int index, Listener listener)
-    {
-        try
-        {
+    public void registerEvent(int index, Listener listener) {
+        try {
             SimplePluginManager pluginManager = (SimplePluginManager) this.getServer().getPluginManager();
             Method getRegistrationClass = SimplePluginManager.class.getDeclaredMethod("getRegistrationClass", Class.class);
             getRegistrationClass.setAccessible(true);
@@ -249,20 +228,16 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
             Field handlerSlotsField = HandlerList.class.getDeclaredField("handlerslots");
             handlerSlotsField.setAccessible(true);
 
-            for (Map.Entry<Class<? extends Event>, Set<RegisteredListener>> entry : this.getPluginLoader().createRegisteredListeners(listener, this).entrySet())
-            {
+            for (Map.Entry<Class<? extends Event>, Set<RegisteredListener>> entry : this.getPluginLoader().createRegisteredListeners(listener, this).entrySet()) {
                 Class<? extends Event> registrationClass = (Class<? extends Event>) getRegistrationClass.invoke(pluginManager, entry.getKey());
                 HandlerList handlerList = (HandlerList) getEventListeners.invoke(pluginManager, registrationClass);
                 handlers.set(handlerList, null);
                 EnumMap<EventPriority, ArrayList<RegisteredListener>> handlerSlots = (EnumMap<EventPriority, ArrayList<RegisteredListener>>) handlerSlotsField.get(handlerList);
-                for(RegisteredListener registeredListener : entry.getValue())
-                {
+                for(RegisteredListener registeredListener : entry.getValue()) {
                     handlerSlots.get(registeredListener.getPriority()).add(index, registeredListener);
                 }
             }
-        }
-        catch(NoSuchMethodException | InvocationTargetException | IllegalAccessException | NoSuchFieldException e)
-        {
+        } catch(NoSuchMethodException | InvocationTargetException | IllegalAccessException | NoSuchFieldException e) {
             e.printStackTrace();
         }
     }
@@ -274,10 +249,8 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param listeners The variable amount of event listeners to register
      */
     @Override
-    public void registerEvents(int index, Listener... listeners)
-    {
-        for(Listener listener : listeners)
-        {
+    public void registerEvents(int index, Listener... listeners) {
+        for(Listener listener : listeners) {
             registerEvent(index, listener);
         }
     }
@@ -288,8 +261,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param listener The listener to register
      */
     @Override
-    public void registerEventFirst(Listener listener)
-    {
+    public void registerEventFirst(Listener listener) {
         registerEvent(0, listener);
     }
 
@@ -299,8 +271,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param listeners The variable amount of event listeners to register
      */
     @Override
-    public void registerEventsFirst(Listener... listeners)
-    {
+    public void registerEventsFirst(Listener... listeners) {
         registerEvents(0, listeners);
     }
 
@@ -310,8 +281,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param listener The listener to register
      */
     @Override
-    public void registerEventLast(Listener listener)
-    {
+    public void registerEventLast(Listener listener) {
         Bukkit.getScheduler().runTaskLater(this, () -> registerEvent(listener), 1);
     }
 
@@ -321,8 +291,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param listeners The variable amount of event listeners to register
      */
     @Override
-    public void registerEventsLast(Listener... listeners)
-    {
+    public void registerEventsLast(Listener... listeners) {
         Bukkit.getScheduler().runTaskLater(this, () -> registerEventsLast(listeners), 1);
     }
 
@@ -335,8 +304,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param completer The <code>TabCompleter</code> to register to the command
      */
     @Override
-    public void registerCommand(String name, CommandExecutor executor, TabCompleter completer)
-    {
+    public void registerCommand(String name, CommandExecutor executor, TabCompleter completer) {
         PluginCommand cmd = this.getCommand(name);
         Validate.notNull(cmd, String.format("Command with name %s could not be found", name));
         cmd.setExecutor(executor);
@@ -351,8 +319,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param executor  The <code>TabExecutor</code> to register to the command
      */
     @Override
-    public void registerCommand(String name, TabExecutor executor)
-    {
+    public void registerCommand(String name, TabExecutor executor) {
         PluginCommand cmd = this.getCommand(name);
         Validate.notNull(cmd, String.format("Command with name %s could not be found", name));
         cmd.setExecutor(executor);
@@ -367,8 +334,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param executor The <code>CommandExecutor</code> to register to the command
      */
     @Override
-    public void registerCommand(String name, CommandExecutor executor)
-    {
+    public void registerCommand(String name, CommandExecutor executor) {
         PluginCommand cmd = this.getCommand(name);
         Validate.notNull(cmd, String.format("Command with name %s could not be found", name));
         cmd.setExecutor(executor);
@@ -382,8 +348,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param completer The <code>TabCompleter</code> to register to the command
      */
     @Override
-    public void registerTabCompleter(String name, TabCompleter completer)
-    {
+    public void registerTabCompleter(String name, TabCompleter completer) {
         PluginCommand cmd = this.getCommand(name);
         Validate.notNull(cmd, String.format("Command with name %s could not be found", name));
         cmd.setTabCompleter(completer);
@@ -396,8 +361,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param command The <code>TabCommandBase</code> to register to the command
      */
     @Override
-    public void registerCommand(TabCommandBase command)
-    {
+    public void registerCommand(TabCommandBase command) {
         String name = command.getName();
         PluginCommand cmd = this.getCommand(name);
         Validate.notNull(cmd, String.format("Command with name %s could not be found", name));
@@ -412,8 +376,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param command The <code>CommandBase</code> to register to the command
      */
     @Override
-    public void registerCommand(CommandBase command)
-    {
+    public void registerCommand(CommandBase command) {
         String name = command.getName();
         PluginCommand cmd = this.getCommand(name);
         Validate.notNull(cmd, String.format("Command with name %s could not be found", name));
@@ -427,8 +390,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param completer The <code>TabBase</code> to register to the command
      */
     @Override
-    public void registerTabCompleter(TabBase completer)
-    {
+    public void registerTabCompleter(TabBase completer) {
         String name = completer.getName();
         PluginCommand cmd = this.getCommand(name);
         Validate.notNull(cmd, String.format("Command with name %s could not be found", name));
@@ -441,8 +403,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param plugin The plugin to enable
      */
     @Override
-    public void enablePlugin(Plugin plugin)
-    {
+    public void enablePlugin(Plugin plugin) {
         this.getServer().getPluginManager().enablePlugin(plugin);
     }
 
@@ -452,8 +413,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param plugin The plugin to disable
      */
     @Override
-    public void disablePlugin(Plugin plugin)
-    {
+    public void disablePlugin(Plugin plugin) {
         this.getServer().getPluginManager().disablePlugin(plugin);
     }
 
@@ -464,8 +424,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @return The plugin's instance, null if no plugin was found
      */
     @Override
-    public Plugin getPlugin(String name)
-    {
+    public Plugin getPlugin(String name) {
         return this.getServer().getPluginManager().getPlugin(name);
     }
 
@@ -476,8 +435,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @return The requested permission, null if no permission was found
      */
     @Override
-    public Permission getPermission(String name)
-    {
+    public Permission getPermission(String name) {
         return this.getServer().getPluginManager().getPermission(name);
     }
 
@@ -487,8 +445,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param permission The permission to add
      */
     @Override
-    public void addPermission(Permission permission)
-    {
+    public void addPermission(Permission permission) {
         this.getServer().getPluginManager().addPermission(permission);
     }
 
@@ -498,8 +455,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param permission The permission to remove
      */
     @Override
-    public void removePermission(Permission permission)
-    {
+    public void removePermission(Permission permission) {
         this.getServer().getPluginManager().removePermission(permission);
     }
 
@@ -509,8 +465,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param name The name of the permission to remove
      */
     @Override
-    public void removePermission(String name)
-    {
+    public void removePermission(String name) {
         this.getServer().getPluginManager().removePermission(name);
     }
 
@@ -520,8 +475,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * @param event The event to be called
      */
     @Override
-    public void callEvent(Event event)
-    {
+    public void callEvent(Event event) {
         this.getServer().getPluginManager().callEvent(event);
     }
 
@@ -530,16 +484,12 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      *
      * @return The retrieved class loader
      */
-    private ClassLoader retrieveClassLoader()
-    {
-        try
-        {
+    private ClassLoader retrieveClassLoader() {
+        try {
             Field field = JavaPlugin.class.getDeclaredField("classLoader");
             field.setAccessible(true);
             return (ClassLoader) field.get(this);
-        }
-        catch(NoSuchFieldException | IllegalAccessException e)
-        {
+        } catch(NoSuchFieldException | IllegalAccessException e) {
             e.printStackTrace();
         }
         return null;
@@ -550,8 +500,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      *
      * @return The <code>ClassLoader</code> for this plugin
      */
-    public ClassLoader classLoader()
-    {
+    public ClassLoader classLoader() {
         return classLoader;
     }
 }

@@ -8,8 +8,7 @@ import org.bukkit.inventory.meta.ItemMeta;
  *
  * @author Mikedeejay2
  */
-public final class SearchUtil
-{
+public final class SearchUtil {
     /**
      * Search for a String in a piece of ItemMeta.
      * This method generalizes the search term by removing spaces and
@@ -22,20 +21,16 @@ public final class SearchUtil
      * @param searchTerm The search term to use
      * @return If search term was found in the ItemMeta or not
      */
-    public static boolean searchMetaFuzzy(ItemMeta meta, String searchTerm)
-    {
+    public static boolean searchMetaFuzzy(ItemMeta meta, String searchTerm) {
         String newName = searchTerm.toLowerCase().replaceAll(" ", "");
         String newDisplayName = meta.getDisplayName().toLowerCase().replaceAll(" ", "");
         if(newDisplayName.contains(newName)) return true;
 
         boolean flag = false;
-        if(meta.hasLore())
-        {
-            for(String lore : meta.getLore())
-            {
+        if(meta.hasLore()) {
+            for(String lore : meta.getLore()) {
                 String newLore = lore.toLowerCase().replaceAll(" ", "");
-                if(newLore.contains(newName))
-                {
+                if(newLore.contains(newName)) {
                     flag = true;
                     break;
                 }
@@ -56,17 +51,13 @@ public final class SearchUtil
      * @param searchTerm The search term to use
      * @return If search term was found in the ItemMeta or not
      */
-    public static boolean searchMeta(ItemMeta meta, String searchTerm)
-    {
+    public static boolean searchMeta(ItemMeta meta, String searchTerm) {
         if(meta.getDisplayName().contains(searchTerm)) return true;
 
         boolean flag = false;
-        if(meta.hasLore())
-        {
-            for(String lore : meta.getLore())
-            {
-                if(lore.contains(searchTerm))
-                {
+        if(meta.hasLore()) {
+            for(String lore : meta.getLore()) {
+                if(lore.contains(searchTerm)) {
                     flag = true;
                     break;
                 }
@@ -87,17 +78,13 @@ public final class SearchUtil
      * @param searchTerm The search term to use
      * @return If search term was found in the ItemMeta or not
      */
-    public static boolean searchMetaExact(ItemMeta meta, String searchTerm)
-    {
+    public static boolean searchMetaExact(ItemMeta meta, String searchTerm) {
         if(meta.getDisplayName().equals(searchTerm)) return true;
 
         boolean flag = false;
-        if(meta.hasLore())
-        {
-            for(String lore : meta.getLore())
-            {
-                if(lore.equals(searchTerm))
-                {
+        if(meta.hasLore()) {
+            for(String lore : meta.getLore()) {
+                if(lore.equals(searchTerm)) {
                     flag = true;
                     break;
                 }

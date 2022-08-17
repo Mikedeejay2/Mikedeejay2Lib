@@ -9,8 +9,7 @@ import org.bukkit.util.Vector;
  *
  * @author Mikedeejay2
  */
-public class ParticleSSubTranslation implements ParticleSModule
-{
+public class ParticleSSubTranslation implements ParticleSModule {
     /**
      * The rotation <code>Vector</code>
      */
@@ -21,8 +20,7 @@ public class ParticleSSubTranslation implements ParticleSModule
      *
      * @param vector The rotation <code>Vector</code>
      */
-    public ParticleSSubTranslation(Vector vector)
-    {
+    public ParticleSSubTranslation(Vector vector) {
         this.vector = vector;
     }
 
@@ -32,8 +30,7 @@ public class ParticleSSubTranslation implements ParticleSModule
      * @param effect The <code>ParticleSystem</code>
      */
     @Override
-    public void onUpdateHead(ParticleSystem effect)
-    {
+    public void onUpdateHead(ParticleSystem effect) {
         Vector curVec = effect.getTranslationVec();
         curVec.subtract(vector);
         effect.setTranslationVec(curVec);

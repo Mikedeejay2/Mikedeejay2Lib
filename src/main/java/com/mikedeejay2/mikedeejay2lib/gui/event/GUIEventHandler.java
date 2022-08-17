@@ -14,8 +14,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class GUIEventHandler implements Cloneable
-{
+public class GUIEventHandler implements Cloneable {
     /**
      * A list of GUIEvents that this <code>GUIEventHandler</code> holds
      */
@@ -24,8 +23,7 @@ public class GUIEventHandler implements Cloneable
     /**
      * Construct a new <code>GUIEventHandler</code>
      */
-    public GUIEventHandler()
-    {
+    public GUIEventHandler() {
         events = new ArrayList<>();
     }
 
@@ -37,10 +35,8 @@ public class GUIEventHandler implements Cloneable
      * @param event The event of the click
      * @param gui   The GUI that this event took place in
      */
-    public void execute(InventoryClickEvent event, GUIContainer gui)
-    {
-        for(int i = 0; i < events.size(); i++)
-        {
+    public void execute(InventoryClickEvent event, GUIContainer gui) {
+        for(int i = 0; i < events.size(); i++) {
             GUIEvent guiEvent = events.get(i);
             guiEvent.execute(new GUIEventInfo(event, gui));
         }
@@ -51,8 +47,7 @@ public class GUIEventHandler implements Cloneable
      *
      * @return All events being stored
      */
-    public List<GUIEvent> getEvents()
-    {
+    public List<GUIEvent> getEvents() {
         return events;
     }
 
@@ -61,8 +56,7 @@ public class GUIEventHandler implements Cloneable
      *
      * @param events The new list of events
      */
-    public void setEvents(List<GUIEvent> events)
-    {
+    public void setEvents(List<GUIEvent> events) {
         this.events = events;
     }
 
@@ -71,8 +65,7 @@ public class GUIEventHandler implements Cloneable
      *
      * @param event The event to add
      */
-    public void addEvent(GUIEvent event)
-    {
+    public void addEvent(GUIEvent event) {
         events.add(event);
     }
 
@@ -81,8 +74,7 @@ public class GUIEventHandler implements Cloneable
      *
      * @param event The event to be removed
      */
-    public void removeEvent(GUIEvent event)
-    {
+    public void removeEvent(GUIEvent event) {
         events.remove(event);
     }
 
@@ -92,8 +84,7 @@ public class GUIEventHandler implements Cloneable
      * @param event The event to check for
      * @return Whether this object holds the event
      */
-    public boolean containsEvent(GUIEvent event)
-    {
+    public boolean containsEvent(GUIEvent event) {
         return events.contains(event);
     }
 
@@ -102,10 +93,8 @@ public class GUIEventHandler implements Cloneable
      *
      * @param eventClass The class of the event that should be removed
      */
-    public void removeEvent(Class<? extends GUIEvent> eventClass)
-    {
-        for(GUIEvent event : events)
-        {
+    public void removeEvent(Class<? extends GUIEvent> eventClass) {
+        for(GUIEvent event : events) {
             if(eventClass != event.getClass()) continue;
             events.remove(event);
             break;
@@ -118,10 +107,8 @@ public class GUIEventHandler implements Cloneable
      * @param eventClass The event class to search for
      * @return Whether this object holds the event
      */
-    public boolean containsEvent(Class<? extends GUIEvent> eventClass)
-    {
-        for(GUIEvent event : events)
-        {
+    public boolean containsEvent(Class<? extends GUIEvent> eventClass) {
+        for(GUIEvent event : events) {
             if(eventClass != event.getClass()) continue;
             return true;
         }
@@ -135,10 +122,8 @@ public class GUIEventHandler implements Cloneable
      * @param <T> The {@link GUIEvent} type, from given class
      * @return The <code>GUIEvent</code> of the class type if it exists, null if it doesn't
      */
-    public <T extends GUIEvent> T getEvent(Class<T> eventClass)
-    {
-        for(GUIEvent event : events)
-        {
+    public <T extends GUIEvent> T getEvent(Class<T> eventClass) {
+        for(GUIEvent event : events) {
             if(eventClass != event.getClass()) continue;
             return eventClass.cast(event);
         }
@@ -151,8 +136,7 @@ public class GUIEventHandler implements Cloneable
      * @param index The index of the event to get
      * @return The {@link GUIEvent} contained within the index
      */
-    public GUIEvent getEvent(int index)
-    {
+    public GUIEvent getEvent(int index) {
         return events.get(index);
     }
 
@@ -162,15 +146,11 @@ public class GUIEventHandler implements Cloneable
      * @return A cloned <code>GUIEventHandler</code>
      */
     @Override
-    public GUIEventHandler clone()
-    {
+    public GUIEventHandler clone() {
         GUIEventHandler newEvents;
-        try
-        {
+        try {
             newEvents = (GUIEventHandler) super.clone();
-        }
-        catch(CloneNotSupportedException e)
-        {
+        } catch(CloneNotSupportedException e) {
             e.printStackTrace();
             return null;
         }

@@ -16,8 +16,7 @@ import java.util.Map;
  *
  * @author Mikedeejay2
  */
-public class LangManager
-{
+public class LangManager {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -55,8 +54,7 @@ public class LangManager
      * @param plugin A reference to the plugin
      * @param filePath The path to where the language files are stored in the plugin's jar
      */
-    public LangManager(BukkitPlugin plugin, String filePath)
-    {
+    public LangManager(BukkitPlugin plugin, String filePath) {
         this.plugin = plugin;
         this.langFiles = new HashMap<>();
         this.doNotLoad = new ArrayList<>();
@@ -71,8 +69,7 @@ public class LangManager
      *
      * @param defaultLang The locale to set the defaultLang to
      */
-    public void setDefaultLang(String defaultLang)
-    {
+    public void setDefaultLang(String defaultLang) {
         this.defaultLang = defaultLang;
         loadLangFileDefaultLang(defaultLang);
     }
@@ -83,14 +80,12 @@ public class LangManager
      * @param locale The language that will attempt to be loaded
      * @return If loading was successful or not
      */
-    public boolean loadLangFile(String locale)
-    {
+    public boolean loadLangFile(String locale) {
         if(locale == null || doNotLoad.contains(locale)) return true;
         JsonFile file = new JsonFile(plugin, filePath + "/" + locale + ".json");
 
         doNotLoad.add(locale);
-        if(file.loadFromJar(false))
-        {
+        if(file.loadFromJar(false)) {
             langFiles.put(locale, file);
             return true;
         }
@@ -104,11 +99,9 @@ public class LangManager
      * @param locale The language that will attempt to be loaded
      * @return If loading was successful or not
      */
-    public boolean loadLangFileDefaultLang(String locale)
-    {
+    public boolean loadLangFileDefaultLang(String locale) {
         boolean loaded = loadLangFile(locale);
-        if(!loaded && !locale.equals("en_us"))
-        {
+        if(!loaded && !locale.equals("en_us")) {
             defaultLang = ENGLISH;
             plugin.getLogger().warning("The default language specified in config.yml is not currently supported by this plugin. English will be used instead.");
         }
@@ -122,23 +115,16 @@ public class LangManager
      * @param locale The lang locale to be loaded
      * @return The specified lang file if it exists or the default lang file
      */
-    public JsonFile getLang(String locale)
-    {
+    public JsonFile getLang(String locale) {
         JsonFile file = null;
-        if(langFiles.containsKey(locale))
-        {
+        if(langFiles.containsKey(locale)) {
             file = langFiles.get(locale);
-        }
-        else if(loadLangFile(locale))
-        {
+        } else if(loadLangFile(locale)) {
             file = langFiles.get(locale);
-        }
-        else
-        {
+        } else {
             file = langFiles.get(defaultLang);
         }
-        if(file == null)
-        {
+        if(file == null) {
             file = langFiles.get(ENGLISH);
         }
         return file;
@@ -150,14 +136,11 @@ public class LangManager
      *
      * @return The default lang file
      */
-    public JsonFile getLang()
-    {
+    public JsonFile getLang() {
         JsonFile file = langFiles.get(defaultLang);
-        if(file == null)
-        {
+        if(file == null) {
             file = langFiles.get(ENGLISH);
-            if(file == null)
-            {
+            if(file == null) {
                 file = new JsonFile(plugin, filePath + "/" + "en_us.json");
             }
         }
@@ -170,8 +153,7 @@ public class LangManager
      * @param player Player to get the language locale from
      * @return The specified lang file based off of the player
      */
-    public JsonFile getLang(Player player)
-    {
+    public JsonFile getLang(Player player) {
         return langFiles.get(player.getLocale().toLowerCase());
     }
 
@@ -181,10 +163,8 @@ public class LangManager
      * @param sender Sender to get the Location locale
      * @return The specified lang file base off of the CommandSender
      */
-    public JsonFile getLang(CommandSender sender)
-    {
-        if(sender instanceof Player)
-        {
+    public JsonFile getLang(CommandSender sender) {
+        if(sender instanceof Player) {
             return langFiles.get(((Player)sender).getLocale().toLowerCase());
         }
         return getLang();
@@ -197,16 +177,13 @@ public class LangManager
      * @param path The path to be used to find the text
      * @return The wanted text, null if text doesn't exist.
      */
-    public String getText(String locale, String path)
-    {
+    public String getText(String locale, String path) {
         JsonFile file = getLang(locale);
-        if(file == null)
-        {
+        if(file == null) {
             file = getLang();
         }
         String string = file.getString(path);
-        if(string == null)
-        {
+        if(string == null) {
             file = getLang();
             string = file.getString(path);
         }
@@ -219,11 +196,9 @@ public class LangManager
      * @param path The path to be used to find the text
      * @return The wanted text, null if text doesn't exist.
      */
-    public String getText(String path)
-    {
+    public String getText(String path) {
         String text = getText(defaultLang, path);
-        if(text == null)
-        {
+        if(text == null) {
             text = getText(ENGLISH, path);
         }
         return text;
@@ -236,8 +211,7 @@ public class LangManager
      * @param path   The path to be used to find the text
      * @return The wanted text, null if text doesn't exist.
      */
-    public String getText(Player player, String path)
-    {
+    public String getText(Player player, String path) {
         return getText(player.getLocale().toLowerCase(), path);
     }
 
@@ -248,10 +222,8 @@ public class LangManager
      * @param path   The path to be used to find the text
      * @return The wanted text, null if text doesn't exist.
      */
-    public String getText(CommandSender sender, String path)
-    {
-        if(sender instanceof Player)
-        {
+    public String getText(CommandSender sender, String path) {
+        if(sender instanceof Player) {
             return getText(((Player)sender).getLocale().toLowerCase(), path);
         }
         return getText(path);
@@ -268,12 +240,10 @@ public class LangManager
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
-    public String getText(String locale, String path, String[] toReplace, String[] replacements)
-    {
+    public String getText(String locale, String path, String[] toReplace, String[] replacements) {
         String text = getText(locale, path);
         if(text == null) return null;
-        for(int i = 0; i < toReplace.length; i++)
-        {
+        for(int i = 0; i < toReplace.length; i++) {
             String curToReplace = toReplace[i];
             String curReplacement = replacements[i];
             text = text.replaceAll("\\{" + curToReplace + "\\}", curReplacement);
@@ -293,11 +263,9 @@ public class LangManager
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
-    public String getText(String path, String[] toReplace, String[] replacements)
-    {
+    public String getText(String path, String[] toReplace, String[] replacements) {
         String text = getText(defaultLang, path, toReplace, replacements);
-        if(text == null)
-        {
+        if(text == null) {
             text = getText(ENGLISH, path, toReplace, replacements);
         }
         return text;
@@ -315,10 +283,8 @@ public class LangManager
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
-    public String getText(CommandSender sender, String path, String[] toReplace, String[] replacements)
-    {
-        if(sender instanceof Player)
-        {
+    public String getText(CommandSender sender, String path, String[] toReplace, String[] replacements) {
+        if(sender instanceof Player) {
             return getText(((Player)sender).getLocale().toLowerCase(), path, toReplace, replacements);
         }
         return getText(path, toReplace, replacements);
@@ -336,8 +302,7 @@ public class LangManager
      * @param replacements The array of Strings that will replace the Strings in toReplace
      * @return The wanted text, processed, null if text doesn't exist
      */
-    public String getText(Player player, String path, String[] toReplace, String[] replacements)
-    {
+    public String getText(Player player, String path, String[] toReplace, String[] replacements) {
         return getText(player.getLocale().toLowerCase(), path, toReplace, replacements);
     }
 
@@ -346,8 +311,7 @@ public class LangManager
      *
      * @return The lang locale (i.e en_us)
      */
-    public String getDefaultLang()
-    {
+    public String getDefaultLang() {
         return defaultLang;
     }
 
@@ -356,8 +320,7 @@ public class LangManager
      *
      * @return The file path towards the language files
      */
-    public String getFilePath()
-    {
+    public String getFilePath() {
         return filePath;
     }
 
@@ -366,8 +329,7 @@ public class LangManager
      *
      * @param filePath The new file path towards the language files
      */
-    public void setFilePath(String filePath)
-    {
+    public void setFilePath(String filePath) {
         this.filePath = filePath;
     }
 }

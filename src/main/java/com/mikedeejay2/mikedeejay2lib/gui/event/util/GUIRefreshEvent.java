@@ -4,7 +4,6 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
  * Refresh a GUI. This event calls {@link GUIContainer#onClose(Player)} and {@link GUIContainer#open(Player)} to
@@ -12,16 +11,14 @@ import org.bukkit.event.inventory.InventoryClickEvent;
  *
  * @author Mikedeejay2
  */
-public class GUIRefreshEvent implements GUIEvent
-{
+public class GUIRefreshEvent implements GUIEvent {
     /**
      * {@inheritDoc}
      *
      * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(GUIEventInfo info)
-    {
+    public void execute(GUIEventInfo info) {
         Player player = info.getPlayer();
         GUIContainer gui = info.getGUI();
         gui.onClose(player);

@@ -12,8 +12,7 @@ import org.bukkit.entity.Player;
  *
  * @author Mikedeejay2
  */
-public class GUIAnimBackgroundModule implements GUIModule
-{
+public class GUIAnimBackgroundModule implements GUIModule {
     /**
      * The animation pattern to use
      */
@@ -30,8 +29,7 @@ public class GUIAnimBackgroundModule implements GUIModule
      * @param backgroundItem The GUI item that will be used for the border
      * @param pattern        The animation pattern to use
      */
-    public GUIAnimBackgroundModule(AnimatedGUIItem backgroundItem, GUIAnimPattern pattern)
-    {
+    public GUIAnimBackgroundModule(AnimatedGUIItem backgroundItem, GUIAnimPattern pattern) {
         this.pattern = pattern;
         this.backgroundItem = backgroundItem;
     }
@@ -41,8 +39,7 @@ public class GUIAnimBackgroundModule implements GUIModule
      *
      * @param backgroundItem The GUI item that will be used for the border
      */
-    public GUIAnimBackgroundModule(AnimatedGUIItem backgroundItem)
-    {
+    public GUIAnimBackgroundModule(AnimatedGUIItem backgroundItem) {
         this(backgroundItem, GUIAnimPattern.TOP_LEFT_DIAGONAL);
     }
 
@@ -53,14 +50,11 @@ public class GUIAnimBackgroundModule implements GUIModule
      * @param gui    The GUI
      */
     @Override
-    public void onOpenHead(Player player, GUIContainer gui)
-    {
+    public void onOpenHead(Player player, GUIContainer gui) {
         int maxRow = gui.getRows();
         int maxCol = gui.getCols();
-        for(int row = 1; row <= gui.getRows(); row++)
-        {
-            for(int col = 1; col <= gui.getCols(); col++)
-            {
+        for(int row = 1; row <= gui.getRows(); row++) {
+            for(int col = 1; col <= gui.getCols(); col++) {
                 gui.setItem(row, col,  pattern.getItemFor(backgroundItem, row, col, maxRow, maxCol));
             }
         }
@@ -71,8 +65,7 @@ public class GUIAnimBackgroundModule implements GUIModule
      *
      * @return The <code>GUIItem</code> that will be used
      */
-    public AnimatedGUIItem getBackgroundItem()
-    {
+    public AnimatedGUIItem getBackgroundItem() {
         return backgroundItem;
     }
 
@@ -81,8 +74,7 @@ public class GUIAnimBackgroundModule implements GUIModule
      *
      * @param backgroundItem GUIItem for the background to use
      */
-    public void setBackgroundItem(AnimatedGUIItem backgroundItem)
-    {
+    public void setBackgroundItem(AnimatedGUIItem backgroundItem) {
         this.backgroundItem = backgroundItem;
     }
 
@@ -91,8 +83,7 @@ public class GUIAnimBackgroundModule implements GUIModule
      *
      * @return The current animation pattern
      */
-    public GUIAnimPattern getPattern()
-    {
+    public GUIAnimPattern getPattern() {
         return pattern;
     }
 
@@ -101,8 +92,7 @@ public class GUIAnimBackgroundModule implements GUIModule
      *
      * @param pattern The new animation pattern
      */
-    public void setPattern(GUIAnimPattern pattern)
-    {
+    public void setPattern(GUIAnimPattern pattern) {
         this.pattern = pattern;
     }
 }

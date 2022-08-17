@@ -7,8 +7,7 @@ import org.bukkit.Particle;
  *
  * @author Mikedeejay2
  */
-public class ParticleData
-{
+public class ParticleData {
     /**
      * The particle enum
      */
@@ -45,7 +44,7 @@ public class ParticleData
     protected Object data;
 
     /**
-     * Whether or not to force the particles to render or not
+     * Whether to force the particles to render or not
      */
     protected boolean force;
 
@@ -60,10 +59,9 @@ public class ParticleData
      * @param offsetZ  The Z offset of the particles
      * @param speed    The speed of the particles
      * @param data     The data of the particles (if any)
-     * @param force    Whether or not to force the particles to render or not
+     * @param force    Whether to force the particles to render or not
      */
-    public ParticleData(Particle particle, int count, double offsetX, double offsetY, double offsetZ, double speed, Object data, boolean force)
-    {
+    public ParticleData(Particle particle, int count, double offsetX, double offsetY, double offsetZ, double speed, Object data, boolean force) {
         this.particle = particle;
         this.count = count;
         this.offsetX = offsetX;
@@ -83,10 +81,9 @@ public class ParticleData
      * @param offsetY  The Y offset of the particles
      * @param offsetZ  The Z offset of the particles
      * @param speed    The speed of the particles
-     * @param force    Whether or not to force the particles to render or not
+     * @param force    Whether to force the particles to render or not
      */
-    public ParticleData(Particle particle, int count, double offsetX, double offsetY, double offsetZ, double speed, boolean force)
-    {
+    public ParticleData(Particle particle, int count, double offsetX, double offsetY, double offsetZ, double speed, boolean force) {
         this(particle, count, offsetX, offsetY, offsetZ, speed, null, force);
     }
 
@@ -101,8 +98,7 @@ public class ParticleData
      * @param speed    The speed of the particles
      * @param data     The data of the particles (if any)
      */
-    public ParticleData(Particle particle, int count, double offsetX, double offsetY, double offsetZ, double speed, Object data)
-    {
+    public ParticleData(Particle particle, int count, double offsetX, double offsetY, double offsetZ, double speed, Object data) {
         this(particle, count, offsetX, offsetY, offsetZ, speed, data, false);
     }
 
@@ -116,8 +112,7 @@ public class ParticleData
      * @param offsetZ  The Z offset of the particles
      * @param speed    The speed of the particles
      */
-    public ParticleData(Particle particle, int count, double offsetX, double offsetY, double offsetZ, double speed)
-    {
+    public ParticleData(Particle particle, int count, double offsetX, double offsetY, double offsetZ, double speed) {
         this(particle, count, offsetX, offsetY, offsetZ, speed, null, false);
     }
 
@@ -129,10 +124,9 @@ public class ParticleData
      * @param offsetX  The X offset of the particles
      * @param offsetY  The Y offset of the particles
      * @param offsetZ  The Z offset of the particles
-     * @param force    Whether or not to force the particles to render or not
+     * @param force    Whether to force the particles to render or not
      */
-    public ParticleData(Particle particle, int count, double offsetX, double offsetY, double offsetZ, boolean force)
-    {
+    public ParticleData(Particle particle, int count, double offsetX, double offsetY, double offsetZ, boolean force) {
         this(particle, count, offsetX, offsetY, offsetZ, 0, null, force);
     }
 
@@ -143,10 +137,9 @@ public class ParticleData
      * @param count    The count of particles to spawn
      * @param speed    The speed of the particles
      * @param data     The data of the particles (if any)
-     * @param force    Whether or not to force the particles to render or not
+     * @param force    Whether to force the particles to render or not
      */
-    public ParticleData(Particle particle, int count, double speed, Object data, boolean force)
-    {
+    public ParticleData(Particle particle, int count, double speed, Object data, boolean force) {
         this(particle, count, 0, 0, 0, speed, data, force);
     }
 
@@ -156,10 +149,9 @@ public class ParticleData
      * @param particle The particle enum
      * @param count    The count of particles to spawn
      * @param speed    The speed of the particles
-     * @param force    Whether or not to force the particles to render or not
+     * @param force    Whether to force the particles to render or not
      */
-    public ParticleData(Particle particle, int count, double speed, boolean force)
-    {
+    public ParticleData(Particle particle, int count, double speed, boolean force) {
         this(particle, count, 0, 0, 0, speed, null, force);
     }
 
@@ -170,8 +162,7 @@ public class ParticleData
      * @param count    The count of particles to spawn
      * @param speed    The speed of the particles
      */
-    public ParticleData(Particle particle, int count, double speed)
-    {
+    public ParticleData(Particle particle, int count, double speed) {
         this(particle, count, 0, 0, 0, speed, null, false);
     }
 
@@ -180,10 +171,9 @@ public class ParticleData
      *
      * @param particle The particle enum
      * @param count    The count of particles to spawn
-     * @param force    Whether or not to force the particles to render or not
+     * @param force    Whether to force the particles to render or not
      */
-    public ParticleData(Particle particle, int count, boolean force)
-    {
+    public ParticleData(Particle particle, int count, boolean force) {
         this(particle, count, 0, 0, 0, 0, null, force);
     }
 
@@ -193,8 +183,7 @@ public class ParticleData
      * @param particle The particle enum
      * @param count    The count of particles to spawn
      */
-    public ParticleData(Particle particle, int count)
-    {
+    public ParticleData(Particle particle, int count) {
         this(particle, count, 0, 0, 0, 0, null, false);
     }
 
@@ -203,8 +192,7 @@ public class ParticleData
      *
      * @param particle The particle enum
      */
-    public ParticleData(Particle particle)
-    {
+    public ParticleData(Particle particle) {
         this(particle, 1, 0, 0, 0, 0, null, false);
     }
 
@@ -213,8 +201,7 @@ public class ParticleData
      *
      * @return The particle
      */
-    public Particle getParticle()
-    {
+    public Particle getParticle() {
         return particle;
     }
 
@@ -223,8 +210,7 @@ public class ParticleData
      *
      * @param particle The new particle
      */
-    public void setParticle(Particle particle)
-    {
+    public void setParticle(Particle particle) {
         this.particle = particle;
     }
 
@@ -233,8 +219,7 @@ public class ParticleData
      *
      * @return The count
      */
-    public int getCount()
-    {
+    public int getCount() {
         return count;
     }
 
@@ -243,8 +228,7 @@ public class ParticleData
      *
      * @param count The new count
      */
-    public void setCount(int count)
-    {
+    public void setCount(int count) {
         this.count = count;
     }
 
@@ -253,8 +237,7 @@ public class ParticleData
      *
      * @return The X offset
      */
-    public double getOffsetX()
-    {
+    public double getOffsetX() {
         return offsetX;
     }
 
@@ -263,8 +246,7 @@ public class ParticleData
      *
      * @param offsetX The new X offset
      */
-    public void setOffsetX(double offsetX)
-    {
+    public void setOffsetX(double offsetX) {
         this.offsetX = offsetX;
     }
 
@@ -273,8 +255,7 @@ public class ParticleData
      *
      * @return The Y offset
      */
-    public double getOffsetY()
-    {
+    public double getOffsetY() {
         return offsetY;
     }
 
@@ -283,8 +264,7 @@ public class ParticleData
      *
      * @param offsetY The new Y offset
      */
-    public void setOffsetY(double offsetY)
-    {
+    public void setOffsetY(double offsetY) {
         this.offsetY = offsetY;
     }
 
@@ -293,8 +273,7 @@ public class ParticleData
      *
      * @return The Z offset
      */
-    public double getOffsetZ()
-    {
+    public double getOffsetZ() {
         return offsetZ;
     }
 
@@ -303,8 +282,7 @@ public class ParticleData
      *
      * @param offsetZ The new Z offset
      */
-    public void setOffsetZ(double offsetZ)
-    {
+    public void setOffsetZ(double offsetZ) {
         this.offsetZ = offsetZ;
     }
 
@@ -313,8 +291,7 @@ public class ParticleData
      *
      * @return The speed
      */
-    public double getSpeed()
-    {
+    public double getSpeed() {
         return speed;
     }
 
@@ -323,8 +300,7 @@ public class ParticleData
      *
      * @param speed The new speed
      */
-    public void setSpeed(double speed)
-    {
+    public void setSpeed(double speed) {
         this.speed = speed;
     }
 
@@ -333,8 +309,7 @@ public class ParticleData
      *
      * @return The particle data
      */
-    public Object getData()
-    {
+    public Object getData() {
         return data;
     }
 
@@ -343,8 +318,7 @@ public class ParticleData
      *
      * @param data The new particle data
      */
-    public void setData(Object data)
-    {
+    public void setData(Object data) {
         this.data = data;
     }
 
@@ -353,8 +327,7 @@ public class ParticleData
      *
      * @return The force
      */
-    public boolean isForce()
-    {
+    public boolean isForce() {
         return force;
     }
 
@@ -363,8 +336,7 @@ public class ParticleData
      *
      * @param force The new force
      */
-    public void setForce(boolean force)
-    {
+    public void setForce(boolean force) {
         this.force = force;
     }
 }

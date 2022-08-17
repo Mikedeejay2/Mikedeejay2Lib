@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * A module that processes {@link AnimatedGUIItem}s.
@@ -23,8 +22,7 @@ import java.util.concurrent.ConcurrentMap;
  *
  * @author Mikedeejay2
  */
-public class GUIAnimationModule implements GUIModule
-{
+public class GUIAnimationModule implements GUIModule {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -51,8 +49,7 @@ public class GUIAnimationModule implements GUIModule
      * @param plugin The {@link BukkitPlugin} instance
      * @param period The period of time between each update
      */
-    public GUIAnimationModule(BukkitPlugin plugin, long period)
-    {
+    public GUIAnimationModule(BukkitPlugin plugin, long period) {
         this.plugin = plugin;
         this.period = period == 0 ? 1 : period;
         this.animatedItems = new ConcurrentHashMap<>();
@@ -66,8 +63,7 @@ public class GUIAnimationModule implements GUIModule
      * @param gui    The GUI
      */
     @Override
-    public void onOpenHead(Player player, GUIContainer gui)
-    {
+    public void onOpenHead(Player player, GUIContainer gui) {
         this.runtime = new AnimationRuntime();
         runtime.setPlayer(player);
         runtime.setGUI(gui);
@@ -82,8 +78,7 @@ public class GUIAnimationModule implements GUIModule
      * @param gui    The GUI
      */
     @Override
-    public void onClose(Player player, GUIContainer gui)
-    {
+    public void onClose(Player player, GUIContainer gui) {
         runtime.cancel();
     }
 
@@ -93,8 +88,7 @@ public class GUIAnimationModule implements GUIModule
      * @param item Item to add
      * @param properties The <code>AnimatedGUIItemProperties</code> of the item
      */
-    public void addItem(AnimatedGUIItem item, AnimatedGUIItemProperties properties)
-    {
+    public void addItem(AnimatedGUIItem item, AnimatedGUIItemProperties properties) {
         if(animatedItems.containsKey(item) && animatedItems.get(item).equals(properties)) return;
         animatedItems.put(item, properties);
     }
@@ -104,8 +98,7 @@ public class GUIAnimationModule implements GUIModule
      *
      * @param item Item to remove
      */
-    public void removeItem(AnimatedGUIItem item)
-    {
+    public void removeItem(AnimatedGUIItem item) {
         animatedItems.remove(item);
     }
 
@@ -116,8 +109,7 @@ public class GUIAnimationModule implements GUIModule
      * @param item The item to get the properties from
      * @return The requested <code>AnimatedGUIItemProperties</code>
      */
-    public AnimatedGUIItemProperties getProperties(AnimatedGUIItem item)
-    {
+    public AnimatedGUIItemProperties getProperties(AnimatedGUIItem item) {
         return animatedItems.get(item);
     }
 
@@ -133,11 +125,9 @@ public class GUIAnimationModule implements GUIModule
      * @param item  The <code>GUIItem</code> that is being set
      */
     @Override
-    public void onItemSet(GUIContainer gui, GUILayer layer, int row, int col, GUIItem item)
-    {
+    public void onItemSet(GUIContainer gui, GUILayer layer, int row, int col, GUIItem item) {
         if(item == null) return;
-        if(item instanceof AnimatedGUIItem)
-        {
+        if(item instanceof AnimatedGUIItem) {
             addItem((AnimatedGUIItem) item, new AnimatedGUIItemProperties(0, row, col, layer));
         }
     }
@@ -154,11 +144,9 @@ public class GUIAnimationModule implements GUIModule
      * @param item  The <code>GUIItem</code> that is being removed
      */
     @Override
-    public void onItemRemove(GUIContainer gui, GUILayer layer, int row, int col, GUIItem item)
-    {
+    public void onItemRemove(GUIContainer gui, GUILayer layer, int row, int col, GUIItem item) {
         if(item == null) return;
-        if(item instanceof AnimatedGUIItem)
-        {
+        if(item instanceof AnimatedGUIItem) {
             removeItem((AnimatedGUIItem) item);
         }
     }

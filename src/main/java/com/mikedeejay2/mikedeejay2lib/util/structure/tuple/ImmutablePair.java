@@ -12,8 +12,7 @@ package com.mikedeejay2.mikedeejay2lib.util.structure.tuple;
  *
  * @author Mikedeejay2
  */
-public class ImmutablePair<L, R> extends Pair<L, R>
-{
+public class ImmutablePair<L, R> extends Pair<L, R> {
     /**
      * Internal serial version unique ID
      */
@@ -29,8 +28,7 @@ public class ImmutablePair<L, R> extends Pair<L, R>
      */
     protected final R right;
 
-    public ImmutablePair(L left, R right)
-    {
+    public ImmutablePair(L left, R right) {
         this.left = left;
         this.right = right;
     }
@@ -41,8 +39,7 @@ public class ImmutablePair<L, R> extends Pair<L, R>
      * @return The left value
      */
     @Override
-    public L getLeft()
-    {
+    public L getLeft() {
         return left;
     }
 
@@ -52,8 +49,7 @@ public class ImmutablePair<L, R> extends Pair<L, R>
      * @return The right value
      */
     @Override
-    public R getRight()
-    {
+    public R getRight() {
         return right;
     }
 
@@ -63,8 +59,7 @@ public class ImmutablePair<L, R> extends Pair<L, R>
      * @return The key
      */
     @Override
-    public L getKey()
-    {
+    public L getKey() {
         return left;
     }
 
@@ -74,8 +69,7 @@ public class ImmutablePair<L, R> extends Pair<L, R>
      * @return The value
      */
     @Override
-    public R getValue()
-    {
+    public R getValue() {
         return right;
     }
 
@@ -88,8 +82,7 @@ public class ImmutablePair<L, R> extends Pair<L, R>
      */
     @Override
     @Deprecated
-    public R setValue(R value)
-    {
+    public R setValue(R value) {
         throw new UnsupportedOperationException();
     }
 }

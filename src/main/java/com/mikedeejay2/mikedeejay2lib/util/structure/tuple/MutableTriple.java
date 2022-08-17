@@ -13,8 +13,7 @@ package com.mikedeejay2.mikedeejay2lib.util.structure.tuple;
  *
  * @author Mikedeejay2
  */
-public class MutableTriple<L, M, R> extends Triple<L, M, R>
-{
+public class MutableTriple<L, M, R> extends Triple<L, M, R> {
     /**
      * Internal serial version unique ID
      */
@@ -42,8 +41,7 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R>
      * @param middle The middle value
      * @param right The right value
      */
-    public MutableTriple(L left, M middle, R right)
-    {
+    public MutableTriple(L left, M middle, R right) {
         this.left = left;
         this.middle = middle;
         this.right = right;
@@ -55,8 +53,7 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R>
      * @return The left value
      */
     @Override
-    public L getLeft()
-    {
+    public L getLeft() {
         return left;
     }
 
@@ -66,8 +63,7 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R>
      * @return The middle value
      */
     @Override
-    public M getMiddle()
-    {
+    public M getMiddle() {
         return middle;
     }
 
@@ -77,8 +73,7 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R>
      * @return The right value
      */
     @Override
-    public R getRight()
-    {
+    public R getRight() {
         return right;
     }
 
@@ -88,8 +83,7 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R>
      * @param left The new left value
      * @return The new left value
      */
-    public L setLeft(L left)
-    {
+    public L setLeft(L left) {
         this.left = left;
         return left;
     }
@@ -100,8 +94,7 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R>
      * @param middle The new middle value
      * @return The new middle value
      */
-    public M setMiddle(M middle)
-    {
+    public M setMiddle(M middle) {
         this.middle = middle;
         return middle;
     }
@@ -113,8 +106,7 @@ public class MutableTriple<L, M, R> extends Triple<L, M, R>
      * @param right The new right value
      * @return The new right value
      */
-    public R setRight(R right)
-    {
+    public R setRight(R right) {
         this.right = right;
         return right;
     }

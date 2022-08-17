@@ -15,8 +15,7 @@ import java.util.Map;
  *
  * @author Mikedeejay2
  */
-public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, R>>, Serializable
-{
+public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, R>>, Serializable {
     /**
      * Internal serial version unique ID
      */
@@ -43,8 +42,7 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
      * @return The comparison result
      */
     @Override
-    public int compareTo(Pair<L, R> other)
-    {
+    public int compareTo(Pair<L, R> other) {
         if(this == other) return 0;
         if(this.getLeft() == other.getLeft() &&
                 this.getRight() == other.getRight()) return 0;
@@ -65,25 +63,20 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
      * @return true if this object is the same as the obj argument; false otherwise.
      */
     @Override
-    public boolean equals(Object obj)
-    {
+    public boolean equals(Object obj) {
         if(this == obj) return true;
         if(!(obj instanceof Pair<?, ?>)) return false;
         Pair<?, ?> other = (Pair<?, ?>) obj;
-        if((this.getLeft() == null && other.getLeft() != null) || (this.getLeft() != null && other.getLeft() == null))
-        {
+        if((this.getLeft() == null && other.getLeft() != null) || (this.getLeft() != null && other.getLeft() == null)) {
             return false;
         }
-        if((this.getRight() == null && other.getRight() != null) || (this.getRight() != null && other.getRight() == null))
-        {
+        if((this.getRight() == null && other.getRight() != null) || (this.getRight() != null && other.getRight() == null)) {
             return false;
         }
-        if(this.getLeft() != null && !this.getLeft().equals(other.getLeft()))
-        {
+        if(this.getLeft() != null && !this.getLeft().equals(other.getLeft())) {
             return false;
         }
-        if(this.getRight() != null && !this.getRight().equals(other.getRight()))
-        {
+        if(this.getRight() != null && !this.getRight().equals(other.getRight())) {
             return false;
         }
         return true;
@@ -95,8 +88,7 @@ public abstract class Pair<L, R> implements Map.Entry<L, R>, Comparable<Pair<L, 
      * @return The generated String
      */
     @Override
-    public String toString()
-    {
+    public String toString() {
         return "(" + getLeft() + ", " + getRight() + ")";
     }
 }

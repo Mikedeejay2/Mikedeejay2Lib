@@ -8,8 +8,7 @@ import java.lang.reflect.Method;
  *
  * @author Mikedeejay2
  */
-public final class TickUtil
-{
+public final class TickUtil {
     /**
      * Field for the current tick
      */
@@ -30,18 +29,14 @@ public final class TickUtil
      */
     private static Object serverObj;
 
-    static
-    {
-        try
-        {
+    static {
+        try {
             minecraftServer = Class.forName("net.minecraft.server.MinecraftServer");
             currentTick = minecraftServer.getDeclaredField("currentTick");
             recentTps = minecraftServer.getDeclaredField("recentTps");
             Method getServer = minecraftServer.getDeclaredMethod("getServer");
             serverObj = getServer.invoke(minecraftServer);
-        }
-        catch(ReflectiveOperationException e)
-        {
+        } catch(ReflectiveOperationException e) {
             e.printStackTrace();
         }
     }
@@ -51,14 +46,10 @@ public final class TickUtil
      *
      * @return The current tick
      */
-    public static int getCurrentTick()
-    {
-        try
-        {
+    public static int getCurrentTick() {
+        try {
             return (int) currentTick.get(null);
-        }
-        catch(IllegalAccessException e)
-        {
+        } catch(IllegalAccessException e) {
             e.printStackTrace();
         }
         return -1;
@@ -69,14 +60,10 @@ public final class TickUtil
      *
      * @return The TPS array
      */
-    public static double[] getTPS()
-    {
-        try
-        {
+    public static double[] getTPS() {
+        try {
             return ((double[]) recentTps.get(serverObj));
-        }
-        catch(IllegalAccessException e)
-        {
+        } catch(IllegalAccessException e) {
             e.printStackTrace();
         }
         return null;

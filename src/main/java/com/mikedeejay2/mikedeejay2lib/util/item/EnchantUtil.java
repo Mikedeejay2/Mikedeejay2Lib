@@ -13,10 +13,8 @@ public final class EnchantUtil
      * @param enchantName The name of the enchantment to get in field form
      * @return The field name of the enchantment, null if custom enchant.
      */
-    public static String getFieldEnchantName(String enchantName)
-    {
-        switch(enchantName.toLowerCase())
-        {
+    public static String getFieldEnchantName(String enchantName) {
+        switch(enchantName.toLowerCase()) {
             case "protection":              return "PROTECTION_ENVIRONMENTAL";
             case "fire_protection":         return "PROTECTION_FIRE";
             case "feather_falling":         return "PROTECTION_FALL";

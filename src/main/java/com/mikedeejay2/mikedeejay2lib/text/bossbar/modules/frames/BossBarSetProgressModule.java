@@ -7,15 +7,13 @@ import com.mikedeejay2.mikedeejay2lib.text.bossbar.BossBarSystem;
  *
  * @author Mikedeejay2
  */
-public class BossBarSetProgressModule extends BossBarFrameModule<Double>
-{
+public class BossBarSetProgressModule extends BossBarFrameModule<Double> {
     /**
      * Construct a new <code>BossBarSetProgressModule</code>
      *
      * @param loop Whether this module should loop the frames or not
      */
-    public BossBarSetProgressModule(boolean loop)
-    {
+    public BossBarSetProgressModule(boolean loop) {
         super(loop);
     }
 
@@ -27,8 +25,7 @@ public class BossBarSetProgressModule extends BossBarFrameModule<Double>
      * @param value  The value of the frame
      */
     @Override
-    public void onFrame(BossBarSystem system, long period, Double value)
-    {
+    public void onFrame(BossBarSystem system, long period, Double value) {
         system.setProgress(value);
     }
 }

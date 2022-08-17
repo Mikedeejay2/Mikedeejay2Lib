@@ -8,8 +8,7 @@ import com.mikedeejay2.mikedeejay2lib.text.bossbar.modules.BossBarModule;
  *
  * @author Mikedeejay2
  */
-public class BossBarSubProgressModule implements BossBarModule
-{
+public class BossBarSubProgressModule implements BossBarModule {
     /**
      * The progress to subtract from the boss bar (between 0.0-1.0)
      */
@@ -20,8 +19,7 @@ public class BossBarSubProgressModule implements BossBarModule
      *
      * @param progress The progress to subtract from the boss bar (between 0.0-1.0)
      */
-    public BossBarSubProgressModule(double progress)
-    {
+    public BossBarSubProgressModule(double progress) {
         this.progress = progress;
     }
 
@@ -31,8 +29,7 @@ public class BossBarSubProgressModule implements BossBarModule
      * @param system The <code>BossBarSystem</code> being ticked
      */
     @Override
-    public void onTick(BossBarSystem system)
-    {
+    public void onTick(BossBarSystem system) {
         double newProgress = Math.abs((system.getProgress() - progress) % 1);
         system.setProgress(newProgress);
     }

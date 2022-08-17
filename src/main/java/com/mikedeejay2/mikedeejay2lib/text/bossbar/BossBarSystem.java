@@ -20,8 +20,7 @@ import java.util.*;
  *
  * @author Mikedeejay2
  */
-public class BossBarSystem
-{
+public class BossBarSystem {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -87,8 +86,7 @@ public class BossBarSystem
      * @param progress The progress (0.0 - 1.0) of the boss bar
      * @param flags    The <code>BarFlags</code> of the boss bar
      */
-    public BossBarSystem(BukkitPlugin plugin, String title, BarColor color, BarStyle style, double progress, BarFlag... flags)
-    {
+    public BossBarSystem(BukkitPlugin plugin, String title, BarColor color, BarStyle style, double progress, BarFlag... flags) {
         this.plugin = plugin;
         this.players = new HashSet<>();
         this.title = Colors.format(title);
@@ -105,8 +103,7 @@ public class BossBarSystem
     /**
      * @param plugin A reference to the plugin
      */
-    public BossBarSystem(BukkitPlugin plugin)
-    {
+    public BossBarSystem(BukkitPlugin plugin) {
         this(plugin, "", BarColor.WHITE, BarStyle.SOLID, 1.0);
     }
 
@@ -116,8 +113,7 @@ public class BossBarSystem
      * @param delay  The delay before the boss bar should be displayed
      * @param period The period between tick updates of the boss bar
      */
-    public void display(long delay, long period)
-    {
+    public void display(long delay, long period) {
         this.runtime = new BossBarRuntime(this);
         runtime.runTaskTimer(plugin, delay, period);
         setVisible(true);
@@ -128,16 +124,14 @@ public class BossBarSystem
      *
      * @param period The period between tick updates of the boss bar
      */
-    public void display(long period)
-    {
+    public void display(long period) {
         this.display(0, period);
     }
 
     /**
      * Display this <code>BossBarSystem</code> to the players added to the system
      */
-    public void display()
-    {
+    public void display() {
         this.display(0, 1);
     }
 
@@ -146,8 +140,7 @@ public class BossBarSystem
      * This method stops the runtime from updating and sets the visibility
      * of the boss bar to false.
      */
-    public void stop()
-    {
+    public void stop() {
         if(runtime == null || runtime.isCancelled()) return;
         runtime.cancel();
     }
@@ -158,10 +151,8 @@ public class BossBarSystem
      * @param players The players to add to the system
      * @return The current <code>BossBarSystem</code>
      */
-    public BossBarSystem addPlayers(Player... players)
-    {
-        for(Player player : players)
-        {
+    public BossBarSystem addPlayers(Player... players) {
+        for(Player player : players) {
             this.players.add(player);
             bar.addPlayer(player);
         }
@@ -174,10 +165,8 @@ public class BossBarSystem
      * @param players The players to remove from this system
      * @return The current <code>BossBarSystem</code>
      */
-    public BossBarSystem removePlayers(Player... players)
-    {
-        for(Player player : players)
-        {
+    public BossBarSystem removePlayers(Player... players) {
+        for(Player player : players) {
             this.players.remove(player);
             bar.removePlayer(player);
         }
@@ -190,10 +179,8 @@ public class BossBarSystem
      * @param players The collection of players to add to this system
      * @return The current <code>BossBarSystem</code>
      */
-    public BossBarSystem addPlayers(Collection<? extends Player> players)
-    {
-        for(Player player : players)
-        {
+    public BossBarSystem addPlayers(Collection<? extends Player> players) {
+        for(Player player : players) {
             this.players.add(player);
             bar.addPlayer(player);
         }
@@ -206,10 +193,8 @@ public class BossBarSystem
      * @param players The collection of players to remove from this system
      * @return The current <code>BossBarSystem</code>
      */
-    public BossBarSystem removePlayers(Collection<? extends Player> players)
-    {
-        for(Player player : players)
-        {
+    public BossBarSystem removePlayers(Collection<? extends Player> players) {
+        for(Player player : players) {
             this.players.remove(player);
             bar.removePlayer(player);
         }
@@ -222,8 +207,7 @@ public class BossBarSystem
      * @param player The player to add to this system
      * @return The current <code>BossBarSystem</code>
      */
-    public BossBarSystem addPlayer(Player player)
-    {
+    public BossBarSystem addPlayer(Player player) {
         players.add(player);
         bar.addPlayer(player);
         return this;
@@ -235,8 +219,7 @@ public class BossBarSystem
      * @param player The player to remove from this system
      * @return The current <code>BossBarSystem</code>
      */
-    public BossBarSystem removePlayer(Player player)
-    {
+    public BossBarSystem removePlayer(Player player) {
         players.remove(player);
         bar.removePlayer(player);
         return this;
@@ -248,8 +231,7 @@ public class BossBarSystem
      * @param player The player to search for
      * @return Whether the player was found in this system or not
      */
-    public boolean containsPlayer(Player player)
-    {
+    public boolean containsPlayer(Player player) {
         return players.contains(player);
     }
 
@@ -258,8 +240,7 @@ public class BossBarSystem
      *
      * @return The title of the boss bar
      */
-    public String getTitle()
-    {
+    public String getTitle() {
         return title;
     }
 
@@ -268,8 +249,7 @@ public class BossBarSystem
      *
      * @param title The new boss bar title
      */
-    public void setTitle(String title)
-    {
+    public void setTitle(String title) {
         this.title = Colors.format(title);
         bar.setTitle(this.title);
     }
@@ -279,8 +259,7 @@ public class BossBarSystem
      *
      * @return The <code>BarColor</code> the boss bar
      */
-    public BarColor getColor()
-    {
+    public BarColor getColor() {
         return color;
     }
 
@@ -289,8 +268,7 @@ public class BossBarSystem
      *
      * @param color The new <code>BarColor</code> of the boss bar
      */
-    public void setColor(BarColor color)
-    {
+    public void setColor(BarColor color) {
         this.color = color;
         bar.setColor(color);
     }
@@ -300,8 +278,7 @@ public class BossBarSystem
      *
      * @return The <code>BarStyle</code> of the boss bar
      */
-    public BarStyle getStyle()
-    {
+    public BarStyle getStyle() {
         return style;
     }
 
@@ -310,8 +287,7 @@ public class BossBarSystem
      *
      * @param style The new <code>BarStyle</code> of the boss bar
      */
-    public void setStyle(BarStyle style)
-    {
+    public void setStyle(BarStyle style) {
         this.style = style;
         bar.setStyle(style);
     }
@@ -321,8 +297,7 @@ public class BossBarSystem
      *
      * @return The <code>BarFlags</code> of the boss bar
      */
-    public List<BarFlag> getFlags()
-    {
+    public List<BarFlag> getFlags() {
         return flags;
     }
 
@@ -332,8 +307,7 @@ public class BossBarSystem
      * @param flag The <code>BarFlag</code> to add
      * @return The current <code>BossBarSystem</code>
      */
-    public BossBarSystem addFlag(BarFlag flag)
-    {
+    public BossBarSystem addFlag(BarFlag flag) {
         flags.add(flag);
         bar.addFlag(flag);
         return this;
@@ -345,8 +319,7 @@ public class BossBarSystem
      * @param flag The <code>BarFlag</code> to remove
      * @return The current <code>BossBarSystem</code>
      */
-    public BossBarSystem removeFlag(BarFlag flag)
-    {
+    public BossBarSystem removeFlag(BarFlag flag) {
         flags.remove(flag);
         bar.removeFlag(flag);
         return this;
@@ -357,8 +330,7 @@ public class BossBarSystem
      *
      * @return The progress of the boss bar
      */
-    public double getProgress()
-    {
+    public double getProgress() {
         return progress;
     }
 
@@ -367,8 +339,7 @@ public class BossBarSystem
      *
      * @param progress The new boss bar progress
      */
-    public void setProgress(double progress)
-    {
+    public void setProgress(double progress) {
         this.progress = progress;
         bar.setProgress(progress);
     }
@@ -378,8 +349,7 @@ public class BossBarSystem
      *
      * @return The list of players
      */
-    public Set<Player> getPlayers()
-    {
+    public Set<Player> getPlayers() {
         return players;
     }
 
@@ -388,8 +358,7 @@ public class BossBarSystem
      *
      * @return The current <code>BossBarSystem</code>
      */
-    public BossBarSystem resetPlayers()
-    {
+    public BossBarSystem resetPlayers() {
         players.clear();
         bar.removeAll();
         return this;
@@ -400,8 +369,7 @@ public class BossBarSystem
      *
      * @return Visibility state
      */
-    public boolean isVisible()
-    {
+    public boolean isVisible() {
         return visible;
     }
 
@@ -410,8 +378,7 @@ public class BossBarSystem
      *
      * @param visible The new visibility state
      */
-    public void setVisible(boolean visible)
-    {
+    public void setVisible(boolean visible) {
         this.visible = visible;
         bar.setVisible(true);
     }
@@ -421,8 +388,7 @@ public class BossBarSystem
      *
      * @return The <code>BossBar</code>
      */
-    public BossBar getBar()
-    {
+    public BossBar getBar() {
         return bar;
     }
 
@@ -432,8 +398,7 @@ public class BossBarSystem
      * @param module The <code>BossBarModule</code> to add to this system
      * @return The current <code>BossBarSystem</code>
      */
-    public BossBarSystem addModule(BossBarModule module)
-    {
+    public BossBarSystem addModule(BossBarModule module) {
         modules.add(module);
         return this;
     }
@@ -444,8 +409,7 @@ public class BossBarSystem
      * @param module The <code>BossBarModule</code> to remove from this system
      * @return The current <code>BossBarSystem</code>
      */
-    public BossBarSystem removeModule(BossBarModule module)
-    {
+    public BossBarSystem removeModule(BossBarModule module) {
         modules.remove(module);
         return this;
     }
@@ -456,8 +420,7 @@ public class BossBarSystem
      * @param index The index to remove the module at
      * @return The current <code>BossBarSystem</code>
      */
-    public BossBarSystem removeModule(int index)
-    {
+    public BossBarSystem removeModule(int index) {
         modules.remove(index);
         return this;
     }
@@ -468,10 +431,8 @@ public class BossBarSystem
      * @param moduleClass The class of the module to remove
      * @return The current <code>BossBarSystem</code>
      */
-    public BossBarSystem removeModule(Class<? extends BossBarModule> moduleClass)
-    {
-        for(BossBarModule module : modules)
-        {
+    public BossBarSystem removeModule(Class<? extends BossBarModule> moduleClass) {
+        for(BossBarModule module : modules) {
             if(moduleClass != module.getClass()) continue;
             modules.remove(module);
             break;
@@ -485,8 +446,7 @@ public class BossBarSystem
      * @param module The <code>BossBarModule</code> to search for
      * @return Whether the module was found or not
      */
-    public boolean containsModule(BossBarModule module)
-    {
+    public boolean containsModule(BossBarModule module) {
         return modules.contains(module);
     }
 
@@ -496,10 +456,8 @@ public class BossBarSystem
      * @param moduleClass The class of the module to search for
      * @return Whether a module of the class was found or not
      */
-    public boolean containsModule(Class<? extends BossBarModule> moduleClass)
-    {
-        for(BossBarModule module : modules)
-        {
+    public boolean containsModule(Class<? extends BossBarModule> moduleClass) {
+        for(BossBarModule module : modules) {
             if(moduleClass == module.getClass()) return true;
         }
         return false;
@@ -511,8 +469,7 @@ public class BossBarSystem
      * @param index The index of the module to get
      * @return The requested <code>BossBarModule</code>
      */
-    public BossBarModule getModule(int index)
-    {
+    public BossBarModule getModule(int index) {
         return modules.get(index);
     }
 
@@ -523,10 +480,8 @@ public class BossBarSystem
      * @param <T>         The class type of the module
      * @return The requested <code>BossBarModule</code>, null if not found
      */
-    public <T extends BossBarModule> T getModule(Class<T> moduleClass)
-    {
-        for(BossBarModule module : modules)
-        {
+    public <T extends BossBarModule> T getModule(Class<T> moduleClass) {
+        for(BossBarModule module : modules) {
             if(moduleClass == module.getClass()) return (T) module;
         }
         return null;
@@ -537,8 +492,7 @@ public class BossBarSystem
      *
      * @return The current <code>BossBarSystem</code>
      */
-    public BossBarSystem resetModules()
-    {
+    public BossBarSystem resetModules() {
         modules.clear();
         return this;
     }
@@ -548,8 +502,7 @@ public class BossBarSystem
      *
      * @return The list of <code>BossBarModules</code>
      */
-    public List<BossBarModule> getModules()
-    {
+    public List<BossBarModule> getModules() {
         return modules;
     }
 }

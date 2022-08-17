@@ -12,8 +12,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class ParticleShapeCylinderFilled implements ParticleShape
-{
+public class ParticleShapeCylinderFilled implements ParticleShape {
     /**
      * The center location
      */
@@ -48,8 +47,7 @@ public class ParticleShapeCylinderFilled implements ParticleShape
      * @param radiusDensity The density of particles in relation to the radius
      * @param heightDensity The density of particles in relation to the height
      */
-    public ParticleShapeCylinderFilled(Location location, double radius, double height, double radiusDensity, double heightDensity)
-    {
+    public ParticleShapeCylinderFilled(Location location, double radius, double height, double radiusDensity, double heightDensity) {
         this.location = location;
         this.radiusDensity = radiusDensity;
         this.heightDensity = heightDensity;
@@ -63,8 +61,7 @@ public class ParticleShapeCylinderFilled implements ParticleShape
      * @return The vector list
      */
     @Override
-    public List<Vector> getShape()
-    {
+    public List<Vector> getShape() {
         return MathUtil.getCylinderFilledVectors(location, radius, height, radiusDensity, heightDensity);
     }
 }

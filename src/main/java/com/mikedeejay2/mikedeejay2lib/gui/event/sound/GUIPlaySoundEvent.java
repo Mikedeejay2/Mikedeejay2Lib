@@ -1,6 +1,5 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.sound;
 
-import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import org.bukkit.Location;
@@ -8,7 +7,6 @@ import org.bukkit.Sound;
 import org.bukkit.SoundCategory;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.Nullable;
 
 /**
@@ -16,8 +14,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Mikedeejay2
  */
-public class GUIPlaySoundEvent implements GUIEvent
-{
+public class GUIPlaySoundEvent implements GUIEvent {
     /**
      * The {@link Sound} to play
      */
@@ -52,8 +49,7 @@ public class GUIPlaySoundEvent implements GUIEvent
      * @param pitch The pitch that the sound will play as
      * @param clickType The {@link ClickType} needed to play the sound
      */
-    public GUIPlaySoundEvent(Sound sound, SoundCategory category, float volume, float pitch, @Nullable ClickType clickType)
-    {
+    public GUIPlaySoundEvent(Sound sound, SoundCategory category, float volume, float pitch, @Nullable ClickType clickType) {
         this.sound = sound;
         this.category = category;
         this.volume = volume;
@@ -69,8 +65,7 @@ public class GUIPlaySoundEvent implements GUIEvent
      * @param volume The volume that the sound will play as
      * @param pitch The pitch that the sound will play as
      */
-    public GUIPlaySoundEvent(Sound sound, SoundCategory category, float volume, float pitch)
-    {
+    public GUIPlaySoundEvent(Sound sound, SoundCategory category, float volume, float pitch) {
         this(sound, category, volume, pitch, null);
     }
 
@@ -81,8 +76,7 @@ public class GUIPlaySoundEvent implements GUIEvent
      * @param volume The volume that the sound will play as
      * @param pitch The pitch that the sound will play as
      */
-    public GUIPlaySoundEvent(Sound sound, float volume, float pitch)
-    {
+    public GUIPlaySoundEvent(Sound sound, float volume, float pitch) {
         this(sound, null, volume, pitch, null);
     }
 
@@ -94,8 +88,7 @@ public class GUIPlaySoundEvent implements GUIEvent
      * @param pitch The pitch that the sound will play as
      * @param clickType The {@link ClickType} needed to play the sound
      */
-    public GUIPlaySoundEvent(Sound sound, float volume, float pitch, ClickType clickType)
-    {
+    public GUIPlaySoundEvent(Sound sound, float volume, float pitch, ClickType clickType) {
         this(sound, null, volume, pitch, clickType);
     }
 
@@ -105,17 +98,13 @@ public class GUIPlaySoundEvent implements GUIEvent
      * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(GUIEventInfo info)
-    {
+    public void execute(GUIEventInfo info) {
         if(clickType != null && info.getClick() != clickType) return;
         Player player = info.getPlayer();
         Location location = player.getLocation();
-        if(category != null)
-        {
+        if(category != null) {
             player.playSound(location, sound, category, volume, pitch);
-        }
-        else
-        {
+        } else {
             player.playSound(location, sound, volume, pitch);
         }
     }
@@ -125,8 +114,7 @@ public class GUIPlaySoundEvent implements GUIEvent
      *
      * @return The sound
      */
-    public Sound getSound()
-    {
+    public Sound getSound() {
         return sound;
     }
 
@@ -135,8 +123,7 @@ public class GUIPlaySoundEvent implements GUIEvent
      *
      * @param sound The new sound
      */
-    public void setSound(Sound sound)
-    {
+    public void setSound(Sound sound) {
         this.sound = sound;
     }
 
@@ -145,8 +132,7 @@ public class GUIPlaySoundEvent implements GUIEvent
      *
      * @return The <code>SoundCategory</code>
      */
-    public SoundCategory getCategory()
-    {
+    public SoundCategory getCategory() {
         return category;
     }
 
@@ -155,8 +141,7 @@ public class GUIPlaySoundEvent implements GUIEvent
      *
      * @param category The new <code>SoundCategory</code>
      */
-    public void setCategory(SoundCategory category)
-    {
+    public void setCategory(SoundCategory category) {
         this.category = category;
     }
 
@@ -165,8 +150,7 @@ public class GUIPlaySoundEvent implements GUIEvent
      *
      * @return The volume
      */
-    public float getVolume()
-    {
+    public float getVolume() {
         return volume;
     }
 
@@ -175,8 +159,7 @@ public class GUIPlaySoundEvent implements GUIEvent
      *
      * @param volume The new volume
      */
-    public void setVolume(float volume)
-    {
+    public void setVolume(float volume) {
         this.volume = volume;
     }
 
@@ -185,8 +168,7 @@ public class GUIPlaySoundEvent implements GUIEvent
      *
      * @return The pitch
      */
-    public float getPitch()
-    {
+    public float getPitch() {
         return pitch;
     }
 
@@ -195,8 +177,7 @@ public class GUIPlaySoundEvent implements GUIEvent
      *
      * @param pitch The new pitch
      */
-    public void setPitch(float pitch)
-    {
+    public void setPitch(float pitch) {
         this.pitch = pitch;
     }
 
@@ -205,8 +186,7 @@ public class GUIPlaySoundEvent implements GUIEvent
      *
      * @return The <code>ClickType</code>
      */
-    public @Nullable ClickType getClickType()
-    {
+    public @Nullable ClickType getClickType() {
         return clickType;
     }
 
@@ -215,8 +195,7 @@ public class GUIPlaySoundEvent implements GUIEvent
      *
      * @param clickType The new <code>ClickType</code>
      */
-    public void setClickType(@Nullable ClickType clickType)
-    {
+    public void setClickType(@Nullable ClickType clickType) {
         this.clickType = clickType;
     }
 }

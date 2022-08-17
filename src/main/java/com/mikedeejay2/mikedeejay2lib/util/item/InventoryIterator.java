@@ -4,8 +4,6 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.function.Predicate;
 
 /**
@@ -15,8 +13,7 @@ import java.util.function.Predicate;
  *
  * @author Mikedeejay2
  */
-public final class InventoryIterator
-{
+public final class InventoryIterator {
     /**
      * Iterate through slots of an inventory
      *
@@ -28,23 +25,17 @@ public final class InventoryIterator
      * @param endIndex The ending index of the iteration
      * @param increment Whether to increment of decrement the operation
      */
-    public static void iterateInventory(Inventory inventory, InventorySlotConsumer consumer, boolean storageOnly, Predicate<ItemStack> predicate, int startIndex, int endIndex, boolean increment)
-    {
+    public static void iterateInventory(Inventory inventory, InventorySlotConsumer consumer, boolean storageOnly, Predicate<ItemStack> predicate, int startIndex, int endIndex, boolean increment) {
         ItemStack[] items = storageOnly ? inventory.getStorageContents() : inventory.getContents();
-        if(increment)
-        {
-            for(int i = startIndex; i <= endIndex; ++i)
-            {
+        if(increment) {
+            for(int i = startIndex; i <= endIndex; ++i) {
                 if(i >= items.length || i < 0) continue;
                 ItemStack stack = items[i];
                 if(predicate != null && !predicate.test(stack)) return;
                 consumer.accept(inventory, stack, i);
             }
-        }
-        else
-        {
-            for(int i = startIndex; i >= endIndex; --i)
-            {
+        } else {
+            for(int i = startIndex; i >= endIndex; --i) {
                 if(i >= items.length || i < 0) continue;
                 ItemStack stack = items[i];
                 if(predicate != null && !predicate.test(stack)) return;
@@ -62,11 +53,9 @@ public final class InventoryIterator
      * @param predicate The <code>Predicate</code> that is checked before accepting the slot
      * @param orders The array of <code>InventoryOrders</code> that will be used
      */
-    public static void iterateInventory(Inventory inventory, InventorySlotConsumer consumer, boolean storageOnly, Predicate<ItemStack> predicate, InventoryOrder... orders)
-    {
+    public static void iterateInventory(Inventory inventory, InventorySlotConsumer consumer, boolean storageOnly, Predicate<ItemStack> predicate, InventoryOrder... orders) {
         ItemStack[] items = storageOnly ? inventory.getStorageContents() : inventory.getContents();
-        for(InventoryOrder order : orders)
-        {
+        for(InventoryOrder order : orders) {
             if(!(inventory instanceof PlayerInventory) && order.isPlayerOnly()) continue;
             int start = order.getStart();
             int end = order.getEnd();
@@ -83,8 +72,7 @@ public final class InventoryIterator
      * @author Mikedeejay2
      */
     @FunctionalInterface
-    public interface InventorySlotConsumer
-    {
+    public interface InventorySlotConsumer {
         /**
          * Accept an inventory slot
          *

@@ -17,8 +17,7 @@ import java.util.Set;
  *
  * @author Mikedeejay2
  */
-public final class JsonFileIO
-{
+public final class JsonFileIO {
     /**
      * Load a JsonObject from the disk.
      *
@@ -28,8 +27,7 @@ public final class JsonFileIO
      * @param json        The <code>JsonObject</code> to load the JSON into
      * @return The requested JsonObject
      */
-    public static JsonObject loadJsonObjectFromDisk(File folder, String filePath, JsonObject json, boolean throwErrors)
-    {
+    public static JsonObject loadJsonObjectFromDisk(File folder, String filePath, JsonObject json, boolean throwErrors) {
         return loadJsonObjectFromDisk(new File(folder, filePath), json, throwErrors);
     }
 
@@ -41,20 +39,16 @@ public final class JsonFileIO
      * @param json        The <code>JsonObject</code> to load the JSON into
      * @return The requested JsonObject
      */
-    public static JsonObject loadJsonObjectFromDisk(File file, JsonObject json, boolean throwErrors)
-    {
+    public static JsonObject loadJsonObjectFromDisk(File file, JsonObject json, boolean throwErrors) {
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
         Gson gson = builder.create();
         Reader reader = FileIO.getReaderFromDisk(file, throwErrors);
-        try
-        {
+        try {
             JsonObject newJson = gson.fromJson(reader, JsonObject.class);
             newJson.entrySet().forEach(entry -> json.add(entry.getKey(), entry.getValue()));
             reader.close();
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             if(throwErrors) FileIO.logFileCouldNotBeLoaded(file.getPath(), e);
         }
         return json;
@@ -69,20 +63,16 @@ public final class JsonFileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested JsonObject
      */
-    public static JsonObject loadJsonObjectFromJar(String filePath, JsonObject json, ClassLoader classLoader, boolean throwErrors)
-    {
+    public static JsonObject loadJsonObjectFromJar(String filePath, JsonObject json, ClassLoader classLoader, boolean throwErrors) {
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
         Gson gson = builder.create();
         Reader reader = FileIO.getReaderFromJar(filePath, classLoader, throwErrors);
-        try
-        {
+        try {
             JsonObject newJson = gson.fromJson(reader, JsonObject.class);
             newJson.entrySet().forEach(entry -> json.add(entry.getKey(), entry.getValue()));
             reader.close();
-        }
-        catch(Exception e)
-        {
+        } catch(Exception e) {
             if(throwErrors) FileIO.logFileCouldNotBeLoaded(filePath, e);
         }
         return json;
@@ -95,15 +85,11 @@ public final class JsonFileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return The requested JsonWriter
      */
-    public static JsonWriter getJsonWriter(File file, boolean throwErrors)
-    {
+    public static JsonWriter getJsonWriter(File file, boolean throwErrors) {
         JsonWriter writer = null;
-        try
-        {
+        try {
             writer = new JsonWriter(new FileWriter(file));
-        }
-        catch(IOException e)
-        {
+        } catch(IOException e) {
             if(throwErrors) FileIO.logFileCouldNotBeSaved(file.getPath(), e);
         }
         return writer;
@@ -117,8 +103,7 @@ public final class JsonFileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return Whether the save was successful or not
      */
-    public static boolean saveJsonFile(File file, JsonObject json, boolean throwErrors)
-    {
+    public static boolean saveJsonFile(File file, JsonObject json, boolean throwErrors) {
         GsonBuilder builder = new GsonBuilder();
         builder.setPrettyPrinting();
         Gson gson = builder.create();
@@ -136,8 +121,7 @@ public final class JsonFileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return Whether the update was successful or not
      */
-    public static boolean updateFromJar(BukkitPlugin plugin, String filePath, JsonObject original, boolean throwErrors)
-    {
+    public static boolean updateFromJar(BukkitPlugin plugin, String filePath, JsonObject original, boolean throwErrors) {
         JsonFile jarFile = new JsonFile(plugin, filePath);
         boolean success = jarFile.loadFromJar(true);
         if(!success) return false;
@@ -154,18 +138,13 @@ public final class JsonFileIO
      * @param throwErrors Whether this method should throw errors if something goes wrong or not
      * @return Whether the update was successful or not
      */
-    private static boolean updateFromJarIterate(JsonObject original, Set<Map.Entry<String, JsonElement>> set, boolean throwErrors)
-    {
-        for(Map.Entry<String, JsonElement> element : set)
-        {
+    private static boolean updateFromJarIterate(JsonObject original, Set<Map.Entry<String, JsonElement>> set, boolean throwErrors) {
+        for(Map.Entry<String, JsonElement> element : set) {
             String memberName = element.getKey();
             JsonElement jsonElement = element.getValue();
-            if(!original.has(memberName))
-            {
+            if(!original.has(memberName)) {
                 original.add(memberName, jsonElement);
-            }
-            else if(jsonElement.isJsonObject())
-            {
+            } else if(jsonElement.isJsonObject()) {
                 Set<Map.Entry<String, JsonElement>> newSet = jsonElement.getAsJsonObject().entrySet();
                 updateFromJarIterate(original.getAsJsonObject(memberName), newSet, throwErrors);
             }

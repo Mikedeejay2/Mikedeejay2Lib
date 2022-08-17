@@ -15,8 +15,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class GUITreeModule implements GUIModule
-{
+public class GUITreeModule implements GUIModule {
     /**
      * The list of nodes that this tree module displays
      */
@@ -25,8 +24,7 @@ public class GUITreeModule implements GUIModule
     /**
      * Construct a new <code>GUITreeModule</code>
      */
-    public GUITreeModule()
-    {
+    public GUITreeModule() {
         this.nodes = new ArrayList<>();
     }
 
@@ -37,11 +35,9 @@ public class GUITreeModule implements GUIModule
      * @param gui    The GUI
      */
     @Override
-    public void onUpdateHead(Player player, GUIContainer gui)
-    {
+    public void onUpdateHead(Player player, GUIContainer gui) {
         GUILayer layer = gui.getLayer(0);
-        for(GUITreeNode node : nodes)
-        {
+        for(GUITreeNode node : nodes) {
             GUIItem item = node.getItem();
             int row = node.getRow();
             int col = node.getCol();
@@ -56,8 +52,7 @@ public class GUITreeModule implements GUIModule
      *
      * @param node The node to add
      */
-    public void addNode(GUITreeNode node)
-    {
+    public void addNode(GUITreeNode node) {
         nodes.add(node);
     }
 
@@ -66,8 +61,7 @@ public class GUITreeModule implements GUIModule
      *
      * @param node The node to remove
      */
-    public void removeNode(GUITreeNode node)
-    {
+    public void removeNode(GUITreeNode node) {
         nodes.remove(node);
     }
 
@@ -77,8 +71,7 @@ public class GUITreeModule implements GUIModule
      * @param node The node to search for
      * @return Whether this tree contains a node
      */
-    public boolean containsNode(GUITreeNode node)
-    {
+    public boolean containsNode(GUITreeNode node) {
         return nodes.contains(node);
     }
 }

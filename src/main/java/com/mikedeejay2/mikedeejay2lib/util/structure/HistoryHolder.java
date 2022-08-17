@@ -7,10 +7,10 @@ import java.util.Stack;
  * <p>
  * Based off of a First In First Out basis like web browser history or similar.
  *
+ * @param <T> The data being stored
  * @author Mikedeejay2
  */
-public class HistoryHolder<T>
-{
+public class HistoryHolder<T> {
     /**
      * The back history stack
      */
@@ -24,8 +24,7 @@ public class HistoryHolder<T>
     /**
      * Construct a new <code>HistoryHolder</code>
      */
-    public HistoryHolder()
-    {
+    public HistoryHolder() {
         this.back = new Stack<>();
         this.forward = new Stack<>();
     }
@@ -35,8 +34,7 @@ public class HistoryHolder<T>
      *
      * @return If this system has back data
      */
-    public boolean hasBack()
-    {
+    public boolean hasBack() {
         return !back.empty();
     }
 
@@ -45,8 +43,7 @@ public class HistoryHolder<T>
      *
      * @return If this system has forward data
      */
-    public boolean hasForward()
-    {
+    public boolean hasForward() {
         return !forward.empty();
     }
 
@@ -55,8 +52,7 @@ public class HistoryHolder<T>
      *
      * @return The back stack size
      */
-    public int backSize()
-    {
+    public int backSize() {
         return back.size();
     }
 
@@ -65,24 +61,21 @@ public class HistoryHolder<T>
      *
      * @return The forward stack size
      */
-    public int forwardSize()
-    {
+    public int forwardSize() {
         return forward.size();
     }
 
     /**
      * Clear the back data stack
      */
-    public void clearBack()
-    {
+    public void clearBack() {
         back.clear();
     }
 
     /**
      * Clear the forward data stack
      */
-    public void clearForward()
-    {
+    public void clearForward() {
         forward.clear();
     }
 
@@ -91,8 +84,7 @@ public class HistoryHolder<T>
      *
      * @return The previous back data
      */
-    public T popBack()
-    {
+    public T popBack() {
         return back.pop();
     }
 
@@ -101,8 +93,7 @@ public class HistoryHolder<T>
      *
      * @return The previous forward data
      */
-    public T popForward()
-    {
+    public T popForward() {
         return forward.pop();
     }
 
@@ -111,8 +102,7 @@ public class HistoryHolder<T>
      *
      * @return The previous back data
      */
-    public T peekBack()
-    {
+    public T peekBack() {
         return back.peek();
     }
 
@@ -121,8 +111,7 @@ public class HistoryHolder<T>
      *
      * @return The previous forward data
      */
-    public T peekForward()
-    {
+    public T peekForward() {
         return forward.peek();
     }
 
@@ -131,8 +120,7 @@ public class HistoryHolder<T>
      *
      * @return The back stack of data
      */
-    public Stack<T> getBackStack()
-    {
+    public Stack<T> getBackStack() {
         return back;
     }
 
@@ -141,8 +129,7 @@ public class HistoryHolder<T>
      *
      * @return The forward stack of data
      */
-    public Stack<T> getForwardStack()
-    {
+    public Stack<T> getForwardStack() {
         return forward;
     }
 
@@ -151,8 +138,7 @@ public class HistoryHolder<T>
      *
      * @param obj The data to add to the back
      */
-    public void pushBack(T obj)
-    {
+    public void pushBack(T obj) {
         if(hasBack() && peekBack() == obj) return;
         back.push(obj);
     }
@@ -162,8 +148,7 @@ public class HistoryHolder<T>
      *
      * @param data The data to add to the forward
      */
-    public void pushForward(T data)
-    {
+    public void pushForward(T data) {
         if(hasForward() && peekForward() == data) return;
         forward.push(data);
     }

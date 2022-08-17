@@ -18,8 +18,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class CommandManager implements TabCommandBase
-{
+public class CommandManager implements TabCommandBase {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -46,8 +45,7 @@ public class CommandManager implements TabCommandBase
      * @param plugin      The {@link BukkitPlugin} instance
      * @param commandName The name of the command
      */
-    public CommandManager(@NotNull BukkitPlugin plugin, @NotNull String commandName)
-    {
+    public CommandManager(@NotNull BukkitPlugin plugin, @NotNull String commandName) {
         Validate.notNull(plugin, "Plugin instance cannot be null");
         Validate.notNull(commandName, "Command name cannot be null");
         this.plugin = plugin;
@@ -66,20 +64,16 @@ public class CommandManager implements TabCommandBase
      * @return Successful or not
      */
     @Override
-    public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args)
-    {
-        if(command.getName().equalsIgnoreCase(commandName))
-        {
-            if(args.length == 0)
-            {
+    public boolean onCommand(@NotNull CommandSender sender, Command command, @NotNull String label, String[] args) {
+        if(command.getName().equalsIgnoreCase(commandName)) {
+            if(args.length == 0) {
                 args = new String[1];
                 args[0] = defaultSubCommand;
             }
 
             SubCommand target = this.getSubcommand(args[0]);
 
-            if(target == null)
-            {
+            if(target == null) {
                 plugin.sendMessage(sender, "&c" + plugin.getLibLangManager().getText(sender, "command.errors.invalid_subcommand"));
                 return false;
             }
@@ -89,23 +83,17 @@ public class CommandManager implements TabCommandBase
 
             arrayList.remove(0);
 
-            if(target.getPermission() != null && !sender.hasPermission(target.getPermission()))
-            {
+            if(target.getPermission() != null && !sender.hasPermission(target.getPermission())) {
                 plugin.sendMessage(sender, "&c" + plugin.getLibLangManager().getText(sender, "errors.permission.nopermission"));
                 return false;
-            }
-            if(!(sender instanceof Player) && target.isPlayerRequired())
-            {
+            } else if(!(sender instanceof Player) && target.isPlayerRequired()) {
                 plugin.sendMessage(sender, "&c" + plugin.getLibLangManager().getText(sender, "errors.player_required"));
                 return false;
             }
 
-            try
-            {
+            try {
                 target.onCommand(sender, args);
-            }
-            catch(Exception exception)
-            {
+            } catch(Exception exception) {
                 plugin.sendMessage(sender, "&c" + plugin.getLibLangManager().getText(sender, "command.errors.general"));
                 exception.printStackTrace();
             }
@@ -120,21 +108,16 @@ public class CommandManager implements TabCommandBase
      * @param name Name of subcommand to get
      * @return The subcommand that corresponds to the name
      */
-    public SubCommand getSubcommand(final String name)
-    {
-        for(SubCommand subcommand : this.commands)
-        {
-            if(subcommand.getName().equalsIgnoreCase(name))
-            {
+    public SubCommand getSubcommand(final String name) {
+        for(SubCommand subcommand : this.commands) {
+            if(subcommand.getName().equalsIgnoreCase(name)) {
                 return subcommand;
             }
 
             List<String> aliases = subcommand.getAliases();
 
-            for(String alias : aliases)
-            {
-                if(name.equalsIgnoreCase(alias))
-                {
+            for(String alias : aliases) {
+                if(name.equalsIgnoreCase(alias)) {
                     return subcommand;
                 }
             }
@@ -148,11 +131,9 @@ public class CommandManager implements TabCommandBase
      * @param aliases Specify whether aliases are wanted or not
      * @return An <code>ArrayList</code> of strings containing the subcommands.
      */
-    public String[] getAllCommandStrings(boolean aliases)
-    {
+    public String[] getAllCommandStrings(boolean aliases) {
         List<String> strings = new ArrayList<>();
-        for(SubCommand command : commands)
-        {
+        for(SubCommand command : commands) {
             strings.add(command.getName());
             if(aliases) Collections.addAll(strings, command.getAliases().toArray(new String[0]));
         }
@@ -164,8 +145,7 @@ public class CommandManager implements TabCommandBase
      *
      * @param subCommand The subcommand to add
      */
-    public void addSubcommand(@NotNull final SubCommand subCommand)
-    {
+    public void addSubcommand(@NotNull final SubCommand subCommand) {
         Validate.notNull(subCommand, "Subcommand cannot be null");
         this.commands.add(subCommand);
     }
@@ -175,8 +155,7 @@ public class CommandManager implements TabCommandBase
      *
      * @param name Name of the subcommand
      */
-    public void removeSubCommand(@NotNull final String name)
-    {
+    public void removeSubCommand(@NotNull final String name) {
         Validate.notNull(name, "Cannot remove subcommand of null name");
         commands.remove(getSubcommand(name));
     }
@@ -186,8 +165,7 @@ public class CommandManager implements TabCommandBase
      *
      * @param subCommand The subcommand to remove
      */
-    public void removeSubCommand(SubCommand subCommand)
-    {
+    public void removeSubCommand(SubCommand subCommand) {
         Validate.notNull(subCommand, "Cannot remove null subcommand");
         commands.remove(subCommand);
     }
@@ -197,8 +175,7 @@ public class CommandManager implements TabCommandBase
      *
      * @return The base command
      */
-    public String getBaseCommand()
-    {
+    public String getBaseCommand() {
         return commandName;
     }
 
@@ -207,8 +184,7 @@ public class CommandManager implements TabCommandBase
      *
      * @return The default subcommand
      */
-    public @Nullable String getDefaultSubCommand()
-    {
+    public @Nullable String getDefaultSubCommand() {
         return defaultSubCommand;
     }
 
@@ -217,8 +193,7 @@ public class CommandManager implements TabCommandBase
      *
      * @param defaultSubCommand The new default subcommand
      */
-    public void setDefaultSubCommand(@Nullable String defaultSubCommand)
-    {
+    public void setDefaultSubCommand(@Nullable String defaultSubCommand) {
         this.defaultSubCommand = defaultSubCommand;
     }
 
@@ -232,12 +207,10 @@ public class CommandManager implements TabCommandBase
      * @return Return a list of autocomplete strings
      */
     @Override
-    public List<String> onTabComplete(@NotNull CommandSender sender, Command command, @NotNull String alias, String[] args)
-    {
+    public List<String> onTabComplete(@NotNull CommandSender sender, Command command, @NotNull String alias, String[] args) {
         if(!command.getName().equalsIgnoreCase(this.commandName)) return null;
         ArrayList<String> commands = new ArrayList<>();
-        if(args.length == 1)
-        {
+        if(args.length == 1) {
             String[] arg1Strings = this.getAllCommandStrings(true);
             Collections.addAll(commands, arg1Strings);
         }
@@ -248,8 +221,7 @@ public class CommandManager implements TabCommandBase
      * {@inheritDoc}
      */
     @Override
-    public String getName()
-    {
+    public String getName() {
         return commandName;
     }
 }

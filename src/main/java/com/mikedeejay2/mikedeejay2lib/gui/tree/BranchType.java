@@ -6,8 +6,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.tree;
  *
  * @author Mikedeejay2
  */
-public enum BranchType
-{
+public enum BranchType {
     /**
      * When creating a branch, run the branch horizontal first, such as:
      * <pre>

@@ -7,8 +7,7 @@ import org.bukkit.inventory.ItemStack;
  *
  * @author Mikedeejay2
  */
-public class AnimationFrame
-{
+public class AnimationFrame {
     /**
      * The item of the animation frame, null if not an item frame
      */
@@ -44,8 +43,7 @@ public class AnimationFrame
      * @param item   The new item that this frame will apply
      * @param period The period between this frame and the next frame
      */
-    public AnimationFrame(ItemStack item, long period)
-    {
+    public AnimationFrame(ItemStack item, long period) {
         this.item = item;
         this.period = period == 0 ? 1 : period;
         this.type = FrameType.ITEM;
@@ -60,8 +58,7 @@ public class AnimationFrame
      * @param relativeMovement Whether or not to use relative (local) movement
      * @param period           The period between this frame and the next frame
      */
-    public AnimationFrame(int row, int col, MovementType movement, boolean relativeMovement, long period)
-    {
+    public AnimationFrame(int row, int col, MovementType movement, boolean relativeMovement, long period) {
         this.row = row;
         this.col = col;
         this.period = period == 0 ? 1 : period;
@@ -80,8 +77,7 @@ public class AnimationFrame
      * @param relativeMovement Whether or not to use relative (local) movement
      * @param period           The period between this frame and the next frame
      */
-    public AnimationFrame(ItemStack item, int row, int col, MovementType movement, boolean relativeMovement, long period)
-    {
+    public AnimationFrame(ItemStack item, int row, int col, MovementType movement, boolean relativeMovement, long period) {
         this.row = row;
         this.col = col;
         this.period = period == 0 ? 1 : period;
@@ -96,8 +92,7 @@ public class AnimationFrame
      *
      * @return The item of this frame
      */
-    public ItemStack getItem()
-    {
+    public ItemStack getItem() {
         return item;
     }
 
@@ -109,8 +104,7 @@ public class AnimationFrame
      *
      * @param item The item to set this frame's item to
      */
-    public void setItem(ItemStack item)
-    {
+    public void setItem(ItemStack item) {
         this.item = item;
     }
 
@@ -120,8 +114,7 @@ public class AnimationFrame
      *
      * @return The movement type of this frame
      */
-    public MovementType getMovementType()
-    {
+    public MovementType getMovementType() {
         return movementType;
     }
 
@@ -133,8 +126,7 @@ public class AnimationFrame
      *
      * @param movementType The movement type to set this frame to
      */
-    public void setMovementType(MovementType movementType)
-    {
+    public void setMovementType(MovementType movementType) {
         this.movementType = movementType;
     }
 
@@ -143,8 +135,7 @@ public class AnimationFrame
      *
      * @return The row of this frame
      */
-    public int getRow()
-    {
+    public int getRow() {
         return row;
     }
 
@@ -157,8 +148,7 @@ public class AnimationFrame
      *
      * @param row The row to set this frame to
      */
-    public void setRow(int row)
-    {
+    public void setRow(int row) {
         this.row = row;
     }
 
@@ -168,8 +158,7 @@ public class AnimationFrame
      *
      * @return The column of this frame
      */
-    public int getCol()
-    {
+    public int getCol() {
         return col;
     }
 
@@ -181,8 +170,7 @@ public class AnimationFrame
      *
      * @param col The column to set this frame to
      */
-    public void setCol(int col)
-    {
+    public void setCol(int col) {
         this.col = col;
     }
 
@@ -195,8 +183,7 @@ public class AnimationFrame
      * @param row The row to set this frame to
      * @param col The column to set this frame to
      */
-    public void setRowCol(int row, int col)
-    {
+    public void setRowCol(int row, int col) {
         this.row = row;
         this.col = col;
     }
@@ -206,8 +193,7 @@ public class AnimationFrame
      *
      * @return The period
      */
-    public long getPeriod()
-    {
+    public long getPeriod() {
         return period;
     }
 
@@ -216,8 +202,7 @@ public class AnimationFrame
      *
      * @param period The period that this frame will be set to
      */
-    public void setPeriod(long period)
-    {
+    public void setPeriod(long period) {
         this.period = period;
     }
 
@@ -226,8 +211,7 @@ public class AnimationFrame
      *
      * @return This frame's type
      */
-    public FrameType getType()
-    {
+    public FrameType getType() {
         return type;
     }
 
@@ -240,8 +224,7 @@ public class AnimationFrame
      *
      * @param type The type to set this frame to.
      */
-    public void setType(FrameType type)
-    {
+    public void setType(FrameType type) {
         this.type = type;
     }
 
@@ -250,8 +233,7 @@ public class AnimationFrame
      *
      * @return Whether this frame moves relatively
      */
-    public boolean moveRelative()
-    {
+    public boolean moveRelative() {
         return relativeMovement;
     }
 
@@ -260,8 +242,7 @@ public class AnimationFrame
      *
      * @param relativeMovement The relative movement to set this frame to
      */
-    public void setRelative(boolean relativeMovement)
-    {
+    public void setRelative(boolean relativeMovement) {
         this.relativeMovement = relativeMovement;
     }
 }

@@ -4,15 +4,13 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
  * Set the name of a GUI on click
  *
  * @author Mikedeejay2
  */
-public class GUISetNameEvent implements GUIEvent
-{
+public class GUISetNameEvent implements GUIEvent {
     /**
      * The name to set the GUI to
      */
@@ -23,8 +21,7 @@ public class GUISetNameEvent implements GUIEvent
      *
      * @param newName The name to set the GUI to
      */
-    public GUISetNameEvent(String newName)
-    {
+    public GUISetNameEvent(String newName) {
         this.name = newName;
     }
 
@@ -34,8 +31,7 @@ public class GUISetNameEvent implements GUIEvent
      * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(GUIEventInfo info)
-    {
+    public void execute(GUIEventInfo info) {
         Player player = info.getPlayer();
         GUIContainer gui = info.getGUI();
         gui.setInventoryName(name);
@@ -48,8 +44,7 @@ public class GUISetNameEvent implements GUIEvent
      *
      * @return The name
      */
-    public String getName()
-    {
+    public String getName() {
         return name;
     }
 
@@ -58,8 +53,7 @@ public class GUISetNameEvent implements GUIEvent
      *
      * @param name The new name
      */
-    public void setName(String name)
-    {
+    public void setName(String name) {
         this.name = name;
     }
 }

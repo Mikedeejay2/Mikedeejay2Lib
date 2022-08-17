@@ -1,20 +1,17 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.chat;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
-import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
 
 /**
  * A GUI Event that prints a message to the player
  *
  * @author Mikedeejay2
  */
-public class GUIPrintMessageEvent implements GUIEvent
-{
+public class GUIPrintMessageEvent implements GUIEvent {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -30,8 +27,7 @@ public class GUIPrintMessageEvent implements GUIEvent
      * @param plugin  The {@link BukkitPlugin} instance
      * @param message The message to be printed
      */
-    public GUIPrintMessageEvent(BukkitPlugin plugin, String message)
-    {
+    public GUIPrintMessageEvent(BukkitPlugin plugin, String message) {
         this.plugin = plugin;
         this.message = message;
     }
@@ -42,8 +38,7 @@ public class GUIPrintMessageEvent implements GUIEvent
      * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(GUIEventInfo info)
-    {
+    public void execute(GUIEventInfo info) {
         Player player = info.getPlayer();
         ClickType clickType = info.getClick();
         if(clickType != ClickType.LEFT) return;
@@ -55,8 +50,7 @@ public class GUIPrintMessageEvent implements GUIEvent
      *
      * @return The message to be printed
      */
-    public String getMessage()
-    {
+    public String getMessage() {
         return message;
     }
 
@@ -65,8 +59,7 @@ public class GUIPrintMessageEvent implements GUIEvent
      *
      * @param message The new message to be printed
      */
-    public void setMessage(String message)
-    {
+    public void setMessage(String message) {
         this.message = message;
     }
 }

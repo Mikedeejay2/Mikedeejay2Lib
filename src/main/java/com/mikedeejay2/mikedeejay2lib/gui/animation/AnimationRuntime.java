@@ -7,15 +7,13 @@ import com.mikedeejay2.mikedeejay2lib.runnable.EnhancedRunnable;
 import org.bukkit.entity.Player;
 
 import java.util.*;
-import java.util.concurrent.ConcurrentMap;
 
 /**
  * Runtime that times and executed <code>AnimatedGUIItems</code>
  *
  * @author Mikedeejay2
  */
-public class AnimationRuntime extends EnhancedRunnable
-{
+public class AnimationRuntime extends EnhancedRunnable {
     /**
      * The map of items to be executed
      */
@@ -37,8 +35,7 @@ public class AnimationRuntime extends EnhancedRunnable
      *
      * @param items The list of AnimatedGUIItems that this runtime will iterate through
      */
-    public void setItems(Map<AnimatedGUIItem, AnimatedGUIItemProperties> items)
-    {
+    public void setItems(Map<AnimatedGUIItem, AnimatedGUIItemProperties> items) {
         this.items = items;
     }
 
@@ -50,8 +47,7 @@ public class AnimationRuntime extends EnhancedRunnable
      *
      * @param player The player that opened up the GUI
      */
-    public void setPlayer(Player player)
-    {
+    public void setPlayer(Player player) {
         this.player = player;
     }
 
@@ -63,8 +59,7 @@ public class AnimationRuntime extends EnhancedRunnable
      *
      * @param gui The player that opened up the GUI
      */
-    public void setGUI(GUIContainer gui)
-    {
+    public void setGUI(GUIContainer gui) {
         this.gui = gui;
     }
 
@@ -74,14 +69,12 @@ public class AnimationRuntime extends EnhancedRunnable
      * the GUI is updated at the end of the run.
      */
     @Override
-    public void onRun()
-    {
+    public void onRun() {
         boolean shouldUpdate = false;
 
         Set<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> copy = new HashSet<>(items.entrySet());
 
-        for(Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry : copy)
-        {
+        for(Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry : copy) {
             AnimatedGUIItem item = entry.getKey();
             AnimatedGUIItemProperties properties = entry.getValue();
             if(item.tick(period, properties)) shouldUpdate = true;
@@ -94,8 +87,7 @@ public class AnimationRuntime extends EnhancedRunnable
      *
      * @return The map of items
      */
-    public Map<AnimatedGUIItem, AnimatedGUIItemProperties> getItems()
-    {
+    public Map<AnimatedGUIItem, AnimatedGUIItemProperties> getItems() {
         return items;
     }
 
@@ -104,8 +96,7 @@ public class AnimationRuntime extends EnhancedRunnable
      *
      * @return This runtimes GUI reference
      */
-    public GUIContainer getGui()
-    {
+    public GUIContainer getGui() {
         return gui;
     }
 
@@ -114,8 +105,7 @@ public class AnimationRuntime extends EnhancedRunnable
      *
      * @return This runtimes player reference.
      */
-    public Player getPlayer()
-    {
+    public Player getPlayer() {
         return player;
     }
 }

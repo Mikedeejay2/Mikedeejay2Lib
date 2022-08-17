@@ -7,8 +7,7 @@ package com.mikedeejay2.mikedeejay2lib.util.structure;
  *
  * @author Mikedeejay2
  */
-public interface IdentityHolder<T>
-{
+public interface IdentityHolder<T> {
     /**
      * Get the ID of the owning object
      *

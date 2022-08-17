@@ -9,8 +9,7 @@ import org.bukkit.map.MapView;
  *
  * @author Mikedeejay2
  */
-public final class MapUtil
-{
+public final class MapUtil {
     /**
      * Increment the map size of a map.
      * <p>
@@ -18,8 +17,7 @@ public final class MapUtil
      *
      * @param meta The input <code>MapMeta</code> to be incremented
      */
-    public static void incrementMapSize(MapMeta meta)
-    {
+    public static void incrementMapSize(MapMeta meta) {
         MapView view = meta.getMapView();
         MapView newView = Bukkit.createMap(view.getWorld());
         newView.setCenterX(view.getCenterX());
@@ -27,8 +25,7 @@ public final class MapUtil
         newView.setLocked(view.isLocked());
         newView.setTrackingPosition(view.isTrackingPosition());
         newView.setUnlimitedTracking(view.isUnlimitedTracking());
-        switch(view.getScale())
-        {
+        switch(view.getScale()) {
             case CLOSEST:
                 newView.setScale(MapView.Scale.CLOSE);
                 break;

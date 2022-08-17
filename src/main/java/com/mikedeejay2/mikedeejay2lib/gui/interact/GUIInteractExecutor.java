@@ -13,8 +13,7 @@ import org.bukkit.inventory.Inventory;
  *
  * @author Mikedeejay2
  */
-public interface GUIInteractExecutor
-{
+public interface GUIInteractExecutor {
     /**
      * Called when nothing should happen
      *

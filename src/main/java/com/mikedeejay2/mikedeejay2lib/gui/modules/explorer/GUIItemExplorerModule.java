@@ -14,12 +14,10 @@ import com.mikedeejay2.mikedeejay2lib.util.structure.HistoryHolder;
 import com.mikedeejay2.mikedeejay2lib.util.structure.tuple.ImmutablePair;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -27,8 +25,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class GUIItemExplorerModule extends GUIListModule
-{
+public class GUIItemExplorerModule extends GUIListModule {
     /**
      * The folder currently being viewed
      */
@@ -71,8 +68,7 @@ public class GUIItemExplorerModule extends GUIListModule
      * @param rightCol  The right column location of the explorer
      * @param layerName The name of the layer that the explorer will exist on
      */
-    public GUIItemExplorerModule(BukkitPlugin plugin, ItemFolder folder, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol, String layerName)
-    {
+    public GUIItemExplorerModule(BukkitPlugin plugin, ItemFolder folder, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol, String layerName) {
         super(plugin, viewMode, topRow, bottomRow, leftCol, rightCol, layerName);
         this.history = new HistoryHolder<>();
         this.addBack(1, 8);
@@ -105,8 +101,7 @@ public class GUIItemExplorerModule extends GUIListModule
      * @param leftCol   The left column location of the explorer
      * @param rightCol  The right column location of the explorer
      */
-    public GUIItemExplorerModule(BukkitPlugin plugin, ItemFolder folder, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol)
-    {
+    public GUIItemExplorerModule(BukkitPlugin plugin, ItemFolder folder, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol) {
         this(plugin, folder, viewMode, topRow, bottomRow, leftCol, rightCol, "explorer");
     }
 
@@ -120,8 +115,7 @@ public class GUIItemExplorerModule extends GUIListModule
      * @param leftCol   The left column location of the explorer
      * @param rightCol  The right column location of the explorer
      */
-    public GUIItemExplorerModule(BukkitPlugin plugin, ItemFolder folder, int topRow, int bottomRow, int leftCol, int rightCol)
-    {
+    public GUIItemExplorerModule(BukkitPlugin plugin, ItemFolder folder, int topRow, int bottomRow, int leftCol, int rightCol) {
         this(plugin, folder, ListViewMode.SCROLL, topRow, bottomRow, leftCol, rightCol);
     }
 
@@ -132,8 +126,7 @@ public class GUIItemExplorerModule extends GUIListModule
      * @param gui    The GUI
      */
     @Override
-    public void onOpenHead(Player player, GUIContainer gui)
-    {
+    public void onOpenHead(Player player, GUIContainer gui) {
         super.onOpenHead(player, gui);
         gui.setInventoryName(folder.getName());
         resetList();
@@ -151,8 +144,7 @@ public class GUIItemExplorerModule extends GUIListModule
      * @param gui    The GUI
      */
     @Override
-    public void onUpdateHead(Player player, GUIContainer gui)
-    {
+    public void onUpdateHead(Player player, GUIContainer gui) {
         super.onUpdateHead(player, gui);
 
         GUILayer layer = gui.getLayer(layerName);
@@ -164,8 +156,7 @@ public class GUIItemExplorerModule extends GUIListModule
      *
      * @param player The reference player viewing the GUI
      */
-    private void localize(Player player)
-    {
+    private void localize(Player player) {
         this.backItemValid.setName("&f" + plugin.getLibLangManager().getText(player, "gui.modules.navigator.backward"))
             .setAmount(Math.min(Math.max(1, history.backSize()), 64));
         this.forwardItemValid.setName("&f" + plugin.getLibLangManager().getText(player, "gui.modules.navigator.backward"))
@@ -177,8 +168,7 @@ public class GUIItemExplorerModule extends GUIListModule
      *
      * @param layer The <code>GUILayer</code> to set the items on
      */
-    private void setHistoryButtons(GUILayer layer)
-    {
+    private void setHistoryButtons(GUILayer layer) {
         layer.setItem(1, 1, history.hasBack() ? backItemValid : null);
         layer.setItem(1, 2, history.hasForward() ? forwardItemValid : null);
     }
@@ -188,8 +178,7 @@ public class GUIItemExplorerModule extends GUIListModule
      *
      * @param baseLayer The base layer of the GUI, the layer that the background decor will be set on
      */
-    private void fillDecor(GUILayer baseLayer)
-    {
+    private void fillDecor(GUILayer baseLayer) {
         GUIItem background1 = backItemValid.clone();
         GUIItem background2 = forwardItemValid.clone();
         GUIItem background3 = backItem.clone();
@@ -210,19 +199,16 @@ public class GUIItemExplorerModule extends GUIListModule
      * @param player The player that is viewing the GUI
      * @param gui    The GUI
      */
-    private void fillList(Player player, GUIContainer gui)
-    {
+    private void fillList(Player player, GUIContainer gui) {
         this.resetList();
         List<ItemFolder> folders = folder.getFolders();
         List<GUIItem> guiItems = folder.getItems();
 
-        for(ItemFolder folder : folders)
-        {
+        for(ItemFolder folder : folders) {
             GUIItem item = genFolderItem(folder);
             this.addListItem(item);
         }
-        for(GUIItem item : guiItems)
-        {
+        for(GUIItem item : guiItems) {
             this.addListItem(item);
         }
     }
@@ -234,8 +220,7 @@ public class GUIItemExplorerModule extends GUIListModule
      * @return The new {@link GUIItem}
      */
     @NotNull
-    private GUIItem genFolderItem(ItemFolder folder)
-    {
+    private GUIItem genFolderItem(ItemFolder folder) {
         ItemStack item = folder.getFolderItem();
         Validate.notNull(item, "Folder item can not be null");
         GUIItem guiItem = new GUIItem(item);
@@ -248,10 +233,8 @@ public class GUIItemExplorerModule extends GUIListModule
      * {@inheritDoc}
      */
     @Override
-    protected void searchThroughList()
-    {
-        if(!deepSearch)
-        {
+    protected void searchThroughList() {
+        if(!deepSearch) {
             super.searchThroughList();
             return;
         }
@@ -273,18 +256,14 @@ public class GUIItemExplorerModule extends GUIListModule
      * @param list The list of generated items
      * @param depth The current depth of the search from the starting folder
      */
-    private void recurSearchFolders(ItemFolder folder, List<GUIItem> list, int depth)
-    {
+    private void recurSearchFolders(ItemFolder folder, List<GUIItem> list, int depth) {
         List<ItemFolder> folders = folder.getFolders();
-        for(ItemFolder curFolder : folders)
-        {
+        for(ItemFolder curFolder : folders) {
             if(!curFolder.getName().toLowerCase().contains(searchTerm.toLowerCase())) continue;
             list.add(genFolderItem(curFolder));
         }
-        if(searchDepth == -1 || depth < searchDepth)
-        {
-            for(ItemFolder curFolder : folders)
-            {
+        if(searchDepth == -1 || depth < searchDepth) {
+            for(ItemFolder curFolder : folders) {
                 recurSearchFolders(curFolder, list, ++depth);
             }
         }
@@ -298,17 +277,13 @@ public class GUIItemExplorerModule extends GUIListModule
      * @param list The list of generated items
      * @param depth The current depth of the search from the starting folder
      */
-    private void recurSearchItems(ItemFolder folder, List<GUIItem> list, int depth)
-    {
-        for(GUIItem item : folder.getItems())
-        {
+    private void recurSearchItems(ItemFolder folder, List<GUIItem> list, int depth) {
+        for(GUIItem item : folder.getItems()) {
             if(!SearchUtil.searchMetaFuzzy(item.getMetaView(), searchTerm)) continue;
             list.add(item);
         }
-        if(searchDepth == -1 || depth < searchDepth)
-        {
-            for(ItemFolder curFolder : folder.getFolders())
-            {
+        if(searchDepth == -1 || depth < searchDepth) {
+            for(ItemFolder curFolder : folder.getFolders()) {
                 recurSearchItems(curFolder, list, ++depth);
             }
         }
@@ -319,8 +294,7 @@ public class GUIItemExplorerModule extends GUIListModule
      *
      * @return The folder
      */
-    public ItemFolder getFolder()
-    {
+    public ItemFolder getFolder() {
         return folder;
     }
 
@@ -329,8 +303,7 @@ public class GUIItemExplorerModule extends GUIListModule
      *
      * @param folder The new folder to use
      */
-    public void setFolder(ItemFolder folder)
-    {
+    public void setFolder(ItemFolder folder) {
         this.folder = folder;
     }
 
@@ -339,8 +312,7 @@ public class GUIItemExplorerModule extends GUIListModule
      *
      * @return The folder history
      */
-    public HistoryHolder<ItemFolder> getHistory()
-    {
+    public HistoryHolder<ItemFolder> getHistory() {
         return history;
     }
 
@@ -349,8 +321,7 @@ public class GUIItemExplorerModule extends GUIListModule
      *
      * @return Whether deep search is enabled
      */
-    public boolean isDeepSearch()
-    {
+    public boolean isDeepSearch() {
         return deepSearch;
     }
 
@@ -360,8 +331,7 @@ public class GUIItemExplorerModule extends GUIListModule
      *
      * @param deepSearch The new deep search value
      */
-    public void setDeepSearch(boolean deepSearch)
-    {
+    public void setDeepSearch(boolean deepSearch) {
         this.deepSearch = deepSearch;
     }
 
@@ -370,8 +340,7 @@ public class GUIItemExplorerModule extends GUIListModule
      *
      * @return The deep search depth
      */
-    public int getSearchDepth()
-    {
+    public int getSearchDepth() {
         return searchDepth;
     }
 
@@ -380,8 +349,7 @@ public class GUIItemExplorerModule extends GUIListModule
      *
      * @param searchDepth The new deep search depth
      */
-    public void setSearchDepth(int searchDepth)
-    {
+    public void setSearchDepth(int searchDepth) {
         this.searchDepth = searchDepth;
     }
 
@@ -390,8 +358,7 @@ public class GUIItemExplorerModule extends GUIListModule
      *
      * @author Mikedeejay2
      */
-    public static class GUISwitchFolderEvent implements GUIEvent
-    {
+    public static class GUISwitchFolderEvent implements GUIEvent {
         /**
          * The folder to be switched to
          */
@@ -402,8 +369,7 @@ public class GUIItemExplorerModule extends GUIListModule
          *
          * @param folder The folder to be switched to
          */
-        public GUISwitchFolderEvent(ItemFolder folder)
-        {
+        public GUISwitchFolderEvent(ItemFolder folder) {
             this.folder = folder;
         }
 
@@ -413,8 +379,7 @@ public class GUIItemExplorerModule extends GUIListModule
          * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(GUIEventInfo info)
-        {
+        public void execute(GUIEventInfo info) {
             Player player = info.getPlayer();
             GUIContainer gui = info.getGUI();
             GUIItemExplorerModule module = gui.getModule(GUIItemExplorerModule.class);
@@ -434,16 +399,14 @@ public class GUIItemExplorerModule extends GUIListModule
      *
      * @author Mikedeejay2
      */
-    public static class GUINavFolderBackEvent implements GUIEvent
-    {
+    public static class GUINavFolderBackEvent implements GUIEvent {
         /**
          * Navigate back a folder
          *
          * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(GUIEventInfo info)
-        {
+        public void execute(GUIEventInfo info) {
             Player player = info.getPlayer();
             GUIContainer gui = info.getGUI();
             GUIItemExplorerModule module = gui.getModule(GUIItemExplorerModule.class);
@@ -463,16 +426,14 @@ public class GUIItemExplorerModule extends GUIListModule
      *
      * @author Mikedeejay2
      */
-    public static class GUINavFolderForwardEvent implements GUIEvent
-    {
+    public static class GUINavFolderForwardEvent implements GUIEvent {
         /**
          * Navigate forward a folder
          *
          * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(GUIEventInfo info)
-        {
+        public void execute(GUIEventInfo info) {
             Player player = info.getPlayer();
             GUIContainer gui = info.getGUI();
             GUIItemExplorerModule module = gui.getModule(GUIItemExplorerModule.class);

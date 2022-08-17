@@ -5,8 +5,7 @@ package com.mikedeejay2.mikedeejay2lib.util.head;
  *
  * @author Mikedeejay2
  */
-public enum Base64Head
-{
+public enum Base64Head {
     // Navigation heads
 
     ARROW_DOWN_WHITE     ("eyJ0ZXh0dXJlcyI6eyJTS0lOIjp7InVybCI6Imh0dHA6Ly90ZXh0dXJlcy5taW5lY3JhZnQubmV0L3RleHR1cmUvODgyZmFmOWE1ODRjNGQ2NzZkNzMwYjIzZjg5NDJiYjk5N2ZhM2RhZDQ2ZDRmNjVlMjg4YzM5ZWI0NzFjZTcifX19"),
@@ -844,8 +843,7 @@ public enum Base64Head
     /**
      * @param base64 The base 64 String of the head
      */
-    Base64Head(String base64)
-    {
+    Base64Head(String base64) {
         this.base64 = base64;
     }
 
@@ -854,8 +852,7 @@ public enum Base64Head
      *
      * @return The base 64 String of the head
      */
-    public String get()
-    {
+    public String get() {
         return base64;
     }
 

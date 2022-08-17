@@ -9,8 +9,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
  *
  * @author Mikedeejay2
  */
-public enum GUIAnimPattern
-{
+public enum GUIAnimPattern {
     /**
      * Diagonal animation starting from the top left
      */
@@ -55,8 +54,7 @@ public enum GUIAnimPattern
      *
      * @param applier The {@link PatternApplier} of the pattern
      */
-    GUIAnimPattern(PatternApplier applier)
-    {
+    GUIAnimPattern(PatternApplier applier) {
         this.applier = applier;
     }
 
@@ -71,8 +69,7 @@ public enum GUIAnimPattern
      * @param maxCol   The maximum column for the GUI, defined in {@link GUIContainer#getRows()}
      * @return The newly cloned item with proper delay for the slot
      */
-    public AnimatedGUIItem getItemFor(AnimatedGUIItem original, int row, int col, int maxRow, int maxCol)
-    {
+    public AnimatedGUIItem getItemFor(AnimatedGUIItem original, int row, int col, int maxRow, int maxCol) {
         AnimatedGUIItem clone = original.clone();
         int delay = getDelayFor(row, col, maxRow, maxCol);
         clone.setDelay(delay);
@@ -88,8 +85,7 @@ public enum GUIAnimPattern
      * @param maxCol The maximum column for the GUI, defined in {@link GUIContainer#getRows()}
      * @return The delay for the specified slot
      */
-    public int getDelayFor(int row, int col, int maxRow, int maxCol)
-    {
+    public int getDelayFor(int row, int col, int maxRow, int maxCol) {
         return applier.getDelayFor(row, col, maxRow, maxCol);
     }
 
@@ -97,8 +93,7 @@ public enum GUIAnimPattern
      * Simple functional interface for applying a pattern to a row and column
      */
     @FunctionalInterface
-    private interface PatternApplier
-    {
+    private interface PatternApplier {
         /**
          * Get the delay for a row and column of a GUI
          *

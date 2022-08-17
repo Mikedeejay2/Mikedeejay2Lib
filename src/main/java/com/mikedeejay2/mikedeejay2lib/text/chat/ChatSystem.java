@@ -15,8 +15,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class ChatSystem
-{
+public class ChatSystem {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -37,8 +36,7 @@ public class ChatSystem
      *
      * @param plugin The {@link BukkitPlugin} instance
      */
-    public ChatSystem(BukkitPlugin plugin)
-    {
+    public ChatSystem(BukkitPlugin plugin) {
         this.plugin = plugin;
         this.slides = new ArrayList<>();
     }
@@ -49,8 +47,7 @@ public class ChatSystem
      * @param slide The slide to add
      * @return The current <code>ChatSystem</code>
      */
-    public ChatSystem addSlide(ChatSlide slide)
-    {
+    public ChatSystem addSlide(ChatSlide slide) {
         slides.add(slide);
         return this;
     }
@@ -62,8 +59,7 @@ public class ChatSystem
      * @param index the index to add the <code>ChatSlide</code> at
      * @return The current <code>ChatSystem</code>
      */
-    public ChatSystem addSlide(ChatSlide slide, int index)
-    {
+    public ChatSystem addSlide(ChatSlide slide, int index) {
         slides.add(index, slide);
         return this;
     }
@@ -73,8 +69,7 @@ public class ChatSystem
      *
      * @return The newly created <code>ChatSlide</code>
      */
-    public ChatSlide createSlide()
-    {
+    public ChatSlide createSlide() {
         ChatSlide slide = new ChatSlide(plugin);
         slides.add(slide);
         return slide;
@@ -86,8 +81,7 @@ public class ChatSystem
      * @param index The index to add the <code>ChatSlide</code> to
      * @return The newly created <code>ChatSlide</code>
      */
-    public ChatSlide createSlide(int index)
-    {
+    public ChatSlide createSlide(int index) {
         ChatSlide slide = new ChatSlide(plugin);
         slides.add(index, slide);
         return slide;
@@ -99,8 +93,7 @@ public class ChatSystem
      * @param index The index to remove from this <code>ChatSystem</code>
      * @return The current <code>ChatSystem</code>
      */
-    public ChatSystem removeSlide(int index)
-    {
+    public ChatSystem removeSlide(int index) {
         slides.remove(index);
         return this;
     }
@@ -111,8 +104,7 @@ public class ChatSystem
      * @param slide A reference to the <code>ChatSlide</code> to remove
      * @return The current <code>ChatSystem</code>
      */
-    public ChatSystem removeSlide(ChatSlide slide)
-    {
+    public ChatSystem removeSlide(ChatSlide slide) {
         slides.remove(slide);
         return this;
     }
@@ -123,8 +115,7 @@ public class ChatSystem
      * @param slide The <code>ChatSlide</code> instance to search for
      * @return Whether the instance was found or not
      */
-    public boolean containsSlide(ChatSlide slide)
-    {
+    public boolean containsSlide(ChatSlide slide) {
         return slides.contains(slide);
     }
 
@@ -134,8 +125,7 @@ public class ChatSystem
      * @param index The index to get
      * @return The <code>ChatSlide</code> at the specified index
      */
-    public ChatSlide getSlide(int index)
-    {
+    public ChatSlide getSlide(int index) {
         return slides.get(index);
     }
 
@@ -144,8 +134,7 @@ public class ChatSystem
      *
      * @return The current <code>ChatSystem</code>
      */
-    public ChatSystem resetSlides()
-    {
+    public ChatSystem resetSlides() {
         slides.clear();
         return this;
     }
@@ -156,8 +145,7 @@ public class ChatSystem
      * @param receivers The <code>CommandSenders</code> that this <code>ChatSystem</code> should be printed to
      * @return The current <code>ChatSystem</code>
      */
-    public ChatSystem print(CommandSender... receivers)
-    {
+    public ChatSystem print(CommandSender... receivers) {
         this.runtime = new ChatAnimRuntime(this, receivers);
         runtime.runTaskTimerAsynchronously(plugin, 1);
         return this;
@@ -168,8 +156,7 @@ public class ChatSystem
      *
      * @return The current <code>ChatSystem</code>
      */
-    public ChatSystem printToConsole()
-    {
+    public ChatSystem printToConsole() {
         return this.print(Bukkit.getConsoleSender());
     }
 
@@ -178,8 +165,7 @@ public class ChatSystem
      *
      * @return The current <code>ChatSystem</code>
      */
-    public ChatSystem broadcast()
-    {
+    public ChatSystem broadcast() {
         return this.print(Bukkit.getOnlinePlayers().toArray(new Player[0]));
     }
 
@@ -188,8 +174,7 @@ public class ChatSystem
      *
      * @return A list of <code>ChatSlides</code>
      */
-    public List<ChatSlide> getSlides()
-    {
+    public List<ChatSlide> getSlides() {
         return slides;
     }
 
@@ -198,8 +183,7 @@ public class ChatSystem
      *
      * @return Whether this <code>ChatSystem</code> is currently printing
      */
-    public boolean isPrinting()
-    {
+    public boolean isPrinting() {
         if(runtime == null) return false;
         return !runtime.isCancelled();
     }
@@ -209,8 +193,7 @@ public class ChatSystem
      *
      * @return Whether this <code>ChatSystem</code> is currently printing
      */
-    public ChatSystem cancelPrint()
-    {
+    public ChatSystem cancelPrint() {
         if(runtime == null) return this;
         runtime.cancel();
         return this;

@@ -12,8 +12,7 @@ import java.util.List;
  *
  * @author Mikedeejay2
  */
-public class ParticleShapeCircleFilled implements ParticleShape
-{
+public class ParticleShapeCircleFilled implements ParticleShape {
     /**
      * The center location
      */
@@ -36,8 +35,7 @@ public class ParticleShapeCircleFilled implements ParticleShape
      * @param radius   The radius
      * @param density  The density of particles
      */
-    public ParticleShapeCircleFilled(Location location, double radius, double density)
-    {
+    public ParticleShapeCircleFilled(Location location, double radius, double density) {
         this.location = location;
         this.density = density;
         this.radius = radius;
@@ -49,8 +47,7 @@ public class ParticleShapeCircleFilled implements ParticleShape
      * @return The vector list
      */
     @Override
-    public List<Vector> getShape()
-    {
+    public List<Vector> getShape() {
         return MathUtil.getCircleFilledVectors(location, radius, density);
     }
 }

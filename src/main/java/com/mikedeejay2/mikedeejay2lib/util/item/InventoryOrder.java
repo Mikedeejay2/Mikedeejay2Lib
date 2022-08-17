@@ -15,8 +15,7 @@ package com.mikedeejay2.mikedeejay2lib.util.item;
  *
  * @author Mikedeejay2
  */
-public enum InventoryOrder
-{
+public enum InventoryOrder {
     /**
      * Start at index 0 and go up
      */
@@ -84,8 +83,7 @@ public enum InventoryOrder
      * @param end        The ending index of the iteration
      * @param increment  Whether to increment or decrement the iteration
      */
-    InventoryOrder(boolean playerOnly, int start, int end, boolean increment)
-    {
+    InventoryOrder(boolean playerOnly, int start, int end, boolean increment) {
         this.playerOnly = playerOnly;
         this.start = start;
         this.end = end;
@@ -97,8 +95,7 @@ public enum InventoryOrder
      *
      * @return Whether the iteration type is for player inventories only
      */
-    public boolean isPlayerOnly()
-    {
+    public boolean isPlayerOnly() {
         return playerOnly;
     }
 
@@ -107,8 +104,7 @@ public enum InventoryOrder
      *
      * @return The starting index of the iteration
      */
-    public int getStart()
-    {
+    public int getStart() {
         return start;
     }
 
@@ -117,8 +113,7 @@ public enum InventoryOrder
      *
      * @return The ending index of the iteration
      */
-    public int getEnd()
-    {
+    public int getEnd() {
         return end;
     }
 
@@ -127,8 +122,7 @@ public enum InventoryOrder
      *
      * @return Whether to increment or decrement the iteration
      */
-    public boolean isIncrement()
-    {
+    public boolean isIncrement() {
         return increment;
     }
 }

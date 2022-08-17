@@ -14,7 +14,6 @@ import com.mikedeejay2.mikedeejay2lib.util.head.HeadUtil;
 import com.mikedeejay2.mikedeejay2lib.util.structure.HistoryHolder;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -29,8 +28,7 @@ import java.util.Queue;
  *
  * @author Mikedeejay2
  */
-public class GUIFileExplorerModule extends GUIListModule
-{
+public class GUIFileExplorerModule extends GUIListModule {
     /**
      * The file separator character, different for different operating systems
      */
@@ -80,8 +78,7 @@ public class GUIFileExplorerModule extends GUIListModule
      * @param rightCol  The right column location of the explorer
      * @param layerName The name of the layer that the explorer will exist on
      */
-    public GUIFileExplorerModule(BukkitPlugin plugin, File file, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol, String layerName)
-    {
+    public GUIFileExplorerModule(BukkitPlugin plugin, File file, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol, String layerName) {
         super(plugin, viewMode, topRow, bottomRow, leftCol, rightCol, layerName);
         Validate.notNull(file, "Folder is null");
         Validate.isTrue(file.isDirectory(), "Provided file is not a directory");
@@ -115,8 +112,7 @@ public class GUIFileExplorerModule extends GUIListModule
      * @param leftCol   The left column location of the explorer
      * @param rightCol  The right column location of the explorer
      */
-    public GUIFileExplorerModule(BukkitPlugin plugin, File file, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol)
-    {
+    public GUIFileExplorerModule(BukkitPlugin plugin, File file, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol) {
         this(plugin, file, viewMode, topRow, bottomRow, leftCol, rightCol, "explorer");
     }
 
@@ -130,8 +126,7 @@ public class GUIFileExplorerModule extends GUIListModule
      * @param leftCol   The left column location of the explorer
      * @param rightCol  The right column location of the explorer
      */
-    public GUIFileExplorerModule(BukkitPlugin plugin, File file, int topRow, int bottomRow, int leftCol, int rightCol)
-    {
+    public GUIFileExplorerModule(BukkitPlugin plugin, File file, int topRow, int bottomRow, int leftCol, int rightCol) {
         this(plugin, file, ListViewMode.SCROLL, topRow, bottomRow, leftCol, rightCol);
     }
 
@@ -142,16 +137,14 @@ public class GUIFileExplorerModule extends GUIListModule
      * @param gui    The GUI
      */
     @Override
-    public void onOpenHead(Player player, GUIContainer gui)
-    {
+    public void onOpenHead(Player player, GUIContainer gui) {
         super.onOpenHead(player, gui);
         gui.setInventoryName(file.getName());
         resetList();
         localize(player);
 
         fillList(player, gui);
-        if(allowUpwardTraversal)
-        {
+        if(allowUpwardTraversal) {
             fillUpwardTraversal();
         }
         GUILayer baseLayer = gui.getLayer(0);
@@ -165,8 +158,7 @@ public class GUIFileExplorerModule extends GUIListModule
      * @param gui    The GUI
      */
     @Override
-    public void onUpdateHead(Player player, GUIContainer gui)
-    {
+    public void onUpdateHead(Player player, GUIContainer gui) {
         super.onUpdateHead(player, gui);
 
         GUILayer layer = gui.getLayer(layerName);
@@ -178,8 +170,7 @@ public class GUIFileExplorerModule extends GUIListModule
      *
      * @param player The reference player viewing the GUI
      */
-    private void localize(Player player)
-    {
+    private void localize(Player player) {
         this.backItemValid.setName("&f" + plugin.getLibLangManager().getText(player, "gui.modules.navigator.backward"))
             .setAmount(Math.min(Math.max(1, history.backSize()), 64));
         this.forwardItemValid.setName("&f" + plugin.getLibLangManager().getText(player, "gui.modules.navigator.backward"))
@@ -191,8 +182,7 @@ public class GUIFileExplorerModule extends GUIListModule
      *
      * @param layer The <code>GUILayer</code> to set the items on
      */
-    private void setHistoryButtons(GUILayer layer)
-    {
+    private void setHistoryButtons(GUILayer layer) {
         layer.setItem(1, 1, history.hasBack() ? backItemValid : null);
         layer.setItem(1, 2, history.hasForward() ? forwardItemValid : null);
     }
@@ -202,8 +192,7 @@ public class GUIFileExplorerModule extends GUIListModule
      *
      * @param baseLayer The base layer of the GUI, the layer that the background decor will be set on
      */
-    private void fillDecor(GUILayer baseLayer)
-    {
+    private void fillDecor(GUILayer baseLayer) {
         GUIItem background1 = backItemValid.clone();
         GUIItem background2 = forwardItemValid.clone();
         GUIItem background3 = backItem.clone();
@@ -221,12 +210,10 @@ public class GUIFileExplorerModule extends GUIListModule
     /**
      * Fill the upwards traversal of the file history
      */
-    private void fillUpwardTraversal()
-    {
+    private void fillUpwardTraversal() {
         Queue<File> temp = new LinkedList<>();
         File curFile = file.getParentFile();
-        while(curFile != null)
-        {
+        while(curFile != null) {
             temp.add(curFile);
             curFile = curFile.getParentFile();
         }
@@ -239,43 +226,35 @@ public class GUIFileExplorerModule extends GUIListModule
      * @param player The player that is viewing the GUI
      * @param gui    The GUI
      */
-    private void fillList(Player player, GUIContainer gui)
-    {
+    private void fillList(Player player, GUIContainer gui) {
         this.resetList();
         File[] files = file.listFiles();
-        if(files == null)
-        {
+        if(files == null) {
             plugin.sendMessage(player, "&c" + plugin.getLibLangManager().getText(player, "command.errors.general"));
             return;
         }
         Queue<GUIItem> folderQueue = new LinkedList<>();
         Queue<GUIItem> fileQueue = new LinkedList<>();
-        for(File curFile : files)
-        {
+        for(File curFile : files) {
             ItemBuilder fileBuilder = ItemBuilder.of(Base64Head.STACK_OF_PAPER.get())
                     .setName("&f" + curFile.getName());
 
             String[] lore = curFile.getPath().split(separator);
             String[] newLore = new String[lore.length];
-            for(int i = 0; i < lore.length; ++i)
-            {
+            for(int i = 0; i < lore.length; ++i) {
                 newLore[i] = "&7" + lore[i];
             }
             fileBuilder.setLore(newLore);
 
             GUIItem fileItem = new GUIItem(null);
-            if(curFile.isDirectory())
-            {
+            if(curFile.isDirectory()) {
                 fileBuilder.setHeadBase64(Base64Head.FOLDER.get());
                 fileItem.setItem(fileBuilder.get());
-                if(allowSubFolders)
-                {
+                if(allowSubFolders) {
                     fileItem.addEvent(new GUISwitchFolderEvent(curFile));
                 }
                 folderQueue.add(fileItem);
-            }
-            else
-            {
+            } else {
                 String extension = FileUtil.getFileExtension(curFile);
                 Base64Head head = HeadUtil.getHeadFromFileExtension(extension);
                 fileBuilder.setHeadBase64(head.get());
@@ -292,8 +271,7 @@ public class GUIFileExplorerModule extends GUIListModule
      *
      * @return The folder
      */
-    public File getFile()
-    {
+    public File getFile() {
         return file;
     }
 
@@ -302,8 +280,7 @@ public class GUIFileExplorerModule extends GUIListModule
      *
      * @param file The new folder to use
      */
-    public void setFile(File file)
-    {
+    public void setFile(File file) {
         this.file = file;
     }
 
@@ -312,8 +289,7 @@ public class GUIFileExplorerModule extends GUIListModule
      *
      * @return The file history
      */
-    public HistoryHolder<File> getHistory()
-    {
+    public HistoryHolder<File> getHistory() {
         return history;
     }
 
@@ -322,8 +298,7 @@ public class GUIFileExplorerModule extends GUIListModule
      *
      * @return Whether this GUI allows subfolders
      */
-    public boolean isAllowSubFolders()
-    {
+    public boolean isAllowSubFolders() {
         return allowSubFolders;
     }
 
@@ -332,8 +307,7 @@ public class GUIFileExplorerModule extends GUIListModule
      *
      * @param allowSubFolders Whether this GUI allows subfolders
      */
-    public void setAllowSubFolders(boolean allowSubFolders)
-    {
+    public void setAllowSubFolders(boolean allowSubFolders) {
         this.allowSubFolders = allowSubFolders;
     }
 
@@ -343,8 +317,7 @@ public class GUIFileExplorerModule extends GUIListModule
      *
      * @return Whether this GUI allows upward traversal
      */
-    public boolean isAllowUpwardTraversal()
-    {
+    public boolean isAllowUpwardTraversal() {
         return allowUpwardTraversal;
     }
 
@@ -355,8 +328,7 @@ public class GUIFileExplorerModule extends GUIListModule
      *
      * @param allowUpwardTraversal Whether this GUI allows upward traversal
      */
-    public void setAllowUpwardTraversal(boolean allowUpwardTraversal)
-    {
+    public void setAllowUpwardTraversal(boolean allowUpwardTraversal) {
         this.allowUpwardTraversal = allowUpwardTraversal;
     }
 
@@ -365,8 +337,7 @@ public class GUIFileExplorerModule extends GUIListModule
      *
      * @author Mikedeejay2
      */
-    public static class GUISwitchFolderEvent implements GUIEvent
-    {
+    public static class GUISwitchFolderEvent implements GUIEvent {
         /**
          * The <code>File</code> folder to be switched to
          */
@@ -377,8 +348,7 @@ public class GUIFileExplorerModule extends GUIListModule
          *
          * @param file The <code>File</code> folder to be switched to
          */
-        public GUISwitchFolderEvent(File file)
-        {
+        public GUISwitchFolderEvent(File file) {
             this.file = file;
         }
 
@@ -388,8 +358,7 @@ public class GUIFileExplorerModule extends GUIListModule
          * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(GUIEventInfo info)
-        {
+        public void execute(GUIEventInfo info) {
             Player player = info.getPlayer();
             GUIContainer gui = info.getGUI();
             GUIFileExplorerModule module = gui.getModule(GUIFileExplorerModule.class);
@@ -409,16 +378,14 @@ public class GUIFileExplorerModule extends GUIListModule
      *
      * @author Mikedeejay2
      */
-    public static class GUINavFileBackEvent implements GUIEvent
-    {
+    public static class GUINavFileBackEvent implements GUIEvent {
         /**
          * Navigate back a folder
          *
          * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(GUIEventInfo info)
-        {
+        public void execute(GUIEventInfo info) {
             Player player = info.getPlayer();
             GUIContainer gui = info.getGUI();
             GUIFileExplorerModule module = gui.getModule(GUIFileExplorerModule.class);
@@ -438,16 +405,14 @@ public class GUIFileExplorerModule extends GUIListModule
      *
      * @author Mikedeejay2
      */
-    public static class GUINavFileForwardEvent implements GUIEvent
-    {
+    public static class GUINavFileForwardEvent implements GUIEvent {
         /**
          * Navigate forward a folder
          *
          * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(GUIEventInfo info)
-        {
+        public void execute(GUIEventInfo info) {
             Player player = info.getPlayer();
             GUIContainer gui = info.getGUI();
             GUIFileExplorerModule module = gui.getModule(GUIFileExplorerModule.class);
