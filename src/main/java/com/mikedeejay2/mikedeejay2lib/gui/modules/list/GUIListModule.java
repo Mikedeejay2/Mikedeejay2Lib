@@ -315,7 +315,7 @@ public class GUIListModule implements GUIModule {
     }
 
     /**
-     * Reset the end items to have no appended end items.
+     * Reset the items to have no appended end items.
      */
     public void resetList() {
         list.clear();
