@@ -588,8 +588,7 @@ public class GUIContainer {
      * @param moduleClass The module class to remove from this GUI
      */
     public void removeModule(Class<? extends GUIModule> moduleClass) {
-        for(GUIModule module : modules)
-        {
+        for(GUIModule module : modules) {
             if(!moduleClass.isAssignableFrom(module.getClass())) continue;
             modules.remove(module);
             break;
@@ -880,8 +879,7 @@ public class GUIContainer {
      *
      * @return The total amount of slots of the viewable inventory
      */
-    public int getSlotAmount()
-    {
+    public int getSlotAmount() {
         return inventorySlots;
     }
 
