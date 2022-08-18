@@ -3,13 +3,17 @@ package com.mikedeejay2.mikedeejay2lib.gui;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
+import com.mikedeejay2.mikedeejay2lib.gui.util.SlotMatcher;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.util.array.ArrayUtil;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import org.bukkit.Material;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.function.Consumer;
 
 /**
  * A layer of a GUI that stores items and other miscellaneous data.
@@ -142,6 +146,15 @@ public class GUILayer {
     }
 
     /**
+     * Remove any items that match the provided {@link SlotMatcher}
+     *
+     * @param matcher The {@link SlotMatcher}
+     */
+    public void removeMatchedItems(SlotMatcher matcher) {
+        forMatchedSlots(matcher, (data) -> data.layer.removeItem(data.row, data.col));
+    }
+
+    /**
      * Set an item using a base64 head string
      *
      * @param row         Row that should be set
@@ -179,6 +192,26 @@ public class GUILayer {
         if(items[row - 1][col - 1] == item) return;
         items[row - 1][col - 1] = item;
         gui.getModules().forEach(module -> module.onItemSet(gui, this, row, col, item));
+    }
+
+    /**
+     * Remove any items that match the provided {@link SlotMatcher}
+     *
+     * @param matcher The {@link SlotMatcher}
+     * @param item The GUIItem to use
+     */
+    public void setItem(SlotMatcher matcher, GUIItem item) {
+        forMatchedSlots(matcher, (data) -> data.layer.setItem(data.row, data.col, item));
+    }
+
+    /**
+     * Remove any items that match the provided {@link SlotMatcher}
+     *
+     * @param matcher The {@link SlotMatcher}
+     * @param stack The <code>ItemStack</code> to set the slot to
+     */
+    public void setItem(SlotMatcher matcher, ItemStack stack) {
+        forMatchedSlots(matcher, (data) -> data.layer.setItem(data.row, data.col, stack));
     }
 
     /**
@@ -326,6 +359,69 @@ public class GUILayer {
      */
     public boolean itemExists(int row, int col) {
         return items[--row][--col] != null;
+    }
+
+    /**
+     * For each slot in this layer, check whether the slot matches with the provided {@link SlotMatcher}.
+     * If the slot matches, the provided <code>Consumer</code> will be called with the generated
+     * {@link SlotMatcher.MatchData}.
+     *
+     * @param matcher The matcher
+     * @param player The player viewing the GUI (optional)
+     * @param consumer The consumer to be called upon a match
+     */
+    public void forMatchedSlots(SlotMatcher matcher, Player player, Consumer<SlotMatcher.MatchData> consumer) {
+        for(int row = 1; row <= getRows(); ++row) {
+            for(int col = 1; col <= getCols(); ++col) {
+                SlotMatcher.MatchData data = new SlotMatcher.MatchData(getGUI(), getItem(row, col), this, player, row, col);
+                if(matcher.matches(data)) {
+                    consumer.accept(data);
+                }
+                if(matcher.shouldStop()) break;
+            }
+        }
+    }
+
+    /**
+     * For each slot in this layer, check whether the slot matches with the provided {@link SlotMatcher}.
+     * If the slot matches, the provided <code>Consumer</code> will be called with the generated
+     * {@link SlotMatcher.MatchData}.
+     *
+     * @param matcher The matcher
+     * @param consumer The consumer to be called upon a match
+     */
+    public void forMatchedSlots(SlotMatcher matcher, Consumer<SlotMatcher.MatchData> consumer) {
+        this.forMatchedSlots(matcher, null, consumer);
+    }
+
+    /**
+     * For each slot in this layer, check whether the slot matches with the provided {@link SlotMatcher}.
+     * Return true if a match is found.
+     *
+     * @param matcher The matcher
+     * @param player The player viewing the GUI (optional)
+     */
+    public boolean containsMatch(SlotMatcher matcher, Player player) {
+        for(int row = 1; row <= getRows(); ++row) {
+            for(int col = 1; col <= getCols(); ++col) {
+                SlotMatcher.MatchData data = new SlotMatcher.MatchData(getGUI(), getItem(row, col), this, player, row, col);
+                if(matcher.matches(data)) {
+                    return true;
+                }
+                if(matcher.shouldStop()) break;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * For each slot in this layer, check whether the slot matches with the provided {@link SlotMatcher}.
+     * Return true if a match is found.
+     *
+     * @param matcher The matcher
+     */
+    public boolean containsMatch(SlotMatcher matcher) {
+        return containsMatch(matcher, null);
     }
 
     /**

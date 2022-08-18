@@ -8,6 +8,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefa
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
+import com.mikedeejay2.mikedeejay2lib.gui.util.SlotMatcher;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import org.bukkit.Bukkit;
@@ -19,6 +20,7 @@ import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * A flexible, over-engineered GUI. The main way of adding onto this GUI
@@ -294,7 +296,7 @@ public class GUIContainer {
      * Remove an item from the GUI based on a row and a column
      *
      * @param row Row that should be removed
-     * @param col Column that should be remove
+     * @param col Column that should be removed
      */
     public void removeItem(int row, int col) {
         setItem(row, col, null);
@@ -311,6 +313,18 @@ public class GUIContainer {
     }
 
     /**
+     * Remove any items that match the provided {@link SlotMatcher} from all layers
+     *
+     * @param matcher The {@link SlotMatcher}
+     */
+    public void removeMatchedItems(SlotMatcher matcher) {
+        for(GUILayer layer : layers) {
+            layer.removeMatchedItems(matcher);
+            if(matcher.shouldStop()) break;
+        }
+    }
+
+    /**
      * Set an item from a <code>GUIItem</code>
      *
      * @param row  The row that should be set
@@ -320,6 +334,32 @@ public class GUIContainer {
     public void setItem(int row, int col, GUIItem item) {
         GUILayer layer = getLayer(0);
         layer.setItem(row, col, item);
+    }
+
+    /**
+     * Remove any items that match the provided {@link SlotMatcher} from all layers
+     *
+     * @param matcher The {@link SlotMatcher}
+     * @param item The GUIItem to use
+     */
+    public void setItem(SlotMatcher matcher, GUIItem item) {
+        for(GUILayer layer : layers) {
+            layer.setItem(matcher, item);
+            if(matcher.shouldStop()) break;
+        }
+    }
+
+    /**
+     * Remove any items that match the provided {@link SlotMatcher} from all layers
+     *
+     * @param matcher The {@link SlotMatcher}
+     * @param stack The <code>ItemStack</code> to set the slot to
+     */
+    public void setItem(SlotMatcher matcher, ItemStack stack) {
+        for(GUILayer layer : layers) {
+            layer.setItem(matcher, stack);
+            if(matcher.shouldStop()) break;
+        }
     }
 
     /**
@@ -525,6 +565,34 @@ public class GUIContainer {
             if(item != null) return item;
         }
         return null;
+    }
+
+    /**
+     * For each slot in each layer of this GUI, check whether the slot matches with the provided {@link SlotMatcher}.
+     * If the slot matches, the provided <code>Consumer</code> will be called with the generated
+     * {@link SlotMatcher.MatchData}.
+     *
+     * @param matcher The matcher
+     * @param player The player viewing the GUI (optional)
+     * @param consumer The consumer to be called upon a match
+     */
+    public void forMatchedSlots(SlotMatcher matcher, Player player, Consumer<SlotMatcher.MatchData> consumer) {
+        for(GUILayer layer : getAllLayers()) {
+            layer.forMatchedSlots(matcher, player, consumer);
+            if(matcher.shouldStop()) break;
+        }
+    }
+
+    /**
+     * For each slot in each layer of this GUI, check whether the slot matches with the provided {@link SlotMatcher}.
+     * If the slot matches, the provided <code>Consumer</code> will be called with the generated
+     * {@link SlotMatcher.MatchData}.
+     *
+     * @param matcher The matcher
+     * @param consumer The consumer to be called upon a match
+     */
+    public void forMatchedSlots(SlotMatcher matcher, Consumer<SlotMatcher.MatchData> consumer) {
+        this.forMatchedSlots(matcher, null, consumer);
     }
 
     /**
