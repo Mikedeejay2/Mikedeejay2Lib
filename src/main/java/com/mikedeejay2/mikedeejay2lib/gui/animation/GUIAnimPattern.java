@@ -42,6 +42,10 @@ public enum GUIAnimPattern {
      * Animation starting from the right and animating to the left
      */
     RIGHT_LEFT((row, col, maxRow, maxCol) -> maxCol - (col - 1)),
+    /**
+     * Completely random animation
+     */
+    RANDOM((row, col, maxRow, maxCol) -> (int) (Math.random() * (maxRow + maxCol) + 1)),
     ;
 
     /**
@@ -62,31 +66,48 @@ public enum GUIAnimPattern {
      * Get a clone of the <code>original</code> {@link AnimatedGUIItem} based off of the row and column
      * of the item
      *
-     * @param original The original item
-     * @param row      The item's current row
-     * @param col      The item's current column
-     * @param maxRow   The maximum row for the GUI, defined in {@link GUIContainer#getRows()}.
-     * @param maxCol   The maximum column for the GUI, defined in {@link GUIContainer#getRows()}
+     * @param original   The original item
+     * @param row        The item's current row
+     * @param col        The item's current column
+     * @param maxRow     The maximum row for the GUI, defined in {@link GUIContainer#getRows()}.
+     * @param maxCol     The maximum column for the GUI, defined in {@link GUIContainer#getRows()}
+     * @param multiplier The multiplier of the delay
+     * @return The newly cloned item with proper delay for the slot
+     */
+    public AnimatedGUIItem getItemFor(AnimatedGUIItem original, int row, int col, int maxRow, int maxCol, int multiplier) {
+        AnimatedGUIItem clone = original.clone();
+        int delay = getDelayFor(row, col, maxRow, maxCol, multiplier);
+        clone.setDelay(clone.getDelay() + delay);
+        return clone;
+    }
+
+    /**
+     * Get a clone of the <code>original</code> {@link AnimatedGUIItem} based off of the row and column
+     * of the item
+     *
+     * @param original   The original item
+     * @param row        The item's current row
+     * @param col        The item's current column
+     * @param maxRow     The maximum row for the GUI, defined in {@link GUIContainer#getRows()}.
+     * @param maxCol     The maximum column for the GUI, defined in {@link GUIContainer#getRows()}
      * @return The newly cloned item with proper delay for the slot
      */
     public AnimatedGUIItem getItemFor(AnimatedGUIItem original, int row, int col, int maxRow, int maxCol) {
-        AnimatedGUIItem clone = original.clone();
-        int delay = getDelayFor(row, col, maxRow, maxCol);
-        clone.setDelay(delay);
-        return clone;
+        return getItemFor(original, row, col, maxRow, maxCol, 1);
     }
 
     /**
      * Get the delay for a row and column of a GUI
      *
-     * @param row    The row to get
-     * @param col    The column to get
-     * @param maxRow The maximum row for the GUI, defined in {@link GUIContainer#getRows()}.
-     * @param maxCol The maximum column for the GUI, defined in {@link GUIContainer#getRows()}
+     * @param row        The row to get
+     * @param col        The column to get
+     * @param maxRow     The maximum row for the GUI, defined in {@link GUIContainer#getRows()}.
+     * @param maxCol     The maximum column for the GUI, defined in {@link GUIContainer#getRows()}
+     * @param multiplier The multiplier of the delay
      * @return The delay for the specified slot
      */
-    public int getDelayFor(int row, int col, int maxRow, int maxCol) {
-        return applier.getDelayFor(row, col, maxRow, maxCol);
+    public int getDelayFor(int row, int col, int maxRow, int maxCol, int multiplier) {
+        return applier.getDelayFor(row, col, maxRow, maxCol) * multiplier;
     }
 
     /**

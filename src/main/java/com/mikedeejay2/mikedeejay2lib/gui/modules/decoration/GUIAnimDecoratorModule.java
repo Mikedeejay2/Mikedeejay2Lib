@@ -19,6 +19,11 @@ public class GUIAnimDecoratorModule extends GUIAbstractDecoratorModule {
     protected GUIAnimPattern pattern;
 
     /**
+     * The animation multiplier
+     */
+    protected int animMultiplier;
+
+    /**
      * The animated item used for decorating the GUI
      */
     protected AnimatedGUIItem guiItem;
@@ -26,14 +31,27 @@ public class GUIAnimDecoratorModule extends GUIAbstractDecoratorModule {
     /**
      * Construct a new <code>GUIAnimDecoratorModule</code>
      *
-     * @param matcher The {@link SlotMatcher} to use
-     * @param guiItem The animated item used for decorating the GUI
-     * @param layerName The name of the layer to decorate
+     * @param matcher        The {@link SlotMatcher} to use
+     * @param guiItem        The animated item used for decorating the GUI
+     * @param animMultiplier The animation multiplier
+     * @param layerName      The name of the layer to decorate
      */
-    public GUIAnimDecoratorModule(SlotMatcher matcher, AnimatedGUIItem guiItem, GUIAnimPattern pattern, @Nullable String layerName) {
+    public GUIAnimDecoratorModule(SlotMatcher matcher, AnimatedGUIItem guiItem, GUIAnimPattern pattern, int animMultiplier, @Nullable String layerName) {
         super(matcher, layerName);
         this.guiItem = guiItem;
         this.pattern = pattern;
+        this.animMultiplier = animMultiplier;
+    }
+
+    /**
+     * Construct a new <code>GUIAnimDecoratorModule</code>
+     *
+     * @param matcher The {@link SlotMatcher} to use
+     * @param guiItem The animated item used for decorating the GUI
+     * @param animMultiplier The animation multiplier
+     */
+    public GUIAnimDecoratorModule(SlotMatcher matcher, AnimatedGUIItem guiItem, GUIAnimPattern pattern, int animMultiplier) {
+        this(matcher, guiItem, pattern, animMultiplier, null);
     }
 
     /**
@@ -43,7 +61,7 @@ public class GUIAnimDecoratorModule extends GUIAbstractDecoratorModule {
      * @param guiItem The animated item used for decorating the GUI
      */
     public GUIAnimDecoratorModule(SlotMatcher matcher, AnimatedGUIItem guiItem, GUIAnimPattern pattern) {
-        this(matcher, guiItem, pattern, null);
+        this(matcher, guiItem, pattern, 1);
     }
 
     /**
@@ -93,5 +111,23 @@ public class GUIAnimDecoratorModule extends GUIAbstractDecoratorModule {
      */
     public void setPattern(GUIAnimPattern pattern) {
         this.pattern = pattern;
+    }
+
+    /**
+     * Get the animation multiplier
+     *
+     * @return The animation multiplier
+     */
+    public int getAnimMultiplier() {
+        return animMultiplier;
+    }
+
+    /**
+     * Set the animation multiplier
+     *
+     * @param animMultiplier The new animation multiplier
+     */
+    public void setAnimMultiplier(int animMultiplier) {
+        this.animMultiplier = animMultiplier;
     }
 }
