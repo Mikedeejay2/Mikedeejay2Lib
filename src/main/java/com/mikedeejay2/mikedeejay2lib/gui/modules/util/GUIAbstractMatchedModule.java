@@ -59,6 +59,7 @@ public abstract class GUIAbstractMatchedModule implements GUIModule {
         } else {
             gui.forMatchedSlots(matcher, player, this::onMatch);
         }
+        matcher.reset();
     }
 
     /**

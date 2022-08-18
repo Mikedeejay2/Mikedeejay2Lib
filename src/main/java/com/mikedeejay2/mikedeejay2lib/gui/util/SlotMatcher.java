@@ -129,9 +129,8 @@ public abstract class SlotMatcher {
      * Get a matcher that matches only the first N matches. For this to work correctly, this matcher should be ANDed
      * with another matcher after all other matchers.
      * <p>
-     * This matcher is not reusable. Once it's used once, it will remember its previous matches. If ANDing with a
-     * matcher that is to be used multiple times, create the reusable matcher without this matcher, then before using,
-     * AND the reusable matcher with this matcher to create a new temporary matcher.
+     * Since this matcher retains count of how many times it has matched, {@link SlotMatcher#reset()} should be called
+     * after using to reset the counter.
      *
      * @param amount The amount of matches to make before not matching
      * @return The constructed matcher
@@ -144,9 +143,8 @@ public abstract class SlotMatcher {
      * Get a matcher that matches only the first match. For this to work correctly, this matcher should be ANDed
      * with another matcher after all other matchers.
      * <p>
-     * This matcher is not reusable. Once it's used once, it will remember its previous matches. If ANDing with a
-     * matcher that is to be used multiple times, create the reusable matcher without this matcher, then before using,
-     * AND the reusable matcher with this matcher to create a new temporary matcher.
+     * Since this matcher retains count of how many times it has matched, {@link SlotMatcher#reset()} should be called
+     * after using to reset the counter.
      *
      * @return The constructed matcher
      */
@@ -200,6 +198,8 @@ public abstract class SlotMatcher {
     public boolean shouldStop() {
         return false;
     }
+
+    public void reset() {}
 
     /**
      * The data that will be passed to the matcher
@@ -295,6 +295,12 @@ public abstract class SlotMatcher {
         public boolean shouldStop() {
             return matcher1.shouldStop() || matcher2.shouldStop();
         }
+
+        @Override
+        public void reset() {
+            matcher1.reset();
+            matcher2.reset();
+        }
     }
 
     /**
@@ -325,6 +331,11 @@ public abstract class SlotMatcher {
         @Override
         public boolean shouldStop() {
             return matcher.shouldStop();
+        }
+
+        @Override
+        public void reset() {
+            matcher.reset();
         }
     }
 
@@ -739,6 +750,11 @@ public abstract class SlotMatcher {
         @Override
         public boolean matches(MatchData data) {
             return ++curMatches <= amount;
+        }
+
+        @Override
+        public void reset() {
+            this.curMatches = 0;
         }
     }
 }
