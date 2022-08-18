@@ -46,6 +46,17 @@ public class GUIAnimDecoratorModule extends GUIAbstractDecoratorModule {
     /**
      * Construct a new <code>GUIAnimDecoratorModule</code>
      *
+     * @param matcher        The {@link SlotMatcher} to use
+     * @param guiItem        The animated item used for decorating the GUI
+     * @param layerName      The name of the layer to decorate
+     */
+    public GUIAnimDecoratorModule(SlotMatcher matcher, AnimatedGUIItem guiItem, GUIAnimPattern pattern, @Nullable String layerName) {
+        this(matcher, guiItem, pattern, 1, layerName);
+    }
+
+    /**
+     * Construct a new <code>GUIAnimDecoratorModule</code>
+     *
      * @param matcher The {@link SlotMatcher} to use
      * @param guiItem The animated item used for decorating the GUI
      * @param animMultiplier The animation multiplier
