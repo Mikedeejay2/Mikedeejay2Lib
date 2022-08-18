@@ -136,7 +136,7 @@ public abstract class SlotMatcher {
      * @param amount The amount of matches to make before not matching
      * @return The constructed matcher
      */
-    public static SlotMatcher firstN(int amount) {
+    public static SlotMatcher first(int amount) {
         return new FirstNMatcher(amount);
     }
 
