@@ -564,8 +564,7 @@ public abstract class SlotMatcher {
         @Override
         public boolean matches(MatchData data) {
             return data.item == null ||
-                data.item.getType().isAir() ||
-                data.item.get().equals(data.gui.getBackgroundItem());
+                data.item.getType().isAir();
         }
     }
 
