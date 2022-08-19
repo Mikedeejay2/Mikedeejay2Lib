@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.button;
 
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.util.GUIAbstractClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import org.apache.commons.lang3.Validate;
@@ -14,7 +15,7 @@ import java.util.function.Consumer;
  *
  * @author Mikedeejay2
  */
-public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent<GUIButtonToggleableEvent> {
+public class GUIButtonToggleableEvent extends GUIAbstractClickEvent {
     /**
      * The consumer that is run when the button is turned on
      */
@@ -66,14 +67,12 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent<GUIButtonTo
     }
 
     /**
-     * {@inheritDoc}
+     * Toggle the button on a valid click
      *
      * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(GUIEventInfo info) {
-        if(!isValidClick(info.getClick())) return;
-        super.execute(info);
+    protected void executeClick(GUIEventInfo info) {
         changeState(!state, info.getGUIItem());
         if(state) {
             onConsumer.accept(info);
@@ -185,11 +184,9 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent<GUIButtonTo
      * Set the {@link ItemBuilder} to display when the button is in the ON state
      *
      * @param onItem The new {@link ItemBuilder}
-     * @return This button
      */
-    public GUIButtonToggleableEvent setOnItem(@Nullable ItemBuilder onItem) {
+    public void setOnItem(@Nullable ItemBuilder onItem) {
         this.onItem = onItem;
-        return this;
     }
 
     /**
@@ -205,10 +202,8 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent<GUIButtonTo
      * Set the {@link ItemBuilder} to display when the button is in the OFF state
      *
      * @param offItem The new {@link ItemBuilder}
-     * @return This button
      */
-    public GUIButtonToggleableEvent setOffItem(@Nullable ItemBuilder offItem) {
+    public void setOffItem(@Nullable ItemBuilder offItem) {
         this.offItem = offItem;
-        return this;
     }
 }

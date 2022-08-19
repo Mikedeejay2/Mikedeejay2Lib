@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.button;
 
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.util.GUIAbstractClickEvent;
 import org.apache.commons.lang3.Validate;
 import org.jetbrains.annotations.NotNull;
 
@@ -11,7 +12,7 @@ import java.util.function.Consumer;
  *
  * @author Mikedeejay2
  */
-public class GUIButtonEvent extends GUIAbstractButtonEvent<GUIButtonEvent> {
+public class GUIButtonEvent extends GUIAbstractClickEvent {
     /**
      * The consumer that is run when the button is clicked
      */
@@ -29,14 +30,12 @@ public class GUIButtonEvent extends GUIAbstractButtonEvent<GUIButtonEvent> {
     }
 
     /**
-     * {@inheritDoc}
+     * Call the button consumer on a valid click
      *
      * @param info {@link GUIEventInfo} of the event
      */
     @Override
-    public void execute(GUIEventInfo info) {
-        if(!isValidClick(info.getClick())) return;
-        super.execute(info);
+    protected void executeClick(GUIEventInfo info) {
         consumer.accept(info);
     }
 
