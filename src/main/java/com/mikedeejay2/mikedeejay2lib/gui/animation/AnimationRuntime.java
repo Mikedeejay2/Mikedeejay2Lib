@@ -72,7 +72,9 @@ public class AnimationRuntime extends EnhancedRunnable {
     public void onRun() {
         boolean shouldUpdate = false;
 
-        Set<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> copy = new HashSet<>(items.entrySet());
+//        Set<Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>> copy = new HashSet<>(items.entrySet());
+        Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>[] copy = items.entrySet()
+            .toArray((Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties>[]) new Map.Entry[0]);
 
         for(Map.Entry<AnimatedGUIItem, AnimatedGUIItemProperties> entry : copy) {
             AnimatedGUIItem item = entry.getKey();

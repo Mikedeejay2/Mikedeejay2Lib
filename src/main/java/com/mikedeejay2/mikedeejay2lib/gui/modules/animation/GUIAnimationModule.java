@@ -52,7 +52,7 @@ public class GUIAnimationModule implements GUIModule {
     public GUIAnimationModule(BukkitPlugin plugin, long period) {
         this.plugin = plugin;
         this.period = period == 0 ? 1 : period;
-        this.animatedItems = new ConcurrentHashMap<>();
+        this.animatedItems = new HashMap<>();
     }
 
     /**
@@ -68,7 +68,7 @@ public class GUIAnimationModule implements GUIModule {
         runtime.setPlayer(player);
         runtime.setGUI(gui);
         runtime.setItems(animatedItems);
-        runtime.runTaskTimer(plugin, period);
+        runtime.runTaskTimerAsynchronously(plugin, period);
     }
 
     /**
