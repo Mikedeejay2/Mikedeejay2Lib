@@ -1,9 +1,11 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.button;
 
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
+import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import org.apache.commons.lang3.Validate;
-import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.function.Consumer;
 
@@ -12,7 +14,7 @@ import java.util.function.Consumer;
  *
  * @author Mikedeejay2
  */
-public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent {
+public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent<GUIButtonToggleableEvent> {
     /**
      * The consumer that is run when the button is turned on
      */
@@ -29,32 +31,14 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent {
     protected boolean state;
 
     /**
-     * Construct a new <code>GUIToggleButtonEvent</code>
-     *
-     * @param onConsumer     The consumer that is run when the button is turned on
-     * @param offConsumer    The consumer that is run when the button is turned off
-     * @param initialState   The initial state (on/off) of the button
-     * @param acceptedClicks The accepted {@link ClickType}s of the button
+     * Item to display when the button is in the ON state
      */
-    public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer, boolean initialState, ClickType... acceptedClicks) {
-        super(acceptedClicks);
-        Validate.notNull(onConsumer, "Button consumer can not be null");
-        Validate.notNull(offConsumer, "Button consumer can not be null");
-        this.onConsumer = onConsumer;
-        this.offConsumer = offConsumer;
-        this.state = initialState;
-    }
+    protected @Nullable ItemBuilder onItem;
 
     /**
-     * Construct a new <code>GUIToggleButtonEvent</code>
-     *
-     * @param onConsumer     The consumer that is run when the button is turned on
-     * @param offConsumer    The consumer that is run when the button is turned off
-     * @param acceptedClicks The accepted {@link ClickType}s of the button
+     * Item to display when the button is in the OFF state
      */
-    public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer, ClickType... acceptedClicks) {
-        this(onConsumer, offConsumer, false, acceptedClicks);
-    }
+    protected @Nullable ItemBuilder offItem;
 
     /**
      * Construct a new <code>GUIToggleButtonEvent</code>
@@ -64,7 +48,11 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent {
      * @param initialState   The initial state (on/off) of the button
      */
     public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer, boolean initialState) {
-        this(onConsumer, offConsumer, initialState, ClickType.LEFT, ClickType.RIGHT, ClickType.MIDDLE, ClickType.SHIFT_LEFT, ClickType.SHIFT_RIGHT);
+        Validate.notNull(onConsumer, "Button consumer can not be null");
+        Validate.notNull(offConsumer, "Button consumer can not be null");
+        this.onConsumer = onConsumer;
+        this.offConsumer = offConsumer;
+        this.state = initialState;
     }
 
     /**
@@ -85,12 +73,38 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent {
     @Override
     public void execute(GUIEventInfo info) {
         if(!isValidClick(info.getClick())) return;
-        state = !state;
+        super.execute(info);
+        changeState(!state, info.getGUIItem());
         if(state) {
             onConsumer.accept(info);
         } else {
             offConsumer.accept(info);
         }
+    }
+
+    /**
+     * Update the item representation of the button
+     *
+     * @param item The <code>GUIItem</code> representing the button
+     */
+    protected void updateItem(GUIItem item) {
+        if(state && onItem != null) {
+            item.setItem(onItem.get());
+        } else if(!state && offItem != null) {
+            item.setItem(offItem.get());
+        }
+    }
+
+    /**
+     * Changes the state of this button without calling the related consumer. The item of this button will also be
+     * updated if it is not null.
+     *
+     * @param state The new state of the button
+     * @param item The <code>GUIItem</code> representing this button
+     */
+    public void changeState(boolean state, GUIItem item) {
+        setState(state);
+        updateItem(item);
     }
 
     /**
@@ -154,7 +168,47 @@ public class GUIButtonToggleableEvent extends GUIAbstractButtonEvent {
      *
      * @param state The new state of the button
      */
-    public void setState(boolean state) {
+    protected void setState(boolean state) {
         this.state = state;
+    }
+
+    /**
+     * Get the {@link ItemBuilder} to display when the button is in the ON state
+     *
+     * @return The {@link ItemBuilder} to display when the button is in the ON state
+     */
+    public @Nullable ItemBuilder getOnItem() {
+        return onItem;
+    }
+
+    /**
+     * Set the {@link ItemBuilder} to display when the button is in the ON state
+     *
+     * @param onItem The new {@link ItemBuilder}
+     * @return This button
+     */
+    public GUIButtonToggleableEvent setOnItem(@Nullable ItemBuilder onItem) {
+        this.onItem = onItem;
+        return this;
+    }
+
+    /**
+     * Get the {@link ItemBuilder} to display when the button is in the OFF state
+     *
+     * @return The {@link ItemBuilder} to display when the button is in the OFF state
+     */
+    public @Nullable ItemBuilder getOffItem() {
+        return offItem;
+    }
+
+    /**
+     * Set the {@link ItemBuilder} to display when the button is in the OFF state
+     *
+     * @param offItem The new {@link ItemBuilder}
+     * @return This button
+     */
+    public GUIButtonToggleableEvent setOffItem(@Nullable ItemBuilder offItem) {
+        this.offItem = offItem;
+        return this;
     }
 }
