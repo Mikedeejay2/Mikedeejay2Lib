@@ -8,6 +8,7 @@ public interface Text {
     }
 
     static LiteralText literal(String text) {
+        if(text == null || text.isEmpty()) return LiteralText.EMPTY;
         return new LiteralText(text);
     }
 
@@ -16,4 +17,6 @@ public interface Text {
     }
 
     String getText(Player player);
+    String getText(String locale);
+    String getText();
 }

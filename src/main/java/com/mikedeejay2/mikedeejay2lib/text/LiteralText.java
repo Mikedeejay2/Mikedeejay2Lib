@@ -13,9 +13,15 @@ public class LiteralText implements Text {
 
     @Override
     public String getText(Player player) {
-        return text;
+        return getText();
     }
 
+    @Override
+    public String getText(String locale) {
+        return getText();
+    }
+
+    @Override
     public String getText() {
         return text;
     }
