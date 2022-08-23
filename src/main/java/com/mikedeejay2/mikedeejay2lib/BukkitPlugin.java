@@ -34,7 +34,7 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin {
     @Override
     public void onEnable() {
         super.onEnable();
-        this.libLangManager = new LangManager(this, "lang/lib");
+        this.libLangManager = new LangManager(this, "lang/mikedeejay2lib");
         this.guiManager = new GUIManager(this);
 
         this.getServer().getPluginManager().registerEvents(new GUIListener(this), this);
