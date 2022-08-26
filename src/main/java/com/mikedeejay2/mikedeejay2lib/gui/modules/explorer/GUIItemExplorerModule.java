@@ -8,6 +8,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.list.GUIListModule;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
+import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import com.mikedeejay2.mikedeejay2lib.util.search.SearchUtil;
 import com.mikedeejay2.mikedeejay2lib.util.structure.HistoryHolder;
@@ -78,12 +79,12 @@ public class GUIItemExplorerModule extends GUIListModule {
 
         this.backItemValid = new GUIItem(
             ItemBuilder.of(Base64Head.ARROW_LEFT_WHITE.get())
-                .setName("&f" + plugin.getLibLangManager().getText("gui.modules.navigator.backward"))
+                .setName("&f" + Text.translatable("gui.modules.navigator.backward").get())
                 .get())
             .addEvent(new GUINavFolderBackEvent());
         this.forwardItemValid = new GUIItem(
             ItemBuilder.of(Base64Head.ARROW_RIGHT_WHITE.get())
-                .setName("&f" + plugin.getLibLangManager().getText("gui.modules.navigator.backward"))
+                .setName("&f" + Text.translatable("gui.modules.navigator.backward").get())
                 .get())
             .addEvent(new GUINavFolderForwardEvent());
         this.deepSearch = false;
@@ -157,9 +158,9 @@ public class GUIItemExplorerModule extends GUIListModule {
      * @param player The reference player viewing the GUI
      */
     private void localize(Player player) {
-        this.backItemValid.setName("&f" + plugin.getLibLangManager().getText(player, "gui.modules.navigator.backward"))
+        this.backItemValid.setName("&f" + Text.translatable("gui.modules.navigator.backward").get(player))
             .setAmount(Math.min(Math.max(1, history.backSize()), 64));
-        this.forwardItemValid.setName("&f" + plugin.getLibLangManager().getText(player, "gui.modules.navigator.backward"))
+        this.forwardItemValid.setName("&f" + Text.translatable("gui.modules.navigator.backward").get(player))
             .setAmount(Math.min(Math.max(1, history.forwardSize()), 64));
     }
 

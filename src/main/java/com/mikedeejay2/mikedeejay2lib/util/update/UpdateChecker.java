@@ -5,6 +5,8 @@ import com.google.gson.GsonBuilder;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonObject;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
+import com.mikedeejay2.mikedeejay2lib.text.PlaceholderFormatter;
+import com.mikedeejay2.mikedeejay2lib.text.Text;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.scheduler.BukkitRunnable;
 
@@ -102,7 +104,7 @@ public class UpdateChecker {
                 try {
                     url = new URL("https://api.github.com/repos/" + userName + "/" + repoName + "/releases/latest");
                 } catch(Exception e) {
-                    plugin.getLogger().severe(plugin.getLibLangManager().getText("update_checker.error.invalid_url"));
+                    plugin.getLogger().severe(Text.translatable("update_checker.error.invalid_url").get());
                     return;
                 }
                 GsonBuilder builder = new GsonBuilder();
@@ -112,7 +114,7 @@ public class UpdateChecker {
                 try {
                     stream = url.openStream();
                 } catch(Exception e) {
-                    plugin.getLogger().severe(plugin.getLibLangManager().getText("update_checker.error.cant_open"));
+                    plugin.getLogger().severe(Text.translatable("update_checker.error.cant_open").get());
                     return;
                 }
                 Reader reader = new InputStreamReader(stream);
@@ -120,7 +122,7 @@ public class UpdateChecker {
                 try {
                     stream.close();
                 } catch(IOException e) {
-                    plugin.getLogger().severe(plugin.getLibLangManager().getText("update_checker.error.cant_close"));
+                    plugin.getLogger().severe(Text.translatable("update_checker.error.cant_close").get());
                     return;
                 }
 
@@ -151,18 +153,23 @@ public class UpdateChecker {
                 String currentVersion = description.getVersion();
                 String pluginName = description.getName();
                 if(currentVersion.equals(version)) return;
-                plugin.sendMessage("&a" + plugin.getLibLangManager().getText("update_checker.update_available",
-                        new String[]{"PLUGIN"},
-                        new String[]{"&b" + pluginName + "&a"}));
-                plugin.sendMessage("&e" + plugin.getLibLangManager().getText("update_checker.new_version",
-                        new String[]{"PLUGIN", "VERSION"},
-                        new String[]{"&b" + pluginName + "&e", "&c&l" + version + "&r&e"}));
-                plugin.sendMessage("&e" + plugin.getLibLangManager().getText("update_checker.release_time",
-                        new String[]{"TIME"},
-                        new String[]{"&a" + releasedTime + "&e"}));
-                plugin.sendMessage("&e" + plugin.getLibLangManager().getText("update_checker.download_link",
-                        new String[]{"LINK"},
-                        new String[]{"&f" + downloadUrl}));
+                plugin.sendMessage("&a" + Text
+                    .translatable("update_checker.update_available")
+                    .placeholder(PlaceholderFormatter.of("plugin", "&b" + pluginName + "&a"))
+                    .get());
+                plugin.sendMessage("&e" + Text
+                    .translatable("update_checker.new_version")
+                    .placeholder(PlaceholderFormatter.of("plugin", "&b" + pluginName + "&e")
+                                     .and("version", "&c&l" + version + "&r&e"))
+                    .get());
+                plugin.sendMessage("&e" + Text
+                    .translatable("update_checker.release_time")
+                    .placeholder(PlaceholderFormatter.of("time", "&a" + releasedTime + "&e"))
+                    .get());
+                plugin.sendMessage("&e" + Text
+                    .translatable("update_checker.download_link")
+                    .placeholder(PlaceholderFormatter.of("link", "&f" + downloadUrl))
+                    .get());
             }
         }.runTaskLaterAsynchronously(plugin, delay * 20L);
     }

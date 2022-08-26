@@ -9,6 +9,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
+import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -62,7 +63,7 @@ public class GUIScrollerModule implements GUIModule {
     @Override
     public void onOpenHead(Player player, GUIContainer gui) {
         if(upItem == null) {
-            String name = plugin.getLibLangManager().getText(player, "gui.modules.scroller.up");
+            String name = Text.translatable("gui.modules.scroller.up").get(player);
             this.upItem = new AnimatedGUIItem(ItemBuilder.of(Base64Head.ARROW_UP_WHITE.get()).setName("&f" + name).get(), false, 1, true);
             upItem.addEvent(new GUIScrollEvent(-1, 0));
             AnimatedGUIItem upItemAnim = (AnimatedGUIItem) upItem;
@@ -72,7 +73,7 @@ public class GUIScrollerModule implements GUIModule {
         }
 
         if(downItem == null) {
-            String name = plugin.getLibLangManager().getText(player, "gui.modules.scroller.down");
+            String name = Text.translatable("gui.modules.scroller.down").get(player);
             this.downItem = new AnimatedGUIItem(ItemBuilder.of(Base64Head.ARROW_DOWN_WHITE.get()).setName("&f" + name).get(), false, 1, true);
             downItem.addEvent(new GUIScrollEvent(1, 0));
             AnimatedGUIItem downItemAnim = (AnimatedGUIItem) downItem;
@@ -82,7 +83,7 @@ public class GUIScrollerModule implements GUIModule {
         }
 
         if(leftItem == null) {
-            String name = plugin.getLibLangManager().getText(player, "gui.modules.scroller.left");
+            String name = Text.translatable("gui.modules.scroller.left").get(player);
             this.leftItem = new AnimatedGUIItem(ItemBuilder.of(Base64Head.ARROW_LEFT_WHITE.get()).setName("&f" + name).get(), false, 1, true);
             leftItem.addEvent(new GUIScrollEvent(0, -1));
             AnimatedGUIItem leftItemAnim = (AnimatedGUIItem) leftItem;
@@ -92,7 +93,7 @@ public class GUIScrollerModule implements GUIModule {
         }
 
         if(rightItem == null) {
-            String name = plugin.getLibLangManager().getText(player, "gui.modules.scroller.right");
+            String name = Text.translatable("gui.modules.scroller.right").get(player);
             this.rightItem = new AnimatedGUIItem(ItemBuilder.of(Base64Head.ARROW_RIGHT_WHITE.get()).setName("&f" + name).get(), false, 1, true);
             rightItem.addEvent(new GUIScrollEvent(0, 1));
             AnimatedGUIItem rightItemAnim = (AnimatedGUIItem) rightItem;

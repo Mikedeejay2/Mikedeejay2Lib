@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.commands;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
+import com.mikedeejay2.mikedeejay2lib.text.Text;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
@@ -74,7 +75,7 @@ public class CommandManager implements TabCommandBase {
             SubCommand target = this.getSubcommand(args[0]);
 
             if(target == null) {
-                plugin.sendMessage(sender, "&c" + plugin.getLibLangManager().getText(sender, "command.errors.invalid_subcommand"));
+                plugin.sendMessage(sender, "&c" + Text.translatable("command.errors.invalid_subcommand").get(sender));
                 return false;
             }
 
@@ -84,17 +85,17 @@ public class CommandManager implements TabCommandBase {
             arrayList.remove(0);
 
             if(target.getPermission() != null && !sender.hasPermission(target.getPermission())) {
-                plugin.sendMessage(sender, "&c" + plugin.getLibLangManager().getText(sender, "errors.permission.nopermission"));
+                plugin.sendMessage(sender, "&c" + Text.translatable("errors.permission.nopermission").get(sender));
                 return false;
             } else if(!(sender instanceof Player) && target.isPlayerRequired()) {
-                plugin.sendMessage(sender, "&c" + plugin.getLibLangManager().getText(sender, "errors.player_required"));
+                plugin.sendMessage(sender, "&c" + Text.translatable("errors.player_required").get(sender));
                 return false;
             }
 
             try {
                 target.onCommand(sender, args);
             } catch(Exception exception) {
-                plugin.sendMessage(sender, "&c" + plugin.getLibLangManager().getText(sender, "command.errors.general"));
+                plugin.sendMessage(sender, "&c" + Text.translatable("command.errors.general").get(sender));
                 exception.printStackTrace();
             }
         }

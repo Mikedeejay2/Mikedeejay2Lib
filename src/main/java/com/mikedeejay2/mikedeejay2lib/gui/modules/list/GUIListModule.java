@@ -8,7 +8,8 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
-import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
+import com.mikedeejay2.mikedeejay2lib.text.PlaceholderFormatter;
+import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import com.mikedeejay2.mikedeejay2lib.util.search.SearchUtil;
@@ -248,14 +249,18 @@ public class GUIListModule implements GUIModule {
         if(searchItem == null) {
             this.searchItem = new GUIItem(
                 ItemBuilder.of(Material.COMPASS)
-                    .setName(searchPreName + plugin.getLibLangManager().getText(player, "gui.modules.list.search"))
+                    .setName(searchPreName + Text
+                        .translatable("gui.modules.list.search")
+                        .get(player))
                     .get());
             searchItem.addEvent(new GUIListSearchEvent(plugin));
         }
         if(searchOffItem == null) {
             this.searchOffItem = new GUIItem(
                 ItemBuilder.of(Material.BOOK)
-                    .setName(searchOffPreName + plugin.getLibLangManager().getText(player, "gui.modules.list.search_off"))
+                    .setName(searchOffPreName + Text
+                        .translatable("gui.modules.list.search_off")
+                        .get(player))
                     .get());
             searchOffItem.addEvent(new GUIListSearchOffEvent());
         }
@@ -394,16 +399,16 @@ public class GUIListModule implements GUIModule {
             GUIItem curItem = forwardItem.clone();
             switch(viewMode) {
                 case SCROLL:
-                    curItem.setNameView(Colors.format(scrollChangePreName + plugin.getLibLangManager().getText(
-                            player, "gui.modules.list.scroll_forward")));
+                    curItem.setNameView(scrollChangePreName + Text
+                        .translatable("gui.modules.list.scroll_forward")
+                        .get(player));
                     break;
                 case PAGED:
                 default:
-                    curItem.setNameView(Colors.format(pageChangePreName + plugin.getLibLangManager().getText(
-                            player, "gui.modules.list.page",
-                            new String[]{"PAGE"},
-                            new String[]{String.valueOf(i)}
-                            )));
+                    curItem.setNameView(pageChangePreName + Text
+                        .translatable("gui.modules.list.page")
+                        .placeholder(PlaceholderFormatter.of("page", String.valueOf(i)))
+                        .get(player));
                     break;
             }
             layer.setItem(row, col, curItem);
@@ -417,16 +422,16 @@ public class GUIListModule implements GUIModule {
             GUIItem curItem = backItem.clone();
             switch(viewMode) {
                 case SCROLL:
-                    curItem.setNameView(Colors.format(scrollChangePreName + plugin.getLibLangManager().getText(
-                            player, "gui.modules.list.scroll_back")));
+                    curItem.setNameView(scrollChangePreName + Text
+                        .translatable("gui.modules.list.scroll_back")
+                        .get(player));
                     break;
                 case PAGED:
                 default:
-                    curItem.setNameView(Colors.format(pageChangePreName + plugin.getLibLangManager().getText(
-                            player, "gui.modules.list.page",
-                            new String[]{"PAGE"},
-                            new String[]{String.valueOf(i)}
-                            )));
+                    curItem.setNameView(pageChangePreName + Text
+                        .translatable("gui.modules.list.page")
+                        .placeholder(PlaceholderFormatter.of("page", String.valueOf(i)))
+                        .get(player));
                     break;
             }
             layer.setItem(row, col, curItem);

@@ -17,6 +17,10 @@ public final class PlaceholderFormatter {
         return new PlaceholderFormatter().and(value, replacement);
     }
 
+    public static PlaceholderFormatter of(String value, String replacement) {
+        return of(value, Text.of(replacement));
+    }
+
     public PlaceholderFormatter and(String value, Text replacement) {
         Validate.notNull(value, "Tried to create placeholder of null value");
         Validate.notNull(replacement, "Tried to create placeholder of null replacement");
@@ -24,10 +28,20 @@ public final class PlaceholderFormatter {
         return this;
     }
 
+    public PlaceholderFormatter and(PlaceholderFormatter formatter) {
+        Validate.notNull(formatter, "Tried to create placeholder from null placeholder");
+        placeholders.putAll(formatter.placeholders);
+        return this;
+    }
+
+    public PlaceholderFormatter and(String value, String replacement) {
+        return and(value, Text.of(replacement));
+    }
+
     public String format(String string) {
         for(String value : placeholders.keySet()) {
             Text replacement = placeholders.get(value);
-            string = format(string, value, replacement.getText());
+            string = format(string, value, replacement.get());
         }
         return string;
     }
@@ -42,7 +56,7 @@ public final class PlaceholderFormatter {
         Validate.notNull(locale, "Tried to format a String for a null locale");
         for(String value : placeholders.keySet()) {
             Text replacement = placeholders.get(value);
-            string = format(string, value, replacement.getText(locale));
+            string = format(string, value, replacement.get(locale));
         }
         return string;
     }

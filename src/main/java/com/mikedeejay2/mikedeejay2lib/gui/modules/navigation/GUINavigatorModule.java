@@ -9,6 +9,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
+import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import com.mikedeejay2.mikedeejay2lib.util.structure.NavigationHolder;
 import org.bukkit.entity.Player;
@@ -72,27 +73,27 @@ public class GUINavigatorModule implements GUIModule {
     public void onOpenHead(Player player, GUIContainer gui) {
         navigationCheck(player);
         if(validBackItem == null) {
-            String backward = plugin.getLibLangManager().getText(player, "gui.modules.navigator.backward");
+            String backward = Text.translatable("gui.modules.navigator.backward").get(player);
             this.validBackItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_LEFT_WHITE.get())
                                                      .setName("&f" + backward)
                                                      .get());
             validBackItem.addEvent(new GUINavBackEvent(plugin));
         }
         if(validForwardItem == null) {
-            String forward = plugin.getLibLangManager().getText(player, "gui.modules.navigator.forward");
+            String forward = Text.translatable("gui.modules.navigator.forward").get(player);
             this.validForwardItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_RIGHT_WHITE.get())
                                                         .setName("&f" + forward)
                                                         .get());
             validForwardItem.addEvent(new GUINavForwardEvent(plugin));
         }
         if(invalidBackItem == null) {
-            String backward = plugin.getLibLangManager().getText(player, "gui.modules.navigator.backward");
+            String backward = Text.translatable("gui.modules.navigator.backward").get(player);
             this.invalidBackItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_LEFT_LIGHT_GRAY.get())
                                                        .setName("&7" + backward)
                                                        .get());
         }
         if(invalidForwardItem == null) {
-            String forward = plugin.getLibLangManager().getText(player, "gui.modules.navigator.forward");
+            String forward = Text.translatable("gui.modules.navigator.forward").get(player);
             this.invalidForwardItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_RIGHT_LIGHT_GRAY.get())
                                                           .setName("&7" + forward)
                                                           .get());
