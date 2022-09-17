@@ -4,7 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.text.language.TranslationManager;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public interface Text {
+public interface Text extends Cloneable {
     static LiteralText of(String text) {
         return literal(text);
     }
@@ -27,6 +27,7 @@ public interface Text {
     String get(String locale);
     String get();
     Text placeholder(PlaceholderFormatter formatter);
+    Text clone();
 
     default String get(Player player, PlaceholderFormatter formatter) {
         return formatter.format(get(player));
@@ -38,5 +39,9 @@ public interface Text {
 
     default String get(PlaceholderFormatter formatter) {
         return formatter.format(get());
+    }
+
+    default Text concat(Text other) {
+        return new ConcatText(this, other);
     }
 }

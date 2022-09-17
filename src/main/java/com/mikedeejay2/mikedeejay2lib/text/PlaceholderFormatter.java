@@ -6,8 +6,8 @@ import org.bukkit.entity.Player;
 import java.util.HashMap;
 import java.util.Map;
 
-public final class PlaceholderFormatter {
-    private final Map<String, Text> placeholders;
+public final class PlaceholderFormatter implements Cloneable {
+    private Map<String, Text> placeholders;
 
     private PlaceholderFormatter() {
         this.placeholders = new HashMap<>();
@@ -63,5 +63,18 @@ public final class PlaceholderFormatter {
 
     private String format(String string, String value, String replacement) {
         return string.replaceAll("%" + value + "%", replacement);
+    }
+
+    @Override
+    public PlaceholderFormatter clone() {
+        PlaceholderFormatter formatter;
+        try {
+            formatter = (PlaceholderFormatter) super.clone();
+        } catch(CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+        formatter.placeholders = new HashMap<>(placeholders);
+        return formatter;
     }
 }

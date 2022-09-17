@@ -7,7 +7,9 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.meta.ItemMeta;
@@ -34,6 +36,30 @@ public interface IItemBuilder<I, T> {
      * @return The item of type <code>I</code>
      */
     I get();
+
+    /**
+     * Get the item using the player as a locale
+     *
+     * @param player The player viewing the item
+     * @return The item of type <code>I</code>
+     */
+    I get(Player player);
+
+    /**
+     * Get the item using the <code>CommandSender</code> as a locale
+     *
+     * @param sender The <code>CommandSender</code> viewing the item
+     * @return The item of type <code>I</code>
+     */
+    I get(CommandSender sender);
+
+    /**
+     * Get the item using a locale to translate the item
+     *
+     * @param locale The locale to translate the item
+     * @return The item of type <code>I</code>
+     */
+    I get(String locale);
 
     /**
      * Set the item to a new item

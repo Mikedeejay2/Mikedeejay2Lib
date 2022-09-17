@@ -34,6 +34,7 @@ public class TranslatableText implements Text {
 
     @Override
     public String get(String locale) {
+        if(locale == null) return get();
         String translation = manager.getTranslation(locale, key);
         if(formatter != null) return formatter.format(translation);
         return translation;
@@ -61,5 +62,18 @@ public class TranslatableText implements Text {
     @Override
     public String toString() {
         return getKey();
+    }
+
+    @Override
+    public TranslatableText clone() {
+        TranslatableText text;
+        try {
+            text = (TranslatableText) super.clone();
+        } catch(CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+        text.formatter = this.formatter.clone();
+        return text;
     }
 }

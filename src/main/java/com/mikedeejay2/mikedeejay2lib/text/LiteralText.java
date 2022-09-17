@@ -47,4 +47,17 @@ public class LiteralText implements Text {
     public String toString() {
         return get();
     }
+
+    @Override
+    public LiteralText clone() {
+        LiteralText text;
+        try {
+            text = (LiteralText) super.clone();
+        } catch(CloneNotSupportedException e) {
+            e.printStackTrace();
+            return null;
+        }
+        text.formatter = this.formatter.clone();
+        return text;
+    }
 }

@@ -10,7 +10,9 @@ import com.mojang.authlib.properties.Property;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
@@ -28,38 +30,38 @@ import java.util.*;
  *
  * @author Mikedeejay2
  */
-public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Cloneable {
+public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Cloneable {
     /**
      * The {@link Material} of the built item
      */
-    private Material type;
+    protected Material type;
 
     /**
      * The stack amount of the built item
      */
-    private int amount;
+    protected int amount;
 
     /**
      * The {@link ItemMeta} of the built item
      */
-    private ItemMeta meta;
+    protected ItemMeta meta;
 
     /**
      * The built item, null if not yet built
      */
-    private ItemStack item;
+    protected ItemStack item;
 
     /**
      * Whether the item has been changed since last build
      */
-    private boolean changed;
+    protected boolean changed;
 
     /**
      * Construct a new <code>ItemBuilder</code>
      *
      * @param item The reference item
      */
-    private ItemBuilder(ItemStack item) {
+    protected ItemBuilder(ItemStack item) {
         set(item);
         this.item = null;
         this.changed = true;
@@ -70,7 +72,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      *
      * @param material The starting material
      */
-    private ItemBuilder(Material material) {
+    protected ItemBuilder(Material material) {
         this.type = material;
         this.amount = 1;
         this.meta = Bukkit.getItemFactory().getItemMeta(type);
@@ -81,7 +83,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
     /**
      * Construct a new <code>ItemBuilder</code> with the default material of <code>STONE</code>
      */
-    private ItemBuilder() {
+    protected ItemBuilder() {
         this.type = Material.STONE;
         this.amount = 1;
         this.meta = Bukkit.getItemFactory().getItemMeta(type);
@@ -94,7 +96,7 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      *
      * @param base64 The base64 of the head
      */
-    private ItemBuilder(String base64) {
+    protected ItemBuilder(String base64) {
         this.type = Material.PLAYER_HEAD;
         this.amount = 1;
         this.meta = Bukkit.getItemFactory().getItemMeta(type);
@@ -108,12 +110,25 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      *
      * @param player The player reference
      */
-    private ItemBuilder(OfflinePlayer player) {
+    protected ItemBuilder(OfflinePlayer player) {
         this.type = Material.PLAYER_HEAD;
         this.amount = 1;
         this.meta = Bukkit.getItemFactory().getItemMeta(type);
         this.item = null;
         this.setHeadOwner(player);
+        this.changed = true;
+    }
+
+    /**
+     * Construct a new <code>ItemBuilder</code> for an ItemBuilder
+     *
+     * @param builder The player reference
+     */
+    protected ItemBuilder(IItemBuilder<?, ?> builder) {
+        this.type = builder.getType();
+        this.amount = builder.getAmount();
+        this.meta = builder.getMeta();
+        this.item = null;
         this.changed = true;
     }
 
@@ -131,6 +146,39 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
             this.changed = false;
         }
         return item;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param player The player viewing the item
+     * @return A reference to this object
+     */
+    @Override
+    public ItemStack get(Player player) {
+        return get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param sender The <code>CommandSender</code> viewing the item
+     * @return A reference to this object
+     */
+    @Override
+    public ItemStack get(CommandSender sender) {
+        return get();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param locale The locale to translate the item
+     * @return A reference to this object
+     */
+    @Override
+    public ItemStack get(String locale) {
+        return get();
     }
 
     /**
@@ -1168,8 +1216,8 @@ public final class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, 
      * @param builder The reference <code>ItemBuilder</code>
      * @return The new {@link ItemBuilder}
      */
-    public static ItemBuilder of(ItemBuilder builder) {
-        return new ItemBuilder(builder.get());
+    public static ItemBuilder of(IItemBuilder<?, ?> builder) {
+        return new ItemBuilder(builder);
     }
 
     /**
