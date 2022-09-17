@@ -7,12 +7,15 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventHandler;
 import com.mikedeejay2.mikedeejay2lib.item.IItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
+import com.mikedeejay2.mikedeejay2lib.text.Text;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
+import org.bukkit.command.CommandSender;
 import org.bukkit.enchantments.Enchantment;
+import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
@@ -229,6 +232,39 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @param player The player viewing the item
+     * @return The reference <code>ItemStack</code>
+     */
+    @Override
+    public ItemStack get(Player player) {
+        return viewItem.get(player);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param sender The <code>CommandSender</code> viewing the item
+     * @return The reference <code>ItemStack</code>
+     */
+    @Override
+    public ItemStack get(CommandSender sender) {
+        return viewItem.get(sender);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param locale The locale to translate the item
+     * @return The reference <code>ItemStack</code>
+     */
+    @Override
+    public ItemStack get(String locale) {
+        return viewItem.get(locale);
+    }
+
+    /**
      * Get the <code>ItemStack</code> of this <code>GUIItem</code> (view item)
      *
      * @return The requested <code>ItemStack</code>
@@ -376,6 +412,39 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @param player The player, for use with translatable text
+     * @return The name of the item
+     */
+    @Override
+    public String getName(Player player) {
+        return viewItem.getName(player);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param sender The <code>CommandSender</code>, for use with translatable text
+     * @return The name of the item
+     */
+    @Override
+    public String getName(CommandSender sender) {
+        return viewItem.getName(sender);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param locale The locale, for use with translatable text
+     * @return The name of the item
+     */
+    @Override
+    public String getName(String locale) {
+        return viewItem.getName(locale);
+    }
+
+    /**
      * Get the name of the base item
      *
      * @return The name of the item
@@ -403,6 +472,19 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
     public GUIItem setName(String name) {
         setNameBase(name);
         setNameView(name);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param text The new name of the item
+     * @return A reference to this object
+     */
+    @Override
+    public GUIItem setName(Text text) {
+        baseItem.setName(text);
+        viewItem.setName(text);
         return this;
     }
 
@@ -565,6 +647,39 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @param player The player, for use with translatable text
+     * @return The String list of lore of the item
+     */
+    @Override
+    public List<String> getLore(Player player) {
+        return viewItem.getLore(player);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param sender The <code>CommandSender</code>, for use with translatable text
+     * @return The String list of lore of the item
+     */
+    @Override
+    public List<String> getLore(CommandSender sender) {
+        return viewItem.getLore(sender);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param locale The locale, for use with translatable text
+     * @return The String list of lore of the item
+     */
+    @Override
+    public List<String> getLore(String locale) {
+        return viewItem.getLore(locale);
+    }
+
+    /**
      * Get the String list of lore of the base item
      *
      * @return The String list of lore of the item
@@ -627,6 +742,32 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
     public GUIItem setLore(String... lore) {
         setLoreBase(lore);
         setLoreView(lore);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param lore The new {@link Text} list of lore of the item
+     * @return A reference to this object
+     */
+    @Override
+    public GUIItem setLoreText(List<Text> lore) {
+        baseItem.setLoreText(lore);
+        viewItem.setLoreText(lore);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param lore The new {@link Text} list of lore of the item
+     * @return A reference to this object
+     */
+    @Override
+    public GUIItem setLoreText(Text... lore) {
+        baseItem.setLoreText(lore);
+        viewItem.setLoreText(lore);
         return this;
     }
 
@@ -771,6 +912,60 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
     public GUIItem addLore(int index, String... lore) {
         addLoreBase(index, lore);
         addLoreView(index, lore);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param lore The new {@link Text} list to add to the item
+     * @return A reference to this object
+     */
+    @Override
+    public GUIItem addLoreText(List<Text> lore) {
+        baseItem.addLoreText(lore);
+        viewItem.addLoreText(lore);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param lore The new {@link Text} array to add to the item
+     * @return A reference to this object
+     */
+    @Override
+    public GUIItem addLoreText(Text... lore) {
+        baseItem.addLoreText(lore);
+        viewItem.addLoreText(lore);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param index The index to add the lore at
+     * @param lore The new {@link Text} list to add to the item
+     * @return A reference to this object
+     */
+    @Override
+    public GUIItem addLoreText(int index, List<Text> lore) {
+        baseItem.addLoreText(lore);
+        viewItem.addLoreText(lore);
+        return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param index The index to add the lore at
+     * @param lore The new {@link Text} array to add to the item
+     * @return A reference to this object
+     */
+    @Override
+    public GUIItem addLoreText(int index, Text... lore) {
+        baseItem.addLoreText(lore);
+        viewItem.addLoreText(lore);
         return this;
     }
 

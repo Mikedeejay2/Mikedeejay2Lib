@@ -4,6 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.commands.CommandBase;
 import com.mikedeejay2.mikedeejay2lib.commands.CommandInfo;
 import com.mikedeejay2.mikedeejay2lib.commands.TabBase;
 import com.mikedeejay2.mikedeejay2lib.commands.TabCommandBase;
+import com.mikedeejay2.mikedeejay2lib.text.Text;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.command.TabCompleter;
@@ -48,12 +49,27 @@ public interface EnhancedPlugin extends Plugin {
     void sendMessage(String message);
 
     /**
+     * Send a message in console with formatted chat colors
+     *
+     * @param message The input {@link Text}
+     */
+    void sendMessage(Text message);
+
+    /**
      * Sends the player a formatted message
      *
      * @param player  Input player that will receive the message
      * @param message The message to be printed (will be formatted with colors)
      */
     void sendMessage(Player player, String message);
+
+    /**
+     * Sends the player a formatted message
+     *
+     * @param player  Input player that will receive the message
+     * @param message The {@link Text} to be printed
+     */
+    void sendMessage(Player player, Text message);
 
     /**
      * Sends the command sender (player or console) a formatted message
@@ -64,11 +80,26 @@ public interface EnhancedPlugin extends Plugin {
     void sendMessage(CommandSender sender, String message);
 
     /**
+     * Sends the command sender (player or console) a formatted message
+     *
+     * @param sender  Input <code>CommandSender</code> that will receive the message
+     * @param message The {@link Text} to be printed
+     */
+    void sendMessage(CommandSender sender, Text message);
+
+    /**
      * Broadcast a message to all players on the server.
      *
      * @param message The message to broadcast to players
      */
     void broadcastMessage(String message);
+
+    /**
+     * Broadcast a message to all players on the server.
+     *
+     * @param message The {@link Text} to broadcast to players
+     */
+    void broadcastMessage(Text message);
 
     /**
      * Send an info message from this plugin's logger
@@ -78,6 +109,13 @@ public interface EnhancedPlugin extends Plugin {
     void sendInfo(String message);
 
     /**
+     * Send an info message from this plugin's logger
+     *
+     * @param message The {@link Text} to be logged
+     */
+    void sendInfo(Text message);
+
+    /**
      * Send a warning message from this plugin's logger
      *
      * @param message The message to be logged
@@ -85,11 +123,25 @@ public interface EnhancedPlugin extends Plugin {
     void sendWarning(String message);
 
     /**
+     * Send a warning message from this plugin's logger
+     *
+     * @param message The {@link Text} to be logged
+     */
+    void sendWarning(Text message);
+
+    /**
      * Send a severe message from this plugin's logger
      *
      * @param message The message to be logged
      */
     void sendSevere(String message);
+
+    /**
+     * Send a severe message from this plugin's logger
+     *
+     * @param message The {@link Text} to be logged
+     */
+    void sendSevere(Text message);
 
     /**
      * Register an event listener to the server

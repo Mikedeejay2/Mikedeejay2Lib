@@ -4,6 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.commands.CommandBase;
 import com.mikedeejay2.mikedeejay2lib.commands.CommandInfo;
 import com.mikedeejay2.mikedeejay2lib.commands.TabBase;
 import com.mikedeejay2.mikedeejay2lib.commands.TabCommandBase;
+import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mikedeejay2.mikedeejay2lib.util.logging.EnhancedPluginLogger;
 import org.apache.commons.lang3.Validate;
@@ -126,6 +127,16 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @param message The input {@link Text}
+     */
+    @Override
+    public void sendMessage(Text message) {
+        this.sendMessage(message.get());
+    }
+
+    /**
      * Sends the player a formatted message
      *
      * @param player  Input player that will receive the message
@@ -134,6 +145,17 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void sendMessage(Player player, String message) {
         player.sendMessage(Colors.format(getPrefix() + message));
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param player  Input player that will receive the message
+     * @param message The {@link Text} to be printed
+     */
+    @Override
+    public void sendMessage(Player player, Text message) {
+        this.sendMessage(player, message.get(player));
     }
 
     /**
@@ -148,6 +170,17 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @param sender  Input <code>CommandSender</code> that will receive the message
+     * @param message The {@link Text} to be printed
+     */
+    @Override
+    public void sendMessage(CommandSender sender, Text message) {
+        this.sendMessage(sender, message.get(sender));
+    }
+
+    /**
      * Broadcast a message to all players on the server.
      *
      * @param message The message to broadcast to players
@@ -155,6 +188,16 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void broadcastMessage(String message) {
         Bukkit.broadcastMessage(Colors.format(getPrefix() + message));
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param message The {@link Text} to broadcast to players
+     */
+    @Override
+    public void broadcastMessage(Text message) {
+        this.broadcastMessage(message.get());
     }
 
     /**
@@ -168,6 +211,16 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @param message The {@link Text} to be logged
+     */
+    @Override
+    public void sendInfo(Text message) {
+        this.sendInfo(message.get());
+    }
+
+    /**
      * Send a warning message from this plugin's logger
      *
      * @param message The message to be logged
@@ -178,6 +231,16 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     }
 
     /**
+     * {@inheritDoc}
+     *
+     * @param message The {@link Text} to be logged
+     */
+    @Override
+    public void sendWarning(Text message) {
+        this.sendWarning(message.get());
+    }
+
+    /**
      * Send a severe message from this plugin's logger
      *
      * @param message The message to be logged
@@ -185,6 +248,16 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
     @Override
     public void sendSevere(String message) {
         this.getLogger().severe(Colors.format(message));
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param message The {@link Text} to be logged
+     */
+    @Override
+    public void sendSevere(Text message) {
+        this.sendSevere(message.get());
     }
 
     /**
