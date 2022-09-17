@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.text;
 
 import org.apache.commons.lang3.Validate;
+import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
@@ -40,23 +41,31 @@ public final class PlaceholderFormatter implements Cloneable {
 
     public String format(String string) {
         for(String value : placeholders.keySet()) {
-            Text replacement = placeholders.get(value);
-            string = format(string, value, replacement.get());
+            string = format(string, value, placeholders.get(value).get());
         }
         return string;
     }
 
     public String format(Player player, String string) {
         Validate.notNull(player, "Tried to format a String for a null player");
-        String locale = player.getLocale().toLowerCase();
-        return format(locale, string);
+        for(String value : placeholders.keySet()) {
+            string = format(string, value, placeholders.get(value).get(player));
+        }
+        return string;
+    }
+
+    public String format(CommandSender sender, String string) {
+        Validate.notNull(sender, "Tried to format a String for a null CommandSender");
+        for(String value : placeholders.keySet()) {
+            string = format(string, value, placeholders.get(value).get(sender));
+        }
+        return string;
     }
 
     public String format(String locale, String string) {
         Validate.notNull(locale, "Tried to format a String for a null locale");
         for(String value : placeholders.keySet()) {
-            Text replacement = placeholders.get(value);
-            string = format(string, value, replacement.get(locale));
+            string = format(string, value, placeholders.get(value).get(locale));
         }
         return string;
     }

@@ -15,17 +15,17 @@ public class TextPlaceholderFormatted implements Text {
 
     @Override
     public String get(Player player) {
-        return formatter.format(text.get(player));
+        return formatter.format(player, text.get(player));
     }
 
     @Override
     public String get(CommandSender sender) {
-        return formatter.format(text.get(sender));
+        return formatter.format(sender, text.get(sender));
     }
 
     @Override
     public String get(String locale) {
-        return formatter.format(text.get(locale));
+        return formatter.format(locale, text.get(locale));
     }
 
     @Override
