@@ -4,6 +4,7 @@ import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
@@ -136,43 +137,48 @@ public class TextItemBuilder extends ItemBuilder {
         return loreToString(locale);
     }
 
-    public List<Text> getLoreText(String locale) {
+    public List<Text> getLoreText() {
         return ImmutableList.copyOf(lore);
     }
 
     @Override
     public TextItemBuilder setLore(List<String> lore) {
-        super.setLore(lore);
-        return this;
+        return this.setLore(lore.toArray(new String[0]));
     }
 
     @Override
     public TextItemBuilder setLore(String... lore) {
-        super.setLore(lore);
+        this.lore.clear();
+        this.addLore(lore);
         return this;
     }
 
     @Override
     public TextItemBuilder addLore(List<String> lore) {
-        super.addLore(lore);
-        return this;
+        return this.addLore(lore.toArray(new String[0]));
     }
 
     @Override
     public TextItemBuilder addLore(String... lore) {
-        super.addLore(lore);
+        for(String cur : lore) {
+            this.lore.add(Text.of(Colors.addReset(Colors.format(cur))));
+        }
+        this.changed = true;
         return this;
     }
 
     @Override
     public TextItemBuilder addLore(int index, List<String> lore) {
-        super.addLore(index, lore);
-        return this;
+        return this.addLore(index, lore.toArray(new String[0]));
     }
 
     @Override
     public TextItemBuilder addLore(int index, String... lore) {
-        super.addLore(index, lore);
+        int curIndex = index;
+        for(String cur : lore) {
+            this.lore.add(curIndex++, Text.of(Colors.addReset(Colors.format(cur))));
+        }
+        this.changed = true;
         return this;
     }
 
