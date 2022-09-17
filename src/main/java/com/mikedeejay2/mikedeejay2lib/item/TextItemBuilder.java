@@ -5,6 +5,7 @@ import com.google.common.collect.Multimap;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
+import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
@@ -17,12 +18,19 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
-import org.bukkit.persistence.PersistentDataContainer;
-import org.bukkit.persistence.PersistentDataType;
 
 import java.util.*;
 
+/**
+ * An extension of {@link ItemBuilder} for use of {@link Text} features for item display name and lore.
+ * An {@link ItemBuilder} is automatically converted to a <code>TextItemBuilder</code> upon invocation of a method that
+ * takes a {@link Text} parameter. See {@link ItemBuilder#of()} to get started.
+ *
+ * @author Mikedeejay2
+ */
 public class TextItemBuilder extends ItemBuilder {
+    private static final Text RESET_TEXT = Text.of(ChatColor.RESET.toString());
+
     protected Text name;
     protected List<Text> lore;
 
@@ -80,14 +88,17 @@ public class TextItemBuilder extends ItemBuilder {
         return name.get();
     }
 
+    @Override
     public String getName(Player player) {
         return name.get(player);
     }
 
+    @Override
     public String getName(CommandSender sender) {
         return name.get(sender);
     }
 
+    @Override
     public String getName(String locale) {
         return name.get(locale);
     }
@@ -102,6 +113,7 @@ public class TextItemBuilder extends ItemBuilder {
         return this;
     }
 
+    @Override
     public TextItemBuilder setName(Text text) {
         this.name = text;
         this.changed = true;
@@ -125,14 +137,17 @@ public class TextItemBuilder extends ItemBuilder {
         return loreToString();
     }
 
+    @Override
     public List<String> getLore(Player player) {
         return loreToString(player);
     }
 
+    @Override
     public List<String> getLore(CommandSender sender) {
         return loreToString(sender);
     }
 
+    @Override
     public List<String> getLore(String locale) {
         return loreToString(locale);
     }
@@ -143,7 +158,7 @@ public class TextItemBuilder extends ItemBuilder {
 
     @Override
     public TextItemBuilder setLore(List<String> lore) {
-        return this.setLore(lore.toArray(new String[0]));
+        return this.setLore(lore == null ? null : lore.toArray(new String[0]));
     }
 
     @Override
@@ -183,18 +198,44 @@ public class TextItemBuilder extends ItemBuilder {
     }
 
     @Override
-    public Map<Enchantment, Integer> getEnchants() {
-        return super.getEnchants();
+    public TextItemBuilder setLoreText(List<Text> lore) {
+        return this.setLoreText(lore.toArray(new Text[0]));
     }
 
     @Override
-    public boolean hasEnchant(Enchantment enchantment) {
-        return super.hasEnchant(enchantment);
+    public TextItemBuilder setLoreText(Text... lore) {
+        this.lore.clear();
+        this.addLoreText(lore);
+        return this;
     }
 
     @Override
-    public int getEnchant(Enchantment enchantment) {
-        return super.getEnchant(enchantment);
+    public TextItemBuilder addLoreText(List<Text> lore) {
+        return this.addLoreText(lore.toArray(new Text[0]));
+    }
+
+    @Override
+    public TextItemBuilder addLoreText(Text... lore) {
+        for(Text cur : lore) {
+            this.lore.add(RESET_TEXT.concat(cur));
+        }
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public TextItemBuilder addLoreText(int index, List<Text> lore) {
+        return this.addLoreText(index, lore.toArray(new Text[0]));
+    }
+
+    @Override
+    public TextItemBuilder addLoreText(int index, Text... lore) {
+        int curIndex = index;
+        for(Text cur : lore) {
+            this.lore.add(curIndex++, RESET_TEXT.concat(cur));
+        }
+        this.changed = true;
+        return this;
     }
 
     @Override
@@ -210,11 +251,6 @@ public class TextItemBuilder extends ItemBuilder {
     }
 
     @Override
-    public boolean hasConflictingEnchant(Enchantment enchantment) {
-        return super.hasConflictingEnchant(enchantment);
-    }
-
-    @Override
     public TextItemBuilder addItemFlags(ItemFlag... flags) {
         super.addItemFlags(flags);
         return this;
@@ -224,16 +260,6 @@ public class TextItemBuilder extends ItemBuilder {
     public TextItemBuilder removeItemFlags(ItemFlag... flags) {
         super.removeItemFlags(flags);
         return this;
-    }
-
-    @Override
-    public boolean hasItemFlag(ItemFlag flag) {
-        return super.hasItemFlag(flag);
-    }
-
-    @Override
-    public Set<ItemFlag> getItemFlags() {
-        return super.getItemFlags();
     }
 
     @Override
@@ -267,50 +293,15 @@ public class TextItemBuilder extends ItemBuilder {
     }
 
     @Override
-    public boolean isUnbreakable() {
-        return super.isUnbreakable();
-    }
-
-    @Override
-    public OfflinePlayer getHeadOwner() {
-        return super.getHeadOwner();
-    }
-
-    @Override
     public TextItemBuilder setHeadOwner(OfflinePlayer player) {
         super.setHeadOwner(player);
         return this;
     }
 
     @Override
-    public String getHeadBase64() {
-        return super.getHeadBase64();
-    }
-
-    @Override
     public TextItemBuilder setHeadBase64(String base64) {
         super.setHeadBase64(base64);
         return this;
-    }
-
-    @Override
-    public boolean hasAttributeModifiers() {
-        return super.hasAttributeModifiers();
-    }
-
-    @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
-        return super.getAttributeModifiers();
-    }
-
-    @Override
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
-        return super.getAttributeModifiers(slot);
-    }
-
-    @Override
-    public Collection<AttributeModifier> getAttributeModifiers(Attribute attribute) {
-        return super.getAttributeModifiers(attribute);
     }
 
     @Override
@@ -368,24 +359,9 @@ public class TextItemBuilder extends ItemBuilder {
     }
 
     @Override
-    public PersistentDataContainer getPersistentDataContainer() {
-        return super.getPersistentDataContainer();
-    }
-
-    @Override
     public TextItemBuilder setCustomModelData(Integer data) {
         super.setCustomModelData(data);
         return this;
-    }
-
-    @Override
-    public int getCustomModelData() {
-        return super.getCustomModelData();
-    }
-
-    @Override
-    public boolean hasCustomModelData() {
-        return super.hasCustomModelData();
     }
 
     @Override
@@ -395,90 +371,15 @@ public class TextItemBuilder extends ItemBuilder {
     }
 
     @Override
-    public String getLocalizedName() {
-        return super.getLocalizedName();
-    }
-
-    @Override
-    public boolean hasLocalizedName() {
-        return super.hasLocalizedName();
-    }
-
-    @Override
-    public String getDisplayName() {
-        return super.getDisplayName();
-    }
-
-    @Override
     public TextItemBuilder setDisplayName(String name) {
         super.setDisplayName(name);
         return this;
     }
 
     @Override
-    public boolean hasDisplayName() {
-        return super.hasDisplayName();
-    }
-
-    @Override
-    public int getDurability() {
-        return super.getDurability();
-    }
-
-    @Override
     public TextItemBuilder setDurability(int durability) {
         super.setDurability(durability);
         return this;
-    }
-
-    @Override
-    public int getMaxStackSize() {
-        return super.getMaxStackSize();
-    }
-
-    @Override
-    public boolean hasDurability() {
-        return super.hasDurability();
-    }
-
-    @Override
-    public <Y, Z> ItemBuilder setData(NamespacedKey key, PersistentDataType<Y, Z> type, Z value) {
-        return super.setData(key, type, value);
-    }
-
-    @Override
-    public <Y, Z> ItemBuilder setData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z value) {
-        return super.setData(plugin, key, type, value);
-    }
-
-    @Override
-    public <Y, Z> boolean hasData(NamespacedKey key, PersistentDataType<Y, Z> type) {
-        return super.hasData(key, type);
-    }
-
-    @Override
-    public <Y, Z> boolean hasData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type) {
-        return super.hasData(plugin, key, type);
-    }
-
-    @Override
-    public <Y, Z> Z getData(NamespacedKey key, PersistentDataType<Y, Z> type) {
-        return super.getData(key, type);
-    }
-
-    @Override
-    public <Y, Z> Z getData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type) {
-        return super.getData(plugin, key, type);
-    }
-
-    @Override
-    public <Y, Z> Z getOrDefaultData(NamespacedKey key, PersistentDataType<Y, Z> type, Z defaultValue) {
-        return super.getOrDefaultData(key, type, defaultValue);
-    }
-
-    @Override
-    public <Y, Z> Z getOrDefaultData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z defaultValue) {
-        return super.getOrDefaultData(plugin, key, type, defaultValue);
     }
 
     @Override
@@ -506,19 +407,15 @@ public class TextItemBuilder extends ItemBuilder {
     }
 
     @Override
-    public boolean isDataEmpty() {
-        return super.isDataEmpty();
-    }
-
-    @Override
     public TextItemBuilder clone() {
         TextItemBuilder builder = (TextItemBuilder) super.clone();
+        builder.lore = new ArrayList<>(this.lore);
         return builder;
     }
 
     private void updateTextFromMeta() {
-        this.setName(this.meta.getDisplayName());
-        this.setLore(this.meta.getLore());
+        this.setName(this.meta.hasDisplayName() ? this.meta.getDisplayName() : null);
+        this.setLore(this.meta.getLore() == null ? Collections.emptyList() : this.meta.getLore());
     }
 
     private void updateMeta(Player player) {

@@ -5,6 +5,7 @@ import org.bukkit.ChatColor;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.function.Function;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -245,5 +246,100 @@ public final class Colors {
             result.add(addReset(message));
         }
         return result;
+    }
+
+    /**
+     * Defines different styles for formatting Strings.
+     *
+     * @author Mikedeejay2
+     */
+    public enum FormatStyle {
+        /**
+         * Format a message using Minecraft's legacy color codes
+         * <p>
+         * For example, <code>"&amp;c"</code> will become a red color, <code>"&amp;1"</code> will become a blue color.
+         */
+        COLOR_CODES(Colors::format),
+
+        /**
+         * Format all hex color codes in the message.
+         * <p>
+         * For example, <code>#ff0000</code> will become a red color, <code>#0000ff</code> will become a blue color.
+         * <p>
+         * Color codes are converted using {@link net.md_5.bungee.api.ChatColor#of(String)}
+         * <p>
+         * If the Minecraft version is less than 1.16 (aka unsupported), hex colors will only be removed but formatting
+         * will not be applied, as there was no alternative below 1.16.
+         */
+        HEX(Colors::formatHexCodes),
+
+        /**
+         * Format all color shortcuts in the message.
+         * <p>
+         * For example, <code>%red%</code> will become a red color, <code>%b%</code> will become a blue color.
+         * See {@link ColorShortcut} enum for all shortcuts.
+         */
+        COLOR_SHORTCUTS(Colors::formatShortcuts),
+
+        /**
+         * Format hex, alternate color codes, AND color shortcuts.
+         * <p>
+         * For example, <code>"&amp;c"</code> would be an alternate color code that would translate to red,
+         * while <code>#0000ff</code> would be a hex code that would translate to a blue color.
+         * Placeholders can also be used for hex and color shortcuts, such as <code>%ff0000%</code> would
+         * translate to red while <code>%blue%</code> would translate to blue.
+         * <p>
+         * If the Minecraft version is less than 1.16 (aka unsupported), hex colors will only be removed but formatting
+         * will not be applied, as there was no alternative below 1.16.
+         */
+        ALL(Colors::formatAll),
+        ;
+
+        /**
+         * The <code>Function</code> to be used for formatting a String
+         */
+        private final Function<String, String> formatterFunction;
+
+        FormatStyle(Function<String, String> formatterFunction) {
+            this.formatterFunction = formatterFunction;
+        }
+
+        /**
+         * Format a String with this {@link FormatStyle}
+         *
+         * @param message The input string to be formatted
+         * @return The formatted String
+         */
+        public String format(String message) {
+            return formatterFunction.apply(message);
+        }
+
+        /**
+         * Format a List of Strings with this {@link FormatStyle}
+         *
+         * @param messages The input List to be formatted
+         * @return The formatted List
+         */
+        public List<String> format(List<String> messages) {
+            List<String> result = new ArrayList<>();
+            for(String message : messages) {
+                result.add(format(message));
+            }
+            return result;
+        }
+
+        /**
+         * Format an array of Strings with this {@link FormatStyle}
+         *
+         * @param messages The input array to be formatted
+         * @return The formatted array
+         */
+        public String[] format(String... messages) {
+            String[] result = new String[messages.length];
+            for(int i = 0; i < messages.length; ++i) {
+                result[i] = format(messages[i]);
+            }
+            return result;
+        }
     }
 }

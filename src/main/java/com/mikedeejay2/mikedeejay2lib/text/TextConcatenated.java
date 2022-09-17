@@ -3,11 +3,11 @@ package com.mikedeejay2.mikedeejay2lib.text;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class ConcatText implements Text {
+public class TextConcatenated implements Text {
     protected Text text1;
     protected Text text2;
 
-    protected ConcatText(Text text1, Text text2) {
+    protected TextConcatenated(Text text1, Text text2) {
         this.text1 = text1;
         this.text2 = text2;
     }
@@ -33,17 +33,10 @@ public class ConcatText implements Text {
     }
 
     @Override
-    public Text placeholder(PlaceholderFormatter formatter) {
-        text1.placeholder(formatter);
-        text2.placeholder(formatter);
-        return this;
-    }
-
-    @Override
-    public ConcatText clone() {
-        ConcatText text;
+    public TextConcatenated clone() {
+        TextConcatenated text;
         try {
-            text = (ConcatText) super.clone();
+            text = (TextConcatenated) super.clone();
         } catch(CloneNotSupportedException e) {
             e.printStackTrace();
             return null;

@@ -1,16 +1,14 @@
 package com.mikedeejay2.mikedeejay2lib.text;
 
-import org.apache.commons.lang3.Validate;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
-public class LiteralText implements Text {
-    public static final LiteralText EMPTY = new LiteralText("");
+public class TextLiteral implements Text {
+    public static final TextLiteral EMPTY = new TextLiteral("");
 
     protected final String text;
-    protected PlaceholderFormatter formatter;
 
-    protected LiteralText(String text) {
+    protected TextLiteral(String text) {
         this.text = text;
     }
 
@@ -31,16 +29,7 @@ public class LiteralText implements Text {
 
     @Override
     public String get() {
-        if(formatter != null) return formatter.format(text);
         return text;
-    }
-
-    @Override
-    public LiteralText placeholder(PlaceholderFormatter formatter) {
-        Validate.notNull(formatter, "Attempted to add null placeholders");
-        if(this.formatter == null) this.formatter = formatter;
-        else this.formatter.and(formatter);
-        return this;
     }
 
     @Override
@@ -49,15 +38,14 @@ public class LiteralText implements Text {
     }
 
     @Override
-    public LiteralText clone() {
-        LiteralText text;
+    public TextLiteral clone() {
+        TextLiteral text;
         try {
-            text = (LiteralText) super.clone();
+            text = (TextLiteral) super.clone();
         } catch(CloneNotSupportedException e) {
             e.printStackTrace();
             return null;
         }
-        text.formatter = this.formatter.clone();
         return text;
     }
 }

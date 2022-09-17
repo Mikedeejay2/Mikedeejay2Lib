@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.item;
 import com.google.common.collect.Multimap;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mikedeejay2.mikedeejay2lib.util.enchant.GlowEnchantment;
 import com.mojang.authlib.GameProfile;
@@ -236,6 +237,39 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
     /**
      * {@inheritDoc}
      *
+     * @param player The player, for use with translatable text
+     * @return The name of the item
+     */
+    @Override
+    public String getName(Player player) {
+        return this.getName();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param sender The <code>CommandSender</code>, for use with translatable text
+     * @return The name of the item
+     */
+    @Override
+    public String getName(CommandSender sender) {
+        return this.getName();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param locale The locale, for use with translatable text
+     * @return The name of the item
+     */
+    @Override
+    public String getName(String locale) {
+        return this.getName();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @param name The new name of the item
      * @return A reference to this object
      */
@@ -244,6 +278,17 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
         this.meta.setDisplayName(Colors.addReset(Colors.format(name)));
         this.changed = true;
         return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param text The new name of the item
+     * @return A reference to this object
+     */
+    @Override
+    public TextItemBuilder setName(Text text) {
+        return new TextItemBuilder(this).setName(text);
     }
 
     /**
@@ -308,6 +353,39 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
     /**
      * {@inheritDoc}
      *
+     * @param player The player, for use with translatable text
+     * @return The String list of lore of the item
+     */
+    @Override
+    public List<String> getLore(Player player) {
+        return this.getLore();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param sender The <code>CommandSender</code>, for use with translatable text
+     * @return The String list of lore of the item
+     */
+    @Override
+    public List<String> getLore(CommandSender sender) {
+        return this.getLore();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param locale The locale, for use with translatable text
+     * @return The String list of lore of the item
+     */
+    @Override
+    public List<String> getLore(String locale) {
+        return this.getLore();
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @param lore The new String list of lore of the item
      * @return A reference to this object
      */
@@ -329,6 +407,28 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
         this.meta.setLore(Colors.addReset(Colors.format(Arrays.asList(lore))));
         this.changed = true;
         return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param lore The new {@link Text} list of lore of the item
+     * @return A reference to this object
+     */
+    @Override
+    public TextItemBuilder setLoreText(List<Text> lore) {
+        return new TextItemBuilder(this).setLoreText(lore);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param lore The new {@link Text} list of lore of the item
+     * @return A reference to this object
+     */
+    @Override
+    public TextItemBuilder setLoreText(Text... lore) {
+        return new TextItemBuilder(this).setLoreText(lore);
     }
 
     /**
@@ -391,6 +491,52 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
         curLore.addAll(index, Arrays.asList(Colors.addReset(Colors.format(lore))));
         this.meta.setLore(curLore);
         return this;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param lore The new {@link Text} list to add to the item
+     * @return A reference to this object
+     */
+    @Override
+    public TextItemBuilder addLoreText(List<Text> lore) {
+        return new TextItemBuilder(this).addLoreText(lore);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param lore The new {@link Text} array to add to the item
+     * @return A reference to this object
+     */
+    @Override
+    public TextItemBuilder addLoreText(Text... lore) {
+        return new TextItemBuilder(this).addLoreText(lore);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param index The index to add the lore at
+     * @param lore The new {@link Text} list to add to the item
+     * @return A reference to this object
+     */
+    @Override
+    public TextItemBuilder addLoreText(int index, List<Text> lore) {
+        return new TextItemBuilder(this).addLoreText(index, lore);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param index The index to add the lore at
+     * @param lore The new {@link Text} array to add to the item
+     * @return A reference to this object
+     */
+    @Override
+    public TextItemBuilder addLoreText(int index, Text... lore) {
+        return new TextItemBuilder(this).addLoreText(index, lore);
     }
 
     /**

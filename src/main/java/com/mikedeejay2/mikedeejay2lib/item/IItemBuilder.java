@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.item;
 
 import com.google.common.collect.Multimap;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
+import com.mikedeejay2.mikedeejay2lib.text.Text;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.OfflinePlayer;
@@ -92,12 +93,44 @@ public interface IItemBuilder<I, T> {
     String getName();
 
     /**
+     * Get the name of the item
+     *
+     * @param player The player, for use with translatable text
+     * @return The name of the item
+     */
+    String getName(Player player);
+
+    /**
+     * Get the name of the item
+     *
+     * @param sender The <code>CommandSender</code>, for use with translatable text
+     * @return The name of the item
+     */
+    String getName(CommandSender sender);
+
+    /**
+     * Get the name of the item
+     *
+     * @param locale The locale, for use with translatable text
+     * @return The name of the item
+     */
+    String getName(String locale);
+
+    /**
      * Set the new name of the item
      *
      * @param name The new name of the item
      * @return A reference to this object
      */
     T setName(String name);
+
+    /**
+     * Set the new name of the item
+     *
+     * @param text The new name of the item
+     * @return A reference to this object
+     */
+    T setName(Text text);
 
     /**
      * Get the stack amount of the item
@@ -137,6 +170,30 @@ public interface IItemBuilder<I, T> {
     List<String> getLore();
 
     /**
+     * Get the String list of lore of the item
+     *
+     * @param player The player, for use with translatable text
+     * @return The String list of lore of the item
+     */
+    List<String> getLore(Player player);
+
+    /**
+     * Get the String list of lore of the item
+     *
+     * @param sender The <code>CommandSender</code>, for use with translatable text
+     * @return The String list of lore of the item
+     */
+    List<String> getLore(CommandSender sender);
+
+    /**
+     * Get the String list of lore of the item
+     *
+     * @param locale The locale, for use with translatable text
+     * @return The String list of lore of the item
+     */
+    List<String> getLore(String locale);
+
+    /**
      * Set the new String list of lore of the item
      *
      * @param lore The new String list of lore of the item
@@ -151,6 +208,22 @@ public interface IItemBuilder<I, T> {
      * @return A reference to this object
      */
     T setLore(String... lore);
+
+    /**
+     * Set the new {@link Text} list of lore of the item
+     *
+     * @param lore The new {@link Text} list of lore of the item
+     * @return A reference to this object
+     */
+    T setLoreText(List<Text> lore);
+
+    /**
+     * Set the new {@link Text} list of lore of the item
+     *
+     * @param lore The new {@link Text} list of lore of the item
+     * @return A reference to this object
+     */
+    T setLoreText(Text... lore);
 
     /**
      * Add new String list of lore of the item
@@ -185,6 +258,40 @@ public interface IItemBuilder<I, T> {
      * @return A reference to this object
      */
     T addLore(int index, String... lore);
+
+    /**
+     * Add new {@link Text} list of lore of the item
+     *
+     * @param lore The new {@link Text} list to add to the item
+     * @return A reference to this object
+     */
+    T addLoreText(List<Text> lore);
+
+    /**
+     * Add new {@link Text} array of lore of the item
+     *
+     * @param lore The new {@link Text} array to add to the item
+     * @return A reference to this object
+     */
+    T addLoreText(Text... lore);
+
+    /**
+     * Add new {@link Text} list of lore of the item
+     *
+     * @param lore The new {@link Text} list to add to the item
+     * @param index The index to add the lore at
+     * @return A reference to this object
+     */
+    T addLoreText(int index, List<Text> lore);
+
+    /**
+     * Add new {@link Text} array of lore of the item
+     *
+     * @param lore The new {@link Text} array to add to the item
+     * @param index The index to add the lore at
+     * @return A reference to this object
+     */
+    T addLoreText(int index, Text... lore);
 
     /**
      * Get the map of enchantments of the item

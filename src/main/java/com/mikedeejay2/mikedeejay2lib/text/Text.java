@@ -1,47 +1,50 @@
 package com.mikedeejay2.mikedeejay2lib.text;
 
 import com.mikedeejay2.mikedeejay2lib.text.language.TranslationManager;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
+import org.apache.commons.lang3.Validate;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
 public interface Text extends Cloneable {
-    static LiteralText of(String text) {
+    static TextLiteral of(String text) {
         return literal(text);
     }
 
-    static LiteralText literal(String text) {
-        if(text == null || text.isEmpty()) return LiteralText.EMPTY;
-        return new LiteralText(text);
+    static TextLiteral literal(String text) {
+        if(text == null || text.isEmpty()) return TextLiteral.EMPTY;
+        return new TextLiteral(text);
     }
 
-    static TranslatableText translatable(String key) {
-        return new TranslatableText(key);
+    static TextTranslatable translatable(String key) {
+        return new TextTranslatable(key);
     }
 
-    static TranslatableText translatable(String key, TranslationManager manager) {
-        return new TranslatableText(key, manager);
+    static TextTranslatable translatable(String key, TranslationManager manager) {
+        return new TextTranslatable(key, manager);
     }
 
     String get(Player player);
     String get(CommandSender sender);
     String get(String locale);
     String get();
-    Text placeholder(PlaceholderFormatter formatter);
     Text clone();
 
-    default String get(Player player, PlaceholderFormatter formatter) {
-        return formatter.format(get(player));
+    default Text placeholder(PlaceholderFormatter formatter) {
+        Validate.notNull(formatter, "Attempted to add null placeholders");
+        return new TextPlaceholderFormatted(this, formatter);
     }
 
-    default String get(String locale, PlaceholderFormatter formatter) {
-        return formatter.format(get(locale));
+    default Text format(Colors.FormatStyle... styles) {
+        return new TextColorFormatted(this, styles);
     }
 
-    default String get(PlaceholderFormatter formatter) {
-        return formatter.format(get());
+    default Text format() {
+        return new TextColorFormatted(this, Colors.FormatStyle.COLOR_CODES);
     }
 
     default Text concat(Text other) {
-        return new ConcatText(this, other);
+        Validate.notNull(other, "Attempted to concatenate null text");
+        return new TextConcatenated(this, other);
     }
 }
