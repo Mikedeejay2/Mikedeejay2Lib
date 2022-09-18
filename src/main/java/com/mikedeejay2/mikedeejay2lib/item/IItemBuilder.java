@@ -223,7 +223,7 @@ public interface IItemBuilder<I, T> {
      * @param lore The new {@link Text} list of lore of the item
      * @return A reference to this object
      */
-    T setLoreText(Text... lore);
+    T setLore(Text... lore);
 
     /**
      * Add new String list of lore of the item
@@ -273,7 +273,7 @@ public interface IItemBuilder<I, T> {
      * @param lore The new {@link Text} array to add to the item
      * @return A reference to this object
      */
-    T addLoreText(Text... lore);
+    T addLore(Text... lore);
 
     /**
      * Add new {@link Text} list of lore of the item
@@ -291,7 +291,7 @@ public interface IItemBuilder<I, T> {
      * @param index The index to add the lore at
      * @return A reference to this object
      */
-    T addLoreText(int index, Text... lore);
+    T addLore(int index, Text... lore);
 
     /**
      * Get the map of enchantments of the item

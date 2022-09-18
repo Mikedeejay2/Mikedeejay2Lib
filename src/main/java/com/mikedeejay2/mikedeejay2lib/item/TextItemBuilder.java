@@ -199,23 +199,23 @@ public class TextItemBuilder extends ItemBuilder {
 
     @Override
     public TextItemBuilder setLoreText(List<Text> lore) {
-        return this.setLoreText(lore.toArray(new Text[0]));
+        return this.setLore(lore.toArray(new Text[0]));
     }
 
     @Override
-    public TextItemBuilder setLoreText(Text... lore) {
+    public TextItemBuilder setLore(Text... lore) {
         this.lore.clear();
-        this.addLoreText(lore);
+        this.addLore(lore);
         return this;
     }
 
     @Override
     public TextItemBuilder addLoreText(List<Text> lore) {
-        return this.addLoreText(lore.toArray(new Text[0]));
+        return this.addLore(lore.toArray(new Text[0]));
     }
 
     @Override
-    public TextItemBuilder addLoreText(Text... lore) {
+    public TextItemBuilder addLore(Text... lore) {
         for(Text cur : lore) {
             this.lore.add(RESET_TEXT.concat(cur));
         }
@@ -225,11 +225,11 @@ public class TextItemBuilder extends ItemBuilder {
 
     @Override
     public TextItemBuilder addLoreText(int index, List<Text> lore) {
-        return this.addLoreText(index, lore.toArray(new Text[0]));
+        return this.addLore(index, lore.toArray(new Text[0]));
     }
 
     @Override
-    public TextItemBuilder addLoreText(int index, Text... lore) {
+    public TextItemBuilder addLore(int index, Text... lore) {
         int curIndex = index;
         for(Text cur : lore) {
             this.lore.add(curIndex++, RESET_TEXT.concat(cur));

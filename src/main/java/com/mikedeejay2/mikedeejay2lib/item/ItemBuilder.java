@@ -427,8 +427,8 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
      * @return A reference to this object
      */
     @Override
-    public TextItemBuilder setLoreText(Text... lore) {
-        return new TextItemBuilder(this).setLoreText(lore);
+    public TextItemBuilder setLore(Text... lore) {
+        return new TextItemBuilder(this).setLore(lore);
     }
 
     /**
@@ -511,8 +511,8 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
      * @return A reference to this object
      */
     @Override
-    public TextItemBuilder addLoreText(Text... lore) {
-        return new TextItemBuilder(this).addLoreText(lore);
+    public TextItemBuilder addLore(Text... lore) {
+        return new TextItemBuilder(this).addLore(lore);
     }
 
     /**
@@ -535,8 +535,8 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
      * @return A reference to this object
      */
     @Override
-    public TextItemBuilder addLoreText(int index, Text... lore) {
-        return new TextItemBuilder(this).addLoreText(index, lore);
+    public TextItemBuilder addLore(int index, Text... lore) {
+        return new TextItemBuilder(this).addLore(index, lore);
     }
 
     /**

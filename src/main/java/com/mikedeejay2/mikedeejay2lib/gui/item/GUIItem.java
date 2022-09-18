@@ -765,9 +765,9 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
      * @return A reference to this object
      */
     @Override
-    public GUIItem setLoreText(Text... lore) {
-        baseItem.setLoreText(lore);
-        viewItem.setLoreText(lore);
+    public GUIItem setLore(Text... lore) {
+        baseItem.setLore(lore);
+        viewItem.setLore(lore);
         return this;
     }
 
@@ -935,9 +935,9 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
      * @return A reference to this object
      */
     @Override
-    public GUIItem addLoreText(Text... lore) {
-        baseItem.addLoreText(lore);
-        viewItem.addLoreText(lore);
+    public GUIItem addLore(Text... lore) {
+        baseItem.addLore(lore);
+        viewItem.addLore(lore);
         return this;
     }
 
@@ -963,9 +963,9 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
      * @return A reference to this object
      */
     @Override
-    public GUIItem addLoreText(int index, Text... lore) {
-        baseItem.addLoreText(lore);
-        viewItem.addLoreText(lore);
+    public GUIItem addLore(int index, Text... lore) {
+        baseItem.addLore(lore);
+        viewItem.addLore(lore);
         return this;
     }
 
