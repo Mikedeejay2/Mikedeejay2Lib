@@ -38,6 +38,12 @@ public class TextColorFormatted implements Text {
         return format(text.get());
     }
 
+    @Override
+    public Text format(Colors.FormatStyle... styles) {
+        formatStyles.addAll(Arrays.asList(styles));
+        return this;
+    }
+
     private String format(String input) {
         String result = input;
         for(Colors.FormatStyle formatStyle : formatStyles) {
