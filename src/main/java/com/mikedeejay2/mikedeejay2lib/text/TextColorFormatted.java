@@ -7,10 +7,34 @@ import org.bukkit.entity.Player;
 
 import java.util.*;
 
+/**
+ * Formats text with a {@link Colors.FormatStyle} to format the color codes within the text. In some cases this isn't
+ * required as color codes may already be translated. However, if color codes aren't translated or additional
+ * functionality is wanted such as translating hex codes or color shortcuts, that functionality can be specified here.
+ * <p>
+ * Color formatted text can be created with {@link Text#color()} for {@link Colors.FormatStyle#COLOR_CODES} or
+ * {@link Text#color(Colors.FormatStyle...)} for multiple styles. These methods are non-static methods.
+ *
+ * @author Mikedeejay2
+ * @see Text
+ */
 public class TextColorFormatted implements Text {
+    /**
+     * The encapsulated text to be color formatted
+     */
     protected final Text text;
+
+    /**
+     * The list of {@link Colors.FormatStyle FormatStyles} to be used when formatting
+     */
     protected final Set<Colors.FormatStyle> formatStyles;
 
+    /**
+     * Construct a new <code>TextColorFormatted</code>
+     *
+     * @param text         The encapsulated text to be color formatted
+     * @param formatStyles The list of {@link Colors.FormatStyle FormatStyles} to be used when formatting
+     */
     protected TextColorFormatted(Text text, Colors.FormatStyle... formatStyles) {
         this.text = text;
         this.formatStyles = new HashSet<>();
@@ -21,32 +45,38 @@ public class TextColorFormatted implements Text {
 
     @Override
     public String get(Player player) {
-        return format(text.get(player));
+        return color(text.get(player));
     }
 
     @Override
     public String get(CommandSender sender) {
-        return format(text.get(sender));
+        return color(text.get(sender));
     }
 
     @Override
     public String get(String locale) {
-        return format(text.get(locale));
+        return color(text.get(locale));
     }
 
     @Override
     public String get() {
-        return format(text.get());
+        return color(text.get());
     }
 
     @Override
-    public Text format(Colors.FormatStyle... styles) {
+    public Text color(Colors.FormatStyle... styles) {
         Set<Colors.FormatStyle> newStyles = new HashSet<>(this.formatStyles);
         newStyles.addAll(Arrays.asList(styles));
         return new TextColorFormatted(text, newStyles.toArray(new Colors.FormatStyle[0]));
     }
 
-    private String format(String input) {
+    /**
+     * Internal method to format
+     *
+     * @param input The input String
+     * @return The formatted String
+     */
+    private String color(String input) {
         String result = input;
         for(Colors.FormatStyle formatStyle : formatStyles) {
             result = formatStyle.format(result);

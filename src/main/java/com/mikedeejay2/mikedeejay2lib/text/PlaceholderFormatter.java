@@ -155,11 +155,6 @@ public final class PlaceholderFormatter implements Cloneable {
         return string.replaceAll("%" + key + "%", replacement);
     }
 
-    /**
-     * Clone this <code>PlaceholderFormatter</code>
-     *
-     * @return The cloned <code>PlaceholderFormatter</code>
-     */
     @Override
     public PlaceholderFormatter clone() {
         PlaceholderFormatter formatter;

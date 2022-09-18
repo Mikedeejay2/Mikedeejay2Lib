@@ -3,33 +3,73 @@ package com.mikedeejay2.mikedeejay2lib.text;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 
+/**
+ * Two texts that are concatenated (combined into one). Should be used to combine two separated texts that need to be
+ * one. For example, a literal text and a translatable text.
+ * <p>
+ * Concatenated text can be created with {@link Text#concat(Text)}. This is a non-static method.
+ *
+ * @author Mikedeejay2
+ * @see Text
+ */
 public class TextConcatenated implements Text {
-    protected Text text1;
-    protected Text text2;
+    /**
+     * The text on the left of the concatenation
+     */
+    protected final Text leftText;
 
-    protected TextConcatenated(Text text1, Text text2) {
-        this.text1 = text1;
-        this.text2 = text2;
+    /**
+     * The text on the right of the concatenation
+     */
+    protected final Text rightText;
+
+    /**
+     * Construct a new <code>TextConcatenated</code>
+     *
+     * @param leftText  The text on the left of the concatenation
+     * @param rightText The text on the right of the concatenation
+     */
+    protected TextConcatenated(Text leftText, Text rightText) {
+        this.leftText = leftText;
+        this.rightText = rightText;
     }
 
     @Override
     public String get(Player player) {
-        return text1.get(player) + text2.get(player);
+        return leftText.get(player) + rightText.get(player);
     }
 
     @Override
     public String get(CommandSender sender) {
-        return text1.get(sender) + text2.get(sender);
+        return leftText.get(sender) + rightText.get(sender);
     }
 
     @Override
     public String get(String locale) {
-        return text1.get(locale) + text2.get(locale);
+        return leftText.get(locale) + rightText.get(locale);
     }
 
     @Override
     public String get() {
-        return text1.get() + text2.get();
+        return leftText.get() + rightText.get();
+    }
+
+    /**
+     * Get the text on the left of the concatenation
+     *
+     * @return The left text
+     */
+    public Text getLeftText() {
+        return leftText;
+    }
+
+    /**
+     * Get the text on the right of the concatenation
+     *
+     * @return The right text
+     */
+    public Text getRightText() {
+        return rightText;
     }
 
     @Override
@@ -41,8 +81,6 @@ public class TextConcatenated implements Text {
             e.printStackTrace();
             return null;
         }
-        text.text1 = this.text1.clone();
-        text.text2 = this.text2.clone();
         return text;
     }
 }
