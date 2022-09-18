@@ -14,7 +14,9 @@ public class TextColorFormatted implements Text {
     protected TextColorFormatted(Text text, Colors.FormatStyle... formatStyles) {
         this.text = text;
         this.formatStyles = new HashSet<>();
-        addStyles(formatStyles);
+        this.formatStyles.addAll(Arrays.asList(formatStyles));
+        Validate.isTrue(!(this.formatStyles.contains(Colors.FormatStyle.ALL) && this.formatStyles.size() > 1),
+                        "Developer error, it is redundant to have more than Colors.FormatStyle.ALL");
     }
 
     @Override
@@ -39,8 +41,9 @@ public class TextColorFormatted implements Text {
 
     @Override
     public Text format(Colors.FormatStyle... styles) {
-        addStyles(styles);
-        return this;
+        Set<Colors.FormatStyle> newStyles = new HashSet<>(this.formatStyles);
+        newStyles.addAll(Arrays.asList(styles));
+        return new TextColorFormatted(text, newStyles.toArray(new Colors.FormatStyle[0]));
     }
 
     private String format(String input) {
@@ -49,12 +52,6 @@ public class TextColorFormatted implements Text {
             result = formatStyle.format(result);
         }
         return result;
-    }
-
-    private void addStyles(Colors.FormatStyle[] formatStyles) {
-        this.formatStyles.addAll(Arrays.asList(formatStyles));
-        Validate.isTrue(!(this.formatStyles.contains(Colors.FormatStyle.ALL) && this.formatStyles.size() > 1),
-                        "Developer error, it is redundant to have more than Colors.FormatStyle.ALL");
     }
 
     @Override
