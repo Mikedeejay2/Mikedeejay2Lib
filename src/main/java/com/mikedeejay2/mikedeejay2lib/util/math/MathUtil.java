@@ -1067,4 +1067,24 @@ public final class MathUtil {
     public static double directionToPitch(Vector directionVector) {
         return new Location(null, 0, 0, 0).setDirection(directionVector).getPitch();
     }
+
+    /**
+     * Fast square implementation, alternate for {@link Math#pow(double, double) Math#pow(double, 2)}
+     *
+     * @param x The number to be squared
+     * @return The squared number
+     */
+    public static double square(double x) {
+        return x * x;
+    }
+
+    /**
+     * Fast cubed implementation, alternate for {@link Math#pow(double, double) Math#pow(double, 3)}
+     *
+     * @param x The number to be cubed
+     * @return The cubed number
+     */
+    public static double cubed(double x) {
+        return x * x * x;
+    }
 }
