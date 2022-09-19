@@ -571,7 +571,7 @@ public class GUILayer {
         for(GUIItem[] arr : items) {
             for(GUIItem guiItem : arr) {
                 if(guiItem == null) continue;
-                ItemStack curItem = guiItem.getItemBase();
+                ItemStack curItem = guiItem.get();
                 if(curItem == null) continue;
                 if(!ItemComparison.equalsEachOther(item, curItem)) continue;
                 return true;
@@ -590,7 +590,7 @@ public class GUILayer {
         for(GUIItem[] arr : items) {
             for(GUIItem guiItem : arr) {
                 if(guiItem == null) continue;
-                ItemStack curItem = guiItem.getItemBase();
+                ItemStack curItem = guiItem.get();
                 if(curItem == null) continue;
                 if(curItem.getType() != material) continue;
                 return true;

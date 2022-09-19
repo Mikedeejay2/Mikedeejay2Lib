@@ -155,7 +155,7 @@ public class AnimatedGUIItem extends GUIItem {
      * @param frame The AnimationFrame that will be processed
      */
     private void processItem(AnimationFrame frame) {
-        setViewItem(frame.getItem());
+        set(frame.getItem());
     }
 
     /**

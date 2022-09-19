@@ -139,7 +139,7 @@ public class GUINavigatorModule implements GUIModule {
             int backAmount = (int) system.backSize();
             if(backAmount == 0) { backAmount = 1; }
             else if(backAmount > 64) { backAmount = 64; }
-            validBackItem.setAmountView(backAmount);
+            validBackItem.setAmount(backAmount);
             layer.setItem(1, 1, validBackItem);
         } else {
             layer.setItem(1, 1, invalidBackItem);
@@ -148,7 +148,7 @@ public class GUINavigatorModule implements GUIModule {
             int forwardAmount = (int) system.forwardSize();
             if(forwardAmount == 0) { forwardAmount = 1; }
             else if(forwardAmount > 64) { forwardAmount = 64; }
-            validForwardItem.setAmountView(forwardAmount);
+            validForwardItem.setAmount(forwardAmount);
             layer.setItem(1, 9, validForwardItem);
         } else {
             layer.setItem(1, 9, invalidForwardItem);

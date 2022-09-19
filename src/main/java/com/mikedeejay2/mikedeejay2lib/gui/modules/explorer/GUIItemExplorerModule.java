@@ -280,7 +280,7 @@ public class GUIItemExplorerModule extends GUIListModule {
      */
     private void recurSearchItems(ItemFolder folder, List<GUIItem> list, int depth) {
         for(GUIItem item : folder.getItems()) {
-            if(!SearchUtil.searchMetaFuzzy(item.getMetaView(), searchTerm)) continue;
+            if(!SearchUtil.searchMetaFuzzy(item.getMeta(), searchTerm)) continue;
             list.add(item);
         }
         if(searchDepth == -1 || depth < searchDepth) {

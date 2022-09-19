@@ -15,6 +15,7 @@ import com.mikedeejay2.mikedeejay2lib.util.head.HeadUtil;
 import com.mikedeejay2.mikedeejay2lib.util.structure.HistoryHolder;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
 
 import java.io.File;
 import java.util.LinkedList;
@@ -247,10 +248,10 @@ public class GUIFileExplorerModule extends GUIListModule {
             }
             fileBuilder.setLore(newLore);
 
-            GUIItem fileItem = new GUIItem(null);
+            GUIItem fileItem = new GUIItem((ItemStack) null);
             if(curFile.isDirectory()) {
                 fileBuilder.setHeadBase64(Base64Head.FOLDER.get());
-                fileItem.setItem(fileBuilder.get());
+                fileItem.set(fileBuilder.get());
                 if(allowSubFolders) {
                     fileItem.addEvent(new GUISwitchFolderEvent(curFile));
                 }
@@ -259,7 +260,7 @@ public class GUIFileExplorerModule extends GUIListModule {
                 String extension = FileUtil.getFileExtension(curFile);
                 Base64Head head = HeadUtil.getHeadFromFileExtension(extension);
                 fileBuilder.setHeadBase64(head.get());
-                fileItem.setItem(fileBuilder.get());
+                fileItem.set(fileBuilder.get());
                 fileQueue.add(fileItem);
             }
         }

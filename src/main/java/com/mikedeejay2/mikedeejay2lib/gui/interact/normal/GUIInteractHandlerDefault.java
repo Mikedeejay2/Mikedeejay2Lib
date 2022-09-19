@@ -74,7 +74,7 @@ public class GUIInteractHandlerDefault extends GUIInteractHandler {
             int     col     = gui.getColFromSlot(slot);
             GUIItem guiItem = layer.getItem(row, col);
             if(guiItem != null) {
-                bottomItem = guiItem.getItemBase();
+                bottomItem = guiItem.get();
             }
         } else if(slot >= 0) {
             bottomItem = playerInv.getItem(slot);

@@ -255,7 +255,7 @@ public class GUIContainer {
                     if(guiItem == null) {
                         continue;
                     }
-                    ItemStack itemStack = guiItem.getItem();
+                    ItemStack itemStack = guiItem.get();
 
                     if(itemStack != null) {
                         inventory.setItem(invSlot, itemStack);

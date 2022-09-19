@@ -114,25 +114,7 @@ public final class GUIEventInfo {
      * @return The current item
      */
     public ItemStack getCurrentItem() {
-        return item.getItem();
-    }
-
-    /**
-     * Get the current view item in the slot that was clicked
-     *
-     * @return The view item
-     */
-    public ItemStack getViewItem() {
-        return item.getItemView();
-    }
-
-    /**
-     * Get the current base item in the slot that was clicked
-     *
-     * @return The base item
-     */
-    public ItemStack getBaseItem() {
-        return item.getItemBase();
+        return item.get();
     }
 
     /**
@@ -149,6 +131,7 @@ public final class GUIEventInfo {
      *
      * @param item The <code>ItemStack</code> to set
      */
+    @Deprecated
     public void setCursor(ItemStack item) {
         event.setCursor(item);
     }
@@ -160,24 +143,6 @@ public final class GUIEventInfo {
      */
     public void setCurrentItem(ItemStack item) {
         this.item.set(item);
-    }
-
-    /**
-     * Set the view item in the slot that was clicked
-     *
-     * @param item The <code>ItemStack</code> to use
-     */
-    public void setViewItem(ItemStack item) {
-        this.item.setViewItem(item);
-    }
-
-    /**
-     * Set the base item in the slot that was clicked
-     *
-     * @param item The <code>ItemStack</code> to use
-     */
-    public void setBaseItem(ItemStack item) {
-        this.item.setBaseItem(item);
     }
 
     /**

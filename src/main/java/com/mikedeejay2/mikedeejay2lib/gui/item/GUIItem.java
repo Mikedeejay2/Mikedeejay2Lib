@@ -29,23 +29,18 @@ import java.util.*;
 /**
  * Represents an item in a GUI. Holds a few useful things such as:
  * <ul>
- *     <li>A base item</li>
- *     <li>A view item</li>
+ *     <li>An {@link ItemBuilder}</li>
  *     <li>Whether or not it's movable in the GUI or not</li>
- *     <li>GUI Events</li>
+ *     <li>GUI Events ({@link GUIEventHandler})</li>
  * </ul>
  *
  * @author Mikedeejay2
  */
 public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
     /**
-     * The base item builder
+     * The item builder
      */
-    protected ItemBuilder baseItem;
-    /**
-     * The view item builder
-     */
-    protected ItemBuilder viewItem;
+    protected ItemBuilder item;
     /**
      * Whether this item can be moved
      */
@@ -61,8 +56,18 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
      * @param item The reference base item
      */
     public GUIItem(ItemStack item) {
-        this.baseItem = ItemBuilder.of(item);
-        this.viewItem = ItemBuilder.of(item);
+        this.item = ItemBuilder.of(item);
+        this.movable = false;
+        this.events = new GUIEventHandler();
+    }
+
+    /**
+     * Construct a new <code>GUIItem</code>
+     *
+     * @param itemBuilder The reference item builder
+     */
+    public GUIItem(IItemBuilder<?, ?> itemBuilder) {
+        this.item = ItemBuilder.of(itemBuilder);
         this.movable = false;
         this.events = new GUIEventHandler();
     }
@@ -211,2896 +216,517 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
         return this;
     }
 
-    /**
-     * Reset the view item to the base item
-     *
-     * @return A reference to this <code>GUIItem</code>
-     */
-    public GUIItem resetViewItem() {
-        this.viewItem = baseItem.clone();
-        return this;
-    }
-
-    /**
-     * {@inheritDoc}
-     *
-     * @return The reference <code>ItemStack</code>
-     */
     @Override
     public ItemStack get() {
-        return getItem();
+        return this.item.get();
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param player The player viewing the item
-     * @return The reference <code>ItemStack</code>
-     */
     @Override
     public ItemStack get(Player player) {
-        return viewItem.get(player);
+        return this.item.get(player);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param sender The <code>CommandSender</code> viewing the item
-     * @return The reference <code>ItemStack</code>
-     */
     @Override
     public ItemStack get(CommandSender sender) {
-        return viewItem.get(sender);
+        return this.item.get(sender);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param locale The locale to translate the item
-     * @return The reference <code>ItemStack</code>
-     */
     @Override
     public ItemStack get(String locale) {
-        return viewItem.get(locale);
+        return this.item.get(locale);
     }
 
-    /**
-     * Get the <code>ItemStack</code> of this <code>GUIItem</code> (view item)
-     *
-     * @return The requested <code>ItemStack</code>
-     */
-    public ItemStack getItem() {
-        return viewItem.get();
-    }
-
-    /**
-     * Get the base <code>ItemStack</code> of this <code>GUIItem</code>
-     *
-     * @return The base item
-     */
-    public ItemStack getItemBase() {
-        return baseItem.get();
-    }
-
-    /**
-     * Get the view item of this <code>GUIItem</code>
-     *
-     * @return The view item
-     */
-    public ItemStack getItemView() {
-        return viewItem.get();
-    }
-
-    /**
-     * Set the <code>ItemStack</code> that this <code>GUIItem</code> stores
-     * (modifies both the base item and the view item)
-     *
-     * @param item The item to set
-     * @return A reference to this <code>GUIItem</code>
-     */
     @Override
     public GUIItem set(ItemStack item) {
-        return setItem(item);
-    }
-
-    /**
-     * Set the <code>ItemStack</code> that this <code>GUIItem</code> stores
-     * (modifies both the base item and the view item)
-     *
-     * @param item The item to set
-     * @return A reference to this <code>GUIItem</code>
-     */
-    public GUIItem setItem(ItemStack item) {
-        setBaseItem(item);
-        setViewItem(item);
+        this.item.set(item);
         return this;
     }
 
-    /**
-     * Set the <code>ItemStack</code> for the base item of this <code>GUIItem</code>
-     *
-     * @param baseItem Item that will be set to the base item
-     * @return A reference to this <code>GUIItem</code>
-     */
-    public GUIItem setBaseItem(ItemStack baseItem) {
-        this.baseItem.set(baseItem);
-        return this;
-    }
-
-    /**
-     * Set the <code>ItemStack</code> for the view item of this <code>GUIItem</code>
-     *
-     * @param viewItem Item that will be set to the view item
-     * @return A reference to this <code>GUIItem</code>
-     */
-    public GUIItem setViewItem(ItemStack viewItem) {
-        this.viewItem.set(viewItem);
-        return this;
-    }
-
-    /**
-     * Get the {@link ItemMeta} of the item
-     *
-     * @return The <code>ItemMeta</code> of the item
-     */
     @Override
     public ItemMeta getMeta() {
-        return getMetaView();
+        return this.item.getMeta();
     }
 
-    /**
-     * Get the {@link ItemMeta} of the base item
-     *
-     * @return The <code>ItemMeta</code> of the item
-     */
-    public ItemMeta getMetaBase() {
-        return baseItem.getMeta();
-    }
-
-    /**
-     * Get the {@link ItemMeta} of the view item
-     *
-     * @return The <code>ItemMeta</code> of the item
-     */
-    public ItemMeta getMetaView() {
-        return viewItem.getMeta();
-    }
-
-    /**
-     * Set the new {@link ItemMeta} of the item
-     *
-     * @param meta The new <code>ItemMeta</code>
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setMeta(ItemMeta meta) {
-        setMetaBase(meta);
-        setMetaView(meta);
+        this.item.setMeta(meta);
         return this;
     }
 
-    /**
-     * Set the new {@link ItemMeta} of the base item
-     *
-     * @param meta The new <code>ItemMeta</code>
-     * @return A reference to this object
-     */
-    public GUIItem setMetaBase(ItemMeta meta) {
-        this.baseItem.setMeta(meta);
-        return this;
-    }
-
-    /**
-     * Set the new {@link ItemMeta} of the view item
-     *
-     * @param meta The new <code>ItemMeta</code>
-     * @return A reference to this object
-     */
-    public GUIItem setMetaView(ItemMeta meta) {
-        this.viewItem.setMeta(meta);
-        return this;
-    }
-
-    /**
-     * Get the name of the item
-     *
-     * @return The name of the item
-     */
     @Override
     public String getName() {
-        return getNameView();
+        return this.item.getName();
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param player The player, for use with translatable text
-     * @return The name of the item
-     */
     @Override
     public String getName(Player player) {
-        return viewItem.getName(player);
+        return this.item.getName(player);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param sender The <code>CommandSender</code>, for use with translatable text
-     * @return The name of the item
-     */
     @Override
     public String getName(CommandSender sender) {
-        return viewItem.getName(sender);
+        return this.item.getName(sender);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param locale The locale, for use with translatable text
-     * @return The name of the item
-     */
     @Override
     public String getName(String locale) {
-        return viewItem.getName(locale);
+        return this.item.getName(locale);
     }
 
-    /**
-     * Get the name of the base item
-     *
-     * @return The name of the item
-     */
-    public String getNameBase() {
-        return baseItem.getName();
-    }
-
-    /**
-     * Get the name of the view item
-     *
-     * @return The name of the item
-     */
-    public String getNameView() {
-        return viewItem.getName();
-    }
-
-    /**
-     * Set the new name of the item
-     *
-     * @param name The new name of the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setName(String name) {
-        setNameBase(name);
-        setNameView(name);
+        this.item.setName(name);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param text The new name of the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setName(Text text) {
-        baseItem.setName(text);
-        viewItem.setName(text);
+        this.item.setName(text);
         return this;
     }
 
-    /**
-     * Set the new name of the base item
-     *
-     * @param name The new name of the item
-     * @return A reference to this object
-     */
-    public GUIItem setNameBase(String name) {
-        baseItem.setName(name);
-        return this;
-    }
-
-    /**
-     * Set the new name of the view item
-     *
-     * @param name The new name of the item
-     * @return A reference to this object
-     */
-    public GUIItem setNameView(String name) {
-        viewItem.setName(name);
-        return this;
-    }
-
-    /**
-     * Get the stack amount of the item
-     *
-     * @return The stack amount of the item
-     */
     @Override
     public int getAmount() {
-        return getAmountView();
+        return this.item.getAmount();
     }
 
-    /**
-     * Get the stack amount of the base item
-     *
-     * @return The stack amount of the item
-     */
-    public int getAmountBase() {
-        return baseItem.getAmount();
-    }
-
-    /**
-     * Get the stack amount of the view item
-     *
-     * @return The stack amount of the item
-     */
-    public int getAmountView() {
-        return viewItem.getAmount();
-    }
-
-    /**
-     * Set the new stack amount of the item
-     *
-     * @param amount The new stack amount of the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setAmount(int amount) {
-        setAmountBase(amount);
-        setAmountView(amount);
+        this.item.setAmount(amount);
         return this;
     }
 
-    /**
-     * Set the new stack amount of the base item
-     *
-     * @param amount The new stack amount of the item
-     * @return A reference to this object
-     */
-    public GUIItem setAmountBase(int amount) {
-        baseItem.setAmount(amount);
-        return this;
-    }
-
-    /**
-     * Set the new stack amount of the view item
-     *
-     * @param amount The new stack amount of the item
-     * @return A reference to this object
-     */
-    public GUIItem setAmountView(int amount) {
-        viewItem.setAmount(amount);
-        return this;
-    }
-
-    /**
-     * Get the material type of the item
-     *
-     * @return The material type of the item
-     */
     @Override
     public Material getType() {
-        return getTypeBase();
+        return this.item.getType();
     }
 
-    /**
-     * Get the material type of the base item
-     *
-     * @return The material type of the item
-     */
-    public Material getTypeBase() {
-        return baseItem.getType();
-    }
-
-    /**
-     * Get the material type of the view item
-     *
-     * @return The material type of the item
-     */
-    public Material getTypeView() {
-        return viewItem.getType();
-    }
-
-    /**
-     * Set the new material type of the item
-     *
-     * @param material The new material type of the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setType(Material material) {
-        setTypeBase(material);
-        setTypeView(material);
+        this.item.setType(material);
         return this;
     }
 
-    /**
-     * Set the new material type of the base item
-     *
-     * @param material The new material type of the item
-     * @return A reference to this object
-     */
-    public GUIItem setTypeBase(Material material) {
-        baseItem.setType(material);
-        return this;
-    }
-
-    /**
-     * Set the new material type of the view item
-     *
-     * @param material The new material type of the item
-     * @return A reference to this object
-     */
-    public GUIItem setTypeView(Material material) {
-        viewItem.setType(material);
-        return this;
-    }
-
-    /**
-     * Get the String list of lore of the item
-     *
-     * @return The String list of lore of the item
-     */
     @Override
     public List<String> getLore() {
-        return getLoreView();
+        return this.item.getLore();
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param player The player, for use with translatable text
-     * @return The String list of lore of the item
-     */
     @Override
     public List<String> getLore(Player player) {
-        return viewItem.getLore(player);
+        return this.item.getLore(player);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param sender The <code>CommandSender</code>, for use with translatable text
-     * @return The String list of lore of the item
-     */
     @Override
     public List<String> getLore(CommandSender sender) {
-        return viewItem.getLore(sender);
+        return this.item.getLore(sender);
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param locale The locale, for use with translatable text
-     * @return The String list of lore of the item
-     */
     @Override
     public List<String> getLore(String locale) {
-        return viewItem.getLore(locale);
+        return this.item.getLore(locale);
     }
 
-    /**
-     * Get the String list of lore of the base item
-     *
-     * @return The String list of lore of the item
-     */
-    public List<String> getLoreBase() {
-        return baseItem.getLore();
-    }
-
-    /**
-     * Get the String list of lore of the view item
-     *
-     * @return The String list of lore of the item
-     */
-    public List<String> getLoreView() {
-        return viewItem.getLore();
-    }
-
-    /**
-     * Set the new String list of lore of the item
-     *
-     * @param lore The new String list of lore of the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setLore(List<String> lore) {
-        setLoreBase(lore);
-        setLoreView(lore);
+        this.item.setLore(lore);
         return this;
     }
 
-    /**
-     * Set the new String list of lore of the base item
-     *
-     * @param lore The new String list of lore of the item
-     * @return A reference to this object
-     */
-    public GUIItem setLoreBase(List<String> lore) {
-        baseItem.setLore(lore);
-        return this;
-    }
-
-    /**
-     * Set the new String list of lore of the view item
-     *
-     * @param lore The new String list of lore of the item
-     * @return A reference to this object
-     */
-    public GUIItem setLoreView(List<String> lore) {
-        viewItem.setLore(lore);
-        return this;
-    }
-
-    /**
-     * Set the new String array of lore of the item
-     *
-     * @param lore The new String array of lore of the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setLore(String... lore) {
-        setLoreBase(lore);
-        setLoreView(lore);
+        this.item.setLore(lore);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param lore The new {@link Text} list of lore of the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setLoreText(List<Text> lore) {
-        baseItem.setLoreText(lore);
-        viewItem.setLoreText(lore);
+        this.item.setLoreText(lore);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param lore The new {@link Text} list of lore of the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setLore(Text... lore) {
-        baseItem.setLore(lore);
-        viewItem.setLore(lore);
+        this.item.setLore(lore);
         return this;
     }
 
-    /**
-     * Set the new String array of lore of the base item
-     *
-     * @param lore The new String array of lore of the item
-     * @return A reference to this object
-     */
-    public GUIItem setLoreBase(String... lore) {
-        baseItem.setLore(lore);
-        return this;
-    }
-
-    /**
-     * Set the new String array of lore of the view item
-     *
-     * @param lore The new String array of lore of the item
-     * @return A reference to this object
-     */
-    public GUIItem setLoreView(String... lore) {
-        viewItem.setLore(lore);
-        return this;
-    }
-
-    /**
-     * Add new String list of lore of the item
-     *
-     * @param lore The new String list to add to the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem addLore(List<String> lore) {
-        addLoreBase(lore);
-        addLoreView(lore);
+        this.item.addLore(lore);
         return this;
     }
 
-    /**
-     * Add new String list of lore of the base item
-     *
-     * @param lore The new String list to add to the item
-     * @return A reference to this object
-     */
-    public GUIItem addLoreBase(List<String> lore) {
-        baseItem.addLore(lore);
-        return this;
-    }
-
-    /**
-     * Add new String list of lore of the view item
-     *
-     * @param lore The new String list to add to the item
-     * @return A reference to this object
-     */
-    public GUIItem addLoreView(List<String> lore) {
-        viewItem.addLore(lore);
-        return this;
-    }
-
-    /**
-     * Add new String array of lore of the item
-     *
-     * @param lore The new String array to add to the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem addLore(String... lore) {
-        addLoreBase(lore);
-        addLoreView(lore);
+        this.item.addLore(lore);
         return this;
     }
 
-    /**
-     * Add new String array of lore of the base item
-     *
-     * @param lore The new String array to add to the item
-     * @return A reference to this object
-     */
-    public GUIItem addLoreBase(String... lore) {
-        baseItem.addLore(lore);
-        return this;
-    }
-
-    /**
-     * Add new String array of lore of the view item
-     *
-     * @param lore The new String array to add to the item
-     * @return A reference to this object
-     */
-    public GUIItem addLoreView(String... lore) {
-        viewItem.addLore(lore);
-        return this;
-    }
-
-    /**
-     * Add new String list of lore of the item
-     *
-     * @param lore The new String list to add to the item
-     * @param index The index to add the lore at
-     * @return A reference to this object
-     */
     @Override
     public GUIItem addLore(int index, List<String> lore) {
-        addLoreBase(index, lore);
-        addLoreView(index, lore);
+        this.item.addLore(index, lore);
         return this;
     }
 
-    /**
-     * Add new String list of lore of the base item
-     *
-     * @param lore The new String list to add to the item
-     * @param index The index to add the lore at
-     * @return A reference to this object
-     */
-    public GUIItem addLoreBase(int index, List<String> lore) {
-        baseItem.addLore(index, lore);
-        return this;
-    }
-
-    /**
-     * Add new String list of lore of the view item
-     *
-     * @param lore The new String list to add to the item
-     * @param index The index to add the lore at
-     * @return A reference to this object
-     */
-    public GUIItem addLoreView(int index, List<String> lore) {
-        viewItem.addLore(index, lore);
-        return this;
-    }
-
-    /**
-     * Add new String array of lore of the item
-     *
-     * @param lore The new String array to add to the item
-     * @param index The index to add the lore at
-     * @return A reference to this object
-     */
     @Override
     public GUIItem addLore(int index, String... lore) {
-        addLoreBase(index, lore);
-        addLoreView(index, lore);
+        this.item.addLore(index, lore);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param lore The new {@link Text} list to add to the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem addLoreText(List<Text> lore) {
-        baseItem.addLoreText(lore);
-        viewItem.addLoreText(lore);
+        this.item.addLoreText(lore);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param lore The new {@link Text} array to add to the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem addLore(Text... lore) {
-        baseItem.addLore(lore);
-        viewItem.addLore(lore);
+        this.item.addLore(lore);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param index The index to add the lore at
-     * @param lore The new {@link Text} list to add to the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem addLoreText(int index, List<Text> lore) {
-        baseItem.addLoreText(lore);
-        viewItem.addLoreText(lore);
+        this.item.addLoreText(index, lore);
         return this;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param index The index to add the lore at
-     * @param lore The new {@link Text} array to add to the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem addLore(int index, Text... lore) {
-        baseItem.addLore(lore);
-        viewItem.addLore(lore);
+        this.item.addLore(index, lore);
         return this;
     }
 
-    /**
-     * Add new String array of lore of the base item
-     *
-     * @param lore The new String array to add to the item
-     * @param index The index to add the lore at
-     * @return A reference to this object
-     */
-    public GUIItem addLoreBase(int index, String... lore) {
-        baseItem.addLore(index, lore);
-        return this;
-    }
-
-    /**
-     * Add new String array of lore of the view item
-     *
-     * @param lore The new String array to add to the item
-     * @param index The index to add the lore at
-     * @return A reference to this object
-     */
-    public GUIItem addLoreView(int index, String... lore) {
-        viewItem.addLore(index, lore);
-        return this;
-    }
-
-    /**
-     * Get the map of enchantments of the item
-     *
-     * @return The map of enchantments of the item
-     */
     @Override
     public Map<Enchantment, Integer> getEnchants() {
-        return getEnchantsView();
+        return this.item.getEnchants();
     }
 
-    /**
-     * Get the map of enchantments of the base item
-     *
-     * @return The map of enchantments of the item
-     */
-    public Map<Enchantment, Integer> getEnchantsBase() {
-        return baseItem.getEnchants();
-    }
-
-    /**
-     * Get the map of enchantments of the view item
-     *
-     * @return The map of enchantments of the item
-     */
-    public Map<Enchantment, Integer> getEnchantsView() {
-        return viewItem.getEnchants();
-    }
-
-    /**
-     * Get whether the item has an enchantment applied to it
-     *
-     * @param enchantment The enchantment to check for
-     * @return True if the item has the enchantment, false if it doesn't
-     */
     @Override
     public boolean hasEnchant(Enchantment enchantment) {
-        return hasEnchantBase(enchantment);
+        return this.item.hasEnchant(enchantment);
     }
 
-    /**
-     * Get whether the base item has an enchantment applied to it
-     *
-     * @param enchantment The enchantment to check for
-     * @return True if the item has the enchantment, false if it doesn't
-     */
-    public boolean hasEnchantBase(Enchantment enchantment) {
-        return baseItem.hasEnchant(enchantment);
-    }
-
-    /**
-     * Get whether the view item has an enchantment applied to it
-     *
-     * @param enchantment The enchantment to check for
-     * @return True if the item has the enchantment, false if it doesn't
-     */
-    public boolean hasEnchantView(Enchantment enchantment) {
-        return viewItem.hasEnchant(enchantment);
-    }
-
-    /**
-     * Get the level of an enchantment applied to the item
-     *
-     * @param enchantment The enchantment to get the level for
-     * @return The level of the specified enchantment of the item
-     */
     @Override
     public int getEnchant(Enchantment enchantment) {
-        return getEnchantView(enchantment);
+        return this.item.getEnchant(enchantment);
     }
 
-    /**
-     * Get the level of an enchantment applied to the base item
-     *
-     * @param enchantment The enchantment to get the level for
-     * @return The level of the specified enchantment of the item
-     */
-    public int getEnchantBase(Enchantment enchantment) {
-        return baseItem.getEnchant(enchantment);
-    }
-
-    /**
-     * Get the level of an enchantment applied to the view item
-     *
-     * @param enchantment The enchantment to get the level for
-     * @return The level of the specified enchantment of the item
-     */
-    public int getEnchantView(Enchantment enchantment) {
-        return viewItem.getEnchant(enchantment);
-    }
-
-    /**
-     * Remove an enchantment from the item
-     *
-     * @param enchantment The enchantment to remove from the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem removeEnchant(Enchantment enchantment) {
-        removeEnchantBase(enchantment);
-        removeEnchantView(enchantment);
+        this.item.removeEnchant(enchantment);
         return this;
     }
 
-    /**
-     * Remove an enchantment from the base item
-     *
-     * @param enchantment The enchantment to remove from the item
-     * @return A reference to this object
-     */
-    public GUIItem removeEnchantBase(Enchantment enchantment) {
-        baseItem.removeEnchant(enchantment);
-        return this;
-    }
-
-    /**
-     * Remove an enchantment from the view item
-     *
-     * @param enchantment The enchantment to remove from the item
-     * @return A reference to this object
-     */
-    public GUIItem removeEnchantView(Enchantment enchantment) {
-        viewItem.removeEnchant(enchantment);
-        return this;
-    }
-
-    /**
-     * Add an enchantment to the item
-     *
-     * @param enchantment The enchantment to add to the item
-     * @param level The level of enchantment to add to the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem addEnchant(Enchantment enchantment, int level) {
-        addEnchantBase(enchantment, level);
-        addEnchantView(enchantment, level);
+        this.item.addEnchant(enchantment, level);
         return this;
     }
 
-    /**
-     * Add an enchantment to the base item
-     *
-     * @param enchantment The enchantment to add to the item
-     * @param level The level of enchantment to add to the item
-     * @return A reference to this object
-     */
-    public GUIItem addEnchantBase(Enchantment enchantment, int level) {
-        baseItem.addEnchant(enchantment, level);
-        return this;
-    }
-
-    /**
-     * Add an enchantment to the view item
-     *
-     * @param enchantment The enchantment to add to the item
-     * @param level The level of enchantment to add to the item
-     * @return A reference to this object
-     */
-    public GUIItem addEnchantView(Enchantment enchantment, int level) {
-        viewItem.addEnchant(enchantment, level);
-        return this;
-    }
-
-    /**
-     * Get whether the item has an enchantment that conflicts with a specified enchantment
-     *
-     * @param enchantment The enchantment to check for
-     * @return True if the item has a conflicting enchantment, false if it doesn't
-     */
     @Override
     public boolean hasConflictingEnchant(Enchantment enchantment) {
-        return hasConflictingEnchantView(enchantment);
+        return this.item.hasConflictingEnchant(enchantment);
     }
 
-    /**
-     * Get whether the base item has an enchantment that conflicts with a specified enchantment
-     *
-     * @param enchantment The enchantment to check for
-     * @return True if the item has a conflicting enchantment, false if it doesn't
-     */
-    public boolean hasConflictingEnchantBase(Enchantment enchantment) {
-        return baseItem.hasConflictingEnchant(enchantment);
-    }
-
-    /**
-     * Get whether the view item has an enchantment that conflicts with a specified enchantment
-     *
-     * @param enchantment The enchantment to check for
-     * @return True if the item has a conflicting enchantment, false if it doesn't
-     */
-    public boolean hasConflictingEnchantView(Enchantment enchantment) {
-        return viewItem.hasConflictingEnchant(enchantment);
-    }
-
-    /**
-     * Add item flags to the item
-     *
-     * @param flags The item flags to add to the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem addItemFlags(ItemFlag... flags) {
-        addItemFlagsBase(flags);
-        addItemFlagsView(flags);
+        this.item.addItemFlags(flags);
         return this;
     }
 
-    /**
-     * Add item flags to the base item
-     *
-     * @param flags The item flags to add to the item
-     * @return A reference to this object
-     */
-    public GUIItem addItemFlagsBase(ItemFlag... flags) {
-        baseItem.addItemFlags(flags);
-        return this;
-    }
-
-    /**
-     * Add item flags to the view item
-     *
-     * @param flags The item flags to add to the item
-     * @return A reference to this object
-     */
-    public GUIItem addItemFlagsView(ItemFlag... flags) {
-        viewItem.addItemFlags(flags);
-        return this;
-    }
-
-    /**
-     * Remove item flags from the item
-     *
-     * @param flags The item flags to remove from the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem removeItemFlags(ItemFlag... flags) {
-        removeItemFlagsBase(flags);
-        removeItemFlagsView(flags);
+        this.item.removeItemFlags(flags);
         return this;
     }
 
-    /**
-     * Remove item flags from the base item
-     *
-     * @param flags The item flags to remove from the item
-     * @return A reference to this object
-     */
-    public GUIItem removeItemFlagsBase(ItemFlag... flags) {
-        baseItem.removeItemFlags(flags);
-        return this;
-    }
-
-    /**
-     * Remove item flags from the view item
-     *
-     * @param flags The item flags to remove from the item
-     * @return A reference to this object
-     */
-    public GUIItem removeItemFlagsView(ItemFlag... flags) {
-        viewItem.removeItemFlags(flags);
-        return this;
-    }
-
-    /**
-     * Get whether the item has a specified item flag or not
-     *
-     * @param flag The item flag to test for
-     * @return Whether the item has the item flag or not
-     */
     @Override
     public boolean hasItemFlag(ItemFlag flag) {
-        return hasItemFlagView(flag);
+        return this.item.hasItemFlag(flag);
     }
 
-    /**
-     * Get whether the base item has a specified item flag or not
-     *
-     * @param flag The item flag to test for
-     * @return Whether the item has the item flag or not
-     */
-    public boolean hasItemFlagBase(ItemFlag flag) {
-        return baseItem.hasItemFlag(flag);
-    }
-
-    /**
-     * Get whether the view item has a specified item flag or not
-     *
-     * @param flag The item flag to test for
-     * @return Whether the item has the item flag or not
-     */
-    public boolean hasItemFlagView(ItemFlag flag) {
-        return viewItem.hasItemFlag(flag);
-    }
-
-    /**
-     * Get a <code>Set</code> of all the item flags for the item
-     *
-     * @return The {@link ItemFlag}s set
-     */
     @Override
     public Set<ItemFlag> getItemFlags() {
-        return getItemFlagsView();
+        return this.item.getItemFlags();
     }
 
-    /**
-     * Get a <code>Set</code> of all the item flags for the base item
-     *
-     * @return The {@link ItemFlag}s set
-     */
-    public Set<ItemFlag> getItemFlagsBase() {
-        return baseItem.getItemFlags();
-    }
-
-    /**
-     * Get a <code>Set</code> of all the item flags for the view item
-     *
-     * @return The {@link ItemFlag}s set
-     */
-    public Set<ItemFlag> getItemFlagsView() {
-        return viewItem.getItemFlags();
-    }
-
-    /**
-     * Add a single {@link ItemFlag} to the item
-     *
-     * @param flag The <code>ItemFlag</code> to add to the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem addItemFlag(ItemFlag flag) {
-        return addItemFlagView(flag);
-    }
-
-    /**
-     * Add a single {@link ItemFlag} to the base item
-     *
-     * @param flag The <code>ItemFlag</code> to add to the item
-     * @return A reference to this object
-     */
-    public GUIItem addItemFlagBase(ItemFlag flag) {
-        baseItem.addItemFlag(flag);
+        this.item.addItemFlag(flag);
         return this;
     }
 
-    /**
-     * Add a single {@link ItemFlag} to the view item
-     *
-     * @param flag The <code>ItemFlag</code> to add to the item
-     * @return A reference to this object
-     */
-    public GUIItem addItemFlagView(ItemFlag flag) {
-        viewItem.addItemFlag(flag);
-        return this;
-    }
-
-    /**
-     * Add an enchant glow effect to the item
-     *
-     * @return A reference to this object
-     */
     @Override
     public GUIItem addGlow() {
-        addGlowBase();
-        addGlowView();
+        this.item.addGlow();
         return this;
     }
 
-    /**
-     * Add an enchant glow effect to the base item
-     *
-     * @return A reference to this object
-     */
-    public GUIItem addGlowBase() {
-        baseItem.addGlow();
-        return this;
-    }
-
-    /**
-     * Add an enchant glow effect to the view item
-     *
-     * @return A reference to this object
-     */
-    public GUIItem addGlowView() {
-        viewItem.addGlow();
-        return this;
-    }
-
-    /**
-     * Remove an enchant glow effect from the item
-     *
-     * @return A reference to this object
-     */
     @Override
     public GUIItem removeGlow() {
-        removeGlowBase();
-        removeGlowView();
+        this.item.removeGlow();
         return this;
     }
 
-    /**
-     * Remove an enchant glow effect from the base item
-     *
-     * @return A reference to this object
-     */
-    public GUIItem removeGlowBase() {
-        baseItem.removeGlow();
-        return this;
-    }
-
-    /**
-     * Remove an enchant glow effect from the view item
-     *
-     * @return A reference to this object
-     */
-    public GUIItem removeGlowView() {
-        viewItem.removeGlow();
-        return this;
-    }
-
-    /**
-     * Set a completely empty name to the item. This name is shorter than a single
-     * space because it's interpreting the light gray color code as an infinitely
-     * small String of text, therefore only rendering about 3 pixels of hover box.
-     *
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setEmptyName() {
-        setEmptyNameBase();
-        setEmptyNameView();
+        this.item.setEmptyName();
         return this;
     }
 
-    /**
-     * Set a completely empty name to the base item. This name is shorter than a single
-     * space because it's interpreting the light gray color code as an infinitely
-     * small String of text, therefore only rendering about 3 pixels of hover box.
-     *
-     * @return A reference to this object
-     */
-    public GUIItem setEmptyNameBase() {
-        baseItem.setEmptyName();
-        return this;
-    }
-
-    /**
-     * Set a completely empty name to the view item. This name is shorter than a single
-     * space because it's interpreting the light gray color code as an infinitely
-     * small String of text, therefore only rendering about 3 pixels of hover box.
-     *
-     * @return A reference to this object
-     */
-    public GUIItem setEmptyNameView() {
-        viewItem.setEmptyName();
-        return this;
-    }
-
-    /**
-     * Set whether the item is unbreakable or not
-     *
-     * @param unbreakable The new unbreakable state of the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setUnbreakable(boolean unbreakable) {
-        setUnbreakableBase(unbreakable);
-        setUnbreakableView(unbreakable);
+        this.item.setUnbreakable(unbreakable);
         return this;
     }
 
-    /**
-     * Set whether the base item is unbreakable or not
-     *
-     * @param unbreakable The new unbreakable state of the item
-     * @return A reference to this object
-     */
-    public GUIItem setUnbreakableBase(boolean unbreakable) {
-        baseItem.setUnbreakable(unbreakable);
-        return this;
-    }
-
-    /**
-     * Set whether the view item is unbreakable or not
-     *
-     * @param unbreakable The new unbreakable state of the item
-     * @return A reference to this object
-     */
-    public GUIItem setUnbreakableView(boolean unbreakable) {
-        viewItem.setUnbreakable(unbreakable);
-        return this;
-    }
-
-    /**
-     * Get whether the item is unbreakable or not
-     *
-     * @return Whether the item is unbreakable or not
-     */
     @Override
     public boolean isUnbreakable() {
-        return isUnbreakableView();
+        return this.item.isUnbreakable();
     }
 
-    /**
-     * Get whether the base item is unbreakable or not
-     *
-     * @return Whether the item is unbreakable or not
-     */
-    public boolean isUnbreakableBase() {
-        return baseItem.isUnbreakable();
-    }
-
-    /**
-     * Get whether the view item is unbreakable or not
-     *
-     * @return Whether the item is unbreakable or not
-     */
-    public boolean isUnbreakableView() {
-        return viewItem.isUnbreakable();
-    }
-
-    /**
-     * Get the head owner of the head item
-     * <p>
-     * Note: The item must be of type {@link Material#PLAYER_HEAD} and must have a head owner
-     * set from {@link IItemBuilder#setHeadOwner(OfflinePlayer)}
-     *
-     * @return The current head owner of the head item
-     */
     @Override
     public OfflinePlayer getHeadOwner() {
-        return getHeadOwnerView();
+        return this.item.getHeadOwner();
     }
 
-    /**
-     * Get the head owner of the head base item
-     * <p>
-     * Note: The base item must be of type {@link Material#PLAYER_HEAD} and must have a head owner
-     * set from {@link IItemBuilder#setHeadOwner(OfflinePlayer)}
-     *
-     * @return The current head owner of the head item
-     */
-    public OfflinePlayer getHeadOwnerBase() {
-        return baseItem.getHeadOwner();
-    }
-
-    /**
-     * Get the head owner of the head view item
-     * <p>
-     * Note: The view item must be of type {@link Material#PLAYER_HEAD} and must have a head owner
-     * set from {@link IItemBuilder#setHeadOwner(OfflinePlayer)}
-     *
-     * @return The current head owner of the head item
-     */
-    public OfflinePlayer getHeadOwnerView() {
-        return viewItem.getHeadOwner();
-    }
-
-    /**
-     * Set the new head owner of the head item
-     * <p>
-     * Note: The item must be of type {@link Material#PLAYER_HEAD}
-     *
-     * @param player The new head owner of the head item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setHeadOwner(OfflinePlayer player) {
-        setHeadOwnerBase(player);
-        setHeadOwnerView(player);
+        this.item.setHeadOwner(player);
         return this;
     }
 
-    /**
-     * Set the new head owner of the head base item
-     * <p>
-     * Note: The base item must be of type {@link Material#PLAYER_HEAD}
-     *
-     * @param player The new head owner of the head item
-     * @return A reference to this object
-     */
-    public GUIItem setHeadOwnerBase(OfflinePlayer player) {
-        baseItem.setHeadOwner(player);
-        return this;
-    }
-
-    /**
-     * Set the new head owner of the head view item
-     * <p>
-     * Note: The view item must be of type {@link Material#PLAYER_HEAD}
-     *
-     * @param player The new head owner of the head item
-     * @return A reference to this object
-     */
-    public GUIItem setHeadOwnerView(OfflinePlayer player) {
-        viewItem.setHeadOwner(player);
-        return this;
-    }
-
-    /**
-     * Get the base 64 string of the item
-     * <p>
-     * Note: The item must be of type {@link Material#PLAYER_HEAD} and must have a base 64 string
-     * set from {@link IItemBuilder#setHeadBase64(String)}
-     *
-     * @return The current base 64 String of the head item
-     */
     @Override
     public String getHeadBase64() {
-        return getHeadBase64View();
+        return this.item.getHeadBase64();
     }
 
-    /**
-     * Get the base 64 string of the base item
-     * <p>
-     * Note: The base item must be of type {@link Material#PLAYER_HEAD} and must have a base 64 string
-     * set from {@link IItemBuilder#setHeadBase64(String)}
-     *
-     * @return The current base 64 String of the head item
-     */
-    public String getHeadBase64Base() {
-        return baseItem.getHeadBase64();
-    }
-
-    /**
-     * Get the base 64 string of the view item
-     * <p>
-     * Note: The view item must be of type {@link Material#PLAYER_HEAD} and must have a base 64 string
-     * set from {@link IItemBuilder#setHeadBase64(String)}
-     *
-     * @return The current base 64 String of the head item
-     */
-    public String getHeadBase64View() {
-        return viewItem.getHeadBase64();
-    }
-
-    /**
-     * Set the new base 64 String of the head item.
-     * <p>
-     * Note: The item must be of type {@link Material#PLAYER_HEAD}
-     *
-     * @param base64 The new base 64 String of the head item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setHeadBase64(String base64) {
-        setHeadBase64Base(base64);
-        setHeadBase64View(base64);
+        this.item.setHeadBase64(base64);
         return this;
     }
 
-    /**
-     * Set the new base 64 String of the head base item.
-     * <p>
-     * Note: The item must be of type {@link Material#PLAYER_HEAD}
-     *
-     * @param base64 The new base 64 String of the head item
-     * @return A reference to this object
-     */
-    public GUIItem setHeadBase64Base(String base64) {
-        baseItem.setHeadBase64(base64);
-        return this;
-    }
-
-    /**
-     * Set the new base 64 String of the head view item.
-     * <p>
-     * Note: The item must be of type {@link Material#PLAYER_HEAD}
-     *
-     * @param base64 The new base 64 String of the head item
-     * @return A reference to this object
-     */
-    public GUIItem setHeadBase64View(String base64) {
-        viewItem.setHeadBase64(base64);
-        return this;
-    }
-
-    /**
-     * Get whether the item has attribute modifiers or not
-     *
-     * @return Whether the item has attribute modifiers
-     */
     @Override
     public boolean hasAttributeModifiers() {
-        return hasAttributeModifiersView();
+        return this.item.hasAttributeModifiers();
     }
 
-    /**
-     * Get whether the base item has attribute modifiers or not
-     *
-     * @return Whether the item has attribute modifiers
-     */
-    public boolean hasAttributeModifiersBase() {
-        return baseItem.hasAttributeModifiers();
-    }
-
-    /**
-     * Get whether the view item has attribute modifiers or not
-     *
-     * @return Whether the item has attribute modifiers
-     */
-    public boolean hasAttributeModifiersView() {
-        return viewItem.hasAttributeModifiers();
-    }
-
-    /**
-     * Get a {@link Multimap} of {@link Attribute} to {@link AttributeModifier}s for the item
-     *
-     * @return A map of attributes for the item
-     */
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers() {
-        return getAttributeModifiersView();
+        return this.item.getAttributeModifiers();
     }
 
-    /**
-     * Get a {@link Multimap} of {@link Attribute} to {@link AttributeModifier}s for the base item
-     *
-     * @return A map of attributes for the item
-     */
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiersBase() {
-        return baseItem.getAttributeModifiers();
-    }
-
-    /**
-     * Get a {@link Multimap} of {@link Attribute} to {@link AttributeModifier}s for the view item
-     *
-     * @return A map of attributes for the item
-     */
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiersView() {
-        return viewItem.getAttributeModifiers();
-    }
-
-    /**
-     * Get a {@link Multimap} of {@link Attribute} to {@link AttributeModifier}s for the item based off of
-     * the equipment slot
-     *
-     * @param slot The <code>EquipmentSlot</code> to get
-     * @return A map of attributes for the item and equipment slot
-     */
     @Override
     public Multimap<Attribute, AttributeModifier> getAttributeModifiers(EquipmentSlot slot) {
-        return getAttributeModifiersView(slot);
+        return this.item.getAttributeModifiers(slot);
     }
 
-    /**
-     * Get a {@link Multimap} of {@link Attribute} to {@link AttributeModifier}s for the base item based off of
-     * the equipment slot
-     *
-     * @param slot The <code>EquipmentSlot</code> to get
-     * @return A map of attributes for the item and equipment slot
-     */
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiersBase(EquipmentSlot slot) {
-        return baseItem.getAttributeModifiers(slot);
-    }
-
-    /**
-     * Get a {@link Multimap} of {@link Attribute} to {@link AttributeModifier}s for the view item based off of
-     * the equipment slot
-     *
-     * @param slot The <code>EquipmentSlot</code> to get
-     * @return A map of attributes for the item and equipment slot
-     */
-    public Multimap<Attribute, AttributeModifier> getAttributeModifiersView(EquipmentSlot slot) {
-        return viewItem.getAttributeModifiers(slot);
-    }
-
-    /**
-     * Get a <code>Collection</code> of {@link AttributeModifier}s for the item based off of the requested
-     * {@link Attribute}
-     *
-     * @param attribute The <code>Attribute</code> to get
-     * @return The collection of <code>AttributeModifiers</code>
-     */
     @Override
     public Collection<AttributeModifier> getAttributeModifiers(Attribute attribute) {
-        return getAttributeModifiersView(attribute);
+        return this.item.getAttributeModifiers(attribute);
     }
 
-    /**
-     * Get a <code>Collection</code> of {@link AttributeModifier}s for the base item based off of the requested
-     * {@link Attribute}
-     *
-     * @param attribute The <code>Attribute</code> to get
-     * @return The collection of <code>AttributeModifiers</code>
-     */
-    public Collection<AttributeModifier> getAttributeModifiersBase(Attribute attribute) {
-        return baseItem.getAttributeModifiers(attribute);
-    }
-
-    /**
-     * Get a <code>Collection</code> of {@link AttributeModifier}s for the view item based off of the requested
-     * {@link Attribute}
-     *
-     * @param attribute The <code>Attribute</code> to get
-     * @return The collection of <code>AttributeModifiers</code>
-     */
-    public Collection<AttributeModifier> getAttributeModifiersView(Attribute attribute) {
-        return viewItem.getAttributeModifiers(attribute);
-    }
-
-    /**
-     * Add an {@link Attribute} to the item
-     *
-     * @param attribute The <code>Attribute</code> to add to the item
-     * @param modifier The <code>AttributeModifier</code> to add
-     * @return A reference to this object
-     */
     @Override
     public GUIItem addAttributeModifier(Attribute attribute, AttributeModifier modifier) {
-        addAttributeModifierBase(attribute, modifier);
-        addAttributeModifierView(attribute, modifier);
+        this.item.addAttributeModifier(attribute, modifier);
         return this;
     }
 
-    /**
-     * Add an {@link Attribute} to the base item
-     *
-     * @param attribute The <code>Attribute</code> to add to the item
-     * @param modifier The <code>AttributeModifier</code> to add
-     * @return A reference to this object
-     */
-    public GUIItem addAttributeModifierBase(Attribute attribute, AttributeModifier modifier) {
-        baseItem.addAttributeModifier(attribute, modifier);
-        return this;
-    }
-
-    /**
-     * Add an {@link Attribute} to the view item
-     *
-     * @param attribute The <code>Attribute</code> to add to the item
-     * @param modifier The <code>AttributeModifier</code> to add
-     * @return A reference to this object
-     */
-    public GUIItem addAttributeModifierView(Attribute attribute, AttributeModifier modifier) {
-        viewItem.addAttributeModifier(attribute, modifier);
-        return this;
-    }
-
-    /**
-     * Add multiple {@link Attribute} with multiple {@link AttributeModifier}s to the item
-     *
-     * @param attribute The <code>Attribute</code> to add to the item
-     * @param modifiers The <code>AttributeModifiers</code> to add
-     * @return A reference to this object
-     */
     @Override
     public GUIItem addAttributeModifiers(Attribute attribute, AttributeModifier... modifiers) {
-        addAttributeModifiersBase(attribute, modifiers);
-        addAttributeModifiersView(attribute, modifiers);
+        this.item.addAttributeModifiers(attribute, modifiers);
         return this;
     }
 
-    /**
-     * Add multiple {@link Attribute} with multiple {@link AttributeModifier}s to the base item
-     *
-     * @param attribute The <code>Attribute</code> to add to the item
-     * @param modifiers The <code>AttributeModifiers</code> to add
-     * @return A reference to this object
-     */
-    public GUIItem addAttributeModifiersBase(Attribute attribute, AttributeModifier... modifiers) {
-        baseItem.addAttributeModifiers(attribute, modifiers);
-        return this;
-    }
-
-    /**
-     * Add multiple {@link Attribute} with multiple {@link AttributeModifier}s to the view item
-     *
-     * @param attribute The <code>Attribute</code> to add to the item
-     * @param modifiers The <code>AttributeModifiers</code> to add
-     * @return A reference to this object
-     */
-    public GUIItem addAttributeModifiersView(Attribute attribute, AttributeModifier... modifiers) {
-        viewItem.addAttributeModifiers(attribute, modifiers);
-        return this;
-    }
-
-    /**
-     * Set a new {@link Multimap} of {@link Attribute} {@link AttributeModifier}s to the item
-     *
-     * @param attributeModifiers The new map of attributes
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setAttributeModifiers(Multimap<Attribute, AttributeModifier> attributeModifiers) {
-        setAttributeModifiersBase(attributeModifiers);
-        setAttributeModifiersView(attributeModifiers);
+        this.item.setAttributeModifiers(attributeModifiers);
         return this;
     }
 
-    /**
-     * Set a new {@link Multimap} of {@link Attribute} {@link AttributeModifier}s to the base item
-     *
-     * @param attributeModifiers The new map of attributes
-     * @return A reference to this object
-     */
-    public GUIItem setAttributeModifiersBase(Multimap<Attribute, AttributeModifier> attributeModifiers) {
-        baseItem.setAttributeModifiers(attributeModifiers);
-        return this;
-    }
-
-    /**
-     * Set a new {@link Multimap} of {@link Attribute} {@link AttributeModifier}s to the view item
-     *
-     * @param attributeModifiers The new map of attributes
-     * @return A reference to this object
-     */
-    public GUIItem setAttributeModifiersView(Multimap<Attribute, AttributeModifier> attributeModifiers) {
-        viewItem.setAttributeModifiers(attributeModifiers);
-        return this;
-    }
-
-    /**
-     * Remove an {@link Attribute} from the item
-     *
-     * @param attribute The <code>Attribute</code> to remove
-     * @return A reference to this object
-     */
     @Override
     public GUIItem removeAttributeModifier(Attribute attribute) {
-        removeAttributeModifierBase(attribute);
-        removeAttributeModifierView(attribute);
+        this.item.removeAttributeModifier(attribute);
         return this;
     }
 
-    /**
-     * Remove an {@link Attribute} from the base item
-     *
-     * @param attribute The <code>Attribute</code> to remove
-     * @return A reference to this object
-     */
-    public GUIItem removeAttributeModifierBase(Attribute attribute) {
-        baseItem.removeAttributeModifier(attribute);
-        return this;
-    }
-
-    /**
-     * Remove an {@link Attribute} from the view item
-     *
-     * @param attribute The <code>Attribute</code> to remove
-     * @return A reference to this object
-     */
-    public GUIItem removeAttributeModifierView(Attribute attribute) {
-        viewItem.removeAttributeModifier(attribute);
-        return this;
-    }
-
-    /**
-     * Remove multiple <code>Attributes</code> from the item
-     *
-     * @param attributes The {@link Attribute} to remove
-     * @return A reference to this object
-     */
     @Override
     public GUIItem removeAttributeModifiers(Attribute... attributes) {
-        removeAttributeModifiersBase(attributes);
-        removeAttributeModifiersView(attributes);
+        this.item.removeAttributeModifiers(attributes);
         return this;
     }
 
-    /**
-     * Remove multiple <code>Attributes</code> from the base item
-     *
-     * @param attributes The {@link Attribute} to remove
-     * @return A reference to this object
-     */
-    public GUIItem removeAttributeModifiersBase(Attribute... attributes) {
-        baseItem.removeAttributeModifiers(attributes);
-        return this;
-    }
-
-    /**
-     * Remove multiple <code>Attributes</code> from the view item
-     *
-     * @param attributes The {@link Attribute} to remove
-     * @return A reference to this object
-     */
-    public GUIItem removeAttributeModifiersView(Attribute... attributes) {
-        viewItem.removeAttributeModifiers(attributes);
-        return this;
-    }
-
-    /**
-     * Remove attribute modifiers of the specified {@link EquipmentSlot} of the item
-     *
-     * @param slot The <code>EquipmentSlot</code> to remove attributes from
-     * @return A reference to this object
-     */
     @Override
     public GUIItem removeAttributeModifier(EquipmentSlot slot) {
-        removeAttributeModifierBase(slot);
-        removeAttributeModifierView(slot);
+        this.item.removeAttributeModifier(slot);
         return this;
     }
 
-    /**
-     * Remove attribute modifiers of the specified {@link EquipmentSlot} of the base item
-     *
-     * @param slot The <code>EquipmentSlot</code> to remove attributes from
-     * @return A reference to this object
-     */
-    public GUIItem removeAttributeModifierBase(EquipmentSlot slot) {
-        baseItem.removeAttributeModifiers(slot);
-        return this;
-    }
-
-    /**
-     * Remove attribute modifiers of the specified {@link EquipmentSlot} of the view item
-     *
-     * @param slot The <code>EquipmentSlot</code> to remove attributes from
-     * @return A reference to this object
-     */
-    public GUIItem removeAttributeModifierView(EquipmentSlot slot) {
-        viewItem.removeAttributeModifiers(slot);
-        return this;
-    }
-
-    /**
-     * Remove multiple attribute modifiers of the specified {@link EquipmentSlot}s
-     *
-     * @param slots The <code>EquipmentSlots</code> to remove attributes from
-     * @return A reference to this object
-     */
     @Override
     public GUIItem removeAttributeModifiers(EquipmentSlot... slots) {
-        removeAttributeModifiersBase(slots);
-        removeAttributeModifiersView(slots);
+        this.item.removeAttributeModifiers(slots);
         return this;
     }
 
-    /**
-     * Remove multiple attribute modifiers of the specified {@link EquipmentSlot}s of the base item
-     *
-     * @param slots The <code>EquipmentSlots</code> to remove attributes from
-     * @return A reference to this object
-     */
-    public GUIItem removeAttributeModifiersBase(EquipmentSlot... slots) {
-        baseItem.removeAttributeModifiers(slots);
-        return this;
-    }
-
-    /**
-     * Remove multiple attribute modifiers of the specified {@link EquipmentSlot}s of the view item
-     *
-     * @param slots The <code>EquipmentSlots</code> to remove attributes from
-     * @return A reference to this object
-     */
-    public GUIItem removeAttributeModifiersView(EquipmentSlot... slots) {
-        viewItem.removeAttributeModifiers(slots);
-        return this;
-    }
-
-    /**
-     * Remove an <code>Attribute's</code> {@link AttributeModifier} from the item
-     *
-     * @param attribute The <code>Attribute</code> to remove from
-     * @param modifier The <code>AttributeModifier</code> to remove
-     * @return A reference to this object
-     */
     @Override
     public GUIItem removeAttributeModifier(Attribute attribute, AttributeModifier modifier) {
-        removeAttributeModifierBase(attribute, modifier);
-        removeAttributeModifierView(attribute, modifier);
+        this.item.removeAttributeModifier(attribute, modifier);
         return this;
     }
 
-    /**
-     * Remove an <code>Attribute's</code> {@link AttributeModifier} from the base item
-     *
-     * @param attribute The <code>Attribute</code> to remove from
-     * @param modifier The <code>AttributeModifier</code> to remove
-     * @return A reference to this object
-     */
-    public GUIItem removeAttributeModifierBase(Attribute attribute, AttributeModifier modifier) {
-        baseItem.removeAttributeModifier(attribute, modifier);
-        return this;
-    }
-
-    /**
-     * Remove an <code>Attribute's</code> {@link AttributeModifier} from the view item
-     *
-     * @param attribute The <code>Attribute</code> to remove from
-     * @param modifier The <code>AttributeModifier</code> to remove
-     * @return A reference to this object
-     */
-    public GUIItem removeAttributeModifierView(Attribute attribute, AttributeModifier modifier) {
-        viewItem.removeAttributeModifier(attribute, modifier);
-        return this;
-    }
-
-    /**
-     * Remove an {@link Attribute} {@link AttributeModifier}s from the item
-     *
-     * @param attribute The <code>Attribute</code> to remove from
-     * @param modifiers The <code>AttributeModifiers</code> to remove
-     * @return A reference to this object
-     */
     @Override
     public GUIItem removeAttributeModifiers(Attribute attribute, AttributeModifier... modifiers) {
-        removeAttributeModifiersBase(attribute, modifiers);
-        removeAttributeModifiersView(attribute, modifiers);
+        this.item.removeAttributeModifiers(attribute, modifiers);
         return this;
     }
 
-    /**
-     * Remove an {@link Attribute} {@link AttributeModifier}s from the base item
-     *
-     * @param attribute The <code>Attribute</code> to remove from
-     * @param modifiers The <code>AttributeModifiers</code> to remove
-     * @return A reference to this object
-     */
-    public GUIItem removeAttributeModifiersBase(Attribute attribute, AttributeModifier... modifiers) {
-        baseItem.removeAttributeModifiers(attribute, modifiers);
-        return this;
-    }
-
-    /**
-     * Remove an {@link Attribute} {@link AttributeModifier}s from the view item
-     *
-     * @param attribute The <code>Attribute</code> to remove from
-     * @param modifiers The <code>AttributeModifiers</code> to remove
-     * @return A reference to this object
-     */
-    public GUIItem removeAttributeModifiersView(Attribute attribute, AttributeModifier... modifiers) {
-        viewItem.removeAttributeModifiers(attribute, modifiers);
-        return this;
-    }
-
-    /**
-     * Get the {@link PersistentDataContainer} for the {@link ItemMeta}
-     *
-     * @return The <code>PersistentDataContainer</code>
-     */
     @Override
     public PersistentDataContainer getPersistentDataContainer() {
-        return getPersistentDataContainerView();
+        return this.item.getPersistentDataContainer();
     }
 
-    /**
-     * Get the {@link PersistentDataContainer} for the base {@link ItemMeta}
-     *
-     * @return The <code>PersistentDataContainer</code>
-     */
-    public PersistentDataContainer getPersistentDataContainerBase() {
-        return baseItem.getPersistentDataContainer();
-    }
-
-    /**
-     * Get the {@link PersistentDataContainer} for the view {@link ItemMeta}
-     *
-     * @return The <code>PersistentDataContainer</code>
-     */
-    public PersistentDataContainer getPersistentDataContainerView() {
-        return viewItem.getPersistentDataContainer();
-    }
-
-    /**
-     * Set the custom model data integer of the item
-     *
-     * @param data The new custom model data
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setCustomModelData(Integer data) {
-        setCustomModelDataBase(data);
-        setCustomModelDataView(data);
+        this.item.setCustomModelData(data);
         return this;
     }
 
-    /**
-     * Set the custom model data integer of the base item
-     *
-     * @param data The new custom model data
-     * @return A reference to this object
-     */
-    public GUIItem setCustomModelDataBase(Integer data) {
-        baseItem.setCustomModelData(data);
-        return this;
-    }
-
-    /**
-     * Set the custom model data integer of the view item
-     *
-     * @param data The new custom model data
-     * @return A reference to this object
-     */
-    public GUIItem setCustomModelDataView(Integer data) {
-        viewItem.setCustomModelData(data);
-        return this;
-    }
-
-    /**
-     * Get the custom model data of the item
-     * <p>
-     * {@link IItemBuilder#hasCustomModelData()} should first be checked before executing this method
-     *
-     * @return The custom model data for the item
-     */
     @Override
     public int getCustomModelData() {
-        return getCustomModelDataView();
+        return this.item.getCustomModelData();
     }
 
-    /**
-     * Get the custom model data of the base item
-     * <p>
-     * {@link IItemBuilder#hasCustomModelData()} should first be checked before executing this method
-     *
-     * @return The custom model data for the item
-     */
-    public int getCustomModelDataBase() {
-        return baseItem.getCustomModelData();
-    }
-
-    /**
-     * Get the custom model data of the view item
-     * <p>
-     * {@link IItemBuilder#hasCustomModelData()} should first be checked before executing this method
-     *
-     * @return The custom model data for the item
-     */
-    public int getCustomModelDataView() {
-        return viewItem.getCustomModelData();
-    }
-
-    /**
-     * Get whether the item has custom model data or not
-     *
-     * @return Whether the item has custom model data
-     */
     @Override
     public boolean hasCustomModelData() {
-        return hasCustomModelDataView();
+        return this.item.hasCustomModelData();
     }
 
-    /**
-     * Get whether the base item has custom model data or not
-     *
-     * @return Whether the item has custom model data
-     */
-    public boolean hasCustomModelDataBase() {
-        return baseItem.hasCustomModelData();
-    }
-
-    /**
-     * Get whether the view item has custom model data or not
-     *
-     * @return Whether the item has custom model data
-     */
-    public boolean hasCustomModelDataView() {
-        return viewItem.hasCustomModelData();
-    }
-
-    /**
-     * Set the localized name of the item
-     *
-     * @param name The new localized name for the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setLocalizedName(String name) {
-        setLocalizedNameBase(name);
-        setLocalizedNameView(name);
+        this.item.setLocalizedName(name);
         return this;
     }
 
-    /**
-     * Set the localized name of the base item
-     *
-     * @param name The new localized name for the item
-     * @return A reference to this object
-     */
-    public GUIItem setLocalizedNameBase(String name) {
-        baseItem.setLocalizedName(name);
-        return this;
-    }
-
-    /**
-     * Set the localized name of the view item
-     *
-     * @param name The new localized name for the item
-     * @return A reference to this object
-     */
-    public GUIItem setLocalizedNameView(String name) {
-        viewItem.setLocalizedName(name);
-        return this;
-    }
-
-    /**
-     * Get the localized name of the item
-     * <p>
-     * {@link IItemBuilder#hasLocalizedName()} should first be checked before executing this method
-     *
-     * @return The localized name of the item
-     */
     @Override
     public String getLocalizedName() {
-        return getLocalizedNameView();
+        return this.item.getLocalizedName();
     }
 
-    /**
-     * Get the localized name of the base item
-     * <p>
-     * {@link IItemBuilder#hasLocalizedName()} should first be checked before executing this method
-     *
-     * @return The localized name of the item
-     */
-    public String getLocalizedNameBase() {
-        return baseItem.getLocalizedName();
-    }
-
-    /**
-     * Get the localized name of the view item
-     * <p>
-     * {@link IItemBuilder#hasLocalizedName()} should first be checked before executing this method
-     *
-     * @return The localized name of the item
-     */
-    public String getLocalizedNameView() {
-        return viewItem.getLocalizedName();
-    }
-
-    /**
-     * Whether the item has a localized name or not
-     *
-     * @return Whether the item has a localized name
-     */
     @Override
     public boolean hasLocalizedName() {
-        return hasLocalizedNameView();
+        return this.item.hasLocalizedName();
     }
 
-    /**
-     * Whether the base item has a localized name or not
-     *
-     * @return Whether the item has a localized name
-     */
-    public boolean hasLocalizedNameBase() {
-        return baseItem.hasLocalizedName();
-    }
-
-    /**
-     * Whether the view item has a localized name or not
-     *
-     * @return Whether the item has a localized name
-     */
-    public boolean hasLocalizedNameView() {
-        return viewItem.hasLocalizedName();
-    }
-
-    /**
-     * Get the display name of the item
-     * <p>
-     * {@link IItemBuilder#hasDisplayName()} should first be checked before executing this method
-     *
-     * @return The display name of the item
-     */
     @Override
     public String getDisplayName() {
-        return getDisplayNameView();
+        return this.item.getDisplayName();
     }
 
-    /**
-     * Get the display name of the base item
-     * <p>
-     * {@link IItemBuilder#hasDisplayName()} should first be checked before executing this method
-     *
-     * @return The display name of the item
-     */
-    public String getDisplayNameBase() {
-        return baseItem.getDisplayName();
-    }
-
-    /**
-     * Get the display name of the view item
-     * <p>
-     * {@link IItemBuilder#hasDisplayName()} should first be checked before executing this method
-     *
-     * @return The display name of the item
-     */
-    public String getDisplayNameView() {
-        return viewItem.getDisplayName();
-    }
-
-    /**
-     * Set the display name of the item
-     *
-     * @param name The new display name of the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setDisplayName(String name) {
-        setDisplayNameBase(name);
-        setDisplayNameView(name);
+        this.item.setDisplayName(name);
         return this;
     }
 
-    /**
-     * Set the display name of the base item
-     *
-     * @param name The new display name of the item
-     * @return A reference to this object
-     */
-    public GUIItem setDisplayNameBase(String name) {
-        baseItem.setDisplayName(name);
-        return this;
-    }
-
-    /**
-     * Set the display name of the view item
-     *
-     * @param name The new display name of the item
-     * @return A reference to this object
-     */
-    public GUIItem setDisplayNameView(String name) {
-        viewItem.setDisplayName(name);
-        return this;
-    }
-
-    /**
-     * Whether the item has a display name or not
-     *
-     * @return Whether the item has a display name
-     */
     @Override
     public boolean hasDisplayName() {
-        return hasDisplayNameView();
+        return this.item.hasDisplayName();
     }
 
-    /**
-     * Whether the base item has a display name or not
-     *
-     * @return Whether the item has a display name
-     */
-    public boolean hasDisplayNameBase() {
-        return baseItem.hasDisplayName();
-    }
-
-    /**
-     * Whether the view item has a display name or not
-     *
-     * @return Whether the item has a display name
-     */
-    public boolean hasDisplayNameView() {
-        return viewItem.hasDisplayName();
-    }
-
-    /**
-     * Get the durability of the item.
-     * <p>
-     * It must be ensured that the item has a durability with {@link IItemBuilder#hasDurability()}
-     *
-     * @return The durability of the item
-     */
     @Override
     public int getDurability() {
-        return getDurabilityView();
+        return this.item.getDurability();
     }
 
-    /**
-     * Get the durability of the base item.
-     * <p>
-     * It must be ensured that the item has a durability with {@link IItemBuilder#hasDurability()}
-     *
-     * @return The durability of the item
-     */
-    public int getDurabilityBase() {
-        return baseItem.getDurability();
-    }
-
-    /**
-     * Get the durability of the view item.
-     * <p>
-     * It must be ensured that the item has a durability with {@link IItemBuilder#hasDurability()}
-     *
-     * @return The durability of the item
-     */
-    public int getDurabilityView() {
-        return viewItem.getDurability();
-    }
-
-    /**
-     * Set the durability of the item.
-     * <p>
-     * It must be ensured that the item has a durability with {@link IItemBuilder#hasDurability()}
-     *
-     * @param durability The new durability of the item
-     * @return A reference to this object
-     */
     @Override
     public GUIItem setDurability(int durability) {
-        setDurabilityBase(durability);
-        setDurabilityView(durability);
+        this.item.setDurability(durability);
         return this;
     }
 
-    /**
-     * Set the durability of the base item.
-     * <p>
-     * It must be ensured that the item has a durability with {@link IItemBuilder#hasDurability()}
-     *
-     * @param durability The new durability of the item
-     * @return A reference to this object
-     */
-    public GUIItem setDurabilityBase(int durability) {
-        baseItem.setDurability(durability);
-        return this;
-    }
-
-    /**
-     * Set the durability of the view item.
-     * <p>
-     * It must be ensured that the item has a durability with {@link IItemBuilder#hasDurability()}
-     *
-     * @param durability The new durability of the item
-     * @return A reference to this object
-     */
-    public GUIItem setDurabilityView(int durability) {
-        viewItem.setDurability(durability);
-        return this;
-    }
-
-    /**
-     * Get the maximum stacking size of the item
-     *
-     * @return The maximum stack size
-     */
     @Override
     public int getMaxStackSize() {
-        return getMaxStackSizeView();
+        return this.item.getMaxStackSize();
     }
 
-    /**
-     * Get the maximum stacking size of the base item
-     *
-     * @return The maximum stack size
-     */
-    public int getMaxStackSizeBase() {
-        return baseItem.getMaxStackSize();
-    }
-
-    /**
-     * Get the maximum stacking size of the view item
-     *
-     * @return The maximum stack size
-     */
-    public int getMaxStackSizeView() {
-        return viewItem.getMaxStackSize();
-    }
-
-    /**
-     * Whether the item has a durability or not
-     *
-     * @return Whether the item has a durability
-     */
     @Override
     public boolean hasDurability() {
-        return hasDurabilityView();
+        return this.item.hasDurability();
     }
 
-    /**
-     * Whether the base item has a durability or not
-     *
-     * @return Whether the item has a durability
-     */
-    public boolean hasDurabilityBase() {
-        return baseItem.hasDurability();
-    }
-
-    /**
-     * Whether the view item has a durability or not
-     *
-     * @return Whether the item has a durability
-     */
-    public boolean hasDurabilityView() {
-        return viewItem.hasDurability();
-    }
-
-    /**
-     * Set data in the item's {@link PersistentDataContainer}
-     *
-     * @param key   The <code>NamespacedKey</code> to set the data in
-     * @param type  The <code>PersistentDataContainer</code> to use
-     * @param value The value to set
-     * @param <Y>   The main object type stored by the tag
-     * @param <Z>   The data type of the retrieved object
-     * @return A reference to this object
-     */
     @Override
     public <Y, Z> GUIItem setData(NamespacedKey key, PersistentDataType<Y, Z> type, Z value) {
-        setDataBase(key, type, value);
-        setDataView(key, type, value);
+        this.item.setData(key, type, value);
         return this;
     }
 
-    /**
-     * Set data in the base item's {@link PersistentDataContainer}
-     *
-     * @param key   The <code>NamespacedKey</code> to set the data in
-     * @param type  The <code>PersistentDataContainer</code> to use
-     * @param value The value to set
-     * @param <Y>   The main object type stored by the tag
-     * @param <Z>   The data type of the retrieved object
-     * @return A reference to this object
-     */
-    public <Y, Z> GUIItem setDataBase(NamespacedKey key, PersistentDataType<Y, Z> type, Z value) {
-        baseItem.setData(key, type, value);
-        return this;
-    }
-
-    /**
-     * Set data in the view item's {@link PersistentDataContainer}
-     *
-     * @param key   The <code>NamespacedKey</code> to set the data in
-     * @param type  The <code>PersistentDataContainer</code> to use
-     * @param value The value to set
-     * @param <Y>   The main object type stored by the tag
-     * @param <Z>   The data type of the retrieved object
-     * @return A reference to this object
-     */
-    public <Y, Z> GUIItem setDataView(NamespacedKey key, PersistentDataType<Y, Z> type, Z value) {
-        viewItem.setData(key, type, value);
-        return this;
-    }
-
-    /**
-     * Set data in the item's {@link PersistentDataContainer}
-     *
-     * @param plugin The plugin's reference for namespace
-     * @param key    The String key to set the data in
-     * @param type   The <code>PersistentDataContainer</code> to use
-     * @param value  The value to set
-     * @param <Y>    The main object type stored by the tag
-     * @param <Z>    The data type of the retrieved object
-     * @return A reference to this object
-     */
     @Override
     public <Y, Z> GUIItem setData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z value) {
-        setDataBase(plugin, key, type, value);
-        setDataView(plugin, key, type, value);
+        this.item.setData(plugin, key, type, value);
         return this;
     }
 
-    /**
-     * Set data in the base item's {@link PersistentDataContainer}
-     *
-     * @param plugin The plugin's reference for namespace
-     * @param key    The String key to set the data in
-     * @param type   The <code>PersistentDataContainer</code> to use
-     * @param value  The value to set
-     * @param <Y>    The main object type stored by the tag
-     * @param <Z>    The data type of the retrieved object
-     * @return A reference to this object
-     */
-    public <Y, Z> GUIItem setDataBase(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z value) {
-        baseItem.setData(plugin, key, type, value);
-        return this;
-    }
-
-    /**
-     * Set data in the view item's {@link PersistentDataContainer}
-     *
-     * @param plugin The plugin's reference for namespace
-     * @param key    The String key to set the data in
-     * @param type   The <code>PersistentDataContainer</code> to use
-     * @param value  The value to set
-     * @param <Y>    The main object type stored by the tag
-     * @param <Z>    The data type of the retrieved object
-     * @return A reference to this object
-     */
-    public <Y, Z> GUIItem setDataView(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z value) {
-        viewItem.setData(plugin, key, type, value);
-        return this;
-    }
-
-    /**
-     * Get whether there is specific data in the item's {@link PersistentDataContainer}
-     *
-     * @param key  The <code>NamespacedKey</code> to check for
-     * @param type The <code>PersistentDataContainer</code> to use
-     * @param <Y>  The main object type stored by the tag
-     * @param <Z>  The data type of the retrieved object
-     * @return A reference to this object
-     */
     @Override
     public <Y, Z> boolean hasData(NamespacedKey key, PersistentDataType<Y, Z> type) {
-        return hasDataView(key, type);
+        return this.item.hasData(key, type);
     }
 
-    /**
-     * Get whether there is specific data in the base item's {@link PersistentDataContainer}
-     *
-     * @param key  The <code>NamespacedKey</code> to check for
-     * @param type The <code>PersistentDataContainer</code> to use
-     * @param <Y>  The main object type stored by the tag
-     * @param <Z>  The data type of the retrieved object
-     * @return A reference to this object
-     */
-    public <Y, Z> boolean hasDataBase(NamespacedKey key, PersistentDataType<Y, Z> type) {
-        return baseItem.hasData(key, type);
-    }
-
-    /**
-     * Get whether there is specific data in the view item's {@link PersistentDataContainer}
-     *
-     * @param key  The <code>NamespacedKey</code> to check for
-     * @param type The <code>PersistentDataContainer</code> to use
-     * @param <Y>  The main object type stored by the tag
-     * @param <Z>  The data type of the retrieved object
-     * @return A reference to this object
-     */
-    public <Y, Z> boolean hasDataView(NamespacedKey key, PersistentDataType<Y, Z> type) {
-        return viewItem.hasData(key, type);
-    }
-
-    /**
-     * Get whether there is specific data in the item's {@link PersistentDataContainer}
-     *
-     * @param plugin The plugin's reference for namespace
-     * @param key    The String key to check for
-     * @param type   The <code>PersistentDataContainer</code> to use
-     * @param <Y>    The main object type stored by the tag
-     * @param <Z>    The data type of the retrieved object
-     * @return A reference to this object
-     */
     @Override
     public <Y, Z> boolean hasData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type) {
-        return hasDataView(plugin, key, type);
+        return this.item.hasData(plugin, key, type);
     }
 
-    /**
-     * Get whether there is specific data in the base item's {@link PersistentDataContainer}
-     *
-     * @param plugin The plugin's reference for namespace
-     * @param key    The String key to check for
-     * @param type   The <code>PersistentDataContainer</code> to use
-     * @param <Y>    The main object type stored by the tag
-     * @param <Z>    The data type of the retrieved object
-     * @return A reference to this object
-     */
-    public <Y, Z> boolean hasDataBase(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type) {
-        return baseItem.hasData(plugin, key, type);
-    }
-
-    /**
-     * Get whether there is specific data in the view item's {@link PersistentDataContainer}
-     *
-     * @param plugin The plugin's reference for namespace
-     * @param key    The String key to check for
-     * @param type   The <code>PersistentDataContainer</code> to use
-     * @param <Y>    The main object type stored by the tag
-     * @param <Z>    The data type of the retrieved object
-     * @return A reference to this object
-     */
-    public <Y, Z> boolean hasDataView(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type) {
-        return viewItem.hasData(plugin, key, type);
-    }
-
-    /**
-     * Get data from the item's {@link PersistentDataContainer}
-     *
-     * @param key  The <code>NamespacedKey</code> to get the data from
-     * @param type The <code>PersistentDataContainer</code> to use
-     * @param <Y>  The main object type stored by the tag
-     * @param <Z>  The data type of the retrieved object
-     * @return A reference to this object
-     */
     @Override
     public <Y, Z> Z getData(NamespacedKey key, PersistentDataType<Y, Z> type) {
-        return getDataView(key, type);
+        return this.item.getData(key, type);
     }
 
-    /**
-     * Get data from the base item's {@link PersistentDataContainer}
-     *
-     * @param key  The <code>NamespacedKey</code> to get the data from
-     * @param type The <code>PersistentDataContainer</code> to use
-     * @param <Y>  The main object type stored by the tag
-     * @param <Z>  The data type of the retrieved object
-     * @return A reference to this object
-     */
-    public <Y, Z> Z getDataBase(NamespacedKey key, PersistentDataType<Y, Z> type) {
-        return baseItem.getData(key, type);
-    }
-
-    /**
-     * Get data from the view item's {@link PersistentDataContainer}
-     *
-     * @param key  The <code>NamespacedKey</code> to get the data from
-     * @param type The <code>PersistentDataContainer</code> to use
-     * @param <Y>  The main object type stored by the tag
-     * @param <Z>  The data type of the retrieved object
-     * @return A reference to this object
-     */
-    public <Y, Z> Z getDataView(NamespacedKey key, PersistentDataType<Y, Z> type) {
-        return viewItem.getData(key, type);
-    }
-
-    /**
-     * Get data from the item's {@link PersistentDataContainer}
-     *
-     * @param plugin The plugin's reference for namespace
-     * @param key    The String key to get
-     * @param type   The <code>PersistentDataContainer</code> to use
-     * @param <Y>    The main object type stored by the tag
-     * @param <Z>    The data type of the retrieved object
-     * @return A reference to this object
-     */
     @Override
     public <Y, Z> Z getData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type) {
-        return getDataView(plugin, key, type);
+        return this.item.getData(plugin, key, type);
     }
 
-    /**
-     * Get data from the base item's {@link PersistentDataContainer}
-     *
-     * @param plugin The plugin's reference for namespace
-     * @param key    The String key to get
-     * @param type   The <code>PersistentDataContainer</code> to use
-     * @param <Y>    The main object type stored by the tag
-     * @param <Z>    The data type of the retrieved object
-     * @return A reference to this object
-     */
-    public <Y, Z> Z getDataBase(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type) {
-        return baseItem.getData(plugin, key, type);
-    }
-
-    /**
-     * Get data from the view item's {@link PersistentDataContainer}
-     *
-     * @param plugin The plugin's reference for namespace
-     * @param key    The String key to get
-     * @param type   The <code>PersistentDataContainer</code> to use
-     * @param <Y>    The main object type stored by the tag
-     * @param <Z>    The data type of the retrieved object
-     * @return A reference to this object
-     */
-    public <Y, Z> Z getDataView(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type) {
-        return viewItem.getData(plugin, key, type);
-    }
-
-    /**
-     * Get data from the item's {@link PersistentDataContainer}. If the data does not exist, get a
-     * default value instead.
-     *
-     * @param key          The <code>NamespacedKey</code> to get the data from
-     * @param type         The <code>PersistentDataContainer</code> to use
-     * @param defaultValue The default value to get if no value currently exists
-     * @param <Y>          The main object type stored by the tag
-     * @param <Z>          The data type of the retrieved object
-     * @return A reference to this object
-     */
     @Override
     public <Y, Z> Z getOrDefaultData(NamespacedKey key, PersistentDataType<Y, Z> type, Z defaultValue) {
-        return getOrDefaultDataView(key, type, defaultValue);
+        return this.item.getOrDefaultData(key, type, defaultValue);
     }
 
-    /**
-     * Get data from the base item's {@link PersistentDataContainer}. If the data does not exist, get a
-     * default value instead.
-     *
-     * @param key          The <code>NamespacedKey</code> to get the data from
-     * @param type         The <code>PersistentDataContainer</code> to use
-     * @param defaultValue The default value to get if no value currently exists
-     * @param <Y>          The main object type stored by the tag
-     * @param <Z>          The data type of the retrieved object
-     * @return A reference to this object
-     */
-    public <Y, Z> Z getOrDefaultDataBase(NamespacedKey key, PersistentDataType<Y, Z> type, Z defaultValue) {
-        return baseItem.getOrDefaultData(key, type, defaultValue);
-    }
-
-    /**
-     * Get data from the view item's {@link PersistentDataContainer}. If the data does not exist, get a
-     * default value instead.
-     *
-     * @param key          The <code>NamespacedKey</code> to get the data from
-     * @param type         The <code>PersistentDataContainer</code> to use
-     * @param defaultValue The default value to get if no value currently exists
-     * @param <Y>          The main object type stored by the tag
-     * @param <Z>          The data type of the retrieved object
-     * @return A reference to this object
-     */
-    public <Y, Z> Z getOrDefaultDataView(NamespacedKey key, PersistentDataType<Y, Z> type, Z defaultValue) {
-        return viewItem.getOrDefaultData(key, type, defaultValue);
-    }
-
-    /**
-     * Get data from the item's {@link PersistentDataContainer}. If the data does not exist, get a
-     * default value instead.
-     *
-     * @param plugin       The plugin's reference for namespace
-     * @param key          The String key to get
-     * @param type         The <code>PersistentDataContainer</code> to use
-     * @param defaultValue The default value to get if no value currently exists
-     * @param <Y>          The main object type stored by the tag
-     * @param <Z>          The data type of the retrieved object
-     * @return A reference to this object
-     */
     @Override
     public <Y, Z> Z getOrDefaultData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z defaultValue) {
-        return null;
+        return this.item.getOrDefaultData(plugin, key, type, defaultValue);
     }
 
-    /**
-     * Get data from the base item's {@link PersistentDataContainer}. If the data does not exist, get a
-     * default value instead.
-     *
-     * @param plugin       The plugin's reference for namespace
-     * @param key          The String key to get
-     * @param type         The <code>PersistentDataContainer</code> to use
-     * @param defaultValue The default value to get if no value currently exists
-     * @param <Y>          The main object type stored by the tag
-     * @param <Z>          The data type of the retrieved object
-     * @return A reference to this object
-     */
-    public <Y, Z> Z getOrDefaultDataBase(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z defaultValue) {
-        return baseItem.getOrDefaultData(plugin, key, type, defaultValue);
-    }
-
-    /**
-     * Get data from the view item's {@link PersistentDataContainer}. If the data does not exist, get a
-     * default value instead.
-     *
-     * @param plugin       The plugin's reference for namespace
-     * @param key          The String key to get
-     * @param type         The <code>PersistentDataContainer</code> to use
-     * @param defaultValue The default value to get if no value currently exists
-     * @param <Y>          The main object type stored by the tag
-     * @param <Z>          The data type of the retrieved object
-     * @return A reference to this object
-     */
-    public <Y, Z> Z getOrDefaultDataView(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z defaultValue) {
-        return viewItem.getOrDefaultData(plugin, key, type, defaultValue);
-    }
-
-    /**
-     * Remove data from the item's {@link PersistentDataContainer}
-     *
-     * @param key The <code>NamespacedKey</code> to remove
-     * @return A reference to this object
-     */
     @Override
     public GUIItem removeData(NamespacedKey key) {
-        removeDataBase(key);
-        removeDataView(key);
+        this.item.removeData(key);
         return this;
     }
 
-    /**
-     * Remove data from the base item's {@link PersistentDataContainer}
-     *
-     * @param key The <code>NamespacedKey</code> to remove
-     * @return A reference to this object
-     */
-    public GUIItem removeDataBase(NamespacedKey key) {
-        baseItem.removeData(key);
-        return this;
-    }
-
-    /**
-     * Remove data from the view item's {@link PersistentDataContainer}
-     *
-     * @param key The <code>NamespacedKey</code> to remove
-     * @return A reference to this object
-     */
-    public GUIItem removeDataView(NamespacedKey key) {
-        viewItem.removeData(key);
-        return this;
-    }
-
-    /**
-     * Remove data from the item's {@link PersistentDataContainer}
-     *
-     * @param plugin The plugin's reference for namespace
-     * @param key    The String key to remove
-     * @return A reference to this object
-     */
     @Override
     public GUIItem removeData(BukkitPlugin plugin, String key) {
-        removeDataBase(plugin, key);
-        removeDataView(plugin, key);
+        this.item.removeData(plugin, key);
         return this;
     }
 
-    /**
-     * Remove data from the base item's {@link PersistentDataContainer}
-     *
-     * @param plugin The plugin's reference for namespace
-     * @param key    The String key to remove
-     * @return A reference to this object
-     */
-    public GUIItem removeDataBase(BukkitPlugin plugin, String key) {
-        baseItem.removeData(plugin, key);
-        return this;
-    }
-
-    /**
-     * Remove data from the view item's {@link PersistentDataContainer}
-     *
-     * @param plugin The plugin's reference for namespace
-     * @param key    The String key to remove
-     * @return A reference to this object
-     */
-    public GUIItem removeDataView(BukkitPlugin plugin, String key) {
-        viewItem.removeData(plugin, key);
-        return this;
-    }
-
-    /**
-     * Remove data from the item's {@link PersistentDataContainer}
-     *
-     * @param keys The <code>NamespacedKeys</code> to remove
-     * @return A reference to this object
-     */
     @Override
     public GUIItem removeData(NamespacedKey... keys) {
-        removeDataBase(keys);
-        removeDataView(keys);
+        this.item.removeData(keys);
         return this;
     }
 
-    /**
-     * Remove data from the base item's {@link PersistentDataContainer}
-     *
-     * @param keys The <code>NamespacedKeys</code> to remove
-     * @return A reference to this object
-     */
-    public GUIItem removeDataBase(NamespacedKey... keys) {
-        baseItem.removeData(keys);
-        return this;
-    }
-
-    /**
-     * Remove data from the view item's {@link PersistentDataContainer}
-     *
-     * @param keys The <code>NamespacedKeys</code> to remove
-     * @return A reference to this object
-     */
-    public GUIItem removeDataView(NamespacedKey... keys) {
-        viewItem.removeData(keys);
-        return this;
-    }
-
-    /**
-     * Remove data from the item's {@link PersistentDataContainer}
-     *
-     * @param plugin The plugin's reference for namespace
-     * @param keys   The String keys to remove
-     * @return A reference to this object
-     */
     @Override
     public GUIItem removeData(BukkitPlugin plugin, String... keys) {
-        removeDataBase(plugin, keys);
-        removeDataView(plugin, keys);
+        this.item.removeData(plugin, keys);
         return this;
     }
 
-    /**
-     * Remove data from the base item's {@link PersistentDataContainer}
-     *
-     * @param plugin The plugin's reference for namespace
-     * @param keys   The String keys to remove
-     * @return A reference to this object
-     */
-    public GUIItem removeDataBase(BukkitPlugin plugin, String... keys) {
-        baseItem.removeData(plugin, keys);
-        return this;
-    }
-
-    /**
-     * Remove data from the view item's {@link PersistentDataContainer}
-     *
-     * @param plugin The plugin's reference for namespace
-     * @param keys   The String keys to remove
-     * @return A reference to this object
-     */
-    public GUIItem removeDataView(BukkitPlugin plugin, String... keys) {
-        viewItem.removeData(plugin, keys);
-        return this;
-    }
-
-    /**
-     * Get whether the item's {@link PersistentDataContainer} is empty or not
-     *
-     * @return Whether the item's data is empty
-     */
     @Override
     public boolean isDataEmpty() {
-        return isDataEmptyView();
-    }
-
-    /**
-     * Get whether the base item's {@link PersistentDataContainer} is empty or not
-     *
-     * @return Whether the item's data is empty
-     */
-    public boolean isDataEmptyBase() {
-        return baseItem.isDataEmpty();
-    }
-
-    /**
-     * Get whether the view item's {@link PersistentDataContainer} is empty or not
-     *
-     * @return Whether the item's data is empty
-     */
-    public boolean isDataEmptyView() {
-        return viewItem.isDataEmpty();
+        return this.item.isDataEmpty();
     }
 
     /**
@@ -3119,11 +745,8 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
             return null;
         }
 
-        if(baseItem != null) {
-            newItem.baseItem = baseItem.clone();
-        }
-        if(viewItem != null) {
-            newItem.viewItem = viewItem.clone();
+        if(item != null) {
+            newItem.item = item.clone();
         }
 
         if(events != null) {

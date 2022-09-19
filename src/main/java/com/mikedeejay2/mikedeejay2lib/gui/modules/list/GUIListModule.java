@@ -399,16 +399,16 @@ public class GUIListModule implements GUIModule {
             GUIItem curItem = forwardItem.clone();
             switch(viewMode) {
                 case SCROLL:
-                    curItem.setNameView(scrollChangePreName + Text
-                        .translatable("gui.modules.list.scroll_forward")
-                        .get(player));
+                    curItem.setName(Text.of(scrollChangePreName).concat(
+                        Text.translatable("gui.modules.list.scroll_forward")
+                    ).color());
                     break;
                 case PAGED:
                 default:
-                    curItem.setNameView(pageChangePreName + Text
-                        .translatable("gui.modules.list.page")
-                        .placeholder(PlaceholderFormatter.of("page", String.valueOf(i)))
-                        .get(player));
+                    curItem.setName(Text.of(pageChangePreName).concat(
+                        Text.translatable("gui.modules.list.page")
+                            .placeholder(PlaceholderFormatter.of("page", String.valueOf(i)))
+                    ).color());
                     break;
             }
             layer.setItem(row, col, curItem);
@@ -422,16 +422,16 @@ public class GUIListModule implements GUIModule {
             GUIItem curItem = backItem.clone();
             switch(viewMode) {
                 case SCROLL:
-                    curItem.setNameView(scrollChangePreName + Text
-                        .translatable("gui.modules.list.scroll_back")
-                        .get(player));
+                    curItem.setName(Text.of(scrollChangePreName).concat(
+                        Text.translatable("gui.modules.list.scroll_back")
+                    ).color());
                     break;
                 case PAGED:
                 default:
-                    curItem.setNameView(pageChangePreName + Text
-                        .translatable("gui.modules.list.page")
-                        .placeholder(PlaceholderFormatter.of("page", String.valueOf(i)))
-                        .get(player));
+                    curItem.setName(Text.of(pageChangePreName).concat(
+                        Text.translatable("gui.modules.list.page")
+                            .placeholder(PlaceholderFormatter.of("page", String.valueOf(i)))
+                    ).color());
                     break;
             }
             layer.setItem(row, col, curItem);
@@ -624,7 +624,7 @@ public class GUIListModule implements GUIModule {
         searchList.clear();
         for(int i = 0; i < list.size(); ++i) {
             GUIItem item = list.get(i);
-            if(!SearchUtil.searchMetaFuzzy(item.getMetaView(), searchTerm)) continue;
+            if(!SearchUtil.searchMetaFuzzy(item.getMeta(), searchTerm)) continue;
             searchList.add(new MutablePair<>(item, i));
         }
     }
@@ -782,7 +782,7 @@ public class GUIListModule implements GUIModule {
      */
     public boolean containsItem(ItemStack item) {
         for(GUIItem guiItem : list) {
-            ItemStack curItem = guiItem.getItemBase();
+            ItemStack curItem = guiItem.get();
             if(curItem == null) continue;
             if(!ItemComparison.equalsEachOther(item, curItem)) continue;
             return true;
@@ -798,7 +798,7 @@ public class GUIListModule implements GUIModule {
      */
     public boolean containsMaterial(Material material) {
         for(GUIItem guiItem : list) {
-            ItemStack curItem = guiItem.getItemBase();
+            ItemStack curItem = guiItem.get();
             if(curItem == null) continue;
             if(curItem.getType() != material) continue;
             return true;

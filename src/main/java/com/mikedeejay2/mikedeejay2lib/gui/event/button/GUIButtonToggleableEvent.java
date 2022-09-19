@@ -88,9 +88,9 @@ public class GUIButtonToggleableEvent extends GUIAbstractClickEvent {
      */
     protected void updateItem(GUIItem item) {
         if(state && onItem != null) {
-            item.setItem(onItem.get());
+            item.set(onItem.get());
         } else if(!state && offItem != null) {
-            item.setItem(offItem.get());
+            item.set(offItem.get());
         }
     }
 
