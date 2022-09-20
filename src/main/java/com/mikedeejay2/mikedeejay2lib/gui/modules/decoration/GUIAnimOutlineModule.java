@@ -1,7 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.gui.modules.decoration;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
-import com.mikedeejay2.mikedeejay2lib.gui.animation.GUIAnimPattern;
+import com.mikedeejay2.mikedeejay2lib.gui.animation.AnimationSpecification;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.util.SlotMatcher;
 import org.bukkit.entity.Player;
@@ -17,30 +17,32 @@ public class GUIAnimOutlineModule extends GUIAnimDecoratorModule {
      * Construct a new <code>GUIAnimOutlineModule</code>
      *
      * @param outlineItem    The GUI item that will be used for the border
-     * @param pattern        The animation pattern to use
+     * @param specification  The {@link AnimationSpecification} to use
      * @param animMultiplier The animation multiplier
      */
-    public GUIAnimOutlineModule(AnimatedGUIItem outlineItem, GUIAnimPattern pattern, int animMultiplier) {
-        super(null, outlineItem, pattern, animMultiplier);
+    public GUIAnimOutlineModule(AnimatedGUIItem outlineItem, AnimationSpecification specification, int animMultiplier) {
+        super(null, outlineItem, specification, animMultiplier);
     }
 
     /**
      * Construct a new <code>GUIAnimOutlineModule</code>
      *
      * @param outlineItem The GUI item that will be used for the border
-     * @param pattern     The animation pattern to use
+     * @param specification  The {@link AnimationSpecification} to use
      */
-    public GUIAnimOutlineModule(AnimatedGUIItem outlineItem, GUIAnimPattern pattern) {
-        super(null, outlineItem, pattern);
+    public GUIAnimOutlineModule(AnimatedGUIItem outlineItem, AnimationSpecification specification) {
+        super(null, outlineItem, specification);
     }
 
     /**
-     * Construct a new <code>GUIAnimOutlineModule</code> with the default top left diagonal {@link GUIAnimPattern}
+     * Construct a new <code>GUIAnimOutlineModule</code> with the default top left diagonal {@link AnimationSpecification}
      *
      * @param outlineItem The GUI item that will be used for the border
      */
     public GUIAnimOutlineModule(AnimatedGUIItem outlineItem) {
-        this(outlineItem, GUIAnimPattern.TOP_LEFT_DIAGONAL);
+        this(outlineItem, new AnimationSpecification(
+            AnimationSpecification.Position.TOP_LEFT,
+            AnimationSpecification.Style.LINEAR));
     }
 
     @Override

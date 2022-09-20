@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.modules.decoration;
 
-import com.mikedeejay2.mikedeejay2lib.gui.animation.GUIAnimPattern;
+import com.mikedeejay2.mikedeejay2lib.gui.animation.AnimationSpecification;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.util.SlotMatcher;
 import org.jetbrains.annotations.Nullable;
@@ -14,9 +14,9 @@ import org.jetbrains.annotations.Nullable;
  */
 public class GUIAnimDecoratorModule extends GUIAbstractDecoratorModule {
     /**
-     * The animation pattern to use
+     * The {@link AnimationSpecification} to use
      */
-    protected GUIAnimPattern pattern;
+    protected AnimationSpecification specification;
 
     /**
      * The animation multiplier
@@ -33,13 +33,14 @@ public class GUIAnimDecoratorModule extends GUIAbstractDecoratorModule {
      *
      * @param matcher        The {@link SlotMatcher} to use
      * @param guiItem        The animated item used for decorating the GUI
+     * @param specification  The {@link AnimationSpecification} to use
      * @param animMultiplier The animation multiplier
      * @param layerName      The name of the layer to decorate
      */
-    public GUIAnimDecoratorModule(SlotMatcher matcher, AnimatedGUIItem guiItem, GUIAnimPattern pattern, int animMultiplier, @Nullable String layerName) {
+    public GUIAnimDecoratorModule(SlotMatcher matcher, AnimatedGUIItem guiItem, AnimationSpecification specification, int animMultiplier, @Nullable String layerName) {
         super(matcher, layerName);
         this.guiItem = guiItem;
-        this.pattern = pattern;
+        this.specification = specification;
         this.animMultiplier = animMultiplier;
     }
 
@@ -48,31 +49,34 @@ public class GUIAnimDecoratorModule extends GUIAbstractDecoratorModule {
      *
      * @param matcher        The {@link SlotMatcher} to use
      * @param guiItem        The animated item used for decorating the GUI
+     * @param specification  The {@link AnimationSpecification} to use
      * @param layerName      The name of the layer to decorate
      */
-    public GUIAnimDecoratorModule(SlotMatcher matcher, AnimatedGUIItem guiItem, GUIAnimPattern pattern, @Nullable String layerName) {
-        this(matcher, guiItem, pattern, 1, layerName);
+    public GUIAnimDecoratorModule(SlotMatcher matcher, AnimatedGUIItem guiItem, AnimationSpecification specification, @Nullable String layerName) {
+        this(matcher, guiItem, specification, 1, layerName);
     }
 
     /**
      * Construct a new <code>GUIAnimDecoratorModule</code>
      *
-     * @param matcher The {@link SlotMatcher} to use
-     * @param guiItem The animated item used for decorating the GUI
+     * @param matcher        The {@link SlotMatcher} to use
+     * @param guiItem        The animated item used for decorating the GUI
+     * @param specification  The {@link AnimationSpecification} to use
      * @param animMultiplier The animation multiplier
      */
-    public GUIAnimDecoratorModule(SlotMatcher matcher, AnimatedGUIItem guiItem, GUIAnimPattern pattern, int animMultiplier) {
-        this(matcher, guiItem, pattern, animMultiplier, null);
+    public GUIAnimDecoratorModule(SlotMatcher matcher, AnimatedGUIItem guiItem, AnimationSpecification specification, int animMultiplier) {
+        this(matcher, guiItem, specification, animMultiplier, null);
     }
 
     /**
      * Construct a new <code>GUIAnimDecoratorModule</code>
      *
-     * @param matcher The {@link SlotMatcher} to use
-     * @param guiItem The animated item used for decorating the GUI
+     * @param matcher       The {@link SlotMatcher} to use
+     * @param guiItem       The animated item used for decorating the GUI
+     * @param specification The {@link AnimationSpecification} to use
      */
-    public GUIAnimDecoratorModule(SlotMatcher matcher, AnimatedGUIItem guiItem, GUIAnimPattern pattern) {
-        this(matcher, guiItem, pattern, 1);
+    public GUIAnimDecoratorModule(SlotMatcher matcher, AnimatedGUIItem guiItem, AnimationSpecification specification) {
+        this(matcher, guiItem, specification, 1);
     }
 
     /**
@@ -85,7 +89,7 @@ public class GUIAnimDecoratorModule extends GUIAbstractDecoratorModule {
     protected AnimatedGUIItem getItem(SlotMatcher.MatchData matchData) {
         int maxRow = matchData.gui.getRows();
         int maxCol = matchData.gui.getCols();
-        return pattern.getItemFor(guiItem, matchData.row, matchData.col, maxRow, maxCol, animMultiplier);
+        return specification.getItemFor(guiItem, matchData.row, matchData.col, maxRow, maxCol, animMultiplier);
     }
 
     /**
@@ -107,21 +111,21 @@ public class GUIAnimDecoratorModule extends GUIAbstractDecoratorModule {
     }
 
     /**
-     * Get the {@link GUIAnimPattern} used for animating the items
+     * Get the {@link AnimationSpecification} to use for animating the items
      *
-     * @return The current animation pattern
+     * @return The {@link AnimationSpecification}
      */
-    public GUIAnimPattern getPattern() {
-        return pattern;
+    public AnimationSpecification getSpecification() {
+        return specification;
     }
 
     /**
-     * Set the {@link GUIAnimPattern} used for animating the items
+     * Set the new {@link AnimationSpecification} to use for animating the items
      *
-     * @param pattern The new animation pattern
+     * @param specification The new {@link AnimationSpecification}
      */
-    public void setPattern(GUIAnimPattern pattern) {
-        this.pattern = pattern;
+    public void setSpecification(AnimationSpecification specification) {
+        this.specification = specification;
     }
 
     /**
