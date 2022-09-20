@@ -9,8 +9,10 @@ import org.bukkit.entity.Player;
 /**
  * Adds animated strips along the sides of a GUI.
  *
+ * @deprecated Use {@link GUIAnimDecoratorModule} instead
  * @author Mikedeejay2
  */
+@Deprecated
 public class GUIAnimStripsModule implements GUIModule
 {
     /**
@@ -23,6 +25,7 @@ public class GUIAnimStripsModule implements GUIModule
      *
      * @param item The item that will be used for the strips
      */
+    @Deprecated
     public GUIAnimStripsModule(AnimatedGUIItem item) {
         this.item = item;
     }

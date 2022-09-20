@@ -93,7 +93,7 @@ public abstract class SlotMatcher {
      * @return The constructed matcher
      */
     public static SlotMatcher filled() {
-        return SlotMatcher.not(SlotMatcher.empty());
+        return not(empty());
     }
 
     /**
@@ -123,6 +123,24 @@ public abstract class SlotMatcher {
      */
     public static SlotMatcher movable() {
         return new MovableMatcher();
+    }
+
+    /**
+     * Get a matcher that is always true.
+     *
+     * @return The constructed matcher
+     */
+    public static SlotMatcher always() {
+        return new TrueMatcher();
+    }
+
+    /**
+     * Get a matcher that is always true.
+     *
+     * @return The constructed matcher
+     */
+    public static SlotMatcher never() {
+        return not(always());
     }
 
     /**
@@ -754,6 +772,24 @@ public abstract class SlotMatcher {
         @Override
         public void reset() {
             this.curMatches = 0;
+        }
+    }
+
+    /**
+     * A matcher that always returns true
+     *
+     * @author Mikedeejay2
+     */
+    protected static class TrueMatcher extends SlotMatcher {
+        /**
+         * Returns true
+         *
+         * @param data The {@link MatchData} to match
+         * @return true
+         */
+        @Override
+        public boolean matches(MatchData data) {
+            return true;
         }
     }
 }

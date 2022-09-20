@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.animation;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
+import com.mikedeejay2.mikedeejay2lib.util.math.MathUtil;
 
 /**
  * Enum of different animation patterns. Has helper methods for getting the delay of a specific
@@ -46,6 +47,22 @@ public enum GUIAnimPattern {
      * Completely random animation
      */
     RANDOM((row, col, maxRow, maxCol) -> (int) (Math.random() * (maxRow + maxCol) + 1)),
+    /**
+     * Animation starting from the center and animating out in a diamond pattern
+     */
+    CENTER_DIAMOND((row, col, maxRow, maxCol) -> Math.abs((maxRow / 2) + 1 - row) + Math.abs((maxCol / 2) + 1 - col)),
+    /**
+     * Animation starting from the center and animating out in a circular pattern
+     */
+    CENTER_CIRCULAR((row, col, maxRow, maxCol) -> (int) (Math.sqrt(
+        MathUtil.square(Math.abs((maxRow / 2) + 1 - row)) + MathUtil.square(Math.abs((maxCol / 2) + 1 - col))
+    ) * 2)),
+    /**
+     * Animation starting from the center and animating out in a circular pattern
+     */
+    CENTER_SQUARE((row, col, maxRow, maxCol) -> (int) (Math.sqrt(
+        MathUtil.square(Math.abs((maxRow / 2) + 1 - row)) + MathUtil.square(Math.abs((maxCol / 2) + 1 - col))
+    ) * 1)),
     ;
 
     /**

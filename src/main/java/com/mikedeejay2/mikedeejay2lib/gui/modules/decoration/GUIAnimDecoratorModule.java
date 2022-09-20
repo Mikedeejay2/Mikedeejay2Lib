@@ -85,7 +85,7 @@ public class GUIAnimDecoratorModule extends GUIAbstractDecoratorModule {
     protected AnimatedGUIItem getItem(SlotMatcher.MatchData matchData) {
         int maxRow = matchData.gui.getRows();
         int maxCol = matchData.gui.getCols();
-        return pattern.getItemFor(guiItem, matchData.row, matchData.col, maxRow, maxCol);
+        return pattern.getItemFor(guiItem, matchData.row, matchData.col, maxRow, maxCol, animMultiplier);
     }
 
     /**

@@ -10,8 +10,10 @@ import org.bukkit.inventory.ItemStack;
  * Module that adds a border of an item type to the top and bottom row of a GUI.
  * Used to add decoration to a GUI.
  *
+ * @deprecated Use {@link GUIAnimDecoratorModule} instead
  * @author Mikedeejay2
  */
+@Deprecated
 public class GUIBorderModule implements GUIModule {
     /**
      * The GUI item that will be used for the border
@@ -23,6 +25,7 @@ public class GUIBorderModule implements GUIModule {
      *
      * @param borderItem The GUI item that will be used for the border
      */
+    @Deprecated
     public GUIBorderModule(GUIItem borderItem) {
         this.borderItem = borderItem;
     }
