@@ -38,22 +38,22 @@ public class TextFormatted implements Text {
 
     @Override
     public String get(Player player) {
-        return String.format(text.get(player));
+        return String.format(text.get(player), getArgs_(player));
     }
 
     @Override
     public String get(CommandSender sender) {
-        return String.format(text.get(sender));
+        return String.format(text.get(sender), getArgs_(sender));
     }
 
     @Override
     public String get(String locale) {
-        return String.format(text.get(locale));
+        return String.format(text.get(locale), getArgs_(locale));
     }
 
     @Override
     public String get() {
-        return String.format(text.get());
+        return String.format(text.get(), getArgs_());
     }
 
     @Override
@@ -61,6 +61,65 @@ public class TextFormatted implements Text {
         List<Object> combined = new ArrayList<>(Arrays.asList(this.args));
         combined.addAll(Arrays.asList(args));
         return new TextFormatted(text, combined.toArray());
+    }
+
+    /**
+     * Internal method to fix the format arguments if they have text contained within them. This method will process the
+     * text to be Strings so that {@link String#format(String, Object...)} can use it accordingly
+     *
+     * @param player The player for the locale
+     * @return The fixed arguments
+     */
+    private Object[] getArgs_(Player player) {
+        final Object[] result = new Object[args.length];
+        for(int i = 0; i < args.length; ++i) {
+            result[i] = args[i] instanceof Text ? ((Text) args[i]).get(player) : args[i];
+        }
+        return result;
+    }
+
+    /**
+     * Internal method to fix the format arguments if they have text contained within them. This method will process the
+     * text to be Strings so that {@link String#format(String, Object...)} can use it accordingly
+     *
+     * @param sender The <code>CommandSender</code> for the locale
+     * @return The fixed arguments
+     */
+    private Object[] getArgs_(CommandSender sender) {
+        final Object[] result = new Object[args.length];
+        for(int i = 0; i < args.length; ++i) {
+            result[i] = args[i] instanceof Text ? ((Text) args[i]).get(sender) : args[i];
+        }
+        return result;
+    }
+
+    /**
+     * Internal method to fix the format arguments if they have text contained within them. This method will process the
+     * text to be Strings so that {@link String#format(String, Object...)} can use it accordingly
+     *
+     * @param locale The locale
+     * @return The fixed arguments
+     */
+    private Object[] getArgs_(String locale) {
+        final Object[] result = new Object[args.length];
+        for(int i = 0; i < args.length; ++i) {
+            result[i] = args[i] instanceof Text ? ((Text) args[i]).get(locale) : args[i];
+        }
+        return result;
+    }
+
+    /**
+     * Internal method to fix the format arguments if they have text contained within them. This method will process the
+     * text to be Strings so that {@link String#format(String, Object...)} can use it accordingly
+     *
+     * @return The fixed arguments
+     */
+    private Object[] getArgs_() {
+        final Object[] result = new Object[args.length];
+        for(int i = 0; i < args.length; ++i) {
+            result[i] = args[i] instanceof Text ? ((Text) args[i]).get() : args[i];
+        }
+        return result;
     }
 
     /**
