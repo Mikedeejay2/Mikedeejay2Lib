@@ -38,6 +38,22 @@ public class TextItemBuilder extends ItemBuilder {
         super(builder);
         this.name = null;
         this.lore = new ArrayList<>();
+        if(builder instanceof TextItemBuilder) {
+            TextItemBuilder textBuilder = (TextItemBuilder) builder;
+            if(textBuilder.hasDisplayName()) {
+                setName(textBuilder.getNameText());
+            }
+            if(textBuilder.hasLore()) {
+                setLoreText(textBuilder.getLoreText());
+            }
+        } else {
+            if(builder.hasDisplayName()) {
+                setName(builder.getName());
+            }
+            if(builder.hasLore()) {
+                setLore(builder.getLore());
+            }
+        }
     }
 
     @Override

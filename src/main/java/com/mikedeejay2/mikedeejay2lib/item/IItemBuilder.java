@@ -163,6 +163,13 @@ public interface IItemBuilder<I, T> {
     T setType(Material material);
 
     /**
+     * Get whether the item has lore
+     *
+     * @return Whether the item has lore
+     */
+    boolean hasLore();
+
+    /**
      * Get the String list of lore of the item
      *
      * @return The String list of lore of the item

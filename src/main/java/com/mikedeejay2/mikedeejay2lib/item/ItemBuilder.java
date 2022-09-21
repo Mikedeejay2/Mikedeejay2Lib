@@ -244,6 +244,11 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
     }
 
     @Override
+    public boolean hasLore() {
+        return meta.hasLore();
+    }
+
+    @Override
     public List<String> getLore() {
         return meta.getLore();
     }

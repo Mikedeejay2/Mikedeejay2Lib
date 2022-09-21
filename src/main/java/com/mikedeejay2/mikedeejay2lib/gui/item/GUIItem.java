@@ -308,6 +308,11 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
     }
 
     @Override
+    public boolean hasLore() {
+        return this.item.hasLore();
+    }
+
+    @Override
     public List<String> getLore() {
         return this.item.getLore();
     }
