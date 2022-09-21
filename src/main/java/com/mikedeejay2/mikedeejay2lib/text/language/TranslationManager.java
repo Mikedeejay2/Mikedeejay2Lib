@@ -179,6 +179,7 @@ public final class TranslationManager {
      * @return Whether the translation was found in the locale
      */
     public boolean containsKey(String locale, String key) {
+        if(key == null || key.isEmpty()) return false;
         Map<String, String> translationMap = getTranslationMap(locale);
         return translationMap != null && translationMap.containsKey(key);
     }
