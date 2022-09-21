@@ -10,6 +10,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.gui.util.SlotMatcher;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
+import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
@@ -64,7 +65,7 @@ public class GUIContainer {
     /**
      * The name of this GUI's inventory
      */
-    protected String inventoryName;
+    protected Text inventoryName;
 
     /**
      * The amount of slots in this GUI
@@ -117,33 +118,6 @@ public class GUIContainer {
     protected boolean fillEmpty;
 
     /**
-     * Create a GUI of a regular size.
-     *
-     * @param plugin        The plugin that this GUI is created by
-     * @param inventoryName The name of this GUI
-     * @param inventoryRows The amount of inventory rows of this GUI. Max amount: 6
-     */
-    public GUIContainer(BukkitPlugin plugin, String inventoryName, int inventoryRows) {
-        this.plugin = plugin;
-        this.backgroundItem = ItemBuilder.of(Material.LIGHT_GRAY_STAINED_GLASS_PANE).setEmptyName().get();
-        this.inventoryName = Colors.format(inventoryName);
-        if(inventoryRows > MAX_INVENTORY_ROWS) inventoryRows = MAX_INVENTORY_ROWS;
-        this.inventorySlots = inventoryRows * MAX_INVENTORY_COLS;
-        this.inventoryRows = inventoryRows;
-        this.inventoryCols = MAX_INVENTORY_COLS;
-        this.layers = new ArrayList<>();
-        this.modules = new ArrayList<>();
-        this.defaultMoveState = false;
-        this.fillEmpty = false;
-        rowOffset = 0;
-        colOffset = 0;
-        layers.add(new GUILayer(this, "base", false, defaultMoveState));
-        this.interactionHandler = new GUIInteractHandlerDefault();
-
-        inventory = Bukkit.createInventory(null, inventorySlots, this.inventoryName);
-    }
-
-    /**
      * Create a GUI of a large size. Note that to travel the GUI you must use a <code>GUIScrollerModule</code>
      *
      * @param plugin        The plugin that this GUI is created by
@@ -151,10 +125,10 @@ public class GUIContainer {
      * @param inventoryRows The amount of inventory rows of this GUI
      * @param inventoryCols The amount of inventory columns of this GUI
      */
-    public GUIContainer(BukkitPlugin plugin, String inventoryName, int inventoryRows, int inventoryCols) {
+    public GUIContainer(BukkitPlugin plugin, Text inventoryName, int inventoryRows, int inventoryCols) {
         this.plugin = plugin;
         this.backgroundItem = ItemBuilder.of(Material.LIGHT_GRAY_STAINED_GLASS_PANE).setEmptyName().get();
-        this.inventoryName = Colors.format(inventoryName);
+        this.inventoryName = inventoryName;
         this.inventorySlots = Math.min(inventoryRows * MAX_INVENTORY_COLS, MAX_INVENTORY_ROWS * MAX_INVENTORY_COLS);
         this.inventoryRows = inventoryRows;
         this.inventoryCols = inventoryCols;
@@ -166,8 +140,40 @@ public class GUIContainer {
         colOffset = 0;
         layers.add(new GUILayer(this, "base", false, defaultMoveState));
         this.interactionHandler = new GUIInteractHandlerDefault();
+    }
 
-        inventory = Bukkit.createInventory(null, inventorySlots, this.inventoryName);
+    /**
+     * Create a GUI of a regular size.
+     *
+     * @param plugin        The plugin that this GUI is created by
+     * @param inventoryName The name of this GUI
+     * @param inventoryRows The amount of inventory rows of this GUI. Max amount: 6
+     */
+    public GUIContainer(BukkitPlugin plugin, Text inventoryName, int inventoryRows) {
+        this(plugin, inventoryName, inventoryRows, MAX_INVENTORY_COLS);
+    }
+
+    /**
+     * Create a GUI of a large size. Note that to travel the GUI you must use a <code>GUIScrollerModule</code>
+     *
+     * @param plugin        The plugin that this GUI is created by
+     * @param inventoryName The name of this GUI
+     * @param inventoryRows The amount of inventory rows of this GUI
+     * @param inventoryCols The amount of inventory columns of this GUI
+     */
+    public GUIContainer(BukkitPlugin plugin, String inventoryName, int inventoryRows, int inventoryCols) {
+        this(plugin, Text.of(Colors.format(inventoryName)), inventoryRows, inventoryCols);
+    }
+
+    /**
+     * Create a GUI of a regular size.
+     *
+     * @param plugin        The plugin that this GUI is created by
+     * @param inventoryName The name of this GUI
+     * @param inventoryRows The amount of inventory rows of this GUI. Max amount: 6
+     */
+    public GUIContainer(BukkitPlugin plugin, String inventoryName, int inventoryRows) {
+        this(plugin, Text.of(Colors.format(inventoryName)), inventoryRows);
     }
 
     /**
@@ -177,6 +183,7 @@ public class GUIContainer {
      * @param player The player that this GUI will open to
      */
     public void onOpen(Player player) {
+        inventory = Bukkit.createInventory(null, inventorySlots, this.inventoryName.get(player));
         modules.forEach(module -> module.onOpenHead(player, this));
         update(player);
         modules.forEach(module -> module.onOpenTail(player, this));
@@ -601,8 +608,16 @@ public class GUIContainer {
      * @param newName The new name of the inventory
      */
     public void setInventoryName(String newName) {
-        this.inventoryName = Colors.format(newName);
-        this.inventory = Bukkit.createInventory(null, inventorySlots, inventoryName);
+        this.inventoryName = Text.of(Colors.format(newName));
+    }
+
+    /**
+     * Set the inventory name for this GUI
+     *
+     * @param newName The new name of the inventory
+     */
+    public void setInventoryName(Text newName) {
+        this.inventoryName = newName;
     }
 
     /**
@@ -610,7 +625,7 @@ public class GUIContainer {
      *
      * @return The name of this GUI
      */
-    public String getName() {
+    public Text getName() {
         return inventoryName;
     }
 
