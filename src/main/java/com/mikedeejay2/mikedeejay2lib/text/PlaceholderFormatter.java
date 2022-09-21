@@ -152,7 +152,12 @@ public final class PlaceholderFormatter implements Cloneable {
      * @return The formatted String
      */
     private String format(String string, String key, String replacement) {
-        return string.replaceAll("%" + key + "%", replacement);
+        final String placeholder = "%" + key + "%";
+        Validate.isTrue(
+            string.contains(placeholder),
+            "Attempted to replace placeholder of key \"%s\", but found no matching placeholders in String \"%s\"",
+            key, string);
+        return string.replaceAll(placeholder, replacement);
     }
 
     @Override
