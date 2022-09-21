@@ -421,48 +421,48 @@ public class TextItemBuilder extends ItemBuilder {
     private void updateMeta(Player player) {
         final List<String> strLore = loreToString(player);
         this.meta.setLore(strLore);
-        this.meta.setDisplayName(name == null ? null : name.get(player));
+        this.meta.setDisplayName(name == null ? null : Colors.format(name.get(player)));
     }
 
     private void updateMeta(CommandSender sender) {
         final List<String> strLore = loreToString(sender);
         this.meta.setLore(strLore);
-        this.meta.setDisplayName(name == null ? null : name.get(sender));
+        this.meta.setDisplayName(name == null ? null : Colors.format(name.get(sender)));
     }
 
     private void updateMeta(String locale) {
         final List<String> strLore = loreToString(locale);
         this.meta.setLore(strLore);
-        this.meta.setDisplayName(name == null ? null : name.get(locale));
+        this.meta.setDisplayName(name == null ? null : Colors.format(name.get(locale)));
     }
 
     private void updateMeta() {
         final List<String> strLore = loreToString();
         this.meta.setLore(strLore);
-        this.meta.setDisplayName(name == null ? null : name.get());
+        this.meta.setDisplayName(name == null ? null : Colors.format(name.get()));
     }
 
     private List<String> loreToString(Player player) {
         final List<String> strLore = new ArrayList<>();
-        lore.forEach(cur -> strLore.add(cur.get(player)));
+        lore.forEach(cur -> strLore.add(Colors.format(cur.get(player))));
         return strLore;
     }
 
     private List<String> loreToString(CommandSender sender) {
         final List<String> strLore = new ArrayList<>();
-        lore.forEach(cur -> strLore.add(cur.get(sender)));
+        lore.forEach(cur -> strLore.add(Colors.format(cur.get(sender))));
         return strLore;
     }
 
     private List<String> loreToString(String locale) {
         final List<String> strLore = new ArrayList<>();
-        lore.forEach(cur -> strLore.add(cur.get(locale)));
+        lore.forEach(cur -> strLore.add(Colors.format(cur.get(locale))));
         return strLore;
     }
 
     private List<String> loreToString() {
         final List<String> strLore = new ArrayList<>();
-        lore.forEach(cur -> strLore.add(cur.get()));
+        lore.forEach(cur -> strLore.add(Colors.format(cur.get())));
         return strLore;
     }
 }
