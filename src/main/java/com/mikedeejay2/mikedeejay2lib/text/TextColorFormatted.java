@@ -84,6 +84,32 @@ public class TextColorFormatted implements Text {
         return result;
     }
 
+    /**
+     * Get the encapsulated text to be color formatted
+     *
+     * @return The encapsulated text to be color formatted
+     */
+    public Text getText() {
+        return text;
+    }
+
+    /**
+     * Get the list of {@link Colors.FormatStyle FormatStyles} to be used when formatting
+     *
+     * @return The list of {@link Colors.FormatStyle FormatStyles} to be used when formatting
+     */
+    public Set<Colors.FormatStyle> getFormatStyles() {
+        return formatStyles;
+    }
+
+    @Override
+    public String toString() {
+        return "TextColorFormatted{" +
+            "text=" + text +
+            ", formatStyles=" + formatStyles +
+            '}';
+    }
+
     @Override
     public TextColorFormatted clone() {
         TextColorFormatted text;

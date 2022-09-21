@@ -66,6 +66,13 @@ import org.bukkit.entity.Player;
  *                 {@link Colors.FormatStyle#COLOR_CODES} or {@link Text#color(Colors.FormatStyle...)} for multiple
  *                 styles. These methods are non-static methods.
  *             </li>
+ *             <li>
+ *                 <strong>Formatted Text</strong> -
+ *                 Formats text using {@link String#format(String, Object...)} for automatic formatting of text when
+ *                 it's retrieved.
+ *                 <p>
+ *                 Formatted text can be created with {@link Text#format(Object...)} This is a non-static method.
+ *             </li>
  *         </ul>
  *     </li>
  * </ul>
@@ -212,5 +219,15 @@ public interface Text extends Cloneable {
     default Text concat(Text other) {
         Validate.notNull(other, "Attempted to concatenate null text");
         return new TextConcatenated(this, other);
+    }
+
+    /**
+     * Formats text using {@link String#format(String, Object...)} for automatic formatting of text when it's retrieved.
+     *
+     * @param args Arguments referenced by the format
+     * @return The formatted text
+     */
+    default Text format(Object... args) {
+        return new TextFormatted(this, args);
     }
 }

@@ -156,6 +156,13 @@ public final class PlaceholderFormatter implements Cloneable {
     }
 
     @Override
+    public String toString() {
+        return "PlaceholderFormatter{" +
+            "placeholders=" + placeholders +
+            '}';
+    }
+
+    @Override
     public PlaceholderFormatter clone() {
         PlaceholderFormatter formatter;
         try {

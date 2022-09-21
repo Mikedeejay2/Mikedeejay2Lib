@@ -62,6 +62,32 @@ public class TextPlaceholderFormatted implements Text {
         return new TextPlaceholderFormatted(text, this.formatter.clone().and(formatter));
     }
 
+    /**
+     * Get the encapsulated text to be placeholder formatted
+     *
+     * @return The encapsulated text to be placeholder formatted
+     */
+    public Text getText() {
+        return text;
+    }
+
+    /**
+     * Get the {@link PlaceholderFormatter} to be used
+     *
+     * @return The {@link PlaceholderFormatter} to be used
+     */
+    public PlaceholderFormatter getFormatter() {
+        return formatter.clone();
+    }
+
+    @Override
+    public String toString() {
+        return "TextPlaceholderFormatted{" +
+            "text=" + text +
+            ", formatter=" + formatter +
+            '}';
+    }
+
     @Override
     public TextPlaceholderFormatted clone() {
         TextPlaceholderFormatted text;

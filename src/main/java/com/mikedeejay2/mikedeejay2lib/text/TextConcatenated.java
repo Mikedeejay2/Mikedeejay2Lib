@@ -73,6 +73,14 @@ public class TextConcatenated implements Text {
     }
 
     @Override
+    public String toString() {
+        return "TextConcatenated{" +
+            "leftText=" + leftText +
+            ", rightText=" + rightText +
+            '}';
+    }
+
+    @Override
     public TextConcatenated clone() {
         TextConcatenated text;
         try {
