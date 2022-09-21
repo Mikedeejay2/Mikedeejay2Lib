@@ -82,14 +82,15 @@ import org.bukkit.entity.Player;
 public interface Text extends Cloneable {
 
     /**
-     * Get literal text of the specified String
+     * Get literal text or translatable text based on the input. If the input is found as a translation key, it will
+     * become translatable text.
      *
      * @param text The String to create text of
      * @return The new text
      * @see Text
      */
-    static TextLiteral of(String text) {
-        return literal(text);
+    static Text of(String text) {
+        return TranslationManager.GLOBAL.containsKey(text) ? translatable(text) : literal(text);
     }
 
     /**
@@ -99,7 +100,7 @@ public interface Text extends Cloneable {
      * @return The new text
      * @see Text
      */
-    static TextLiteral literal(String text) {
+    static Text literal(String text) {
         if(text == null || text.isEmpty()) return TextLiteral.EMPTY;
         return new TextLiteral(text);
     }
@@ -111,7 +112,7 @@ public interface Text extends Cloneable {
      * @return The new text
      * @see Text
      */
-    static TextTranslatable translatable(String key) {
+    static Text translatable(String key) {
         return new TextTranslatable(key);
     }
 

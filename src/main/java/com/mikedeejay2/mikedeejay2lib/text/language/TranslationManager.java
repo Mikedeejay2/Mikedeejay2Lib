@@ -162,13 +162,23 @@ public final class TranslationManager {
     }
 
     /**
+     * Get whether a translation exists in the base locale
+     *
+     * @param key The key to search for
+     * @return Whether the translation was found in the base locale
+     */
+    public boolean containsKey(String key) {
+        return containsKey(baseLocale, key);
+    }
+
+    /**
      * Get whether a translation exists in the specified locale
      *
      * @param locale The locale to check in
      * @param key    The translation key to check for
      * @return Whether the translation was found in the locale
      */
-    private boolean containsKey(String locale, String key) {
+    public boolean containsKey(String locale, String key) {
         Map<String, String> translationMap = getTranslationMap(locale);
         return translationMap != null && translationMap.containsKey(key);
     }
