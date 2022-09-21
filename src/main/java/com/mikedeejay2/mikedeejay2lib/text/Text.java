@@ -222,6 +222,18 @@ public interface Text extends Cloneable {
     }
 
     /**
+     * Concatenate (combine into one) this text with another String. Should be used to combine two separated texts that
+     * need to be one. For example, a literal text and a translatable text.
+     *
+     * @param other The other String to concatenate with
+     * @return The concatenated text
+     */
+    default Text concat(String other) {
+        Validate.notNull(other, "Attempted to concatenate null text");
+        return new TextConcatenated(this, Text.of(other));
+    }
+
+    /**
      * Formats text using {@link String#format(String, Object...)} for automatic formatting of text when it's retrieved.
      *
      * @param args Arguments referenced by the format
