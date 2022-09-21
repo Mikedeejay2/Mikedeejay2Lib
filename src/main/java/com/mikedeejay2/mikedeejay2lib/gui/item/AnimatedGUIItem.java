@@ -6,6 +6,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.animation.AnimationFrame;
 import com.mikedeejay2.mikedeejay2lib.gui.animation.FrameType;
 import com.mikedeejay2.mikedeejay2lib.gui.animation.MovementType;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.animation.GUIAnimationModule;
+import com.mikedeejay2.mikedeejay2lib.item.IItemBuilder;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -78,6 +79,45 @@ public class AnimatedGUIItem extends GUIItem {
      */
     public AnimatedGUIItem(ItemStack item, boolean loop, long delay, boolean resetAnimOnClick) {
         super(item);
+
+        this.delay = delay;
+        this.loop = loop;
+        this.frames = new ArrayList<>();
+        this.resetOnClick = resetAnimOnClick;
+        this.startingIndex = 0;
+    }
+
+    /**
+     * Construct a new <code>AnimatedGUIItem</code>
+     *
+     * @param builder The reference base item
+     * @param loop Whether this item's animation will loop or not
+     */
+    public AnimatedGUIItem(IItemBuilder<?, ?> builder, boolean loop) {
+        this(builder, loop, 0);
+    }
+
+    /**
+     * Construct a new <code>AnimatedGUIItem</code>
+     *
+     * @param builder  The reference base item
+     * @param loop  Whether this item's animation will loop or not
+     * @param delay The delay that this item has before its animation begins
+     */
+    public AnimatedGUIItem(IItemBuilder<?, ?> builder, boolean loop, long delay) {
+        this(builder, loop, delay, false);
+    }
+
+    /**
+     * Construct a new <code>AnimatedGUIItem</code>
+     *
+     * @param builder             The reference base item
+     * @param loop             Whether this item's animation will loop or not
+     * @param delay            The delay that this item has before its animation begins
+     * @param resetAnimOnClick Whether to reset the animation of this item on click
+     */
+    public AnimatedGUIItem(IItemBuilder<?, ?> builder, boolean loop, long delay, boolean resetAnimOnClick) {
+        super(builder);
 
         this.delay = delay;
         this.loop = loop;
