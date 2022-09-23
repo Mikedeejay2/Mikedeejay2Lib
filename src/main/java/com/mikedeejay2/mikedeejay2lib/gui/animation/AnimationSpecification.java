@@ -211,7 +211,7 @@ public class AnimationSpecification {
         /**
          * Column-only animation style. Refers to this style only using columns to generate the animation.
          */
-        COL((row, col) -> row),
+        COL((row, col) -> col),
         ;
 
         /**
