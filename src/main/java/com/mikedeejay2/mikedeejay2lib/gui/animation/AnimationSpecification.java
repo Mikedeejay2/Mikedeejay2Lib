@@ -212,6 +212,10 @@ public class AnimationSpecification {
          * Column-only animation style. Refers to this style only using columns to generate the animation.
          */
         COL((row, col) -> col),
+        /**
+         * Instant animation. Plays the animation without any delay or offsets
+         */
+        INSTANT((row, col) -> 0)
         ;
 
         /**
