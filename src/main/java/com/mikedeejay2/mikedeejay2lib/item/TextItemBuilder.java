@@ -430,31 +430,27 @@ public class TextItemBuilder extends ItemBuilder {
     }
 
     private void updateTextFromMeta() {
-        this.setName(this.meta.hasDisplayName() ? this.meta.getDisplayName() : null);
-        this.setLore(this.meta.getLore() == null ? Collections.emptyList() : this.meta.getLore());
+        this.meta.setLore(loreToString());
+        this.meta.setDisplayName(name == null ? null : Colors.format(name.get()));
     }
 
     private void updateMeta(Player player) {
-        final List<String> strLore = loreToString(player);
-        this.meta.setLore(strLore);
+        this.meta.setLore(loreToString(player));
         this.meta.setDisplayName(name == null ? null : Colors.format(name.get(player)));
     }
 
     private void updateMeta(CommandSender sender) {
-        final List<String> strLore = loreToString(sender);
-        this.meta.setLore(strLore);
+        this.meta.setLore(loreToString(sender));
         this.meta.setDisplayName(name == null ? null : Colors.format(name.get(sender)));
     }
 
     private void updateMeta(String locale) {
-        final List<String> strLore = loreToString(locale);
-        this.meta.setLore(strLore);
+        this.meta.setLore(loreToString(locale));
         this.meta.setDisplayName(name == null ? null : Colors.format(name.get(locale)));
     }
 
     private void updateMeta() {
-        final List<String> strLore = loreToString();
-        this.meta.setLore(strLore);
+        this.meta.setLore(loreToString());
         this.meta.setDisplayName(name == null ? null : Colors.format(name.get()));
     }
 
