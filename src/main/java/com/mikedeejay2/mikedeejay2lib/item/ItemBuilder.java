@@ -794,6 +794,9 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
      * @return The new {@link ItemBuilder}
      */
     public static ItemBuilder of(IItemBuilder<?, ?> builder) {
+        if(builder instanceof TextItemBuilder) {
+            return new TextItemBuilder(builder);
+        }
         return new ItemBuilder(builder);
     }
 
