@@ -81,6 +81,7 @@ public class GUIListener implements Listener {
         GUIManager manager = plugin.getGUIManager();
         if(!manager.containsPlayer(player)) return;
         PlayerGUI playerGUI = manager.getPlayer(player);
+        if(!playerGUI.isGuiOpened()) return;
         GUIContainer curGUI = playerGUI.getGUI();
         if(curGUI == null) return;
         if(playerGUI.isGuiChange()) {
