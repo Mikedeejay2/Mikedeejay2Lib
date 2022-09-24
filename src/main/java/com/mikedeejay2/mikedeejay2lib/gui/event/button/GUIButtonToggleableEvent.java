@@ -119,10 +119,12 @@ public class GUIButtonToggleableEvent extends GUIAbstractClickEvent {
      * Set the consumer that is run when the button is turned on
      *
      * @param consumer The new consumer
+     * @return This event
      */
-    public void setOnConsumer(Consumer<GUIEventInfo> consumer) {
+    public GUIButtonToggleableEvent setOnConsumer(Consumer<GUIEventInfo> consumer) {
         Validate.notNull(consumer, "Button consumer can not be null");
         this.onConsumer = consumer;
+        return this;
     }
 
     /**
@@ -138,10 +140,12 @@ public class GUIButtonToggleableEvent extends GUIAbstractClickEvent {
      * Set the consumer that is run when the button is turned on
      *
      * @param consumer The new consumer
+     * @return This event
      */
-    public void setOffConsumer(Consumer<GUIEventInfo> consumer) {
+    public GUIButtonToggleableEvent setOffConsumer(Consumer<GUIEventInfo> consumer) {
         Validate.notNull(consumer, "Button consumer can not be null");
         this.offConsumer = consumer;
+        return this;
     }
 
     /**
@@ -184,9 +188,11 @@ public class GUIButtonToggleableEvent extends GUIAbstractClickEvent {
      * Set the {@link ItemBuilder} to display when the button is in the ON state
      *
      * @param onItem The new {@link ItemBuilder}
+     * @return This event
      */
-    public void setOnItem(@Nullable ItemBuilder onItem) {
+    public GUIButtonToggleableEvent setOnItem(@Nullable ItemBuilder onItem) {
         this.onItem = onItem;
+        return this;
     }
 
     /**
@@ -202,8 +208,10 @@ public class GUIButtonToggleableEvent extends GUIAbstractClickEvent {
      * Set the {@link ItemBuilder} to display when the button is in the OFF state
      *
      * @param offItem The new {@link ItemBuilder}
+     * @return This event
      */
-    public void setOffItem(@Nullable ItemBuilder offItem) {
+    public GUIButtonToggleableEvent setOffItem(@Nullable ItemBuilder offItem) {
         this.offItem = offItem;
+        return this;
     }
 }

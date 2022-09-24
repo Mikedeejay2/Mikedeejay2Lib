@@ -52,9 +52,11 @@ public class GUIButtonEvent extends GUIAbstractClickEvent {
      * Set the consumer that is run when the button is clicked
      *
      * @param consumer The new consumer
+     * @return This event
      */
-    public void setConsumer(@NotNull Consumer<GUIEventInfo> consumer) {
+    public GUIButtonEvent setConsumer(@NotNull Consumer<GUIEventInfo> consumer) {
         Validate.notNull(consumer, "Button consumer can not be null");
         this.consumer = consumer;
+        return this;
     }
 }
