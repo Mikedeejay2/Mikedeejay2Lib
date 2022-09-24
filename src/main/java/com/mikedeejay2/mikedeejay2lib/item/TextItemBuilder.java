@@ -430,28 +430,36 @@ public class TextItemBuilder extends ItemBuilder {
     }
 
     private void updateTextFromMeta() {
-        this.meta.setLore(loreToString());
-        this.meta.setDisplayName(name == null ? null : Colors.format(name.get()));
+        this.setName(this.meta.hasDisplayName() ? this.meta.getDisplayName() : null);
+        this.setLore(this.meta.getLore() == null ? Collections.emptyList() : this.meta.getLore());
     }
 
     private void updateMeta(Player player) {
-        this.meta.setLore(loreToString(player));
-        this.meta.setDisplayName(name == null ? null : Colors.format(name.get(player)));
+        checkAndUpdateMeta(name == null ? null : Colors.format(name.get(player)), loreToString(player));
     }
 
     private void updateMeta(CommandSender sender) {
-        this.meta.setLore(loreToString(sender));
-        this.meta.setDisplayName(name == null ? null : Colors.format(name.get(sender)));
+        checkAndUpdateMeta(name == null ? null : Colors.format(name.get(sender)), loreToString(sender));
     }
 
     private void updateMeta(String locale) {
-        this.meta.setLore(loreToString(locale));
-        this.meta.setDisplayName(name == null ? null : Colors.format(name.get(locale)));
+        checkAndUpdateMeta(name == null ? null : Colors.format(name.get(locale)), loreToString(locale));
     }
 
     private void updateMeta() {
-        this.meta.setLore(loreToString());
-        this.meta.setDisplayName(name == null ? null : Colors.format(name.get()));
+        checkAndUpdateMeta(name == null ? null : Colors.format(name.get()), loreToString());
+    }
+
+    private void checkAndUpdateMeta(String name, List<String> lore) {
+        if((!this.meta.hasDisplayName() && name == null) || // Both names are null
+            (this.meta.hasDisplayName() && name != null && name.equals(this.meta.getDisplayName())) || // Both have the same name
+            (!this.meta.hasLore() && lore.isEmpty()) || // Both lores are empty
+            (this.meta.hasLore() && !lore.isEmpty() && lore.equals(this.meta.getLore()))) { // Both lores are the same
+            return;
+        }
+        this.meta.setDisplayName(name);
+        this.meta.setLore(lore);
+        this.changed = true;
     }
 
     private List<String> loreToString(Player player) {
