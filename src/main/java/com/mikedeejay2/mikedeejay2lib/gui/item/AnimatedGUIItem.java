@@ -7,6 +7,9 @@ import com.mikedeejay2.mikedeejay2lib.gui.animation.FrameType;
 import com.mikedeejay2.mikedeejay2lib.gui.animation.MovementType;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.animation.GUIAnimationModule;
 import com.mikedeejay2.mikedeejay2lib.item.IItemBuilder;
+import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
+import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 
@@ -93,7 +96,7 @@ public class AnimatedGUIItem extends GUIItem {
      * @param builder The reference base item
      * @param loop Whether this item's animation will loop or not
      */
-    public AnimatedGUIItem(IItemBuilder<?, ?> builder, boolean loop) {
+    public AnimatedGUIItem(ItemBuilder builder, boolean loop) {
         this(builder, loop, 0);
     }
 
@@ -104,7 +107,7 @@ public class AnimatedGUIItem extends GUIItem {
      * @param loop  Whether this item's animation will loop or not
      * @param delay The delay that this item has before its animation begins
      */
-    public AnimatedGUIItem(IItemBuilder<?, ?> builder, boolean loop, long delay) {
+    public AnimatedGUIItem(ItemBuilder builder, boolean loop, long delay) {
         this(builder, loop, delay, false);
     }
 
@@ -116,7 +119,7 @@ public class AnimatedGUIItem extends GUIItem {
      * @param delay            The delay that this item has before its animation begins
      * @param resetAnimOnClick Whether to reset the animation of this item on click
      */
-    public AnimatedGUIItem(IItemBuilder<?, ?> builder, boolean loop, long delay, boolean resetAnimOnClick) {
+    public AnimatedGUIItem(ItemBuilder builder, boolean loop, long delay, boolean resetAnimOnClick) {
         super(builder);
 
         this.delay = delay;
@@ -187,12 +190,13 @@ public class AnimatedGUIItem extends GUIItem {
             }
         }
         properties.index += framePass;
+        this.setChanged(true);
     }
 
     /**
      * Process an item frame
      *
-     * @param frame The AnimationFrame that will be processed
+     * @param frame  The AnimationFrame that will be processed
      */
     private void processItem(AnimationFrame frame) {
         set(frame.getItem());
@@ -223,15 +227,15 @@ public class AnimatedGUIItem extends GUIItem {
         GUIItem[][]     items        = layer.getItemsAsArray();
         switch(movementType) {
             case SWAP_ITEM: {
-                items[newRow - 1][newCol - 1] = this;
-                items[currentRow - 1][currentCol - 1] = previousItem;
+                animSetItem(layer, this, newRow, newCol);
+                animSetItem(layer, previousItem, currentRow, currentCol);
                 properties.setRow(newRow);
                 properties.setCol(newCol);
                 break;
             }
             case OVERRIDE_ITEM: {
-                items[currentRow - 1][currentCol - 1] = null;
-                items[newRow - 1][newCol - 1] = this;
+                animSetItem(layer, null, currentRow, currentCol);
+                animSetItem(layer, this, newRow, newCol);
                 properties.setRow(newRow);
                 properties.setCol(newCol);
                 break;
@@ -240,8 +244,8 @@ public class AnimatedGUIItem extends GUIItem {
                 int pushRow = newRow-1;
                 int pushCol = newCol;
                 if(!validCheck(pushRow, pushCol, properties)) break;
-                items[currentRow - 1][currentCol - 1] = null;
-                items[pushRow - 1][pushCol - 1] = previousItem;
+                animSetItem(layer, null, currentRow, currentCol);
+                animSetItem(layer, previousItem, pushRow, pushCol);
                 properties.setRow(pushRow);
                 properties.setCol(pushCol);
                 break;
@@ -250,27 +254,34 @@ public class AnimatedGUIItem extends GUIItem {
                 int pushRow = newRow+1;
                 int pushCol = newCol;
                 if(!validCheck(pushRow, pushCol, properties)) break;
-                items[currentRow - 1][currentCol - 1] = null;
-                items[pushRow - 1][pushCol - 1] = previousItem;
+                animSetItem(layer, null, currentRow, currentCol);
+                animSetItem(layer, previousItem, pushRow, pushCol);
                 break;
             }
             case PUSH_ITEM_LEFT: {
                 int pushRow = newRow;
                 int pushCol = newCol-1;
                 if(!validCheck(pushRow, pushCol, properties)) break;
-                items[currentRow - 1][currentCol - 1] = null;
-                items[pushRow - 1][pushCol - 1] = previousItem;
+                animSetItem(layer, null, currentRow, currentCol);
+                animSetItem(layer, previousItem, pushRow, pushCol);
                 break;
             }
             case PUSH_ITEM_RIGHT: {
                 int pushRow = newRow;
                 int pushCol = newCol+1;
                 if(!validCheck(pushRow, pushCol, properties)) break;
-                items[currentRow - 1][currentCol - 1] = null;
-                items[pushRow - 1][pushCol - 1] = previousItem;
+                animSetItem(layer, null, currentRow, currentCol);
+                animSetItem(layer, previousItem, pushRow, pushCol);
                 break;
             }
         }
+    }
+
+    private void animSetItem(GUILayer layer, GUIItem item, int row, int col) {
+        GUIItem[][] items = layer.getItemsAsArray();
+        items[row - 1][col - 1] = item;
+        GUIItem current = layer.getGUI().getItem(row, col);
+        if(current != null) current.setChanged(true);
     }
 
     /**
@@ -293,6 +304,18 @@ public class AnimatedGUIItem extends GUIItem {
      * @return Reference to this <code>AnimatedGUIItem</code>
      */
     public AnimatedGUIItem addFrame(ItemStack item, long period) {
+        frames.add(new AnimationFrame(item, period));
+        return this;
+    }
+
+    /**
+     * Add an item frame to this item
+     *
+     * @param item   The item to add to the frame
+     * @param period The time to wait between this frame and the frame after it
+     * @return Reference to this <code>AnimatedGUIItem</code>
+     */
+    public AnimatedGUIItem addFrame(ItemBuilder item, long period) {
         frames.add(new AnimationFrame(item, period));
         return this;
     }
@@ -329,12 +352,28 @@ public class AnimatedGUIItem extends GUIItem {
     }
 
     /**
+     * Add a movement + item frame to this item
+     *
+     * @param item             The item to add to the frame
+     * @param row              The row to move the item to
+     * @param col              The column to move the item to
+     * @param movementType     The type of movement that will be performed when the item is moved
+     * @param relativeMovement Whether or not the movement should move relatively (locally)
+     * @param period           The time to wait between this frame and the frame after it
+     * @return Reference to this <code>AnimatedGUIItem</code>
+     */
+    public AnimatedGUIItem addFrame(ItemBuilder item, int row, int col, MovementType movementType, boolean relativeMovement, long period) {
+        frames.add(new AnimationFrame(item, row, col, movementType, relativeMovement, period));
+        return this;
+    }
+
+    /**
      * Helper method to get the item of a frame
      *
      * @param index The frame index to get
      * @return The <code>ItemStack</code> of the frame
      */
-    public ItemStack getFrameItem(int index) {
+    public ItemBuilder getFrameItem(int index) {
         return frames.get(index).getItem();
     }
 
@@ -419,6 +458,8 @@ public class AnimatedGUIItem extends GUIItem {
     @Override
     public void onClick(InventoryClickEvent event, GUIContainer gui) {
         super.onClick(event, gui);
+        ClickType type = event.getClick();
+        if(!type.isLeftClick() && !type.isRightClick() && !type.isShiftClick()) return;
         if(resetOnClick && gui.containsModule(GUIAnimationModule.class)) {
             GUIAnimationModule module = gui.getModule(GUIAnimationModule.class);
             AnimatedGUIItemProperties properties = module.getProperties(this);

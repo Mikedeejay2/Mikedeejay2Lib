@@ -93,7 +93,7 @@ public class GUILayer {
      * @param material    The material of the item
      * @param amount      The amount of the item
      * @param displayName The display of the new item
-     * @param loreString  The lores of the item
+     * @param loreString  The lore of the item
      */
     public void setItem(int row, int col, Material material, int amount, String displayName, String... loreString) {
         setItem(row, col, ItemBuilder.of(material)
@@ -115,6 +115,18 @@ public class GUILayer {
             row -= gui.getRowOffset();
             col -= gui.getColOffset();
         }
+        if(row > this.getRows() || col > this.getCols() || row <= 0 || col <= 0) return null;
+        return items[--row][--col];
+    }
+
+    /**
+     * Get an item from a slot, ignoring row and column offsets if an overlay layer
+     *
+     * @param row The row to get
+     * @param col The column to get
+     * @return The <code>GUIItem</code> that is contained in that slot
+     */
+    public GUIItem getItemAbsolute(int row, int col) {
         return items[--row][--col];
     }
 
@@ -122,12 +134,10 @@ public class GUILayer {
      * Remove an item from the GUI based on a row and a column
      *
      * @param row Row that should be removed
-     * @param col Column that should be remove
+     * @param col Column that should be removed
      */
     public void removeItem(int row, int col) {
-        GUIItem item = getItem(row, col);
         setItem(row, col, (GUIItem)null);
-        gui.getModules().forEach(module -> module.onItemRemove(gui, this, row, col, item));
     }
 
     /**
@@ -190,7 +200,16 @@ public class GUILayer {
      */
     public void setItem(int row, int col, GUIItem item) {
         if(items[row - 1][col - 1] == item) return;
+        GUIItem currentItem = getItemAbsolute(row, col);
         items[row - 1][col - 1] = item;
+        if(currentItem != null) {
+            gui.getModules().forEach(module -> module.onItemRemove(gui, this, row, col, currentItem));
+        }
+        if(item != null) item.setChanged(true);
+        else {
+            GUIItem curItem = gui.getItem(row, col);
+            if(curItem != null) curItem.setChanged(true);
+        }
         gui.getModules().forEach(module -> module.onItemSet(gui, this, row, col, item));
     }
 
@@ -348,6 +367,8 @@ public class GUILayer {
         GUIItem itemToMove = items[row][col];
         items[row][col] = items[newRow][newCol];
         items[newRow][newCol] = itemToMove;
+        if(items[row][col] != null) items[row][col].setChanged(true);
+        if(items[newRow][newCol] != null) items[newRow][newCol].setChanged(true);
     }
 
     /**
@@ -497,7 +518,7 @@ public class GUILayer {
     }
 
     /**
-     * Set the visibility of this layer. This DOES NOT updat the GUI, therefore
+     * Set the visibility of this layer. This DOES NOT update the GUI, therefore
      * the GUI needs to be manually updated after this.
      *
      * @param visibility Visibility to set this layer to

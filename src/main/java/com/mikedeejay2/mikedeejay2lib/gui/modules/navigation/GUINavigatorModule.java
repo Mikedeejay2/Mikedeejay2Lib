@@ -61,6 +61,20 @@ public class GUINavigatorModule implements GUIModule {
     public GUINavigatorModule(BukkitPlugin plugin, String navigationID) {
         this.plugin = plugin;
         this.navigationID = navigationID;
+        this.validBackItem = new GUIItem(
+            ItemBuilder.of(Base64Head.ARROW_LEFT_WHITE.get())
+                .setName(Text.of("&f").concat("gui.modules.navigator.backward")));
+        validBackItem.addEvent(new GUINavBackEvent(plugin));
+        this.validForwardItem = new GUIItem(
+            ItemBuilder.of(Base64Head.ARROW_RIGHT_WHITE.get())
+                .setName(Text.of("&f").concat("gui.modules.navigator.forward")));
+        validForwardItem.addEvent(new GUINavForwardEvent(plugin));
+        this.invalidBackItem = new GUIItem(
+            ItemBuilder.of(Base64Head.ARROW_LEFT_LIGHT_GRAY.get())
+                .setName(Text.of("&7").concat("gui.modules.navigator.backward")));
+        this.invalidForwardItem = new GUIItem(
+            ItemBuilder.of(Base64Head.ARROW_RIGHT_LIGHT_GRAY.get())
+                .setName(Text.of("&7").concat("gui.modules.navigator.forward")));
     }
 
     /**
@@ -72,32 +86,6 @@ public class GUINavigatorModule implements GUIModule {
     @Override
     public void onOpenHead(Player player, GUIContainer gui) {
         navigationCheck(player);
-        if(validBackItem == null) {
-            String backward = Text.translatable("gui.modules.navigator.backward").get(player);
-            this.validBackItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_LEFT_WHITE.get())
-                                                     .setName("&f" + backward)
-                                                     .get());
-            validBackItem.addEvent(new GUINavBackEvent(plugin));
-        }
-        if(validForwardItem == null) {
-            String forward = Text.translatable("gui.modules.navigator.forward").get(player);
-            this.validForwardItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_RIGHT_WHITE.get())
-                                                        .setName("&f" + forward)
-                                                        .get());
-            validForwardItem.addEvent(new GUINavForwardEvent(plugin));
-        }
-        if(invalidBackItem == null) {
-            String backward = Text.translatable("gui.modules.navigator.backward").get(player);
-            this.invalidBackItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_LEFT_LIGHT_GRAY.get())
-                                                       .setName("&7" + backward)
-                                                       .get());
-        }
-        if(invalidForwardItem == null) {
-            String forward = Text.translatable("gui.modules.navigator.forward").get(player);
-            this.invalidForwardItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_RIGHT_LIGHT_GRAY.get())
-                                                          .setName("&7" + forward)
-                                                          .get());
-        }
     }
 
     /**
@@ -139,7 +127,7 @@ public class GUINavigatorModule implements GUIModule {
             int backAmount = (int) system.backSize();
             if(backAmount == 0) { backAmount = 1; }
             else if(backAmount > 64) { backAmount = 64; }
-            validBackItem.setAmount(backAmount);
+            if(validBackItem.getAmount() != backAmount) validBackItem.setAmount(backAmount);
             layer.setItem(1, 1, validBackItem);
         } else {
             layer.setItem(1, 1, invalidBackItem);
@@ -148,7 +136,7 @@ public class GUINavigatorModule implements GUIModule {
             int forwardAmount = (int) system.forwardSize();
             if(forwardAmount == 0) { forwardAmount = 1; }
             else if(forwardAmount > 64) { forwardAmount = 64; }
-            validForwardItem.setAmount(forwardAmount);
+            if(validForwardItem.getAmount() != forwardAmount) validForwardItem.setAmount(forwardAmount);
             layer.setItem(1, 9, validForwardItem);
         } else {
             layer.setItem(1, 9, invalidForwardItem);
@@ -274,7 +262,6 @@ public class GUINavigatorModule implements GUIModule {
             GUIContainer backGUI = system.popBack();
             system.pushForward(gui);
             system.setNavigationFlag(true);
-            gui.onClose(player);
             backGUI.open(player);
         }
     }
@@ -316,7 +303,6 @@ public class GUINavigatorModule implements GUIModule {
             GUIContainer forwardGUI = system.popForward();
             system.pushBack(gui);
             system.setNavigationFlag(true);
-            gui.onClose(player);
             forwardGUI.open(player);
         }
     }

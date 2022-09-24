@@ -204,7 +204,10 @@ public final class TranslationManager {
      * @return The retrieved map, null if not found
      */
     private Map<String, String> getTranslationMap(String locale) {
-        return translations.getOrDefault(locale, loadTranslations(locale));
+        if(!translations.containsKey(locale)) {
+            return loadTranslations(locale);
+        }
+        return translations.get(locale);
     }
 
     /**

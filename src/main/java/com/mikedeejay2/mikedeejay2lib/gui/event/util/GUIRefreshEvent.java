@@ -6,7 +6,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import org.bukkit.entity.Player;
 
 /**
- * Refresh a GUI. This event calls {@link GUIContainer#onClose(Player)} and {@link GUIContainer#open(Player)} to
+ * Refresh a GUI. This event calls {@link GUIContainer#open(Player)} to
  * "refresh" a player's GUI for any packet-based changes. (Name change, size change, etc)
  *
  * @author Mikedeejay2
@@ -21,7 +21,6 @@ public class GUIRefreshEvent implements GUIEvent {
     public void execute(GUIEventInfo info) {
         Player player = info.getPlayer();
         GUIContainer gui = info.getGUI();
-        gui.onClose(player);
         gui.open(player);
     }
 }

@@ -93,13 +93,11 @@ public class GUIFileExplorerModule extends GUIListModule {
 
         this.backItemValid = new GUIItem(
             ItemBuilder.of(Base64Head.ARROW_LEFT_WHITE.get())
-                .setName("&f" + Text.translatable("gui.modules.navigator.backward").get())
-                .get())
+                .setName(Text.of("&f").concat("gui.modules.navigator.backward")))
             .addEvent(new GUINavFileBackEvent());
         this.forwardItemValid = new GUIItem(
             ItemBuilder.of(Base64Head.ARROW_RIGHT_WHITE.get())
-                .setName("&f" + Text.translatable("gui.modules.navigator.backward").get())
-                .get())
+                .setName(Text.of("&f").concat("gui.modules.navigator.forward")))
             .addEvent(new GUINavFileForwardEvent());
     }
 
@@ -143,7 +141,6 @@ public class GUIFileExplorerModule extends GUIListModule {
         super.onOpenHead(player, gui);
         gui.setInventoryName(file.getName());
         resetList();
-        localize(player);
 
         fillList(player, gui);
         if(allowUpwardTraversal) {
@@ -165,18 +162,6 @@ public class GUIFileExplorerModule extends GUIListModule {
 
         GUILayer layer = gui.getLayer(layerName);
         setHistoryButtons(layer);
-    }
-
-    /**
-     * Localize the GUI history buttons
-     *
-     * @param player The reference player viewing the GUI
-     */
-    private void localize(Player player) {
-        this.backItemValid.setName("&f" + Text.translatable("gui.modules.navigator.backward").get(player))
-            .setAmount(Math.min(Math.max(1, history.backSize()), 64));
-        this.forwardItemValid.setName("&f" + Text.translatable("gui.modules.navigator.backward").get(player))
-            .setAmount(Math.min(Math.max(1, history.forwardSize()), 64));
     }
 
     /**
@@ -251,7 +236,7 @@ public class GUIFileExplorerModule extends GUIListModule {
             GUIItem fileItem = new GUIItem((ItemStack) null);
             if(curFile.isDirectory()) {
                 fileBuilder.setHeadBase64(Base64Head.FOLDER.get());
-                fileItem.set(fileBuilder.get());
+                fileItem.set(fileBuilder.get(player));
                 if(allowSubFolders) {
                     fileItem.addEvent(new GUISwitchFolderEvent(curFile));
                 }
@@ -260,7 +245,7 @@ public class GUIFileExplorerModule extends GUIListModule {
                 String extension = FileUtil.getFileExtension(curFile);
                 Base64Head head = HeadUtil.getHeadFromFileExtension(extension);
                 fileBuilder.setHeadBase64(head.get());
-                fileItem.set(fileBuilder.get());
+                fileItem.set(fileBuilder.get(player));
                 fileQueue.add(fileItem);
             }
         }
@@ -370,7 +355,6 @@ public class GUIFileExplorerModule extends GUIListModule {
             module.getHistory().clearForward();
             module.setListLoc(1);
             gui.setInventoryName(file.getName());
-            gui.onClose(player);
             gui.open(player);
         }
     }
@@ -397,7 +381,6 @@ public class GUIFileExplorerModule extends GUIListModule {
             module.getHistory().pushForward(oldFile);
             module.setListLoc(1);
             gui.setInventoryName(file.getName());
-            gui.onClose(player);
             gui.open(player);
         }
     }
@@ -424,7 +407,6 @@ public class GUIFileExplorerModule extends GUIListModule {
             module.getHistory().pushBack(oldFile);
             module.setListLoc(1);
             gui.setInventoryName(newFile.getName());
-            gui.onClose(player);
             gui.open(player);
         }
     }

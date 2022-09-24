@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.event;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
+import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
@@ -114,7 +115,7 @@ public final class GUIEventInfo {
      * @return The current item
      */
     public ItemStack getCurrentItem() {
-        return item.get();
+        return item.get(player);
     }
 
     /**
@@ -143,6 +144,15 @@ public final class GUIEventInfo {
      */
     public void setCurrentItem(ItemStack item) {
         this.item.set(item);
+    }
+
+    /**
+     * Set the item in the slot that was clicked
+     *
+     * @param builder The <code>ItemBuilder</code> to use
+     */
+    public void setCurrentItem(ItemBuilder builder) {
+        this.item.set(builder);
     }
 
     /**

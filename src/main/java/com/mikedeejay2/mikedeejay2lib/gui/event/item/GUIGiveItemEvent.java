@@ -6,7 +6,7 @@ import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
-import java.util.function.Supplier;
+import java.util.function.Function;
 
 /**
  * Give the <code>Player</code> viewing the GUI a specified item
@@ -17,7 +17,7 @@ public class GUIGiveItemEvent implements GUIEvent {
     /**
      * The item that will be given to the player upon click
      */
-    protected Supplier<ItemStack> itemStack;
+    protected Function<Player, ItemStack> itemStack;
 
     /**
      * Construct a new <code>GUIGiveItemEvent</code>
@@ -25,7 +25,7 @@ public class GUIGiveItemEvent implements GUIEvent {
      * @param itemStack The item that will be given to the player upon click
      */
     public GUIGiveItemEvent(ItemStack itemStack) {
-        this.itemStack = () -> itemStack;
+        this.itemStack = (player) -> itemStack;
     }
 
     /**
@@ -34,16 +34,16 @@ public class GUIGiveItemEvent implements GUIEvent {
      * @param builder The item builder that will be given to the player upon click
      */
     public GUIGiveItemEvent(ItemBuilder builder) {
-        this.itemStack = builder::get;
+        this.itemStack = (player) -> player == null ? builder.get() : builder.get(player);
     }
 
     /**
      * Construct a new <code>GUIGiveItemEvent</code>
      *
-     * @param supplier The supplier that will generate the item that will be given to the player upon click
+     * @param function The function that will generate the item that will be given to the player upon click
      */
-    public GUIGiveItemEvent(Supplier<ItemStack> supplier) {
-        this.itemStack = supplier;
+    public GUIGiveItemEvent(Function<Player, ItemStack> function) {
+        this.itemStack = function;
     }
 
     /**
@@ -54,7 +54,17 @@ public class GUIGiveItemEvent implements GUIEvent {
     @Override
     public void execute(GUIEventInfo info) {
         Player player = info.getPlayer();
-        player.getInventory().addItem(itemStack.get());
+        player.getInventory().addItem(itemStack.apply(player));
+    }
+
+    /**
+     * Get the <code>ItemStack</code> that will be given to the player upon click
+     *
+     * @param player The player retrieving the item
+     * @return The <code>ItemStack</code> that will be given to the player upon click
+     */
+    public ItemStack getItemStack(Player player) {
+        return itemStack.apply(player);
     }
 
     /**
@@ -63,7 +73,7 @@ public class GUIGiveItemEvent implements GUIEvent {
      * @return The <code>ItemStack</code> that will be given to the player upon click
      */
     public ItemStack getItemStack() {
-        return itemStack.get();
+        return itemStack.apply(null);
     }
 
     /**
@@ -72,7 +82,7 @@ public class GUIGiveItemEvent implements GUIEvent {
      * @param itemStack The new <code>ItemStack</code>
      */
     public void setItemStack(ItemStack itemStack) {
-        this.itemStack = () -> itemStack;
+        this.itemStack = (player) -> itemStack;
     }
 
     /**
@@ -80,7 +90,7 @@ public class GUIGiveItemEvent implements GUIEvent {
      *
      * @param function The function that will generate the item that will be given to the player upon click
      */
-    public void setItemStack(Supplier<ItemStack> function) {
+    public void setItemStack(Function<Player, ItemStack> function) {
         this.itemStack = function;
     }
 }

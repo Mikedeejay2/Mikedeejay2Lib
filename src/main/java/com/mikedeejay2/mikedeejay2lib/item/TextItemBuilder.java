@@ -3,8 +3,10 @@ package com.mikedeejay2.mikedeejay2lib.item;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
+import com.mikedeejay2.mikedeejay2lib.text.PlaceholderFormatter;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
+import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -33,11 +35,13 @@ public class TextItemBuilder extends ItemBuilder {
 
     protected Text name;
     protected List<Text> lore;
+    protected String previousLocale;
 
     protected TextItemBuilder(IItemBuilder<?, ?> builder) {
         super(builder);
         this.name = null;
         this.lore = new ArrayList<>();
+        this.previousLocale = null;
         if(builder instanceof TextItemBuilder) {
             TextItemBuilder textBuilder = (TextItemBuilder) builder;
             setName(textBuilder.getNameText());
@@ -61,19 +65,19 @@ public class TextItemBuilder extends ItemBuilder {
     @Override
     public ItemStack get(Player player) {
         updateMeta(player);
-        return super.get(player);
+        return super.get();
     }
 
     @Override
     public ItemStack get(CommandSender sender) {
         updateMeta(sender);
-        return super.get(sender);
+        return super.get();
     }
 
     @Override
     public ItemStack get(String locale) {
         updateMeta(locale);
-        return super.get(locale);
+        return super.get();
     }
 
     @Override
@@ -431,28 +435,32 @@ public class TextItemBuilder extends ItemBuilder {
     }
 
     private void updateMeta(Player player) {
+        String locale = player.getLocale();
+        if(isCacheValid(locale)) return;
         checkAndUpdateMeta(name == null ? null : Colors.format(name.get(player)), loreToString(player));
+        this.previousLocale = player.getLocale();
     }
 
     private void updateMeta(CommandSender sender) {
+        String locale = sender instanceof Player ? ((Player) sender).getLocale() : null;
+        if(isCacheValid(locale)) return;
         checkAndUpdateMeta(name == null ? null : Colors.format(name.get(sender)), loreToString(sender));
+        this.previousLocale = locale;
     }
 
     private void updateMeta(String locale) {
+        if(isCacheValid(locale)) return;
         checkAndUpdateMeta(name == null ? null : Colors.format(name.get(locale)), loreToString(locale));
+        this.previousLocale = locale;
     }
 
     private void updateMeta() {
+        if(isCacheValid(null)) return;
         checkAndUpdateMeta(name == null ? null : Colors.format(name.get()), loreToString());
+        this.previousLocale = null;
     }
 
     private void checkAndUpdateMeta(String name, List<String> lore) {
-        if((!this.meta.hasDisplayName() && name == null) || // Both names are null
-            (this.meta.hasDisplayName() && name != null && name.equals(this.meta.getDisplayName())) || // Both have the same name
-            (!this.meta.hasLore() && lore.isEmpty()) || // Both lores are empty
-            (this.meta.hasLore() && !lore.isEmpty() && lore.equals(this.meta.getLore()))) { // Both lores are the same
-            return;
-        }
         this.meta.setDisplayName(name);
         this.meta.setLore(lore);
         this.changed = true;
@@ -480,5 +488,10 @@ public class TextItemBuilder extends ItemBuilder {
         final List<String> strLore = new ArrayList<>();
         lore.forEach(cur -> strLore.add(Colors.format(cur.get())));
         return strLore;
+    }
+
+    private boolean isCacheValid(String locale) {
+        return (item != null) && ((locale == null && previousLocale == null) ||
+            (locale != null && locale.equals(previousLocale)));
     }
 }

@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.text;
 
 import com.mikedeejay2.mikedeejay2lib.text.language.TranslationManager;
+import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 

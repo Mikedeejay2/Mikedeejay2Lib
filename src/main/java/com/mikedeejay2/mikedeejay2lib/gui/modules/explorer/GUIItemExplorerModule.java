@@ -84,7 +84,7 @@ public class GUIItemExplorerModule extends GUIListModule {
             .addEvent(new GUINavFolderBackEvent());
         this.forwardItemValid = new GUIItem(
             ItemBuilder.of(Base64Head.ARROW_RIGHT_WHITE.get())
-                .setName("&f" + Text.translatable("gui.modules.navigator.backward").get())
+                .setName("&f" + Text.translatable("gui.modules.navigator.forward").get())
                 .get())
             .addEvent(new GUINavFolderForwardEvent());
         this.deepSearch = false;
@@ -160,7 +160,7 @@ public class GUIItemExplorerModule extends GUIListModule {
     private void localize(Player player) {
         this.backItemValid.setName("&f" + Text.translatable("gui.modules.navigator.backward").get(player))
             .setAmount(Math.min(Math.max(1, history.backSize()), 64));
-        this.forwardItemValid.setName("&f" + Text.translatable("gui.modules.navigator.backward").get(player))
+        this.forwardItemValid.setName("&f" + Text.translatable("gui.modules.navigator.forward").get(player))
             .setAmount(Math.min(Math.max(1, history.forwardSize()), 64));
     }
 
@@ -390,7 +390,6 @@ public class GUIItemExplorerModule extends GUIListModule {
             module.getHistory().clearForward();
             module.setListLoc(1);
             gui.setInventoryName(folder.getName());
-            gui.onClose(player);
             gui.open(player);
         }
     }
@@ -417,7 +416,6 @@ public class GUIItemExplorerModule extends GUIListModule {
             module.getHistory().pushForward(oldFolder);
             module.setListLoc(1);
             gui.setInventoryName(folder.getName());
-            gui.onClose(player);
             gui.open(player);
         }
     }
@@ -444,7 +442,6 @@ public class GUIItemExplorerModule extends GUIListModule {
             module.getHistory().pushBack(oldFolder);
             module.setListLoc(1);
             gui.setInventoryName(newFolder.getName());
-            gui.onClose(player);
             gui.open(player);
         }
     }

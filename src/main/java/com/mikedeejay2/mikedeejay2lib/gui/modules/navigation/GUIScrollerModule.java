@@ -52,55 +52,39 @@ public class GUIScrollerModule implements GUIModule {
      */
     public GUIScrollerModule(BukkitPlugin plugin) {
         this.plugin = plugin;
-    }
 
-    /**
-     * Generate the UI for the scroller when the GUI opens
-     *
-     * @param player The player that is viewing the GUI
-     * @param gui    The GUI
-     */
-    @Override
-    public void onOpenHead(Player player, GUIContainer gui) {
-        if(upItem == null) {
-            String name = Text.translatable("gui.modules.scroller.up").get(player);
-            this.upItem = new AnimatedGUIItem(ItemBuilder.of(Base64Head.ARROW_UP_WHITE.get()).setName("&f" + name).get(), false, 1, true);
-            upItem.addEvent(new GUIScrollEvent(-1, 0));
-            AnimatedGUIItem upItemAnim = (AnimatedGUIItem) upItem;
-            upItemAnim.addFrame(ItemBuilder.of(Base64Head.ARROW_UP_LIGHT_GRAY.get()).setName("&f" + name).get(), 1);
-            upItemAnim.addFrame(ItemBuilder.of(Base64Head.ARROW_UP_WHITE.get()).setName("&f" + name).get(), 1);
-            upItemAnim.setStartingIndex(1);
-        }
-
-        if(downItem == null) {
-            String name = Text.translatable("gui.modules.scroller.down").get(player);
-            this.downItem = new AnimatedGUIItem(ItemBuilder.of(Base64Head.ARROW_DOWN_WHITE.get()).setName("&f" + name).get(), false, 1, true);
-            downItem.addEvent(new GUIScrollEvent(1, 0));
-            AnimatedGUIItem downItemAnim = (AnimatedGUIItem) downItem;
-            downItemAnim.addFrame(ItemBuilder.of(Base64Head.ARROW_DOWN_LIGHT_GRAY.get()).setName("&f" + name).get(), 1);
-            downItemAnim.addFrame(ItemBuilder.of(Base64Head.ARROW_DOWN_WHITE.get()).setName("&f" + name).get(), 1);
-            downItemAnim.setStartingIndex(1);
-        }
-
-        if(leftItem == null) {
-            String name = Text.translatable("gui.modules.scroller.left").get(player);
-            this.leftItem = new AnimatedGUIItem(ItemBuilder.of(Base64Head.ARROW_LEFT_WHITE.get()).setName("&f" + name).get(), false, 1, true);
-            leftItem.addEvent(new GUIScrollEvent(0, -1));
-            AnimatedGUIItem leftItemAnim = (AnimatedGUIItem) leftItem;
-            leftItemAnim.addFrame(ItemBuilder.of(Base64Head.ARROW_LEFT_LIGHT_GRAY.get()).setName("&f" + name).get(), 1);
-            leftItemAnim.addFrame(ItemBuilder.of(Base64Head.ARROW_LEFT_WHITE.get()).setName("&f" + name).get(), 1);
-            leftItemAnim.setStartingIndex(1);
-        }
-
-        if(rightItem == null) {
-            String name = Text.translatable("gui.modules.scroller.right").get(player);
-            this.rightItem = new AnimatedGUIItem(ItemBuilder.of(Base64Head.ARROW_RIGHT_WHITE.get()).setName("&f" + name).get(), false, 1, true);
-            rightItem.addEvent(new GUIScrollEvent(0, 1));
-            AnimatedGUIItem rightItemAnim = (AnimatedGUIItem) rightItem;
-            rightItemAnim.addFrame(ItemBuilder.of(Base64Head.ARROW_RIGHT_LIGHT_GRAY.get()).setName("&f" + name).get(), 1);
-            rightItemAnim.addFrame(ItemBuilder.of(Base64Head.ARROW_RIGHT_WHITE.get()).setName("&f" + name).get(), 1);
-            rightItemAnim.setStartingIndex(1);
-        }
+        Text upName = Text.of("gui.modules.scroller.up");
+        this.upItem = new AnimatedGUIItem(
+            ItemBuilder.of(Base64Head.ARROW_UP_WHITE.get()).setName(Text.of("&f").concat(upName)),
+            false, 1, true)
+            .addFrame(ItemBuilder.of(Base64Head.ARROW_UP_LIGHT_GRAY.get()).setName(Text.of("&f").concat(upName)), 1)
+            .addFrame(ItemBuilder.of(Base64Head.ARROW_UP_WHITE.get()).setName(Text.of("&f").concat(upName)), 1)
+            .setStartingIndex(1);
+        upItem.addEvent(new GUIScrollEvent(-1, 0));
+        Text downName = Text.of("gui.modules.scroller.down");
+        this.downItem = new AnimatedGUIItem(
+            ItemBuilder.of(Base64Head.ARROW_DOWN_WHITE.get())
+                .setName(Text.of("&f").concat(downName)), false, 1, true)
+            .addFrame(ItemBuilder.of(Base64Head.ARROW_DOWN_LIGHT_GRAY.get()).setName(Text.of("&f").concat(downName)), 1)
+            .addFrame(ItemBuilder.of(Base64Head.ARROW_DOWN_WHITE.get()).setName(Text.of("&f").concat(downName)), 1)
+            .setStartingIndex(1);
+        downItem.addEvent(new GUIScrollEvent(1, 0));
+        Text leftName = Text.of("gui.modules.scroller.left");
+        this.leftItem = new AnimatedGUIItem(
+            ItemBuilder.of(Base64Head.ARROW_LEFT_WHITE.get())
+                .setName(Text.of("&f").concat(leftName)), false, 1, true)
+            .addFrame(ItemBuilder.of(Base64Head.ARROW_LEFT_LIGHT_GRAY.get()).setName(Text.of("&f").concat(leftName)), 1)
+            .addFrame(ItemBuilder.of(Base64Head.ARROW_LEFT_WHITE.get()).setName(Text.of("&f").concat(leftName)), 1)
+            .setStartingIndex(1);
+        leftItem.addEvent(new GUIScrollEvent(0, -1));
+        Text rightName = Text.of("gui.modules.scroller.right");
+        this.rightItem = new AnimatedGUIItem(
+            ItemBuilder.of(Base64Head.ARROW_RIGHT_WHITE.get())
+                .setName(Text.of("&f").concat(rightName)), false, 1, true)
+            .addFrame(ItemBuilder.of(Base64Head.ARROW_RIGHT_LIGHT_GRAY.get()).setName(Text.of("&f").concat(rightName)), 1)
+            .addFrame(ItemBuilder.of(Base64Head.ARROW_RIGHT_WHITE.get()).setName(Text.of("&f").concat(rightName)), 1)
+            .setStartingIndex(1);
+        rightItem.addEvent(new GUIScrollEvent(0, 1));
     }
 
     /**

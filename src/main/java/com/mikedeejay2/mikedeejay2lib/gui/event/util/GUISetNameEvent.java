@@ -35,7 +35,6 @@ public class GUISetNameEvent implements GUIEvent {
         Player player = info.getPlayer();
         GUIContainer gui = info.getGUI();
         gui.setInventoryName(name);
-        gui.onClose(player);
         gui.open(player);
     }
 

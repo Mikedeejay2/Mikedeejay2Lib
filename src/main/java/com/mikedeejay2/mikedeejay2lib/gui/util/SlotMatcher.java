@@ -531,7 +531,7 @@ public abstract class SlotMatcher {
          */
         @Override
         public boolean matches(MatchData data) {
-            return data.item != null && itemStack.equals(data.item.get());
+            return data.item != null && itemStack.equals(data.item.get(data.player));
         }
     }
 

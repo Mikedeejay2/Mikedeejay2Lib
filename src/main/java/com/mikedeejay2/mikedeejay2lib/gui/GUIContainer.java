@@ -12,6 +12,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.util.SlotMatcher;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
+import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -20,7 +21,9 @@ import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.function.Consumer;
 
 /**
@@ -185,8 +188,22 @@ public class GUIContainer {
     public void onOpen(Player player) {
         inventory = Bukkit.createInventory(null, inventorySlots, this.inventoryName.get(player));
         modules.forEach(module -> module.onOpenHead(player, this));
+        changeAllItems();
         update(player);
         modules.forEach(module -> module.onOpenTail(player, this));
+    }
+
+    /**
+     * Ensure that all items in the GUI know that they need to be changed upon opening the GUI.
+     */
+    private void changeAllItems() {
+        for(GUILayer layer : layers) {
+            for(GUIItem[] items : layer.getItemsAsArray()) {
+                for(GUIItem item : items) {
+                    if(item != null) item.setChanged(true);
+                }
+            }
+        }
     }
 
     /**
@@ -229,7 +246,10 @@ public class GUIContainer {
     public void update(Player player) {
         modules.forEach(module -> module.onUpdateHead(player, this));
         int newInvRows = Math.min(inventoryRows, MAX_INVENTORY_ROWS);
+        boolean[][] changedArr = new boolean[newInvRows][MAX_INVENTORY_COLS];
+        Set<GUIItem> changedItems = new HashSet<>();
 
+        // Fill empty slots, if enabled
         if(fillEmpty) {
             int fillSlot = -1;
             GUILayer bottomLayer = layers.get(0);
@@ -237,39 +257,71 @@ public class GUIContainer {
                 for(int col = 1; col <= MAX_INVENTORY_COLS; ++col) {
                     GUIItem item = bottomLayer.getItem(row, col);
                     ++fillSlot;
-                    if((item != null && item.isMovable()) || (item == null && bottomLayer.getDefaultMoveState())) {
-                        if(item == null) inventory.setItem(fillSlot, null);
+                    if(item != null || bottomLayer.getDefaultMoveState()) {
                         continue;
                     }
                     inventory.setItem(fillSlot, backgroundItem);
+                    changedArr[row-1][col-1] = true;
                 }
-            }
-        } else {
-            for(int i = 0; i < inventorySlots; ++i) {
-                inventory.setItem(i, null);
             }
         }
 
+        // Find out what slots require an update
         for(GUILayer layer : layers) {
             if(!layer.isVisible()) continue;
-            int curRowOffset = rowOffset;
-            int curColOffset = colOffset;
+            for(int row = 1; row <= newInvRows; ++row) {
+                for(int col = 1; col <= MAX_INVENTORY_COLS; ++col) {
+                    if(changedArr[row-1][col-1]) continue; // If already true, don't check again
+                    GUIItem guiItem = layer.getItem(row + rowOffset, col + colOffset);
+                    if(guiItem == null) continue;
+                    changedArr[row-1][col-1] = guiItem.isChanged();
+                }
+            }
+        }
+
+        // Fill items
+        for(GUILayer layer : layers) {
+            if(!layer.isVisible()) continue;
             int invSlot = -1;
-            for(int row = 0; row < newInvRows; ++row) {
-                for(int col = 0; col < MAX_INVENTORY_COLS; ++col) {
+            for(int row = 1; row <= newInvRows; ++row) {
+                for(int col = 1; col <= MAX_INVENTORY_COLS; ++col) {
                     ++invSlot;
-                    GUIItem guiItem = layer.getItem(row + 1 + curRowOffset, col + 1 + curColOffset);
-                    if(guiItem == null) {
-                        continue;
-                    }
-                    ItemStack itemStack = guiItem.get();
+                    if(!changedArr[row-1][col-1]) continue;
+
+                    GUIItem guiItem = layer.getItem(row + rowOffset, col + colOffset);
+                    if(guiItem == null) continue;
+                    ItemStack itemStack = guiItem.get(player);
 
                     if(itemStack != null) {
                         inventory.setItem(invSlot, itemStack);
                     }
+                    changedItems.add(guiItem);
                 }
             }
         }
+
+        // Clean up remnants of previous frame
+        int invSlot = -1;
+        for(int row = 1; row <= newInvRows; ++row) {
+            for(int col = 1; col <= MAX_INVENTORY_COLS; ++col) {
+                GUIItem item = null;
+                for(int i = layers.size() - 1; i >= 0; i--) {
+                    GUILayer layer = getLayer(i);
+                    GUIItem curItem = layer.getItem(row + rowOffset, col + colOffset);
+                    if(curItem != null && curItem.getType() != null && curItem.getType() != Material.AIR) {
+                        item = curItem;
+                        break;
+                    }
+                }
+                ++invSlot;
+                if(item != null || changedArr[row-1][col-1]) continue;
+                inventory.setItem(invSlot, null);
+            }
+        }
+        for(GUIItem item : changedItems) {
+            item.setChanged(false);
+        }
+
         modules.forEach(module -> module.onUpdateTail(player, this));
     }
 
@@ -793,7 +845,9 @@ public class GUIContainer {
      * @param rowOffset The new row offset
      */
     public void setRowOffset(int rowOffset) {
+        if(this.rowOffset == rowOffset) return;
         this.rowOffset = rowOffset;
+        changeAllItems();
     }
 
     /**
@@ -811,7 +865,9 @@ public class GUIContainer {
      * @param colOffset The new column offset
      */
     public void setColOffset(int colOffset) {
+        if(this.colOffset == colOffset) return;
         this.colOffset = colOffset;
+        changeAllItems();
     }
 
     /**
@@ -820,7 +876,9 @@ public class GUIContainer {
      * @param amount The amount to add
      */
     public void addRowOffset(int amount) {
+        if(amount == 0) return;
         rowOffset += amount;
+        changeAllItems();
     }
 
     /**
@@ -829,7 +887,9 @@ public class GUIContainer {
      * @param amount The amount to add
      */
     public void addColOffset(int amount) {
+        if(amount == 0) return;
         colOffset += amount;
+        changeAllItems();
     }
 
     /**

@@ -5,6 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
+import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import com.mikedeejay2.mikedeejay2lib.util.enchant.GlowEnchantment;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
@@ -146,17 +147,17 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
 
     @Override
     public ItemStack get(Player player) {
-        return get();
+        return this.get();
     }
 
     @Override
     public ItemStack get(CommandSender sender) {
-        return get();
+        return this.get();
     }
 
     @Override
     public ItemStack get(String locale) {
-        return get();
+        return this.get();
     }
 
     @Override
@@ -745,6 +746,15 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
         }
         this.changed = true;
         return this;
+    }
+
+    /**
+     * Get whether the item has been changed since last build
+     *
+     * @return Whether the item has been changed since last build
+     */
+    public boolean isChanged() {
+        return changed;
     }
 
     @Override

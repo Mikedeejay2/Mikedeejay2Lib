@@ -1,5 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.animation;
 
+import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import org.bukkit.inventory.ItemStack;
 
 /**
@@ -11,7 +12,7 @@ public class AnimationFrame {
     /**
      * The item of the animation frame, null if not an item frame
      */
-    protected ItemStack item;
+    protected ItemBuilder item;
     /**
      * The type of movement that this frame processes, null if not movement frame.
      */
@@ -33,7 +34,7 @@ public class AnimationFrame {
      */
     protected FrameType type;
     /**
-     * Whether or not relative (local) movement is use, null if not a movement frame.
+     * Whether relative (local) movement is use, null if not a movement frame.
      */
     protected boolean relativeMovement;
 
@@ -44,9 +45,7 @@ public class AnimationFrame {
      * @param period The period between this frame and the next frame
      */
     public AnimationFrame(ItemStack item, long period) {
-        this.item = item;
-        this.period = period == 0 ? 1 : period;
-        this.type = FrameType.ITEM;
+        this(ItemBuilder.of(item), period);
     }
 
     /**
@@ -55,7 +54,7 @@ public class AnimationFrame {
      * @param row              The row that the item will move to
      * @param col              The column that the item will move to
      * @param movement         The <code>MovementType</code> of this frame
-     * @param relativeMovement Whether or not to use relative (local) movement
+     * @param relativeMovement Whether to use relative (local) movement
      * @param period           The period between this frame and the next frame
      */
     public AnimationFrame(int row, int col, MovementType movement, boolean relativeMovement, long period) {
@@ -74,15 +73,41 @@ public class AnimationFrame {
      * @param row              The row that the item will move to
      * @param col              The column that the item will move to
      * @param movement         The <code>MovementType</code> of this frame
-     * @param relativeMovement Whether or not to use relative (local) movement
+     * @param relativeMovement Whether to use relative (local) movement
      * @param period           The period between this frame and the next frame
      */
     public AnimationFrame(ItemStack item, int row, int col, MovementType movement, boolean relativeMovement, long period) {
+        this(ItemBuilder.of(item), row, col, movement, relativeMovement, period);
+    }
+
+    /**
+     * Constructor for constructing an <code>ITEM</code> frame
+     *
+     * @param item   The new item that this frame will apply
+     * @param period The period between this frame and the next frame
+     */
+    public AnimationFrame(ItemBuilder item, long period) {
+        this.item = ItemBuilder.of(item);
+        this.period = period == 0 ? 1 : period;
+        this.type = FrameType.ITEM;
+    }
+
+    /**
+     * Constructor for constructing a <code>BOTH</code> (Item and movement) frame
+     *
+     * @param item             The new item that this frame will apply
+     * @param row              The row that the item will move to
+     * @param col              The column that the item will move to
+     * @param movement         The <code>MovementType</code> of this frame
+     * @param relativeMovement Whether to use relative (local) movement
+     * @param period           The period between this frame and the next frame
+     */
+    public AnimationFrame(ItemBuilder item, int row, int col, MovementType movement, boolean relativeMovement, long period) {
         this.row = row;
         this.col = col;
         this.period = period == 0 ? 1 : period;
         this.movementType = movement;
-        this.item = item;
+        this.item = ItemBuilder.of(item);
         this.relativeMovement = relativeMovement;
         this.type = FrameType.BOTH;
     }
@@ -92,7 +117,7 @@ public class AnimationFrame {
      *
      * @return The item of this frame
      */
-    public ItemStack getItem() {
+    public ItemBuilder getItem() {
         return item;
     }
 
@@ -105,6 +130,18 @@ public class AnimationFrame {
      * @param item The item to set this frame's item to
      */
     public void setItem(ItemStack item) {
+        this.item = ItemBuilder.of(item);
+    }
+
+    /**
+     * Set the item of this frame.
+     * <p>
+     * Note: The item will only be used if the {@link FrameType} for this frame is <code>ITEM</code> or
+     * <code>BOTH</code>
+     *
+     * @param item The item to set this frame's item to
+     */
+    public void setItem(ItemBuilder item) {
         this.item = item;
     }
 
@@ -229,7 +266,7 @@ public class AnimationFrame {
     }
 
     /**
-     * Whether or not this frame moves relatively (locally)
+     * Whether this frame moves relatively (locally)
      *
      * @return Whether this frame moves relatively
      */
