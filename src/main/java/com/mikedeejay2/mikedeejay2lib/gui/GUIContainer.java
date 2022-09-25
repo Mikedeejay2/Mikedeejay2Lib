@@ -223,8 +223,8 @@ public class GUIContainer {
      */
     public void open(Player player) {
         PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
-        onOpen(player);
         playerGUI.setGUI(this);
+        onOpen(player);
         player.openInventory(inventory);
     }
 
@@ -314,7 +314,7 @@ public class GUIContainer {
                     }
                 }
                 ++invSlot;
-                if(item != null || changedArr[row-1][col-1]) continue;
+                if(item != null) continue;
                 inventory.setItem(invSlot, null);
             }
         }

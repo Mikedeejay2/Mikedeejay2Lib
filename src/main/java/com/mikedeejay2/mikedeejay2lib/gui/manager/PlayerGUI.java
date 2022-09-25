@@ -73,31 +73,16 @@ public class PlayerGUI {
     }
 
     /**
-     * Set this player's current GUI to a new GUI. This method also opens the player's
-     * GUI using {@link PlayerGUI#openGUI()}
+     * Set this player's current GUI to a new GUI.
      *
      * @param gui GUI that the player will view
      */
     public void setGUI(GUIContainer gui) {
         if(this.guiOpened) {
             this.guiChange = true;
-            onClose();
+            this.gui.onClose(player);
         }
         this.gui = gui;
-    }
-
-    /**
-     * Open this player's currently selected GUI
-     */
-    private void openGUI() {
-        gui.onOpen(player);
-    }
-
-    /**
-     * Close this player's currently opened GUI
-     */
-    private void onClose() {
-        gui.onClose(player);
     }
 
     /**

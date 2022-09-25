@@ -51,6 +51,10 @@ public class GUINavigatorModule implements GUIModule {
      * The invalid forward item
      */
     protected GUIItem invalidForwardItem;
+    /**
+     * Flag for when a navigation has occurred
+     */
+    boolean navigated;
 
     /**
      * Construct a new <code>GUINavigatorModule</code>
@@ -75,41 +79,23 @@ public class GUINavigatorModule implements GUIModule {
         this.invalidForwardItem = new GUIItem(
             ItemBuilder.of(Base64Head.ARROW_RIGHT_LIGHT_GRAY.get())
                 .setName(Text.of("&7").concat("gui.modules.navigator.forward")));
+
+        this.navigated = false;
     }
 
-    /**
-     * Generate the navigation UI on open
-     *
-     * @param player The player that is viewing the GUI
-     * @param gui    The GUI
-     */
     @Override
-    public void onOpenHead(Player player, GUIContainer gui) {
-        navigationCheck(player);
-    }
-
-    /**
-     * Checks whether the GUI is using a navigation system and if so calculate the forward
-     * and back navigations.
-     */
-    private void navigationCheck(Player player) {
-        PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
-        GUIContainer oldGUI = playerGUI.getGUI();
-        String curID = getNavigationID();
-        NavigationHolder<GUIContainer> system = playerGUI.getNavigation(curID);
-        if(system.isNavigationFlagged() || !playerGUI.isGuiOpened()) {
-            system.setNavigationFlag(false);
+    public void onClose(Player player, GUIContainer gui) {
+        if(navigated) {
+            navigated = false;
             return;
         }
-        if(oldGUI != null) {
-            if(!oldGUI.containsModule(GUINavigatorModule.class)) return;
-            String oldID = oldGUI.getModule(GUINavigatorModule.class).getNavigationID();
-            if(!curID.equals(oldID)) return;
-            if(system.hasBack() && system.peekBack() == oldGUI) return;
-            system.pushBack(oldGUI);
-            if(!system.hasForward()) return;
-            system.clearForward();
-        }
+        PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
+        String curID = getNavigationID();
+        NavigationHolder<GUIContainer> system = playerGUI.getNavigation(curID);
+        if(system.hasBack() && system.peekBack() == gui) return;
+        system.pushBack(gui);
+        if(!system.hasForward()) return;
+        system.clearForward();
     }
 
     /**
@@ -261,7 +247,7 @@ public class GUINavigatorModule implements GUIModule {
             NavigationHolder<GUIContainer> system = playerGUI.getNavigation(module.getNavigationID());
             GUIContainer backGUI = system.popBack();
             system.pushForward(gui);
-            system.setNavigationFlag(true);
+            module.navigated = true;
             backGUI.open(player);
         }
     }
@@ -302,7 +288,7 @@ public class GUINavigatorModule implements GUIModule {
             NavigationHolder<GUIContainer> system = playerGUI.getNavigation(module.getNavigationID());
             GUIContainer forwardGUI = system.popForward();
             system.pushBack(gui);
-            system.setNavigationFlag(true);
+            module.navigated = true;
             forwardGUI.open(player);
         }
     }
