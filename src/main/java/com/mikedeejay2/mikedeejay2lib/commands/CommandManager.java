@@ -13,6 +13,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Manages a command with subcommands
@@ -75,27 +76,22 @@ public class CommandManager implements TabCommandBase {
             SubCommand target = this.getSubcommand(args[0]);
 
             if(target == null) {
-                plugin.sendMessage(sender, "&c" + Text.translatable("command.errors.invalid_subcommand").get(sender));
+                plugin.sendMessage(sender, Text.of("&c").concat("command.errors.invalid_subcommand"));
                 return false;
             }
 
-            // TODO: Unused ArrayList?
-            ArrayList<String> arrayList = new ArrayList<>(Arrays.asList(args));
-
-            arrayList.remove(0);
-
             if(target.getPermission() != null && !sender.hasPermission(target.getPermission())) {
-                plugin.sendMessage(sender, "&c" + Text.translatable("errors.permission.nopermission").get(sender));
+                plugin.sendMessage(sender, Text.of("&c").concat("errors.permission.nopermission"));
                 return false;
             } else if(!(sender instanceof Player) && target.isPlayerRequired()) {
-                plugin.sendMessage(sender, "&c" + Text.translatable("errors.player_required").get(sender));
+                plugin.sendMessage(sender, Text.of("&c").concat("errors.player_required"));
                 return false;
             }
 
             try {
                 target.onCommand(sender, args);
             } catch(Exception exception) {
-                plugin.sendMessage(sender, "&c" + Text.translatable("command.errors.general").get(sender));
+                plugin.sendMessage(sender, Text.of("&c").concat("command.errors.general"));
                 exception.printStackTrace();
             }
         }
@@ -212,7 +208,10 @@ public class CommandManager implements TabCommandBase {
         if(!command.getName().equalsIgnoreCase(this.commandName)) return null;
         ArrayList<String> commands = new ArrayList<>();
         if(args.length == 1) {
-            String[] arg1Strings = this.getAllCommandStrings(true);
+            String currentArg = args[0];
+            String[] arg1Strings = Arrays.stream(this.getAllCommandStrings(true))
+                .filter((str) -> str.startsWith(currentArg))
+                .toArray(String[]::new);
             Collections.addAll(commands, arg1Strings);
         }
         return commands;
