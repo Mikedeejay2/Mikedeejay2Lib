@@ -2,11 +2,5 @@
   "command.errors.invalid_subcommand": "오류: 잘못된 하위 명령",
   "command.errors.general": "오류가 발생했습니다.",
   "errors.permission.nopermission": "당신은 이 명령을 실행할 권한이 없습니다!",
-  "generic.success": "성공!",
-  "warnings.big_number": "경고: 입력 한 숫자는 권장 한도를 초과하여 이상하게 작동 할 수 있습니다.",
   "errors.player_required": "오류: 이 명령어를 실행하려면 플레이어 여야합니다.",
-  "errors.number_required": "오류: 이 하위 명령을 실행하려면 숫자가 필요합니다.",
-  "errors.number_less_than_zero": "오류: 입력 한 숫자가 0보다 작습니다. 0보다 큰 숫자를 입력하십시오.",
-  "errors.not_a_number": "오류: 입력 한 데이터가 숫자가 아닙니다. 숫자를 입력하세요.",
-  "errors.invalid_item_held": "손에 든 아이템이 유효하지 않습니다. 유효한 아이템을 손에 드십시오."
 }
