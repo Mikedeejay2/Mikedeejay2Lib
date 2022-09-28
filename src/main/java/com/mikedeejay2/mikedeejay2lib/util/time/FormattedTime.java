@@ -12,12 +12,11 @@ public final class FormattedTime {
     /**
      * The formatter that will format the current time
      */
-    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-
+    private static final DateTimeFormatter formatterSlashes = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
     /**
-     * A reference to the current LocalDateTime
+     * The formatter that will format the current time
      */
-    private static final LocalDateTime now = LocalDateTime.now();
+    private static final DateTimeFormatter formatterDashes = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     /**
      * Get the current time formatted as "yyyy/MM/dd HH:mm:ss"
@@ -25,6 +24,15 @@ public final class FormattedTime {
      * @return The current formatted time
      */
     public static String getTime() {
-        return formatter.format(now);
+        return formatterSlashes.format(LocalDateTime.now());
+    }
+
+    /**
+     * Get the current time formatted as "yyyy-MM-dd HH:mm:ss"
+     *
+     * @return The current formatted time
+     */
+    public static String getTimeDashed() {
+        return formatterDashes.format(LocalDateTime.now());
     }
 }
