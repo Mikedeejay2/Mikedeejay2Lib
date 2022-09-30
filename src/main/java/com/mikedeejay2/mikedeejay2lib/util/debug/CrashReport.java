@@ -5,15 +5,16 @@ import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.time.FormattedTime;
 import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
 import org.apache.commons.lang3.Validate;
+import org.bukkit.Bukkit;
+import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
-import org.bukkit.entity.Player;
+import org.bukkit.plugin.Plugin;
+import org.bukkit.plugin.PluginDescriptionFile;
+import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Crash report system. Basic setup:
@@ -32,10 +33,6 @@ public class CrashReport {
      */
     protected final BukkitPlugin plugin;
     /**
-     * Whether to notify players with OP in-game
-     */
-    protected boolean notifyOps;
-    /**
      * The list of {@link Text} details that will be included with the crash report
      */
     protected Map<String, String> details;
@@ -48,36 +45,71 @@ public class CrashReport {
      */
     protected List<CrashReportSection> sections;
 
-    public CrashReport(BukkitPlugin plugin, boolean notifyOps, String description) {
+    public CrashReport(BukkitPlugin plugin, String description) {
         this.plugin = plugin;
-        this.notifyOps = notifyOps;
         this.details = new LinkedHashMap<>();
         this.sections = new ArrayList<>();
-        addDetail("Time", FormattedTime.getTimeDashed());
+        addDetail("Time", FormattedTime.getTime());
         addDetail("Description", description);
     }
 
     private CrashReportSection getHead() {
         CrashReportSection head = new CrashReportSection("Head");
         head.addDetail("Thread", Thread.currentThread().getName());
-        StringBuilder stack = new StringBuilder("\n");
-        for(StackTraceElement element : Thread.currentThread().getStackTrace()) {
-            stack.append("\tat ").append(element.toString()).append("\n");
-        }
-        head.addDetail("Stacktrace", stack.toString());
+        head.addDetail("Stacktrace", "\n" + formatStackTrace(Thread.currentThread().getStackTrace()));
         return head;
     }
 
     private CrashReportSection getSystemDetails() {
         CrashReportSection section = new CrashReportSection("System Details");
         section.addDetail("Minecraft Version", MinecraftVersion.getVersionString());
+        section.addDetail("Plugin Name", plugin.getName());
+        section.addDetail("Plugin Version", plugin.getDescription().getVersion());
+        section.addDetail("Plugin API Version", plugin.getDescription().getAPIVersion());
         section.addDetail("Operating System", SystemDetails.OPERATING_SYSTEM);
         section.addDetail("Java Version", SystemDetails.JAVA_VERSION);
         section.addDetail("Java VM Version", SystemDetails.JAVA_VM_VERSION);
         section.addDetail("Memory", SystemDetails.getMemory());
         section.addDetail("CPUs", SystemDetails.getMemory());
         section.addDetail("JVM Flags", SystemDetails.getJVMFlags());
+
+        section.addDetail("CraftBukkit Information", getServerDetails());
         return section;
+    }
+
+    /**
+     * Modified from <code>org.bukkit.craftbukkit.CraftCrashReport</code>
+     *
+     * @return Server details
+     */
+    private static String getServerDetails() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("\n\tRunning: ").append(Bukkit.getName()).append(" version ")
+            .append(Bukkit.getVersion()).append(" (Implementing API version ")
+            .append(Bukkit.getBukkitVersion()).append(") ")
+            .append(Bukkit.getServer().getOnlineMode());
+        builder.append("\n\tPlugins: {");
+        for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
+            PluginDescriptionFile description = plugin.getDescription();
+            boolean legacy = description.getAPIVersion() == null;
+            builder.append(' ').append(description.getFullName())
+                .append(legacy ? "*" : "").append(' ')
+                .append(description.getMain()).append(' ')
+                .append(Arrays.toString(description.getAuthors().toArray())).append(',');
+        }
+        builder.append("}\n\tWarnings: ").append(Bukkit.getWarningState().name());
+        builder.append("}\n\t").append("Scheduler: ").append(Bukkit.getScheduler());
+        builder.append("\n\tForce Loaded Chunks: {");
+        for (World world : Bukkit.getWorlds()) {
+            builder.append(' ').append(world.getName()).append(": {");
+            for (Map.Entry<Plugin, Collection<Chunk>> entry : world.getPluginChunkTickets().entrySet()) {
+                builder.append(' ').append(entry.getKey().getDescription().getFullName()).append(": ")
+                    .append(entry.getValue().size()).append(',');
+            }
+            builder.append("},");
+        }
+        builder.append("}");
+        return builder.toString();
     }
 
     public CrashReport addAffectedLevel(World world) {
@@ -108,14 +140,6 @@ public class CrashReport {
         return section;
     }
 
-    public boolean isNotifyOps() {
-        return notifyOps;
-    }
-
-    public void setNotifyOps(boolean notifyOps) {
-        this.notifyOps = notifyOps;
-    }
-
     public Map<String, String> getDetails() {
         return details;
     }
@@ -130,9 +154,7 @@ public class CrashReport {
     }
 
     public void execute() {
-        String report = buildReport();
-
-        plugin.sendSevere(report);
+        plugin.sendSevere(buildReport());
     }
 
     private String buildReport() {
@@ -152,16 +174,20 @@ public class CrashReport {
         builder.append("A detailed walkthrough of the error, its code path and all known details is as follows:\n");
         builder.append("---------------------------------------------------------------------------------------\n");
 
-        builder.append("\n").append(getHead().getString());
+        builder.append("\n").append(getHead().getString()).append("\n\n");
 
         for(CrashReportSection section : sections) {
-            builder.append("\n").append(section.getString()).append("\n");
+            builder.append(getSectionString(section)).append("\n\n");
         }
-        if(!sections.isEmpty()) builder.append("\n");
 
-        builder.append(getSystemDetails().getString());
+        builder.append(getSectionString(getSystemDetails()));
 
         return builder.toString();
+    }
+
+    @NotNull
+    private static String getSectionString(CrashReportSection section) {
+        return section.getString().replace("\n", "\n\t");
     }
 
     protected static String formatStackTrace(StackTraceElement[] elements) {
@@ -173,6 +199,6 @@ public class CrashReport {
     }
 
     protected static String formatLocation(Location location) {
-        return location.getX() + "," + location.getY() + "," + location.getZ();
+        return location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ();
     }
 }

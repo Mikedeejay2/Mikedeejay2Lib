@@ -38,6 +38,6 @@ public class CrashReportSection {
             String detail = details.get(detailName);
             builder.append(detailName).append(": ").append(detail).append("\n");
         }
-        return builder.toString();
+        return builder.toString().trim();
     }
 }
