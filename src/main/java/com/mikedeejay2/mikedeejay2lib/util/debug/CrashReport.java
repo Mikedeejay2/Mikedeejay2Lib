@@ -1,20 +1,28 @@
 package com.mikedeejay2.mikedeejay2lib.util.debug;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
+import com.mikedeejay2.mikedeejay2lib.text.PlaceholderFormatter;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.time.FormattedTime;
 import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
+import net.md_5.bungee.api.chat.BaseComponent;
+import net.md_5.bungee.api.chat.TextComponent;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
+
+import static com.mikedeejay2.mikedeejay2lib.util.chat.ChatConverter.*;
+import static net.md_5.bungee.api.chat.ClickEvent.Action.*;
+import static net.md_5.bungee.api.chat.HoverEvent.Action.*;
 
 /**
  * Crash report system. Basic setup:
@@ -44,11 +52,16 @@ public class CrashReport {
      * The sections of this crash report
      */
     protected List<CrashReportSection> sections;
+    /**
+     * Whether to notify players with OP
+     */
+    protected boolean notifyOps;
 
-    public CrashReport(BukkitPlugin plugin, String description) {
+    public CrashReport(BukkitPlugin plugin, String description, boolean notifyOps) {
         this.plugin = plugin;
         this.details = new LinkedHashMap<>();
         this.sections = new ArrayList<>();
+        this.notifyOps = notifyOps;
         addDetail("Time", FormattedTime.getTime());
         addDetail("Description", description);
     }
@@ -70,7 +83,7 @@ public class CrashReport {
         section.addDetail("Java Version", SystemDetails.JAVA_VERSION);
         section.addDetail("Java VM Version", SystemDetails.JAVA_VM_VERSION);
         section.addDetail("Memory", SystemDetails.getMemory());
-        section.addDetail("CPUs", SystemDetails.getMemory());
+        section.addDetail("CPUs", SystemDetails.getProcessorCount());
         section.addDetail("JVM Flags", SystemDetails.getJVMFlags());
 
         section.addDetail("CraftBukkit Information", getServerDetails());
@@ -84,40 +97,47 @@ public class CrashReport {
      */
     private static String getServerDetails() {
         StringBuilder builder = new StringBuilder();
-        builder.append("\n\tRunning: ").append(Bukkit.getName()).append(" version ")
+        builder.append("\n    Running: ").append(Bukkit.getName()).append(" version ")
             .append(Bukkit.getVersion()).append(" (Implementing API version ")
             .append(Bukkit.getBukkitVersion()).append(") ")
             .append(Bukkit.getServer().getOnlineMode());
-        builder.append("\n\tPlugins: {");
+        builder.append("\n    Plugins:");
         for (Plugin plugin : Bukkit.getPluginManager().getPlugins()) {
             PluginDescriptionFile description = plugin.getDescription();
             boolean legacy = description.getAPIVersion() == null;
-            builder.append(' ').append(description.getFullName())
+            builder.append("\n      ").append(description.getFullName())
                 .append(legacy ? "*" : "").append(' ')
                 .append(description.getMain()).append(' ')
-                .append(Arrays.toString(description.getAuthors().toArray())).append(',');
+                .append(Arrays.toString(description.getAuthors().toArray()));
         }
-        builder.append("}\n\tWarnings: ").append(Bukkit.getWarningState().name());
-        builder.append("}\n\t").append("Scheduler: ").append(Bukkit.getScheduler());
-        builder.append("\n\tForce Loaded Chunks: {");
+        builder.append("\n    Warnings: ").append(Bukkit.getWarningState().name());
+        builder.append("\n    ").append("Scheduler: ").append(Bukkit.getScheduler());
+        builder.append("\n    Force Loaded Chunks:");
         for (World world : Bukkit.getWorlds()) {
-            builder.append(' ').append(world.getName()).append(": {");
+            builder.append("\n      ").append(world.getName()).append(": {");
             for (Map.Entry<Plugin, Collection<Chunk>> entry : world.getPluginChunkTickets().entrySet()) {
                 builder.append(' ').append(entry.getKey().getDescription().getFullName()).append(": ")
-                    .append(entry.getValue().size()).append(',');
+                    .append(entry.getValue().size());
             }
-            builder.append("},");
+            builder.append("}");
         }
-        builder.append("}");
         return builder.toString();
     }
 
     public CrashReport addAffectedLevel(World world) {
         CrashReportSection section = addSection("Affected level");
-        section.addDetail("All players", world.getPlayers().size() + " total; " + world.getPlayers());
+        StringBuilder playerBuilder = new StringBuilder(world.getPlayers().size()).append(" total; [");
+        for(Player player : world.getPlayers()) {
+            playerBuilder.append(String.format(
+                "%s(uuid=%s, world=%s, location=%s), ",
+                player.getName(), player.getUniqueId(), player.getWorld().getName(), formatLocation(player.getLocation())));
+        }
+        String players = playerBuilder.toString();
+        players = players.substring(0, players.length() - 2) + "]";
+        section.addDetail("All players", world.getPlayers().size() + " total; " + players);
         section.addDetail("Chunk stats", String.valueOf(world.getLoadedChunks().length));
         section.addDetail("Level dimension", world.getEnvironment().toString().toLowerCase());
-        section.addDetail("Level spawn location", formatLocation(world.getSpawnLocation()));
+        section.addDetail("Level spawn location", formatBlockLocation(world.getSpawnLocation()));
         section.addDetail("Level time", world.getGameTime() + " game time, " + world.getTime() + " day time");
         section.addDetail("Level name", world.getName());
         section.addDetail("Level game mode", "Game mode: " + plugin.getServer().getDefaultGameMode().toString().toLowerCase() +
@@ -140,21 +160,27 @@ public class CrashReport {
         return section;
     }
 
-    public Map<String, String> getDetails() {
-        return details;
-    }
-
-    public @Nullable Throwable getThrowable() {
-        return throwable;
-    }
-
-    public CrashReport setThrowable(@Nullable Throwable throwable) {
-        this.throwable = throwable;
-        return this;
-    }
-
     public void execute() {
-        plugin.sendSevere(buildReport());
+        final String report = buildReport();
+        plugin.sendSevere("\n" + report);
+
+        if(!notifyOps) return;
+        final Text textMessage = Text.of("&4").concat("crash_report.message")
+            .placeholder(PlaceholderFormatter.of("plugin", plugin.getName())).color();
+        final Text textCopy = Text.of("&6").concat("crash_report.copy_report").color();
+
+        for(Player player : Bukkit.getOnlinePlayers()) {
+            if(!player.isOp()) continue;
+            final String stringMessage = textMessage.get(player);
+            final String stringCopy = textCopy.get(player);
+            BaseComponent[] componentsMessage = TextComponent.fromLegacyText(stringMessage + " ");
+            BaseComponent[] componentsCopy = TextComponent.fromLegacyText(stringCopy);
+            setClickEvent(componentsCopy, getClickEvent(COPY_TO_CLIPBOARD, report));
+            setHoverEvent(componentsCopy, getHoverEvent(SHOW_TEXT, stringCopy));
+
+            player.spigot().sendMessage(componentsMessage);
+            player.spigot().sendMessage(componentsCopy);
+        }
     }
 
     private String buildReport() {
@@ -198,7 +224,32 @@ public class CrashReport {
         return builder.toString();
     }
 
-    protected static String formatLocation(Location location) {
+    protected static String formatBlockLocation(Location location) {
         return location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ();
+    }
+
+    protected static String formatLocation(Location location) {
+        return String.format("%.2f,%.2f,%.2f", location.getX(), location.getY(), location.getZ());
+    }
+
+    public Map<String, String> getDetails() {
+        return details;
+    }
+
+    public @Nullable Throwable getThrowable() {
+        return throwable;
+    }
+
+    public CrashReport setThrowable(@Nullable Throwable throwable) {
+        this.throwable = throwable;
+        return this;
+    }
+
+    public boolean notifyOps() {
+        return notifyOps;
+    }
+
+    public void setNotifyOps(boolean notifyOps) {
+        this.notifyOps = notifyOps;
     }
 }

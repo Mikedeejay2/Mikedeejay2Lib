@@ -23,5 +23,7 @@
   "update_checker.update_available": "An update for %plugin% is available!",
   "update_checker.new_version": "%plugin% has a new version %version% available for download.",
   "update_checker.release_time": "The update was released at %time%",
-  "update_checker.download_link": "Direct download link: %link%"
+  "update_checker.download_link": "Direct download link: %link%",
+  "crash_report.message": "%plugin% has crashed.",
+  "crash_report.copy_report": "Click here to copy the crash report"
 }
