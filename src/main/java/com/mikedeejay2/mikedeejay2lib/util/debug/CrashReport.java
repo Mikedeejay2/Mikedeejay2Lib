@@ -225,7 +225,7 @@ public class CrashReport {
      */
     public void execute() {
         final String report = getReport();
-        plugin.sendSevere("\n" + report);
+        plugin.sendSevere("\n&4" + report);
 
         if(!notifyOps) return;
         final Text textMessage = Text.of("&4").concat("crash_report.message")
