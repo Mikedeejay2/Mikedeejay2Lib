@@ -15,7 +15,6 @@ import org.bukkit.World;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
-import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -41,7 +40,7 @@ public class CrashReport {
      */
     protected final BukkitPlugin plugin;
     /**
-     * The list of {@link Text} details that will be included with the crash report
+     * The map of details that will be included with the crash report
      */
     protected Map<String, String> details;
     /**
@@ -57,6 +56,13 @@ public class CrashReport {
      */
     protected boolean notifyOps;
 
+    /**
+     * Construct a new <code>CrashReport</code>
+     *
+     * @param plugin      The {@link BukkitPlugin} of this crash report
+     * @param description The description of this crash report
+     * @param notifyOps   Whether to notify players with OP upon execution of the crash report
+     */
     public CrashReport(BukkitPlugin plugin, String description, boolean notifyOps) {
         this.plugin = plugin;
         this.details = new LinkedHashMap<>();
@@ -66,6 +72,11 @@ public class CrashReport {
         addDetail("Description", description);
     }
 
+    /**
+     * Generate the head of the crash report. Contains a thread name and its stack trace.
+     *
+     * @return The head section
+     */
     private CrashReportSection getHead() {
         CrashReportSection head = new CrashReportSection("Head");
         head.addDetail("Thread", Thread.currentThread().getName());
@@ -73,6 +84,11 @@ public class CrashReport {
         return head;
     }
 
+    /**
+     * Generate the system details of the crash report.
+     *
+     * @return The system details section
+     */
     private CrashReportSection getSystemDetails() {
         CrashReportSection section = new CrashReportSection("System Details");
         section.addDetail("Minecraft Version", MinecraftVersion.getVersionString());
@@ -91,9 +107,10 @@ public class CrashReport {
     }
 
     /**
-     * Modified from <code>org.bukkit.craftbukkit.CraftCrashReport</code>
+     * Modified from <code>org.bukkit.craftbukkit.CraftCrashReport</code>. Generates the server details of the crash
+     * report.
      *
-     * @return Server details
+     * @return The String of server details
      */
     private static String getServerDetails() {
         StringBuilder builder = new StringBuilder();
@@ -124,6 +141,13 @@ public class CrashReport {
         return builder.toString();
     }
 
+    /**
+     * Add an affected level to this crash report. This only needs to be specified if the crash has occurred in a
+     * specific world.
+     *
+     * @param world The world where the crash has occurred in
+     * @return This crash report
+     */
     public CrashReport addAffectedLevel(World world) {
         CrashReportSection section = addSection("Affected level");
         StringBuilder playerBuilder = new StringBuilder(world.getPlayers().size()).append(" total; [");
@@ -147,6 +171,14 @@ public class CrashReport {
         return this;
     }
 
+    /**
+     * Add a detail. This is displayed at the top of the crash report and should only contain basic information to be
+     * displayed to the user. For advanced information, create a section using {@link CrashReport#addSection(String)}.
+     *
+     * @param name   The name of this detail
+     * @param detail The detail as a String
+     * @return This crash report
+     */
     public CrashReport addDetail(String name, String detail) {
         Validate.notNull(name, "Attempted to add null detail name to crash report");
         Validate.notNull(detail, "Attempted to add null detail to crash report");
@@ -154,14 +186,27 @@ public class CrashReport {
         return this;
     }
 
+    /**
+     * Add a section. This is display in the middle of the crash report, and used for debugging in relation to the
+     * crash that occurred. The returned {@link CrashReportSection} should have details added to it using
+     * {@link CrashReportSection#addDetail(String, String)}.
+     *
+     * @param title The title of the section
+     * @return The new {@link CrashReportSection}
+     */
     public CrashReportSection addSection(String title) {
         CrashReportSection section = new CrashReportSection(title);
         sections.add(section);
         return section;
     }
 
+    /**
+     * Execute this crash report, printing the crash report to the console. If {@link CrashReport#notifyOps()} is true,
+     * players with OP will also be notified in-game about the crash, with the ability to copy the crash report in its
+     * entirety to clipboard.
+     */
     public void execute() {
-        final String report = buildReport();
+        final String report = getReport();
         plugin.sendSevere("\n" + report);
 
         if(!notifyOps) return;
@@ -183,7 +228,12 @@ public class CrashReport {
         }
     }
 
-    private String buildReport() {
+    /**
+     * Build the String of this crash report
+     *
+     * @return This crash report as a String
+     */
+    public String getReport() {
         StringBuilder builder = new StringBuilder();
         builder.append("---- ").append(plugin.getName()).append(" Crash Report ----\n\n");
         for(String detailName : details.keySet()) {
@@ -211,11 +261,22 @@ public class CrashReport {
         return builder.toString();
     }
 
-    @NotNull
+    /**
+     * Helper method for retrieving the String form of a {@link CrashReportSection}
+     *
+     * @param section The {@link CrashReportSection} to get
+     * @return The section as a String
+     */
     private static String getSectionString(CrashReportSection section) {
         return section.getString().replace("\n", "\n\t");
     }
 
+    /**
+     * Helper method to format a stack trace to a String
+     *
+     * @param elements The array of stack trace elements
+     * @return The formatted String
+     */
     protected static String formatStackTrace(StackTraceElement[] elements) {
         final StringBuilder builder = new StringBuilder();
         for(StackTraceElement element : elements) {
@@ -224,31 +285,69 @@ public class CrashReport {
         return builder.toString();
     }
 
+    /**
+     * Helper method for formatting a block location
+     *
+     * @param location The location to format
+     * @return The formatted String
+     */
     protected static String formatBlockLocation(Location location) {
         return location.getBlockX() + "," + location.getBlockY() + "," + location.getBlockZ();
     }
 
+    /**
+     * Helper method for formatting a location
+     *
+     * @param location The location to format
+     * @return The formatted String
+     */
     protected static String formatLocation(Location location) {
         return String.format("%.2f,%.2f,%.2f", location.getX(), location.getY(), location.getZ());
     }
 
+    /**
+     * Get the map of details that will be included with the crash report
+     *
+     * @return The map of details
+     */
     public Map<String, String> getDetails() {
         return details;
     }
 
+    /**
+     * Get the throwable of this crash report.
+     *
+     * @return The throwable, null if it doesn't exist
+     */
     public @Nullable Throwable getThrowable() {
         return throwable;
     }
 
+    /**
+     * Set the throwable of this crash report
+     *
+     * @param throwable The throwable
+     * @return This crash report
+     */
     public CrashReport setThrowable(@Nullable Throwable throwable) {
         this.throwable = throwable;
         return this;
     }
 
+    /**
+     * Whether this crash report notifies players with OP of the crash
+     *
+     * @return Whether this crash report notifies players with OP
+     */
     public boolean notifyOps() {
         return notifyOps;
     }
 
+    /**
+     * Set whether this crash report notifies players with OP of the crash
+     *
+     * @param notifyOps The new notify OPs state
+     */
     public void setNotifyOps(boolean notifyOps) {
         this.notifyOps = notifyOps;
     }
