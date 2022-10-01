@@ -12,9 +12,11 @@ import org.bukkit.Bukkit;
 import org.bukkit.Chunk;
 import org.bukkit.Location;
 import org.bukkit.World;
+import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.Plugin;
 import org.bukkit.plugin.PluginDescriptionFile;
+import org.bukkit.util.Vector;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
@@ -50,7 +52,7 @@ public class CrashReport {
     /**
      * The sections of this crash report
      */
-    protected List<CrashReportSection> sections;
+    protected Map<String, CrashReportSection> sections;
     /**
      * Whether to notify players with OP
      */
@@ -66,7 +68,7 @@ public class CrashReport {
     public CrashReport(BukkitPlugin plugin, String description, boolean notifyOps) {
         this.plugin = plugin;
         this.details = new LinkedHashMap<>();
-        this.sections = new ArrayList<>();
+        this.sections = new LinkedHashMap<>();
         this.notifyOps = notifyOps;
         addDetail("Time", FormattedTime.getTime());
         addDetail("Description", description);
@@ -142,23 +144,15 @@ public class CrashReport {
     }
 
     /**
-     * Add an affected level to this crash report. This only needs to be specified if the crash has occurred in a
-     * specific world.
+     * Add a world to this crash report. This only needs to be specified if the crash has occurred in a specific world.
      *
+     * @param name  The name of the section
      * @param world The world where the crash has occurred in
-     * @return This crash report
+     * @return The created section
      */
-    public CrashReport addAffectedLevel(World world) {
-        CrashReportSection section = addSection("Affected level");
-        StringBuilder playerBuilder = new StringBuilder(world.getPlayers().size()).append(" total; [");
-        for(Player player : world.getPlayers()) {
-            playerBuilder.append(String.format(
-                "%s(uuid=%s, world=%s, location=%s), ",
-                player.getName(), player.getUniqueId(), player.getWorld().getName(), formatLocation(player.getLocation())));
-        }
-        String players = playerBuilder.toString();
-        players = players.substring(0, players.length() - 2) + "]";
-        section.addDetail("All players", world.getPlayers().size() + " total; " + players);
+    public CrashReportSection addWorld(String name, World world) {
+        CrashReportSection section = addSection(name);
+        section.addDetail("All players", world.getPlayers().size() + " total; [" + formatEntities(world.getPlayers()) + "]");
         section.addDetail("Chunk stats", String.valueOf(world.getLoadedChunks().length));
         section.addDetail("Level dimension", world.getEnvironment().toString().toLowerCase());
         section.addDetail("Level spawn location", formatBlockLocation(world.getSpawnLocation()));
@@ -168,7 +162,31 @@ public class CrashReport {
             ". Hardcore: " + world.isHardcore());
         section.addDetail("Level weather", "Rain time: " + world.getWeatherDuration() + " (now: " + !world.isClearWeather() + "), " +
             "thunder time: " + world.getThunderDuration() + " (now: " + world.isThundering() + ")");
-        return this;
+        return section;
+    }
+
+    /**
+     * Add an entity to this crash report. This only needs to be specified if the crash report occurred because of the
+     * entity.
+     *
+     * @param name   The name of the section
+     * @param entity The entity that has caused the crash
+     * @return The created section
+     */
+    public CrashReportSection addEntity(String name, Entity entity) {
+        CrashReportSection section = addSection(name);
+        section.addDetail("Entity Type", entity.getType().toString().toLowerCase() +
+            (entity.getType().getEntityClass() != null ? " (" + entity.getType().getEntityClass().getCanonicalName() + ")" : ""));
+        section.addDetail("Entity ID", String.valueOf(entity.getEntityId()));
+        section.addDetail("Entity Name", entity.getName());
+        section.addDetail("Entity's Exact location", formatLocation(entity.getLocation()));
+        section.addDetail("Entity's Block location", formatBlockLocation(entity.getLocation()));
+        final Vector velocity = entity.getVelocity();
+        section.addDetail("Entity's Momentum", String.format(
+            "%.2f,%.2f,%.2f", velocity.getX(), velocity.getY(), velocity.getZ()));
+        section.addDetail("Entity's Passengers", "[" + formatEntities(entity.getPassengers()) + "]");
+        section.addDetail("Entity's Vehicle", entity.getVehicle() != null ? formatEntity(entity.getVehicle()) : "none");
+        return section;
     }
 
     /**
@@ -196,7 +214,7 @@ public class CrashReport {
      */
     public CrashReportSection addSection(String title) {
         CrashReportSection section = new CrashReportSection(title);
-        sections.add(section);
+        sections.put(title, section);
         return section;
     }
 
@@ -252,7 +270,7 @@ public class CrashReport {
 
         builder.append("\n").append(getHead().getString()).append("\n\n");
 
-        for(CrashReportSection section : sections) {
+        for(CrashReportSection section : sections.values()) {
             builder.append(getSectionString(section)).append("\n\n");
         }
 
@@ -306,12 +324,69 @@ public class CrashReport {
     }
 
     /**
+     * Helper method for formatting a list of entities
+     *
+     * @param entities The entities to be formatted
+     * @return The formatted String
+     */
+    protected static String formatEntities(List<? extends Entity> entities) {
+        final StringBuilder builder = new StringBuilder();
+        for(int i = 0; i < entities.size(); ++i) {
+            Entity entity = entities.get(i);
+            builder.append(formatEntity(entity));
+            if(i < entities.size() - 1) builder.append(", ");
+        }
+        return builder.toString();
+    }
+
+    /**
+     * Helper method for formatting an entity
+     *
+     * @param entity The entity to be formatted
+     * @return The formatted String
+     */
+    protected static String formatEntity(Entity entity) {
+        return String.format(
+            "%s(uuid=%s, world=%s, location=%s)",
+            entity.getName(), entity.getUniqueId(), entity.getWorld().getName(), formatLocation(entity.getLocation()));
+    }
+
+    /**
      * Get the map of details that will be included with the crash report
      *
      * @return The map of details
      */
     public Map<String, String> getDetails() {
         return details;
+    }
+
+    /**
+     * Get a detail of this crash report based off of the name of the detail.
+     *
+     * @param name The name of the detail to retrieve
+     * @return The retrieved detail
+     */
+    public String getDetail(String name) {
+        return details.get(name);
+    }
+
+    /**
+     * Get the map of sections included in this crash report
+     *
+     * @return The map of sections
+     */
+    public Map<String, CrashReportSection> getSections() {
+        return sections;
+    }
+
+    /**
+     * Get a section of this crash report based off of the name of the section.
+     *
+     * @param name The name of the section to retrieve
+     * @return The retrieved section
+     */
+    public CrashReportSection getSection(String name) {
+        return sections.get(name);
     }
 
     /**
