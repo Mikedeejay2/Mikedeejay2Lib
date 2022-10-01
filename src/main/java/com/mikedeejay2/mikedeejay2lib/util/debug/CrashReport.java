@@ -224,10 +224,10 @@ public class CrashReport {
      */
     public void execute() {
         final String report = getReport();
-        plugin.sendSevere("\n&4" + report);
+        plugin.sendSevere("\n&c" + report);
 
         if(!notifyOps) return;
-        final Text textMessage = Text.of("&4").concat("crash_report.message")
+        final Text textMessage = Text.of("&c").concat("crash_report.message")
             .placeholder(PlaceholderFormatter.of("plugin", plugin.getName())).color();
         final Text textCopy = Text.of("&6").concat("crash_report.copy_report").color();
 
