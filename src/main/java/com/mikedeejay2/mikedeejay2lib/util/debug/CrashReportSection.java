@@ -40,7 +40,6 @@ public class CrashReportSection {
      */
     public CrashReportSection addDetail(String name, String detail) {
         Validate.notNull(name, "Attempted to add null detail name to crash report");
-        Validate.notNull(detail, "Attempted to add null detail to crash report of name \"%s\"", name);
         details.put(name, detail);
         return this;
     }
