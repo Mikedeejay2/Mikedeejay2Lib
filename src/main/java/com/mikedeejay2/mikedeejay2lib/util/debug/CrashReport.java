@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.util.debug;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.text.PlaceholderFormatter;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
+import com.mikedeejay2.mikedeejay2lib.util.file.FileIO;
 import com.mikedeejay2.mikedeejay2lib.util.time.FormattedTime;
 import com.mikedeejay2.mikedeejay2lib.util.version.MinecraftVersion;
 import net.md_5.bungee.api.chat.BaseComponent;
@@ -19,6 +20,10 @@ import org.bukkit.plugin.PluginDescriptionFile;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.Nullable;
 
+import java.io.*;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 import static com.mikedeejay2.mikedeejay2lib.util.chat.ChatConverter.*;
@@ -61,8 +66,15 @@ public class CrashReport {
      * Information about the crash. Printed to console after the crash report and to players if <code>notifyOps</code>
      * is true. Should include details such as a generic statement about what happened and where to report the crash
      * report.
+     * <p>
+     * This is <strong>NOT</strong> the crash report! This is helper information printed after the crash report to aid
+     * users in submitting a bug report.
      */
     protected List<Text> crashInfo;
+    /**
+     * Whether to create a file in <code>plugins/plugin_name/crash-reports</code>
+     */
+    protected boolean createFile;
 
     /**
      * Construct a new <code>CrashReport</code>
@@ -70,13 +82,15 @@ public class CrashReport {
      * @param plugin      The {@link BukkitPlugin} of this crash report
      * @param description The description of this crash report
      * @param notifyOps   Whether to notify players with OP upon execution of the crash report
+     * @param createFile  Whether to create a file in <code>plugins/plugin_name/crash-reports</code>
      */
-    public CrashReport(BukkitPlugin plugin, String description, boolean notifyOps) {
+    public CrashReport(BukkitPlugin plugin, String description, boolean notifyOps, boolean createFile) {
         this.plugin = plugin;
         this.details = new LinkedHashMap<>();
         this.sections = new LinkedHashMap<>();
         this.notifyOps = notifyOps;
         this.crashInfo = new ArrayList<>();
+        this.createFile = createFile;
         addDetail("Time", FormattedTime.getTime());
         addDetail("Description", description);
     }
@@ -246,32 +260,12 @@ public class CrashReport {
     public void execute() {
         final String report = getReport();
         plugin.sendSevere("\n&c" + report);
-
         for(Text text : crashInfo) {
             plugin.sendInfo(text);
         }
 
-        if(!notifyOps) return;
-        final Text textMessage = Text.of("&c").concat("crash_report.message")
-            .placeholder(PlaceholderFormatter.of("plugin", plugin.getName())).color();
-        final Text textCopy = Text.of("&6").concat("crash_report.copy_report").color();
-
-        for(Player player : Bukkit.getOnlinePlayers()) {
-            if(!player.isOp()) continue;
-            final String stringMessage = textMessage.get(player);
-            final String stringCopy = textCopy.get(player);
-            BaseComponent[] componentsMessage = TextComponent.fromLegacyText(stringMessage + " ");
-            BaseComponent[] componentsCopy = TextComponent.fromLegacyText(stringCopy);
-            setClickEvent(componentsCopy, getClickEvent(COPY_TO_CLIPBOARD, report));
-            setHoverEvent(componentsCopy, getHoverEvent(SHOW_TEXT, stringCopy));
-
-            player.spigot().sendMessage(componentsMessage);
-            player.spigot().sendMessage(componentsCopy);
-
-            for(Text text : crashInfo) {
-                plugin.sendMessage(player, text);
-            }
-        }
+        if(notifyOps) executeNotifyOps(report);
+        if(createFile) executeCreateFile(report);
     }
 
     /**
@@ -305,6 +299,45 @@ public class CrashReport {
         builder.append(getSectionString(getSystemDetails()));
 
         return builder.toString();
+    }
+
+    /**
+     * Execute notifying players with OP about the crash.
+     *
+     * @param report The generated crash report
+     */
+    protected void executeNotifyOps(String report) {
+        final Text textMessage = Text.of("&c").concat("crash_report.message")
+            .placeholder(PlaceholderFormatter.of("plugin", plugin.getName())).color();
+        final Text textCopy = Text.of("&6").concat("crash_report.copy_report").color();
+
+        for(Player player : Bukkit.getOnlinePlayers()) {
+            if(!player.isOp()) continue;
+            final String stringMessage = textMessage.get(player);
+            final String stringCopy = textCopy.get(player);
+            BaseComponent[] componentsMessage = TextComponent.fromLegacyText(stringMessage + " ");
+            BaseComponent[] componentsCopy = TextComponent.fromLegacyText(stringCopy);
+            setClickEvent(componentsCopy, getClickEvent(COPY_TO_CLIPBOARD, report));
+            setHoverEvent(componentsCopy, getHoverEvent(SHOW_TEXT, stringCopy));
+
+            player.spigot().sendMessage(componentsMessage);
+            player.spigot().sendMessage(componentsCopy);
+
+            for(Text text : crashInfo) {
+                plugin.sendMessage(player, text);
+            }
+        }
+    }
+
+    /**
+     * Execute creation of a crash report file.
+     *
+     * @param crashReport The generated crash report
+     */
+    protected void executeCreateFile(String crashReport) {
+        String fileName = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH.mm.ss").format(LocalDateTime.now());
+        File file = new File(plugin.getDataFolder(), "crash-reports/crash-" + fileName + ".txt");
+        FileIO.saveFile(file, new ByteArrayInputStream(crashReport.getBytes()), false, true);
     }
 
     /**
@@ -418,6 +451,20 @@ public class CrashReport {
     }
 
     /**
+     * Get information about the crash. Printed to console after the crash report and to players if
+     * <code>notifyOps</code> is true. Should include details such as a generic statement about what happened and where
+     * to report the crash report.
+     * <p>
+     * This is <strong>NOT</strong> the crash report! This is helper information printed after the crash report to aid
+     * users in submitting a bug report.
+     *
+     * @return The crash information
+     */
+    public List<Text> getCrashInfo() {
+        return crashInfo;
+    }
+
+    /**
      * Get the throwable of this crash report.
      *
      * @return The throwable, null if it doesn't exist
@@ -453,5 +500,23 @@ public class CrashReport {
      */
     public void setNotifyOps(boolean notifyOps) {
         this.notifyOps = notifyOps;
+    }
+
+    /**
+     * Get whether to create a file in <code>plugins/plugin_name/crash-reports</code>
+     *
+     * @return Whether to create a file
+     */
+    public boolean isCreateFile() {
+        return createFile;
+    }
+
+    /**
+     * Set whether to create a file in <code>plugins/plugin_name/crash-reports</code>
+     *
+     * @param createFile New create file state
+     */
+    public void setCreateFile(boolean createFile) {
+        this.createFile = createFile;
     }
 }
