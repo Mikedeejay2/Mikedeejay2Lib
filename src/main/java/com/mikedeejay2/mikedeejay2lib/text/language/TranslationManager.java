@@ -9,10 +9,7 @@ import com.mikedeejay2.mikedeejay2lib.util.structure.tuple.Pair;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.entity.Player;
 
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Manages translations loaded from JSON files, either from plugin jar or a file. For the global
@@ -23,6 +20,13 @@ import java.util.Set;
  * @author Mikedeejay2
  */
 public final class TranslationManager {
+    /**
+     * The locale retrieved from the system that the server is running on.
+     */
+    public static final String SYSTEM_LOCALE =
+        String.format("%s_%s", System.getProperty("user.language"), System.getProperty("user.country"))
+        .toLowerCase(Locale.ROOT);
+
     /**
      * The global <code>TranslationManager</code>. This should be used in most cases.
      */
@@ -77,7 +81,7 @@ public final class TranslationManager {
         this.translations = new HashMap<>();
         this.directories = new HashSet<>();
         this.baseLocale = baseLocale;
-        this.globalLocale = baseLocale;
+        this.globalLocale = SYSTEM_LOCALE;
     }
 
     /**
