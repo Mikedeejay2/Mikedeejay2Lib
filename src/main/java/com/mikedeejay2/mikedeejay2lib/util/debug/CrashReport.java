@@ -57,6 +57,12 @@ public class CrashReport {
      * Whether to notify players with OP
      */
     protected boolean notifyOps;
+    /**
+     * Information about the crash. Printed to console after the crash report and to players if <code>notifyOps</code>
+     * is true. Should include details such as a generic statement about what happened and where to report the crash
+     * report.
+     */
+    protected List<Text> crashInfo;
 
     /**
      * Construct a new <code>CrashReport</code>
@@ -70,6 +76,7 @@ public class CrashReport {
         this.details = new LinkedHashMap<>();
         this.sections = new LinkedHashMap<>();
         this.notifyOps = notifyOps;
+        this.crashInfo = new ArrayList<>();
         addDetail("Time", FormattedTime.getTime());
         addDetail("Description", description);
     }
@@ -218,6 +225,20 @@ public class CrashReport {
     }
 
     /**
+     * Add information about the crash. Printed to console after the crash report and to players if
+     * <code>notifyOps</code> is true. Should include details such as a generic statement about what happened and where
+     * to report the crash report.
+     *
+     * @param text The text to be added as information
+     * @return This crash report
+     */
+    public CrashReport addInfo(Text text) {
+        Validate.notNull(text, "Attempted to add null crash information");
+        crashInfo.add(text);
+        return this;
+    }
+
+    /**
      * Execute this crash report, printing the crash report to the console. If {@link CrashReport#notifyOps()} is true,
      * players with OP will also be notified in-game about the crash, with the ability to copy the crash report in its
      * entirety to clipboard.
@@ -225,6 +246,10 @@ public class CrashReport {
     public void execute() {
         final String report = getReport();
         plugin.sendSevere("\n&c" + report);
+
+        for(Text text : crashInfo) {
+            plugin.sendInfo(text);
+        }
 
         if(!notifyOps) return;
         final Text textMessage = Text.of("&c").concat("crash_report.message")
@@ -242,6 +267,10 @@ public class CrashReport {
 
             player.spigot().sendMessage(componentsMessage);
             player.spigot().sendMessage(componentsCopy);
+
+            for(Text text : crashInfo) {
+                plugin.sendMessage(player, text);
+            }
         }
     }
 
