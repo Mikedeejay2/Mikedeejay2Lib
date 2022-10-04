@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules.list;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
+import org.apache.commons.lang3.Validate;
 import org.bukkit.entity.Player;
 
 import java.util.Collection;
@@ -115,6 +116,8 @@ public class GUIMappedListModule<T> extends GUIListModule {
      *                           {@link GUIItem GUIItems}.
      */
     private void setMapperFields(Collection<T> unmappedCollection, Function<T, GUIItem> mapFunction) {
+        Validate.notNull(unmappedCollection, "Unmapped collection cannot be null");
+        Validate.notNull(mapFunction, "Map Function cannot be null");
         this.unmappedCollection = unmappedCollection;
         this.mapFunction = mapFunction;
         this.lastMapHashcode = unmappedCollection.hashCode();
@@ -139,7 +142,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
     protected void mapList() {
         resetList();
         for(T unmappedObj : unmappedCollection) {
-            list.add(mapFunction.apply(unmappedObj));
+            addListItem(mapFunction.apply(unmappedObj));
         }
         this.lastMapHashcode = unmappedCollection.hashCode();
     }
