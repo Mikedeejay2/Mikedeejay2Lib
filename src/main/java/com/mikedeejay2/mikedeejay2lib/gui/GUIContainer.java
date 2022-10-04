@@ -234,7 +234,6 @@ public class GUIContainer {
      * @param player The player who is currently viewing the GUI
      */
     public void close(Player player) {
-        onClose(player);
         player.closeInventory();
     }
 

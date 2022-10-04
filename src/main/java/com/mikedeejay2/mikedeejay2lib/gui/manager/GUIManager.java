@@ -91,6 +91,7 @@ public class GUIManager {
             if(!playerGUI.isGuiOpened()) continue;
             if(playerGUI.getGUI() == null) continue;
             playerGUI.getGUI().close(player);
+            playerGUI.getGUI().onClose(player);
         }
     }
 }
