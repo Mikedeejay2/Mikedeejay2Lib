@@ -90,6 +90,7 @@ public class GUINavigatorModule implements GUIModule {
             return;
         }
         PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
+        if(!playerGUI.isGuiChange()) return;
         String curID = getNavigationID();
         NavigationHolder<GUIContainer> system = playerGUI.getNavigation(curID);
         if(system.hasBack() && system.peekBack() == gui) return;
