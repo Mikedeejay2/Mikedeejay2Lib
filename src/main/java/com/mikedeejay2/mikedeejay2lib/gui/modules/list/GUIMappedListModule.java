@@ -257,7 +257,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
     /**
      * Set the unmapped collection
      *
-     * @return The new unmapped collection
+     * @param unmappedCollection The new unmapped collection
      */
     public void setUnmappedCollection(Collection<T> unmappedCollection) {
         this.unmappedCollection = unmappedCollection;
