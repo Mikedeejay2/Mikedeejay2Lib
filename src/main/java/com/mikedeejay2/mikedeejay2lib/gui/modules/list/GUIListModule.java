@@ -18,7 +18,6 @@ import com.mikedeejay2.mikedeejay2lib.util.structure.tuple.Pair;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.Nullable;
 
@@ -160,6 +159,11 @@ public class GUIListModule implements GUIModule {
     protected @Nullable Comparator<? super GUIItem> sorter;
 
     /**
+     * The list of listeners for this list
+     */
+    protected final List<Listener> listeners;
+
+    /**
      * Construct a new GUI List module
      *
      * @param plugin    Reference to the <code>BukkitPlugin</code> of the plugin
@@ -176,6 +180,7 @@ public class GUIListModule implements GUIModule {
         this.list = new ArrayList<>();
         this.searchList = new ArrayList<>();
         this.layerName = layerName;
+        this.listeners = new ArrayList<>();
 
         curLoc = 1;
         endItems = new ArrayList<>();
@@ -430,6 +435,7 @@ public class GUIListModule implements GUIModule {
     public void addListItem(GUIItem item) {
         list.add(item);
         changed = true;
+        listeners.forEach(listener -> listener.onAddItem(item, list.size() - 1));
     }
 
     /**
@@ -444,6 +450,7 @@ public class GUIListModule implements GUIModule {
         int index = getListItemIndex(row, col, gui);
         list.add(index, item);
         changed = true;
+        listeners.forEach(listener -> listener.onAddItem(item, index));
     }
 
     /**
@@ -455,6 +462,7 @@ public class GUIListModule implements GUIModule {
     public void addListItem(int index, GUIItem item) {
         list.add(index, item);
         changed = true;
+        listeners.forEach(listener -> listener.onAddItem(item, index));
     }
 
     /**
@@ -469,8 +477,10 @@ public class GUIListModule implements GUIModule {
     public void changeGUIItem(GUIItem item, int row, int col, GUIContainer gui) {
         int viewOffset = getViewOffset();
         int index = gui.getSlotFromRowCol(row-2, col-1) + viewOffset;
-        list.set(index, item);
+        GUIItem prevItem = list.set(index, item);
+        if(prevItem != null) listeners.forEach(listener -> listener.onRemoveItem(prevItem, index));
         changed = true;
+        listeners.forEach(listener -> listener.onAddItem(item, index));
     }
 
     /**
@@ -479,8 +489,18 @@ public class GUIListModule implements GUIModule {
      * @param items The list of items to set this list to
      */
     public void setGUIItems(List<GUIItem> items) {
+        for(int i = 0; i < this.list.size(); ++i) {
+            for(Listener listener : listeners) {
+                listener.onRemoveItem(list.get(i), i);
+            }
+        }
         this.list = items;
         changed = true;
+        for(int i = 0; i < items.size(); ++i) {
+            for(Listener listener : listeners) {
+                listener.onAddItem(items.get(i), i);
+            }
+        }
     }
 
     /**
@@ -489,8 +509,9 @@ public class GUIListModule implements GUIModule {
      * @param index The index to the item that will be removed
      */
     public void removeGUIItem(int index) {
-        list.remove(index);
+        GUIItem removedItem = list.remove(index);
         changed = true;
+        listeners.forEach(listener -> listener.onRemoveItem(removedItem, index));
     }
 
     /**
@@ -499,8 +520,11 @@ public class GUIListModule implements GUIModule {
      * @param item The item to remove from this list
      */
     public void removeGUIItem(GUIItem item) {
+        if(!list.contains(item)) return;
+        int index = list.indexOf(item);
         list.remove(item);
         changed = true;
+        listeners.forEach(listener -> listener.onRemoveItem(item, index));
     }
 
     /**
@@ -603,6 +627,40 @@ public class GUIListModule implements GUIModule {
             if(!SearchUtil.searchMetaFuzzy(item.getMeta(), searchTerm)) continue;
             searchList.add(new MutablePair<>(item, i));
         }
+    }
+
+    /**
+     * Add a listener to this list module
+     *
+     * @param listener The listener to add
+     */
+    public void addListener(Listener listener) {
+        listeners.add(listener);
+    }
+
+    /**
+     * Remove a listener from this list module
+     *
+     * @param listener The listener to remove
+     */
+    public void removeListener(Listener listener) {
+        listeners.remove(listener);
+    }
+
+    /**
+     * Clear the list of listeners from this list module
+     */
+    public void resetListeners() {
+        listeners.clear();
+    }
+
+    /**
+     * Get the list of listeners for this list
+     *
+     * @return The list of listeners
+     */
+    public List<Listener> getListeners() {
+        return listeners;
     }
 
     /**
@@ -1255,5 +1313,28 @@ public class GUIListModule implements GUIModule {
          */
         SCROLL
         ;
+    }
+
+    /**
+     * A listener for a {@link GUIListModule}
+     *
+     * @author Mikedeejay2
+     */
+    public interface Listener {
+        /**
+         * Listen for items being added to the list
+         *
+         * @param item  The item being added
+         * @param index The index that the item is being added to
+         */
+        default void onAddItem(GUIItem item, int index) {}
+
+        /**
+         * Listen for items being removed from the list
+         *
+         * @param item  The item being removed
+         * @param index The index that the item is being removed from
+         */
+        default void onRemoveItem(GUIItem item, int index) {}
     }
 }

@@ -5,8 +5,10 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.entity.Player;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.Collection;
+import java.util.List;
 import java.util.function.Function;
 
 /**
@@ -24,6 +26,11 @@ public class GUIMappedListModule<T> extends GUIListModule {
      * The mapping function that takes items from The unmapped collection and maps them to {@link GUIItem GUIItems}.
      */
     protected Function<T, GUIItem> mapFunction;
+    /**
+     * The unmapping function. Only used when a {@link GUIItem} is added to the list and the item should also be mapped
+     * back to its unmapped state.
+     */
+    protected @Nullable Function<GUIItem, T> unmapFunction;
     /**
      * Hash code of {@link GUIMappedListModule#unmappedCollection} at the time of the previous mapping operation
      */
@@ -135,6 +142,88 @@ public class GUIMappedListModule<T> extends GUIListModule {
         super.onUpdateHead(player, gui);
     }
 
+    @Override
+    public void addListItem(GUIItem item) {
+        addToUnmapped(list.size(), item);
+        super.addListItem(item);
+    }
+
+    @Override
+    public void addListItem(int row, int col, GUIContainer gui, GUIItem item) {
+        int index = getListItemIndex(row, col, gui);
+        addToUnmapped(index, item);
+        super.addListItem(row, col, gui, item);
+    }
+
+    @Override
+    public void addListItem(int index, GUIItem item) {
+        addToUnmapped(index, item);
+        super.addListItem(index, item);
+    }
+
+    @Override
+    public void changeGUIItem(GUIItem item, int row, int col, GUIContainer gui) {
+        int index = getListItemIndex(row, col, gui);
+        removeFromUnmapped(index, list.get(index));
+        addToUnmapped(index, item);
+        super.changeGUIItem(item, row, col, gui);
+    }
+
+    @Override
+    public void setGUIItems(List<GUIItem> items) {
+        for(int i = 0; i < list.size(); ++i) {
+            removeFromUnmapped(i, list.get(i));
+        }
+        for(int i = 0; i < items.size(); ++i) {
+            addToUnmapped(i, items.get(i));
+        }
+        super.setGUIItems(items);
+    }
+
+    @Override
+    public void removeGUIItem(int index) {
+        removeFromUnmapped(index, getItem(index));
+        super.removeGUIItem(index);
+    }
+
+    @Override
+    public void removeGUIItem(GUIItem item) {
+        if(!list.contains(item)) return;
+        int index = list.indexOf(item);
+        removeFromUnmapped(index, item);
+        super.removeGUIItem(item);
+    }
+
+    @Override
+    public void removeListItem(int row, int col, GUIContainer gui) {
+        int index = getListItemIndex(row, col, gui);
+        GUIItem item = getItem(index);
+        removeFromUnmapped(index, item);
+        super.removeListItem(row, col, gui);
+    }
+
+    private void addToUnmapped(int index, GUIItem item) {
+        if(unmapFunction != null) {
+            T unmapped = unmapFunction.apply(item);
+            if(unmappedCollection instanceof List) {
+                ((List<T>) unmappedCollection).add(index, unmapped);
+            } else {
+                unmappedCollection.add(unmapped);
+            }
+        }
+    }
+
+    private void removeFromUnmapped(int index, GUIItem item) {
+        if(unmapFunction != null) {
+            T unmapped = unmapFunction.apply(item);
+            if(unmappedCollection instanceof List) {
+                ((List<T>) unmappedCollection).remove(index);
+            } else {
+                unmappedCollection.remove(unmapped);
+            }
+        }
+    }
+
     /**
      * Map the list of the super {@link GUIListModule} to The unmapped collection. This will reset the existing super list, if
      * changes have been made to the {@link GUIItem} list, they will not be reflected upon a mapping update.
@@ -142,7 +231,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
     protected void mapList() {
         resetList();
         for(T unmappedObj : unmappedCollection) {
-            addListItem(mapFunction.apply(unmappedObj));
+            super.addListItem(mapFunction.apply(unmappedObj));
         }
         this.lastMapHashcode = unmappedCollection.hashCode();
     }
@@ -154,5 +243,61 @@ public class GUIMappedListModule<T> extends GUIListModule {
      */
     public boolean hasChanged() {
         return lastMapHashcode != unmappedCollection.hashCode();
+    }
+
+    /**
+     * Get the unmapped collection
+     *
+     * @return The unmapped collection
+     */
+    public Collection<T> getUnmappedCollection() {
+        return unmappedCollection;
+    }
+
+    /**
+     * Set the unmapped collection
+     *
+     * @return The new unmapped collection
+     */
+    public void setUnmappedCollection(Collection<T> unmappedCollection) {
+        this.unmappedCollection = unmappedCollection;
+    }
+
+    /**
+     * Get the mapping function that takes items from The unmapped collection and maps them to {@link GUIItem GUIItems}
+     *
+     * @return The mapping function
+     */
+    public Function<T, GUIItem> getMapFunction() {
+        return mapFunction;
+    }
+
+    /**
+     * Set the mapping function that takes items from The unmapped collection and maps them to {@link GUIItem GUIItems}
+     *
+     * @param mapFunction The new mapping function
+     */
+    public void setMapFunction(Function<T, GUIItem> mapFunction) {
+        this.mapFunction = mapFunction;
+    }
+
+    /**
+     * Get the unmapping function. Only used when a {@link GUIItem} is added to the list and the item should also be mapped
+     * back to its unmapped state.
+     *
+     * @return The unmapping function
+     */
+    public @Nullable Function<GUIItem, T> getUnmapFunction() {
+        return unmapFunction;
+    }
+
+    /**
+     * Set the unmapping function. Only used when a {@link GUIItem} is added to the list and the item should also be mapped
+     * back to its unmapped state.
+     *
+     * @param unmapFunction The new unmapping function
+     */
+    public void setUnmapFunction(@Nullable Function<GUIItem, T> unmapFunction) {
+        this.unmapFunction = unmapFunction;
     }
 }
