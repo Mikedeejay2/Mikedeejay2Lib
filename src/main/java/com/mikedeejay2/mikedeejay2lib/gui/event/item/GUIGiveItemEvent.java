@@ -1,9 +1,10 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.item;
 
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.util.GUIAbstractClickEvent;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.function.Function;
@@ -13,7 +14,7 @@ import java.util.function.Function;
  *
  * @author Mikedeejay2
  */
-public class GUIGiveItemEvent implements GUIEvent {
+public class GUIGiveItemEvent extends GUIAbstractClickEvent {
     /**
      * The item that will be given to the player upon click
      */
@@ -23,8 +24,20 @@ public class GUIGiveItemEvent implements GUIEvent {
      * Construct a new <code>GUIGiveItemEvent</code>
      *
      * @param itemStack The item that will be given to the player upon click
+     * @param acceptedClicks The list of {@link ClickType ClickTypes} to accept
+     */
+    public GUIGiveItemEvent(ItemStack itemStack, ClickType... acceptedClicks) {
+        super(acceptedClicks);
+        this.itemStack = (player) -> itemStack;
+    }
+
+    /**
+     * Construct a new <code>GUIGiveItemEvent</code>
+     *
+     * @param itemStack The item that will be given to the player upon click
      */
     public GUIGiveItemEvent(ItemStack itemStack) {
+        super();
         this.itemStack = (player) -> itemStack;
     }
 
@@ -46,13 +59,8 @@ public class GUIGiveItemEvent implements GUIEvent {
         this.itemStack = function;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param info {@link GUIEventInfo} of the event
-     */
     @Override
-    public void execute(GUIEventInfo info) {
+    protected void executeClick(GUIEventInfo info) {
         Player player = info.getPlayer();
         player.getInventory().addItem(itemStack.apply(player));
     }

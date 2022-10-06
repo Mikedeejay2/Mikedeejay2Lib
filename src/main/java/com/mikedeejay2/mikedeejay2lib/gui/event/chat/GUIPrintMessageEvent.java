@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.event.chat;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.util.GUIAbstractClickEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
@@ -11,7 +12,7 @@ import org.bukkit.event.inventory.ClickType;
  *
  * @author Mikedeejay2
  */
-public class GUIPrintMessageEvent implements GUIEvent {
+public class GUIPrintMessageEvent extends GUIAbstractClickEvent {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -24,24 +25,31 @@ public class GUIPrintMessageEvent implements GUIEvent {
     /**
      * Construct a new <code>GUIPrintMessageEvent</code>
      *
-     * @param plugin  The {@link BukkitPlugin} instance
-     * @param message The message to be printed
+     * @param plugin         The {@link BukkitPlugin} instance
+     * @param message        The message to be printed
+     * @param acceptedClicks The list of {@link ClickType ClickTypes} to accept
      */
-    public GUIPrintMessageEvent(BukkitPlugin plugin, String message) {
+    public GUIPrintMessageEvent(BukkitPlugin plugin, String message, ClickType... acceptedClicks) {
+        super(acceptedClicks);
         this.plugin = plugin;
         this.message = message;
     }
 
     /**
-     * {@inheritDoc}
+     * Construct a new <code>GUIPrintMessageEvent</code>
      *
-     * @param info {@link GUIEventInfo} of the event
+     * @param plugin  The {@link BukkitPlugin} instance
+     * @param message The message to be printed
      */
+    public GUIPrintMessageEvent(BukkitPlugin plugin, String message) {
+        super();
+        this.plugin = plugin;
+        this.message = message;
+    }
+
     @Override
-    public void execute(GUIEventInfo info) {
+    protected void executeClick(GUIEventInfo info) {
         Player player = info.getPlayer();
-        ClickType clickType = info.getClick();
-        if(clickType != ClickType.LEFT) return;
         plugin.sendMessage(player, message);
     }
 

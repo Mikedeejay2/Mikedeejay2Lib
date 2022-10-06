@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.event.navigation;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.util.GUIAbstractClickEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 
@@ -11,7 +12,7 @@ import org.bukkit.event.inventory.ClickType;
  *
  * @author Mikedeejay2
  */
-public class GUICloseEvent implements GUIEvent {
+public class GUICloseEvent extends GUIAbstractClickEvent {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -21,21 +22,26 @@ public class GUICloseEvent implements GUIEvent {
      * Construct a new <code>GUICloseEvent</code>
      *
      * @param plugin The {@link BukkitPlugin} instance
+     * @param acceptedClicks The list of {@link ClickType ClickTypes} to accept
      */
-    public GUICloseEvent(BukkitPlugin plugin) {
+    public GUICloseEvent(BukkitPlugin plugin, ClickType... acceptedClicks) {
+        super(acceptedClicks);
         this.plugin = plugin;
     }
 
     /**
-     * {@inheritDoc}
+     * Construct a new <code>GUICloseEvent</code>
      *
-     * @param info {@link GUIEventInfo} of the event
+     * @param plugin The {@link BukkitPlugin} instance
      */
+    public GUICloseEvent(BukkitPlugin plugin) {
+        super();
+        this.plugin = plugin;
+    }
+
     @Override
-    public void execute(GUIEventInfo info) {
+    protected void executeClick(GUIEventInfo info) {
         Player player = info.getPlayer();
-        ClickType clickType = info.getClick();
-        if(clickType != ClickType.LEFT) return;
         info.getGUI().close(player);
     }
 }

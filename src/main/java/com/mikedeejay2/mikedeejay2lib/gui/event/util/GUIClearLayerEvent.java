@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Nullable;
  *
  * @author Mikedeejay2
  */
-public class GUIClearLayerEvent implements GUIEvent {
+public class GUIClearLayerEvent extends GUIAbstractClickEvent {
     /**
      * The layer name of the layer to clear. Null if <code>mode</code> is not {@link ClearLayerMode#LAYER_NAME}
      */
@@ -37,9 +37,46 @@ public class GUIClearLayerEvent implements GUIEvent {
     /**
      * Construct a new <code>GUIClearLayerEvent</code> based off of the layer's name
      *
+     * @param layerName      The layer name to clear
+     * @param acceptedClicks The list of {@link ClickType ClickTypes} to accept
+     */
+    public GUIClearLayerEvent(@NotNull String layerName, ClickType... acceptedClicks) {
+        super(acceptedClicks);
+        this.layerName = layerName;
+        this.mode = ClearLayerMode.LAYER_NAME;
+    }
+
+    /**
+     * Construct a new <code>GUIClearLayerEvent</code> based off of the layer's index
+     *
+     * @param index          The index of the layer to clear
+     * @param acceptedClicks The list of {@link ClickType ClickTypes} to accept
+     */
+    public GUIClearLayerEvent(int index, ClickType... acceptedClicks) {
+        super(acceptedClicks);
+        this.index = index;
+        this.mode = ClearLayerMode.INDEX;
+    }
+
+    /**
+     * Construct a new <code>GUIClearLayerEvent</code> based off of the layer's instance
+     *
+     * @param layer          The layer to clear
+     * @param acceptedClicks The list of {@link ClickType ClickTypes} to accept
+     */
+    public GUIClearLayerEvent(@NotNull GUILayer layer, ClickType... acceptedClicks) {
+        super(acceptedClicks);
+        this.layer = layer;
+        this.mode = ClearLayerMode.LAYER;
+    }
+
+    /**
+     * Construct a new <code>GUIClearLayerEvent</code> based off of the layer's name
+     *
      * @param layerName The layer name to clear
      */
     public GUIClearLayerEvent(@NotNull String layerName) {
+        super();
         this.layerName = layerName;
         this.mode = ClearLayerMode.LAYER_NAME;
     }
@@ -50,7 +87,8 @@ public class GUIClearLayerEvent implements GUIEvent {
      * @param index The index of the layer to clear
      */
     public GUIClearLayerEvent(int index) {
-        this.index =  index;
+        super();
+        this.index = index;
         this.mode = ClearLayerMode.INDEX;
     }
 
@@ -60,19 +98,13 @@ public class GUIClearLayerEvent implements GUIEvent {
      * @param layer The layer to clear
      */
     public GUIClearLayerEvent(@NotNull GUILayer layer) {
+        super();
         this.layer = layer;
         this.mode = ClearLayerMode.LAYER;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param info {@link GUIEventInfo} of the event
-     */
     @Override
-    public void execute(GUIEventInfo info) {
-        ClickType clickType = info.getClick();
-        if(clickType != ClickType.LEFT) return;
+    protected void executeClick(GUIEventInfo info) {
         GUIContainer gui = info.getGUI();
         GUILayer layer = null;
         switch(mode) {

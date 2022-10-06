@@ -2,7 +2,9 @@ package com.mikedeejay2.mikedeejay2lib.gui.event.item;
 
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.util.GUIAbstractClickEvent;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.InventoryView;
 
 /**
@@ -10,14 +12,25 @@ import org.bukkit.inventory.InventoryView;
  *
  * @author Mikedeejay2
  */
-public class GUIDeleteCursorEvent implements GUIEvent {
+public class GUIDeleteCursorEvent extends GUIAbstractClickEvent {
     /**
-     * {@inheritDoc}
+     * Construct a new <code>GUIDeleteCursorEvent</code>
      *
-     * @param info {@link GUIEventInfo} of the event
+     * @param acceptedClicks The list of {@link ClickType ClickTypes} to accept
      */
+    public GUIDeleteCursorEvent(ClickType... acceptedClicks) {
+        super(acceptedClicks);
+    }
+
+    /**
+     * Construct a new <code>GUIDeleteCursorEvent</code>
+     */
+    public GUIDeleteCursorEvent() {
+        super();
+    }
+
     @Override
-    public void execute(GUIEventInfo info) {
+    protected void executeClick(GUIEventInfo info) {
         Player player = info.getPlayer();
         InventoryView inventory = player.getOpenInventory();
         inventory.setCursor(null);

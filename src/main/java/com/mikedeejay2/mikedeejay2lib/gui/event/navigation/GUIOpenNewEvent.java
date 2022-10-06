@@ -3,7 +3,6 @@ package com.mikedeejay2.mikedeejay2lib.gui.event.navigation;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIConstructor;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.Nullable;
@@ -11,11 +10,11 @@ import org.jetbrains.annotations.Nullable;
 /**
  * Open a player's GUI to a NEW specified GUI.
  * <p>
- * Instead opening an already constructed GUI, this event creates a new GUI upon request.
+ * Instead of opening an already constructed GUI, this event creates a new GUI upon request.
  *
  * @author Mikedeejay2
  */
-public class GUIOpenNewEvent implements GUIEvent {
+public class GUIOpenNewEvent extends GUIOpenEvent {
     /**
      * The {@link BukkitPlugin} instance
      */
@@ -25,14 +24,19 @@ public class GUIOpenNewEvent implements GUIEvent {
      * The {@link GUIConstructor} used to construct a new {@link GUIContainer}
      */
     protected GUIConstructor constructor;
+
     /**
-     * The constructed {@link GUIContainer}, may be null if not previously constructed
+     * Construct a new <code>GUIOpenNewEvent</code>
+     *
+     * @param plugin         The {@link BukkitPlugin} instance
+     * @param constructor    The {@link GUIConstructor} used for constructing the new GUI
+     * @param acceptedClicks The list of {@link ClickType ClickTypes} to accept
      */
-    protected @Nullable GUIContainer gui;
-    /**
-     * The {@link GUIOpenEvent} created after construction of the GUI, may be null if not previously constructed
-     */
-    protected @Nullable GUIOpenEvent event;
+    public GUIOpenNewEvent(BukkitPlugin plugin, GUIConstructor constructor, ClickType... acceptedClicks) {
+        super(plugin, null, acceptedClicks);
+        this.plugin = plugin;
+        this.constructor = constructor;
+    }
 
     /**
      * Construct a new <code>GUIOpenNewEvent</code>
@@ -41,23 +45,15 @@ public class GUIOpenNewEvent implements GUIEvent {
      * @param constructor The {@link GUIConstructor} used for constructing the new GUI
      */
     public GUIOpenNewEvent(BukkitPlugin plugin, GUIConstructor constructor) {
+        super(plugin, null);
         this.plugin = plugin;
         this.constructor = constructor;
-        this.gui = null;
-        this.event = null;
     }
 
-    /**
-     * {@inheritDoc}
-     *
-     * @param info {@link GUIEventInfo} of the event
-     */
     @Override
-    public void execute(GUIEventInfo info) {
-        ClickType clickType = info.getClick();
-        if(clickType != ClickType.LEFT) return;
+    protected void executeClick(GUIEventInfo info) {
         construct();
-        this.event.execute(new GUIEventInfo(info.getEvent(), info.getGUI()));
+        super.executeClick(info);
     }
 
     /**
@@ -85,16 +81,15 @@ public class GUIOpenNewEvent implements GUIEvent {
      */
     public GUIContainer getGUI() {
         construct();
-        return gui;
+        return guiToOpen;
     }
 
     /**
      * Force the construction of the {@link GUIContainer}
      */
     public void construct() {
-        if(this.event == null) {
-            this.gui = constructor.get();
-            this.event = new GUIOpenEvent(plugin, this.gui);
+        if(this.guiToOpen == null) {
+            this.guiToOpen = constructor.get();
         }
     }
 }

@@ -3,16 +3,16 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules.navigation;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.sound.GUIPlaySoundEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
 
 /**
  * A module that allows for the scrolling of large GUIs.
@@ -109,7 +109,7 @@ public class GUIScrollerModule implements GUIModule {
      *
      * @author Mikedeejay2
      */
-    public static class GUIScrollEvent implements GUIEvent {
+    public static class GUIScrollEvent extends GUIPlaySoundEvent {
         /**
          * The row amount to scroll on click
          */
@@ -127,6 +127,7 @@ public class GUIScrollerModule implements GUIModule {
          * @param colAmt The column amount to scroll on click
          */
         public GUIScrollEvent(int rowAmt, int colAmt) {
+            super(Sound.UI_BUTTON_CLICK, 0.3f, 1f);
             this.rowAmt = rowAmt;
             this.colAmt = colAmt;
         }
@@ -137,9 +138,7 @@ public class GUIScrollerModule implements GUIModule {
          * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(GUIEventInfo info) {
-            ClickType clickType = info.getClick();
-            if(clickType != ClickType.LEFT) return;
+        public void executeClick(GUIEventInfo info) {
             GUIContainer gui = info.getGUI();
             int rowOffset = gui.getRowOffset();
             int colOffset = gui.getColOffset();
@@ -151,6 +150,7 @@ public class GUIScrollerModule implements GUIModule {
             if(gui.getCols() >= totalCol + colAmt && colOffset + colAmt >= 0) {
                 gui.addColOffset(colAmt);
             }
+            super.executeClick(info);
         }
     }
 }

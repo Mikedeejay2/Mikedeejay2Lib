@@ -2,12 +2,13 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules.list;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
+import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.entity.Player;
+import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.Nullable;
 
-import java.util.Collection;
 import java.util.List;
 import java.util.function.Function;
 
@@ -19,11 +20,11 @@ import java.util.function.Function;
  */
 public class GUIMappedListModule<T> extends GUIListModule {
     /**
-     * The unmapped collection
+     * The unmapped list
      */
-    protected Collection<T> unmappedCollection;
+    protected List<T> unmappedList;
     /**
-     * The mapping function that takes items from The unmapped collection and maps them to {@link GUIItem GUIItems}.
+     * The mapping function that takes items from The unmapped list and maps them to {@link GUIItem GUIItems}.
      */
     protected Function<T, GUIItem> mapFunction;
     /**
@@ -32,7 +33,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
      */
     protected @Nullable Function<GUIItem, T> unmapFunction;
     /**
-     * Hash code of {@link GUIMappedListModule#unmappedCollection} at the time of the previous mapping operation
+     * Hash code of {@link GUIMappedListModule#unmappedList} at the time of the previous mapping operation
      */
     protected int lastMapHashcode;
 
@@ -41,8 +42,8 @@ public class GUIMappedListModule<T> extends GUIListModule {
      *
      * @param plugin             Reference to the <code>BukkitPlugin</code> of the plugin
      * @param viewMode           The {@link ListViewMode} to used
-     * @param unmappedCollection The unmapped collection
-     * @param mapFunction        The mapping function that takes items from The unmapped collection and maps them to
+     * @param unmappedList The unmapped list
+     * @param mapFunction        The mapping function that takes items from The unmapped list and maps them to
      *                           {@link GUIItem GUIItems}.
      * @param topRow             The top row of the list's bounding box
      * @param bottomRow          The bottom row of the list's bounding box
@@ -54,7 +55,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
     public GUIMappedListModule(
         BukkitPlugin plugin,
         ListViewMode viewMode,
-        Collection<T> unmappedCollection,
+        List<T> unmappedList,
         Function<T, GUIItem> mapFunction,
         int topRow,
         int bottomRow,
@@ -62,7 +63,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
         int rightCol,
         String layerName) {
         super(plugin, viewMode, topRow, bottomRow, leftCol, rightCol, layerName);
-        setMapperFields(unmappedCollection, mapFunction);
+        setMapperFields(unmappedList, mapFunction);
     }
 
     /**
@@ -70,8 +71,8 @@ public class GUIMappedListModule<T> extends GUIListModule {
      *
      * @param plugin             Reference to the <code>BukkitPlugin</code> of the plugin
      * @param viewMode           The {@link ListViewMode} to used
-     * @param unmappedCollection The unmapped collection
-     * @param mapFunction        The mapping function that takes items from The unmapped collection and maps them to
+     * @param unmappedList The unmapped list
+     * @param mapFunction        The mapping function that takes items from The unmapped list and maps them to
      *                           {@link GUIItem GUIItems}.
      * @param topRow             The top row of the list's bounding box
      * @param bottomRow          The bottom row of the list's bounding box
@@ -81,22 +82,22 @@ public class GUIMappedListModule<T> extends GUIListModule {
     public GUIMappedListModule(
         BukkitPlugin plugin,
         ListViewMode viewMode,
-        Collection<T> unmappedCollection,
+        List<T> unmappedList,
         Function<T, GUIItem> mapFunction,
         int topRow,
         int bottomRow,
         int leftCol,
         int rightCol) {
         super(plugin, viewMode, topRow, bottomRow, leftCol, rightCol);
-        setMapperFields(unmappedCollection, mapFunction);
+        setMapperFields(unmappedList, mapFunction);
     }
 
     /**
      * Construct a new <code>GUIMappedListModule</code>
      *
      * @param plugin             Reference to the <code>BukkitPlugin</code> of the plugin
-     * @param unmappedCollection The unmapped collection
-     * @param mapFunction        The mapping function that takes items from The unmapped collection and maps them to
+     * @param unmappedList The unmapped list
+     * @param mapFunction        The mapping function that takes items from The unmapped list and maps them to
      *                           {@link GUIItem GUIItems}.
      * @param topRow             The top row of the list's bounding box
      * @param bottomRow          The bottom row of the list's bounding box
@@ -105,27 +106,27 @@ public class GUIMappedListModule<T> extends GUIListModule {
      */
     public GUIMappedListModule(
         BukkitPlugin plugin,
-        Collection<T> unmappedCollection,
+        List<T> unmappedList,
         Function<T, GUIItem> mapFunction,
         int topRow,
         int bottomRow,
         int leftCol,
         int rightCol) {
         super(plugin, topRow, bottomRow, leftCol, rightCol);
-        setMapperFields(unmappedCollection, mapFunction);
+        setMapperFields(unmappedList, mapFunction);
     }
 
     /**
      * Internal constructor called method for setting the mapping fields
      *
-     * @param unmappedCollection The unmapped collection
-     * @param mapFunction        The mapping function that takes items from The unmapped collection and maps them to
+     * @param unmappedCollection The unmapped list
+     * @param mapFunction        The mapping function that takes items from The unmapped list and maps them to
      *                           {@link GUIItem GUIItems}.
      */
-    private void setMapperFields(Collection<T> unmappedCollection, Function<T, GUIItem> mapFunction) {
-        Validate.notNull(unmappedCollection, "Unmapped collection cannot be null");
+    private void setMapperFields(List<T> unmappedCollection, Function<T, GUIItem> mapFunction) {
+        Validate.notNull(unmappedCollection, "unmapped list cannot be null");
         Validate.notNull(mapFunction, "Map Function cannot be null");
-        this.unmappedCollection = unmappedCollection;
+        this.unmappedList = unmappedCollection;
         this.mapFunction = mapFunction;
         this.lastMapHashcode = unmappedCollection.hashCode();
     }
@@ -140,6 +141,19 @@ public class GUIMappedListModule<T> extends GUIListModule {
     public void onUpdateHead(Player player, GUIContainer gui) {
         if(hasChanged()) mapList();
         super.onUpdateHead(player, gui);
+    }
+
+    @Override
+    public void onClickedTail(InventoryClickEvent event, GUIContainer gui) {
+        if(event.getClickedInventory() != event.getInventory()) return;
+        GUILayer layer = gui.getLayer(layerName);
+        int slot = event.getSlot();
+        int row = layer.getRowFromSlot(slot);
+        int col = layer.getColFromSlot(slot);
+        GUIItem item = getItem(row, col, gui);
+        if(item == null) return;
+        int index = getListItemIndex(row, col, gui);
+        setFromUnmapped(index, item);
     }
 
     @Override
@@ -164,8 +178,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
     @Override
     public void changeGUIItem(GUIItem item, int row, int col, GUIContainer gui) {
         int index = getListItemIndex(row, col, gui);
-        removeFromUnmapped(index, list.get(index));
-        addToUnmapped(index, item);
+        setFromUnmapped(index, item);
         super.changeGUIItem(item, row, col, gui);
     }
 
@@ -203,68 +216,61 @@ public class GUIMappedListModule<T> extends GUIListModule {
     }
 
     private void addToUnmapped(int index, GUIItem item) {
-        if(unmapFunction != null) {
-            T unmapped = unmapFunction.apply(item);
-            if(unmappedCollection instanceof List) {
-                ((List<T>) unmappedCollection).add(index, unmapped);
-            } else {
-                unmappedCollection.add(unmapped);
-            }
-        }
+        if(unmapFunction == null) return;
+        unmappedList.add(index, unmapFunction.apply(item));
     }
 
     private void removeFromUnmapped(int index, GUIItem item) {
-        if(unmapFunction != null) {
-            T unmapped = unmapFunction.apply(item);
-            if(unmappedCollection instanceof List) {
-                ((List<T>) unmappedCollection).remove(index);
-            } else {
-                unmappedCollection.remove(unmapped);
-            }
-        }
+        if(unmapFunction == null) return;
+        unmappedList.remove(index);
+    }
+
+    private void setFromUnmapped(int index, GUIItem item) {
+        if(unmapFunction == null) return;
+        unmappedList.set(index, unmapFunction.apply(item));
     }
 
     /**
-     * Map the list of the super {@link GUIListModule} to The unmapped collection. This will reset the existing super list, if
+     * Map the list of the super {@link GUIListModule} to The unmapped list. This will reset the existing super list, if
      * changes have been made to the {@link GUIItem} list, they will not be reflected upon a mapping update.
      */
     protected void mapList() {
         resetList();
-        for(T unmappedObj : unmappedCollection) {
+        for(T unmappedObj : unmappedList) {
             super.addListItem(mapFunction.apply(unmappedObj));
         }
-        this.lastMapHashcode = unmappedCollection.hashCode();
+        this.lastMapHashcode = unmappedList.hashCode();
     }
 
     /**
-     * Whether The unmapped collection has updated since last mapping update to the list.
+     * Whether The unmapped list has updated since last mapping update to the list.
      *
-     * @return Whether The unmapped collection has changed since last update
+     * @return Whether The unmapped list has changed since last update
      */
     public boolean hasChanged() {
-        return lastMapHashcode != unmappedCollection.hashCode();
+        return lastMapHashcode != unmappedList.hashCode();
     }
 
     /**
-     * Get the unmapped collection
+     * Get the unmapped list
      *
-     * @return The unmapped collection
+     * @return The unmapped list
      */
-    public Collection<T> getUnmappedCollection() {
-        return unmappedCollection;
+    public List<T> getUnmappedList() {
+        return unmappedList;
     }
 
     /**
-     * Set the unmapped collection
+     * Set the unmapped list
      *
-     * @param unmappedCollection The new unmapped collection
+     * @param unmappedList The new unmapped list
      */
-    public void setUnmappedCollection(Collection<T> unmappedCollection) {
-        this.unmappedCollection = unmappedCollection;
+    public void setUnmappedList(List<T> unmappedList) {
+        this.unmappedList = unmappedList;
     }
 
     /**
-     * Get the mapping function that takes items from The unmapped collection and maps them to {@link GUIItem GUIItems}
+     * Get the mapping function that takes items from The unmapped list and maps them to {@link GUIItem GUIItems}
      *
      * @return The mapping function
      */
@@ -273,7 +279,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
     }
 
     /**
-     * Set the mapping function that takes items from The unmapped collection and maps them to {@link GUIItem GUIItems}
+     * Set the mapping function that takes items from The unmapped list and maps them to {@link GUIItem GUIItems}
      *
      * @param mapFunction The new mapping function
      */

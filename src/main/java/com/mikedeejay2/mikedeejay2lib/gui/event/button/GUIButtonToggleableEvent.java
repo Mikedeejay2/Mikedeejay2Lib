@@ -1,10 +1,11 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.button;
 
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
-import com.mikedeejay2.mikedeejay2lib.gui.event.util.GUIAbstractClickEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.sound.GUIPlaySoundEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import org.apache.commons.lang3.Validate;
+import org.bukkit.event.inventory.ClickType;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 
@@ -15,7 +16,7 @@ import java.util.function.Consumer;
  *
  * @author Mikedeejay2
  */
-public class GUIButtonToggleableEvent extends GUIAbstractClickEvent {
+public class GUIButtonToggleableEvent extends GUIPlaySoundEvent {
     /**
      * The consumer that is run when the button is turned on
      */
@@ -47,8 +48,37 @@ public class GUIButtonToggleableEvent extends GUIAbstractClickEvent {
      * @param onConsumer     The consumer that is run when the button is turned on
      * @param offConsumer    The consumer that is run when the button is turned off
      * @param initialState   The initial state (on/off) of the button
+     * @param acceptedClicks The list of {@link ClickType ClickTypes} to accept
+     */
+    public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer, boolean initialState, ClickType... acceptedClicks) {
+        super(null, null, 1, 1, acceptedClicks);
+        Validate.notNull(onConsumer, "Button consumer can not be null");
+        Validate.notNull(offConsumer, "Button consumer can not be null");
+        this.onConsumer = onConsumer;
+        this.offConsumer = offConsumer;
+        this.state = initialState;
+    }
+
+    /**
+     * Construct a new <code>GUIToggleButtonEvent</code>
+     *
+     * @param onConsumer     The consumer that is run when the button is turned on
+     * @param offConsumer    The consumer that is run when the button is turned off
+     * @param acceptedClicks The list of {@link ClickType ClickTypes} to accept
+     */
+    public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer, ClickType... acceptedClicks) {
+        this(onConsumer, offConsumer, false, acceptedClicks);
+    }
+
+    /**
+     * Construct a new <code>GUIToggleButtonEvent</code>
+     *
+     * @param onConsumer     The consumer that is run when the button is turned on
+     * @param offConsumer    The consumer that is run when the button is turned off
+     * @param initialState   The initial state (on/off) of the button
      */
     public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer, boolean initialState) {
+        super(null, null, 1, 1);
         Validate.notNull(onConsumer, "Button consumer can not be null");
         Validate.notNull(offConsumer, "Button consumer can not be null");
         this.onConsumer = onConsumer;
@@ -79,6 +109,7 @@ public class GUIButtonToggleableEvent extends GUIAbstractClickEvent {
         } else {
             offConsumer.accept(info);
         }
+        super.executeClick(info);
     }
 
     /**

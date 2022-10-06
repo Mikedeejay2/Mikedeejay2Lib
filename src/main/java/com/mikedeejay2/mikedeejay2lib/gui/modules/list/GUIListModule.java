@@ -5,6 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.sound.GUIPlaySoundEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
@@ -16,6 +17,7 @@ import com.mikedeejay2.mikedeejay2lib.util.search.SearchUtil;
 import com.mikedeejay2.mikedeejay2lib.util.structure.tuple.MutablePair;
 import com.mikedeejay2.mikedeejay2lib.util.structure.tuple.Pair;
 import org.bukkit.Material;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.inventory.ItemStack;
@@ -556,7 +558,7 @@ public class GUIListModule implements GUIModule {
      */
     public GUIItem getItem(int row, int col, GUIContainer gui) {
         int index = getListItemIndex(row, col, gui);
-        if(index >= list.size()) return null;
+        if(index >= list.size() || index < 0) return null;
         return list.get(index);
     }
 
@@ -1249,15 +1251,18 @@ public class GUIListModule implements GUIModule {
      *
      * @author Mikedeejay2
      */
-    public static class GUISwitchListLocEvent implements GUIEvent {
+    public static class GUISwitchListLocEvent extends GUIPlaySoundEvent {
+        public GUISwitchListLocEvent() {
+            super(Sound.UI_BUTTON_CLICK, 0.3f, 1f, ClickType.LEFT);
+        }
+
         /**
          * Execute the modification of a list location switch (Moving what is being viewed on the list)
          *
          * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(GUIEventInfo info) {
-            ClickType clickType = info.getClick();
+        public void executeClick(GUIEventInfo info) {
             int slot = info.getSlot();
             GUIContainer gui = info.getGUI();
             GUIListModule module = gui.getModule(GUIListModule.class);
@@ -1266,7 +1271,6 @@ public class GUIListModule implements GUIModule {
             int row = listLayer.getRowFromSlot(slot);
             int col = listLayer.getColFromSlot(slot);
             if(!gui.getTopLayer(row, col).getName().equals(listLayerName)) return;
-            if(clickType != ClickType.LEFT) return;
 
             List<Pair<Integer, Integer>> forwards = module.getForwards();
             List<Pair<Integer, Integer>> backs = module.getBacks();
@@ -1295,6 +1299,7 @@ public class GUIListModule implements GUIModule {
             if(relative != 0) {
                 module.setListLoc(module.getCurLoc() + relative);
             }
+            super.executeClick(info);
         }
     }
 

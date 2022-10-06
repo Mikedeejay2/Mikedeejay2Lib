@@ -3,8 +3,8 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules.navigation;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.sound.GUIPlaySoundEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
@@ -12,8 +12,8 @@ import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import com.mikedeejay2.mikedeejay2lib.util.structure.NavigationHolder;
+import org.bukkit.Sound;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.ClickType;
 
 /**
  * A module that adds a web browser style navigator to the GUI that
@@ -217,7 +217,7 @@ public class GUINavigatorModule implements GUIModule {
      *
      * @author Mikedeejay2
      */
-    public static class GUINavBackEvent implements GUIEvent {
+    public static class GUINavBackEvent extends GUIPlaySoundEvent {
         /**
          * The {@link BukkitPlugin} instance
          */
@@ -229,6 +229,7 @@ public class GUINavigatorModule implements GUIModule {
          * @param plugin The {@link BukkitPlugin} instance
          */
         public GUINavBackEvent(BukkitPlugin plugin) {
+            super(Sound.UI_BUTTON_CLICK, 0.3f, 1f);
             this.plugin = plugin;
         }
 
@@ -238,10 +239,8 @@ public class GUINavigatorModule implements GUIModule {
          * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(GUIEventInfo info) {
+        public void executeClick(GUIEventInfo info) {
             Player player = info.getPlayer();
-            ClickType clickType = info.getClick();
-            if(clickType != ClickType.LEFT) return;
             GUIContainer gui = info.getGUI();
             GUINavigatorModule module = gui.getModule(GUINavigatorModule.class);
             PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
@@ -250,6 +249,7 @@ public class GUINavigatorModule implements GUIModule {
             system.pushForward(gui);
             module.navigated = true;
             backGUI.open(player);
+            super.executeClick(info);
         }
     }
 
@@ -258,7 +258,7 @@ public class GUINavigatorModule implements GUIModule {
      *
      * @author Mikedeejay2
      */
-    public static class GUINavForwardEvent implements GUIEvent {
+    public static class GUINavForwardEvent extends GUIPlaySoundEvent {
         /**
          * The {@link BukkitPlugin} instance
          */
@@ -270,6 +270,7 @@ public class GUINavigatorModule implements GUIModule {
          * @param plugin The {@link BukkitPlugin} instance
          */
         public GUINavForwardEvent(BukkitPlugin plugin) {
+            super(Sound.UI_BUTTON_CLICK, 0.3f, 1f);
             this.plugin = plugin;
         }
 
@@ -279,10 +280,8 @@ public class GUINavigatorModule implements GUIModule {
          * @param info {@link GUIEventInfo} of the event
          */
         @Override
-        public void execute(GUIEventInfo info) {
+        public void executeClick(GUIEventInfo info) {
             Player player = info.getPlayer();
-            ClickType clickType = info.getClick();
-            if(clickType != ClickType.LEFT) return;
             GUIContainer gui = info.getGUI();
             GUINavigatorModule module = gui.getModule(GUINavigatorModule.class);
             PlayerGUI playerGUI = plugin.getGUIManager().getPlayer(player);
@@ -291,6 +290,7 @@ public class GUINavigatorModule implements GUIModule {
             system.pushBack(gui);
             module.navigated = true;
             forwardGUI.open(player);
+            super.executeClick(info);
         }
     }
 }
