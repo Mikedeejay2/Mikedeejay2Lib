@@ -640,7 +640,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         GUIItem       guiItem    = list.getItem(row, col, gui);
         if(interactType == GUIInteractType.SINGLE_ITEM && list.containsItem(curItem)) return;
         if(interactType == GUIInteractType.SINGLE_MATERIAL && list.containsMaterial(curItem.getType())) return;
-        if(guiItem == null) {
+        final boolean nullGuiItem = guiItem == null;
+        if(nullGuiItem) {
             guiItem = new GUIItem((ItemStack) null);
             guiItem.setMovable(true);
         }
@@ -662,6 +663,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
                 }
             }
             guiItem.set(curItem);
+        }
+        if(nullGuiItem) {
             list.addListItem(guiItem);
         }
     }
