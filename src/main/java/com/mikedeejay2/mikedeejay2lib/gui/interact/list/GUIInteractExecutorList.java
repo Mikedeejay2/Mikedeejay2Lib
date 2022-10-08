@@ -643,7 +643,6 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         if(guiItem == null) {
             guiItem = new GUIItem((ItemStack) null);
             guiItem.setMovable(true);
-            list.addListItem(guiItem);
         }
         ItemStack item = guiItem.get(player);
         if(consume) playerInv.setItem(hotbarSlot, item);
@@ -663,6 +662,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
                 }
             }
             guiItem.set(curItem);
+            list.addListItem(guiItem);
         }
     }
 
