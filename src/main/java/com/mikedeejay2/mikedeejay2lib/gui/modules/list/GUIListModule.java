@@ -1271,6 +1271,7 @@ public class GUIListModule implements GUIModule {
             int row = listLayer.getRowFromSlot(slot);
             int col = listLayer.getColFromSlot(slot);
             if(!gui.getTopLayer(row, col).getName().equals(listLayerName)) return;
+            super.executeClick(info);
 
             List<Pair<Integer, Integer>> forwards = module.getForwards();
             List<Pair<Integer, Integer>> backs = module.getBacks();
@@ -1299,7 +1300,6 @@ public class GUIListModule implements GUIModule {
             if(relative != 0) {
                 module.setListLoc(module.getCurLoc() + relative);
             }
-            super.executeClick(info);
         }
     }
 
