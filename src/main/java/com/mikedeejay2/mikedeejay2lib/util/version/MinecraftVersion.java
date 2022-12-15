@@ -68,7 +68,7 @@ public final class MinecraftVersion {
      */
     private static int[] calcLongVersion() {
         String[] splitStr = versionString.split("\\.");
-        int[] arr = new int[splitStr.length];
+        int[] arr = new int[3];
         for(int i = 0; i < splitStr.length; ++i) {
             arr[i] = Integer.parseInt(splitStr[i]);
         }
