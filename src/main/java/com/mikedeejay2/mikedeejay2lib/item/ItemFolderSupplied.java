@@ -1,4 +1,4 @@
-package com.mikedeejay2.mikedeejay2lib.gui.modules.explorer;
+package com.mikedeejay2.mikedeejay2lib.item;
 
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import org.bukkit.inventory.ItemStack;
@@ -30,9 +30,9 @@ public class ItemFolderSupplied implements ItemFolder {
     protected Supplier<List<ItemFolder>> folderGenerator;
 
     /**
-     * The supplier used to generate the list of {@link GUIItem GUIItems} inside of this folder
+     * The supplier used to generate the list of {@link ItemStack ItemStacks} inside of this folder
      */
-    protected Supplier<List<GUIItem>> itemGenerator;
+    protected Supplier<List<ItemStack>> itemGenerator;
 
     /**
      * Construct a new <code>ItemFolderSupplied</code>
@@ -41,9 +41,9 @@ public class ItemFolderSupplied implements ItemFolder {
      * @param folderItem      The display item of the folder
      * @param folderGenerator The supplier used to generate the list of {@link ItemFolder ItemFolders} inside of this
      *                        folder
-     * @param itemGenerator   The supplier used to generate the list of {@link GUIItem GUIItems} inside of this folder
+     * @param itemGenerator   The supplier used to generate the list of {@link ItemStack ItemStacks} inside of this folder
      */
-    public ItemFolderSupplied(String name, ItemStack folderItem, Supplier<List<ItemFolder>> folderGenerator, Supplier<List<GUIItem>> itemGenerator) {
+    public ItemFolderSupplied(String name, ItemStack folderItem, Supplier<List<ItemFolder>> folderGenerator, Supplier<List<ItemStack>> itemGenerator) {
         this.name = name;
         this.folderItem = folderItem;
         this.folderGenerator = folderGenerator;
@@ -96,7 +96,7 @@ public class ItemFolderSupplied implements ItemFolder {
      * @return The list of {@link ItemFolder}s
      */
     @Override
-    public List<GUIItem> getItems() {
+    public List<ItemStack> getItems() {
         return itemGenerator.get();
     }
 }

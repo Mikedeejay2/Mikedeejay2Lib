@@ -8,6 +8,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.list.GUIListModule;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
+import com.mikedeejay2.mikedeejay2lib.item.ItemFolder;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import com.mikedeejay2.mikedeejay2lib.util.search.SearchUtil;
@@ -30,7 +31,12 @@ public class GUIItemExplorerModule extends GUIListModule {
     /**
      * The folder currently being viewed
      */
-    protected ItemFolder folder;
+    private ItemFolder folder;
+
+    /**
+     * The contents of the current folder as {@link GUIItem GUIItems}
+     */
+    private final List<GUIItem> folderItems;
 
     /**
      * The item view history
@@ -75,7 +81,8 @@ public class GUIItemExplorerModule extends GUIListModule {
         this.addBack(1, 8);
         this.addForward(1, 9);
 
-        this.folder = folder;
+        this.folderItems = new ArrayList<>();
+        this.setFolder(folder);
 
         this.backItemValid = new GUIItem(
             ItemBuilder.of(Base64Head.ARROW_LEFT_WHITE.get())
@@ -202,14 +209,13 @@ public class GUIItemExplorerModule extends GUIListModule {
      */
     private void fillList(Player player, GUIContainer gui) {
         this.resetList();
-        List<ItemFolder> folders = folder.getFolders();
-        List<GUIItem> guiItems = folder.getItems();
+        List<? extends ItemFolder> folders = folder.getFolders();
 
         for(ItemFolder folder : folders) {
             GUIItem item = genFolderItem(folder);
             this.addListItem(item);
         }
-        for(GUIItem item : guiItems) {
+        for(GUIItem item : folderItems) {
             this.addListItem(item);
         }
     }
@@ -258,7 +264,7 @@ public class GUIItemExplorerModule extends GUIListModule {
      * @param depth The current depth of the search from the starting folder
      */
     private void recurSearchFolders(ItemFolder folder, List<GUIItem> list, int depth) {
-        List<ItemFolder> folders = folder.getFolders();
+        List<? extends ItemFolder> folders = folder.getFolders();
         for(ItemFolder curFolder : folders) {
             if(!curFolder.getName().toLowerCase().contains(searchTerm.toLowerCase())) continue;
             list.add(genFolderItem(curFolder));
@@ -279,7 +285,7 @@ public class GUIItemExplorerModule extends GUIListModule {
      * @param depth The current depth of the search from the starting folder
      */
     private void recurSearchItems(ItemFolder folder, List<GUIItem> list, int depth) {
-        for(GUIItem item : folder.getItems()) {
+        for(GUIItem item : folderItems) {
             if(!SearchUtil.searchMetaFuzzy(item.getMeta(), searchTerm)) continue;
             list.add(item);
         }
@@ -306,6 +312,10 @@ public class GUIItemExplorerModule extends GUIListModule {
      */
     public void setFolder(ItemFolder folder) {
         this.folder = folder;
+        this.folderItems.clear();
+        for(ItemStack item : folder.getItems()) {
+            this.folderItems.add(new GUIItem(item));
+        }
     }
 
     /**

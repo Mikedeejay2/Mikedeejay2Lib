@@ -1,12 +1,11 @@
-package com.mikedeejay2.mikedeejay2lib.gui.modules.explorer;
+package com.mikedeejay2.mikedeejay2lib.item;
 
-import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
 
 /**
- * A folder that holds items for a {@link GUIItemExplorerModule}
+ * A folder that holds items.
  *
  * @author Mikedeejay2
  */
@@ -33,15 +32,15 @@ public interface ItemFolder {
      *
      * @return The list of {@link ItemFolder}s
      */
-    List<ItemFolder> getFolders();
+    List<? extends ItemFolder> getFolders();
 
     /**
-     * Get the {@link GUIItem}s that this folder contains.
+     * Get the {@link ItemStack ItemStacks} that this folder contains.
      * <p>
      * <strong>This list should be generated only when the method is invoked.</strong> Early generation of this list
      * could lead to a cascading item generation and subsequently increased memory uses and generation time.
      *
-     * @return The list of {@link GUIItem}s
+     * @return The list of {@link ItemStack ItemStacks}
      */
-    List<GUIItem> getItems();
+    List<ItemStack> getItems();
 }

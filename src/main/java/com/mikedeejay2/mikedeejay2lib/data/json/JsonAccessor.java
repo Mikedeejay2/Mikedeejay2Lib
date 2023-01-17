@@ -952,7 +952,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public void setBooleanList(String name, List<Boolean> data) {
-        JsonArray array = getArray(name);
+        JsonArray array = new JsonArray();
         data.forEach(array::add);
         json.add(name, array);
     }
@@ -965,7 +965,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public void setIntList(String name, List<Integer> data) {
-        JsonArray array = getArray(name);
+        JsonArray array = new JsonArray();
         data.forEach(array::add);
         json.add(name, array);
     }
@@ -978,7 +978,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public void setFloatList(String name, List<Float> data) {
-        JsonArray array = getArray(name);
+        JsonArray array = new JsonArray();
         data.forEach(array::add);
         json.add(name, array);
     }
@@ -991,7 +991,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public void setDoubleList(String name, List<Double> data) {
-        JsonArray array = getArray(name);
+        JsonArray array = new JsonArray();
         data.forEach(array::add);
         json.add(name, array);
     }
@@ -1004,7 +1004,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public void setLongList(String name, List<Long> data) {
-        JsonArray array = getArray(name);
+        JsonArray array = new JsonArray();
         data.forEach(array::add);
         json.add(name, array);
     }
@@ -1017,7 +1017,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public void setStringList(String name, List<String> data) {
-        JsonArray array = getArray(name);
+        JsonArray array = new JsonArray();
         data.forEach(array::add);
         json.add(name, array);
     }
@@ -1151,7 +1151,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public void setMaterialList(String name, List<Material> data) {
-        JsonArray array = getArray(name);
+        JsonArray array = new JsonArray();
         data.forEach(material -> array.add(material.toString()));
         json.add(name, array);
     }
