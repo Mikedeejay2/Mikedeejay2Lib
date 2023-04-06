@@ -1,0 +1,3 @@
+files:
+  - source: /src/main/resources/lang/mikedeejay2lib/en_us.json
+    translation: /src/main/resources/lang/mikedeejay2lib/%locale_with_underscore%.json
