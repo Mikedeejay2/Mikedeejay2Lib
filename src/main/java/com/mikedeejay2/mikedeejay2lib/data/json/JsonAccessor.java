@@ -586,6 +586,20 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      * @return The requested list
      */
     @Override
+    public List<ItemMeta> getItemMetaList(String name) {
+        List<ItemMeta> list = new ArrayList<>();
+        JsonArray array = getArray(name);
+        array.forEach(element -> list.add(new JsonAccessor(dataFile, element.getAsJsonObject()).getItemMeta(null)));
+        return list;
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param name The key name
+     * @return The requested list
+     */
+    @Override
     public List<OfflinePlayer> getPlayerList(String name) {
         List<OfflinePlayer> list = new ArrayList<>();
         JsonArray array = getArray(name);
@@ -841,6 +855,17 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      * @param data The data to set to the key
      */
     @Override
+    public void setItemMeta(String name, ItemMeta data) {
+        setSerializedInternal(getObject(name), data);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param name The key name
+     * @param data The data to set to the key
+     */
+    @Override
     public void setPlayer(String name, OfflinePlayer data) {
         setSerializedInternal(getObject(name), data);
     }
@@ -1052,6 +1077,17 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public void setVectorList(String name, List<Vector> data) {
+        setSerializedListInternal(name, data);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param name The key name
+     * @param data The <code>List</code> of data to set to the key
+     */
+    @Override
+    public void setItemMetaList(String name, List<ItemMeta> data) {
         setSerializedListInternal(name, data);
     }
 

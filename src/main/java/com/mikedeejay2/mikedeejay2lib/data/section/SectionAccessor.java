@@ -355,6 +355,14 @@ public abstract class SectionAccessor<D extends DataFile, T> {
     public abstract List<Vector> getVectorList(String name);
 
     /**
+     * Get a <code>List</code> of {@link ItemMeta} values
+     *
+     * @param name The key name
+     * @return The requested list
+     */
+    public abstract List<ItemMeta> getItemMetaList(String name);
+
+    /**
      * Get a <code>List</code> of {@link OfflinePlayer} values
      *
      * @param name The key name
@@ -517,6 +525,14 @@ public abstract class SectionAccessor<D extends DataFile, T> {
     public abstract void setVector(String name, Vector data);
 
     /**
+     * Set an {@link ItemMeta} value
+     *
+     * @param name The key name
+     * @param data The data to set to the key
+     */
+    public abstract void setItemMeta(String name, ItemMeta data);
+
+    /**
      * Set an {@link OfflinePlayer} value
      *
      * @param name The key name
@@ -667,6 +683,14 @@ public abstract class SectionAccessor<D extends DataFile, T> {
      * @param data The <code>List</code> of data to set to the key
      */
     public abstract void setVectorList(String name, List<Vector> data);
+
+    /**
+     * Set a <code>List</code> of {@link ItemMeta} values
+     *
+     * @param name The key name
+     * @param data The <code>List</code> of data to set to the key
+     */
+    public abstract void setItemMetaList(String name, List<ItemMeta> data);
 
     /**
      * Set a <code>List</code> of {@link OfflinePlayer} values

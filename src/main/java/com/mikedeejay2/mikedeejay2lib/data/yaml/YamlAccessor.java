@@ -469,6 +469,17 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object> {
      * @return The requested list
      */
     @Override
+    public List<ItemMeta> getItemMetaList(String name) {
+        return (List<ItemMeta>) yaml.getList(name);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param name The key name
+     * @return The requested list
+     */
+    @Override
     public List<OfflinePlayer> getPlayerList(String name) {
         return (List<OfflinePlayer>) yaml.getList(name);
     }
@@ -691,6 +702,17 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object> {
      * @param data The data to set to the key
      */
     @Override
+    public void setItemMeta(String name, ItemMeta data) {
+        yaml.set(name, data);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param name The key name
+     * @param data The data to set to the key
+     */
+    @Override
     public void setPlayer(String name, OfflinePlayer data) {
         yaml.set(name, data);
     }
@@ -890,6 +912,17 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object> {
      */
     @Override
     public void setVectorList(String name, List<Vector> data) {
+        yaml.set(name, data);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
+     * @param name The key name
+     * @param data The <code>List</code> of data to set to the key
+     */
+    @Override
+    public void setItemMetaList(String name, List<ItemMeta> data) {
         yaml.set(name, data);
     }
 
