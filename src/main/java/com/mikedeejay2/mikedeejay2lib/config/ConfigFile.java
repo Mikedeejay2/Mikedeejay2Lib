@@ -22,10 +22,7 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.util.*;
-import java.util.function.BiFunction;
-import java.util.function.Consumer;
-import java.util.function.Function;
-import java.util.function.Supplier;
+import java.util.function.*;
 
 public class ConfigFile {
     protected final BukkitPlugin plugin;
@@ -525,8 +522,13 @@ public class ConfigFile {
             return this;
         }
 
-        public Updater rename(String oldName) {
-            this.preLoadUpdates.add(new UpdateRenameFile(oldName));
+        public Updater rename(String originalPath, String destinationPath) {
+            this.preLoadUpdates.add(new UpdateRenameFile(originalPath, destinationPath));
+            return this;
+        }
+
+        public Updater convert(String originalPath, String destinationPath, BiConsumer<SectionAccessor<?, ?>, SectionAccessor<?, ?>> converter) {
+            this.preLoadUpdates.add(new UpdateConvertFile(originalPath, destinationPath, converter));
             return this;
         }
 
@@ -580,21 +582,51 @@ public class ConfigFile {
 
         private static class UpdateRenameFile implements UpdateOperation {
             private final String originalPath;
+            private final String destinationPath;
 
-            public UpdateRenameFile(String originalPath) {
+            public UpdateRenameFile(String originalPath, String destinationPath) {
                 this.originalPath = originalPath;
+                this.destinationPath = destinationPath;
             }
 
             @Override
             public void update(ConfigFile file) {
                 final File oldFile = new File(file.plugin.getDataFolder(), originalPath);
-                final File newFile = new File(file.plugin.getDataFolder(), file.dataFile.getFilePath());
+                final File newFile = new File(file.plugin.getDataFolder(), destinationPath);
                 if(!oldFile.exists() || newFile.exists()) return;
                 try {
                     Files.move(oldFile.toPath(), newFile.toPath());
                 } catch(IOException e) {
                     throw new RuntimeException(e);
                 }
+            }
+        }
+
+        private static class UpdateConvertFile implements UpdateOperation {
+            private final String originalPath;
+            private final String destinationPath;
+            private final BiConsumer<SectionAccessor<?, ?>, SectionAccessor<?, ?>> updater;
+
+            public UpdateConvertFile(String originalPath, String destinationPath, BiConsumer<SectionAccessor<?, ?>, SectionAccessor<?, ?>> converter) {
+                this.originalPath = originalPath;
+                this.destinationPath = destinationPath;
+                this.updater = converter;
+            }
+
+            @Override
+            public void update(ConfigFile file) {
+                final FileType oldType = FileType.pathToType(originalPath);
+                final FileType newType = FileType.pathToType(destinationPath);
+                if(oldType == null || newType == null) return;
+                final ConfigFile oldFile = new ConfigFile(file.plugin, originalPath, oldType, false);
+                final ConfigFile newFile = new ConfigFile(file.plugin, destinationPath, newType, false);
+                if(!oldFile.internalFileExists() || newFile.internalFileExists()) return;
+                oldFile.load();
+                newFile.load();
+                final SectionAccessor<?, ?> oldSection = ((SectionInstancer<?, ?, ?>) oldFile.dataFile).getAccessor();
+                final SectionAccessor<?, ?> newSection = ((SectionInstancer<?, ?, ?>) newFile.dataFile).getAccessor();
+                updater.accept(oldSection, newSection);
+                newFile.save();
             }
         }
     }
