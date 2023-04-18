@@ -6,6 +6,7 @@ import com.mikedeejay2.mikedeejay2lib.data.json.JsonFile;
 import com.mikedeejay2.mikedeejay2lib.data.section.SectionAccessor;
 import com.mikedeejay2.mikedeejay2lib.data.section.SectionInstancer;
 import com.mikedeejay2.mikedeejay2lib.data.yaml.YamlFile;
+import org.apache.commons.io.FilenameUtils;
 import org.bukkit.*;
 import org.bukkit.attribute.AttributeModifier;
 import org.bukkit.block.banner.Pattern;
@@ -17,13 +18,16 @@ import org.bukkit.util.BlockVector;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
 import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
 import java.util.function.Supplier;
 
-public abstract class ConfigFile {
+public class ConfigFile {
     protected final BukkitPlugin plugin;
     protected final DataFile dataFile;
     protected final FileType fileType;
@@ -135,6 +139,7 @@ public abstract class ConfigFile {
     public boolean load() {
         if(isLoaded()) return false;
         boolean success = true;
+        this.updater.updatePreLoad();
         if(!internalFileExists()) {
             if(loadFromJar) success &= internalLoadFromJar();
             if(success) this.loaded = true;
@@ -197,6 +202,7 @@ public abstract class ConfigFile {
             internalSaveToDisk();
         }
         if(success) {
+            this.updater.updateOnLoad();
             values.forEach(ConfigValue::load);
             this.loaded = true;
         }
@@ -204,7 +210,6 @@ public abstract class ConfigFile {
     }
 
     protected boolean internalUpdateFromJar() {
-        this.updater.update();
         return dataFile.updateFromJar(true);
     }
 
@@ -468,57 +473,80 @@ public abstract class ConfigFile {
     }
 
     public enum FileType {
-        YAML(YamlFile::new),
-        JSON(JsonFile::new)
+        YAML(YamlFile::new, "yaml", "yml"),
+        JSON(JsonFile::new, "json")
         ;
 
         private final BiFunction<BukkitPlugin, String, DataFile> generator;
+        private final String[] extensions;
 
-        FileType(BiFunction<BukkitPlugin, String, DataFile> generator) {
+        FileType(BiFunction<BukkitPlugin, String, DataFile> generator, String... extensions) {
             this.generator = generator;
+            this.extensions = extensions;
         }
 
         public DataFile create(BukkitPlugin plugin, String filePath) {
             return generator.apply(plugin, filePath);
         }
+
+        public String[] getExtensions() {
+            return extensions;
+        }
+
+        public static FileType pathToType(String path) {
+            final String extension = FilenameUtils.getExtension(path);
+            for(FileType value : values()) {
+                for(String curExt : value.getExtensions()) {
+                    if(curExt.equals(extension)) return value;
+                }
+            }
+            return null;
+        }
     }
 
     public static final class Updater {
         private final ConfigFile file;
-        private final List<UpdateOperation> operations;
+        private final List<UpdateOperation> loadUpdates;
+        private final List<UpdateOperation> preLoadUpdates;
 
         private Updater(ConfigFile file) {
             this.file = file;
-            this.operations = new ArrayList<>();
+            this.loadUpdates = new ArrayList<>();
+            this.preLoadUpdates = new ArrayList<>();
         }
 
         public Updater remove(String key) {
-            this.operations.add(new UpdateRemove(key));
+            this.loadUpdates.add(new UpdateRemove(key));
             return this;
         }
 
         public Updater relocate(String key, String destinationKey) {
-            this.operations.add(new UpdateRelocate(key, destinationKey));
+            this.loadUpdates.add(new UpdateRelocate(key, destinationKey));
             return this;
         }
 
-        private void update() {
-            this.operations.forEach(operation -> operation.update(file));
+        public Updater rename(String oldName) {
+            this.preLoadUpdates.add(new UpdateRenameFile(oldName));
+            return this;
         }
 
-        private static abstract class UpdateOperation {
-            protected final String key;
-
-            public UpdateOperation(String key) {
-                this.key = key;
-            }
-
-            public abstract void update(ConfigFile file);
+        private void updateOnLoad() {
+            this.loadUpdates.forEach(operation -> operation.update(file));
         }
 
-        private static class UpdateRemove extends UpdateOperation {
+        private void updatePreLoad() {
+            this.preLoadUpdates.forEach(operation -> operation.update(file));
+        }
+
+        private interface UpdateOperation {
+            void update(ConfigFile file);
+        }
+
+        private static class UpdateRemove implements UpdateOperation {
+            private final String key;
+
             public UpdateRemove(String key) {
-                super(key);
+                this.key = key;
             }
 
             @Override
@@ -530,11 +558,12 @@ public abstract class ConfigFile {
             }
         }
 
-        private static class UpdateRelocate extends UpdateOperation {
+        private static class UpdateRelocate implements UpdateOperation {
+            private final String key;
             private final String destinationKey;
 
             public UpdateRelocate(String key, String destinationKey) {
-                super(key);
+                this.key = key;
                 this.destinationKey = destinationKey;
             }
 
@@ -546,6 +575,26 @@ public abstract class ConfigFile {
                 if(!accessor.contains(name)) return;
                 file.getAccessor(destinationKey).set(newName, accessor.get(name));
                 accessor.delete(name);
+            }
+        }
+
+        private static class UpdateRenameFile implements UpdateOperation {
+            private final String originalPath;
+
+            public UpdateRenameFile(String originalPath) {
+                this.originalPath = originalPath;
+            }
+
+            @Override
+            public void update(ConfigFile file) {
+                final File oldFile = new File(file.plugin.getDataFolder(), originalPath);
+                final File newFile = new File(file.plugin.getDataFolder(), file.dataFile.getFilePath());
+                if(!oldFile.exists() || newFile.exists()) return;
+                try {
+                    Files.move(oldFile.toPath(), newFile.toPath());
+                } catch(IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         }
     }
