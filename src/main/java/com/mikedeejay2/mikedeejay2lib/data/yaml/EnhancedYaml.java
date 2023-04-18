@@ -51,7 +51,8 @@ public class EnhancedYaml extends YamlConfiguration {
         int previousDeepness = 0;
         for(String line : lines) {
             String trimmed = line.trim();
-            if(line.isEmpty() || trimmed.startsWith("#") || !trimmed.contains(":")) {
+            if(trimmed.isEmpty()) continue;
+            if(!trimmed.contains(":")) {
                 newStr.append(line).append("\n");
                 continue;
             }
@@ -70,7 +71,7 @@ public class EnhancedYaml extends YamlConfiguration {
             newStr.append(line).append("\n");
         }
 
-        return newStr.toString();
+        return newStr.toString().trim();
     }
 
     /**
@@ -179,6 +180,7 @@ public class EnhancedYaml extends YamlConfiguration {
             if(trimmed.startsWith("#")) continue;
             newHeader.append(line).append("\n");
         }
+
         return newHeader.toString();
     }
 
