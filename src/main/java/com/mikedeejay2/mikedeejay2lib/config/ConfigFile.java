@@ -17,10 +17,7 @@ import org.bukkit.util.BlockVector;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -33,6 +30,7 @@ public abstract class ConfigFile {
     protected final List<ConfigValue<?>> values;
     protected final List<ConfigFile> children;
     protected final boolean loadFromJar;
+    protected final Updater updater;
     private boolean modified;
     private boolean loaded;
 
@@ -45,6 +43,12 @@ public abstract class ConfigFile {
         this.values = new ArrayList<>();
         this.children = new ArrayList<>();
         this.loadFromJar = loadFromJar;
+        this.updater = new Updater(this);
+    }
+
+    private <T> ConfigValue<T> addValue(ConfigValue<T> value) {
+        this.values.add(value);
+        return value;
     }
 
     protected <T> ConfigValue<T> value(ValueType<T> type, String path, T defaultValue) {
@@ -53,13 +57,47 @@ public abstract class ConfigFile {
         return value;
     }
 
+    protected <T> ConfigValue<T> value(ValueType<T> type, String path, Supplier<T> defaultValueSupplier) {
+        final ConfigValue<T> value = new ConfigValue<>(this, type, path, defaultValueSupplier.get());
+        this.values.add(value);
+        return value;
+    }
+
     protected <T> ConfigValue<T> value(ValueType<T> type, String path) {
-        return value(type, path, null);
+        return value(type, path, (T) null);
+    }
+
+    protected <T extends Collection<E>, E> ConfigValueCollection<T, E> collectionValue(ValueType<T> type, String path, T defaultValue) {
+        final ConfigValueCollection<T, E> value = new ConfigValueCollection<>(this, type, path, defaultValue);
+        this.values.add(value);
+        return value;
+    }
+
+    protected <T extends Collection<E>, E> ConfigValueCollection<T, E> collectionValue(ValueType<T> type, String path, Supplier<T> defaultValueSupplier) {
+        final ConfigValueCollection<T, E> value = new ConfigValueCollection<>(this, type, path, defaultValueSupplier.get());
+        this.values.add(value);
+        return value;
+    }
+
+    protected <T extends Map<K, V>, K, V> ConfigValueMap<T, K, V> mapValue(ValueType<T> type, String path, T defaultValue) {
+        final ConfigValueMap<T, K, V> value = new ConfigValueMap<>(this, type, path, defaultValue);
+        this.values.add(value);
+        return value;
+    }
+
+    protected <T extends Map<K, V>, K, V> ConfigValueMap<T, K, V> mapValue(ValueType<T> type, String path, Supplier<T> defaultValueSupplier) {
+        final ConfigValueMap<T, K, V> value = new ConfigValueMap<>(this, type, path, defaultValueSupplier.get());
+        this.values.add(value);
+        return value;
     }
 
     protected <T extends ConfigFile> T child(T configFile) {
         this.children.add(configFile);
         return configFile;
+    }
+
+    public Updater getUpdater() {
+        return updater;
     }
 
     public boolean isModified() {
@@ -72,6 +110,22 @@ public abstract class ConfigFile {
 
     public boolean isLoaded() {
         return loaded;
+    }
+
+    public List<ConfigValue<?>> getValues() {
+        return values;
+    }
+
+    public List<ConfigFile> getChildren() {
+        return children;
+    }
+
+    public FileType getFileType() {
+        return fileType;
+    }
+
+    public boolean shouldLoadFromJar() {
+        return loadFromJar;
     }
 
     public boolean load() {
@@ -133,8 +187,10 @@ public abstract class ConfigFile {
     protected boolean internalLoadFromDisk() {
         if(loaded) return false;
         boolean success = dataFile.loadFromDisk(true);
-        if(loadFromJar) internalUpdateFromJar();
-        success &= internalSaveToDisk();
+        if(loadFromJar) {
+            internalUpdateFromJar();
+            internalSaveToDisk();
+        }
         if(success) {
             values.forEach(ConfigValue::load);
             this.loaded = true;
@@ -143,6 +199,7 @@ public abstract class ConfigFile {
     }
 
     protected boolean internalUpdateFromJar() {
+        this.updater.update();
         return dataFile.updateFromJar(true);
     }
 
@@ -156,19 +213,32 @@ public abstract class ConfigFile {
         return success;
     }
 
+    private SectionAccessor<DataFile, Object> getAccessor(String path) {
+        final String[] splitPath = path.split("\\.");
+        SectionAccessor<DataFile, Object> accessor = ((SectionInstancer<?, DataFile, Object>) dataFile).getAccessor();
+        for(int i = 0; i < splitPath.length - 1; ++i) {
+            accessor = accessor.getSection(splitPath[i]);
+        }
+        return accessor;
+    }
+
+    private String getName(String path) {
+        final String[] splitPath = path.split("\\.");
+        return splitPath[splitPath.length - 1];
+    }
+
     public static class ConfigValue<T> {
-        private final ConfigFile file;
-        private final ValueType<T> type;
-        private final String path;
-        private final String name;
-        private T value;
+        protected final ConfigFile file;
+        protected final ValueType<T> type;
+        protected final String path;
+        protected final String name;
+        protected T value;
 
         private ConfigValue(ConfigFile file, ValueType<T> type, String path, T defaultValue) {
             this.file = file;
             this.type = type;
             this.path = path;
-            final String[] splitPath = path.split("/");
-            this.name = splitPath[splitPath.length - 1];
+            this.name = file.getName(path);
             this.value = defaultValue;
         }
 
@@ -182,11 +252,12 @@ public abstract class ConfigFile {
         }
 
         public void load() {
-            value = this.type.load(getAccessor(), name);
+            final T loaded = this.type.load(file.getAccessor(path), name);
+            if(loaded != null) value = loaded;
         }
 
         public void save() {
-            this.type.save(getAccessor(), name, value);
+            this.type.save(file.getAccessor(path), name, value);
         }
 
         public ValueType<T> getType() {
@@ -200,14 +271,49 @@ public abstract class ConfigFile {
         public String getName() {
             return name;
         }
+    }
 
-        private SectionAccessor<?, ?> getAccessor() {
-            final String[] splitPath = path.split("/");
-            SectionAccessor<?, ?> accessor = ((SectionInstancer<?, ?, ?>) file.dataFile).getAccessor();
-            for(int i = 0; i < splitPath.length - 1; ++i) {
-                accessor = accessor.getSection(splitPath[i]);
+    public static class ConfigValueCollection<T extends Collection<E>, E> extends ConfigValue<T> {
+        private ConfigValueCollection(ConfigFile file, ValueType<T> type, String path, T defaultValue) {
+            super(file, type, path, defaultValue);
+        }
+
+        @Override
+        public void set(T value) {
+            this.value.clear();
+            this.value.addAll(value);
+            this.file.modified = true;
+        }
+
+        @Override
+        public void load() {
+            final T loaded = this.type.load(file.getAccessor(path), name);
+            if(loaded != null) {
+                this.value.clear();
+                this.value.addAll(loaded);
             }
-            return accessor;
+        }
+    }
+
+    public static class ConfigValueMap<T extends Map<K, V>, K, V> extends ConfigValue<T> {
+        private ConfigValueMap(ConfigFile file, ValueType<T> type, String path, T defaultValue) {
+            super(file, type, path, defaultValue);
+        }
+
+        @Override
+        public void set(T value) {
+            this.value.clear();
+            this.value.putAll(value);
+            this.file.modified = true;
+        }
+
+        @Override
+        public void load() {
+            final T loaded = this.type.load(file.getAccessor(path), name);
+            if(loaded != null) {
+                this.value.clear();
+                this.value.putAll(loaded);
+            }
         }
     }
 
@@ -369,6 +475,73 @@ public abstract class ConfigFile {
 
         public DataFile create(BukkitPlugin plugin, String filePath) {
             return generator.apply(plugin, filePath);
+        }
+    }
+
+    public static final class Updater {
+        private final ConfigFile file;
+        private final List<UpdateOperation> operations;
+
+        private Updater(ConfigFile file) {
+            this.file = file;
+            this.operations = new ArrayList<>();
+        }
+
+        public Updater remove(String key) {
+            this.operations.add(new UpdateRemove(key));
+            return this;
+        }
+
+        public Updater relocate(String key, String destinationKey) {
+            this.operations.add(new UpdateRelocate(key, destinationKey));
+            return this;
+        }
+
+        private void update() {
+            this.operations.forEach(operation -> operation.update(file));
+        }
+
+        private static abstract class UpdateOperation {
+            protected final String key;
+
+            public UpdateOperation(String key) {
+                this.key = key;
+            }
+
+            public abstract void update(ConfigFile file);
+        }
+
+        private static class UpdateRemove extends UpdateOperation {
+            public UpdateRemove(String key) {
+                super(key);
+            }
+
+            @Override
+            public void update(ConfigFile file) {
+                final SectionAccessor<DataFile, Object> accessor = file.getAccessor(key);
+                final String name = file.getName(key);
+                if(!accessor.contains(name)) return;
+                accessor.delete(name);
+            }
+        }
+
+        private static class UpdateRelocate extends UpdateOperation {
+            private final String destinationKey;
+
+            public UpdateRelocate(String key, String destinationKey) {
+                super(key);
+                this.destinationKey = destinationKey;
+            }
+
+            @Override
+            public void update(ConfigFile file) {
+                final SectionAccessor<DataFile, Object> accessor = file.getAccessor(key);
+                final String name = file.getName(key);
+                final String newName = file.getName(destinationKey);
+                if(!accessor.contains(name)) return;
+                file.getAccessor(destinationKey).set(newName, accessor.get(name));
+                accessor.delete(name);
+            }
         }
     }
 }
