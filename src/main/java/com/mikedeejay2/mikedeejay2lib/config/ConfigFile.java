@@ -18,6 +18,7 @@ import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -31,14 +32,14 @@ public abstract class ConfigFile {
     protected final List<ConfigFile> children;
     protected final boolean loadFromJar;
     protected final Updater updater;
-    private boolean modified;
-    private boolean loaded;
+    protected AtomicBoolean modified;
+    protected boolean loaded;
 
     protected ConfigFile(BukkitPlugin plugin, String configPath, FileType fileType, boolean loadFromJar) {
         this.fileType = fileType;
         this.plugin = plugin;
         this.dataFile = fileType.create(plugin, configPath);
-        this.modified = false;
+        this.modified = new AtomicBoolean(false);
         this.loaded = false;
         this.values = new ArrayList<>();
         this.children = new ArrayList<>();
@@ -93,6 +94,7 @@ public abstract class ConfigFile {
 
     protected <T extends ConfigFile> T child(T configFile) {
         this.children.add(configFile);
+        configFile.modified = this.modified;
         return configFile;
     }
 
@@ -101,11 +103,11 @@ public abstract class ConfigFile {
     }
 
     public boolean isModified() {
-        return modified;
+        return modified.get();
     }
 
     public void setModified(boolean modified) {
-        this.modified = modified;
+        this.modified.set(modified);
     }
 
     public boolean isLoaded() {
@@ -129,7 +131,7 @@ public abstract class ConfigFile {
     }
 
     public boolean load() {
-        if(loaded) return false;
+        if(isLoaded()) return false;
         if(!internalFileExists()) {
             boolean success = true;
             if(loadFromJar) success &= internalLoadFromJar();
@@ -142,15 +144,15 @@ public abstract class ConfigFile {
     }
 
     public boolean save() {
-        if(!loaded) return false;
+        if(!isLoaded()) return false;
         boolean success = internalSaveToDisk();
-        if(success) modified = false;
+        if(success) setModified(false);
         children.forEach(ConfigFile::save);
         return success;
     }
 
     public boolean reload() {
-        final boolean success = modified ? save() : load();
+        final boolean success = isModified() ? save() : load();
         children.forEach(ConfigFile::reload);
         return success;
     }
@@ -169,7 +171,7 @@ public abstract class ConfigFile {
     }
 
     protected boolean internalLoadFromJar() {
-        if(loaded) return false;
+        if(isLoaded()) return false;
         boolean success = dataFile.loadFromJar(true);
         if(success) {
             values.forEach(ConfigValue::load);
@@ -179,13 +181,13 @@ public abstract class ConfigFile {
     }
 
     protected boolean internalSaveToDisk() {
-        if(!loaded) return false;
+        if(!isLoaded()) return false;
         values.forEach(ConfigValue::save);
         return dataFile.saveToDisk(true);
     }
 
     protected boolean internalLoadFromDisk() {
-        if(loaded) return false;
+        if(isLoaded()) return false;
         boolean success = dataFile.loadFromDisk(true);
         if(loadFromJar) {
             internalUpdateFromJar();
@@ -209,7 +211,7 @@ public abstract class ConfigFile {
 
     protected boolean internalDelete() {
         boolean success = dataFile.delete(true);
-        this.loaded = !success;
+        this.loaded = false;
         return success;
     }
 
@@ -248,7 +250,7 @@ public abstract class ConfigFile {
 
         public void set(T value) {
             this.value = value;
-            this.file.modified = true;
+            this.file.setModified(false);
         }
 
         public void load() {
@@ -282,7 +284,7 @@ public abstract class ConfigFile {
         public void set(T value) {
             this.value.clear();
             this.value.addAll(value);
-            this.file.modified = true;
+            this.file.setModified(true);
         }
 
         @Override
@@ -304,7 +306,7 @@ public abstract class ConfigFile {
         public void set(T value) {
             this.value.clear();
             this.value.putAll(value);
-            this.file.modified = true;
+            this.file.setModified(true);
         }
 
         @Override
