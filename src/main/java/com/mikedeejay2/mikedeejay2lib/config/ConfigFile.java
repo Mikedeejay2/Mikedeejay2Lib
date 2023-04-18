@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.config;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.data.DataFile;
+import com.mikedeejay2.mikedeejay2lib.data.FileType;
 import com.mikedeejay2.mikedeejay2lib.data.json.JsonFile;
 import com.mikedeejay2.mikedeejay2lib.data.section.SectionAccessor;
 import com.mikedeejay2.mikedeejay2lib.data.section.SectionInstancer;
@@ -19,15 +20,12 @@ import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 import org.jetbrains.annotations.Nullable;
 
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 import java.util.*;
 import java.util.function.*;
 
 /**
  * A configuration file. The basis of this class is a {@link DataFile} with extra features such as handled
- * {@link ConfigValue configuration values}, {@link ValueType value types}, an {@link Updater updater}, and abstraction
+ * {@link ConfigValue configuration values}, {@link ValueType value types}, an {@link ConfigUpdater updater}, and abstraction
  * of saving, loading, and resetting the file.
  * <p>
  * The main objects this class holds are {@link ConfigValue ConfigValues} and child {@link ConfigFile ConfigFiles}.
@@ -84,9 +82,9 @@ public class ConfigFile {
     protected final boolean loadFromJar;
 
     /**
-     * The {@link Updater} for this configuration.
+     * The {@link ConfigUpdater} for this configuration.
      */
-    protected final Updater updater;
+    protected final ConfigUpdater updater;
 
     /**
      * The parent {@link ConfigFile}, only non-null if this config is a child of a parent config.
@@ -122,7 +120,7 @@ public class ConfigFile {
         this.values = new ArrayList<>();
         this.children = new ArrayList<>();
         this.loadFromJar = loadFromJar;
-        this.updater = new Updater(this);
+        this.updater = new ConfigUpdater(this);
         this.parent = null;
     }
 
@@ -260,11 +258,11 @@ public class ConfigFile {
     }
 
     /**
-     * Get this config's {@link Updater}
+     * Get this config's {@link ConfigUpdater}
      *
-     * @return This config's {@link Updater}
+     * @return This config's {@link ConfigUpdater}
      */
-    public Updater getUpdater() {
+    public ConfigUpdater getUpdater() {
         return updater;
     }
 
@@ -340,7 +338,7 @@ public class ConfigFile {
      * <p>
      * List of operations that this method performs:
      * <ul>
-     *     <li>Perform preload updates ({@link Updater#updatePreLoad()})</li>
+     *     <li>Perform preload updates ({@link ConfigUpdater#updatePreLoad()})</li>
      *     <li>
      *          If file does not exist on disk: ({@link ConfigFile#internalFileExists()})
      *          <ul>
@@ -455,7 +453,7 @@ public class ConfigFile {
      *             <li>Save the updated values to disk ({@link ConfigFile#internalSaveToDisk()})</li>
      *         </ul>
      *     </li>
-     *     <li>Run updater post-load operations ({@link Updater#updateOnLoad()})</li>
+     *     <li>Run updater post-load operations ({@link ConfigUpdater#updateOnLoad()})</li>
      * </ul>
      *
      * @return Whether loading from disk was successful
@@ -515,7 +513,7 @@ public class ConfigFile {
      *             For example, "<code>root.level1.level2.name</code>"
      * @return The specified {@link SectionAccessor} of the path
      */
-    private SectionAccessor<DataFile, Object> getAccessor(String path) {
+    SectionAccessor<DataFile, Object> getAccessor(String path) {
         final String[] splitPath = path.split("\\.");
         SectionAccessor<DataFile, Object> accessor = ((SectionInstancer<?, DataFile, Object>) dataFile).getAccessor();
         for(int i = 0; i < splitPath.length - 1; ++i) {
@@ -533,7 +531,7 @@ public class ConfigFile {
      *             For example, "<code>root.level1.level2.name</code>"
      * @return The name (key) of a path
      */
-    private String getName(String path) {
+    String getName(String path) {
         final String[] splitPath = path.split("\\.");
         return splitPath[splitPath.length - 1];
     }
@@ -1053,382 +1051,6 @@ public class ConfigFile {
              * @param value    The value to save
              */
             void save(SectionAccessor<?, ?> accessor, String name, T value);
-        }
-    }
-
-    /**
-     * File type enumeration. Used for dynamic creation of file types.
-     *
-     * @author Mikedeejay2
-     */
-    public enum FileType {
-        /**
-         * The YAML file type. Instantiates {@link YamlFile} for extensions "yaml" and "yml"
-         */
-        YAML(YamlFile::new, "yaml", "yml"),
-
-        /**
-         * The JSON file type. Instantiates {@link JsonFile} for extensions "json"
-         */
-        JSON(JsonFile::new, "json");
-
-        /**
-         * The function used to create a {@link DataFile} of the specified type
-         */
-        private final BiFunction<BukkitPlugin, String, DataFile> generator;
-
-        /**
-         * Array of file extensions associated with the file type
-         */
-        private final String[] extensions;
-
-        /**
-         * Internal constructor
-         *
-         * @param generator  The function used to create a {@link DataFile} of the specified type
-         * @param extensions Array of file extensions associated with the file type
-         */
-        FileType(BiFunction<BukkitPlugin, String, DataFile> generator, String... extensions) {
-            this.generator = generator;
-            this.extensions = extensions;
-        }
-
-        /**
-         * Create a new {@link DataFile} of the file type
-         *
-         * @param plugin   The {@link BukkitPlugin} instance
-         * @param filePath The path to the file
-         * @return The newly created {@link DataFile}
-         */
-        public DataFile create(BukkitPlugin plugin, String filePath) {
-            return generator.apply(plugin, filePath);
-        }
-
-        /**
-         * Get the array of file extensions associated with the file type
-         *
-         * @return The array of file extensions
-         */
-        public String[] getExtensions() {
-            return extensions;
-        }
-
-        /**
-         * Get the {@link FileType} of a path based off of its file extension
-         *
-         * @param path The path of the file
-         * @return The {@link FileType} of the path, if detected
-         */
-        public static FileType pathToType(String path) {
-            final String extension = FilenameUtils.getExtension(path);
-            for(FileType value : values()) {
-                for(String curExt : value.getExtensions()) {
-                    if(curExt.equals(extension)) return value;
-                }
-            }
-            return null;
-        }
-    }
-
-    /**
-     * An updater for updating legacy data in relation to a {@link ConfigFile}. This updater can be used to ensure data
-     * is valid on newer versions of a plugin given that the structure of a configuration file has changed over time.
-     * <p>
-     * List of operations available:
-     * <ul>
-     *     <li>{@link Updater#remove(String)} - Remove a value from a configuration file.</li>
-     *     <li>{@link Updater#relocate(String, String)} - Relocate a key in a configuration file to a new key.</li>
-     *     <li>{@link Updater#rename} - Rename a file on disk to a new name.</li>
-     *     <li>{@link Updater#convert(String, String, BiConsumer)} - Convert one file type to another.</li>
-     * </ul>
-     *
-     * @author Mikedeejay2
-     */
-    public static final class Updater {
-        /**
-         * The parent {@link ConfigFile}
-         */
-        private final ConfigFile file;
-
-        /**
-         * The list of {@link UpdateOperation UpdateOperations} that will occur at the time of loading the file
-         */
-        private final List<UpdateOperation> loadUpdates;
-
-        /**
-         * The list of {@link UpdateOperation UpdateOperations} that will occur before loading the file
-         */
-        private final List<UpdateOperation> preLoadUpdates;
-
-        /**
-         * Internal constructor
-         *
-         * @param file The parent {@link ConfigFile}
-         */
-        private Updater(ConfigFile file) {
-            this.file = file;
-            this.loadUpdates = new ArrayList<>();
-            this.preLoadUpdates = new ArrayList<>();
-        }
-
-        /**
-         * Remove a value from a configuration file. This update occurs when the file is loaded.
-         *
-         * @param key The key to remove from the configuration file.
-         * @return This updater
-         */
-        public Updater remove(String key) {
-            this.loadUpdates.add(new UpdateRemove(key));
-            return this;
-        }
-
-        /**
-         * Relocate a key in a configuration file to a new key. This update occurs when the file is loaded.
-         *
-         * @param key            The old key to be updated
-         * @param destinationKey The new key
-         * @return This updater
-         */
-        public Updater relocate(String key, String destinationKey) {
-            this.loadUpdates.add(new UpdateRelocate(key, destinationKey));
-            return this;
-        }
-
-        /**
-         * Rename a file on disk to a new name. This update occurs before the file is loaded.
-         *
-         * @param originalPath    The original path to be updated
-         * @param destinationPath The new destination path
-         * @return This updater
-         */
-        public Updater rename(String originalPath, String destinationPath) {
-            this.preLoadUpdates.add(new UpdateRenameFile(originalPath, destinationPath));
-            return this;
-        }
-
-        /**
-         * Convert one file type to another. This update occurs before the file is loaded.
-         *
-         * @param originalPath    The original path of the file to be converted
-         * @param destinationPath The destination path to save to once conversion is done
-         * @param converter       The converter consumer. This consumer must account for all values that should be
-         *                        converted and manually move each value from the old {@link SectionAccessor} to the new
-         *                        accessor.
-         * @return This updater
-         */
-        public Updater convert(String originalPath, String destinationPath, BiConsumer<SectionAccessor<?, ?>, SectionAccessor<?, ?>> converter) {
-            this.preLoadUpdates.add(new UpdateConvertFile(originalPath, destinationPath, converter));
-            return this;
-        }
-
-        /**
-         * Call all updates that should occur when a file is loaded
-         */
-        private void updateOnLoad() {
-            this.loadUpdates.forEach(operation -> operation.update(file));
-        }
-
-        /**
-         * Call all updates that should occur before a file is loaded
-         */
-        private void updatePreLoad() {
-            this.preLoadUpdates.forEach(operation -> operation.update(file));
-        }
-
-        /**
-         * A single update operation.
-         *
-         * @author Mikedeejay2
-         */
-        private interface UpdateOperation {
-            /**
-             * Update the {@link ConfigFile} with the specified operation
-             *
-             * @param file The {@link ConfigFile} to update
-             */
-            void update(ConfigFile file);
-        }
-
-        /**
-         * An update operation to remove a key from a configuration file.
-         *
-         * @author Mikedeejay2
-         */
-        private static class UpdateRemove implements UpdateOperation {
-            /**
-             * The key to remove
-             */
-            private final String key;
-
-            /**
-             * Internal constructor
-             *
-             * @param key The key to remove
-             */
-            private UpdateRemove(String key) {
-                this.key = key;
-            }
-
-            /**
-             * Remove the {@link UpdateRemove#key} from the {@link ConfigFile} if it was found.
-             *
-             * @param file The {@link ConfigFile} to update
-             */
-            @Override
-            public void update(ConfigFile file) {
-                final SectionAccessor<DataFile, Object> accessor = file.getAccessor(key);
-                final String name = file.getName(key);
-                if(!accessor.contains(name)) return;
-                accessor.delete(name);
-            }
-        }
-
-        /**
-         * An update operation to relocate a key to a new key in a configuration file.
-         *
-         * @author Mikedeejay2
-         */
-        private static class UpdateRelocate implements UpdateOperation {
-            /**
-             * The original key to be relocated
-             */
-            private final String key;
-
-            /**
-             * The destination key, the name of the key after relocation
-             */
-            private final String destinationKey;
-
-            /**
-             * Internal constructor
-             *
-             * @param key            The original key to be relocated
-             * @param destinationKey The destination key, the name of the key after relocation
-             */
-            private UpdateRelocate(String key, String destinationKey) {
-                this.key = key;
-                this.destinationKey = destinationKey;
-            }
-
-            /**
-             * Relocate the key to the destination key if the key was found.
-             *
-             * @param file The {@link ConfigFile} to update
-             */
-            @Override
-            public void update(ConfigFile file) {
-                final SectionAccessor<DataFile, Object> accessor = file.getAccessor(key);
-                final String name = file.getName(key);
-                final String newName = file.getName(destinationKey);
-                if(!accessor.contains(name)) return;
-                file.getAccessor(destinationKey).set(newName, accessor.get(name));
-                accessor.delete(name);
-            }
-        }
-
-        /**
-         * An update operation to rename a file on the disk.
-         *
-         * @author Mikedeejay2
-         */
-        private static class UpdateRenameFile implements UpdateOperation {
-            /**
-             * The path to the file to be renamed
-             */
-            private final String originalPath;
-
-            /**
-             * The path of the file after renaming
-             */
-            private final String destinationPath;
-
-            /**
-             * Internal constructor
-             *
-             * @param originalPath    The path to the file to be renamed
-             * @param destinationPath The path of the file after renaming
-             */
-            private UpdateRenameFile(String originalPath, String destinationPath) {
-                this.originalPath = originalPath;
-                this.destinationPath = destinationPath;
-            }
-
-            /**
-             * Rename the original file to the destination path if found.
-             *
-             * @param file The {@link ConfigFile} to update
-             */
-            @Override
-            public void update(ConfigFile file) {
-                final File oldFile = new File(file.plugin.getDataFolder(), originalPath);
-                final File newFile = new File(file.plugin.getDataFolder(), destinationPath);
-                if(!oldFile.exists() || newFile.exists()) return;
-                try {
-                    Files.move(oldFile.toPath(), newFile.toPath());
-                } catch(IOException e) {
-                    throw new RuntimeException(e);
-                }
-            }
-        }
-
-        /**
-         * An update operation to convert a file to another file type.
-         *
-         * @author Mikedeejay2
-         */
-        private static class UpdateConvertFile implements UpdateOperation {
-            /**
-             * The path to the file to be converted
-             */
-            private final String originalPath;
-
-            /**
-             * The path of the file after converting
-             */
-            private final String destinationPath;
-
-            /**
-             * The converter consumer. This consumer must account for all values that should be converted and manually
-             * move each value from the old {@link SectionAccessor} to the new accessor.
-             */
-            private final BiConsumer<SectionAccessor<?, ?>, SectionAccessor<?, ?>> updater;
-
-            /**
-             * Internal constructor
-             *
-             * @param originalPath    The path to the file to be converted
-             * @param destinationPath he path of the file after converting
-             * @param converter       The converter consumer. This consumer must account for all values that should be
-             *                        converted and manually move each value from the old {@link SectionAccessor} to the
-             *                        new accessor.
-             */
-            private UpdateConvertFile(String originalPath, String destinationPath, BiConsumer<SectionAccessor<?, ?>, SectionAccessor<?, ?>> converter) {
-                this.originalPath = originalPath;
-                this.destinationPath = destinationPath;
-                this.updater = converter;
-            }
-
-            /**
-             * Convert the original file from its format to the new format at the destination path using the
-             * {@link UpdateConvertFile#updater} function.
-             *
-             * @param file The {@link ConfigFile} to update
-             */
-            @Override
-            public void update(ConfigFile file) {
-                final FileType oldType = FileType.pathToType(originalPath);
-                final FileType newType = FileType.pathToType(destinationPath);
-                if(oldType == null || newType == null) return;
-                final ConfigFile oldFile = new ConfigFile(file.plugin, originalPath, oldType, false);
-                final ConfigFile newFile = new ConfigFile(file.plugin, destinationPath, newType, false);
-                if(!oldFile.internalFileExists() || newFile.internalFileExists()) return;
-                oldFile.load();
-                newFile.load();
-                final SectionAccessor<?, ?> oldSection = ((SectionInstancer<?, ?, ?>) oldFile.dataFile).getAccessor();
-                final SectionAccessor<?, ?> newSection = ((SectionInstancer<?, ?, ?>) newFile.dataFile).getAccessor();
-                updater.accept(oldSection, newSection);
-                newFile.save();
-            }
         }
     }
 }
