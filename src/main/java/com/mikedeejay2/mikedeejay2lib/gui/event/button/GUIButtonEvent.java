@@ -22,7 +22,8 @@ public class GUIButtonEvent extends GUIPlaySoundEvent {
     /**
      * Construct a new <code>GUIButtonEvent</code>
      *
-     * @param consumer The consumer that is run when the button is clicked
+     * @param consumer       The consumer that is run when the button is clicked
+     * @param acceptedClicks The list of {@link ClickType ClickTypes} to accept
      */
     public GUIButtonEvent(@NotNull Consumer<GUIEventInfo> consumer, ClickType... acceptedClicks) {
         super(null, null, 1, 1, acceptedClicks);

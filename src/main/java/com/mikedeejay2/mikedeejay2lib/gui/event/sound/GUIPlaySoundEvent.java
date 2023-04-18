@@ -37,10 +37,10 @@ public class GUIPlaySoundEvent extends GUIAbstractClickEvent {
     /**
      * Construct a new <code>GUIPlaySoundEvent</code>
      *
-     * @param sound The {@link Sound} to play
-     * @param category The {@link SoundCategory} that the sound will play in
-     * @param volume The volume that the sound will play as
-     * @param pitch The pitch that the sound will play as
+     * @param sound          The {@link Sound} to play
+     * @param category       The {@link SoundCategory} that the sound will play in
+     * @param volume         The volume that the sound will play as
+     * @param pitch          The pitch that the sound will play as
      * @param acceptedClicks The list of {@link ClickType ClickTypes} to accept
      */
     public GUIPlaySoundEvent(Sound sound, SoundCategory category, float volume, float pitch, ClickType... acceptedClicks) {
@@ -54,10 +54,10 @@ public class GUIPlaySoundEvent extends GUIAbstractClickEvent {
     /**
      * Construct a new <code>GUIPlaySoundEvent</code>
      *
-     * @param sound The {@link Sound} to play
+     * @param sound    The {@link Sound} to play
      * @param category The {@link SoundCategory} that the sound will play in
-     * @param volume The volume that the sound will play as
-     * @param pitch The pitch that the sound will play as
+     * @param volume   The volume that the sound will play as
+     * @param pitch    The pitch that the sound will play as
      */
     public GUIPlaySoundEvent(Sound sound, SoundCategory category, float volume, float pitch) {
         super();
@@ -70,9 +70,9 @@ public class GUIPlaySoundEvent extends GUIAbstractClickEvent {
     /**
      * Construct a new <code>GUIPlaySoundEvent</code>
      *
-     * @param sound The {@link Sound} to play
+     * @param sound  The {@link Sound} to play
      * @param volume The volume that the sound will play as
-     * @param pitch The pitch that the sound will play as
+     * @param pitch  The pitch that the sound will play as
      */
     public GUIPlaySoundEvent(Sound sound, float volume, float pitch) {
         this(sound, null, volume, pitch);
@@ -81,9 +81,9 @@ public class GUIPlaySoundEvent extends GUIAbstractClickEvent {
     /**
      * Construct a new <code>GUIPlaySoundEvent</code>
      *
-     * @param sound The {@link Sound} to play
-     * @param volume The volume that the sound will play as
-     * @param pitch The pitch that the sound will play as
+     * @param sound          The {@link Sound} to play
+     * @param volume         The volume that the sound will play as
+     * @param pitch          The pitch that the sound will play as
      * @param acceptedClicks The list of {@link ClickType ClickTypes} to accept
      */
     public GUIPlaySoundEvent(Sound sound, float volume, float pitch, ClickType... acceptedClicks) {

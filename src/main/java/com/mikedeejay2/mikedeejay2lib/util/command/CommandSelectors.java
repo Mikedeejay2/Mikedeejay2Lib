@@ -38,7 +38,8 @@ public final class CommandSelectors {
      * This command allows for the use of vanilla Minecraft's player selectors, <code>&amp;a</code>,
      * <code>&amp;p</code>, and <code>&amp;r</code>.
      *
-     * @param value The input value, either a player's name or a player selector
+     * @param value  The input value, either a player's name or a player selector
+     * @param sender The {@link CommandSender} who sent the request
      * @return The list of retrieved players
      */
     public static List<Player> getPlayers(String value, CommandSender sender) {

@@ -32,7 +32,7 @@ import java.util.function.*;
  * To begin using this class, extend this class and create a {@link ConfigValue} using
  * {@link ConfigFile#value(ValueType, String)}. If you want to create your own {@link ValueType}, you can start with a
  * pre-existing type and add on to it using its built-in methods or create a new type using
- * {@link ValueType#of(ValueType.Loader, ValueType.Saver)}.
+ * {@link ConfigFile.ValueType#of(ConfigFile.ValueType.Loader, ConfigFile.ValueType.Saver)}.
  * <p>
  * Recommended use is to create and load this config when enabling your plugin. Create the config using
  * {@link ConfigFile#ConfigFile(BukkitPlugin, String, FileType, boolean)}}, once it has been instantiated,
@@ -174,7 +174,8 @@ public class ConfigFile {
      *                     each level. For example, "<code>root.level1.level2.name</code>"
      * @param defaultValue The default value to use. This should never be null, it needs to be a new or existing
      *                     instantiation of a collection data type.
-     * @param <T>          The data type that is being stored within the value
+     * @param <T>          The collection data type of the value
+     * @param <E>          The type maintained by the collection
      * @return The new {@link ConfigValue}
      */
     protected <T extends Collection<E>, E> ConfigValueCollection<T, E> collectionValue(ValueType<T> type, String path, T defaultValue) {
@@ -193,7 +194,8 @@ public class ConfigFile {
      *                             for each level. For example, "<code>root.level1.level2.name</code>"
      * @param defaultValueSupplier The default value supplier to use. This should never be null, it needs to be a new or
      *                             existing instantiation of a collection data type.
-     * @param <T>                  The data type that is being stored within the value
+     * @param <T>                  The collection data type of the value
+     * @param <E>                  The type maintained by the collection
      * @return The new {@link ConfigValue}
      */
     protected <T extends Collection<E>, E> ConfigValueCollection<T, E> collectionValue(ValueType<T> type, String path, Supplier<T> defaultValueSupplier) {
@@ -212,7 +214,9 @@ public class ConfigFile {
      *                     each level. For example, "<code>root.level1.level2.name</code>"
      * @param defaultValue The default value to use. This should never be null, it needs to be a new or existing
      *                     instantiation of a map data type.
-     * @param <T>          The data type that is being stored within the value
+     * @param <T>          The map data type of the value
+     * @param <K>          The type of keys maintained by the map
+     * @param <V>          The type of values maintained by the map
      * @return The new {@link ConfigValue}
      */
     protected <T extends Map<K, V>, K, V> ConfigValueMap<T, K, V> mapValue(ValueType<T> type, String path, T defaultValue) {
@@ -231,7 +235,9 @@ public class ConfigFile {
      *                             for each level. For example, "<code>root.level1.level2.name</code>"
      * @param defaultValueSupplier The default value supplier to use. This should never be null, it needs to be a new or
      *                             existing instantiation of a map data type.
-     * @param <T>                  The data type that is being stored within the value
+     * @param <T>                  The map data type of the value
+     * @param <K>                  The type of keys maintained by the map
+     * @param <V>                  The type of values maintained by the map
      * @return The new {@link ConfigValue}
      */
     protected <T extends Map<K, V>, K, V> ConfigValueMap<T, K, V> mapValue(ValueType<T> type, String path, Supplier<T> defaultValueSupplier) {
@@ -751,7 +757,7 @@ public class ConfigFile {
      * Pre-existing types can be found as static variables of this class, such as {@link ValueType#BOOLEAN} or
      * {@link ValueType#ITEM_STACK}. If you want to create your own {@link ValueType}, you can start with a pre-existing
      * type and add on to it using its built-in methods or create a new type using
-     * {@link ValueType#of(ValueType.Loader, ValueType.Saver)}.
+     * {@link ConfigFile.ValueType#of(ConfigFile.ValueType.Loader, ConfigFile.ValueType.Saver)}.
      *
      * @param <T> The type that is maintained
      * @author Mikedeejay2
@@ -1021,7 +1027,7 @@ public class ConfigFile {
          * @author Mikedeejay2
          */
         @FunctionalInterface
-        private interface Loader<T> {
+        public interface Loader<T> {
             /**
              * Load a value from a {@link SectionAccessor} and a path.
              *
@@ -1039,7 +1045,7 @@ public class ConfigFile {
          * @author Mikedeejay2
          */
         @FunctionalInterface
-        private interface Saver<T> {
+        public interface Saver<T> {
             /**
              * Save a value to a {@link SectionAccessor}
              *

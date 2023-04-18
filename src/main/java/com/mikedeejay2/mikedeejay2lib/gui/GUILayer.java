@@ -12,7 +12,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
 import java.util.List;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.Consumer;
 
 /**
@@ -217,7 +216,7 @@ public class GUILayer {
      * Remove any items that match the provided {@link SlotMatcher}
      *
      * @param matcher The {@link SlotMatcher}
-     * @param item The GUIItem to use
+     * @param item    The GUIItem to use
      */
     public void setItem(SlotMatcher matcher, GUIItem item) {
         forMatchedSlots(matcher, (data) -> data.layer.setItem(data.row, data.col, item));
@@ -227,7 +226,7 @@ public class GUILayer {
      * Remove any items that match the provided {@link SlotMatcher}
      *
      * @param matcher The {@link SlotMatcher}
-     * @param stack The <code>ItemStack</code> to set the slot to
+     * @param stack   The <code>ItemStack</code> to set the slot to
      */
     public void setItem(SlotMatcher matcher, ItemStack stack) {
         forMatchedSlots(matcher, (data) -> data.layer.setItem(data.row, data.col, stack));
@@ -387,8 +386,8 @@ public class GUILayer {
      * If the slot matches, the provided <code>Consumer</code> will be called with the generated
      * {@link SlotMatcher.MatchData}.
      *
-     * @param matcher The matcher
-     * @param player The player viewing the GUI (optional)
+     * @param matcher  The matcher
+     * @param player   The player viewing the GUI (optional)
      * @param consumer The consumer to be called upon a match
      */
     public void forMatchedSlots(SlotMatcher matcher, Player player, Consumer<SlotMatcher.MatchData> consumer) {
@@ -408,7 +407,7 @@ public class GUILayer {
      * If the slot matches, the provided <code>Consumer</code> will be called with the generated
      * {@link SlotMatcher.MatchData}.
      *
-     * @param matcher The matcher
+     * @param matcher  The matcher
      * @param consumer The consumer to be called upon a match
      */
     public void forMatchedSlots(SlotMatcher matcher, Consumer<SlotMatcher.MatchData> consumer) {
@@ -420,7 +419,8 @@ public class GUILayer {
      * Return true if a match is found.
      *
      * @param matcher The matcher
-     * @param player The player viewing the GUI (optional)
+     * @param player  The player viewing the GUI (optional)
+     * @return Whether a match was found
      */
     public boolean containsMatch(SlotMatcher matcher, Player player) {
         for(int row = 1; row <= getRows(); ++row) {
@@ -440,6 +440,7 @@ public class GUILayer {
      * Return true if a match is found.
      *
      * @param matcher The matcher
+     * @return Whether a match was found
      */
     public boolean containsMatch(SlotMatcher matcher) {
         return containsMatch(matcher, null);

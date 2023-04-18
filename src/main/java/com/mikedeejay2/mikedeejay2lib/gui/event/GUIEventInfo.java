@@ -53,6 +53,9 @@ public final class GUIEventInfo {
 
     /**
      * Construct a new <code>GUIEventInfo</code>
+     *
+     * @param event The original {@link InventoryClickEvent} called
+     * @param gui   The {@link GUIContainer} instance
      */
     public GUIEventInfo(InventoryClickEvent event, GUIContainer gui) {
         this.event = event;
