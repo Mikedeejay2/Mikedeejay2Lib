@@ -18,7 +18,6 @@ import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
 import java.util.*;
-import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.function.BiFunction;
 import java.util.function.Consumer;
 import java.util.function.Function;
@@ -32,19 +31,21 @@ public abstract class ConfigFile {
     protected final List<ConfigFile> children;
     protected final boolean loadFromJar;
     protected final Updater updater;
-    protected AtomicBoolean modified;
+    protected ConfigFile parent;
+    protected boolean modified;
     protected boolean loaded;
 
     protected ConfigFile(BukkitPlugin plugin, String configPath, FileType fileType, boolean loadFromJar) {
         this.fileType = fileType;
         this.plugin = plugin;
         this.dataFile = fileType.create(plugin, configPath);
-        this.modified = new AtomicBoolean(false);
+        this.modified = false;
         this.loaded = false;
         this.values = new ArrayList<>();
         this.children = new ArrayList<>();
         this.loadFromJar = loadFromJar;
         this.updater = new Updater(this);
+        this.parent = null;
     }
 
     private <T> ConfigValue<T> addValue(ConfigValue<T> value) {
@@ -94,7 +95,7 @@ public abstract class ConfigFile {
 
     protected <T extends ConfigFile> T child(T configFile) {
         this.children.add(configFile);
-        configFile.modified = this.modified;
+        configFile.parent = this;
         return configFile;
     }
 
@@ -103,11 +104,12 @@ public abstract class ConfigFile {
     }
 
     public boolean isModified() {
-        return modified.get();
+        return modified;
     }
 
     public void setModified(boolean modified) {
-        this.modified.set(modified);
+        this.modified = modified;
+        if(this.parent != null) this.parent.setModified(true);
     }
 
     public boolean isLoaded() {
@@ -132,13 +134,14 @@ public abstract class ConfigFile {
 
     public boolean load() {
         if(isLoaded()) return false;
+        boolean success = true;
         if(!internalFileExists()) {
-            boolean success = true;
             if(loadFromJar) success &= internalLoadFromJar();
+            if(success) this.loaded = true;
             success &= internalSaveToDisk();
-            return success;
+        } else {
+            success = internalLoadFromDisk();
         }
-        final boolean success = internalLoadFromDisk();
         children.forEach(ConfigFile::load);
         return success;
     }
@@ -146,8 +149,8 @@ public abstract class ConfigFile {
     public boolean save() {
         if(!isLoaded()) return false;
         boolean success = internalSaveToDisk();
-        if(success) setModified(false);
         children.forEach(ConfigFile::save);
+        if(success) setModified(false);
         return success;
     }
 
