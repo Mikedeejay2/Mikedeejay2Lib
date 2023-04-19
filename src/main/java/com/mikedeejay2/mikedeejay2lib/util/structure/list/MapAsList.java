@@ -112,7 +112,6 @@ public class MapAsList<K, V> implements List<Map.Entry<K, V>> {
 
     @Override
     public Map.Entry<K, V> set(int index, Map.Entry<K, V> element) {
-        System.out.println("set");
         if(index >= map.size()) {
             add(element);
             return null;
@@ -134,7 +133,6 @@ public class MapAsList<K, V> implements List<Map.Entry<K, V>> {
 
     @Override
     public void add(int index, Map.Entry<K, V> element) {
-        System.out.println("add");
         new Exception().printStackTrace();
         if(index >= map.size()) {
             add(element);
@@ -155,7 +153,6 @@ public class MapAsList<K, V> implements List<Map.Entry<K, V>> {
 
     @Override
     public Map.Entry<K, V> remove(int index) {
-        System.out.println("remove");
         if(index >= map.size()) return null;
         final List<Map.Entry<K, V>> list = toListFull();
         clear();
