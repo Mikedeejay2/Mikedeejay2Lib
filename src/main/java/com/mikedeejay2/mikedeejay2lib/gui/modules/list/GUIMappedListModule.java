@@ -2,11 +2,9 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules.list;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
-import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.jetbrains.annotations.Nullable;
 
 import java.util.List;
@@ -38,19 +36,24 @@ public class GUIMappedListModule<T> extends GUIListModule {
     protected int lastMapHashcode;
 
     /**
+     * Whether items currently being added to the list should be unmapped
+     */
+    protected boolean shouldUnmap;
+
+    /**
      * Construct a new <code>GUIMappedListModule</code>
      *
-     * @param plugin             Reference to the <code>BukkitPlugin</code> of the plugin
-     * @param viewMode           The {@link ListViewMode} to used
+     * @param plugin       Reference to the <code>BukkitPlugin</code> of the plugin
+     * @param viewMode     The {@link ListViewMode} to used
      * @param unmappedList The unmapped list
-     * @param mapFunction        The mapping function that takes items from The unmapped list and maps them to
-     *                           {@link GUIItem GUIItems}.
-     * @param topRow             The top row of the list's bounding box
-     * @param bottomRow          The bottom row of the list's bounding box
-     * @param leftCol            The left column of the list's bounding box
-     * @param rightCol           The right column of the list's bounding box
-     * @param layerName          The name of the <code>GUILayer</code> that will be used, useful for if there are multiple lists
-     *                           in one GUI
+     * @param mapFunction  The mapping function that takes items from The unmapped list and maps them to
+     *                     {@link GUIItem GUIItems}.
+     * @param topRow       The top row of the list's bounding box
+     * @param bottomRow    The bottom row of the list's bounding box
+     * @param leftCol      The left column of the list's bounding box
+     * @param rightCol     The right column of the list's bounding box
+     * @param layerName    The name of the <code>GUILayer</code> that will be used, useful for if there are multiple lists
+     *                     in one GUI
      */
     public GUIMappedListModule(
         BukkitPlugin plugin,
@@ -69,15 +72,15 @@ public class GUIMappedListModule<T> extends GUIListModule {
     /**
      * Construct a new <code>GUIMappedListModule</code>
      *
-     * @param plugin             Reference to the <code>BukkitPlugin</code> of the plugin
-     * @param viewMode           The {@link ListViewMode} to used
+     * @param plugin       Reference to the <code>BukkitPlugin</code> of the plugin
+     * @param viewMode     The {@link ListViewMode} to used
      * @param unmappedList The unmapped list
-     * @param mapFunction        The mapping function that takes items from The unmapped list and maps them to
-     *                           {@link GUIItem GUIItems}.
-     * @param topRow             The top row of the list's bounding box
-     * @param bottomRow          The bottom row of the list's bounding box
-     * @param leftCol            The left column of the list's bounding box
-     * @param rightCol           The right column of the list's bounding box
+     * @param mapFunction  The mapping function that takes items from The unmapped list and maps them to
+     *                     {@link GUIItem GUIItems}.
+     * @param topRow       The top row of the list's bounding box
+     * @param bottomRow    The bottom row of the list's bounding box
+     * @param leftCol      The left column of the list's bounding box
+     * @param rightCol     The right column of the list's bounding box
      */
     public GUIMappedListModule(
         BukkitPlugin plugin,
@@ -129,103 +132,62 @@ public class GUIMappedListModule<T> extends GUIListModule {
         this.unmappedList = unmappedCollection;
         this.mapFunction = mapFunction;
         this.lastMapHashcode = unmappedCollection.hashCode();
+        this.shouldUnmap = true;
+        addListener(new MappingListener<>(this));
     }
 
+    /**
+     * Overridden method to map list upon a GUI update
+     *
+     * @param player The player that is viewing the GUI
+     * @param gui    The GUI
+     */
     @Override
     public void onOpenHead(Player player, GUIContainer gui) {
         this.mapList();
         super.onOpenHead(player, gui);
     }
 
+    /**
+     * Overridden method to map list upon a GUI update
+     *
+     * @param player The player that is viewing the GUI
+     * @param gui    The GUI
+     */
     @Override
     public void onUpdateHead(Player player, GUIContainer gui) {
         if(hasChanged()) mapList();
         super.onUpdateHead(player, gui);
     }
 
-    @Override
-    public void onClickedTail(InventoryClickEvent event, GUIContainer gui) {
-        if(event.getClickedInventory() != event.getInventory()) return;
-        GUILayer layer = gui.getLayer(layerName);
-        int slot = event.getSlot();
-        int row = layer.getRowFromSlot(slot);
-        int col = layer.getColFromSlot(slot);
-        GUIItem item = getItem(row, col, gui);
-        if(item == null) return;
-        int index = getListItemIndex(row, col, gui);
-        setFromUnmapped(index, item);
-    }
-
-    @Override
-    public void addListItem(GUIItem item) {
-        addToUnmapped(list.size(), item);
-        super.addListItem(item);
-    }
-
-    @Override
-    public void addListItem(int row, int col, GUIContainer gui, GUIItem item) {
-        int index = getListItemIndex(row, col, gui);
-        addToUnmapped(index, item);
-        super.addListItem(row, col, gui, item);
-    }
-
-    @Override
-    public void addListItem(int index, GUIItem item) {
-        addToUnmapped(index, item);
-        super.addListItem(index, item);
-    }
-
-    @Override
-    public void changeGUIItem(GUIItem item, int row, int col, GUIContainer gui) {
-        int index = getListItemIndex(row, col, gui);
-        setFromUnmapped(index, item);
-        super.changeGUIItem(item, row, col, gui);
-    }
-
-    @Override
-    public void setGUIItems(List<GUIItem> items) {
-        for(int i = 0; i < list.size(); ++i) {
-            removeFromUnmapped(i, list.get(i));
-        }
-        for(int i = 0; i < items.size(); ++i) {
-            addToUnmapped(i, items.get(i));
-        }
-        super.setGUIItems(items);
-    }
-
-    @Override
-    public void removeListItem(int index) {
-        removeFromUnmapped(index, getItem(index));
-        super.removeListItem(index);
-    }
-
-    @Override
-    public void removeListItem(GUIItem item) {
-        if(!list.contains(item)) return;
-        int index = list.indexOf(item);
-        removeFromUnmapped(index, item);
-        super.removeListItem(item);
-    }
-
-    @Override
-    public void removeListItem(int row, int col, GUIContainer gui) {
-        int index = getListItemIndex(row, col, gui);
-        GUIItem item = getItem(index);
-        removeFromUnmapped(index, item);
-        super.removeListItem(row, col, gui);
-    }
-
+    /**
+     * Add a {@link GUIItem} to the unmapped list
+     *
+     * @param index The index being added
+     * @param item  The item being added
+     */
     private void addToUnmapped(int index, GUIItem item) {
         if(unmapFunction == null) return;
         unmappedList.add(index, unmapFunction.apply(item));
     }
 
-    private void removeFromUnmapped(int index, GUIItem item) {
+    /**
+     * Remove a {@link GUIItem} from the unmapped list
+     *
+     * @param index The index being removed
+     */
+    private void removeFromUnmapped(int index) {
         if(unmapFunction == null) return;
         unmappedList.remove(index);
     }
 
-    private void setFromUnmapped(int index, GUIItem item) {
+    /**
+     * Set a {@link GUIItem} to the unmapped list
+     *
+     * @param index The index being set
+     * @param item  The item being set
+     */
+    private void setToUnmapped(int index, GUIItem item) {
         if(unmapFunction == null) return;
         unmappedList.set(index, unmapFunction.apply(item));
     }
@@ -235,11 +197,13 @@ public class GUIMappedListModule<T> extends GUIListModule {
      * changes have been made to the {@link GUIItem} list, they will not be reflected upon a mapping update.
      */
     protected void mapList() {
+        shouldUnmap = false;
         resetList();
         for(T unmappedObj : unmappedList) {
             super.addListItem(mapFunction.apply(unmappedObj));
         }
         this.lastMapHashcode = unmappedList.hashCode();
+        shouldUnmap = true;
     }
 
     /**
@@ -305,5 +269,64 @@ public class GUIMappedListModule<T> extends GUIListModule {
      */
     public void setUnmapFunction(@Nullable Function<GUIItem, T> unmapFunction) {
         this.unmapFunction = unmapFunction;
+    }
+
+    /**
+     * A listener for listening to adding items to the list. This listener unmaps new items to the unmapped list to
+     * maintain synchronization between the mapped and unmapped lists.
+     *
+     * @param <T> The type being maintained by the unmapped list
+     * @author Mikedeejay2
+     */
+    private static final class MappingListener<T> implements Listener {
+        /**
+         * The mapped list module
+         */
+        private final GUIMappedListModule<T> list;
+
+        /**
+         * Internal constructor
+         *
+         * @param list The mapped list module
+         */
+        private MappingListener(GUIMappedListModule<T> list) {
+            this.list = list;
+        }
+
+        /**
+         * Add an item to the unmapped items list
+         *
+         * @param item  The item being added
+         * @param index The index that the item is being added to
+         */
+        @Override
+        public void onAddItem(GUIItem item, int index) {
+            if(!list.shouldUnmap) return;
+            list.addToUnmapped(index, item);
+        }
+
+        /**
+         * Remove an item from the unmapped items list
+         *
+         * @param item  The item being added
+         * @param index The index that the item is being added to
+         */
+        @Override
+        public void onRemoveItem(GUIItem item, int index) {
+            if(!list.shouldUnmap) return;
+            list.removeFromUnmapped(index);
+        }
+
+        /**
+         * Set an item to the unmapped items list
+         *
+         * @param item  The item being added
+         * @param index The index that the item is being added to
+         */
+        @Override
+        public void onSetItem(GUIItem item, int index) {
+            if(!list.shouldUnmap) return;
+            list.setToUnmapped(index, item);
+        }
     }
 }

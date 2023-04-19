@@ -480,9 +480,8 @@ public class GUIListModule implements GUIModule {
         int viewOffset = getViewOffset();
         int index = gui.getSlotFromRowCol(row-2, col-1) + viewOffset;
         GUIItem prevItem = list.set(index, item);
-        if(prevItem != null) listeners.forEach(listener -> listener.onRemoveItem(prevItem, index));
         changed = true;
-        listeners.forEach(listener -> listener.onAddItem(item, index));
+        listeners.forEach(listener -> listener.onSetItem(item, index));
     }
 
     /**
@@ -579,8 +578,9 @@ public class GUIListModule implements GUIModule {
      * @param item The <code>GUIItem</code> to set
      */
     public void setItem(int slot, GUIItem item) {
-        removeListItem(slot);
-        addListItem(slot, item);
+        list.set(slot, item);
+        changed = true;
+        listeners.forEach(listener -> listener.onSetItem(item, slot));
     }
 
     /**
@@ -591,8 +591,10 @@ public class GUIListModule implements GUIModule {
      * @param item The <code>GUIItem</code> to set
      */
     public void setItem(int row, int col, GUIContainer gui, GUIItem item) {
-        removeListItem(row, col, gui);
-        addListItem(row, col, gui, item);
+        int index = getListItemIndex(row, col, gui);
+        list.set(index, item);
+        changed = true;
+        listeners.forEach(listener -> listener.onSetItem(item, index));
     }
 
     /**
@@ -606,8 +608,9 @@ public class GUIListModule implements GUIModule {
     public void removeListItem(int row, int col, GUIContainer gui) {
         int index = getListItemIndex(row, col, gui);
         List<GUIItem> list = this.list;
-        list.remove(index);
+        GUIItem item = list.remove(index);
         changed = true;
+        listeners.forEach(listener -> listener.onRemoveItem(item, index));
     }
 
     /**
@@ -1364,5 +1367,13 @@ public class GUIListModule implements GUIModule {
          * @param index The index that the item is being removed from
          */
         default void onRemoveItem(GUIItem item, int index) {}
+
+        /**
+         * Listen for items being set to an index in the list
+         *
+         * @param item  The item being set
+         * @param index The index that the item is being set to
+         */
+        default void onSetItem(GUIItem item, int index) {}
     }
 }
