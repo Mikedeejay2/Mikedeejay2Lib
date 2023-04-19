@@ -683,10 +683,10 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
     public void executeCloneStack(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
         GUIListModule list = gui.getModule(GUIListModule.class);
         if(inventory != gui.getInventory()) return;
-        Inventory playerInv = player.getInventory();
         int       row       = layer.getRowFromSlot(slot);
         int       col       = layer.getColFromSlot(slot);
         GUIItem   guiItem   = list.getItem(row, col, gui);
+        if(guiItem == null) return;
         ItemStack item      = guiItem.get(player).clone();
         int       maxAmount = limit == -1 ? item.getMaxStackSize() : limit;
         item.setAmount(maxAmount);

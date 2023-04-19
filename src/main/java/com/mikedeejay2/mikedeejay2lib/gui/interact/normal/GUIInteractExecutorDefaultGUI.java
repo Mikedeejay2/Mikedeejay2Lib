@@ -651,6 +651,7 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor {
         int       row       = layer.getRowFromSlot(slot);
         int       col       = layer.getColFromSlot(slot);
         GUIItem   guiItem   = layer.getItem(row, col);
+        if(guiItem == null) return;
         ItemStack item      = guiItem.get(player).clone();
         int       maxAmount = limit == -1 ? item.getMaxStackSize() : limit;
         item.setAmount(maxAmount);
