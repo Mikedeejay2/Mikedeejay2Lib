@@ -510,7 +510,7 @@ public class GUIListModule implements GUIModule {
      *
      * @param index The index to the item that will be removed
      */
-    public void removeGUIItem(int index) {
+    public void removeListItem(int index) {
         GUIItem removedItem = list.remove(index);
         changed = true;
         listeners.forEach(listener -> listener.onRemoveItem(removedItem, index));
@@ -521,7 +521,7 @@ public class GUIListModule implements GUIModule {
      *
      * @param item The item to remove from this list
      */
-    public void removeGUIItem(GUIItem item) {
+    public void removeListItem(GUIItem item) {
         if(!list.contains(item)) return;
         int index = list.indexOf(item);
         list.remove(item);
@@ -570,6 +570,29 @@ public class GUIListModule implements GUIModule {
      */
     public GUIItem getItem(int slot) {
         return list.get(slot);
+    }
+
+    /**
+     * Set a list item to a slot in the list.
+     *
+     * @param slot The slot to set the item to
+     * @param item The <code>GUIItem</code> to set
+     */
+    public void setItem(int slot, GUIItem item) {
+        removeListItem(slot);
+        addListItem(slot, item);
+    }
+
+    /**
+     * Set a list item to a slot in the list.
+     *
+     * @param row The row to get the item from
+     * @param col The column to get the item from
+     * @param item The <code>GUIItem</code> to set
+     */
+    public void setItem(int row, int col, GUIContainer gui, GUIItem item) {
+        removeListItem(row, col, gui);
+        addListItem(row, col, gui, item);
     }
 
     /**

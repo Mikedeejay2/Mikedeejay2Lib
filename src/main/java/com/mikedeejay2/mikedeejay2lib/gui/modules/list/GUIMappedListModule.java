@@ -194,17 +194,17 @@ public class GUIMappedListModule<T> extends GUIListModule {
     }
 
     @Override
-    public void removeGUIItem(int index) {
+    public void removeListItem(int index) {
         removeFromUnmapped(index, getItem(index));
-        super.removeGUIItem(index);
+        super.removeListItem(index);
     }
 
     @Override
-    public void removeGUIItem(GUIItem item) {
+    public void removeListItem(GUIItem item) {
         if(!list.contains(item)) return;
         int index = list.indexOf(item);
         removeFromUnmapped(index, item);
-        super.removeGUIItem(item);
+        super.removeListItem(item);
     }
 
     @Override

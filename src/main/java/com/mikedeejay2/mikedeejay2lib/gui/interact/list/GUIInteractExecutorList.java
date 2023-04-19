@@ -153,6 +153,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         int           maxAmount  = limit == -1 ? bottomItem.getMaxStackSize() : limit;
         if(curAmount > maxAmount) {
             guiItem.setAmount(curAmount - maxAmount);
+            list.setItem(row, col, gui, guiItem);
             curAmount = maxAmount;
         } else list.removeListItem(row, col, gui);
         if(consume) {
@@ -186,6 +187,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         int           maxAmount    = limit == -1 ? cursorItem.getMaxStackSize() : limit;
         guiItem.setAmount(bottomAmount - (maxAmount - cursorAmount));
         if(guiItem.getAmount() <= 0) list.removeListItem(row, col, gui);
+        else list.setItem(row, col, gui, guiItem);
         if(consume) {
             cursorItem.setAmount(maxAmount);
             player.setItemOnCursor(cursorItem);
@@ -221,6 +223,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         }
         guiItem.setAmount(halfBottom);
         if(halfBottom <= 0) list.removeListItem(row, col, gui);
+        else list.setItem(row, col, gui, guiItem);
         if(consume) {
             cursorItem = bottomItem.clone();
             cursorItem.setAmount(halfTop);
@@ -258,6 +261,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         }
         guiItem.setAmount(bottomAmount - 1);
         if(bottomAmount - 1 <= 0) list.removeListItem(row, col, gui);
+        else list.setItem(row, col, gui, guiItem);
         if(consume) player.setItemOnCursor(cursorItem);
     }
 
@@ -315,6 +319,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
                 newAmount = maxAmount;
             }
             curItem.setAmount(newAmount);
+            list.setItem(row, col, gui, curItem);
             if(consume) cursorItem.setAmount(extraAmount);
         }
         if(consume) player.setItemOnCursor(cursorItem);
@@ -345,6 +350,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         int       bottomAmount = bottomItem.getAmount();
         int       maxAmount    = limit == -1 ? cursorItem.getMaxStackSize() : limit;
         guiItem.setAmount(maxAmount);
+        list.setItem(row, col, gui, guiItem);
         if(consume) {
             cursorItem.setAmount(bottomAmount - (maxAmount - cursorAmount));
             player.setItemOnCursor(cursorItem);
@@ -388,6 +394,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
             int maxAmount = limit == -1 ? guiItem.get(player).getMaxStackSize() : limit;
             if(guiItem.getAmount() >= maxAmount) return;
             guiItem.setAmount(guiItem.getAmount() + 1);
+            list.setItem(row, col, gui, guiItem);
         }
         if(consume) {
             cursorItem.setAmount(cursorAmount - 1);
@@ -419,6 +426,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         GUIItem   guiItem    = list.getItem(row, col, gui);
         ItemStack bottomItem = guiItem.get(player);
         guiItem.set(consume ? cursorItem : cursorItem.clone());
+        list.setItem(row, col, gui, guiItem);
         if(consume) player.setItemOnCursor(bottomItem);
     }
 
@@ -446,6 +454,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         int           maxAmount        = limit == -1 ? stack.getMaxStackSize() : limit;
         if(curAmount > maxAmount) {
             guiItem.setAmount(curAmount - maxAmount);
+            list.setItem(row, col, gui, guiItem);
             itemToDropAmount = maxAmount;
         }
         else list.removeListItem(row, col, gui);
@@ -480,6 +489,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         itemToDrop.setAmount(1);
         guiItem.setAmount(guiItem.getAmount() - 1);
         if(guiItem.getAmount() <= 0) list.removeListItem(row, col, gui);
+        else list.setItem(row, col, gui, guiItem);
 
         Location location = player.getEyeLocation();
         World    world    = location.getWorld();
@@ -570,6 +580,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
                 if(consume) itemToMove.setAmount(extraAmount);
                 itemToMoveAmt = extraAmount;
                 curGUIItem.setAmount(newAmount);
+                list.setItem(i, curGUIItem);
                 if(itemToMoveAmt <= 0) return;
             }
             if(itemToMoveAmt <= 0 || !layer.getDefaultMoveState()) return;
@@ -577,7 +588,6 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
             if(interactType == GUIInteractType.SINGLE_MATERIAL && list.containsMaterial(itemToMove.getType())) return;
             GUIItem guiItem = new GUIItem(itemToMove.clone());
             guiItem.setMovable(true);
-            list.addListItem(guiItem);
             int newAmount   = itemToMoveAmt;
             int extraAmount = 0;
             int maxAmount   = limit == -1 ? itemToMove.getMaxStackSize() : limit;
@@ -587,6 +597,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
             }
             if(consume) itemToMove.setAmount(extraAmount);
             guiItem.setAmount(newAmount);
+            list.addListItem(guiItem);
         }
     }
 
@@ -615,6 +626,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         int       maxAmount = limit == -1 ? hotbarItem.getMaxStackSize() : limit;
         if(hotbarItem.getAmount() > maxAmount) return;
         guiItem.set(hotbarItem);
+        list.setItem(row, col, gui, guiItem);
         if(consume) playerInv.setItem(hotbarSlot, topItem);
     }
 
@@ -666,6 +678,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         }
         if(nullGuiItem) {
             list.addListItem(guiItem);
+        } else {
+            list.setItem(row, col, gui, guiItem);
         }
     }
 
@@ -729,6 +743,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
                     cursorItem.setAmount(newAmount);
                     curGuiItem.setAmount(extraAmount);
                     if(extraAmount <= 0) list.removeListItem(row, col, gui);
+                    else list.setItem(row, col, gui, curGuiItem);
                     if(cursorItem.getAmount() == maxAmount) return;
                 }
             }
