@@ -133,7 +133,6 @@ public class MapAsList<K, V> implements List<Map.Entry<K, V>> {
 
     @Override
     public void add(int index, Map.Entry<K, V> element) {
-        new Exception().printStackTrace();
         if(index >= map.size()) {
             add(element);
             return;
