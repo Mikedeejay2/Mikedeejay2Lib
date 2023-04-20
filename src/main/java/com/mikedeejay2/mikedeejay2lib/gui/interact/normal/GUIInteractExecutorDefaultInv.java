@@ -369,6 +369,7 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
     public void executeHotbarSwap(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
         if(inventory != player.getInventory()) return;
         int       hotbarSlot = event.getHotbarButton();
+        if(hotbarSlot < 0) return;
         Inventory playerInv  = player.getInventory();
         ItemStack curItem    = playerInv.getItem(hotbarSlot);
         ItemStack item       = playerInv.getItem(slot);

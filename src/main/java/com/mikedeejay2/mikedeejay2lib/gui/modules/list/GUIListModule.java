@@ -477,8 +477,7 @@ public class GUIListModule implements GUIModule {
      * @param gui  The GUI to update
      */
     public void changeGUIItem(GUIItem item, int row, int col, GUIContainer gui) {
-        int viewOffset = getViewOffset();
-        int index = gui.getSlotFromRowCol(row-2, col-1) + viewOffset;
+        int index = getListItemIndex(row, col, gui);
         GUIItem prevItem = list.set(index, item);
         changed = true;
         listeners.forEach(listener -> listener.onSetItem(item, index));
@@ -530,7 +529,6 @@ public class GUIListModule implements GUIModule {
 
     /**
      * Get a list's index based off of its row and column in the GUI.
-     * Not recommended for use but included just in case.
      *
      * @param row The row to get the item from
      * @param col The column to get the item from
