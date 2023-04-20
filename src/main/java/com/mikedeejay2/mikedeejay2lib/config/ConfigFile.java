@@ -1013,6 +1013,9 @@ public class ConfigFile {
                 },
                 (accessor, name, map) -> {
                     final SectionAccessor<?, ?> section = accessor.getSection(name);
+                    for(String key : section.getKeys(false)) {
+                        section.delete(key);
+                    }
                     for(String key : map.keySet()) {
                         T value = map.get(key);
                         valueType.save(section, key, value);
