@@ -588,6 +588,7 @@ public class GUIListModule implements GUIModule {
      *
      * @param row The row to get the item from
      * @param col The column to get the item from
+     * @param gui The <code>GUIContainer</code> that this list is located in
      * @param item The <code>GUIItem</code> to set
      */
     public void setItem(int row, int col, GUIContainer gui, GUIItem item) {
