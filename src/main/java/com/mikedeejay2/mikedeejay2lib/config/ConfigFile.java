@@ -247,6 +247,141 @@ public class ConfigFile {
     }
 
     /**
+     * Add a {@link ConfigValueBoolean} to this config.
+     *
+     * @param type         The {@link ConfigValueBoolean} of the value
+     * @param path         The path to the value in the file. This includes depth, separated by a <code>.</code> for
+     *                     each level. For example, "<code>root.level1.level2.name</code>"
+     * @param defaultValue The default value to use if a value is not on the disk or in the jar file
+     * @return The new {@link ConfigValueBoolean}
+     */
+    protected ConfigValueBoolean valueBoolean(ValueType<Boolean> type, String path, boolean defaultValue) {
+        final ConfigValueBoolean value = new ConfigValueBoolean(this, type, path, defaultValue);
+        this.values.add(value);
+        return value;
+    }
+
+    /**
+     * Add a {@link ConfigValueBoolean} to this config.
+     *
+     * @param type The {@link ConfigValueBoolean} of the value
+     * @param path The path to the value in the file. This includes depth, separated by a <code>.</code> for
+     *             each level. For example, "<code>root.level1.level2.name</code>"
+     * @return The new {@link ConfigValueBoolean}
+     */
+    protected ConfigValueBoolean valueBoolean(ValueType<Boolean> type, String path) {
+        return valueBoolean(type, path, false);
+    }
+
+    /**
+     * Add a {@link ConfigValueInteger} to this config.
+     *
+     * @param type         The {@link ConfigValueInteger} of the value
+     * @param path         The path to the value in the file. This includes depth, separated by a <code>.</code> for
+     *                     each level. For example, "<code>root.level1.level2.name</code>"
+     * @param defaultValue The default value to use if a value is not on the disk or in the jar file
+     * @return The new {@link ConfigValueInteger}
+     */
+    protected ConfigValueInteger valueInteger(ValueType<Integer> type, String path, int defaultValue) {
+        final ConfigValueInteger value = new ConfigValueInteger(this, type, path, defaultValue);
+        this.values.add(value);
+        return value;
+    }
+
+    /**
+     * Add a {@link ConfigValueInteger} to this config.
+     *
+     * @param type The {@link ConfigValueInteger} of the value
+     * @param path The path to the value in the file. This includes depth, separated by a <code>.</code> for
+     *             each level. For example, "<code>root.level1.level2.name</code>"
+     * @return The new {@link ConfigValueInteger}
+     */
+    protected ConfigValueInteger valueInteger(ValueType<Integer> type, String path) {
+        return valueInteger(type, path, 0);
+    }
+
+    /**
+     * Add a {@link ConfigValueFloat} to this config.
+     *
+     * @param type         The {@link ConfigValueFloat} of the value
+     * @param path         The path to the value in the file. This includes depth, separated by a <code>.</code> for
+     *                     each level. For example, "<code>root.level1.level2.name</code>"
+     * @param defaultValue The default value to use if a value is not on the disk or in the jar file
+     * @return The new {@link ConfigValueFloat}
+     */
+    protected ConfigValueFloat valueFloat(ValueType<Float> type, String path, float defaultValue) {
+        final ConfigValueFloat value = new ConfigValueFloat(this, type, path, defaultValue);
+        this.values.add(value);
+        return value;
+    }
+
+    /**
+     * Add a {@link ConfigValueFloat} to this config.
+     *
+     * @param type The {@link ConfigValueFloat} of the value
+     * @param path The path to the value in the file. This includes depth, separated by a <code>.</code> for
+     *             each level. For example, "<code>root.level1.level2.name</code>"
+     * @return The new {@link ConfigValueFloat}
+     */
+    protected ConfigValueFloat valueFloat(ValueType<Float> type, String path) {
+        return valueFloat(type, path, 0.0f);
+    }
+
+    /**
+     * Add a {@link ConfigValueDouble} to this config.
+     *
+     * @param type         The {@link ConfigValueDouble} of the value
+     * @param path         The path to the value in the file. This includes depth, separated by a <code>.</code> for
+     *                     each level. For example, "<code>root.level1.level2.name</code>"
+     * @param defaultValue The default value to use if a value is not on the disk or in the jar file
+     * @return The new {@link ConfigValueDouble}
+     */
+    protected ConfigValueDouble valueDouble(ValueType<Double> type, String path, double defaultValue) {
+        final ConfigValueDouble value = new ConfigValueDouble(this, type, path, defaultValue);
+        this.values.add(value);
+        return value;
+    }
+
+    /**
+     * Add a {@link ConfigValueDouble} to this config.
+     *
+     * @param type The {@link ConfigValueDouble} of the value
+     * @param path The path to the value in the file. This includes depth, separated by a <code>.</code> for
+     *             each level. For example, "<code>root.level1.level2.name</code>"
+     * @return The new {@link ConfigValueDouble}
+     */
+    protected ConfigValueDouble valueDouble(ValueType<Double> type, String path) {
+        return valueDouble(type, path, 0.0);
+    }
+
+    /**
+     * Add a {@link ConfigValueLong} to this config.
+     *
+     * @param type         The {@link ConfigValueLong} of the value
+     * @param path         The path to the value in the file. This includes depth, separated by a <code>.</code> for
+     *                     each level. For example, "<code>root.level1.level2.name</code>"
+     * @param defaultValue The default value to use if a value is not on the disk or in the jar file
+     * @return The new {@link ConfigValueLong}
+     */
+    protected ConfigValueLong valueLong(ValueType<Long> type, String path, long defaultValue) {
+        final ConfigValueLong value = new ConfigValueLong(this, type, path, defaultValue);
+        this.values.add(value);
+        return value;
+    }
+
+    /**
+     * Add a {@link ConfigValueLong} to this config.
+     *
+     * @param type The {@link ConfigValueLong} of the value
+     * @param path The path to the value in the file. This includes depth, separated by a <code>.</code> for
+     *             each level. For example, "<code>root.level1.level2.name</code>"
+     * @return The new {@link ConfigValueLong}
+     */
+    protected ConfigValueLong valueLong(ValueType<Long> type, String path) {
+        return valueLong(type, path, 0L);
+    }
+
+    /**
      * Add a {@link ConfigFile} child to this config. The child will be controlled by the parent config and will follow
      * all actions of the parent, such as saving and loading.
      *
@@ -749,6 +884,306 @@ public class ConfigFile {
                 this.value.clear();
                 this.value.putAll(loaded);
             }
+        }
+    }
+
+    /**
+     * A configuration value for a primitive boolean.
+     *
+     * @see ConfigValue
+     * @author Mikedeejay2
+     */
+    public static class ConfigValueBoolean extends ConfigValue<Boolean> {
+        /**
+         * The boolean value
+         */
+        private boolean value;
+
+        private ConfigValueBoolean(ConfigFile file, ValueType<Boolean> type, String path, boolean defaultValue) {
+            super(file, type, path, defaultValue);
+            this.value = defaultValue;
+        }
+
+        /**
+         * Get the boolean value
+         *
+         * @return The boolean value
+         */
+        public boolean getBoolean() {
+            return value;
+        }
+
+        /**
+         * Set the boolean value
+         *
+         * @param value The new boolean value
+         */
+        public void setBoolean(boolean value) {
+            this.value = value;
+        }
+
+        @Override
+        @Deprecated
+        public Boolean get() {
+            return getBoolean();
+        }
+
+        @Override
+        @Deprecated
+        public void set(Boolean value) {
+            setBoolean(value);
+        }
+
+        @Override
+        protected void load() {
+            super.load();
+            this.value = super.value;
+        }
+
+        @Override
+        protected void save() {
+            super.value = this.value;
+            super.save();
+        }
+    }
+
+    /**
+     * A configuration value for a primitive integer.
+     *
+     * @see ConfigValue
+     * @author Mikedeejay2
+     */
+    public static class ConfigValueInteger extends ConfigValue<Integer> {
+        /**
+         * The integer value
+         */
+        private int value;
+
+        private ConfigValueInteger(ConfigFile file, ValueType<Integer> type, String path, int defaultValue) {
+            super(file, type, path, defaultValue);
+            this.value = defaultValue;
+        }
+
+        /**
+         * Get the integer value
+         *
+         * @return The integer value
+         */
+        public int getInteger() {
+            return value;
+        }
+
+        /**
+         * Set the integer value
+         *
+         * @param value The new integer value
+         */
+        public void setInteger(int value) {
+            this.value = value;
+        }
+
+        @Override
+        @Deprecated
+        public Integer get() {
+            return getInteger();
+        }
+
+        @Override
+        @Deprecated
+        public void set(Integer value) {
+            setInteger(value);
+        }
+
+        @Override
+        protected void load() {
+            super.load();
+            this.value = super.value;
+        }
+
+        @Override
+        protected void save() {
+            super.value = this.value;
+            super.save();
+        }
+    }
+
+    /**
+     * A configuration value for a primitive float.
+     *
+     * @see ConfigValue
+     * @author Mikedeejay2
+     */
+    public static class ConfigValueFloat extends ConfigValue<Float> {
+        /**
+         * The float value
+         */
+        private float value;
+
+        private ConfigValueFloat(ConfigFile file, ValueType<Float> type, String path, float defaultValue) {
+            super(file, type, path, defaultValue);
+            this.value = defaultValue;
+        }
+
+        /**
+         * Get the float value
+         *
+         * @return The float value
+         */
+        public float getFloat() {
+            return value;
+        }
+
+        /**
+         * Set the float value
+         *
+         * @param value The new float value
+         */
+        public void setFloat(float value) {
+            this.value = value;
+        }
+
+        @Override
+        @Deprecated
+        public Float get() {
+            return getFloat();
+        }
+
+        @Override
+        @Deprecated
+        public void set(Float value) {
+            setFloat(value);
+        }
+
+        @Override
+        protected void load() {
+            super.load();
+            this.value = super.value;
+        }
+
+        @Override
+        protected void save() {
+            super.value = this.value;
+            super.save();
+        }
+    }
+
+    /**
+     * A configuration value for a primitive double.
+     *
+     * @see ConfigValue
+     * @author Mikedeejay2
+     */
+    public static class ConfigValueDouble extends ConfigValue<Double> {
+        /**
+         * The double value
+         */
+        private double value;
+
+        private ConfigValueDouble(ConfigFile file, ValueType<Double> type, String path, double defaultValue) {
+            super(file, type, path, defaultValue);
+            this.value = defaultValue;
+        }
+
+        /**
+         * Get the double value
+         *
+         * @return The double value
+         */
+        public double getDouble() {
+            return value;
+        }
+
+        /**
+         * Set the double value
+         *
+         * @param value The new double value
+         */
+        public void setDouble(double value) {
+            this.value = value;
+        }
+
+        @Override
+        @Deprecated
+        public Double get() {
+            return getDouble();
+        }
+
+        @Override
+        @Deprecated
+        public void set(Double value) {
+            setDouble(value);
+        }
+
+        @Override
+        protected void load() {
+            super.load();
+            this.value = super.value;
+        }
+
+        @Override
+        protected void save() {
+            super.value = this.value;
+            super.save();
+        }
+    }
+
+    /**
+     * A configuration value for a primitive long.
+     *
+     * @see ConfigValue
+     * @author Mikedeejay2
+     */
+    public static class ConfigValueLong extends ConfigValue<Long> {
+        /**
+         * The long value
+         */
+        private long value;
+
+        private ConfigValueLong(ConfigFile file, ValueType<Long> type, String path, long defaultValue) {
+            super(file, type, path, defaultValue);
+            this.value = defaultValue;
+        }
+
+        /**
+         * Get the long value
+         *
+         * @return The long value
+         */
+        public long getLong() {
+            return value;
+        }
+
+        /**
+         * Set the long value
+         *
+         * @param value The new long value
+         */
+        public void setLong(long value) {
+            this.value = value;
+        }
+
+        @Override
+        @Deprecated
+        public Long get() {
+            return getLong();
+        }
+
+        @Override
+        @Deprecated
+        public void set(Long value) {
+            setLong(value);
+        }
+
+        @Override
+        protected void load() {
+            super.load();
+            this.value = super.value;
+        }
+
+        @Override
+        protected void save() {
+            super.value = this.value;
+            super.save();
         }
     }
 
