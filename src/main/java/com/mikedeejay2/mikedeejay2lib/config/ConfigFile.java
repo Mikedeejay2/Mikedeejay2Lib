@@ -536,6 +536,7 @@ public class ConfigFile {
      */
     public boolean reset() {
         if(!internalDelete()) return false;
+        values.forEach(ConfigValue::reset);
         final boolean success = load();
         children.forEach(ConfigFile::reset);
         return success;
@@ -707,6 +708,11 @@ public class ConfigFile {
         protected final String name;
 
         /**
+         * The default value. Will be used upon initialization or upon reset.
+         */
+        protected T defaultValue;
+
+        /**
          * The value being stored. Data type is specified via {@link ValueType}.
          */
         protected T value;
@@ -725,6 +731,7 @@ public class ConfigFile {
             this.type = type;
             this.path = path;
             this.name = file.getName(path);
+            this.defaultValue = defaultValue;
             this.value = defaultValue;
         }
 
@@ -738,13 +745,22 @@ public class ConfigFile {
         }
 
         /**
+         * Get the default value.
+         *
+         * @return The default value
+         */
+        public T getDefaultValue() {
+            return defaultValue;
+        }
+
+        /**
          * Set the value. This method will automatically set the parent {@link ConfigFile} as modified.
          *
          * @param value The new value
          */
         public void set(T value) {
             this.value = value;
-            this.file.setModified(false);
+            this.file.setModified(true);
         }
 
         /**
@@ -760,6 +776,10 @@ public class ConfigFile {
          */
         protected void save() {
             this.type.save(file.getAccessor(path), name, value);
+        }
+
+        protected void reset() {
+            set(defaultValue);
         }
 
         /**
@@ -842,6 +862,12 @@ public class ConfigFile {
                 this.value.addAll(loaded);
             }
         }
+
+        @Override
+        protected void reset() {
+            this.value.clear();
+            this.file.setModified(true);
+        }
     }
 
     /**
@@ -884,6 +910,12 @@ public class ConfigFile {
                 this.value.clear();
                 this.value.putAll(loaded);
             }
+        }
+
+        @Override
+        protected void reset() {
+            this.value.clear();
+            this.file.setModified(true);
         }
     }
 
@@ -932,6 +964,11 @@ public class ConfigFile {
         @Deprecated
         public void set(Boolean value) {
             setBoolean(value);
+        }
+
+        @Override
+        protected void reset() {
+            this.value = defaultValue;
         }
 
         @Override
@@ -995,6 +1032,11 @@ public class ConfigFile {
         }
 
         @Override
+        protected void reset() {
+            this.value = defaultValue;
+        }
+
+        @Override
         protected void load() {
             super.load();
             this.value = super.value;
@@ -1052,6 +1094,11 @@ public class ConfigFile {
         @Deprecated
         public void set(Float value) {
             setFloat(value);
+        }
+
+        @Override
+        protected void reset() {
+            this.value = defaultValue;
         }
 
         @Override
@@ -1115,6 +1162,11 @@ public class ConfigFile {
         }
 
         @Override
+        protected void reset() {
+            this.value = defaultValue;
+        }
+
+        @Override
         protected void load() {
             super.load();
             this.value = super.value;
@@ -1172,6 +1224,11 @@ public class ConfigFile {
         @Deprecated
         public void set(Long value) {
             setLong(value);
+        }
+
+        @Override
+        protected void reset() {
+            this.value = defaultValue;
         }
 
         @Override
