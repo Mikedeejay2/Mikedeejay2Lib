@@ -284,8 +284,14 @@ public class CrashReport {
 
         if(throwable != null) {
             builder.append(throwable).append("\n")
-                .append(formatStackTrace(throwable.getStackTrace()))
-                .append("\n");
+                .append(formatStackTrace(throwable.getStackTrace()));
+            Throwable cause = throwable.getCause();
+            while(cause != null) {
+                builder.append("Caused by: ").append(cause).append("\n")
+                    .append(formatStackTrace(cause.getStackTrace()));
+                cause = cause.getCause();
+            }
+            builder.append("\n");
         }
         builder.append("A detailed walkthrough of the error, its code path and all known details is as follows:\n");
         builder.append("---------------------------------------------------------------------------------------\n");
