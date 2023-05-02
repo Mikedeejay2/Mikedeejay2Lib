@@ -262,7 +262,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem set(ItemStack item) {
-        this.item.set(item);
+        this.item = this.item.set(item);
         this.setChanged(true);
         return this;
     }
@@ -286,7 +286,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem setMeta(ItemMeta meta) {
-        this.item.setMeta(meta);
+        this.item = this.item.setMeta(meta);
         this.setChanged(true);
         return this;
     }
@@ -313,14 +313,14 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem setName(String name) {
-        this.item.setName(name);
+        this.item = this.item.setName(name);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem setName(Text text) {
-        this.item.setName(text);
+        this.item = this.item.setName(text);
         this.setChanged(true);
         return this;
     }
@@ -332,7 +332,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem setAmount(int amount) {
-        this.item.setAmount(amount);
+        this.item = this.item.setAmount(amount);
         this.setChanged(true);
         return this;
     }
@@ -344,7 +344,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem setType(Material material) {
-        this.item.setType(material);
+        this.item = this.item.setType(material);
         this.setChanged(true);
         return this;
     }
@@ -376,84 +376,84 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem setLore(List<String> lore) {
-        this.item.setLore(lore);
+        this.item = this.item.setLore(lore);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem setLore(String... lore) {
-        this.item.setLore(lore);
+        this.item = this.item.setLore(lore);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem setLoreText(List<Text> lore) {
-        this.item.setLoreText(lore);
+        this.item = this.item.setLoreText(lore);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem setLore(Text... lore) {
-        this.item.setLore(lore);
+        this.item = this.item.setLore(lore);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem addLore(List<String> lore) {
-        this.item.addLore(lore);
+        this.item = this.item.addLore(lore);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem addLore(String... lore) {
-        this.item.addLore(lore);
+        this.item = this.item.addLore(lore);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem addLore(int index, List<String> lore) {
-        this.item.addLore(index, lore);
+        this.item = this.item.addLore(index, lore);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem addLore(int index, String... lore) {
-        this.item.addLore(index, lore);
+        this.item = this.item.addLore(index, lore);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem addLoreText(List<Text> lore) {
-        this.item.addLoreText(lore);
+        this.item = this.item.addLoreText(lore);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem addLore(Text... lore) {
-        this.item.addLore(lore);
+        this.item = this.item.addLore(lore);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem addLoreText(int index, List<Text> lore) {
-        this.item.addLoreText(index, lore);
+        this.item = this.item.addLoreText(index, lore);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem addLore(int index, Text... lore) {
-        this.item.addLore(index, lore);
+        this.item = this.item.addLore(index, lore);
         this.setChanged(true);
         return this;
     }
@@ -475,14 +475,14 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem removeEnchant(Enchantment enchantment) {
-        this.item.removeEnchant(enchantment);
+        this.item = this.item.removeEnchant(enchantment);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem addEnchant(Enchantment enchantment, int level) {
-        this.item.addEnchant(enchantment, level);
+        this.item = this.item.addEnchant(enchantment, level);
         this.setChanged(true);
         return this;
     }
@@ -494,14 +494,14 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem addItemFlags(ItemFlag... flags) {
-        this.item.addItemFlags(flags);
+        this.item = this.item.addItemFlags(flags);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem removeItemFlags(ItemFlag... flags) {
-        this.item.removeItemFlags(flags);
+        this.item = this.item.removeItemFlags(flags);
         this.setChanged(true);
         return this;
     }
@@ -518,35 +518,35 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem addItemFlag(ItemFlag flag) {
-        this.item.addItemFlag(flag);
+        this.item = this.item.addItemFlag(flag);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem addGlow() {
-        this.item.addGlow();
+        this.item = this.item.addGlow();
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem removeGlow() {
-        this.item.removeGlow();
+        this.item = this.item.removeGlow();
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem setEmptyName() {
-        this.item.setEmptyName();
+        this.item = this.item.setEmptyName();
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem setUnbreakable(boolean unbreakable) {
-        this.item.setUnbreakable(unbreakable);
+        this.item = this.item.setUnbreakable(unbreakable);
         this.setChanged(true);
         return this;
     }
@@ -563,7 +563,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem setHeadOwner(OfflinePlayer player) {
-        this.item.setHeadOwner(player);
+        this.item = this.item.setHeadOwner(player);
         this.setChanged(true);
         return this;
     }
@@ -575,7 +575,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem setHeadBase64(String base64) {
-        this.item.setHeadBase64(base64);
+        this.item = this.item.setHeadBase64(base64);
         this.setChanged(true);
         return this;
     }
@@ -602,63 +602,63 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem addAttributeModifier(Attribute attribute, AttributeModifier modifier) {
-        this.item.addAttributeModifier(attribute, modifier);
+        this.item = this.item.addAttributeModifier(attribute, modifier);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem addAttributeModifiers(Attribute attribute, AttributeModifier... modifiers) {
-        this.item.addAttributeModifiers(attribute, modifiers);
+        this.item = this.item.addAttributeModifiers(attribute, modifiers);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem setAttributeModifiers(Multimap<Attribute, AttributeModifier> attributeModifiers) {
-        this.item.setAttributeModifiers(attributeModifiers);
+        this.item = this.item.setAttributeModifiers(attributeModifiers);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem removeAttributeModifier(Attribute attribute) {
-        this.item.removeAttributeModifier(attribute);
+        this.item = this.item.removeAttributeModifier(attribute);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem removeAttributeModifiers(Attribute... attributes) {
-        this.item.removeAttributeModifiers(attributes);
+        this.item = this.item.removeAttributeModifiers(attributes);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem removeAttributeModifier(EquipmentSlot slot) {
-        this.item.removeAttributeModifier(slot);
+        this.item = this.item.removeAttributeModifier(slot);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem removeAttributeModifiers(EquipmentSlot... slots) {
-        this.item.removeAttributeModifiers(slots);
+        this.item = this.item.removeAttributeModifiers(slots);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem removeAttributeModifier(Attribute attribute, AttributeModifier modifier) {
-        this.item.removeAttributeModifier(attribute, modifier);
+        this.item = this.item.removeAttributeModifier(attribute, modifier);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem removeAttributeModifiers(Attribute attribute, AttributeModifier... modifiers) {
-        this.item.removeAttributeModifiers(attribute, modifiers);
+        this.item = this.item.removeAttributeModifiers(attribute, modifiers);
         this.setChanged(true);
         return this;
     }
@@ -670,7 +670,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem setCustomModelData(Integer data) {
-        this.item.setCustomModelData(data);
+        this.item = this.item.setCustomModelData(data);
         this.setChanged(true);
         return this;
     }
@@ -687,7 +687,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem setLocalizedName(String name) {
-        this.item.setLocalizedName(name);
+        this.item = this.item.setLocalizedName(name);
         this.setChanged(true);
         return this;
     }
@@ -709,7 +709,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem setDisplayName(String name) {
-        this.item.setDisplayName(name);
+        this.item = this.item.setDisplayName(name);
         this.setChanged(true);
         return this;
     }
@@ -726,7 +726,7 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem setDurability(int durability) {
-        this.item.setDurability(durability);
+        this.item = this.item.setDurability(durability);
         this.setChanged(true);
         return this;
     }
@@ -743,14 +743,14 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public <Y, Z> GUIItem setData(NamespacedKey key, PersistentDataType<Y, Z> type, Z value) {
-        this.item.setData(key, type, value);
+        this.item = this.item.setData(key, type, value);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public <Y, Z> GUIItem setData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z value) {
-        this.item.setData(plugin, key, type, value);
+        this.item = this.item.setData(plugin, key, type, value);
         this.setChanged(true);
         return this;
     }
@@ -787,28 +787,28 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
 
     @Override
     public GUIItem removeData(NamespacedKey key) {
-        this.item.removeData(key);
+        this.item = this.item.removeData(key);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem removeData(BukkitPlugin plugin, String key) {
-        this.item.removeData(plugin, key);
+        this.item = this.item.removeData(plugin, key);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem removeData(NamespacedKey... keys) {
-        this.item.removeData(keys);
+        this.item = this.item.removeData(keys);
         this.setChanged(true);
         return this;
     }
 
     @Override
     public GUIItem removeData(BukkitPlugin plugin, String... keys) {
-        this.item.removeData(plugin, keys);
+        this.item = this.item.removeData(plugin, keys);
         this.setChanged(true);
         return this;
     }
