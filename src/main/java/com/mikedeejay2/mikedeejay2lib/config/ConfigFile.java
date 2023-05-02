@@ -1487,6 +1487,32 @@ public class ConfigFile {
         }
 
         /**
+         * Create a new type utilizing a {@link ConfigurationSerializable} class
+         *
+         * @param clazz The {@link ConfigurationSerializable} Class type
+         * @param <T>    The type that is contained within the {@link ValueType}
+         * @return The new {@link ValueType}
+         */
+        public static <T extends ConfigurationSerializable> ValueType<T> ofSerializable(Class<T> clazz) {
+            return new ValueType<>(
+                (accessor, name) -> accessor.getSerialized(name, clazz),
+                SectionAccessor::setSerialized);
+        }
+
+        /**
+         * Create a new list type utilizing a {@link ConfigurationSerializable} class
+         *
+         * @param clazz The {@link ConfigurationSerializable} Class type
+         * @param <T>    The type that is contained within the {@link ValueType}
+         * @return The new {@link ValueType}
+         */
+        public static <T extends ConfigurationSerializable> ValueType<List<T>> ofSerializableList(Class<T> clazz) {
+            return new ValueType<>(
+                (accessor, name) -> accessor.getSerializedList(name, clazz),
+                (accessor, name, value) -> accessor.setSerializedList(name, (List<ConfigurationSerializable>) value));
+        }
+
+        /**
          * Create a new type of key value pairs, where key values are stored in a map as the value.
          *
          * @param valueType The {@link ValueType} used to retrieve values
