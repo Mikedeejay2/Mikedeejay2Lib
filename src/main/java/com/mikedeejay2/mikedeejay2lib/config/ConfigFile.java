@@ -1459,7 +1459,7 @@ public class ConfigFile {
          * @param path     The path to retrieve
          * @return The retrieved data
          */
-        private T load(SectionAccessor<?, ?> accessor, String path) {
+        private T load(SectionAccessor<DataFile, Object> accessor, String path) {
             return this.loader.load(accessor, path);
         }
 
@@ -1470,7 +1470,7 @@ public class ConfigFile {
          * @param path     The path to save to
          * @param value    The value to save
          */
-        private void save(SectionAccessor<?, ?> accessor, String path, T value) {
+        private void save(SectionAccessor<DataFile, Object> accessor, String path, T value) {
             this.saver.save(accessor, path, value);
         }
 
@@ -1523,14 +1523,14 @@ public class ConfigFile {
             return new ValueType<>(
                 (accessor, name) -> {
                     final Map<String, T> map = new LinkedHashMap<>();
-                    final SectionAccessor<?, ?> section = accessor.getSection(name);
+                    final SectionAccessor<DataFile, Object> section = accessor.getSection(name);
                     for(String key : section.getKeys(false)) {
                         map.put(key, valueType.load(section, key));
                     }
                     return map;
                 },
                 (accessor, name, map) -> {
-                    final SectionAccessor<?, ?> section = accessor.getSection(name);
+                    final SectionAccessor<DataFile, Object> section = accessor.getSection(name);
                     for(String key : section.getKeys(false)) {
                         section.delete(key);
                     }
@@ -1556,7 +1556,7 @@ public class ConfigFile {
              * @param name     The name to retrieve
              * @return The retrieved data
              */
-            T load(SectionAccessor<?, ?> accessor, String name);
+            T load(SectionAccessor<DataFile, Object> accessor, String name);
         }
 
         /**
@@ -1574,7 +1574,7 @@ public class ConfigFile {
              * @param name     The name to save to
              * @param value    The value to save
              */
-            void save(SectionAccessor<?, ?> accessor, String name, T value);
+            void save(SectionAccessor<DataFile, Object> accessor, String name, T value);
         }
     }
 }
