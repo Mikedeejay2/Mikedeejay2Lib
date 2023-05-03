@@ -61,8 +61,8 @@ public final class GUIEventInfo {
         this.event = event;
         this.player = (Player) event.getWhoClicked();
         this.gui = gui;
-        this.row = gui.getRowFromSlot(event.getSlot());
-        this.column = gui.getColFromSlot(event.getSlot());
+        this.row = gui.getRow(event.getSlot());
+        this.column = gui.getColumn(event.getSlot());
         this.layer = gui.getTopLayer(row, column);
         this.item = layer.getItem(row, column);
     }

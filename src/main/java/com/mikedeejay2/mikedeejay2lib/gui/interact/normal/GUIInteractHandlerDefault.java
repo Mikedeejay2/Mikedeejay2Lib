@@ -70,8 +70,8 @@ public class GUIInteractHandlerDefault extends GUIInteractHandler {
         if(cursorItem.getType() == Material.AIR) cursorItem = null;
         ItemStack bottomItem = null;
         if(clickedInv == gui.getInventory()) {
-            int     row     = gui.getRowFromSlot(slot);
-            int     col     = gui.getColFromSlot(slot);
+            int     row     = gui.getRow(slot);
+            int     col     = gui.getColumn(slot);
             GUIItem guiItem = layer.getItem(row, col);
             if(guiItem != null) {
                 bottomItem = guiItem.get(player);

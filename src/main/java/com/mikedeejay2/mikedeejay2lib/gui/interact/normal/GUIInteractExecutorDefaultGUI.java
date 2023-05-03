@@ -141,8 +141,8 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor {
     public void executePickupAll(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
         if(inventory != gui.getInventory()) return;
         ItemStack cursorItem;
-        int       row        = layer.getRowFromSlot(slot);
-        int       col        = layer.getColFromSlot(slot);
+        int       row        = layer.getRow(slot);
+        int       col        = layer.getColumn(slot);
         GUIItem   guiItem    = layer.getItem(row, col);
         ItemStack bottomItem = guiItem.get(player);
         int       curAmount  = bottomItem.getAmount();
@@ -173,8 +173,8 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor {
         if(inventory != gui.getInventory()) return;
         ItemStack cursorItem   = player.getItemOnCursor();
         int       cursorAmount = cursorItem.getAmount();
-        int       row          = layer.getRowFromSlot(slot);
-        int       col          = layer.getColFromSlot(slot);
+        int       row          = layer.getRow(slot);
+        int       col          = layer.getColumn(slot);
         GUIItem   guiItem      = layer.getItem(row, col);
         ItemStack bottomItem   = guiItem.get(player);
         int       bottomAmount = bottomItem.getAmount();
@@ -200,8 +200,8 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor {
     public void executePickupHalf(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
         if(inventory != gui.getInventory()) return;
         ItemStack cursorItem;
-        int       row          = layer.getRowFromSlot(slot);
-        int       col          = layer.getColFromSlot(slot);
+        int       row          = layer.getRow(slot);
+        int       col          = layer.getColumn(slot);
         GUIItem   guiItem      = layer.getItem(row, col);
         ItemStack bottomItem   = guiItem.get(player);
         int       bottomAmount = bottomItem.getAmount();
@@ -235,8 +235,8 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor {
         if(inventory != gui.getInventory()) return;
         ItemStack cursorItem   = player.getItemOnCursor();
         int       cursorAmount = cursorItem.getAmount();
-        int       row          = layer.getRowFromSlot(slot);
-        int       col          = layer.getColFromSlot(slot);
+        int       row          = layer.getRow(slot);
+        int       col          = layer.getColumn(slot);
         GUIItem   guiItem      = layer.getItem(row, col);
         ItemStack bottomItem   = guiItem.get(player);
         int       bottomAmount = bottomItem.getAmount();
@@ -265,8 +265,8 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor {
         if(inventory != gui.getInventory()) return;
         ItemStack cursorItem   = player.getItemOnCursor();
         int       cursorAmount = cursorItem.getAmount();
-        int       row          = layer.getRowFromSlot(slot);
-        int       col          = layer.getColFromSlot(slot);
+        int       row          = layer.getRow(slot);
+        int       col          = layer.getColumn(slot);
         int       bottomAmount = 0;
         GUIItem   curItem      = layer.getItem(row, col);
         if(curItem != null) {
@@ -310,8 +310,8 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor {
         if(interactType == GUIInteractType.SINGLE_ITEM && layer.containsItem(cursorItem)) return;
         if(interactType == GUIInteractType.SINGLE_MATERIAL && layer.containsMaterial(cursorItem.getType())) return;
         int       cursorAmount = cursorItem.getAmount();
-        int       row          = layer.getRowFromSlot(slot);
-        int       col          = layer.getColFromSlot(slot);
+        int       row          = layer.getRow(slot);
+        int       col          = layer.getColumn(slot);
         GUIItem   guiItem      = layer.getItem(row, col);
         ItemStack bottomItem   = guiItem.get(player);
         int       bottomAmount = bottomItem.getAmount();
@@ -338,8 +338,8 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor {
         if(inventory != gui.getInventory()) return;
         ItemStack cursorItem   = player.getItemOnCursor();
         int       cursorAmount = cursorItem.getAmount();
-        int       row          = layer.getRowFromSlot(slot);
-        int       col          = layer.getColFromSlot(slot);
+        int       row          = layer.getRow(slot);
+        int       col          = layer.getColumn(slot);
         GUIItem   guiItem      = layer.getItem(row, col);
         if(guiItem == null) {
             if(interactType == GUIInteractType.SINGLE_ITEM && layer.containsItem(cursorItem)) return;
@@ -377,8 +377,8 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor {
         if(interactType == GUIInteractType.SINGLE_MATERIAL && layer.containsMaterial(cursorItem.getType())) return;
         int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
         if(cursorItem.getAmount() > maxAmount) return;
-        int       row        = layer.getRowFromSlot(slot);
-        int       col        = layer.getColFromSlot(slot);
+        int       row        = layer.getRow(slot);
+        int       col        = layer.getColumn(slot);
         GUIItem   guiItem    = layer.getItem(row, col);
         ItemStack bottomItem = guiItem.get(player);
         guiItem.set(consume ? cursorItem : cursorItem.clone());
@@ -399,8 +399,8 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor {
     public void executeDropAllSlot(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
         if(inventory != gui.getInventory()) return;
         ItemStack itemToDrop;
-        int       row              = layer.getRowFromSlot(slot);
-        int       col              = layer.getColFromSlot(slot);
+        int       row              = layer.getRow(slot);
+        int       col              = layer.getColumn(slot);
         GUIItem   guiItem          = layer.getItem(row, col);
         ItemStack stack            = guiItem.get(player);
         int       curAmount        = stack.getAmount();
@@ -432,8 +432,8 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor {
     public void executeDropOneSlot(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
         if(inventory != gui.getInventory()) return;
         ItemStack itemToDrop;
-        int       row     = layer.getRowFromSlot(slot);
-        int       col     = layer.getColFromSlot(slot);
+        int       row     = layer.getRow(slot);
+        int       col     = layer.getColumn(slot);
         GUIItem   guiItem = layer.getItem(row, col);
         itemToDrop = guiItem.get(player).clone();
         itemToDrop.setAmount(1);
@@ -457,8 +457,8 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor {
     @Override
     public void executeMoveToOtherInventory(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
         if(inventory == gui.getInventory()) {
-            int       row        = layer.getRowFromSlot(slot);
-            int       col        = layer.getColFromSlot(slot);
+            int       row        = layer.getRow(slot);
+            int       col        = layer.getColumn(slot);
             GUIItem   guiItem    = layer.getItem(row, col);
             ItemStack itemToMove = guiItem.get(player);
             Inventory playerInv  = player.getInventory();
@@ -572,8 +572,8 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor {
      */
     @Override
     public void executeHotbarMoveAndReadd(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        int       row        = layer.getRowFromSlot(slot);
-        int       col        = layer.getColFromSlot(slot);
+        int       row        = layer.getRow(slot);
+        int       col        = layer.getColumn(slot);
         int       hotbarSlot = event.getHotbarButton();
         Inventory playerInv  = player.getInventory();
         ItemStack hotbarItem = playerInv.getItem(hotbarSlot);
@@ -602,8 +602,8 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor {
         if(inventory != gui.getInventory()) return;
         int       hotbarSlot = event.getHotbarButton();
         Inventory playerInv  = player.getInventory();
-        int       row        = layer.getRowFromSlot(slot);
-        int       col        = layer.getColFromSlot(slot);
+        int       row        = layer.getRow(slot);
+        int       col        = layer.getColumn(slot);
         GUIItem   guiItem    = layer.getItem(row, col);
         ItemStack curItem    = playerInv.getItem(hotbarSlot);
         if(!consume) curItem = curItem.clone();
@@ -648,8 +648,8 @@ public class GUIInteractExecutorDefaultGUI implements GUIInteractExecutor {
     @Override
     public void executeCloneStack(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
         if(inventory != gui.getInventory()) return;
-        int       row       = layer.getRowFromSlot(slot);
-        int       col       = layer.getColFromSlot(slot);
+        int       row       = layer.getRow(slot);
+        int       col       = layer.getColumn(slot);
         GUIItem   guiItem   = layer.getItem(row, col);
         if(guiItem == null) return;
         ItemStack item      = guiItem.get(player).clone();

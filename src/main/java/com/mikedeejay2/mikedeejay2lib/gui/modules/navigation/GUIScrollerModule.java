@@ -141,14 +141,14 @@ public class GUIScrollerModule implements GUIModule {
         public void executeClick(GUIEventInfo info) {
             GUIContainer gui = info.getGUI();
             int rowOffset = gui.getRowOffset();
-            int colOffset = gui.getColOffset();
+            int colOffset = gui.getColumnOffset();
             int totalRow  = rowOffset + Math.min(GUIContainer.MAX_INVENTORY_ROWS, gui.getRows());
             int totalCol  = colOffset + GUIContainer.MAX_INVENTORY_COLS;
             if(gui.getRows() >= totalRow + rowAmt && rowOffset + rowAmt >= 0) {
                 gui.addRowOffset(rowAmt);
             }
             if(gui.getCols() >= totalCol + colAmt && colOffset + colAmt >= 0) {
-                gui.addColOffset(colAmt);
+                gui.addColumnOffset(colAmt);
             }
             super.executeClick(info);
         }

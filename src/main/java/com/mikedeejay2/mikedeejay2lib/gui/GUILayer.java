@@ -112,14 +112,14 @@ public class GUILayer {
     public GUIItem getItem(int row, int col) {
         if(overlay) {
             row -= gui.getRowOffset();
-            col -= gui.getColOffset();
+            col -= gui.getColumnOffset();
         }
         if(row > this.getRows() || col > this.getCols() || row <= 0 || col <= 0) return null;
         return items[--row][--col];
     }
 
     /**
-     * Get an item from a slot, ignoring row and column offsets if an overlay layer
+     * Get an item from a slot, ignoring row and column offsets of an overlay layer
      *
      * @param row The row to get
      * @param col The column to get
@@ -239,7 +239,7 @@ public class GUILayer {
      * @param col     The column to set
      * @param movable Whether the item is movable or not
      */
-    public void setMoveState(int row, int col, boolean movable) {
+    public void setMovable(int row, int col, boolean movable) {
         GUIItem item = items[--row][--col];
         item.setMovable(movable);
     }
@@ -312,7 +312,7 @@ public class GUILayer {
      * @param event The event that should be searched for
      * @return Whether the slot contains the event
      */
-    public boolean doesSlotContainEvent(int row, int col, GUIEvent event) {
+    public boolean containsEvent(int row, int col, GUIEvent event) {
         GUIItem item = items[--row][--col];
         return item != null && item.containsEvent(event);
     }
@@ -325,7 +325,7 @@ public class GUILayer {
      * @param eventClass The class of the event that should be searched for
      * @return Whether the slot contains the event
      */
-    public boolean doesSlotContainEvent(int row, int col, Class<? extends GUIEvent> eventClass) {
+    public boolean containsEvent(int row, int col, Class<? extends GUIEvent> eventClass) {
         GUIItem item = items[--row][--col];
         return item != null && item.containsEvent(eventClass);
     }
@@ -336,7 +336,7 @@ public class GUILayer {
      * @param row Row to remove events from
      * @param col Column to remove events from
      */
-    public void removeEventHandler(int row, int col) {
+    public void resetEvents(int row, int col) {
         GUIItem item = items[--row][--col];
         if(item != null) item.resetEvents();
     }
@@ -348,7 +348,7 @@ public class GUILayer {
      * @param col The column to get
      * @return Whether the slot is movable
      */
-    public boolean canSlotBeMoved(int row, int col) {
+    public boolean isMovable(int row, int col) {
         GUIItem item = items[--row][--col];
         return item == null ? defaultMoveState : item.isMovable();
     }
@@ -544,7 +544,7 @@ public class GUILayer {
      * @param col The column to use
      * @return The slot based off of the row and the column
      */
-    public int getSlotFromRowCol(int row, int col) {
+    public int getSlot(int row, int col) {
         return (row * inventoryCols) + col;
     }
 
@@ -554,7 +554,7 @@ public class GUILayer {
      * @param slot The slot to use
      * @return The row based off of the slot
      */
-    public int getRowFromSlot(int slot) {
+    public int getRow(int slot) {
         if(overlay) {
             return (slot / GUIContainer.MAX_INVENTORY_COLS) + 1;
         }
@@ -567,11 +567,11 @@ public class GUILayer {
      * @param slot The slot to use
      * @return The column based off of the slot
      */
-    public int getColFromSlot(int slot) {
+    public int getColumn(int slot) {
         if(overlay) {
             return (slot % GUIContainer.MAX_INVENTORY_COLS) + 1;
         }
-        return (slot % GUIContainer.MAX_INVENTORY_COLS) + 1 + gui.getColOffset();
+        return (slot % GUIContainer.MAX_INVENTORY_COLS) + 1 + gui.getColumnOffset();
     }
 
     /**

@@ -200,10 +200,20 @@ public class GUIMappedListModule<T> extends GUIListModule {
         shouldUnmap = false;
         resetList();
         for(T unmappedObj : unmappedList) {
-            super.addListItem(mapFunction.apply(unmappedObj));
+            super.addItem(mapFunction.apply(unmappedObj));
         }
         this.lastMapHashcode = unmappedList.hashCode();
         shouldUnmap = true;
+    }
+
+    /**
+     * Get an unmapped item from index
+     *
+     * @param index The index to get
+     * @return The unmapped item at the index
+     */
+    public T getUnmapped(int index) {
+        return unmappedList.get(index);
     }
 
     /**

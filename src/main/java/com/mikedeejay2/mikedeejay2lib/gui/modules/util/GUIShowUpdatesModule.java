@@ -20,7 +20,7 @@ public class GUIShowUpdatesModule implements GUIModule {
         GUILayer updatesLayer = gui.getLayer("updates");
         for(GUILayer layer : gui.getAllLayers()) {
             int rowOffset = layer.isOverlay() ? gui.getRowOffset() : 0;
-            int colOffset = layer.isOverlay() ? gui.getColOffset() : 0;
+            int colOffset = layer.isOverlay() ? gui.getColumnOffset() : 0;
             if(layer == updatesLayer) continue;
             for(int row = 1; row <= layer.getRows(); ++row) {
                 for(int col = 1; col <= layer.getCols(); ++col) {

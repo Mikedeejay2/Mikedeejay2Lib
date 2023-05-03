@@ -12,7 +12,6 @@ import com.mikedeejay2.mikedeejay2lib.gui.util.SlotMatcher;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
-import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
@@ -342,8 +341,8 @@ public class GUIContainer {
      */
     public void onClicked(InventoryClickEvent event) {
         int slot = event.getSlot();
-        int row = getRowFromSlot(slot);
-        int col = getColFromSlot(slot);
+        int row = getRow(slot);
+        int col = getColumn(slot);
         modules.forEach(module -> module.onClickedHead(event, this));
         GUIItem item = getItem(row, col);
         if(item != null) item.onClick(event, this);
@@ -427,7 +426,7 @@ public class GUIContainer {
      * @param col     The column to set
      * @param movable Whether the item is movable or not
      */
-    public void setMoveState(int row, int col, boolean movable) {
+    public void setMovable(int row, int col, boolean movable) {
         for(int i = layers.size() - 1; i >= 0; i--) {
             GUILayer layer = getLayer(i);
             GUIItem item = layer.getItem(row, col);
@@ -534,7 +533,7 @@ public class GUIContainer {
      * @param event The event that should be searched for
      * @return Whether the slot contains the event
      */
-    public boolean doesSlotContainEvent(int row, int col, GUIEvent event) {
+    public boolean containsEvent(int row, int col, GUIEvent event) {
         for(int i = layers.size() - 1; i >= 0; i--) {
             GUILayer layer = getLayer(i);
             GUIItem item = layer.getItem(row, col);
@@ -551,7 +550,7 @@ public class GUIContainer {
      * @param eventClass The class of the event that should be searched for
      * @return Whether the slot contains the event
      */
-    public boolean doesSlotContainEvent(int row, int col, Class<? extends GUIEvent> eventClass) {
+    public boolean containsEvent(int row, int col, Class<? extends GUIEvent> eventClass) {
         for(int i = layers.size() - 1; i >= 0; i--) {
             GUILayer layer = getLayer(i);
             GUIItem item = layer.getItem(row, col);
@@ -566,7 +565,7 @@ public class GUIContainer {
      * @param row Row to remove events from
      * @param col Column to remove events from
      */
-    public void removeEventHandler(int row, int col) {
+    public void resetEvents(int row, int col) {
         for(int i = layers.size() - 1; i >= 0; i--) {
             GUILayer layer = getLayer(i);
             GUIItem item = layer.getItem(row, col);
@@ -584,7 +583,7 @@ public class GUIContainer {
      * @param col The column to get
      * @return Whether the slot is movable
      */
-    public boolean canSlotBeMoved(int row, int col) {
+    public boolean isMovable(int row, int col) {
         for(int i = layers.size() - 1; i >= 0; i--) {
             GUILayer layer = getLayer(i);
             GUIItem item = layer.getItem(row, col);
@@ -805,7 +804,7 @@ public class GUIContainer {
      * @param col The column to use
      * @return The slot based off of the row and the column
      */
-    public int getSlotFromRowCol(int row, int col) {
+    public int getSlot(int row, int col) {
         return (row * GUIContainer.MAX_INVENTORY_COLS) + col;
     }
 
@@ -815,7 +814,7 @@ public class GUIContainer {
      * @param slot The slot to use
      * @return The row based off of the slot
      */
-    public int getRowFromSlot(int slot) {
+    public int getRow(int slot) {
         return (slot / MAX_INVENTORY_COLS) + 1 + rowOffset;
     }
 
@@ -825,7 +824,7 @@ public class GUIContainer {
      * @param slot The slot to use
      * @return The column based off of the slot
      */
-    public int getColFromSlot(int slot) {
+    public int getColumn(int slot) {
         return (slot % MAX_INVENTORY_COLS) + 1 + colOffset;
     }
 
@@ -854,7 +853,7 @@ public class GUIContainer {
      *
      * @return The column offset
      */
-    public int getColOffset() {
+    public int getColumnOffset() {
         return colOffset;
     }
 
@@ -863,7 +862,7 @@ public class GUIContainer {
      *
      * @param colOffset The new column offset
      */
-    public void setColOffset(int colOffset) {
+    public void setColumnOffset(int colOffset) {
         if(this.colOffset == colOffset) return;
         this.colOffset = colOffset;
         changeAllItems();
@@ -885,7 +884,7 @@ public class GUIContainer {
      *
      * @param amount The amount to add
      */
-    public void addColOffset(int amount) {
+    public void addColumnOffset(int amount) {
         if(amount == 0) return;
         colOffset += amount;
         changeAllItems();

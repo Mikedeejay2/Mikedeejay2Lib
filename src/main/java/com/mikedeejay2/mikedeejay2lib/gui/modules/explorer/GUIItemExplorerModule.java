@@ -213,10 +213,10 @@ public class GUIItemExplorerModule extends GUIListModule {
 
         for(ItemFolder folder : folders) {
             GUIItem item = genFolderItem(folder);
-            this.addListItem(item);
+            this.addItem(item);
         }
         for(GUIItem item : folderItems) {
-            this.addListItem(item);
+            this.addItem(item);
         }
     }
 

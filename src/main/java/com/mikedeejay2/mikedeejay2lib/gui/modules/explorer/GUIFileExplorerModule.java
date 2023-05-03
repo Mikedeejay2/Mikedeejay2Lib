@@ -249,8 +249,8 @@ public class GUIFileExplorerModule extends GUIListModule {
                 fileQueue.add(fileItem);
             }
         }
-        folderQueue.forEach(this::addListItem);
-        fileQueue.forEach(this::addListItem);
+        folderQueue.forEach(this::addItem);
+        fileQueue.forEach(this::addItem);
     }
 
     /**

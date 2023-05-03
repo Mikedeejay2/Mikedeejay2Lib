@@ -145,8 +145,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         if(inventory != gui.getInventory()) return;
         GUIListModule list       = gui.getModule(GUIListModule.class);
         ItemStack     cursorItem;
-        int           row        = layer.getRowFromSlot(slot);
-        int           col        = layer.getColFromSlot(slot);
+        int           row        = layer.getRow(slot);
+        int           col        = layer.getColumn(slot);
         GUIItem       guiItem    = list.getItem(row, col, gui);
         ItemStack     bottomItem = guiItem.get(player);
         int           curAmount  = bottomItem.getAmount();
@@ -155,7 +155,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
             guiItem.setAmount(curAmount - maxAmount);
             list.setItem(row, col, gui, guiItem);
             curAmount = maxAmount;
-        } else list.removeListItem(row, col, gui);
+        } else list.removeItem(row, col, gui);
         if(consume) {
             cursorItem = bottomItem.clone();
             cursorItem.setAmount(curAmount);
@@ -179,14 +179,14 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         GUIListModule list         = gui.getModule(GUIListModule.class);
         ItemStack     cursorItem   = player.getItemOnCursor();
         int           cursorAmount = cursorItem.getAmount();
-        int           row          = layer.getRowFromSlot(slot);
-        int           col          = layer.getColFromSlot(slot);
+        int           row          = layer.getRow(slot);
+        int           col          = layer.getColumn(slot);
         GUIItem       guiItem      = list.getItem(row, col, gui);
         ItemStack     bottomItem   = guiItem.get(player);
         int           bottomAmount = bottomItem.getAmount();
         int           maxAmount    = limit == -1 ? cursorItem.getMaxStackSize() : limit;
         guiItem.setAmount(bottomAmount - (maxAmount - cursorAmount));
-        if(guiItem.getAmount() <= 0) list.removeListItem(row, col, gui);
+        if(guiItem.getAmount() <= 0) list.removeItem(row, col, gui);
         else list.setItem(row, col, gui, guiItem);
         if(consume) {
             cursorItem.setAmount(maxAmount);
@@ -209,8 +209,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         if(inventory != gui.getInventory()) return;
         GUIListModule list         = gui.getModule(GUIListModule.class);
         ItemStack     cursorItem;
-        int           row          = layer.getRowFromSlot(slot);
-        int           col          = layer.getColFromSlot(slot);
+        int           row          = layer.getRow(slot);
+        int           col          = layer.getColumn(slot);
         GUIItem       guiItem      = list.getItem(row, col, gui);
         ItemStack     bottomItem   = guiItem.get(player);
         int           bottomAmount = bottomItem.getAmount();
@@ -222,7 +222,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
             halfTop = maxAmount;
         }
         guiItem.setAmount(halfBottom);
-        if(halfBottom <= 0) list.removeListItem(row, col, gui);
+        if(halfBottom <= 0) list.removeItem(row, col, gui);
         else list.setItem(row, col, gui, guiItem);
         if(consume) {
             cursorItem = bottomItem.clone();
@@ -247,8 +247,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         GUIListModule list         = gui.getModule(GUIListModule.class);
         ItemStack     cursorItem   = player.getItemOnCursor();
         int           cursorAmount = cursorItem.getAmount();
-        int           row          = layer.getRowFromSlot(slot);
-        int           col          = layer.getColFromSlot(slot);
+        int           row          = layer.getRow(slot);
+        int           col          = layer.getColumn(slot);
         GUIItem       guiItem      = list.getItem(row, col, gui);
         ItemStack     bottomItem   = guiItem.get(player);
         int           bottomAmount = bottomItem.getAmount();
@@ -260,7 +260,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
             cursorItem.setAmount(cursorAmount + 1);
         }
         guiItem.setAmount(bottomAmount - 1);
-        if(bottomAmount - 1 <= 0) list.removeListItem(row, col, gui);
+        if(bottomAmount - 1 <= 0) list.removeItem(row, col, gui);
         else list.setItem(row, col, gui, guiItem);
         if(consume) player.setItemOnCursor(cursorItem);
     }
@@ -280,8 +280,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         if(inventory != gui.getInventory()) return;
         GUIListModule list       = gui.getModule(GUIListModule.class);
         ItemStack     cursorItem = player.getItemOnCursor();
-        int           row        = layer.getRowFromSlot(slot);
-        int           col        = layer.getColFromSlot(slot);
+        int           row        = layer.getRow(slot);
+        int           col        = layer.getColumn(slot);
         GUIItem       curItem    = list.getItem(row, col, gui);
         if(
                 curItem == null ||
@@ -301,12 +301,12 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
             }
             newItem.setAmount(newAmount);
             if(consume) cursorItem.setAmount(extraAmount);
-            int index = list.getListItemIndex(row, col, gui);
+            int index = list.getItemIndex(row, col, gui);
             int size  = list.getSize();
             if(index >= size) {
-                list.addListItem(newItem);
+                list.addItem(newItem);
             } else {
-                list.addListItem(row, col, gui, newItem);
+                list.addItem(row, col, gui, newItem);
             }
         } else {
             int cursorAmount = cursorItem.getAmount();
@@ -343,8 +343,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         if(interactType == GUIInteractType.SINGLE_ITEM && list.containsItem(cursorItem)) return;
         if(interactType == GUIInteractType.SINGLE_MATERIAL && list.containsMaterial(cursorItem.getType())) return;
         int       cursorAmount = cursorItem.getAmount();
-        int       row          = layer.getRowFromSlot(slot);
-        int       col          = layer.getColFromSlot(slot);
+        int       row          = layer.getRow(slot);
+        int       col          = layer.getColumn(slot);
         GUIItem   guiItem      = list.getItem(row, col, gui);
         ItemStack bottomItem   = guiItem.get(player);
         int       bottomAmount = bottomItem.getAmount();
@@ -373,8 +373,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         GUIListModule list         = gui.getModule(GUIListModule.class);
         ItemStack     cursorItem   = player.getItemOnCursor();
         int           cursorAmount = cursorItem.getAmount();
-        int           row          = layer.getRowFromSlot(slot);
-        int           col          = layer.getColFromSlot(slot);
+        int           row          = layer.getRow(slot);
+        int           col          = layer.getColumn(slot);
         GUIItem       guiItem      = list.getItem(row, col, gui);
         if(guiItem == null) {
             if(interactType == GUIInteractType.SINGLE_ITEM && list.containsItem(cursorItem)) return;
@@ -382,12 +382,12 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
             guiItem = new GUIItem(cursorItem.clone());
             guiItem.setMovable(true);
             guiItem.setAmount(1);
-            int index = list.getListItemIndex(row, col, gui);
+            int index = list.getItemIndex(row, col, gui);
             int size  = list.getList().size();
             if(index > size) {
-                list.addListItem(guiItem);
+                list.addItem(guiItem);
             } else {
-                list.addListItem(row, col, gui, guiItem);
+                list.addItem(row, col, gui, guiItem);
             }
         } else {
             if(!ItemComparison.equalsEachOther(guiItem.get(player), cursorItem)) return;
@@ -421,8 +421,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         if(interactType == GUIInteractType.SINGLE_MATERIAL && list.containsMaterial(cursorItem.getType())) return;
         int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
         if(cursorItem.getAmount() > maxAmount) return;
-        int       row        = layer.getRowFromSlot(slot);
-        int       col        = layer.getColFromSlot(slot);
+        int       row        = layer.getRow(slot);
+        int       col        = layer.getColumn(slot);
         GUIItem   guiItem    = list.getItem(row, col, gui);
         ItemStack bottomItem = guiItem.get(player);
         guiItem.set(consume ? cursorItem : cursorItem.clone());
@@ -445,8 +445,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         if(inventory != gui.getInventory()) return;
         GUIListModule list             = gui.getModule(GUIListModule.class);
         ItemStack     itemToDrop;
-        int           row              = layer.getRowFromSlot(slot);
-        int           col              = layer.getColFromSlot(slot);
+        int           row              = layer.getRow(slot);
+        int           col              = layer.getColumn(slot);
         GUIItem       guiItem          = list.getItem(row, col, gui);
         ItemStack     stack            = guiItem.get(player);
         int           curAmount        = stack.getAmount();
@@ -457,7 +457,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
             list.setItem(row, col, gui, guiItem);
             itemToDropAmount = maxAmount;
         }
-        else list.removeListItem(row, col, gui);
+        else list.removeItem(row, col, gui);
         itemToDrop = stack.clone();
         itemToDrop.setAmount(itemToDropAmount);
         Location location = player.getEyeLocation();
@@ -481,14 +481,14 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         if(inventory != gui.getInventory()) return;
         GUIListModule list    = gui.getModule(GUIListModule.class);
         ItemStack     itemToDrop;
-        int           row     = layer.getRowFromSlot(slot);
-        int           col     = layer.getColFromSlot(slot);
+        int           row     = layer.getRow(slot);
+        int           col     = layer.getColumn(slot);
         GUIItem       guiItem = list.getItem(row, col, gui);
 
         itemToDrop = guiItem.get(player).clone();
         itemToDrop.setAmount(1);
         guiItem.setAmount(guiItem.getAmount() - 1);
-        if(guiItem.getAmount() <= 0) list.removeListItem(row, col, gui);
+        if(guiItem.getAmount() <= 0) list.removeItem(row, col, gui);
         else list.setItem(row, col, gui, guiItem);
 
         Location location = player.getEyeLocation();
@@ -511,13 +511,13 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
     public void executeMoveToOtherInventory(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
         GUIListModule list = gui.getModule(GUIListModule.class);
         if(inventory == gui.getInventory()) {
-            int       row        = layer.getRowFromSlot(slot);
-            int       col        = layer.getColFromSlot(slot);
+            int       row        = layer.getRow(slot);
+            int       col        = layer.getColumn(slot);
             GUIItem   guiItem    = list.getItem(row, col, gui);
             ItemStack itemToMove = guiItem.get(player);
             Inventory playerInv  = player.getInventory();
             if(!consume) {
-                list.removeListItem(row, col, gui);
+                list.removeItem(row, col, gui);
                 return;
             }
             for(int i = 0; i < playerInv.getStorageContents().length; ++i) {
@@ -535,12 +535,12 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
                 itemToMove.setAmount(extraAmount);
                 curItem.setAmount(newAmount);
                 if(itemToMove.getAmount() <= 0) {
-                    list.removeListItem(row, col, gui);
+                    list.removeItem(row, col, gui);
                     return;
                 }
             }
             if(itemToMove.getAmount() <= 0) {
-                list.removeListItem(row, col, gui);
+                list.removeItem(row, col, gui);
                 return;
             }
             for(int i = 0; i < playerInv.getStorageContents().length; ++i) {
@@ -558,7 +558,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
                 curItem.setAmount(newAmount);
                 playerInv.setItem(i, curItem);
                 if(itemToMove.getAmount() <= 0) {
-                    list.removeListItem(row, col, gui);
+                    list.removeItem(row, col, gui);
                     return;
                 }
             }
@@ -597,7 +597,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
             }
             if(consume) itemToMove.setAmount(extraAmount);
             guiItem.setAmount(newAmount);
-            list.addListItem(guiItem);
+            list.addItem(guiItem);
         }
     }
 
@@ -614,8 +614,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
     @Override
     public void executeHotbarMoveAndReadd(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
         GUIListModule list       = gui.getModule(GUIListModule.class);
-        int           row        = layer.getRowFromSlot(slot);
-        int           col        = layer.getColFromSlot(slot);
+        int           row        = layer.getRow(slot);
+        int           col        = layer.getColumn(slot);
         int           hotbarSlot = event.getHotbarButton();
         Inventory     playerInv  = player.getInventory();
         ItemStack     hotbarItem = playerInv.getItem(hotbarSlot);
@@ -646,8 +646,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         GUIListModule list       = gui.getModule(GUIListModule.class);
         int           hotbarSlot = event.getHotbarButton();
         Inventory     playerInv  = player.getInventory();
-        int           row        = layer.getRowFromSlot(slot);
-        int           col        = layer.getColFromSlot(slot);
+        int           row        = layer.getRow(slot);
+        int           col        = layer.getColumn(slot);
         ItemStack     curItem    = playerInv.getItem(hotbarSlot);
         GUIItem       guiItem    = list.getItem(row, col, gui);
         if(interactType == GUIInteractType.SINGLE_ITEM && list.containsItem(curItem)) return;
@@ -660,7 +660,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
         ItemStack item = guiItem.get(player);
         if(consume) playerInv.setItem(hotbarSlot, item);
         if(curItem == null) {
-            list.removeListItem(row, col, gui);
+            list.removeItem(row, col, gui);
         } else {
             int curAmount = curItem.getAmount();
             int maxAmount = limit == -1 ? curItem.getMaxStackSize() : limit;
@@ -677,7 +677,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
             guiItem.set(curItem);
         }
         if(nullGuiItem) {
-            list.addListItem(guiItem);
+            list.addItem(guiItem);
         } else {
             list.setItem(row, col, gui, guiItem);
         }
@@ -697,8 +697,8 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
     public void executeCloneStack(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
         GUIListModule list = gui.getModule(GUIListModule.class);
         if(inventory != gui.getInventory()) return;
-        int       row       = layer.getRowFromSlot(slot);
-        int       col       = layer.getColFromSlot(slot);
+        int       row       = layer.getRow(slot);
+        int       col       = layer.getColumn(slot);
         GUIItem   guiItem   = list.getItem(row, col, gui);
         if(guiItem == null) return;
         ItemStack item      = guiItem.get(player).clone();
@@ -742,7 +742,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
                     }
                     cursorItem.setAmount(newAmount);
                     curGuiItem.setAmount(extraAmount);
-                    if(extraAmount <= 0) list.removeListItem(row, col, gui);
+                    if(extraAmount <= 0) list.removeItem(row, col, gui);
                     else list.setItem(row, col, gui, curGuiItem);
                     if(cursorItem.getAmount() == maxAmount) return;
                 }

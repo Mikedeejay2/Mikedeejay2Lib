@@ -59,11 +59,11 @@ public class GUIListener implements Listener {
             return;
         }
 
-        int row = curGUI.getRowFromSlot(slot);
-        int col = curGUI.getColFromSlot(slot);
+        int row = curGUI.getRow(slot);
+        int col = curGUI.getColumn(slot);
 
         event.setCancelled(true);
-        if(curGUI.canSlotBeMoved(row, col)) {
+        if(curGUI.isMovable(row, col)) {
             curGUI.onPlayerInteract(event);
         }
         curGUI.onClicked(event);

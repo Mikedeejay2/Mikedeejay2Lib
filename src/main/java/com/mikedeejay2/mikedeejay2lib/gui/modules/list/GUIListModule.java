@@ -335,8 +335,8 @@ public class GUIListModule implements GUIModule {
             // This algorithm calculates the normalized slot index based off of the bounding box of the list
             int slotIndex = ((topRow-1) * (layer.getCols() * ((int)(i / colDif)+1))) + (leftCol) + (i % colDif);
             --slotIndex;
-            int row = layer.getRowFromSlot(slotIndex);
-            int col = layer.getColFromSlot(slotIndex);
+            int row = layer.getRow(slotIndex);
+            int col = layer.getColumn(slotIndex);
             layer.removeItem(row, col);
 
             if(listSize >= (i+1) + viewOffset) { // List items
@@ -434,7 +434,7 @@ public class GUIListModule implements GUIModule {
      *
      * @param item The item that will be added to the list
      */
-    public void addListItem(GUIItem item) {
+    public void addItem(GUIItem item) {
         list.add(item);
         changed = true;
         listeners.forEach(listener -> listener.onAddItem(item, list.size() - 1));
@@ -448,8 +448,8 @@ public class GUIListModule implements GUIModule {
      * @param gui  The <code>GUIContainer</code> that this list is located in
      * @param item The <code>GUIItem</code> to be added
      */
-    public void addListItem(int row, int col, GUIContainer gui, GUIItem item) {
-        int index = getListItemIndex(row, col, gui);
+    public void addItem(int row, int col, GUIContainer gui, GUIItem item) {
+        int index = getItemIndex(row, col, gui);
         list.add(index, item);
         changed = true;
         listeners.forEach(listener -> listener.onAddItem(item, index));
@@ -461,24 +461,35 @@ public class GUIListModule implements GUIModule {
      * @param index The index to add the item at
      * @param item The item that will be added to the list
      */
-    public void addListItem(int index, GUIItem item) {
+    public void addItem(int index, GUIItem item) {
         list.add(index, item);
         changed = true;
         listeners.forEach(listener -> listener.onAddItem(item, index));
     }
 
     /**
-     * Change a GUI item based off of a row and column.
-     * Not recommended for usage but still included just in case.
+     * Set a list item to a slot in the list.
      *
-     * @param item The item to replace the current item
-     * @param row  The row to replace
-     * @param col  The column to replace
-     * @param gui  The GUI to update
+     * @param index The index to set the item to
+     * @param item The <code>GUIItem</code> to set
      */
-    public void changeGUIItem(GUIItem item, int row, int col, GUIContainer gui) {
-        int index = getListItemIndex(row, col, gui);
-        GUIItem prevItem = list.set(index, item);
+    public void setItem(int index, GUIItem item) {
+        list.set(index, item);
+        changed = true;
+        listeners.forEach(listener -> listener.onSetItem(item, index));
+    }
+
+    /**
+     * Set a list item to a slot in the list.
+     *
+     * @param row The row to get the item from
+     * @param col The column to get the item from
+     * @param gui The <code>GUIContainer</code> that this list is located in
+     * @param item The <code>GUIItem</code> to set
+     */
+    public void setItem(int row, int col, GUIContainer gui, GUIItem item) {
+        int index = getItemIndex(row, col, gui);
+        list.set(index, item);
         changed = true;
         listeners.forEach(listener -> listener.onSetItem(item, index));
     }
@@ -488,7 +499,7 @@ public class GUIListModule implements GUIModule {
      *
      * @param items The list of items to set this list to
      */
-    public void setGUIItems(List<GUIItem> items) {
+    public void setItems(List<GUIItem> items) {
         for(int i = 0; i < this.list.size(); ++i) {
             for(Listener listener : listeners) {
                 listener.onRemoveItem(list.get(i), i);
@@ -508,7 +519,7 @@ public class GUIListModule implements GUIModule {
      *
      * @param index The index to the item that will be removed
      */
-    public void removeListItem(int index) {
+    public void removeItem(int index) {
         GUIItem removedItem = list.remove(index);
         changed = true;
         listeners.forEach(listener -> listener.onRemoveItem(removedItem, index));
@@ -519,7 +530,7 @@ public class GUIListModule implements GUIModule {
      *
      * @param item The item to remove from this list
      */
-    public void removeListItem(GUIItem item) {
+    public void removeItem(GUIItem item) {
         if(!list.contains(item)) return;
         int index = list.indexOf(item);
         list.remove(item);
@@ -535,9 +546,9 @@ public class GUIListModule implements GUIModule {
      * @param gui The GUI to get the index from
      * @return The index based off of the row and column
      */
-    public int getListItemIndex(int row, int col, GUIContainer gui) {
+    public int getItemIndex(int row, int col, GUIContainer gui) {
         int viewOffset = getViewOffset();
-        int index = gui.getSlotFromRowCol(row-2, col-1) + viewOffset;
+        int index = gui.getSlot(row-2, col-1) + viewOffset;
         if(searchMode) {
             index = searchList.get(index).getValue();
         }
@@ -554,7 +565,7 @@ public class GUIListModule implements GUIModule {
      * @return The <code>GUIItem</code> at the location.
      */
     public GUIItem getItem(int row, int col, GUIContainer gui) {
-        int index = getListItemIndex(row, col, gui);
+        int index = getItemIndex(row, col, gui);
         if(index >= list.size() || index < 0) return null;
         return list.get(index);
     }
@@ -562,38 +573,11 @@ public class GUIListModule implements GUIModule {
     /**
      * Get a list item from its slot in the list.
      *
-     * @param slot The slot to get the item from
+     * @param index The list index to get the item from
      * @return The <code>GUIItem</code> of the slot
      */
-    public GUIItem getItem(int slot) {
-        return list.get(slot);
-    }
-
-    /**
-     * Set a list item to a slot in the list.
-     *
-     * @param slot The slot to set the item to
-     * @param item The <code>GUIItem</code> to set
-     */
-    public void setItem(int slot, GUIItem item) {
-        list.set(slot, item);
-        changed = true;
-        listeners.forEach(listener -> listener.onSetItem(item, slot));
-    }
-
-    /**
-     * Set a list item to a slot in the list.
-     *
-     * @param row The row to get the item from
-     * @param col The column to get the item from
-     * @param gui The <code>GUIContainer</code> that this list is located in
-     * @param item The <code>GUIItem</code> to set
-     */
-    public void setItem(int row, int col, GUIContainer gui, GUIItem item) {
-        int index = getListItemIndex(row, col, gui);
-        list.set(index, item);
-        changed = true;
-        listeners.forEach(listener -> listener.onSetItem(item, index));
+    public GUIItem getItem(int index) {
+        return list.get(index);
     }
 
     /**
@@ -604,8 +588,8 @@ public class GUIListModule implements GUIModule {
      * @param col The column to remove the item from
      * @param gui The <code>GUIContainer</code> that this list is located in
      */
-    public void removeListItem(int row, int col, GUIContainer gui) {
-        int index = getListItemIndex(row, col, gui);
+    public void removeItem(int row, int col, GUIContainer gui) {
+        int index = getItemIndex(row, col, gui);
         List<GUIItem> list = this.list;
         GUIItem item = list.remove(index);
         changed = true;
@@ -1293,8 +1277,8 @@ public class GUIListModule implements GUIModule {
             GUIListModule module = gui.getModule(GUIListModule.class);
             String listLayerName = module.getLayerName();
             GUILayer listLayer = gui.getLayer(listLayerName);
-            int row = listLayer.getRowFromSlot(slot);
-            int col = listLayer.getColFromSlot(slot);
+            int row = listLayer.getRow(slot);
+            int col = listLayer.getColumn(slot);
             if(!gui.getTopLayer(row, col).getName().equals(listLayerName)) return;
             super.executeClick(info);
 
