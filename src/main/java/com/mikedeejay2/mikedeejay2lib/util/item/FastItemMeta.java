@@ -20,9 +20,13 @@ public final class FastItemMeta {
         }
     }
 
-    public static ItemMeta getItemMeta(ItemStack itemStack) throws Throwable {
-        return itemStack.getClass() == ItemStack.class ? // Ensure it's not a CraftItemStack (doesn't use meta field)
-               (ItemMeta) META_HANDLE.invokeExact(itemStack) :
-               itemStack.hasItemMeta() ? itemStack.getItemMeta() : null;
+    public static ItemMeta getItemMeta(ItemStack itemStack) {
+        try {
+            return itemStack.getClass() == ItemStack.class ? // Ensure it's not a CraftItemStack (doesn't use meta field)
+                   (ItemMeta) META_HANDLE.invokeExact(itemStack) :
+                   itemStack.hasItemMeta() ? itemStack.getItemMeta() : null;
+        } catch(Throwable e) {
+            throw new RuntimeException(e);
+        }
     }
 }
