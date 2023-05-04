@@ -23,6 +23,7 @@ import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
+import org.jetbrains.annotations.Nullable;
 
 import java.util.*;
 
@@ -32,6 +33,8 @@ import java.util.*;
  *     <li>An {@link ItemBuilder}</li>
  *     <li>Whether or not it's movable in the GUI or not</li>
  *     <li>GUI Events ({@link GUIEventHandler})</li>
+ *     <li>Whether this item has been changed since last being viewed</li>
+ *     <li>A map of extra data for keeping a reference to relevant data for this item</li>
  * </ul>
  *
  * @author Mikedeejay2
@@ -53,6 +56,11 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
      * Whether this item has been changed and requires an update
      */
     protected boolean changed;
+
+    /**
+     * A nullable map of extra data contained within this item
+     */
+    protected @Nullable Map<String, Object> extraData;
 
     /**
      * Construct a new <code>GUIItem</code>
@@ -238,6 +246,95 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
      */
     public void setChanged(boolean changed) {
         this.changed = changed;
+    }
+
+    /**
+     * Whether this item has extra data
+     *
+     * @return Whether this item has extra data
+     */
+    public boolean hasExtraData() {
+        return extraData != null;
+    }
+
+    /**
+     * Get this item's extra data map. Could be null.
+     *
+     * @return Nullable map of extra data
+     */
+    public @Nullable Map<String, Object> getExtraData() {
+        return extraData;
+    }
+
+    /**
+     * Internal method to initialize extra data when it's needed.
+     */
+    protected void initExtraData() {
+        if(hasExtraData()) return;
+        this.extraData = new LinkedHashMap<>();
+    }
+
+    /**
+     * Add extra data to this item
+     *
+     * @param key   The key name of the data
+     * @param value The data
+     * @param <T>   The type of data
+     * @return A reference to this object
+     */
+    public <T> GUIItem addExtraData(String key, T value) {
+        initExtraData();
+        this.extraData.put(key, value);
+        return this;
+    }
+
+    /**
+     * Get extra data from this item
+     *
+     * @param key          The key name of the data
+     * @param expectedType The expected type of data to get
+     * @param <T>          The type of data
+     * @return The retrieved extra data
+     */
+    public <T> T getExtraData(String key, Class<T> expectedType) {
+        if(!hasExtraData()) return null;
+        return expectedType.cast(this.extraData.get(key));
+    }
+
+    /**
+     * Get extra data from this item
+     *
+     * @param key The key name of the data
+     * @return The retrieved extra data
+     */
+    public Object getExtraData(String key) {
+        if(!hasExtraData()) return null;
+        return this.extraData.get(key);
+    }
+
+    /**
+     * See if this item contains extra data
+     *
+     * @param key          The key name of the data
+     * @param expectedType The expected type of the data
+     * @return Whether the data of the key and expected type are contained within this item
+     */
+    public boolean containsExtraData(String key, Class<?> expectedType) {
+        if(!hasExtraData()) return false;
+        if(!this.extraData.containsKey(key)) return false;
+        return expectedType.isAssignableFrom(this.extraData.get(key).getClass());
+    }
+
+    /**
+     * Remove extra data from this item
+     *
+     * @param key The key name of the data
+     * @return A reference to this object
+     */
+    public GUIItem removeExtraData(String key) {
+        if(!hasExtraData()) return this;
+        this.extraData.remove(key);
+        return this;
     }
 
     @Override
