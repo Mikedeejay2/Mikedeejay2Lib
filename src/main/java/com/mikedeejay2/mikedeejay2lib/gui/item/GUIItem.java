@@ -326,6 +326,17 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
     }
 
     /**
+     * See if this item contains extra data
+     *
+     * @param key          The key name of the data
+     * @return Whether the data is contained within this item
+     */
+    public boolean containsExtraData(String key) {
+        if(!hasExtraData()) return false;
+        return this.extraData.containsKey(key);
+    }
+
+    /**
      * Remove extra data from this item
      *
      * @param key The key name of the data
