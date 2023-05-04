@@ -24,12 +24,12 @@ public class GUIMappedListModule<T> extends GUIListModule {
     /**
      * The mapping function that takes items from The unmapped list and maps them to {@link GUIItem GUIItems}.
      */
-    protected Function<T, GUIItem> mapFunction;
+    protected MappingFunction<T> mapFunction;
     /**
      * The unmapping function. Only used when a {@link GUIItem} is added to the list and the item should also be mapped
      * back to its unmapped state.
      */
-    protected @Nullable Function<GUIItem, T> unmapFunction;
+    protected @Nullable UnmappingFunction<T> unmapFunction;
     /**
      * Hash code of {@link GUIMappedListModule#unmappedList} at the time of the previous mapping operation
      */
@@ -59,7 +59,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
         BukkitPlugin plugin,
         ListViewMode viewMode,
         List<T> unmappedList,
-        Function<T, GUIItem> mapFunction,
+        MappingFunction<T> mapFunction,
         int topRow,
         int bottomRow,
         int leftCol,
@@ -86,7 +86,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
         BukkitPlugin plugin,
         ListViewMode viewMode,
         List<T> unmappedList,
-        Function<T, GUIItem> mapFunction,
+        MappingFunction<T> mapFunction,
         int topRow,
         int bottomRow,
         int leftCol,
@@ -110,7 +110,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
     public GUIMappedListModule(
         BukkitPlugin plugin,
         List<T> unmappedList,
-        Function<T, GUIItem> mapFunction,
+        MappingFunction<T> mapFunction,
         int topRow,
         int bottomRow,
         int leftCol,
@@ -126,7 +126,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
      * @param mapFunction        The mapping function that takes items from The unmapped list and maps them to
      *                           {@link GUIItem GUIItems}.
      */
-    private void setMapperFields(List<T> unmappedCollection, Function<T, GUIItem> mapFunction) {
+    private void setMapperFields(List<T> unmappedCollection, MappingFunction<T> mapFunction) {
         Validate.notNull(unmappedCollection, "unmapped list cannot be null");
         Validate.notNull(mapFunction, "Map Function cannot be null");
         this.unmappedList = unmappedCollection;
@@ -168,7 +168,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
      */
     private void addToUnmapped(int index, GUIItem item) {
         if(unmapFunction == null) return;
-        unmappedList.add(index, unmapFunction.apply(item));
+        unmappedList.add(index, unmapFunction.unmap(item, index, this));
     }
 
     /**
@@ -189,7 +189,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
      */
     private void setToUnmapped(int index, GUIItem item) {
         if(unmapFunction == null) return;
-        unmappedList.set(index, unmapFunction.apply(item));
+        unmappedList.set(index, unmapFunction.unmap(item, index, this));
     }
 
     /**
@@ -199,8 +199,8 @@ public class GUIMappedListModule<T> extends GUIListModule {
     protected void mapList() {
         shouldUnmap = false;
         resetList();
-        for(T unmappedObj : unmappedList) {
-            super.addItem(mapFunction.apply(unmappedObj));
+        for(int i = 0; i < unmappedList.size(); i++) {
+            super.addItem(mapFunction.map(unmappedList.get(i), i, this));
         }
         this.lastMapHashcode = unmappedList.hashCode();
         shouldUnmap = true;
@@ -248,7 +248,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
      *
      * @return The mapping function
      */
-    public Function<T, GUIItem> getMapFunction() {
+    public MappingFunction<T> getMapFunction() {
         return mapFunction;
     }
 
@@ -257,7 +257,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
      *
      * @param mapFunction The new mapping function
      */
-    public void setMapFunction(Function<T, GUIItem> mapFunction) {
+    public void setMapFunction(MappingFunction<T> mapFunction) {
         this.mapFunction = mapFunction;
     }
 
@@ -267,7 +267,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
      *
      * @return The unmapping function
      */
-    public @Nullable Function<GUIItem, T> getUnmapFunction() {
+    public @Nullable UnmappingFunction<T> getUnmapFunction() {
         return unmapFunction;
     }
 
@@ -277,7 +277,7 @@ public class GUIMappedListModule<T> extends GUIListModule {
      *
      * @param unmapFunction The new unmapping function
      */
-    public void setUnmapFunction(@Nullable Function<GUIItem, T> unmapFunction) {
+    public void setUnmapFunction(@Nullable UnmappingFunction<T> unmapFunction) {
         this.unmapFunction = unmapFunction;
     }
 
@@ -338,5 +338,27 @@ public class GUIMappedListModule<T> extends GUIListModule {
             if(!list.shouldUnmap) return;
             list.setToUnmapped(index, item);
         }
+    }
+
+    /**
+     * A simple function to map from the type to a {@link GUIItem}
+     *
+     * @param <T> The type to map from
+     * @author Mikedeejay2
+     */
+    @FunctionalInterface
+    public interface MappingFunction<T> {
+        GUIItem map(T unmapped, int index, GUIMappedListModule<T> module);
+    }
+
+    /**
+     * A simple function to unmap from a {@link GUIItem} to the type
+     *
+     * @param <T> The type to map from
+     * @author Mikedeejay2
+     */
+    @FunctionalInterface
+    public interface UnmappingFunction<T> {
+        T unmap(GUIItem mapped, int index, GUIMappedListModule<T> module);
     }
 }
