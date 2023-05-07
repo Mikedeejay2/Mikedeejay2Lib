@@ -8,14 +8,15 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
+import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
 /**
- * Information about a {@link GUIEvent}, used in {@link GUIEvent#execute(GUIEventInfo)}
+ * Information about a {@link GUIEvent}, used in {@link GUIEvent#execute(GUIClickEvent)}
  *
  * @author Mikedeejay2
  */
-public final class GUIEventInfo {
+public final class GUIClickEvent {
     /**
      * The original {@link InventoryClickEvent} called
      */
@@ -57,7 +58,7 @@ public final class GUIEventInfo {
      * @param event The original {@link InventoryClickEvent} called
      * @param gui   The {@link GUIContainer} instance
      */
-    public GUIEventInfo(InventoryClickEvent event, GUIContainer gui) {
+    public GUIClickEvent(InventoryClickEvent event, GUIContainer gui) {
         this.event = event;
         this.player = (Player) event.getWhoClicked();
         this.gui = gui;
@@ -65,6 +66,17 @@ public final class GUIEventInfo {
         this.column = gui.getColumn(event.getSlot());
         this.layer = gui.getTopLayer(row, column);
         this.item = layer.getItem(row, column);
+    }
+
+    /**
+     * Construct a new <code>GUIEventInfo</code>
+     *
+     * @param event  The original {@link InventoryClickEvent} called
+     * @param gui    The {@link GUIContainer} instance
+     * @param action The {@link InventoryAction} that was performed
+     */
+    public GUIClickEvent(InventoryClickEvent event, GUIContainer gui, InventoryAction action) {
+        this(new InventoryClickEvent(event.getView(), event.getSlotType(), event.getSlot(), event.getClick(), action, event.getHotbarButton()), gui);
     }
 
     /**
@@ -264,5 +276,14 @@ public final class GUIEventInfo {
      */
     public InventoryClickEvent getEvent() {
         return event;
+    }
+
+    /**
+     * Gets the inventory corresponding to the clicked slot.
+     *
+     * @return Inventory, or null if clicked outside
+     */
+    public Inventory getClickedInventory() {
+        return event.getClickedInventory();
     }
 }

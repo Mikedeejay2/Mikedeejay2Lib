@@ -30,7 +30,7 @@ public class GUIEventHandler implements Cloneable {
     /**
      * Called when a player clicks on the parent {@link GUIItem}. This method iterates
      * through all of the {@link GUIEvent}s that are held in the <code>events</code> list
-     * and runs their {@link GUIEvent#execute(GUIEventInfo)} method.
+     * and runs their {@link GUIEvent#execute(GUIClickEvent)} method.
      *
      * @param event The event of the click
      * @param gui   The GUI that this event took place in
@@ -38,7 +38,7 @@ public class GUIEventHandler implements Cloneable {
     public void execute(InventoryClickEvent event, GUIContainer gui) {
         for(int i = 0; i < events.size(); i++) {
             GUIEvent guiEvent = events.get(i);
-            guiEvent.execute(new GUIEventInfo(event, gui));
+            guiEvent.execute(new GUIClickEvent(event, gui));
         }
     }
 

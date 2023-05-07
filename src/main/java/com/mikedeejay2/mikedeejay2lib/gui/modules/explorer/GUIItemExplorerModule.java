@@ -4,7 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.list.GUIListModule;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
@@ -387,10 +387,10 @@ public class GUIItemExplorerModule extends GUIListModule {
         /**
          * Switch the explorer to view the {@link GUISwitchFolderEvent#folder}
          *
-         * @param info {@link GUIEventInfo} of the event
+         * @param info {@link GUIClickEvent} of the event
          */
         @Override
-        public void execute(GUIEventInfo info) {
+        public void execute(GUIClickEvent info) {
             Player player = info.getPlayer();
             GUIContainer gui = info.getGUI();
             GUIItemExplorerModule module = gui.getModule(GUIItemExplorerModule.class);
@@ -413,10 +413,10 @@ public class GUIItemExplorerModule extends GUIListModule {
         /**
          * Navigate back a folder
          *
-         * @param info {@link GUIEventInfo} of the event
+         * @param info {@link GUIClickEvent} of the event
          */
         @Override
-        public void execute(GUIEventInfo info) {
+        public void execute(GUIClickEvent info) {
             Player player = info.getPlayer();
             GUIContainer gui = info.getGUI();
             GUIItemExplorerModule module = gui.getModule(GUIItemExplorerModule.class);
@@ -439,10 +439,10 @@ public class GUIItemExplorerModule extends GUIListModule {
         /**
          * Navigate forward a folder
          *
-         * @param info {@link GUIEventInfo} of the event
+         * @param info {@link GUIClickEvent} of the event
          */
         @Override
-        public void execute(GUIEventInfo info) {
+        public void execute(GUIClickEvent info) {
             Player player = info.getPlayer();
             GUIContainer gui = info.getGUI();
             GUIItemExplorerModule module = gui.getModule(GUIItemExplorerModule.class);

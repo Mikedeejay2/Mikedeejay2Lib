@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.interact.list;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractExecutorDefaultInv;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
@@ -57,14 +58,14 @@ public class GUIInteractHandlerList extends GUIInteractHandler {
      */
     @Override
     public void handleInteraction(InventoryClickEvent event, GUIContainer gui) {
-        ClickType clickType = event.getClick();
+        final ClickType clickType = event.getClick();
         InventoryAction action = event.getAction();
-        Player player = (Player) event.getWhoClicked();
-        int slot = event.getSlot();
+        final Player player = (Player) event.getWhoClicked();
+        final int slot = event.getSlot();
 
-        Inventory clickedInv = event.getClickedInventory();
-        Inventory playerInv = player.getInventory();
-        GUILayer layer = gui.getLayer(0);
+        final Inventory clickedInv = event.getClickedInventory();
+        final Inventory playerInv = player.getInventory();
+        final GUILayer layer = gui.getLayer(0);
 
         ItemStack cursorItem = player.getItemOnCursor();
         if(cursorItem.getType() == Material.AIR) cursorItem = null;
@@ -81,7 +82,7 @@ public class GUIInteractHandlerList extends GUIInteractHandler {
         }
 
         if(limit == -1) {
-            executeAction(player, clickedInv, slot, action, event, gui, layer);
+            executeAction(new GUIClickEvent(event, gui));
             return;
         }
 
@@ -123,7 +124,7 @@ public class GUIInteractHandlerList extends GUIInteractHandler {
             }
             break;
         }
-        executeAction(player, clickedInv, slot, action, event, gui, layer);
+        executeAction(new GUIClickEvent(event, gui, action));
     }
 
     /**

@@ -3,7 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules.navigation;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.sound.GUIPlaySoundEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.PlayerGUI;
@@ -236,10 +236,10 @@ public class GUINavigatorModule implements GUIModule {
         /**
          * Execute navigating the GUI back through history
          *
-         * @param info {@link GUIEventInfo} of the event
+         * @param info {@link GUIClickEvent} of the event
          */
         @Override
-        public void executeClick(GUIEventInfo info) {
+        public void executeClick(GUIClickEvent info) {
             Player player = info.getPlayer();
             GUIContainer gui = info.getGUI();
             GUINavigatorModule module = gui.getModule(GUINavigatorModule.class);
@@ -277,10 +277,10 @@ public class GUINavigatorModule implements GUIModule {
         /**
          * Execute navigating the GUI forward through history
          *
-         * @param info {@link GUIEventInfo} of the event
+         * @param info {@link GUIClickEvent} of the event
          */
         @Override
-        public void executeClick(GUIEventInfo info) {
+        public void executeClick(GUIClickEvent info) {
             Player player = info.getPlayer();
             GUIContainer gui = info.getGUI();
             GUINavigatorModule module = gui.getModule(GUINavigatorModule.class);

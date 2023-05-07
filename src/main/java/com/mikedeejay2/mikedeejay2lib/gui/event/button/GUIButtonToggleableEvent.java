@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.button;
 
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.sound.GUIPlaySoundEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
@@ -20,12 +20,12 @@ public class GUIButtonToggleableEvent extends GUIPlaySoundEvent {
     /**
      * The consumer that is run when the button is turned on
      */
-    protected Consumer<GUIEventInfo> onConsumer;
+    protected Consumer<GUIClickEvent> onConsumer;
 
     /**
      * The consumer that is run when the button is turned off
      */
-    protected Consumer<GUIEventInfo> offConsumer;
+    protected Consumer<GUIClickEvent> offConsumer;
 
     /**
      * The current state of whether the button is on or off
@@ -50,7 +50,7 @@ public class GUIButtonToggleableEvent extends GUIPlaySoundEvent {
      * @param initialState   The initial state (on/off) of the button
      * @param acceptedClicks The list of {@link ClickType ClickTypes} to accept
      */
-    public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer, boolean initialState, ClickType... acceptedClicks) {
+    public GUIButtonToggleableEvent(@NotNull Consumer<GUIClickEvent> onConsumer, @NotNull Consumer<GUIClickEvent> offConsumer, boolean initialState, ClickType... acceptedClicks) {
         super(null, null, 1, 1, acceptedClicks);
         Validate.notNull(onConsumer, "Button consumer can not be null");
         Validate.notNull(offConsumer, "Button consumer can not be null");
@@ -66,7 +66,7 @@ public class GUIButtonToggleableEvent extends GUIPlaySoundEvent {
      * @param offConsumer    The consumer that is run when the button is turned off
      * @param acceptedClicks The list of {@link ClickType ClickTypes} to accept
      */
-    public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer, ClickType... acceptedClicks) {
+    public GUIButtonToggleableEvent(@NotNull Consumer<GUIClickEvent> onConsumer, @NotNull Consumer<GUIClickEvent> offConsumer, ClickType... acceptedClicks) {
         this(onConsumer, offConsumer, false, acceptedClicks);
     }
 
@@ -77,7 +77,7 @@ public class GUIButtonToggleableEvent extends GUIPlaySoundEvent {
      * @param offConsumer    The consumer that is run when the button is turned off
      * @param initialState   The initial state (on/off) of the button
      */
-    public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer, boolean initialState) {
+    public GUIButtonToggleableEvent(@NotNull Consumer<GUIClickEvent> onConsumer, @NotNull Consumer<GUIClickEvent> offConsumer, boolean initialState) {
         super(null, null, 1, 1);
         Validate.notNull(onConsumer, "Button consumer can not be null");
         Validate.notNull(offConsumer, "Button consumer can not be null");
@@ -92,17 +92,17 @@ public class GUIButtonToggleableEvent extends GUIPlaySoundEvent {
      * @param onConsumer     The consumer that is run when the button is turned on
      * @param offConsumer    The consumer that is run when the button is turned off
      */
-    public GUIButtonToggleableEvent(@NotNull Consumer<GUIEventInfo> onConsumer, @NotNull Consumer<GUIEventInfo> offConsumer) {
+    public GUIButtonToggleableEvent(@NotNull Consumer<GUIClickEvent> onConsumer, @NotNull Consumer<GUIClickEvent> offConsumer) {
         this(onConsumer, offConsumer, false);
     }
 
     /**
      * Toggle the button on a valid click
      *
-     * @param info {@link GUIEventInfo} of the event
+     * @param info {@link GUIClickEvent} of the event
      */
     @Override
-    protected void executeClick(GUIEventInfo info) {
+    protected void executeClick(GUIClickEvent info) {
         changeState(!state, info.getGUIItem());
         if(state) {
             onConsumer.accept(info);
@@ -142,7 +142,7 @@ public class GUIButtonToggleableEvent extends GUIPlaySoundEvent {
      *
      * @return The consumer that is run when the button is turned on
      */
-    public Consumer<GUIEventInfo> getOnConsumer() {
+    public Consumer<GUIClickEvent> getOnConsumer() {
         return onConsumer;
     }
 
@@ -152,7 +152,7 @@ public class GUIButtonToggleableEvent extends GUIPlaySoundEvent {
      * @param consumer The new consumer
      * @return This event
      */
-    public GUIButtonToggleableEvent setOnConsumer(Consumer<GUIEventInfo> consumer) {
+    public GUIButtonToggleableEvent setOnConsumer(Consumer<GUIClickEvent> consumer) {
         Validate.notNull(consumer, "Button consumer can not be null");
         this.onConsumer = consumer;
         return this;
@@ -163,7 +163,7 @@ public class GUIButtonToggleableEvent extends GUIPlaySoundEvent {
      *
      * @return The consumer that is run when the button is turned off
      */
-    public Consumer<GUIEventInfo> getOffConsumer() {
+    public Consumer<GUIClickEvent> getOffConsumer() {
         return offConsumer;
     }
 
@@ -173,7 +173,7 @@ public class GUIButtonToggleableEvent extends GUIPlaySoundEvent {
      * @param consumer The new consumer
      * @return This event
      */
-    public GUIButtonToggleableEvent setOffConsumer(Consumer<GUIEventInfo> consumer) {
+    public GUIButtonToggleableEvent setOffConsumer(Consumer<GUIClickEvent> consumer) {
         Validate.notNull(consumer, "Button consumer can not be null");
         this.offConsumer = consumer;
         return this;

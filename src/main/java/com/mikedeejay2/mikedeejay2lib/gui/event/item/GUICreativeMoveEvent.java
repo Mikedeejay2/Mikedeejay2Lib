@@ -1,7 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.item;
 
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import org.bukkit.Location;
 import org.bukkit.World;
@@ -53,10 +53,10 @@ public class GUICreativeMoveEvent implements GUIEvent {
     /**
      * {@inheritDoc}
      *
-     * @param info {@link GUIEventInfo} of the event
+     * @param info {@link GUIClickEvent} of the event
      */
     @Override
-    public void execute(GUIEventInfo info) {
+    public void execute(GUIClickEvent info) {
         Player player = info.getPlayer();
         InventoryView inventory = player.getOpenInventory();
         ItemStack item = itemStack.apply(player).clone();

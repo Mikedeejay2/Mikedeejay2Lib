@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.button;
 
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.sound.GUIPlaySoundEvent;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.event.inventory.ClickType;
@@ -17,7 +17,7 @@ public class GUIButtonEvent extends GUIPlaySoundEvent {
     /**
      * The consumer that is run when the button is clicked
      */
-    protected Consumer<GUIEventInfo> consumer;
+    protected Consumer<GUIClickEvent> consumer;
 
     /**
      * Construct a new <code>GUIButtonEvent</code>
@@ -25,7 +25,7 @@ public class GUIButtonEvent extends GUIPlaySoundEvent {
      * @param consumer       The consumer that is run when the button is clicked
      * @param acceptedClicks The list of {@link ClickType ClickTypes} to accept
      */
-    public GUIButtonEvent(@NotNull Consumer<GUIEventInfo> consumer, ClickType... acceptedClicks) {
+    public GUIButtonEvent(@NotNull Consumer<GUIClickEvent> consumer, ClickType... acceptedClicks) {
         super(null, null, 1, 1, acceptedClicks);
         Validate.notNull(consumer, "Button consumer can not be null");
         this.consumer = consumer;
@@ -36,7 +36,7 @@ public class GUIButtonEvent extends GUIPlaySoundEvent {
      *
      * @param consumer The consumer that is run when the button is clicked
      */
-    public GUIButtonEvent(@NotNull Consumer<GUIEventInfo> consumer) {
+    public GUIButtonEvent(@NotNull Consumer<GUIClickEvent> consumer) {
         super(null, null, 1, 1);
         Validate.notNull(consumer, "Button consumer can not be null");
         this.consumer = consumer;
@@ -45,10 +45,10 @@ public class GUIButtonEvent extends GUIPlaySoundEvent {
     /**
      * Call the button consumer on a valid click
      *
-     * @param info {@link GUIEventInfo} of the event
+     * @param info {@link GUIClickEvent} of the event
      */
     @Override
-    protected void executeClick(GUIEventInfo info) {
+    protected void executeClick(GUIClickEvent info) {
         consumer.accept(info);
         super.executeClick(info);
     }
@@ -58,7 +58,7 @@ public class GUIButtonEvent extends GUIPlaySoundEvent {
      *
      * @return The consumer for the button click
      */
-    public Consumer<GUIEventInfo> getConsumer() {
+    public Consumer<GUIClickEvent> getConsumer() {
         return consumer;
     }
 
@@ -68,7 +68,7 @@ public class GUIButtonEvent extends GUIPlaySoundEvent {
      * @param consumer The new consumer
      * @return This event
      */
-    public GUIButtonEvent setConsumer(@NotNull Consumer<GUIEventInfo> consumer) {
+    public GUIButtonEvent setConsumer(@NotNull Consumer<GUIClickEvent> consumer) {
         Validate.notNull(consumer, "Button consumer can not be null");
         this.consumer = consumer;
         return this;

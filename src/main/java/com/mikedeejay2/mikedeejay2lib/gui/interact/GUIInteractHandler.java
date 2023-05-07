@@ -1,12 +1,11 @@
 package com.mikedeejay2.mikedeejay2lib.gui.interact;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
-import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.normal.GUIInteractHandlerDefault;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.InventoryAction;
 import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -126,35 +125,29 @@ public abstract class GUIInteractHandler {
     /**
      * Executes a specific {@link InventoryAction} and sends the action to {@link GUIInteractExecutor}
      *
-     * @param player    The <code>Player</code> performing the action
-     * @param inventory The <code>Inventory</code> that the action is being performed in
-     * @param slot      The slot that the action is being performed on
-     * @param action    The <code>InventoryAction</code> that is being executed
-     * @param event     The original <code>InventoryClickEvent</code>
-     * @param gui       The GUI that the action is being performed in
-     * @param layer     The <code>GUILayer</code> that the action should be performed on
+     * @param info The {@link GUIClickEvent} of the click
      */
-    public void executeAction(Player player, Inventory inventory, int slot, InventoryAction action, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        switch(action) {
-            case NOTHING:                   executors.forEach(e -> e.executeNothing             (player, inventory, slot, event, gui, layer)); break;
-            case PICKUP_ALL:                executors.forEach(e -> e.executePickupAll           (player, inventory, slot, event, gui, layer)); break;
-            case PICKUP_SOME:               executors.forEach(e -> e.executePickupSome          (player, inventory, slot, event, gui, layer)); break;
-            case PICKUP_HALF:               executors.forEach(e -> e.executePickupHalf          (player, inventory, slot, event, gui, layer)); break;
-            case PICKUP_ONE:                executors.forEach(e -> e.executePickupOne           (player, inventory, slot, event, gui, layer)); break;
-            case PLACE_ALL:                 executors.forEach(e -> e.executePlaceAll            (player, inventory, slot, event, gui, layer)); break;
-            case PLACE_SOME:                executors.forEach(e -> e.executePlaceSome           (player, inventory, slot, event, gui, layer)); break;
-            case PLACE_ONE:                 executors.forEach(e -> e.executePlaceOne            (player, inventory, slot, event, gui, layer)); break;
-            case SWAP_WITH_CURSOR:          executors.forEach(e -> e.executeSwapWithCursor      (player, inventory, slot, event, gui, layer)); break;
-            case DROP_ALL_CURSOR:           executors.forEach(e -> e.executeDropAllCursor       (player, inventory, slot, event, gui, layer)); break;
-            case DROP_ONE_CURSOR:           executors.forEach(e -> e.executeDropOneCursor       (player, inventory, slot, event, gui, layer)); break;
-            case DROP_ALL_SLOT:             executors.forEach(e -> e.executeDropAllSlot         (player, inventory, slot, event, gui, layer)); break;
-            case DROP_ONE_SLOT:             executors.forEach(e -> e.executeDropOneSlot         (player, inventory, slot, event, gui, layer)); break;
-            case MOVE_TO_OTHER_INVENTORY:   executors.forEach(e -> e.executeMoveToOtherInventory(player, inventory, slot, event, gui, layer)); break;
-            case HOTBAR_MOVE_AND_READD:     executors.forEach(e -> e.executeHotbarMoveAndReadd  (player, inventory, slot, event, gui, layer)); break;
-            case HOTBAR_SWAP:               executors.forEach(e -> e.executeHotbarSwap          (player, inventory, slot, event, gui, layer)); break;
-            case CLONE_STACK:               executors.forEach(e -> e.executeCloneStack          (player, inventory, slot, event, gui, layer)); break;
-            case COLLECT_TO_CURSOR:         executors.forEach(e -> e.executeCollectToCursor     (player, inventory, slot, event, gui, layer)); break;
-            default:                        executors.forEach(e -> e.executeUnknown             (player, inventory, slot, event, gui, layer)); break;
+    public void executeAction(GUIClickEvent info) {
+        switch(info.getAction()) {
+            case NOTHING:                   executors.forEach(e -> e.executeNothing             (info)); break;
+            case PICKUP_ALL:                executors.forEach(e -> e.executePickupAll           (info)); break;
+            case PICKUP_SOME:               executors.forEach(e -> e.executePickupSome          (info)); break;
+            case PICKUP_HALF:               executors.forEach(e -> e.executePickupHalf          (info)); break;
+            case PICKUP_ONE:                executors.forEach(e -> e.executePickupOne           (info)); break;
+            case PLACE_ALL:                 executors.forEach(e -> e.executePlaceAll            (info)); break;
+            case PLACE_SOME:                executors.forEach(e -> e.executePlaceSome           (info)); break;
+            case PLACE_ONE:                 executors.forEach(e -> e.executePlaceOne            (info)); break;
+            case SWAP_WITH_CURSOR:          executors.forEach(e -> e.executeSwapWithCursor      (info)); break;
+            case DROP_ALL_CURSOR:           executors.forEach(e -> e.executeDropAllCursor       (info)); break;
+            case DROP_ONE_CURSOR:           executors.forEach(e -> e.executeDropOneCursor       (info)); break;
+            case DROP_ALL_SLOT:             executors.forEach(e -> e.executeDropAllSlot         (info)); break;
+            case DROP_ONE_SLOT:             executors.forEach(e -> e.executeDropOneSlot         (info)); break;
+            case MOVE_TO_OTHER_INVENTORY:   executors.forEach(e -> e.executeMoveToOtherInventory(info)); break;
+            case HOTBAR_MOVE_AND_READD:     executors.forEach(e -> e.executeHotbarMoveAndReadd  (info)); break;
+            case HOTBAR_SWAP:               executors.forEach(e -> e.executeHotbarSwap          (info)); break;
+            case CLONE_STACK:               executors.forEach(e -> e.executeCloneStack          (info)); break;
+            case COLLECT_TO_CURSOR:         executors.forEach(e -> e.executeCollectToCursor     (info)); break;
+            default:                        executors.forEach(e -> e.executeUnknown             (info)); break;
         }
     }
 }

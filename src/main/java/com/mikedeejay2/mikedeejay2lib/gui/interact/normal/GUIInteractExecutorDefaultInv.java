@@ -1,16 +1,13 @@
 package com.mikedeejay2.mikedeejay2lib.gui.interact.normal;
 
-import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
-import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractExecutor;
-import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractType;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import org.bukkit.Location;
 import org.bukkit.Material;
 import org.bukkit.World;
 import org.bukkit.entity.Item;
 import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.ItemStack;
 
@@ -44,24 +41,23 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
     /**
      * {@inheritDoc}
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executePickupAll(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        if(inventory != player.getInventory()) return;
-        ItemStack bottomItem = inventory.getItem(slot);
-        int       curAmount  = bottomItem.getAmount();
-        int       maxAmount  = limit == -1 ? bottomItem.getMaxStackSize() : limit;
+    public void executePickupAll(GUIClickEvent event) {
+        final Player player = event.getPlayer();
+        if(event.getClickedInventory() != player.getInventory()) return;
+        final Inventory inventory = event.getClickedInventory();
+        final int slot = event.getSlot();
+
+        final ItemStack bottomItem = inventory.getItem(slot);
+        final int maxAmount = limit == -1 ? bottomItem.getMaxStackSize() : limit;
+        int curAmount = bottomItem.getAmount();
+
         if(curAmount > maxAmount) {
             bottomItem.setAmount(curAmount - maxAmount);
             curAmount = maxAmount;
-        }
-        else inventory.setItem(slot, null);
+        } else inventory.setItem(slot, null);
         ItemStack cursorItem = bottomItem.clone();
         cursorItem.setAmount(curAmount);
         player.setItemOnCursor(cursorItem);
@@ -70,21 +66,19 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
     /**
      * {@inheritDoc}
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executePickupSome(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        if(inventory != player.getInventory()) return;
-        ItemStack cursorItem   = player.getItemOnCursor();
-        int       cursorAmount = cursorItem.getAmount();
-        ItemStack bottomItem   = inventory.getItem(slot);
-        int       bottomAmount = bottomItem.getAmount();
-        int       maxAmount    = limit == -1 ? cursorItem.getMaxStackSize() : limit;
+    public void executePickupSome(GUIClickEvent event) {
+        final Player player = event.getPlayer();
+        if(event.getClickedInventory() != player.getInventory()) return;
+        final ItemStack bottomItem = event.getClickedInventory().getItem(event.getSlot());
+
+        final ItemStack cursorItem = player.getItemOnCursor();
+        final int cursorAmount = cursorItem.getAmount();
+        final int bottomAmount = bottomItem.getAmount();
+        final int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
+
         cursorItem.setAmount(maxAmount);
         bottomItem.setAmount(bottomAmount - (maxAmount - cursorAmount));
         player.setItemOnCursor(cursorItem);
@@ -93,21 +87,19 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
     /**
      * {@inheritDoc}
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executePickupHalf(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        if(inventory != player.getInventory()) return;
-        ItemStack bottomItem   = inventory.getItem(slot);
-        int       bottomAmount = bottomItem.getAmount();
-        int       maxAmount    = limit == -1 ? bottomItem.getMaxStackSize() : limit;
-        int       halfTop      = (int) Math.ceil(bottomAmount / 2.0);
-        int       halfBottom   = (int) Math.floor(bottomAmount / 2.0);
+    public void executePickupHalf(GUIClickEvent event) {
+        final Player player = event.getPlayer();
+        if(event.getClickedInventory() != player.getInventory()) return;
+        final ItemStack bottomItem = event.getClickedInventory().getItem(event.getSlot());
+
+        final int bottomAmount = bottomItem.getAmount();
+        final int maxAmount = limit == -1 ? bottomItem.getMaxStackSize() : limit;
+        int halfTop = (int) Math.ceil(bottomAmount / 2.0);
+        int halfBottom = (int) Math.floor(bottomAmount / 2.0);
+
         if(halfTop > maxAmount) {
             halfBottom += halfTop - maxAmount;
             halfTop = maxAmount;
@@ -122,20 +114,18 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
     /**
      * {@inheritDoc}
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executePickupOne(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        if(inventory != player.getInventory()) return;
-        ItemStack cursorItem   = player.getItemOnCursor();
-        int       cursorAmount = cursorItem.getAmount();
-        ItemStack bottomItem   = inventory.getItem(slot);
-        int       bottomAmount = bottomItem.getAmount();
+    public void executePickupOne(GUIClickEvent event) {
+        final Player player = event.getPlayer();
+        if(event.getClickedInventory() != player.getInventory()) return;
+        final ItemStack bottomItem = event.getClickedInventory().getItem(event.getSlot());
+
+        ItemStack cursorItem = player.getItemOnCursor();
+        final int cursorAmount = cursorItem.getAmount();
+        final int bottomAmount = bottomItem.getAmount();
+
         if(cursorItem.getType() == Material.AIR) {
             cursorItem = bottomItem.clone();
             cursorItem.setAmount(1);
@@ -150,25 +140,25 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
     /**
      * {@inheritDoc}
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executePlaceAll(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        if(inventory != player.getInventory()) return;
-        ItemStack cursorItem   = player.getItemOnCursor();
-        int       cursorAmount = cursorItem.getAmount();
-        ItemStack curItem      = inventory.getItem(slot);
-        int       bottomAmount = 0;
+    public void executePlaceAll(GUIClickEvent event) {
+        final Player player = event.getPlayer();
+        if(event.getClickedInventory() != player.getInventory()) return;
+        final Inventory inventory = event.getClickedInventory();
+        final int slot = event.getSlot();
+
+        final ItemStack cursorItem = player.getItemOnCursor();
+        final int cursorAmount = cursorItem.getAmount();
+        final ItemStack curItem = inventory.getItem(slot);
+        int bottomAmount = 0;
         if(curItem != null) bottomAmount = curItem.getAmount();
-        ItemStack bottomItem  = cursorItem.clone();
-        int       extraAmount = 0;
-        int       newAmount   = cursorAmount + bottomAmount;
-        int       maxAmount   = limit == -1 ? cursorItem.getMaxStackSize() : limit;
+        final ItemStack bottomItem = cursorItem.clone();
+        int extraAmount = 0;
+        int newAmount = cursorAmount + bottomAmount;
+        final int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
+
         if(newAmount > maxAmount) {
             extraAmount = newAmount - maxAmount;
             newAmount = maxAmount;
@@ -182,21 +172,19 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
     /**
      * {@inheritDoc}
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executePlaceSome(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        if(inventory != player.getInventory()) return;
-        ItemStack cursorItem   = player.getItemOnCursor();
-        int       cursorAmount = cursorItem.getAmount();
-        ItemStack bottomItem   = inventory.getItem(slot);
-        int       bottomAmount = bottomItem.getAmount();
-        int       maxAmount    = limit == -1 ? cursorItem.getMaxStackSize() : limit;
+    public void executePlaceSome(GUIClickEvent event) {
+        final Player player = event.getPlayer();
+        if(event.getClickedInventory() != player.getInventory()) return;
+        ItemStack bottomItem = event.getClickedInventory().getItem(event.getSlot());
+
+        final ItemStack cursorItem = player.getItemOnCursor();
+        final int cursorAmount = cursorItem.getAmount();
+        final int bottomAmount = bottomItem.getAmount();
+        final int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
+
         cursorItem.setAmount(bottomAmount - (maxAmount - cursorAmount));
         bottomItem.setAmount(maxAmount);
         player.setItemOnCursor(cursorItem);
@@ -205,19 +193,19 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
     /**
      * {@inheritDoc}
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executePlaceOne(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        if(inventory != player.getInventory()) return;
-        ItemStack cursorItem   = player.getItemOnCursor();
-        int       cursorAmount = cursorItem.getAmount();
-        ItemStack bottomItem   = inventory.getItem(slot);
+    public void executePlaceOne(GUIClickEvent event) {
+        final Player player = event.getPlayer();
+        if(event.getClickedInventory() != player.getInventory()) return;
+        final Inventory inventory = event.getClickedInventory();
+        final int slot = event.getSlot();
+
+        final ItemStack cursorItem = player.getItemOnCursor();
+        final int cursorAmount = cursorItem.getAmount();
+        ItemStack bottomItem = inventory.getItem(slot);
+
         if(bottomItem == null) {
             bottomItem = cursorItem.clone();
             bottomItem.setAmount(1);
@@ -232,20 +220,20 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
     /**
      * {@inheritDoc}
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executeSwapWithCursor(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        if(inventory != player.getInventory()) return;
-        ItemStack cursorItem      = player.getItemOnCursor();
-        int       maxAmountCursor = limit == -1 ? cursorItem.getAmount() : limit;
-        ItemStack bottomItem      = inventory.getItem(slot);
-        int       maxAmountBottom = limit == -1 ? bottomItem.getAmount() : limit;
+    public void executeSwapWithCursor(GUIClickEvent event) {
+        final Player player = event.getPlayer();
+        if(event.getClickedInventory() != player.getInventory()) return;
+        final Inventory inventory = event.getClickedInventory();
+        final int slot = event.getSlot();
+
+        final ItemStack cursorItem = player.getItemOnCursor();
+        final int maxAmountCursor = limit == -1 ? cursorItem.getAmount() : limit;
+        final ItemStack bottomItem = inventory.getItem(slot);
+        final int maxAmountBottom = limit == -1 ? bottomItem.getAmount() : limit;
+
         if(cursorItem.getAmount() > maxAmountCursor || bottomItem.getAmount() > maxAmountBottom) return;
         inventory.setItem(slot, cursorItem);
         player.setItemOnCursor(bottomItem);
@@ -254,21 +242,19 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
     /**
      * {@inheritDoc}
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executeDropAllCursor(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        ItemStack cursorItem = player.getItemOnCursor();
-        Location  location   = player.getEyeLocation();
-        World     world      = location.getWorld();
-        ItemStack itemToDrop = cursorItem.clone();
-        int       curAmount  = cursorItem.getAmount();
-        int       maxAmount  = limit == -1 ? cursorItem.getMaxStackSize() : limit;
+    public void executeDropAllCursor(GUIClickEvent event) {
+        final Player player = event.getPlayer();
+
+        final ItemStack cursorItem = player.getItemOnCursor();
+        final Location location = player.getEyeLocation();
+        final World world = location.getWorld();
+        final ItemStack itemToDrop = cursorItem.clone();
+        final int curAmount = cursorItem.getAmount();
+        final int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
+
         if(curAmount > maxAmount) {
             itemToDrop.setAmount(maxAmount);
             cursorItem.setAmount(curAmount - maxAmount);
@@ -282,22 +268,20 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
     /**
      * {@inheritDoc}
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executeDropOneCursor(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        ItemStack cursorItem = player.getItemOnCursor();
-        ItemStack itemToDrop = cursorItem.clone();
+    public void executeDropOneCursor(GUIClickEvent event) {
+        final Player player = event.getPlayer();
+
+        final ItemStack cursorItem = player.getItemOnCursor();
+        final ItemStack itemToDrop = cursorItem.clone();
+        final Location location = player.getEyeLocation();
+        final World world = location.getWorld();
+
         itemToDrop.setAmount(1);
         cursorItem.setAmount(cursorItem.getAmount() - 1);
-        Location location = player.getEyeLocation();
-        World    world    = location.getWorld();
-        Item     item     = world.dropItem(location, itemToDrop);
+        Item item = world.dropItem(location, itemToDrop);
         item.setVelocity(location.getDirection().multiply(1.0 / 3.0));
         player.setItemOnCursor(cursorItem);
     }
@@ -305,74 +289,72 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
     /**
      * {@inheritDoc}
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executeDropAllSlot(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        if(inventory != player.getInventory()) return;
-        ItemStack itemToDrop;
-        ItemStack stack            = inventory.getItem(slot);
-        int       curAmount        = stack.getAmount();
-        int       itemToDropAmount = curAmount;
-        int       maxAmount        = limit == -1 ? stack.getMaxStackSize() : limit;
+    public void executeDropAllSlot(GUIClickEvent event) {
+        final Player player = event.getPlayer();
+        if(event.getClickedInventory() != player.getInventory()) return;
+        final Inventory inventory = event.getClickedInventory();
+        final int slot = event.getSlot();
+
+        final ItemStack stack = inventory.getItem(slot);
+        final int curAmount = stack.getAmount();
+        final int maxAmount = limit == -1 ? stack.getMaxStackSize() : limit;
+        final Location location = player.getEyeLocation();
+        final World world = location.getWorld();
+        int itemToDropAmount = curAmount;
+
         if(curAmount > maxAmount) {
             stack.setAmount(curAmount - maxAmount);
             itemToDropAmount = maxAmount;
         } else inventory.setItem(slot, null);
-        itemToDrop = stack.clone();
+        ItemStack itemToDrop = stack.clone();
         itemToDrop.setAmount(itemToDropAmount);
-        Location location = player.getEyeLocation();
-        World    world    = location.getWorld();
-        Item     item     = world.dropItem(location, itemToDrop);
+        Item item = world.dropItem(location, itemToDrop);
         item.setVelocity(location.getDirection().multiply(1.0 / 3.0));
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executeDropOneSlot(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        if(inventory != player.getInventory()) return;
-        ItemStack origItem   = inventory.getItem(slot);
-        ItemStack itemToDrop = origItem.clone();
+    public void executeDropOneSlot(GUIClickEvent event) {
+        final Player player = event.getPlayer();
+        if(event.getClickedInventory() != player.getInventory()) return;
+        final Inventory inventory = event.getClickedInventory();
+        final int slot = event.getSlot();
+
+        final ItemStack origItem = inventory.getItem(slot);
+        final ItemStack itemToDrop = origItem.clone();
+        final Location location = player.getEyeLocation();
+        final World world = location.getWorld();
+
         itemToDrop.setAmount(1);
         origItem.setAmount(origItem.getAmount() - 1);
-        Location location = player.getEyeLocation();
-        World    world    = location.getWorld();
-        Item     item     = world.dropItem(location, itemToDrop);
+        Item item = world.dropItem(location, itemToDrop);
         item.setVelocity(location.getDirection().multiply(1.0 / 3.0));
     }
 
     /**
      * {@inheritDoc}
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executeHotbarSwap(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        if(inventory != player.getInventory()) return;
-        int       hotbarSlot = event.getHotbarButton();
+    public void executeHotbarSwap(GUIClickEvent event) {
+        final Player player = event.getPlayer();
+        if(event.getClickedInventory() != player.getInventory()) return;
+        final int hotbarSlot = event.getHotbarButton();
         if(hotbarSlot < 0) return;
-        Inventory playerInv  = player.getInventory();
-        ItemStack curItem    = playerInv.getItem(hotbarSlot);
-        ItemStack item       = playerInv.getItem(slot);
+        final int slot = event.getSlot();
+
+        final Inventory playerInv = player.getInventory();
+        final ItemStack curItem = playerInv.getItem(hotbarSlot);
+        final ItemStack item = playerInv.getItem(slot);
+
         playerInv.setItem(hotbarSlot, item);
         playerInv.setItem(slot, curItem);
     }
@@ -380,19 +362,16 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
     /**
      * {@inheritDoc}
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executeCloneStack(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        if(inventory != player.getInventory()) return;
-        Inventory playerInv = player.getInventory();
-        ItemStack item      = playerInv.getItem(slot).clone();
-        int       maxAmount = limit == -1 ? item.getMaxStackSize() : limit;
+    public void executeCloneStack(GUIClickEvent event) {
+        final Player player = event.getPlayer();
+        if(event.getClickedInventory() != player.getInventory()) return;
+        final Inventory playerInv = player.getInventory();
+        final ItemStack item = playerInv.getItem(event.getSlot()).clone();
+        final int maxAmount = limit == -1 ? item.getMaxStackSize() : limit;
+
         item.setAmount(maxAmount);
         player.setItemOnCursor(item);
     }
@@ -400,18 +379,16 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
     /**
      * {@inheritDoc}
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executeCollectToCursor(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {
-        ItemStack cursorItem = player.getItemOnCursor();
-        Inventory playerInv  = player.getInventory();
-        int       maxAmount  = limit == -1 ? cursorItem.getMaxStackSize() : limit;
+    public void executeCollectToCursor(GUIClickEvent event) {
+        final Player player = event.getPlayer();
+
+        final ItemStack cursorItem = player.getItemOnCursor();
+        final Inventory playerInv = player.getInventory();
+        final int maxAmount = limit == -1 ? cursorItem.getMaxStackSize() : limit;
+
         if(cursorItem.getAmount() >= maxAmount) return;
         for(int amount = 1; amount <= maxAmount; ++amount) {
             for(int i = 0; i < playerInv.getStorageContents().length; ++i) {
@@ -419,7 +396,7 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
                 if(curItem == null) continue;
                 if(curItem.getAmount() != amount) continue;
                 if(!ItemComparison.equalsEachOther(cursorItem, curItem)) continue;
-                int newAmount   = curItem.getAmount() + cursorItem.getAmount();
+                int newAmount = curItem.getAmount() + cursorItem.getAmount();
                 int extraAmount = 0;
                 if(newAmount > maxAmount) {
                     extraAmount = newAmount - maxAmount;
@@ -434,54 +411,34 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
     /**
      * Not an inventory execution, therefore not implemented.
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executeNothing(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {}
+    public void executeNothing(GUIClickEvent event) {}
 
     /**
      * Not an inventory execution, therefore not implemented.
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executeMoveToOtherInventory(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {}
+    public void executeMoveToOtherInventory(GUIClickEvent event) {}
 
     /**
      * Not an inventory execution, therefore not implemented.
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executeHotbarMoveAndReadd(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {}
+    public void executeHotbarMoveAndReadd(GUIClickEvent event) {}
 
     /**
      * Not an inventory execution, therefore not implemented.
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
     @Override
-    public void executeUnknown(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer) {}
+    public void executeUnknown(GUIClickEvent event) {}
 
     /**
      * Get the item stack limit, <code>-1</code> is default stack limit

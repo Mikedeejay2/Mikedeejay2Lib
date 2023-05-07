@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.sound;
 
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.util.GUIAbstractClickEvent;
 import org.bukkit.Location;
 import org.bukkit.Sound;
@@ -91,7 +91,7 @@ public class GUIPlaySoundEvent extends GUIAbstractClickEvent {
     }
 
     @Override
-    protected void executeClick(GUIEventInfo info) {
+    protected void executeClick(GUIClickEvent info) {
         if(sound == null) return;
         Player player = info.getPlayer();
         Location location = player.getLocation();

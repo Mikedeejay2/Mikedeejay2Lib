@@ -1,8 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.chat;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.util.GUIAbstractClickEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -48,7 +47,7 @@ public class GUIPrintMessageEvent extends GUIAbstractClickEvent {
     }
 
     @Override
-    protected void executeClick(GUIEventInfo info) {
+    protected void executeClick(GUIClickEvent info) {
         Player player = info.getPlayer();
         plugin.sendMessage(player, message);
     }

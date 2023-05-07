@@ -3,7 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules.navigation;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.sound.GUIPlaySoundEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.AnimatedGUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
@@ -135,10 +135,10 @@ public class GUIScrollerModule implements GUIModule {
         /**
          * Execute scrolling in the specified direction
          *
-         * @param info {@link GUIEventInfo} of the event
+         * @param info {@link GUIClickEvent} of the event
          */
         @Override
-        public void executeClick(GUIEventInfo info) {
+        public void executeClick(GUIClickEvent info) {
             GUIContainer gui = info.getGUI();
             int rowOffset = gui.getRowOffset();
             int colOffset = gui.getColumnOffset();

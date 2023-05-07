@@ -2,7 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.event.navigation;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.util.GUIAbstractClickEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -48,7 +48,7 @@ public class GUIOpenEvent extends GUIAbstractClickEvent {
     }
 
     @Override
-    protected void executeClick(GUIEventInfo info) {
+    protected void executeClick(GUIClickEvent info) {
         Player player = info.getPlayer();
         if(info.getGUI().equals(guiToOpen)) return;
         guiToOpen.open(player);

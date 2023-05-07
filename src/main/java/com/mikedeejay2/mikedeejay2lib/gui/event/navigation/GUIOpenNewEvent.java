@@ -3,9 +3,8 @@ package com.mikedeejay2.mikedeejay2lib.gui.event.navigation;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIConstructor;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import org.bukkit.event.inventory.ClickType;
-import org.jetbrains.annotations.Nullable;
 
 /**
  * Open a player's GUI to a NEW specified GUI.
@@ -51,7 +50,7 @@ public class GUIOpenNewEvent extends GUIOpenEvent {
     }
 
     @Override
-    protected void executeClick(GUIEventInfo info) {
+    protected void executeClick(GUIClickEvent info) {
         construct();
         super.executeClick(info);
     }

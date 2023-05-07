@@ -4,7 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.sound.GUIPlaySoundEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.GUIModule;
@@ -1220,10 +1220,10 @@ public class GUIListModule implements GUIModule {
         /**
          * Execute search event that prompts user to input data
          *
-         * @param info {@link GUIEventInfo} of the event
+         * @param info {@link GUIClickEvent} of the event
          */
         @Override
-        public void execute(GUIEventInfo info) {
+        public void execute(GUIClickEvent info) {
             Player player = info.getPlayer();
             ClickType clickType = info.getClick();
             if(clickType != ClickType.LEFT) return;
@@ -1245,10 +1245,10 @@ public class GUIListModule implements GUIModule {
         /**
          * Execute disabling search mode on the GUI
          *
-         * @param info {@link GUIEventInfo} of the event
+         * @param info {@link GUIClickEvent} of the event
          */
         @Override
-        public void execute(GUIEventInfo info) {
+        public void execute(GUIClickEvent info) {
             ClickType clickType = info.getClick();
             if(clickType != ClickType.LEFT) return;
             info.getGUI().getModule(GUIListModule.class).disableSearchMode();
@@ -1268,10 +1268,10 @@ public class GUIListModule implements GUIModule {
         /**
          * Execute the modification of a list location switch (Moving what is being viewed on the list)
          *
-         * @param info {@link GUIEventInfo} of the event
+         * @param info {@link GUIClickEvent} of the event
          */
         @Override
-        public void executeClick(GUIEventInfo info) {
+        public void executeClick(GUIClickEvent info) {
             int slot = info.getSlot();
             GUIContainer gui = info.getGUI();
             GUIListModule module = gui.getModule(GUIListModule.class);

@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.interact.normal;
 
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.interact.GUIInteractHandler;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
@@ -57,21 +58,21 @@ public class GUIInteractHandlerDefault extends GUIInteractHandler {
      */
     @Override
     public void handleInteraction(InventoryClickEvent event, GUIContainer gui) {
-        ClickType       clickType = event.getClick();
-        InventoryAction action    = event.getAction();
-        Player          player    = (Player) event.getWhoClicked();
-        int             slot      = event.getSlot();
+        final ClickType clickType = event.getClick();
+        InventoryAction action = event.getAction();
+        final Player player = (Player) event.getWhoClicked();
+        final int slot = event.getSlot();
 
-        Inventory clickedInv = event.getClickedInventory();
-        Inventory playerInv  = player.getInventory();
-        GUILayer  layer      = gui.getLayer(0);
+        final Inventory clickedInv = event.getClickedInventory();
+        final Inventory playerInv = player.getInventory();
+        final GUILayer layer = gui.getLayer(0);
 
         ItemStack cursorItem = player.getItemOnCursor();
         if(cursorItem.getType() == Material.AIR) cursorItem = null;
         ItemStack bottomItem = null;
         if(clickedInv == gui.getInventory()) {
-            int     row     = gui.getRow(slot);
-            int     col     = gui.getColumn(slot);
+            int row = gui.getRow(slot);
+            int col = gui.getColumn(slot);
             GUIItem guiItem = layer.getItem(row, col);
             if(guiItem != null) {
                 bottomItem = guiItem.get(player);
@@ -81,7 +82,7 @@ public class GUIInteractHandlerDefault extends GUIInteractHandler {
         }
 
         if(limit == -1) {
-            executeAction(player, clickedInv, slot, action, event, gui, layer);
+            executeAction(new GUIClickEvent(event, gui));
             return;
         }
 
@@ -128,7 +129,7 @@ public class GUIInteractHandlerDefault extends GUIInteractHandler {
             }
             break;
         }
-        executeAction(player, clickedInv, slot, action, event, gui, layer);
+        executeAction(new GUIClickEvent(event, gui, action));
     }
 
     /**

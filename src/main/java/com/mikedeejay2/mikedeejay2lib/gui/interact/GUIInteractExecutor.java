@@ -1,14 +1,10 @@
 package com.mikedeejay2.mikedeejay2lib.gui.interact;
 
-import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
-import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
-import org.bukkit.entity.Player;
-import org.bukkit.event.inventory.InventoryClickEvent;
-import org.bukkit.inventory.Inventory;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 
 /**
  * An interface to be the basis of any item interaction executor.
- * This interface gives a base for all of the methods required for all of the
+ * This interface gives a base for all the methods required for all the
  * possible item movement types.
  *
  * @author Mikedeejay2
@@ -17,228 +13,133 @@ public interface GUIInteractExecutor {
     /**
      * Called when nothing should happen
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executeNothing(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executeNothing(GUIClickEvent event);
 
     /**
      * Called when all items of a slot should be picked up into the player's cursor
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executePickupAll(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executePickupAll(GUIClickEvent event);
 
     /**
      * Called when some of the items of a slot should be picked up into the player's cursor
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executePickupSome(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executePickupSome(GUIClickEvent event);
 
     /**
      * Called when half of the items should be picked up from a slot into the player's cursor
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executePickupHalf(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executePickupHalf(GUIClickEvent event);
 
     /**
      * Called when one of the items of a slot should be picked up into a player's cursor
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executePickupOne(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executePickupOne(GUIClickEvent event);
 
     /**
      * Called when everything in a player's cursor should be dropped into a slot
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executePlaceAll(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executePlaceAll(GUIClickEvent event);
 
     /**
      * Called when some of the player's cursor should be dropped into a slot
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executePlaceSome(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executePlaceSome(GUIClickEvent event);
 
     /**
      * Called when one of the player's cursor should be dropped into a slot
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executePlaceOne(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executePlaceOne(GUIClickEvent event);
 
     /**
      * Called when the item in the GUI should be swapped with the item in the player's cursor
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executeSwapWithCursor(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executeSwapWithCursor(GUIClickEvent event);
 
     /**
      * Called when the item that the player interacted with should be dropped to the ground
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executeDropAllCursor(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executeDropAllCursor(GUIClickEvent event);
 
     /**
      * Called when one of the item that the player interacted with should be dropped to the ground
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executeDropOneCursor(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executeDropOneCursor(GUIClickEvent event);
 
     /**
      * Called when the item that the player interacted with should be dropped to the ground
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executeDropAllSlot(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executeDropAllSlot(GUIClickEvent event);
 
     /**
      * Called when one of the item that the player interacted with should be dropped to ground
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executeDropOneSlot(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executeDropOneSlot(GUIClickEvent event);
 
     /**
      * Called when the item that the player interacted with should be moved to the other inventory
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executeMoveToOtherInventory(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executeMoveToOtherInventory(GUIClickEvent event);
 
     /**
      * Called when an item in the hotbar is moved and re-added to a different slot
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executeHotbarMoveAndReadd(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executeHotbarMoveAndReadd(GUIClickEvent event);
 
     /**
      * Called when an item should be added to the hotbar and the item that is currently there is moved into the player's inventory
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executeHotbarSwap(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executeHotbarSwap(GUIClickEvent event);
 
     /**
      * Called when the player clones an <code>ItemStack</code> into their cursor
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executeCloneStack(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executeCloneStack(GUIClickEvent event);
 
     /**
      * Called when the player collects up to max stack size to their cursor
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executeCollectToCursor(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executeCollectToCursor(GUIClickEvent event);
 
     /**
      * Called when the player executes an unknown interaction type.
      *
-     * @param player    The {@link Player} interacting with the GUI
-     * @param inventory The {@link Inventory} that was interacted with
-     * @param slot      The slot that was interacted with
-     * @param event     The event of the click
-     * @param gui       The {@link GUIContainer} that was interacted with
-     * @param layer     The {@link GUILayer} that items should be placed on
+     * @param event The {@link GUIClickEvent} of the click
      */
-    void executeUnknown(Player player, Inventory inventory, int slot, InventoryClickEvent event, GUIContainer gui, GUILayer layer);
+    void executeUnknown(GUIClickEvent event);
 }

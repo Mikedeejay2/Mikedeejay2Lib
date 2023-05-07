@@ -1,7 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.util;
 
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import org.bukkit.event.inventory.ClickType;
 
 import java.util.ArrayList;
@@ -9,7 +9,7 @@ import java.util.Arrays;
 import java.util.List;
 
 /**
- * An abstract event that only calls {@link GUIAbstractClickEvent#executeClick(GUIEventInfo)} if the click type matches
+ * An abstract event that only calls {@link GUIAbstractClickEvent#executeClick(GUIClickEvent)} if the click type matches
  * a specified click type.
  *
  * @author Mikedeejay2
@@ -37,12 +37,12 @@ public abstract class GUIAbstractClickEvent implements GUIEvent {
     }
 
     /**
-     * Calls {@link GUIAbstractClickEvent#executeClick(GUIEventInfo)} if the click type is valid
+     * Calls {@link GUIAbstractClickEvent#executeClick(GUIClickEvent)} if the click type is valid
      *
-     * @param info {@link GUIEventInfo} of the event
+     * @param info {@link GUIClickEvent} of the event
      */
     @Override
-    public void execute(GUIEventInfo info) {
+    public void execute(GUIClickEvent info) {
         if(!isValidClick(info.getClick())) return;
         executeClick(info);
     }
@@ -50,9 +50,9 @@ public abstract class GUIAbstractClickEvent implements GUIEvent {
     /**
      * Only called if click type is valid
      *
-     * @param info {@link GUIEventInfo} of the event
+     * @param info {@link GUIClickEvent} of the event
      */
-    protected abstract void executeClick(GUIEventInfo info);
+    protected abstract void executeClick(GUIClickEvent info);
 
     /**
      * Get List of the accepted {@link ClickType}s that will activate the event.

@@ -1,7 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.item;
 
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.util.GUIAbstractClickEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.event.inventory.ClickType;
@@ -30,7 +29,7 @@ public class GUIDeleteCursorEvent extends GUIAbstractClickEvent {
     }
 
     @Override
-    protected void executeClick(GUIEventInfo info) {
+    protected void executeClick(GUIClickEvent info) {
         Player player = info.getPlayer();
         InventoryView inventory = player.getOpenInventory();
         inventory.setCursor(null);

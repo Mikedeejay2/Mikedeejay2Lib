@@ -1,6 +1,6 @@
 package com.mikedeejay2.mikedeejay2lib.gui.event.item;
 
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEventInfo;
+import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.util.GUIAbstractClickEvent;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import org.bukkit.entity.Player;
@@ -60,7 +60,7 @@ public class GUIGiveItemEvent extends GUIAbstractClickEvent {
     }
 
     @Override
-    protected void executeClick(GUIEventInfo info) {
+    protected void executeClick(GUIClickEvent info) {
         Player player = info.getPlayer();
         player.getInventory().addItem(itemStack.apply(player));
     }
