@@ -62,10 +62,17 @@ public final class GUIClickEvent {
         this.event = event;
         this.player = (Player) event.getWhoClicked();
         this.gui = gui;
-        this.row = gui.getRow(event.getSlot());
-        this.column = gui.getColumn(event.getSlot());
-        this.layer = gui.getTopLayer(row, column);
-        this.item = layer.getItem(row, column);
+        if(event.getSlot() >= 0) {
+            this.row = gui.getRow(event.getSlot());
+            this.column = gui.getColumn(event.getSlot());
+            this.layer = gui.getTopLayer(row, column);
+            this.item = layer.getItem(row, column);
+            return;
+        }
+        this.row = -1;
+        this.column = -1;
+        this.layer = null;
+        this.item = null;
     }
 
     /**
@@ -76,7 +83,7 @@ public final class GUIClickEvent {
      * @param action The {@link InventoryAction} that was performed
      */
     public GUIClickEvent(InventoryClickEvent event, GUIContainer gui, InventoryAction action) {
-        this(new InventoryClickEvent(event.getView(), event.getSlotType(), event.getSlot(), event.getClick(), action, event.getHotbarButton()), gui);
+        this(new InventoryClickEvent(event.getView(), event.getSlotType(), event.getRawSlot(), event.getClick(), action, event.getHotbarButton()), gui);
     }
 
     /**

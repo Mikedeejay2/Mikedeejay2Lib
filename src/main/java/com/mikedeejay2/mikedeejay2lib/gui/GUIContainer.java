@@ -987,7 +987,7 @@ public class GUIContainer {
             GUIItem item = layer.getItem(row, col);
             if(item != null) return layer;
         }
-        return null;
+        return layers.get(0);
     }
 
     /**
