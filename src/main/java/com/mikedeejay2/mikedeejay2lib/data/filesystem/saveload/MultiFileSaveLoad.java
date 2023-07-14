@@ -121,12 +121,13 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
 
     @Override
     public SerializableFolderFS<T> loadFolder(String path) {
-        FolderInfo<T> curFolderFromPool = system.getFolderPool().getIfPresent(path);
+        FolderInfo<T> curFolderFromPool = system.getFolderPool().get(path);
         if(curFolderFromPool != null) return curFolderFromPool.owner;
         File folderFile = new File(plugin.getDataFolder(), path);
         Validate.isTrue(folderFile.exists(), "A folder \"%s\" does not exist.", path);
         String name = folderFile.getName();
         name = name.substring(0, name.lastIndexOf('.'));
+        name = SerializableFileSystem.getSafeName(name);
         return new SerializableFolderFS<>(name, path, system);
     }
 

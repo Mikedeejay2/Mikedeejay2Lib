@@ -1,7 +1,5 @@
 package com.mikedeejay2.mikedeejay2lib.data.filesystem;
 
-import com.google.common.cache.Cache;
-import com.google.common.cache.CacheBuilder;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.data.filesystem.modifier.AutoFileSystemModifier;
 import com.mikedeejay2.mikedeejay2lib.data.filesystem.modifier.FileSystemModifier;
@@ -24,18 +22,17 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> impleme
     protected final Class<T> serializableClass;
     protected final SerializableFolderFS<T> root;
     protected final String savePath;
+    protected final FolderPool<T> folderPool;
     protected boolean autoWrite;
     protected final FileMode fileMode;
     protected FileSystemModifier<T> modifier;
     protected FileSystemSaveLoad<T> saveLoad;
 
-    protected final Cache<String, FolderInfo<T>> folderPool;
-
     public SerializableFileSystem(BukkitPlugin plugin, Class<T> serializableClass, String name, String initialPath, FileMode fileMode, boolean autoWrite) {
-        this.folderPool = CacheBuilder.newBuilder().maximumSize(10).build();
         this.serializableClass = serializableClass;
         this.plugin = plugin;
-        this.root = new SerializableFolderFS<>(name, null, this);
+        this.folderPool = new FolderPool<>(this);
+        this.root = new SerializableFolderFS<>(getSafeName(name), null, this);
         this.autoWrite = autoWrite;
         this.fileMode = fileMode;
         this.savePath = initialPath.replace('\\', '/');
@@ -53,42 +50,53 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> impleme
     }
 
     public void addItem(String path, String name, T item) {
+        path = getSafePath(path);
+        name = getSafeName(name);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to add item to null folder at path \"%s\"", path);
         folder.addItem(name, item);
     }
 
     public void removeItem(String path, String name) {
+        path = getSafePath(path);
+        name = getSafeName(name);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to remove item from null folder at path \"%s\"", path);
         folder.removeItem(name);
     }
 
     public void clearItems(String path) {
+        path = getSafePath(path);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to clear items from null folder at path \"%s\"", path);
         folder.clearItems();
     }
 
     public void createFolder(String path, String name) {
+        path = getSafePath(path);
+        name = getSafeName(name);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to create folder into null folder at path \"%s\"", path);
         folder.addFolder(name);
     }
 
     public void removeFolder(String path, String name) {
+        path = getSafePath(path);
+        name = getSafeName(name);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to remove folder from null folder at path \"%s\"", path);
         folder.removeFolder(name);
     }
 
     public void clearFolders(String path) {
+        path = getSafePath(path);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to clear folders from null folder at path \"%s\"", path);
         folder.clearFolders();
     }
 
     public void save(String path) {
+        path = getSafePath(path);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to save null folder at path \"%s\"", path);
         folder.save();
@@ -99,25 +107,25 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> impleme
     }
 
     public T getItem(String path, String name) {
+        path = getSafePath(path);
+        name = getSafeName(name);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get item from null folder at path \"%s\"", path);
         return folder.getItem(name);
     }
 
     public String getItemName(String path, T item) {
+        path = getSafePath(path);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get item name from null folder at path \"%s\"", path);
         return folder.getItemName(item);
     }
 
     public SerializableFolderFS<T> getFolder(String path) {
+        path = getSafePath(path);
         Validate.notNull(path, "Tried to get folder from null folder of null path");
-        System.out.println("ATTEMPT: " + path);
-        for(String cur : folderPool.asMap().keySet()) {
-            System.out.println("CACHED: " + cur);
-        }
         if(path.equals(root.getPath())) return root;
-        FolderInfo<T> folderInfo = folderPool.getIfPresent(path);
+        FolderInfo<T> folderInfo = folderPool.get(path);
         if(folderInfo == null) {
             saveLoad.loadFolder(path);
         }
@@ -125,24 +133,28 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> impleme
     }
 
     public List<SerializableFolderFS<T>> getFolders(String path) {
+        path = getSafePath(path);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get folders from null folder at path \"%s\"", path);
         return folder.getFolders();
     }
 
     public Map<String, SerializableFolderFS<T>> getFoldersMap(String path) {
+        path = getSafePath(path);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get folders from null folder at path \"%s\"", path);
         return folder.getFoldersMap();
     }
 
     public List<T> getItems(String path) {
+        path = getSafePath(path);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get items from null folder at path \"%s\"", path);
         return folder.getItems();
     }
 
     public Map<String, T> getItemsMap(String path) {
+        path = getSafePath(path);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get items from null folder at path \"%s\"", path);
         return folder.getItemsMap();
@@ -176,7 +188,7 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> impleme
         return savePath;
     }
 
-    public Cache<String, FolderInfo<T>> getFolderPool() {
+    public FolderPool<T> getFolderPool() {
         return folderPool;
     }
 
@@ -200,6 +212,21 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> impleme
             return false;
         }
         return true;
+    }
+
+    public static String getSafePath(String path) {
+        path = path.trim();
+        path = path.replace('\\', '/');
+        if(path.charAt(0) == '/') path = path.substring(1);
+        if(path.charAt(path.length() - 1) == '/') path = path.substring(0, path.length() - 1);
+        return path;
+    }
+
+    public static String getSafeName(String name) {
+        name = name.trim();
+        name = name.replace('\\', '/');
+        name = name.replace("/", "");
+        return name;
     }
 
     /**

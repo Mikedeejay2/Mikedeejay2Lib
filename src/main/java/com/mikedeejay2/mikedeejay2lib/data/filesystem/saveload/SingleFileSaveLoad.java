@@ -111,7 +111,7 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
 
     @Override
     public SerializableFolderFS<T> loadFolder(String path) {
-        FolderInfo<T> curFolderFromPool = system.getFolderPool().getIfPresent(path);
+        FolderInfo<T> curFolderFromPool = system.getFolderPool().get(path);
         if(curFolderFromPool != null) return curFolderFromPool.owner;
         Validate.isTrue(accessor.contains(path), "A folder \"%s\" does not exist.", path);
         JsonAccessor curFolder = accessor.getSection(path);

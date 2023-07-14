@@ -15,15 +15,15 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
     protected @NotNull String name;
     protected @NotNull String path;
     protected Map<String, T> items = null;
+    protected boolean saved;
 
     public SerializableFolderFS(@NotNull String name, String path, @NotNull SerializableFileSystem<T> fileSystem) {
         Validate.isTrue(SerializableFileSystem.checkValidFilename(name), "File name is invalid, \"%s\"", name);
         this.fileSystem = fileSystem;
         this.name = name;
         this.path = path == null ? name : path.replace('\\', '/') + "/" + name;
-        Validate.isTrue(fileSystem.folderPool.getIfPresent(this.getPath()) == null,
-                        "A folder with the path \"%s\" already exists", this.getPath());
-        fileSystem.folderPool.put(this.getPath(), new FolderInfo<>(null, this));
+        this.saved = false;
+        fileSystem.getFolderPool().put(this.getPath(), new FolderInfo<>(null, this));
     }
 
     public @NotNull SerializableFileSystem<T> getFileSystem() {
@@ -44,31 +44,31 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
     }
 
     public void addItem(String name, T item) {
-        fileSystem.modifier.addItem(this, name, item);
+        fileSystem.getModifier().addItem(this, name, item);
     }
 
     public void removeItem(String name) {
-        fileSystem.modifier.removeItem(this, name);
+        fileSystem.getModifier().removeItem(this, name);
     }
 
     public void clearItems() {
-        fileSystem.modifier.clearItems(this);
+        fileSystem.getModifier().clearItems(this);
     }
 
     public void addFolder(String name) {
-        fileSystem.modifier.addFolder(this, name, new SerializableFolderFS<>(name, path, fileSystem));
+        fileSystem.getModifier().addFolder(this, name, new SerializableFolderFS<>(name, path, fileSystem));
     }
 
     public void removeFolder(String name) {
-        fileSystem.modifier.removeFolder(this, name);
+        fileSystem.getModifier().removeFolder(this, name);
     }
 
     public void clearFolders() {
-        fileSystem.modifier.clearFolders(this);
+        fileSystem.getModifier().clearFolders(this);
     }
 
     public void save() {
-        fileSystem.modifier.save(this);
+        fileSystem.getModifier().save(this);
     }
 
     public T getItem(String name) {
@@ -96,7 +96,7 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
     }
 
     public Map<String, SerializableFolderFS<T>> getFoldersRaw() {
-        FolderInfo<T> folders = fileSystem.folderPool.getIfPresent(this.getPath());
+        FolderInfo<T> folders = fileSystem.getFolderPool().get(this.getPath());
         if(folders == null || folders.folders == null) {
             return loadFolders();
         }
@@ -104,8 +104,8 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
     }
 
     private Map<String, SerializableFolderFS<T>> loadFolders() {
-        Map<String, SerializableFolderFS<T>> folders = fileSystem.saveLoad.loadFolders(this);
-        fileSystem.folderPool.put(this.getPath(), new FolderInfo<>(folders, this));
+        Map<String, SerializableFolderFS<T>> folders = fileSystem.getSaveLoad().loadFolders(this);
+        fileSystem.getFolderPool().put(this.getPath(), new FolderInfo<>(folders, this));
         return folders;
     }
 
@@ -120,8 +120,16 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
 
     public Map<String, T> getItemsRaw() {
         if(items == null) {
-            items = fileSystem.saveLoad.loadItems(this);
+            items = fileSystem.getSaveLoad().loadItems(this);
         }
         return items;
+    }
+
+    public boolean isSaved() {
+        return saved;
+    }
+
+    public void setSaved(boolean saved) {
+        this.saved = saved;
     }
 }
