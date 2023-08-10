@@ -8,6 +8,7 @@ import org.bukkit.NamespacedKey;
 import org.bukkit.inventory.*;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class CraftingRecipeBuilder {
     private final BukkitPlugin plugin;
@@ -61,16 +62,36 @@ public class CraftingRecipeBuilder {
         return setIngredient(key, new RecipeChoice.MaterialChoice(ingredients));
     }
 
-    public CraftingRecipeBuilder setIngredient(char key, ItemStack itemStack) {
-        return setIngredient(key, new RecipeChoice.ExactChoice(itemStack));
+    public CraftingRecipeBuilder setIngredient(char key, ItemStack ingredient) {
+        return setIngredient(key, new RecipeChoice.ExactChoice(ingredient));
     }
 
-    public CraftingRecipeBuilder setIngredient(char key, ItemStack... itemStacks) {
-        return setIngredient(key, new RecipeChoice.ExactChoice(itemStacks));
+    public CraftingRecipeBuilder setIngredient(char key, ItemStack... ingredients) {
+        return setIngredient(key, new RecipeChoice.ExactChoice(ingredients));
     }
 
-    public CraftingRecipeBuilder setIngredientI(char key, List<ItemStack> itemStacks) {
-        return setIngredient(key, new RecipeChoice.ExactChoice(itemStacks));
+    public CraftingRecipeBuilder setIngredientI(char key, List<ItemStack> ingredients) {
+        return setIngredient(key, new RecipeChoice.ExactChoice(ingredients));
+    }
+
+    public CraftingRecipeBuilder setIngredient(char key, ItemBuilder ingredient) {
+        return setIngredient(key, new RecipeChoice.ExactChoice(ingredient.get()));
+    }
+
+    public CraftingRecipeBuilder setIngredient(char key, ItemBuilder... ingredients) {
+        return setIngredient(key, new RecipeChoice.ExactChoice(
+            Arrays.stream(ingredients)
+                .map(ItemBuilder::get)
+                .collect(Collectors.toList())
+        ));
+    }
+
+    public CraftingRecipeBuilder setIngredientIB(char key, List<ItemBuilder> ingredients) {
+        return setIngredient(key, new RecipeChoice.ExactChoice(
+            ingredients.stream()
+                .map(ItemBuilder::get)
+                .collect(Collectors.toList())
+        ));
     }
 
     public CraftingRecipeBuilder setIngredient(char key, RecipeChoice ingredient) {
@@ -127,6 +148,30 @@ public class CraftingRecipeBuilder {
         return addIngredient(count, new RecipeChoice.ExactChoice(ingredients));
     }
 
+    public CraftingRecipeBuilder addIngredient(ItemBuilder ingredient) {
+        return addIngredient(new RecipeChoice.ExactChoice(ingredient.get()));
+    }
+
+    public CraftingRecipeBuilder addIngredient(ItemBuilder... ingredients) {
+        return addIngredient(new RecipeChoice.ExactChoice(builderArrayToStack(ingredients)));
+    }
+
+    public CraftingRecipeBuilder addIngredientIB(List<ItemBuilder> ingredients) {
+        return addIngredient(new RecipeChoice.ExactChoice(builderListToStack(ingredients)));
+    }
+
+    public CraftingRecipeBuilder addIngredient(int count, ItemBuilder ingredient) {
+        return addIngredient(count, new RecipeChoice.ExactChoice(ingredient.get()));
+    }
+
+    public CraftingRecipeBuilder addIngredient(int count, ItemBuilder... ingredients) {
+        return addIngredient(count, new RecipeChoice.ExactChoice(builderArrayToStack(ingredients)));
+    }
+
+    public CraftingRecipeBuilder addIngredientIB(int count, List<ItemBuilder> ingredients) {
+        return addIngredient(count, new RecipeChoice.ExactChoice(builderListToStack(ingredients)));
+    }
+
     public CraftingRecipeBuilder addIngredient(int count, RecipeChoice ingredient) {
         while(count-- > 0) {
             addIngredient(ingredient);
@@ -178,5 +223,21 @@ public class CraftingRecipeBuilder {
 
     public static CraftingRecipeBuilder of(BukkitPlugin plugin, String recipeKey) {
         return new CraftingRecipeBuilder(plugin, recipeKey);
+    }
+
+    private static ItemStack[] builderArrayToStack(ItemBuilder... itemBuilders) {
+        ItemStack[] itemStacks = new ItemStack[itemBuilders.length];
+        for(int i = 0; i < itemBuilders.length; ++i) {
+            itemStacks[i] = itemBuilders[i].get();
+        }
+        return itemStacks;
+    }
+
+    private static List<ItemStack> builderListToStack(List<ItemBuilder> itemBuilders) {
+        List<ItemStack> itemStacks = new ArrayList<>();
+        for(ItemBuilder builder : itemBuilders) {
+            itemStacks.add(builder.get());
+        }
+        return itemStacks;
     }
 }
