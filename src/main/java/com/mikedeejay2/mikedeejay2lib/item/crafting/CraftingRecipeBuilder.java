@@ -187,6 +187,7 @@ public class CraftingRecipeBuilder {
 
     public Recipe addRecipe() {
         build();
+        Bukkit.removeRecipe(key);
         Bukkit.addRecipe(recipe);
         return recipe;
     }
