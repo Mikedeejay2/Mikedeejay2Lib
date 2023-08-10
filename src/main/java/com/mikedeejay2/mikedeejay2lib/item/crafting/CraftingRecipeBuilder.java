@@ -175,4 +175,8 @@ public class CraftingRecipeBuilder {
     public NamespacedKey getKey() {
         return key;
     }
+
+    public static CraftingRecipeBuilder of(BukkitPlugin plugin, String recipeKey) {
+        return new CraftingRecipeBuilder(plugin, recipeKey);
+    }
 }
