@@ -31,7 +31,7 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> impleme
     public SerializableFileSystem(BukkitPlugin plugin, Class<T> serializableClass, String name, String initialPath, FileMode fileMode, boolean autoWrite) {
         this.serializableClass = serializableClass;
         this.plugin = plugin;
-        this.folderPool = new FolderPool<>(this);
+        this.folderPool = new FolderPool<>(this, 10);
         this.root = new SerializableFolderFS<>(getSafeName(name), null, this);
         this.autoWrite = autoWrite;
         this.fileMode = fileMode;
