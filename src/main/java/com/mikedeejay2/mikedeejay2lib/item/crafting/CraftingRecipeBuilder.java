@@ -19,7 +19,7 @@ public class CraftingRecipeBuilder {
     private String[] rows;
     private final Map<Character, RecipeChoice> shapedIngredients;
 
-    private CraftingRecipe recipe;
+    private Recipe recipe;
     private boolean shaped = false;
     private boolean changed;
 
@@ -185,18 +185,18 @@ public class CraftingRecipeBuilder {
         return this;
     }
 
-    public CraftingRecipe addRecipe() {
+    public Recipe addRecipe() {
         build();
         Bukkit.addRecipe(recipe);
         return recipe;
     }
 
-    public CraftingRecipe get() {
+    public Recipe get() {
         build();
         return recipe;
     }
 
-    private CraftingRecipe build() {
+    private Recipe build() {
         if(!changed) return recipe;
         if(shaped) {
             ShapedRecipe shapedRecipe = new ShapedRecipe(key, result.get());
