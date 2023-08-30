@@ -80,10 +80,10 @@ public class ManualFileSystemModifier<T extends ConfigurationSerializable> imple
             saveLoad.saveItem(owner, name, changed.addedItems.get(name));
         }
         for(String name : changed.removedFolders) {
-            saveLoad.deleteFolder(owner.getFullPath() + "/" + name);
+            saveLoad.deleteFolder(SerializableFileSystem.getPath(owner.getPath(), name));
         }
         for(String name : changed.removedItems) {
-            saveLoad.deleteItem(owner.getFullPath(), name);
+            saveLoad.deleteItem(owner.getPath(), name);
         }
         saveLoad.commit();
         changedItems.remove(owner);

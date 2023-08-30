@@ -20,20 +20,54 @@ public final class FolderPool<T extends ConfigurationSerializable> {
 
     public FolderInfo<T> get(String path) {
         if(!folderPool.containsKey(path)) return null;
-        lastRetrieved.add(path);
+        access(path);
         return folderPool.get(path);
     }
 
     public void put(String path, FolderInfo<T> info) {
         Validate.isTrue(get(path) == null,
                         "A folder with the path \"%s\" already exists", path);
-        lastRetrieved.add(path);
+        access(path);
         folderPool.put(path, info);
+    }
+
+    public void remove(String path) {
+        lastRetrieved.remove(path);
+        FolderInfo<T> info = folderPool.remove(path);
+        if(info.getOwner() != null) {
+            folderPool.get(info.getOwner().getPath()).setFolders(null);
+        }
+        recurRemove(info);
+    }
+
+    public boolean contains(String path) {
+        return folderPool.containsKey(path);
     }
 
     private void checkAndTrim() {
         if(folderPool.size() <= maxSize) return;
+        while(folderPool.size() - maxSize > 0) {
+            remove(lastRetrieved.removeFirst());
+        }
+    }
 
+    private void recurRemove(FolderInfo<T> info) {
+        for(String path : info.getFolders().keySet()) {
+            FolderInfo<T> cur = folderPool.remove(path);
+            if(cur != null) recurRemove(cur);
+        }
+    }
+
+    private void access(String path) {
+        if(path == null) return;
+        while(path.contains("/")) {
+            lastRetrieved.remove(path);
+            lastRetrieved.addLast(path);
+            path = path.substring(0, path.lastIndexOf('/'));
+        }
+        lastRetrieved.remove(path);
+        lastRetrieved.addLast(path);
+        checkAndTrim();
     }
 
     public int getMaxSize() {

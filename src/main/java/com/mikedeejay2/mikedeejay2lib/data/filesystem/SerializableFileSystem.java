@@ -32,7 +32,7 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> impleme
         this.serializableClass = serializableClass;
         this.plugin = plugin;
         this.folderPool = new FolderPool<>(this, 10);
-        this.root = new SerializableFolderFS<>(getSafeName(name), null, this);
+        this.root = new SerializableFolderFS<>(getSafeName(name), null, this, true);
         this.autoWrite = autoWrite;
         this.fileMode = fileMode;
         this.savePath = initialPath.replace('\\', '/');
@@ -123,13 +123,9 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> impleme
 
     public SerializableFolderFS<T> getFolder(String path) {
         path = getSafePath(path);
-        Validate.notNull(path, "Tried to get folder from null folder of null path");
-        if(path.equals(root.getPath())) return root;
+        if(path == null) return root;
         FolderInfo<T> folderInfo = folderPool.get(path);
-        if(folderInfo == null) {
-            saveLoad.loadFolder(path);
-        }
-        return folderInfo == null ? null : folderInfo.owner;
+        return folderInfo == null ? saveLoad.loadFolder(path) : folderInfo.getOwner();
     }
 
     public List<SerializableFolderFS<T>> getFolders(String path) {
@@ -211,10 +207,11 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> impleme
         } catch(InvalidPathException ignored) {
             return false;
         }
-        return true;
+        return name.indexOf('/') == -1 && name.indexOf('\\') == -1;
     }
 
-    public static String getSafePath(String path) {
+    public String getSafePath(String path) {
+        if(path == null) return null;
         path = path.trim();
         path = path.replace('\\', '/');
         if(path.charAt(0) == '/') path = path.substring(1);
@@ -223,10 +220,31 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> impleme
     }
 
     public static String getSafeName(String name) {
+        if(name == null) return null;
         name = name.trim();
         name = name.replace('\\', '/');
         name = name.replace("/", "");
         return name;
+    }
+
+    public String getFullPath(String path) {
+        return path == null ? savePath : savePath + "/" + path;
+    }
+
+    public String getFullPath(String path, String name) {
+        return path == null ? savePath + "/" + name : savePath + "/" + path + "/" + name;
+    }
+
+    public static String getPath(String path, String name) {
+        return path == null ? name : path + "/" + name;
+    }
+
+    public SerializableFolderFS<T> getRootFolder() {
+        return root;
+    }
+
+    public void setMaxPoolSize(int maxSize) {
+        this.folderPool.setMaxSize(maxSize);
     }
 
     /**

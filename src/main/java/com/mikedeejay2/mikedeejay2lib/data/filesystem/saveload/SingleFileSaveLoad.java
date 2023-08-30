@@ -18,6 +18,7 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
     public static final String KEY_FOLDERS = "folders";
     public static final String KEY_ITEMS = "items";
     public static final String KEY_NAME = "name";
+    public static final String KEY_ROOT = "_root";
 
     protected final BukkitPlugin plugin;
     protected final SerializableFileSystem<T> system;
@@ -40,10 +41,10 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
     public void saveFolder(SerializableFolderFS<T> folder) {
         getFolderSection(folder).setString(KEY_NAME, folder.getName());
         String path = folder.getPath();
-        if(path.contains("/")) {
+        if(path != null) {
             JsonAccessor parentAccessor = getParentAccessor(path);
             List<String> curFolders = parentAccessor.getStringList(KEY_FOLDERS);
-            String name = path.substring(path.lastIndexOf('/') + 1);
+            String name = path.contains("/") ? path.substring(path.lastIndexOf('/') + 1) : path;
             if(!curFolders.contains(name)) curFolders.add(name);
             parentAccessor.setStringList(KEY_FOLDERS, curFolders);
         }
@@ -51,6 +52,7 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
     }
 
     protected JsonAccessor getParentAccessor(String path) {
+        if(!path.contains("/")) return this.accessor.getSection(KEY_ROOT);
         String parentPath = path.substring(0, path.lastIndexOf('/'));
         return this.accessor.getSection(parentPath);
     }
@@ -64,10 +66,10 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
     @Override
     public void deleteFolder(String path) {
         this.accessor.delete(path);
-        if(path.contains("/")) {
+        if(path != null) {
             JsonAccessor parentAccessor = getParentAccessor(path);
             List<String> curFolders = parentAccessor.getStringList(KEY_FOLDERS);
-            String name = path.substring(path.lastIndexOf('/') + 1);
+            String name = path.contains("/") ? path.substring(path.lastIndexOf('/') + 1) : path;
             curFolders.remove(name);
             parentAccessor.setStringList(KEY_FOLDERS, curFolders);
         }
@@ -100,9 +102,9 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
     @Override
     public Map<String, SerializableFolderFS<T>> loadFolders(SerializableFolderFS<T> folder) {
         Map<String, SerializableFolderFS<T>> folders = new LinkedHashMap<>();
-        List<String> folderPaths = getFolderSection(folder).getStringList(KEY_FOLDERS);
-        for(String path : folderPaths) {
-            path = folder.getPath() + "/" + path;
+        List<String> folderNames = getFolderSection(folder).getStringList(KEY_FOLDERS);
+        for(String name : folderNames) {
+            String path = SerializableFileSystem.getPath(folder.getPath(), name);
             SerializableFolderFS<T> curFolder = loadFolder(path);
             folders.put(curFolder.getName(), curFolder);
         }
@@ -112,7 +114,7 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
     @Override
     public SerializableFolderFS<T> loadFolder(String path) {
         FolderInfo<T> curFolderFromPool = system.getFolderPool().get(path);
-        if(curFolderFromPool != null) return curFolderFromPool.owner;
+        if(curFolderFromPool != null) return curFolderFromPool.getOwner();
         Validate.isTrue(accessor.contains(path), "A folder \"%s\" does not exist.", path);
         JsonAccessor curFolder = accessor.getSection(path);
         path = path.contains("/") ? path.substring(0, path.lastIndexOf('/')) : null;
@@ -132,6 +134,7 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
     }
 
     protected JsonAccessor getFolderSection(SerializableFolderFS<T> folder) {
+        if(folder.getPath() == null) this.accessor.getSection(KEY_ROOT);
         return this.accessor.getSection(folder.getPath());
     }
 

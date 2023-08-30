@@ -35,7 +35,7 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
 
     @Override
     public void saveFolder(SerializableFolderFS<T> folder) {
-        changedItems.addedFolders.add(folder.getPath());
+        changedItems.addedFolders.add(folder.getFullPath());
         save();
     }
 
@@ -49,18 +49,18 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
 
     @Override
     public void deleteFolder(String path) {
-        changedItems.removedFolders.add(path);
+        changedItems.removedFolders.add(system.getFullPath(path));
         save();
     }
 
     @Override
     public void deleteItem(String path, String name) {
-        changedItems.removedItems.add(String.format("%s%s%s.json", path, File.separator, name));
+        changedItems.removedItems.add(system.getFullPath(path, name));
         save();
     }
 
     private JsonFile getItemFile(SerializableFolderFS<T> folder, String name) {
-        return new JsonFile(plugin, String.format("%s%s%s.json", folder.getFullPath(), File.separator, name));
+        return new JsonFile(plugin, String.format("%s/%s.json", folder.getFullPath(), name));
     }
 
     @Override
@@ -104,17 +104,15 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
     @Override
     public Map<String, SerializableFolderFS<T>> loadFolders(SerializableFolderFS<T> folder) {
         Map<String, SerializableFolderFS<T>> folders = new LinkedHashMap<>();
-        File folderFile = new File(plugin.getDataFolder(), folder.getPath());
+        File folderFile = new File(plugin.getDataFolder(), folder.getFullPath());
         if(!folderFile.exists()) return folders;
         File[] directories = folderFile.listFiles(File::isDirectory);
         if(directories == null) return folders;
-        int pluginPathLen = plugin.getDataFolder().getPath().length() + 1;
+        int savePathLen = plugin.getDataFolder().getPath().length() + system.getSavePath().length() + 2;
         for(File file : directories) {
-            String path = file.getPath();
-            path = path.substring(pluginPathLen, path.lastIndexOf(File.separatorChar));
+            String path = system.getSafePath(file.getPath().substring(savePathLen));
             String name = file.getName();
-            name = name.substring(0, name.lastIndexOf('.'));
-            folders.put(name, new SerializableFolderFS<>(name, path, folder.getFileSystem()));
+            folders.put(name, loadFolder(path));
         }
         return folders;
     }
@@ -122,19 +120,19 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
     @Override
     public SerializableFolderFS<T> loadFolder(String path) {
         FolderInfo<T> curFolderFromPool = system.getFolderPool().get(path);
-        if(curFolderFromPool != null) return curFolderFromPool.owner;
-        File folderFile = new File(plugin.getDataFolder(), path);
+        if(curFolderFromPool != null) return curFolderFromPool.getOwner();
+        File folderFile = new File(plugin.getDataFolder(), system.getFullPath(path));
         Validate.isTrue(folderFile.exists(), "A folder \"%s\" does not exist.", path);
         String name = folderFile.getName();
-        name = name.substring(0, name.lastIndexOf('.'));
         name = SerializableFileSystem.getSafeName(name);
+        path = path.indexOf('/') != -1 ? path.substring(0, path.lastIndexOf('/')) : null;
         return new SerializableFolderFS<>(name, path, system);
     }
 
     @Override
     public Map<String, T> loadItems(SerializableFolderFS<T> folder) {
         Map<String, T> items = new LinkedHashMap<>();
-        File folderFile = new File(plugin.getDataFolder(), folder.getPath());
+        File folderFile = new File(plugin.getDataFolder(), folder.getFullPath());
         if(!folderFile.exists()) return items;
         File[] itemFiles = folderFile.listFiles((f) -> f.isFile() && f.getName().endsWith(".json"));
         if(itemFiles == null) return items;
@@ -148,9 +146,10 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
     }
 
     private T loadSerialized(SerializableFolderFS<T> folder, String name) {
-        String path = String.format("%s%s%s.json", folder.getFullPath(), File.separator, name);
+        String path = String.format("%s/%s.json", folder.getFullPath(), name);
         JsonFile itemFile = new JsonFile(plugin, path);
         if(!itemFile.fileExists()) return null;
+        itemFile.loadFromDisk(true);
 
         JsonAccessor accessor = itemFile.getAccessor();
         if(!accessor.contains(KEY_ITEM)) {

@@ -23,7 +23,7 @@ public class AutoFileSystemModifier<T extends ConfigurationSerializable> impleme
     @Override
     public void removeItem(SerializableFolderFS<T> owner, String name) {
         owner.getItemsRaw().remove(name);
-        system.getSaveLoad().deleteItem(owner.getFullPath(), name);
+        system.getSaveLoad().deleteItem(owner.getPath(), name);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class AutoFileSystemModifier<T extends ConfigurationSerializable> impleme
         owner.getItemsRaw().clear();
         system.getSaveLoad().startCommit();
         for(String name : names) {
-            system.getSaveLoad().deleteItem(owner.getFullPath(), name);
+            system.getSaveLoad().deleteItem(owner.getPath(), name);
         }
         system.getSaveLoad().commit();
     }
@@ -46,7 +46,7 @@ public class AutoFileSystemModifier<T extends ConfigurationSerializable> impleme
     @Override
     public void removeFolder(SerializableFolderFS<T> owner, String name) {
         owner.getFoldersRaw().remove(name);
-        system.getSaveLoad().deleteFolder(owner.getFullPath() + "/" + name);
+        system.getSaveLoad().deleteFolder(SerializableFileSystem.getPath(owner.getPath(), name));
     }
 
     @Override
@@ -54,8 +54,9 @@ public class AutoFileSystemModifier<T extends ConfigurationSerializable> impleme
         final List<String> names = ImmutableList.copyOf(owner.getFoldersRaw().keySet());
         owner.getFoldersRaw().clear();
         system.getSaveLoad().startCommit();
+        final String path = owner.getPath();
         for(String name : names) {
-            system.getSaveLoad().deleteFolder(owner.getFullPath() + "/" + name);
+            system.getSaveLoad().deleteFolder(path == null ? name : path + "/" + name);
         }
         system.getSaveLoad().commit();
     }
