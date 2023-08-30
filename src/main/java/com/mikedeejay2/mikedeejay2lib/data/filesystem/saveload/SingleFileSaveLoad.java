@@ -40,7 +40,7 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
     public void saveFolder(SerializableFolderFS<T> folder) {
         getFolderSection(folder); // Add folder section
         String path = folder.getPath();
-        if(path != null) {
+        if(path != null) { // Saves relation to parent, not needed on root folder
             JsonAccessor parentAccessor = getParentAccessor(path);
             List<String> curFolders = parentAccessor.getStringList(KEY_FOLDERS);
             String name = path.contains("/") ? path.substring(path.lastIndexOf('/') + 1) : path;
@@ -65,7 +65,7 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
     @Override
     public void deleteFolder(String path) {
         this.accessor.delete(path);
-        if(path != null) {
+        if(path != null) { // Deletes relation to parent, not needed on root folder
             JsonAccessor parentAccessor = getParentAccessor(path);
             List<String> curFolders = parentAccessor.getStringList(KEY_FOLDERS);
             String name = path.contains("/") ? path.substring(path.lastIndexOf('/') + 1) : path;

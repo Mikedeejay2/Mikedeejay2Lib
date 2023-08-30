@@ -210,7 +210,7 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> impleme
         return name.indexOf('/') == -1 && name.indexOf('\\') == -1;
     }
 
-    public String getSafePath(String path) {
+    public static String getSafePath(String path) {
         if(path == null) return null;
         path = path.trim();
         path = path.replace('\\', '/');
@@ -227,16 +227,16 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> impleme
         return name;
     }
 
+    public static String getPath(String path, String name) {
+        return path == null ? name : path + "/" + name;
+    }
+
     public String getFullPath(String path) {
         return path == null ? savePath : savePath + "/" + path;
     }
 
     public String getFullPath(String path, String name) {
         return path == null ? savePath + "/" + name : savePath + "/" + path + "/" + name;
-    }
-
-    public static String getPath(String path, String name) {
-        return path == null ? name : path + "/" + name;
     }
 
     public SerializableFolderFS<T> getRootFolder() {
