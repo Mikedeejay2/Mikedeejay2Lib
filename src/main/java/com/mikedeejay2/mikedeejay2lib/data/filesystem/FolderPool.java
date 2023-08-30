@@ -34,8 +34,9 @@ public final class FolderPool<T extends ConfigurationSerializable> {
     public void remove(String path) {
         lastRetrieved.remove(path);
         FolderInfo<T> info = folderPool.remove(path);
-        if(info.getOwner() != null) {
-            folderPool.get(info.getOwner().getPath()).setFolders(null);
+        String parentPath = path.substring(0, path.lastIndexOf('/'));
+        if(folderPool.containsKey(parentPath)) {
+            folderPool.get(parentPath).setFolders(null); // Invalidate parent folder
         }
         recurRemove(info);
     }

@@ -17,7 +17,6 @@ import java.util.Map;
 public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements FileSystemSaveLoad<T> {
     public static final String KEY_FOLDERS = "folders";
     public static final String KEY_ITEMS = "items";
-    public static final String KEY_NAME = "name";
     public static final String KEY_ROOT = "_root";
 
     protected final BukkitPlugin plugin;
@@ -39,7 +38,7 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
 
     @Override
     public void saveFolder(SerializableFolderFS<T> folder) {
-        getFolderSection(folder).setString(KEY_NAME, folder.getName());
+        getFolderSection(folder); // Add folder section
         String path = folder.getPath();
         if(path != null) {
             JsonAccessor parentAccessor = getParentAccessor(path);
@@ -116,10 +115,9 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
         FolderInfo<T> curFolderFromPool = system.getFolderPool().get(path);
         if(curFolderFromPool != null) return curFolderFromPool.getOwner();
         Validate.isTrue(accessor.contains(path), "A folder \"%s\" does not exist.", path);
-        JsonAccessor curFolder = accessor.getSection(path);
-        path = path.contains("/") ? path.substring(0, path.lastIndexOf('/')) : null;
-        String name = curFolder.getString(KEY_NAME);
-        return new SerializableFolderFS<>(name, path, system);
+        String newPath = path.contains("/") ? path.substring(0, path.lastIndexOf('/')) : null;
+        String name = path.contains("/") ? path.substring(path.lastIndexOf('/') + 1) : path;
+        return new SerializableFolderFS<>(name, newPath, system);
     }
 
     @Override
@@ -134,7 +132,7 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
     }
 
     protected JsonAccessor getFolderSection(SerializableFolderFS<T> folder) {
-        if(folder.getPath() == null) this.accessor.getSection(KEY_ROOT);
+        if(folder.getPath() == null) return this.accessor.getSection(KEY_ROOT);
         return this.accessor.getSection(folder.getPath());
     }
 
