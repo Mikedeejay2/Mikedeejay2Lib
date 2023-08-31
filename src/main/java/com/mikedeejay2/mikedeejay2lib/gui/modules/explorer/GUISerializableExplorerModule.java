@@ -23,14 +23,14 @@ import java.util.stream.Collectors;
  * @see com.mikedeejay2.mikedeejay2lib.data.filesystem.SerializableFileSystem SerializableFileSystem
  * @author Mikedeejay2
  */
-public class GUISerializableExplorerModule<T extends ConfigurationSerializable> extends GUIExplorerBaseModule<SerializableFolder<T>> {
+public class GUISerializableExplorerModule<F extends SerializableFolder<T>, T extends ConfigurationSerializable> extends GUIExplorerBaseModule<F> {
     /**
      * The converter used to convert between the serialized type and a {@link GUIItem}
      */
     protected Function<T, GUIItem> converter;
 
     /**
-     * Construct a new <code>GUIItemExplorerModule</code>
+     * Construct a new <code>GUISerializableExplorerModule</code>
      *
      * @param plugin    The {@link BukkitPlugin} instance
      * @param folder    The root {@link SerializableFolder} of the explorer
@@ -44,7 +44,7 @@ public class GUISerializableExplorerModule<T extends ConfigurationSerializable> 
      */
     public GUISerializableExplorerModule(
         BukkitPlugin plugin,
-        SerializableFolder<T> folder,
+        F folder,
         Function<T, GUIItem> converter,
         ListViewMode viewMode,
         int topRow,
@@ -58,7 +58,7 @@ public class GUISerializableExplorerModule<T extends ConfigurationSerializable> 
     }
 
     /**
-     * Construct a new <code>GUIItemExplorerModule</code>
+     * Construct a new <code>GUISerializableExplorerModule</code>
      *
      * @param plugin    The {@link BukkitPlugin} instance
      * @param folder    The root {@link SerializableFolder} of the explorer
@@ -71,7 +71,7 @@ public class GUISerializableExplorerModule<T extends ConfigurationSerializable> 
      */
     public GUISerializableExplorerModule(
         BukkitPlugin plugin,
-        SerializableFolder<T> folder,
+        F folder,
         Function<T, GUIItem> converter,
         ListViewMode viewMode,
         int topRow,
@@ -82,7 +82,7 @@ public class GUISerializableExplorerModule<T extends ConfigurationSerializable> 
     }
 
     /**
-     * Construct a new <code>GUIItemExplorerModule</code>
+     * Construct a new <code>GUISerializableExplorerModule</code>
      *
      * @param plugin    The {@link BukkitPlugin} instance
      * @param folder    The root {@link SerializableFolder} of the explorer
@@ -94,7 +94,7 @@ public class GUISerializableExplorerModule<T extends ConfigurationSerializable> 
      */
     public GUISerializableExplorerModule(
         BukkitPlugin plugin,
-        SerializableFolder<T> folder,
+        F folder,
         Function<T, GUIItem> converter,
         int topRow,
         int bottomRow,
@@ -110,7 +110,7 @@ public class GUISerializableExplorerModule<T extends ConfigurationSerializable> 
      * @return The name of the folder
      */
     @Override
-    protected Text getFolderName(SerializableFolder<T> folder) {
+    protected Text getFolderName(F folder) {
         return Text.of(folder.getName());
     }
 
@@ -121,8 +121,8 @@ public class GUISerializableExplorerModule<T extends ConfigurationSerializable> 
      * @return The contained folders
      */
     @Override
-    protected List<? extends SerializableFolder<T>> getContainedFolders(SerializableFolder<T> folder) {
-        return folder.getFolders();
+    protected List<? extends F> getContainedFolders(F folder) {
+        return (List<? extends F>) folder.getFolders();
     }
 
     /**
@@ -132,7 +132,7 @@ public class GUISerializableExplorerModule<T extends ConfigurationSerializable> 
      * @return The contained items
      */
     @Override
-    protected List<GUIItem> getFolderItems(SerializableFolder<T> folder) {
+    protected List<GUIItem> getFolderItems(F folder) {
         return folder.getItems().stream()
             .map(converter)
             .collect(Collectors.toList());
@@ -145,9 +145,11 @@ public class GUISerializableExplorerModule<T extends ConfigurationSerializable> 
      * @return The new {@link GUIItem}
      */
     @Override
-    protected @NotNull GUIItem getFolderItem(SerializableFolder<T> folder) {
+    protected @NotNull GUIItem getFolderItem(F folder) {
         ItemStack item = ItemBuilder.of(Base64Head.FOLDER.get())
-            .setName(folder.getName()).get();
+            .setName(folder.getName())
+            .setLore("&7Folder")
+            .get();
         Validate.notNull(item, "Folder item can not be null");
         GUIItem guiItem = new GUIItem(item);
         guiItem.setName(folder.getName());
