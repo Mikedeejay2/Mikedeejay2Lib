@@ -16,11 +16,17 @@ import java.util.function.Function;
 import java.util.stream.Collectors;
 
 /**
- * An item explorer for viewing and interacting with organized items.
+ * An object explorer for viewing and interacting with organized serializable objects. This module displays
+ * {@link SerializableFolder SerializableFolders} and allows traversing through the file structure.
  *
+ * @see SerializableFolder
+ * @see com.mikedeejay2.mikedeejay2lib.data.filesystem.SerializableFileSystem SerializableFileSystem
  * @author Mikedeejay2
  */
 public class GUISerializableExplorerModule<T extends ConfigurationSerializable> extends GUIExplorerBaseModule<SerializableFolder<T>> {
+    /**
+     * The converter used to convert between the serialized type and a {@link GUIItem}
+     */
     protected Function<T, GUIItem> converter;
 
     /**
@@ -28,7 +34,7 @@ public class GUISerializableExplorerModule<T extends ConfigurationSerializable> 
      *
      * @param plugin    The {@link BukkitPlugin} instance
      * @param folder    The root {@link SerializableFolder} of the explorer
-     * @param converter The converter used to convert between the serialized type and a GUIItem
+     * @param converter The converter used to convert between the serializable type and a {@link GUIItem}
      * @param viewMode  The viewing mode of the list
      * @param topRow    The top row location of the explorer
      * @param bottomRow The bottom row location of the explorer
@@ -56,7 +62,7 @@ public class GUISerializableExplorerModule<T extends ConfigurationSerializable> 
      *
      * @param plugin    The {@link BukkitPlugin} instance
      * @param folder    The root {@link SerializableFolder} of the explorer
-     * @param converter The converter used to convert between the serialized type and a GUIItem
+     * @param converter The converter used to convert between the serializable type and a {@link GUIItem}
      * @param viewMode  The viewing mode of the list
      * @param topRow    The top row location of the explorer
      * @param bottomRow The bottom row location of the explorer
@@ -80,7 +86,7 @@ public class GUISerializableExplorerModule<T extends ConfigurationSerializable> 
      *
      * @param plugin    The {@link BukkitPlugin} instance
      * @param folder    The root {@link SerializableFolder} of the explorer
-     * @param converter The converter used to convert between the serialized type and a GUIItem
+     * @param converter The converter used to convert between the serializable type and a {@link GUIItem}
      * @param topRow    The top row location of the explorer
      * @param bottomRow The bottom row location of the explorer
      * @param leftCol   The left column location of the explorer
