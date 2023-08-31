@@ -77,8 +77,18 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
         fileSystem.getModifier().save(this);
     }
 
+    @Override
     public T getItem(String name) {
         return getItemsRaw().get(name);
+    }
+
+    @Override
+    public boolean containsFolder(String name) {
+        return getFoldersRaw().containsKey(name);
+    }
+
+    public boolean containsItem(String name) {
+        return getItemsRaw().containsKey(name);
     }
 
     public String getItemName(T item) {
@@ -88,6 +98,7 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
         return null;
     }
 
+    @Override
     public SerializableFolderFS<T> getFolder(String name) {
         return getFoldersRaw().get(name);
     }

@@ -32,7 +32,7 @@ public interface ItemFolder {
      *
      * @return The list of {@link ItemFolder}s
      */
-    List<? extends ItemFolder> getFolders();
+    List<ItemFolder> getFolders();
 
     /**
      * Get the {@link ItemStack ItemStacks} that this folder contains.

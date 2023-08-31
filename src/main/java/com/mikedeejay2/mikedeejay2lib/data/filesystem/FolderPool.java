@@ -7,7 +7,7 @@ import java.util.*;
 
 public final class FolderPool<T extends ConfigurationSerializable> {
     private final Map<String, FolderInfo<T>> folderPool;
-    private final LinkedList<String> lastRetrieved;
+    private final Queue<String> lastRetrieved;
     private final SerializableFileSystem<T> system;
     private int maxSize;
 
@@ -48,7 +48,7 @@ public final class FolderPool<T extends ConfigurationSerializable> {
     private void checkAndTrim() {
         if(folderPool.size() <= maxSize) return;
         while(folderPool.size() - maxSize > 0) {
-            remove(lastRetrieved.removeFirst());
+            remove(lastRetrieved.peek());
         }
     }
 
@@ -63,11 +63,11 @@ public final class FolderPool<T extends ConfigurationSerializable> {
         if(path == null) return;
         while(path.contains("/")) {
             lastRetrieved.remove(path);
-            lastRetrieved.addLast(path);
+            lastRetrieved.offer(path);
             path = path.substring(0, path.lastIndexOf('/'));
         }
         lastRetrieved.remove(path);
-        lastRetrieved.addLast(path);
+        lastRetrieved.offer(path);
         checkAndTrim();
     }
 

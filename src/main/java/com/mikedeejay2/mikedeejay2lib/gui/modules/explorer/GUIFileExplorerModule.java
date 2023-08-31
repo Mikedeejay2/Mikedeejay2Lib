@@ -2,24 +2,19 @@ package com.mikedeejay2.mikedeejay2lib.gui.modules.explorer;
 
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
-import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
-import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
-import com.mikedeejay2.mikedeejay2lib.gui.modules.list.GUIListModule;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.file.FileUtil;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import com.mikedeejay2.mikedeejay2lib.util.head.HeadUtil;
-import com.mikedeejay2.mikedeejay2lib.util.structure.HistoryHolder;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
 
 import java.io.File;
-import java.util.LinkedList;
-import java.util.Queue;
+import java.util.*;
 
 /**
  * A file explorer to browse real files.
@@ -30,31 +25,11 @@ import java.util.Queue;
  *
  * @author Mikedeejay2
  */
-public class GUIFileExplorerModule extends GUIListModule {
+public class GUIFileExplorerModule extends GUIExplorerBaseModule<File> {
     /**
      * The file separator character, different for different operating systems
      */
     private static final String separator = File.separatorChar == '\\' ? "\\\\" : String.valueOf(File.separatorChar);
-
-    /**
-     * The file of this GUI, the root file to be explored
-     */
-    protected File file;
-
-    /**
-     * The file view history
-     */
-    protected HistoryHolder<File> history;
-
-    /**
-     * The valid back navigation item
-     */
-    protected GUIItem backItemValid;
-
-    /**
-     * The valid forward navigation item
-     */
-    protected GUIItem forwardItemValid;
 
     /**
      * Whether to allow subfolders to be explored. This could pose a security risk if this is not necessary.
@@ -81,24 +56,11 @@ public class GUIFileExplorerModule extends GUIListModule {
      * @param layerName The name of the layer that the explorer will exist on
      */
     public GUIFileExplorerModule(BukkitPlugin plugin, File file, ListViewMode viewMode, int topRow, int bottomRow, int leftCol, int rightCol, String layerName) {
-        super(plugin, viewMode, topRow, bottomRow, leftCol, rightCol, layerName);
+        super(plugin, file, viewMode, topRow, bottomRow, leftCol, rightCol, layerName);
         Validate.notNull(file, "Folder is null");
         Validate.isTrue(file.isDirectory(), "Provided file is not a directory");
-        this.history = new HistoryHolder<>();
-        this.file = file;
         this.allowSubFolders = true;
         this.allowUpwardTraversal = false;
-        this.addBack(1, 8);
-        this.addForward(1, 9);
-
-        this.backItemValid = new GUIItem(
-            ItemBuilder.of(Base64Head.ARROW_LEFT_WHITE.get())
-                .setName(Text.of("&f").concat("gui.modules.navigator.backward")))
-            .addEvent(new GUINavFileBackEvent());
-        this.forwardItemValid = new GUIItem(
-            ItemBuilder.of(Base64Head.ARROW_RIGHT_WHITE.get())
-                .setName(Text.of("&f").concat("gui.modules.navigator.forward")))
-            .addEvent(new GUINavFileForwardEvent());
     }
 
     /**
@@ -130,6 +92,60 @@ public class GUIFileExplorerModule extends GUIListModule {
         this(plugin, file, ListViewMode.SCROLL, topRow, bottomRow, leftCol, rightCol);
     }
 
+    @Override
+    protected Text getFolderName(File folder) {
+        return Text.of(folder.getName());
+    }
+
+    @Override
+    protected List<File> getContainedFolders(File folder) {
+        return Arrays.asList(folder.listFiles((file) -> file.isDirectory()));
+    }
+
+    @Override
+    protected List<GUIItem> getFolderItems(File folder) {
+        File[] files = folder.listFiles();
+        if(files == null) return null;
+        List<GUIItem> items = new ArrayList<>();
+        for(File curFile : files) {
+            ItemBuilder fileBuilder = ItemBuilder.of(Base64Head.STACK_OF_PAPER.get())
+                .setName("&f" + curFile.getName());
+            setPathLore(curFile, fileBuilder);
+
+            GUIItem fileItem = new GUIItem((ItemStack) null);
+            String extension = FileUtil.getFileExtension(curFile);
+            Base64Head head = HeadUtil.getHeadFromFileExtension(extension);
+            fileBuilder.setHeadBase64(head.get());
+            fileItem.set(fileBuilder.get());
+            items.add(fileItem);
+        }
+        return items;
+    }
+
+    @Override
+    protected @NotNull GUIItem getFolderItem(File folder) {
+        ItemBuilder fileBuilder = ItemBuilder.of(Base64Head.STACK_OF_PAPER.get())
+            .setName("&f" + folder.getName());
+        setPathLore(folder, fileBuilder);
+
+        GUIItem fileItem = new GUIItem((ItemStack) null);
+        fileBuilder.setHeadBase64(Base64Head.FOLDER.get());
+        fileItem.set(fileBuilder.get());
+        if(allowSubFolders) {
+            fileItem.addEvent(new GUISwitchFolderEvent<>(this, folder));
+        }
+        return fileItem;
+    }
+
+    private static void setPathLore(File folder, ItemBuilder fileBuilder) {
+        String[] lore = folder.getPath().split(separator);
+        String[] newLore = new String[lore.length];
+        for(int i = 0; i < lore.length; ++i) {
+            newLore[i] = "&7" + lore[i];
+        }
+        fileBuilder.setLore(newLore);
+    }
+
     /**
      * Overridden <code>onOpenHead</code> that fills the file explorer with items
      *
@@ -139,59 +155,9 @@ public class GUIFileExplorerModule extends GUIListModule {
     @Override
     public void onOpenHead(Player player, GUIContainer gui) {
         super.onOpenHead(player, gui);
-        gui.setInventoryName(file.getName());
-        resetList();
-
-        fillList(player, gui);
         if(allowUpwardTraversal) {
             fillUpwardTraversal();
         }
-        GUILayer baseLayer = gui.getLayer(0);
-        fillDecor(baseLayer);
-    }
-
-    /**
-     * Overridden update method that updates the history buttons
-     *
-     * @param player The player that is viewing the GUI
-     * @param gui    The GUI
-     */
-    @Override
-    public void onUpdateHead(Player player, GUIContainer gui) {
-        super.onUpdateHead(player, gui);
-
-        GUILayer layer = gui.getLayer(layerName);
-        setHistoryButtons(layer);
-    }
-
-    /**
-     * Set the file history buttons
-     *
-     * @param layer The <code>GUILayer</code> to set the items on
-     */
-    private void setHistoryButtons(GUILayer layer) {
-        layer.setItem(1, 1, history.hasBack() ? backItemValid : null);
-        layer.setItem(1, 2, history.hasForward() ? forwardItemValid : null);
-    }
-
-    /**
-     * Fill the decoration items for the GUI
-     *
-     * @param baseLayer The base layer of the GUI, the layer that the background decor will be set on
-     */
-    private void fillDecor(GUILayer baseLayer) {
-        GUIItem background1 = backItemValid.clone();
-        GUIItem background2 = forwardItemValid.clone();
-        GUIItem background3 = backItem.clone();
-        GUIItem background4 = forwardItem.clone();
-        background1.setHeadBase64(Base64Head.ARROW_LEFT_LIGHT_GRAY.get()).resetEvents();
-        background2.setHeadBase64(Base64Head.ARROW_RIGHT_LIGHT_GRAY.get()).resetEvents();
-        background3.setHeadBase64(Base64Head.ARROW_UP_LIGHT_GRAY.get()).resetEvents();
-        background4.setHeadBase64(Base64Head.ARROW_DOWN_LIGHT_GRAY.get()).resetEvents();
-        baseLayer.setItem(1, 1, background1);
-        baseLayer.setItem(1, 2, background2);
-        baseLayer.setItem(1, 8, background3);
-        baseLayer.setItem(1, 9, background4);
     }
 
     /**
@@ -199,85 +165,12 @@ public class GUIFileExplorerModule extends GUIListModule {
      */
     private void fillUpwardTraversal() {
         Queue<File> temp = new LinkedList<>();
-        File curFile = file.getParentFile();
+        File curFile = folder.getParentFile();
         while(curFile != null) {
             temp.add(curFile);
             curFile = curFile.getParentFile();
         }
         temp.forEach(file -> history.pushBack(file));
-    }
-
-    /**
-     * Fill the GUI list with all files in the current folder
-     *
-     * @param player The player that is viewing the GUI
-     * @param gui    The GUI
-     */
-    private void fillList(Player player, GUIContainer gui) {
-        this.resetList();
-        File[] files = file.listFiles();
-        if(files == null) {
-            plugin.sendMessage(player, "&c" + Text.translatable("command.errors.general").get(player));
-            return;
-        }
-        Queue<GUIItem> folderQueue = new LinkedList<>();
-        Queue<GUIItem> fileQueue = new LinkedList<>();
-        for(File curFile : files) {
-            ItemBuilder fileBuilder = ItemBuilder.of(Base64Head.STACK_OF_PAPER.get())
-                    .setName("&f" + curFile.getName());
-
-            String[] lore = curFile.getPath().split(separator);
-            String[] newLore = new String[lore.length];
-            for(int i = 0; i < lore.length; ++i) {
-                newLore[i] = "&7" + lore[i];
-            }
-            fileBuilder.setLore(newLore);
-
-            GUIItem fileItem = new GUIItem((ItemStack) null);
-            if(curFile.isDirectory()) {
-                fileBuilder.setHeadBase64(Base64Head.FOLDER.get());
-                fileItem.set(fileBuilder.get(player));
-                if(allowSubFolders) {
-                    fileItem.addEvent(new GUISwitchFolderEvent(curFile));
-                }
-                folderQueue.add(fileItem);
-            } else {
-                String extension = FileUtil.getFileExtension(curFile);
-                Base64Head head = HeadUtil.getHeadFromFileExtension(extension);
-                fileBuilder.setHeadBase64(head.get());
-                fileItem.set(fileBuilder.get(player));
-                fileQueue.add(fileItem);
-            }
-        }
-        folderQueue.forEach(this::addItem);
-        fileQueue.forEach(this::addItem);
-    }
-
-    /**
-     * Get the current folder of this GUI
-     *
-     * @return The folder
-     */
-    public File getFile() {
-        return file;
-    }
-
-    /**
-     * Set the current folder of this GUI
-     *
-     * @param file The new folder to use
-     */
-    public void setFile(File file) {
-        this.file = file;
-    }
-
-    /**
-     * Get the {@link HistoryHolder} of the file history for this GUI
-     *
-     * @return The file history
-     */
-    public HistoryHolder<File> getHistory() {
-        return history;
     }
 
     /**
@@ -317,97 +210,5 @@ public class GUIFileExplorerModule extends GUIListModule {
      */
     public void setAllowUpwardTraversal(boolean allowUpwardTraversal) {
         this.allowUpwardTraversal = allowUpwardTraversal;
-    }
-
-    /**
-     * Event to switch a folder in a {@link GUIFileExplorerModule} GUI
-     *
-     * @author Mikedeejay2
-     */
-    public static class GUISwitchFolderEvent implements GUIEvent {
-        /**
-         * The <code>File</code> folder to be switched to
-         */
-        private final File file;
-
-        /**
-         * Construct a new <code>GUISwitchFolderEvent</code>
-         *
-         * @param file The <code>File</code> folder to be switched to
-         */
-        public GUISwitchFolderEvent(File file) {
-            this.file = file;
-        }
-
-        /**
-         * Switch the explorer to view the {@link GUISwitchFolderEvent#file}
-         *
-         * @param info {@link GUIClickEvent} of the event
-         */
-        @Override
-        public void execute(GUIClickEvent info) {
-            Player player = info.getPlayer();
-            GUIContainer gui = info.getGUI();
-            GUIFileExplorerModule module = gui.getModule(GUIFileExplorerModule.class);
-            File oldFile = module.getFile();
-            module.setFile(file);
-            module.getHistory().pushBack(oldFile);
-            module.getHistory().clearForward();
-            module.setListLoc(1);
-            gui.setInventoryName(file.getName());
-            gui.open(player);
-        }
-    }
-
-    /**
-     * Event to navigate back a folder in a {@link GUIFileExplorerModule} GUI
-     *
-     * @author Mikedeejay2
-     */
-    public static class GUINavFileBackEvent implements GUIEvent {
-        /**
-         * Navigate back a folder
-         *
-         * @param info {@link GUIClickEvent} of the event
-         */
-        @Override
-        public void execute(GUIClickEvent info) {
-            Player player = info.getPlayer();
-            GUIContainer gui = info.getGUI();
-            GUIFileExplorerModule module = gui.getModule(GUIFileExplorerModule.class);
-            File oldFile = module.getFile();
-            File file = module.getHistory().popBack();
-            module.setFile(file);
-            module.getHistory().pushForward(oldFile);
-            module.setListLoc(1);
-            gui.setInventoryName(file.getName());
-            gui.open(player);
-        }
-    }
-
-    /**
-     * Event to navigate forward a folder in a {@link GUIFileExplorerModule} GUI
-     *
-     * @author Mikedeejay2
-     */
-    public static class GUINavFileForwardEvent implements GUIEvent {
-        /**
-         * Navigate forward a folder
-         *
-         * @param info {@link GUIClickEvent} of the event
-         */
-        @Override
-        public void execute(GUIClickEvent info) {
-            Player player = info.getPlayer();
-            GUIContainer gui = info.getGUI();
-            GUIFileExplorerModule module = gui.getModule(GUIFileExplorerModule.class);
-            File oldFile = module.getFile();
-            File newFile = module.getHistory().popForward();
-            module.setFile(newFile);
-            module.getHistory().pushBack(oldFile);
-            module.setListLoc(1);
-            gui.setInventoryName(newFile.getName());
-            gui.open(player);
-        }
     }
 }

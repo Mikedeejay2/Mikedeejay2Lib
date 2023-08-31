@@ -16,7 +16,7 @@ import java.nio.file.InvalidPathException;
 import java.nio.file.Paths;
 import java.util.*;
 
-public class SerializableFileSystem<T extends ConfigurationSerializable> implements SerializableFolder<T> {
+public class SerializableFileSystem<T extends ConfigurationSerializable> {
     protected final BukkitPlugin plugin;
 
     protected final Class<T> serializableClass;
@@ -154,21 +154,6 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> impleme
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get items from null folder at path \"%s\"", path);
         return folder.getItemsMap();
-    }
-
-    @Override
-    public String getName() {
-        return root.getName();
-    }
-
-    @Override
-    public List<? extends SerializableFolder<T>> getFolders() {
-        return this.root.getFolders();
-    }
-
-    @Override
-    public List<T> getItems() {
-        return this.root.getItems();
     }
 
     public boolean isAutoWrite() {

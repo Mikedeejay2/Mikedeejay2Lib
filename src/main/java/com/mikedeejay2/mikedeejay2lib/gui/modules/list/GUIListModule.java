@@ -272,7 +272,7 @@ public class GUIListModule implements GUIModule {
         }
 
         if(searchMode) {
-            searchThroughList();
+            searchThroughList(player);
         }
         updateListControls(layer);
         updateView(layer);
@@ -630,7 +630,7 @@ public class GUIListModule implements GUIModule {
      * Search through this entire list, called in {@link GUIListModule#onUpdateHead(Player, GUIContainer)}
      * if search mode is enabled.
      */
-    protected void searchThroughList() {
+    protected void searchThroughList(Player player) {
         searchMode = true;
         searchList.clear();
         for(int i = 0; i < list.size(); ++i) {

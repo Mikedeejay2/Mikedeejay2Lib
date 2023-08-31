@@ -8,4 +8,7 @@ public interface SerializableFolder<T extends ConfigurationSerializable> {
     String getName();
     List<? extends SerializableFolder<T>> getFolders();
     List<T> getItems();
+    SerializableFolder<T> getFolder(String name);
+    T getItem(String name);
+    boolean containsFolder(String name);
 }
