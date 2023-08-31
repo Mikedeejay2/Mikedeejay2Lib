@@ -97,16 +97,34 @@ public class GUISerializableExplorerModule<T extends ConfigurationSerializable> 
         this(plugin, folder, converter, ListViewMode.SCROLL, topRow, bottomRow, leftCol, rightCol);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param folder The folder to get the name of
+     * @return The name of the folder
+     */
     @Override
     protected Text getFolderName(SerializableFolder<T> folder) {
         return Text.of(folder.getName());
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param folder The folder to get the contained folders from
+     * @return The contained folders
+     */
     @Override
     protected List<? extends SerializableFolder<T>> getContainedFolders(SerializableFolder<T> folder) {
         return folder.getFolders();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param folder The folder to get the items from
+     * @return The contained items
+     */
     @Override
     protected List<GUIItem> getFolderItems(SerializableFolder<T> folder) {
         return folder.getItems().stream()
@@ -114,6 +132,12 @@ public class GUISerializableExplorerModule<T extends ConfigurationSerializable> 
             .collect(Collectors.toList());
     }
 
+    /**
+     * Generate a folder item from a folder
+     *
+     * @param folder The folder to get the item from
+     * @return The new {@link GUIItem}
+     */
     @Override
     protected @NotNull GUIItem getFolderItem(SerializableFolder<T> folder) {
         ItemStack item = ItemBuilder.of(Base64Head.FOLDER.get())

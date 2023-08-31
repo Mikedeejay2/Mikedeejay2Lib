@@ -629,6 +629,8 @@ public class GUIListModule implements GUIModule {
     /**
      * Search through this entire list, called in {@link GUIListModule#onUpdateHead(Player, GUIContainer)}
      * if search mode is enabled.
+     *
+     * @param player The player viewing the GUI
      */
     protected void searchThroughList(Player player) {
         searchMode = true;

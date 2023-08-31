@@ -92,16 +92,34 @@ public class GUIFileExplorerModule extends GUIExplorerBaseModule<File> {
         this(plugin, file, ListViewMode.SCROLL, topRow, bottomRow, leftCol, rightCol);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param folder The folder to get the name of
+     * @return The name of the folder
+     */
     @Override
     protected Text getFolderName(File folder) {
         return Text.of(folder.getName());
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param folder The folder to get the contained folders from
+     * @return The contained folders
+     */
     @Override
     protected List<File> getContainedFolders(File folder) {
-        return Arrays.asList(folder.listFiles((file) -> file.isDirectory()));
+        return Arrays.asList(folder.listFiles(File::isDirectory));
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param folder The folder to get the items from
+     * @return The contained items
+     */
     @Override
     protected List<GUIItem> getFolderItems(File folder) {
         File[] files = folder.listFiles();
@@ -122,6 +140,12 @@ public class GUIFileExplorerModule extends GUIExplorerBaseModule<File> {
         return items;
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param folder The folder to get the item from
+     * @return The new {@link GUIItem}
+     */
     @Override
     protected @NotNull GUIItem getFolderItem(File folder) {
         ItemBuilder fileBuilder = ItemBuilder.of(Base64Head.STACK_OF_PAPER.get())
@@ -137,8 +161,14 @@ public class GUIFileExplorerModule extends GUIExplorerBaseModule<File> {
         return fileItem;
     }
 
-    private static void setPathLore(File folder, ItemBuilder fileBuilder) {
-        String[] lore = folder.getPath().split(separator);
+    /**
+     * Set the lore of an ItemBuilder to display the path to the file on the drive
+     *
+     * @param file        The file to get the path of
+     * @param fileBuilder The {@link ItemBuilder} to set the lore of
+     */
+    private static void setPathLore(File file, ItemBuilder fileBuilder) {
+        String[] lore = file.getPath().split(separator);
         String[] newLore = new String[lore.length];
         for(int i = 0; i < lore.length; ++i) {
             newLore[i] = "&7" + lore[i];

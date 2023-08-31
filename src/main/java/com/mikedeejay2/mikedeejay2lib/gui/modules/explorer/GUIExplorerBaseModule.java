@@ -20,7 +20,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * An item explorer for viewing and interacting with organized items.
+ * An abstract explorer for viewing and interacting with folder data types.
  *
  * @author Mikedeejay2
  */
@@ -61,7 +61,7 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
     protected int searchDepth;
 
     /**
-     * Construct a new <code>GUIItemExplorerModule</code>
+     * Construct a new <code>GUIExplorerBaseModule</code>
      *
      * @param plugin    The {@link BukkitPlugin} instance
      * @param folder    The root folder of the explorer
@@ -104,7 +104,7 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
     }
 
     /**
-     * Construct a new <code>GUIItemExplorerModule</code>
+     * Construct a new <code>GUIExplorerBaseModule</code>
      *
      * @param plugin    The {@link BukkitPlugin} instance
      * @param folder    The root folder of the explorer
@@ -126,7 +126,7 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
     }
 
     /**
-     * Construct a new <code>GUIItemExplorerModule</code>
+     * Construct a new <code>GUIExplorerBaseModule</code>
      *
      * @param plugin    The {@link BukkitPlugin} instance
      * @param folder    The root folder of the explorer
@@ -145,10 +145,28 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
         this(plugin, folder, ListViewMode.SCROLL, topRow, bottomRow, leftCol, rightCol);
     }
 
+    /**
+     * Get the name of a folder
+     *
+     * @param folder The folder to get the name of
+     * @return The name of the folder
+     */
     protected abstract Text getFolderName(F folder);
 
+    /**
+     * Get the folders contained within a folder
+     *
+     * @param folder The folder to get the contained folders from
+     * @return The contained folders
+     */
     protected abstract List<? extends F> getContainedFolders(F folder);
 
+    /**
+     * Get the items contained in a folder
+     *
+     * @param folder The folder to get the items from
+     * @return The contained items
+     */
     protected abstract List<GUIItem> getFolderItems(F folder);
 
     /**

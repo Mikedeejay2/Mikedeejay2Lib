@@ -62,16 +62,34 @@ public class GUIItemExplorerModule extends GUIExplorerBaseModule<ItemFolder> {
         this(plugin, folder, ListViewMode.SCROLL, topRow, bottomRow, leftCol, rightCol);
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param folder The folder to get the name of
+     * @return The name of the folder
+     */
     @Override
     protected Text getFolderName(ItemFolder folder) {
         return Text.of(folder.getName());
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param folder The folder to get the contained folders from
+     * @return The contained folders
+     */
     @Override
     protected List<ItemFolder> getContainedFolders(ItemFolder folder) {
         return folder.getFolders();
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param folder The folder to get the items from
+     * @return The contained items
+     */
     @Override
     protected List<GUIItem> getFolderItems(ItemFolder folder) {
         return folder.getItems().stream()
@@ -79,6 +97,12 @@ public class GUIItemExplorerModule extends GUIExplorerBaseModule<ItemFolder> {
             .collect(Collectors.toList());
     }
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param folder The folder to get the item from
+     * @return The new {@link GUIItem}
+     */
     @Override
     protected @NotNull GUIItem getFolderItem(ItemFolder folder) {
         ItemStack item = folder.getFolderItem();
