@@ -73,6 +73,7 @@ public class GUICreativeMoveEvent implements GUIEvent {
                 item.setAmount(1);
                 inventory.setCursor(item);
                 break;
+            case COLLECT_TO_CURSOR:
             case PLACE_ALL:
             case PLACE_ONE:
             case PLACE_SOME:
