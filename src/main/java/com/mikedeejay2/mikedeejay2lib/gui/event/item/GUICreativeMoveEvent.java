@@ -3,6 +3,7 @@ package com.mikedeejay2.mikedeejay2lib.gui.event.item;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
+import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import org.bukkit.Location;
 import org.bukkit.World;
 import org.bukkit.entity.Item;
@@ -71,6 +72,16 @@ public class GUICreativeMoveEvent implements GUIEvent {
             case PICKUP_ONE:
                 item.setAmount(1);
                 inventory.setCursor(item);
+                break;
+            case PLACE_ALL:
+            case PLACE_ONE:
+            case PLACE_SOME:
+                if(!ItemComparison.equalsEachOther(inventory.getCursor(), item)) {
+                    inventory.setCursor(null);
+                    break;
+                }
+                inventory.getCursor()
+                    .setAmount(Math.min(item.getMaxStackSize(), inventory.getCursor().getAmount() + item.getAmount()));
                 break;
             case CLONE_STACK:
             case PICKUP_SOME:
