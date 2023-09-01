@@ -13,7 +13,6 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.stream.Collectors;
 
 /**
  * Manages a command with subcommands
@@ -206,15 +205,21 @@ public class CommandManager implements TabCommandBase {
     @Override
     public List<String> onTabComplete(@NotNull CommandSender sender, Command command, @NotNull String alias, String[] args) {
         if(!command.getName().equalsIgnoreCase(this.commandName)) return null;
-        ArrayList<String> commands = new ArrayList<>();
         if(args.length == 1) {
             String currentArg = args[0];
             String[] arg1Strings = Arrays.stream(this.getAllCommandStrings(true))
                 .filter((str) -> str.startsWith(currentArg))
                 .toArray(String[]::new);
-            Collections.addAll(commands, arg1Strings);
+            return Arrays.asList(arg1Strings);
         }
-        return commands;
+        if(args.length > 1) {
+            String subCommandStr = args[0];
+            SubCommand subCommand = getSubcommand(subCommandStr);
+            if(!(subCommand instanceof TabSubCommand)) return null;
+            TabSubCommand tabSubCommand = (TabSubCommand) subCommand;
+            return tabSubCommand.onTabComplete(sender, args);
+        }
+        return null;
     }
 
     /**
