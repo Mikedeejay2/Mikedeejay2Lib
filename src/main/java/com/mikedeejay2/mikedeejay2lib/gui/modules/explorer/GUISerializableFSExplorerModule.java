@@ -5,6 +5,8 @@ import com.mikedeejay2.mikedeejay2lib.data.filesystem.SerializableFileSystem;
 import com.mikedeejay2.mikedeejay2lib.data.filesystem.SerializableFolderFS;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
+import com.mikedeejay2.mikedeejay2lib.text.Text;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemFlag;
@@ -114,6 +116,21 @@ public class GUISerializableFSExplorerModule<T extends ConfigurationSerializable
     /**
      * {@inheritDoc}
      *
+     * @param folder The folder to get the name of
+     * @return The name of the folder
+     */
+    @Override
+    protected Text getFolderName(SerializableFolderFS<T> folder) {
+        if(folder.containsItem(ICON_KEY)) {
+            final GUIItem item = converter.apply(folder.getItem(ICON_KEY));
+            if(item.hasDisplayName()) return Text.of(item.getName()).color(Colors.FormatStyle.COLOR_CODES, Colors.FormatStyle.HEX);
+        }
+        return super.getFolderName(folder);
+    }
+
+    /**
+     * {@inheritDoc}
+     *
      * @param folder The folder to get the items from
      * @return The contained items
      */
@@ -138,7 +155,7 @@ public class GUISerializableFSExplorerModule<T extends ConfigurationSerializable
             folder.containsItem(ICON_KEY) ?
             converter.apply(folder.getItem(ICON_KEY)) :
             new GUIItem(ItemBuilder.of(Base64Head.FOLDER.get()).get());
-        guiItem.setName(folder.getName())
+        guiItem.setName(getFolderName(folder))
             .addItemFlags(PREVIEW_ITEM_FLAGS)
             .addLore("&7Folder")
             .addEvent(new GUISwitchFolderEvent<>(this, folder));

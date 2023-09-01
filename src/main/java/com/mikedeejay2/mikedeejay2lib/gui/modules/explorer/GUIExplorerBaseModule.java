@@ -5,6 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.gui.GUIContainer;
 import com.mikedeejay2.mikedeejay2lib.gui.GUILayer;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIClickEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.event.GUIEvent;
+import com.mikedeejay2.mikedeejay2lib.gui.event.item.GUICreativeMoveEvent;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.gui.modules.list.GUIListModule;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
@@ -61,6 +62,11 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
     protected int searchDepth;
 
     /**
+     * Whether the explorer acts like a creative menu
+     */
+    protected boolean creativeActions;
+
+    /**
      * Construct a new <code>GUIExplorerBaseModule</code>
      *
      * @param plugin    The {@link BukkitPlugin} instance
@@ -101,6 +107,7 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
             .addEvent(new GUINavFolderForwardEvent<>(this));
         this.deepSearch = false;
         this.searchDepth = 10;
+        this.creativeActions = false;
     }
 
     /**
@@ -272,6 +279,7 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
             this.addItem(item);
         }
         for(GUIItem item : folderItems) {
+
             this.addItem(item);
         }
     }
@@ -353,9 +361,14 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
     public void setFolder(F folder) {
         this.folder = folder;
         this.folderItems.clear();
-        for(GUIItem guiItem : getFolderItems(folder)) {
-            this.folderItems.add(guiItem);
+        final List<GUIItem> items = getFolderItems(folder);
+        if(creativeActions) {
+            for(GUIItem item : items) {
+                if(item.containsEvent(GUICreativeMoveEvent.class)) continue;
+                item.addEvent(new GUICreativeMoveEvent(item.get()));
+            }
         }
+        this.folderItems.addAll(items);
     }
 
     /**
@@ -405,6 +418,24 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
     }
 
     /**
+     * Get whether the explorer acts like a creative menu
+     *
+     * @return Whether the explorer acts like a creative menu
+     */
+    public boolean isCreativeActions() {
+        return creativeActions;
+    }
+
+    /**
+     * Set whether the explorer acts like a creative menu
+     *
+     * @param creativeActions The new creative actions state
+     */
+    public void setCreativeActions(boolean creativeActions) {
+        this.creativeActions = creativeActions;
+    }
+
+    /**
      * Event to switch a folder in a {@link GUIExplorerBaseModule} GUI
      *
      * @author Mikedeejay2
@@ -415,8 +446,17 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
          */
         private final F folder;
 
+        /**
+         * The parent module
+         */
         private final GUIExplorerBaseModule<F> module;
 
+        /**
+         * Construct a new <code>GUISwitchFolderEvent</code>
+         *
+         * @param module The parent module
+         * @param folder The folder to be switched to
+         */
         public GUISwitchFolderEvent(GUIExplorerBaseModule<F> module, F folder) {
             this.module = module;
             this.folder = folder;
@@ -447,8 +487,16 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
      * @author Mikedeejay2
      */
     public static class GUINavFolderBackEvent<F> implements GUIEvent {
+        /**
+         * The parent module
+         */
         private final GUIExplorerBaseModule<F> module;
 
+        /**
+         * Construct a new <code>GUINavFolderBackEvent</code>
+         *
+         * @param module The parent module
+         */
         public GUINavFolderBackEvent(GUIExplorerBaseModule<F> module) {
             this.module = module;
         }
@@ -478,8 +526,16 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
      * @author Mikedeejay2
      */
     public static class GUINavFolderForwardEvent<F> implements GUIEvent {
+        /**
+         * The parent module
+         */
         private final GUIExplorerBaseModule<F> module;
 
+        /**
+         * Construct a new <code>GUINavFolderForwardEvent</code>
+         *
+         * @param module The parent module
+         */
         public GUINavFolderForwardEvent(GUIExplorerBaseModule<F> module) {
             this.module = module;
         }

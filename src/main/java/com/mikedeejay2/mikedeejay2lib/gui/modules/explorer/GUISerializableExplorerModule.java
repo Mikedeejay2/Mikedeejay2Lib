@@ -5,6 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.data.filesystem.SerializableFolder;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.item.ItemBuilder;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mikedeejay2.mikedeejay2lib.util.head.Base64Head;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
@@ -111,7 +112,7 @@ public class GUISerializableExplorerModule<F extends SerializableFolder<T>, T ex
      */
     @Override
     protected Text getFolderName(F folder) {
-        return Text.of(folder.getName());
+        return Text.of(folder.getName()).color(Colors.FormatStyle.COLOR_CODES, Colors.FormatStyle.HEX);
     }
 
     /**

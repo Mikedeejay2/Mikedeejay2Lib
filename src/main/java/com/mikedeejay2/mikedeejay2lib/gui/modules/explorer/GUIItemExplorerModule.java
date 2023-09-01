@@ -4,6 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.gui.item.GUIItem;
 import com.mikedeejay2.mikedeejay2lib.item.ItemFolder;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
+import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
@@ -70,7 +71,7 @@ public class GUIItemExplorerModule extends GUIExplorerBaseModule<ItemFolder> {
      */
     @Override
     protected Text getFolderName(ItemFolder folder) {
-        return Text.of(folder.getName());
+        return Text.of(folder.getName()).color(Colors.FormatStyle.COLOR_CODES, Colors.FormatStyle.HEX);
     }
 
     /**
