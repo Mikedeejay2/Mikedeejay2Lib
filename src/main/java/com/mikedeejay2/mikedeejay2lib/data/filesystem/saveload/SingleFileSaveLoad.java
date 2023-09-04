@@ -37,9 +37,8 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
     }
 
     @Override
-    public void saveFolder(SerializableFolderFS<T> folder) {
-        getFolderSection(folder); // Add folder section
-        String path = folder.getPath();
+    public void saveFolder(String path) {
+        getFolderSection(path); // Add folder section
         if(path != null) { // Saves relation to parent, not needed on root folder
             JsonAccessor parentAccessor = getParentAccessor(path);
             List<String> curFolders = parentAccessor.getStringList(KEY_FOLDERS);
@@ -57,8 +56,8 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
     }
 
     @Override
-    public void saveItem(SerializableFolderFS<T> owner, String name, T item) {
-        getFolderSection(owner, KEY_ITEMS).setSerialized(name, item);
+    public void saveItem(String path, String name, T item) {
+        getFolderSection(path, KEY_ITEMS).setSerialized(name, item);
         save();
     }
 
@@ -99,12 +98,12 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
     }
 
     @Override
-    public Map<String, SerializableFolderFS<T>> loadFolders(SerializableFolderFS<T> folder) {
+    public Map<String, SerializableFolderFS<T>> loadFolders(String path) {
         Map<String, SerializableFolderFS<T>> folders = new LinkedHashMap<>();
-        List<String> folderNames = getFolderSection(folder).getStringList(KEY_FOLDERS);
+        List<String> folderNames = getFolderSection(path).getStringList(KEY_FOLDERS);
         for(String name : folderNames) {
-            String path = SerializableFileSystem.getPath(folder.getPath(), name);
-            SerializableFolderFS<T> curFolder = loadFolder(path);
+            String curPath = SerializableFileSystem.getPath(path, name);
+            SerializableFolderFS<T> curFolder = loadFolder(curPath);
             folders.put(curFolder.getName(), curFolder);
         }
         return folders;
@@ -121,9 +120,9 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
     }
 
     @Override
-    public Map<String, T> loadItems(SerializableFolderFS<T> folder) {
+    public Map<String, T> loadItems(String path) {
         Map<String, T> items = new LinkedHashMap<>();
-        JsonAccessor section = getFolderSection(folder, KEY_ITEMS);
+        JsonAccessor section = getFolderSection(path, KEY_ITEMS);
         for(String name : section.getKeys(false)) {
             T item = section.getSerialized(name, system.getSerializableClass());
             items.put(name, item);
@@ -131,12 +130,12 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
         return items;
     }
 
-    protected JsonAccessor getFolderSection(SerializableFolderFS<T> folder) {
-        if(folder.getPath() == null) return this.accessor.getSection(KEY_ROOT);
-        return this.accessor.getSection(folder.getPath());
+    protected JsonAccessor getFolderSection(String path) {
+        if(path == null) return this.accessor.getSection(KEY_ROOT);
+        return this.accessor.getSection(path);
     }
 
-    protected JsonAccessor getFolderSection(SerializableFolderFS<T> folder, String key) {
-        return getFolderSection(folder).getSection(key);
+    protected JsonAccessor getFolderSection(String path, String key) {
+        return getFolderSection(path).getSection(key);
     }
 }

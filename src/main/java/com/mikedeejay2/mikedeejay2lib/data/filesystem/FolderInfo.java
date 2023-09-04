@@ -51,12 +51,6 @@ public final class FolderInfo<T extends ConfigurationSerializable> {
      * @param folders The new map of folders. Null to invalidate existing folders
      */
     public void setFolders(Map<String, SerializableFolderFS<T>> folders) {
-        if(this.folders != null) {
-            for(SerializableFolderFS<T> folder : this.folders.values()) {
-                if(folders != null && folders.containsKey(folder.getPath())) continue;
-                owner.getFileSystem().getFolderPool().remove(folder.getPath());
-            }
-        }
         this.folders = folders;
     }
 

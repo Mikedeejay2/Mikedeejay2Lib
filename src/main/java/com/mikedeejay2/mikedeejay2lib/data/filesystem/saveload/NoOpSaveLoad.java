@@ -12,15 +12,15 @@ public class NoOpSaveLoad<T extends ConfigurationSerializable> implements FileSy
     public NoOpSaveLoad(BukkitPlugin plugin, SerializableFileSystem<T> system) {}
     public NoOpSaveLoad() {}
 
-    @Override public void saveFolder(SerializableFolderFS<T> folder) {}
-    @Override public void saveItem(SerializableFolderFS<T> owner, String name, T item) {}
+    @Override public void saveFolder(String path) {}
+    @Override public void saveItem(String path, String name, T item) {}
     @Override public void deleteFolder(String path) {}
     @Override public void deleteItem(String path, String name) {}
     @Override public void startCommit() {}
     @Override public void commit() {}
 
     @Override
-    public Map<String, SerializableFolderFS<T>> loadFolders(SerializableFolderFS<T> folder) {
+    public Map<String, SerializableFolderFS<T>> loadFolders(String path) {
         return new LinkedHashMap<>();
     }
 
@@ -30,7 +30,7 @@ public class NoOpSaveLoad<T extends ConfigurationSerializable> implements FileSy
     }
 
     @Override
-    public Map<String, T> loadItems(SerializableFolderFS<T> folder) {
+    public Map<String, T> loadItems(String path) {
         return new LinkedHashMap<>();
     }
 }

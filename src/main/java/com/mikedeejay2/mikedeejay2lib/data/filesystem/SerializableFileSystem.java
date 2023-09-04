@@ -4,7 +4,7 @@ import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.data.filesystem.modifier.AutoFileSystemModifier;
 import com.mikedeejay2.mikedeejay2lib.data.filesystem.modifier.FileSystemModifier;
 import com.mikedeejay2.mikedeejay2lib.data.filesystem.modifier.ManualFileSystemModifier;
-import com.mikedeejay2.mikedeejay2lib.data.filesystem.modifier.NoOpSystemModifier;
+import com.mikedeejay2.mikedeejay2lib.data.filesystem.modifier.BaseSystemModifier;
 import com.mikedeejay2.mikedeejay2lib.data.filesystem.saveload.FileSystemSaveLoad;
 import com.mikedeejay2.mikedeejay2lib.data.filesystem.saveload.MultiFileSaveLoad;
 import com.mikedeejay2.mikedeejay2lib.data.filesystem.saveload.NoOpSaveLoad;
@@ -560,7 +560,7 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
         /**
          * No operation. Files are not saved to disk.
          */
-        NO_OP(NoOpSystemModifier::new),
+        NO_OP(BaseSystemModifier::new),
         ;
 
         /**

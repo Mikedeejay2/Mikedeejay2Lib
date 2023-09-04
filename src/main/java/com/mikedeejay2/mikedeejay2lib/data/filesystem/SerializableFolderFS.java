@@ -141,9 +141,10 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * Add a new folder to this folder
      *
      * @param name The name of the folder to add
+     * @return The created folder
      */
-    public void addFolder(String name) {
-        fileSystem.getModifier().addFolder(this, name, new SerializableFolderFS<>(name, path, fileSystem));
+    public SerializableFolderFS<T> addFolder(String name) {
+        return fileSystem.getModifier().addFolder(this, name);
     }
 
     /**
@@ -163,10 +164,21 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
     }
 
     /**
+     * Get the parent folder of this folder
+     *
+     * @return The parent folder, null if current folder is the root folder
+     */
+    public SerializableFolderFS<T> getParentFolder() {
+        if(path == null) return null;
+        if(!path.contains("/")) return fileSystem.getRootFolder();
+        return fileSystem.getFolder(path.substring(0, path.lastIndexOf('/')));
+    }
+
+    /**
      * Save this folder to disk. Redundant if auto write is on.
      */
     public void save() {
-        fileSystem.getModifier().save(this);
+        fileSystem.getModifier().save(path);
     }
 
     /**
@@ -260,7 +272,7 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @return The loaded map of folders
      */
     private Map<String, SerializableFolderFS<T>> loadFolders() {
-        Map<String, SerializableFolderFS<T>> folders = fileSystem.getSaveLoad().loadFolders(this);
+        Map<String, SerializableFolderFS<T>> folders = fileSystem.getSaveLoad().loadFolders(path);
         fileSystem.getFolderPool().get(path).setFolders(folders);
         return folders;
     }
@@ -291,7 +303,7 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      */
     public Map<String, T> getItemsRaw() {
         if(items == null) {
-            items = fileSystem.getSaveLoad().loadItems(this);
+            items = fileSystem.getSaveLoad().loadItems(path);
         }
         return items;
     }

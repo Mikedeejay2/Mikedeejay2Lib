@@ -34,14 +34,14 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
     }
 
     @Override
-    public void saveFolder(SerializableFolderFS<T> folder) {
-        changedItems.addedFolders.add(folder.getFullPath());
+    public void saveFolder(String path) {
+        changedItems.addedFolders.add(system.getFullPath(path));
         save();
     }
 
     @Override
-    public void saveItem(SerializableFolderFS<T> owner, String name, T item) {
-        JsonFile file = getItemFile(owner, name);
+    public void saveItem(String path, String name, T item) {
+        JsonFile file = getItemFile(path, name);
         file.getAccessor().setSerialized(KEY_ITEM, item);
         changedItems.addedItems.add(file);
         save();
@@ -57,10 +57,6 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
     public void deleteItem(String path, String name) {
         changedItems.removedItems.add(system.getFullPath(path, name));
         save();
-    }
-
-    private JsonFile getItemFile(SerializableFolderFS<T> folder, String name) {
-        return new JsonFile(plugin, String.format("%s/%s.json", folder.getFullPath(), name));
     }
 
     @Override
@@ -102,17 +98,17 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
     }
 
     @Override
-    public Map<String, SerializableFolderFS<T>> loadFolders(SerializableFolderFS<T> folder) {
+    public Map<String, SerializableFolderFS<T>> loadFolders(String path) {
         Map<String, SerializableFolderFS<T>> folders = new LinkedHashMap<>();
-        File folderFile = new File(plugin.getDataFolder(), folder.getFullPath());
+        File folderFile = new File(plugin.getDataFolder(), system.getFullPath(path));
         if(!folderFile.exists()) return folders;
         File[] directories = folderFile.listFiles(File::isDirectory);
         if(directories == null) return folders;
         int savePathLen = plugin.getDataFolder().getPath().length() + system.getSavePath().length() + 2;
         for(File file : directories) {
-            String path = system.getSafePath(file.getPath().substring(savePathLen));
+            String curPath = SerializableFileSystem.getSafePath(file.getPath().substring(savePathLen));
             String name = file.getName();
-            folders.put(name, loadFolder(path));
+            folders.put(name, loadFolder(curPath));
         }
         return folders;
     }
@@ -130,24 +126,23 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
     }
 
     @Override
-    public Map<String, T> loadItems(SerializableFolderFS<T> folder) {
+    public Map<String, T> loadItems(String path) {
         Map<String, T> items = new LinkedHashMap<>();
-        File folderFile = new File(plugin.getDataFolder(), folder.getFullPath());
+        File folderFile = new File(plugin.getDataFolder(), system.getFullPath(path));
         if(!folderFile.exists()) return items;
         File[] itemFiles = folderFile.listFiles((f) -> f.isFile() && f.getName().endsWith(".json"));
         if(itemFiles == null) return items;
         for(File file : itemFiles) {
             String name = file.getName();
             name = name.substring(0, name.lastIndexOf('.'));
-            T item = loadSerialized(folder, name);
+            T item = loadSerialized(path, name);
             items.put(name, item);
         }
         return items;
     }
 
-    private T loadSerialized(SerializableFolderFS<T> folder, String name) {
-        String path = String.format("%s/%s.json", folder.getFullPath(), name);
-        JsonFile itemFile = new JsonFile(plugin, path);
+    private T loadSerialized(String path, String name) {
+        JsonFile itemFile = getItemFile(path, name);
         if(!itemFile.fileExists()) return null;
         itemFile.loadFromDisk(true);
 
@@ -157,6 +152,10 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
             return null;
         }
         return accessor.getSerialized(KEY_ITEM, system.getSerializableClass());
+    }
+
+    private JsonFile getItemFile(String path, String name) {
+        return new JsonFile(plugin, String.format("%s.json", system.getFullPath(path, name)));
     }
 
     private static final class ChangedItems {

@@ -10,103 +10,98 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
-public class ManualFileSystemModifier<T extends ConfigurationSerializable> implements FileSystemModifier<T> {
-    protected final SerializableFileSystem<T> system;
-    protected final Map<SerializableFolderFS<T>, ChangedItems<T>> changedItems = new LinkedHashMap<>();
+public class ManualFileSystemModifier<T extends ConfigurationSerializable> extends BaseSystemModifier<T> {
+    protected final Map<String, ChangedItems<T>> changedItems = new LinkedHashMap<>();
 
     public ManualFileSystemModifier(SerializableFileSystem<T> system) {
-        this.system = system;
+        super(system);
     }
 
     @Override
     public void addItem(SerializableFolderFS<T> owner, String name, T item) {
-        getChangedItems(owner).addedItems.put(name, item);
-        getChangedItems(owner).removedItems.add(name);
-        owner.getItemsRaw().put(name, item);
+        super.addItem(owner, name, item);
+        getChangedItems(owner.getPath()).addedItems.put(name, item);
+        getChangedItems(owner.getPath()).removedItems.add(name);
     }
 
     @Override
     public void removeItem(SerializableFolderFS<T> owner, String name) {
-        getChangedItems(owner).removedItems.add(name);
-        getChangedItems(owner).addedItems.remove(name);
-        owner.getItemsRaw().remove(name);
+        super.removeItem(owner, name);
+        getChangedItems(owner.getPath()).removedItems.add(name);
+        getChangedItems(owner.getPath()).addedItems.remove(name);
     }
 
     @Override
     public void clearItems(SerializableFolderFS<T> owner) {
-        getChangedItems(owner).addedItems.clear();
-        getChangedItems(owner).removedItems.addAll(owner.getItemsRaw().keySet());
-        owner.getItemsRaw().clear();
+        super.clearItems(owner);
+        getChangedItems(owner.getPath()).addedItems.clear();
+        getChangedItems(owner.getPath()).removedItems.addAll(owner.getItemsRaw().keySet());
     }
 
     @Override
-    public void addFolder(SerializableFolderFS<T> owner, String name, SerializableFolderFS<T> folder) {
-        getChangedItems(owner).addedFolders.put(name, folder);
-        getChangedItems(owner).removedFolders.add(name);
-        owner.getFoldersRaw().put(name, folder);
+    public SerializableFolderFS<T> addFolder(SerializableFolderFS<T> owner, String name) {
+        final SerializableFolderFS<T> folder = super.addFolder(owner, name);
+        getChangedItems(owner.getPath()).addedFolders.add(name);
+        getChangedItems(owner.getPath()).removedFolders.remove(name);
+        return folder;
     }
 
     @Override
     public void removeFolder(SerializableFolderFS<T> owner, String name) {
-        getChangedItems(owner).removedFolders.add(name);
-        getChangedItems(owner).addedFolders.remove(name);
-        SerializableFolderFS<T> removed = owner.getFoldersRaw().remove(name);
-        recursiveRemove(removed);
-    }
-
-    private void recursiveRemove(SerializableFolderFS<T> toRemove) {
-        changedItems.remove(toRemove);
-        for(SerializableFolderFS<T> folder : toRemove.getFoldersRaw().values()) {
-            recursiveRemove(folder);
-        }
+        super.removeFolder(owner, name);
     }
 
     @Override
     public void clearFolders(SerializableFolderFS<T> owner) {
-        getChangedItems(owner).addedFolders.clear();
-        getChangedItems(owner).removedFolders.addAll(owner.getFoldersRaw().keySet());
-        owner.getFoldersRaw().clear();
+        super.clearFolders(owner);
     }
 
     @Override
-    public void save(SerializableFolderFS<T> owner) {
-        final ChangedItems<T> changed = getChangedItems(owner);
+    protected void removeSingleFolder(SerializableFolderFS<T> owner, String name) {
+        super.removeSingleFolder(owner, name);
+        getChangedItems(owner.getPath()).removedFolders.add(name);
+        getChangedItems(owner.getPath()).addedFolders.remove(name);
+    }
+
+    @Override
+    public void save(String path) {
+        final ChangedItems<T> changed = getChangedItems(path);
         final FileSystemSaveLoad<T> saveLoad = system.getSaveLoad();
         saveLoad.startCommit();
-        for(String name : changed.addedFolders.keySet()) {
-            saveLoad.saveFolder(changed.addedFolders.get(name));
+        for(String name : changed.addedFolders) {
+            saveLoad.saveFolder(SerializableFileSystem.getPath(path, name));
         }
         for(String name : changed.addedItems.keySet()) {
-            saveLoad.saveItem(owner, name, changed.addedItems.get(name));
+            saveLoad.saveItem(path, name, changed.addedItems.get(name));
         }
         for(String name : changed.removedFolders) {
-            saveLoad.deleteFolder(SerializableFileSystem.getPath(owner.getPath(), name));
+            saveLoad.deleteFolder(SerializableFileSystem.getPath(path, name));
         }
         for(String name : changed.removedItems) {
-            saveLoad.deleteItem(owner.getPath(), name);
+            saveLoad.deleteItem(path, name);
         }
         saveLoad.commit();
-        changedItems.remove(owner);
+        changedItems.remove(path);
     }
 
     @Override
     public void saveAll() {
-        for(SerializableFolderFS<T> folder : changedItems.keySet()) {
-            save(folder);
+        for(String path : changedItems.keySet()) {
+            save(path);
         }
     }
 
-    private ChangedItems<T> getChangedItems(SerializableFolderFS<T> owner) {
-        if(!changedItems.containsKey(owner)) {
+    private ChangedItems<T> getChangedItems(String path) {
+        if(!changedItems.containsKey(path)) {
             ChangedItems<T> newChangedItems = new ChangedItems<>();
-            changedItems.put(owner, newChangedItems);
+            changedItems.put(path, newChangedItems);
             return newChangedItems;
         }
-        return changedItems.get(owner);
+        return changedItems.get(path);
     }
 
     private static final class ChangedItems<T extends ConfigurationSerializable> {
-        private final Map<String, SerializableFolderFS<T>> addedFolders = new LinkedHashMap<>();
+        private final List<String> addedFolders = new ArrayList<>();
         private final Map<String, T> addedItems = new LinkedHashMap<>();
         private final List<String> removedFolders = new ArrayList<>();
         private final List<String> removedItems = new ArrayList<>();
