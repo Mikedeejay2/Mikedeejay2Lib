@@ -69,7 +69,7 @@ public class BaseSystemModifier<T extends ConfigurationSerializable> implements 
     @Override
     public void clearFolders(SerializableFolderFS<T> owner) {
         for(String name : ImmutableSet.copyOf(owner.getFoldersRaw().keySet())) {
-            removeFolder(owner, name);
+            recursiveRemoveFolder(owner, name);
         }
     }
 

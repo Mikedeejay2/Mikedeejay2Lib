@@ -1,11 +1,8 @@
 package com.mikedeejay2.mikedeejay2lib.data.filesystem.modifier;
 
-import com.google.common.collect.ImmutableList;
 import com.mikedeejay2.mikedeejay2lib.data.filesystem.SerializableFolderFS;
 import com.mikedeejay2.mikedeejay2lib.data.filesystem.SerializableFileSystem;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
-
-import java.util.List;
 
 public class AutoFileSystemModifier<T extends ConfigurationSerializable> extends BaseSystemModifier<T> {
     public AutoFileSystemModifier(SerializableFileSystem<T> system) {
@@ -38,7 +35,9 @@ public class AutoFileSystemModifier<T extends ConfigurationSerializable> extends
 
     @Override
     public void removeFolder(SerializableFolderFS<T> owner, String name) {
-        owner.getFoldersRaw().remove(name);
+        system.getSaveLoad().startCommit();
+        super.removeFolder(owner, name);
+        system.getSaveLoad().commit();
     }
 
     @Override
@@ -50,14 +49,8 @@ public class AutoFileSystemModifier<T extends ConfigurationSerializable> extends
 
     @Override
     public void clearFolders(SerializableFolderFS<T> owner) {
-        final List<String> names = ImmutableList.copyOf(owner.getFoldersRaw().keySet());
-        owner.getFoldersRaw().clear();
         system.getSaveLoad().startCommit();
-        final String path = owner.getPath();
-        for(String name : names) {
-            system.getFolderPool().remove(SerializableFileSystem.getPath(owner.getPath(), name));
-            system.getSaveLoad().deleteFolder(path == null ? name : path + "/" + name);
-        }
+        super.clearFolders(owner);
         system.getSaveLoad().commit();
     }
 }
