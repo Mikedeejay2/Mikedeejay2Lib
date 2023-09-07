@@ -81,7 +81,7 @@ public final class FolderPool<T extends ConfigurationSerializable> {
     public void remove(String path) {
         lastRetrieved.remove(path);
         folderPool.remove(path);
-        String parentPath = path.substring(0, path.lastIndexOf('/'));
+        String parentPath = path.contains("/") ? path.substring(0, path.lastIndexOf('/')) : null;
         if(folderPool.containsKey(parentPath)) {
             folderPool.get(parentPath).setFolders(null); // Invalidate parent folder
         }

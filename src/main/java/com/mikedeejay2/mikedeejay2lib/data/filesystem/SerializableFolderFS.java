@@ -179,7 +179,10 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @param name The name of the folder to remove
      */
     public void removeFolder(String name) {
-        fileSystem.getModifier().removeFolder(getFolder(name));
+        final SerializableFolderFS<T> folder = getFolder(name);
+        Validate.notNull(folder, "Tried to remove folder from null folder at path \"%s\"",
+                         SerializableFileSystem.getPath(path, name));
+        fileSystem.getModifier().removeFolder(folder);
     }
 
     /**
