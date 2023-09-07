@@ -42,7 +42,7 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
         if(path != null) { // Saves relation to parent, not needed on root folder
             JsonAccessor parentAccessor = getParentAccessor(path);
             List<String> curFolders = parentAccessor.getStringList(KEY_FOLDERS);
-            String name = path.contains("/") ? path.substring(path.lastIndexOf('/') + 1) : path;
+            String name = SerializableFileSystem.getNameFromPath(path);
             if(!curFolders.contains(name)) curFolders.add(name);
             parentAccessor.setStringList(KEY_FOLDERS, curFolders);
         }
@@ -67,7 +67,7 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
         if(path != null) { // Deletes relation to parent, not needed on root folder
             JsonAccessor parentAccessor = getParentAccessor(path);
             List<String> curFolders = parentAccessor.getStringList(KEY_FOLDERS);
-            String name = path.contains("/") ? path.substring(path.lastIndexOf('/') + 1) : path;
+            String name = SerializableFileSystem.getNameFromPath(path);
             curFolders.remove(name);
             parentAccessor.setStringList(KEY_FOLDERS, curFolders);
         }
@@ -114,8 +114,8 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
         FolderInfo<T> curFolderFromPool = system.getFolderPool().get(path);
         if(curFolderFromPool != null) return curFolderFromPool.getOwner();
         Validate.isTrue(accessor.contains(path), "A folder \"%s\" does not exist.", path);
-        String newPath = path.contains("/") ? path.substring(0, path.lastIndexOf('/')) : null;
-        String name = path.contains("/") ? path.substring(path.lastIndexOf('/') + 1) : path;
+        String newPath = SerializableFileSystem.getParentPath(path);
+        String name = SerializableFileSystem.getNameFromPath(path);
         return new SerializableFolderFS<>(name, newPath, system);
     }
 

@@ -118,10 +118,10 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
         FolderInfo<T> curFolderFromPool = system.getFolderPool().get(path);
         if(curFolderFromPool != null) return curFolderFromPool.getOwner();
         File folderFile = new File(plugin.getDataFolder(), system.getFullPath(path));
-        Validate.isTrue(folderFile.exists(), "A folder \"%s\" does not exist.", path);
+        if(!folderFile.exists()) return null;
         String name = folderFile.getName();
         name = SerializableFileSystem.getSafeName(name);
-        path = path.indexOf('/') != -1 ? path.substring(0, path.lastIndexOf('/')) : null;
+        path = SerializableFileSystem.getParentPath(path);
         return new SerializableFolderFS<>(name, path, system);
     }
 

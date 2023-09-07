@@ -253,6 +253,17 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
     }
 
     /**
+     * Get whether this file system contains an object at a specified path and name
+     *
+     * @param path The path to the object
+     * @param name The name of the object
+     * @return Whether an object was found at that path and name
+     */
+    public boolean containsObject(String path, String name) {
+        return getObject(path, name) != null;
+    }
+
+    /**
      * Create a new folder in the file system
      *
      * @param path The path to create the folder at
@@ -317,6 +328,16 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
         SerializableFolderFS<T> newOwner = getFolder(folderPath);
         Validate.notNull(folder, "Tried to move folder to null folder at path \"%s\"", folderPath);
         modifier.moveFolder(folder, newOwner, folderName);
+    }
+
+    /**
+     * Get whether this file system contains a folder of a specified path
+     *
+     * @param path The path to check for
+     * @return Whether a folder was found at the path
+     */
+    public boolean containsFolder(String path) {
+        return getFolder(path) != null;
     }
 
     /**
@@ -543,6 +564,30 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      */
     public static String getPath(@Nullable String path, String name) {
         return path == null ? name : path + "/" + name;
+    }
+
+    /**
+     * Get the parent path of a path, example:
+     * <p>
+     * <code>folder1/folder2/item1</code> would become <code>folder1/folder2</code>
+     *
+     * @param path The path
+     * @return The parent path
+     */
+    public static String getParentPath(String path) {
+        return path.indexOf('/') != -1 ? path.substring(0, path.lastIndexOf('/')) : null;
+    }
+
+    /**
+     * Get the name out of a path, example:
+     * <p>
+     * <code>folder1/folder2/item1</code> would become <code>item1</code>
+     *
+     * @param path The path
+     * @return The retrieved name
+     */
+    public static String getNameFromPath(String path) {
+        return path.indexOf('/') != -1 ? path.substring(path.lastIndexOf('/') + 1) : path;
     }
 
     /**
