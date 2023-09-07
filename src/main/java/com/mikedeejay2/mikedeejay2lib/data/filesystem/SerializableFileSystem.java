@@ -392,6 +392,7 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @return The retrieved folder, null if not found
      */
     public SerializableFolderFS<T> getFolder(String path) {
+        path = getSafePath(path);
         if(path == null) return root;
         FolderInfo<T> folderInfo = folderPool.get(path);
         return folderInfo == null ? saveLoad.loadFolder(path) : folderInfo.getOwner();
@@ -535,10 +536,17 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
     public static String getSafePath(String path) {
         if(path == null) return null;
         path = path.trim();
+        if(path.isEmpty()) return null;
         path = path.replace('\\', '/');
-        if(path.charAt(0) == '/') path = path.substring(1);
-        if(path.charAt(path.length() - 1) == '/') path = path.substring(0, path.length() - 1);
-        return path;
+        if(path.indexOf('/') == -1) return path;
+
+        while(!path.isEmpty() && path.charAt(0) == '/') {
+            path = path.substring(1);
+        }
+        while(!path.isEmpty() && path.charAt(path.length() - 1) == '/') {
+            path = path.substring(0, path.length() - 1);
+        }
+        return path.isEmpty() ? null : path;
     }
 
     /**
