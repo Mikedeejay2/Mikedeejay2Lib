@@ -24,13 +24,13 @@ import java.util.*;
  * <ul>
  *     <li>
  *         <strong>{@link SaveMode#MANUAL_SAVE}</strong> - Files must be saved manually using the save method. This
- *         method is best for single file mode or batch operations of multi-file mode. It saves all modified items
+ *         method is best for single file mode or batch operations of multi-file mode. It saves all modified objects
  *         separately, so it could have a higher memory profile with large operations than auto save.
  *     </li>
  *     <li>
  *         <strong>{@link SaveMode#AUTO_SAVE}</strong> - Files are automatically saved using this method. Best for
- *         multi-file mode where items are added over time. The drawback to this method is higher disk usage, as it
- *         saves whenever an item is added or removed.
+ *         multi-file mode where objects are added over time. The drawback to this method is higher disk usage, as it
+ *         saves whenever an object is added or removed.
  *     </li>
  * </ul>
  * The save mode is set by the <code>autoWrite</code> parameter in the constructor.
@@ -38,39 +38,39 @@ import java.util.*;
  * The {@link FileMode} enum specifies how data is stored to disk:
  * <ul>
  *     <li>
- *         <strong>{@link FileMode#SINGLE_FILE}</strong> - Save all items to a single .json file. Good for small
- *         portable item file systems but requires that the entire file system be loaded into json.
+ *         <strong>{@link FileMode#SINGLE_FILE}</strong> - Save all objects to a single .json file. Good for small
+ *         portable object file systems but requires that the entire file system be loaded into json.
  *         <p>
  *         Storage format:
  *         <ul>
- *             <li><code>items.json</code></li>
+ *             <li><code>objects.json</code></li>
  *         </ul>
  *     </li>
  *     <li>
- *         <strong>{@link FileMode#FILE_SYSTEM}</strong> - Save items to their own .json file in a real file system on
+ *         <strong>{@link FileMode#FILE_SYSTEM}</strong> - Save objects to their own .json file in a real file system on
  *         the server machine. This solution is less portable but ensures that only updated or loaded files are saved to
- *         the system. This implementation is good for large item file systems.
+ *         the system. This implementation is good for large object file systems.
  *         <p>
  *         Storage format:
  *         <ul>
- *             <li><code>items</code>
+ *             <li><code>objects</code>
  *                 <ul>
  *                     <li><code>folder1</code>
  *                         <ul>
- *                             <li><code>sub_item1.json</code></li>
- *                             <li><code>sub_item2.json</code></li>
+ *                             <li><code>sub_object1.json</code></li>
+ *                             <li><code>sub_object2.json</code></li>
  *                         </ul>
  *                     </li>
  *                     <li><code>folder2</code>
  *                         <ul>
- *                             <li><code>sub_item1.json</code></li>
- *                             <li><code>sub_item2.json</code></li>
+ *                             <li><code>sub_object1.json</code></li>
+ *                             <li><code>sub_object2.json</code></li>
  *                         </ul>
  *                     </li>
- *                     <li><code>item1.json</code></li>
- *                     <li><code>item2.json</code></li>
- *                     <li><code>item3.json</code></li>
- *                     <li><code>item4.json</code></li>
+ *                     <li><code>object1.json</code></li>
+ *                     <li><code>object2.json</code></li>
+ *                     <li><code>object3.json</code></li>
+ *                     <li><code>object4.json</code></li>
  *                 </ul>
  *             </li>
  *         </ul>
@@ -188,10 +188,10 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param name The file name of the object
      * @param obj The object to add
      */
-    public void addItem(String path, String name, T obj) {
+    public void addObject(String path, String name, T obj) {
         SerializableFolderFS<T> folder = getFolder(path);
-        Validate.notNull(folder, "Tried to add item to null folder at path \"%s\"", path);
-        folder.addItem(name, obj);
+        Validate.notNull(folder, "Tried to add object to null folder at path \"%s\"", path);
+        folder.addObject(name, obj);
     }
 
     /**
@@ -200,11 +200,11 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param path The path to remove the object from
      * @param name The file name of the object
      */
-    public void removeItem(String path, String name) {
+    public void removeObject(String path, String name) {
         name = getSafeName(name);
         SerializableFolderFS<T> folder = getFolder(path);
-        Validate.notNull(folder, "Tried to remove item from null folder at path \"%s\"", path);
-        folder.removeItem(name);
+        Validate.notNull(folder, "Tried to remove object from null folder at path \"%s\"", path);
+        folder.removeObject(name);
     }
 
     /**
@@ -212,10 +212,10 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      *
      * @param path The path to clear all objects from
      */
-    public void clearItems(String path) {
+    public void clearObjects(String path) {
         SerializableFolderFS<T> folder = getFolder(path);
-        Validate.notNull(folder, "Tried to clear items from null folder at path \"%s\"", path);
-        folder.clearItems();
+        Validate.notNull(folder, "Tried to clear objects from null folder at path \"%s\"", path);
+        folder.clearObjects();
     }
 
     /**
@@ -225,12 +225,12 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param name    The current name of the object
      * @param newName The new name of the object
      */
-    public void renameItem(String path, String name, String newName) {
+    public void renameObject(String path, String name, String newName) {
         SerializableFolderFS<T> folder = getFolder(path);
-        Validate.notNull(folder, "Tried to rename item from null folder at path \"%s\"", path);
+        Validate.notNull(folder, "Tried to rename object from null folder at path \"%s\"", path);
         name = getSafeName(name);
         newName = getSafeName(newName);
-        folder.renameItem(name, newName);
+        folder.renameObject(name, newName);
     }
 
     /**
@@ -241,15 +241,15 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param newPath The new path of the object
      * @param newName The new name of the object
      */
-    public void moveItem(String path, String name, String newPath, String newName) {
+    public void moveObject(String path, String name, String newPath, String newName) {
         newPath = getSafePath(newPath);
         SerializableFolderFS<T> folder = getFolder(path);
-        Validate.notNull(folder, "Tried to move item from null folder at path \"%s\"", path);
+        Validate.notNull(folder, "Tried to move object from null folder at path \"%s\"", path);
         SerializableFolderFS<T> destination = getFolder(newPath);
-        Validate.notNull(destination, "Tried to move item to null folder at path \"%s\"", newPath);
+        Validate.notNull(destination, "Tried to move object to null folder at path \"%s\"", newPath);
         name = getSafeName(name);
         newName = getSafeName(newName);
-        folder.moveItem(destination, name, newName);
+        folder.moveObject(destination, name, newName);
     }
 
     /**
@@ -344,11 +344,11 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param name The file name of the object
      * @return The retrieved object, null if not found
      */
-    public T getItem(String path, String name) {
+    public T getObject(String path, String name) {
         name = getSafeName(name);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get item from null folder at path \"%s\"", path);
-        return folder.getItem(name);
+        return folder.getObject(name);
     }
 
     /**
@@ -358,10 +358,10 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param obj The object to find the name of
      * @return The retrieved file name, null if not found
      */
-    public String getItemName(String path, T obj) {
+    public String getObjectName(String path, T obj) {
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get item name from null folder at path \"%s\"", path);
-        return folder.getItemName(obj);
+        return folder.getObjectName(obj);
     }
 
     /**
@@ -406,10 +406,10 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param path The path to get objects from
      * @return The list of objects in the path
      */
-    public List<T> getItems(String path) {
+    public List<T> getObjects(String path) {
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get items from null folder at path \"%s\"", path);
-        return folder.getItems();
+        return folder.getObjects();
     }
 
     /**
@@ -418,10 +418,10 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param path The path to get objects from
      * @return The map of file name to object
      */
-    public Map<String, T> getItemsMap(String path) {
+    public Map<String, T> getObjectsMap(String path) {
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get items from null folder at path \"%s\"", path);
-        return folder.getItemsMap();
+        return folder.getObjectsMap();
     }
 
     /**
@@ -595,14 +595,14 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
     public enum SaveMode {
         /**
          * Files must be saved manually using the save method. This method is best for single file mode or batch
-         * operations of multi-file mode. It saves all modified items separately, so it could have a higher memory
+         * operations of multi-file mode. It saves all modified objects separately, so it could have a higher memory
          * profile with large operations than auto save.
          */
         MANUAL_SAVE(ManualFileSystemModifier::new),
 
         /**
-         * Files are automatically saved using this method. Best for multi-file mode where items are added over time.
-         * The drawback to this method is higher disk usage, as it saves whenever an item is added or removed.
+         * Files are automatically saved using this method. Best for multi-file mode where objects are added over time.
+         * The drawback to this method is higher disk usage, as it saves whenever an object is added or removed.
          */
         AUTO_SAVE(AutoFileSystemModifier::new),
 
@@ -661,46 +661,46 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
     }
 
     /**
-     * The file mode used for saving and loading items from disk.
+     * The file mode used for saving and loading objects from disk.
      *
      * @author Mikedeejay2
      */
     public enum FileMode {
         /**
-         * Save all items to a single .json file. Good for small portable item file systems but requires that the entire
-         * file system be loaded into json.
+         * Save all objects to a single .json file. Good for small portable object file systems but requires that the
+         * entire file system be loaded into json.
          * <p>
          * Storage format:
          * <ul>
-         *     <li><code>items.json</code></li>
+         *     <li><code>objects.json</code></li>
          * </ul>
          */
         SINGLE_FILE(SingleFileSaveLoad::new),
         /**
-         * Save items to their own .json file in a real file system on the server machine. This solution is less
+         * Save objects to their own .json file in a real file system on the server machine. This solution is less
          * portable but ensures that only updated or loaded files are saved to the system. This implementation is good
-         * for large item file systems.
+         * for large object file systems.
          * <p>
          * Storage format:
          * <ul>
-         *     <li><code>items</code>
+         *     <li><code>objects</code>
          *     <ul>
          *         <li><code>folder1</code>
          *         <ul>
-         *             <li><code>sub_item1.json</code></li>
-         *             <li><code>sub_item2.json</code></li>
+         *             <li><code>sub_object1.json</code></li>
+         *             <li><code>sub_object2.json</code></li>
          *         </ul>
          *         </li>
          *         <li><code>folder2</code>
          *         <ul>
-         *             <li><code>sub_item1.json</code></li>
-         *             <li><code>sub_item2.json</code></li>
+         *             <li><code>sub_object1.json</code></li>
+         *             <li><code>sub_object2.json</code></li>
          *         </ul>
          *         </li>
-         *         <li><code>item1.json</code></li>
-         *         <li><code>item2.json</code></li>
-         *         <li><code>item3.json</code></li>
-         *         <li><code>item4.json</code></li>
+         *         <li><code>object1.json</code></li>
+         *         <li><code>object2.json</code></li>
+         *         <li><code>object3.json</code></li>
+         *         <li><code>object4.json</code></li>
          *     </ul>
          *     </li>
          * </ul>

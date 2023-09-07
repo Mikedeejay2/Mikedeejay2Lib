@@ -13,31 +13,31 @@ public class BaseSystemModifier<T extends ConfigurationSerializable> implements 
     }
 
     @Override
-    public void addItem(SerializableFolderFS<T> owner, String name, T item) {
-        owner.getItemsRaw().put(name, item);
+    public void addObject(SerializableFolderFS<T> owner, String name, T item) {
+        owner.getObjectsRaw().put(name, item);
     }
 
     @Override
-    public void removeItem(SerializableFolderFS<T> owner, String name) {
-        owner.getItemsRaw().remove(name);
+    public void removeObject(SerializableFolderFS<T> owner, String name) {
+        owner.getObjectsRaw().remove(name);
     }
 
     @Override
-    public void clearItems(SerializableFolderFS<T> owner) {
-        for(String name : ImmutableSet.copyOf(owner.getItemsRaw().keySet())) {
-            removeItem(owner, name);
+    public void clearObjects(SerializableFolderFS<T> owner) {
+        for(String name : ImmutableSet.copyOf(owner.getObjectsRaw().keySet())) {
+            removeObject(owner, name);
         }
     }
 
     @Override
-    public void renameItem(SerializableFolderFS<T> owner, String name, String newName) {
-        moveItem(owner, name, owner, newName);
+    public void renameObject(SerializableFolderFS<T> owner, String name, String newName) {
+        moveObject(owner, name, owner, newName);
     }
 
     @Override
-    public void moveItem(SerializableFolderFS<T> owner, String name, SerializableFolderFS<T> newOwner, String newName) {
-        addItem(newOwner, newName, owner.getItem(name));
-        removeItem(owner, name);
+    public void moveObject(SerializableFolderFS<T> owner, String name, SerializableFolderFS<T> newOwner, String newName) {
+        addObject(newOwner, newName, owner.getObject(name));
+        removeObject(owner, name);
     }
 
     @Override
@@ -85,8 +85,8 @@ public class BaseSystemModifier<T extends ConfigurationSerializable> implements 
 
     protected void recursiveMoveFolder(SerializableFolderFS<T> folder, SerializableFolderFS<T> newOwner, String newName) {
         final SerializableFolderFS<T> newFolder = addFolder(newOwner, newName);
-        for(String itemName : folder.getItemsRaw().keySet()) {
-            addItem(newFolder, itemName, folder.getItem(itemName));
+        for(String itemName : folder.getObjectsRaw().keySet()) {
+            addObject(newFolder, itemName, folder.getObject(itemName));
         }
         for(String folderName : folder.getFoldersRaw().keySet()) {
             recursiveMoveFolder(folder.getFolder(folderName), newFolder, folderName);

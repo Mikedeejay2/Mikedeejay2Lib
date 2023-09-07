@@ -31,5 +31,5 @@ public interface SerializableFolder<T extends ConfigurationSerializable> {
      *
      * @return The list of objects
      */
-    List<T> getItems();
+    List<T> getObjects();
 }

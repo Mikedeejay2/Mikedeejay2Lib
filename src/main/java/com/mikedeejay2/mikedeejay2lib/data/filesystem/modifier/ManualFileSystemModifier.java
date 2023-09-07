@@ -18,24 +18,24 @@ public class ManualFileSystemModifier<T extends ConfigurationSerializable> exten
     }
 
     @Override
-    public void addItem(SerializableFolderFS<T> owner, String name, T item) {
-        super.addItem(owner, name, item);
+    public void addObject(SerializableFolderFS<T> owner, String name, T item) {
+        super.addObject(owner, name, item);
         getChangedItems(owner.getPath()).addedItems.put(name, item);
         getChangedItems(owner.getPath()).removedItems.add(name);
     }
 
     @Override
-    public void removeItem(SerializableFolderFS<T> owner, String name) {
-        super.removeItem(owner, name);
+    public void removeObject(SerializableFolderFS<T> owner, String name) {
+        super.removeObject(owner, name);
         getChangedItems(owner.getPath()).removedItems.add(name);
         getChangedItems(owner.getPath()).addedItems.remove(name);
     }
 
     @Override
-    public void clearItems(SerializableFolderFS<T> owner) {
-        super.clearItems(owner);
+    public void clearObjects(SerializableFolderFS<T> owner) {
+        super.clearObjects(owner);
         getChangedItems(owner.getPath()).addedItems.clear();
-        getChangedItems(owner.getPath()).removedItems.addAll(owner.getItemsRaw().keySet());
+        getChangedItems(owner.getPath()).removedItems.addAll(owner.getObjectsRaw().keySet());
     }
 
     @Override
@@ -73,13 +73,13 @@ public class ManualFileSystemModifier<T extends ConfigurationSerializable> exten
             saveLoad.saveFolder(SerializableFileSystem.getPath(path, name));
         }
         for(String name : changed.addedItems.keySet()) {
-            saveLoad.saveItem(path, name, changed.addedItems.get(name));
+            saveLoad.saveObject(path, name, changed.addedItems.get(name));
         }
         for(String name : changed.removedFolders) {
             saveLoad.deleteFolder(SerializableFileSystem.getPath(path, name));
         }
         for(String name : changed.removedItems) {
-            saveLoad.deleteItem(path, name);
+            saveLoad.deleteObject(path, name);
         }
         saveLoad.commit();
         changedItems.remove(path);

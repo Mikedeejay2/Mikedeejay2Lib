@@ -121,8 +121,8 @@ public class GUISerializableFSExplorerModule<T extends ConfigurationSerializable
      */
     @Override
     protected Text getFolderName(SerializableFolderFS<T> folder) {
-        if(folder.containsItem(ICON_KEY)) {
-            final GUIItem item = converter.apply(folder.getItem(ICON_KEY));
+        if(folder.containsObject(ICON_KEY)) {
+            final GUIItem item = converter.apply(folder.getObject(ICON_KEY));
             if(item.hasDisplayName()) return Text.of(item.getName()).color(Colors.FormatStyle.COLOR_CODES, Colors.FormatStyle.HEX);
         }
         return super.getFolderName(folder);
@@ -136,7 +136,7 @@ public class GUISerializableFSExplorerModule<T extends ConfigurationSerializable
      */
     @Override
     protected List<GUIItem> getFolderItems(SerializableFolderFS<T> folder) {
-        return folder.getItemsMap().entrySet().stream()
+        return folder.getObjectsMap().entrySet().stream()
             .filter(e -> !e.getKey().equals(ICON_KEY))
             .map(Map.Entry::getValue)
             .map(converter)
@@ -152,8 +152,8 @@ public class GUISerializableFSExplorerModule<T extends ConfigurationSerializable
     @Override
     protected @NotNull GUIItem getFolderItem(SerializableFolderFS<T> folder) {
         GUIItem guiItem =
-            folder.containsItem(ICON_KEY) ?
-            converter.apply(folder.getItem(ICON_KEY)) :
+            folder.containsObject(ICON_KEY) ?
+            converter.apply(folder.getObject(ICON_KEY)) :
             new GUIItem(ItemBuilder.of(Base64Head.FOLDER.get()).get());
         guiItem.setName(getFolderName(folder))
             .addItemFlags(PREVIEW_ITEM_FLAGS)

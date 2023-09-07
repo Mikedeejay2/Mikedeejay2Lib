@@ -36,9 +36,9 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
     protected String path;
 
     /**
-     * The items contained in this folder
+     * The objects contained in this folder
      */
-    protected @Nullable Map<String, T> items;
+    protected @Nullable Map<String, T> objects;
 
     /**
      * Whether this folder has been saved to disk
@@ -56,7 +56,7 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
     public SerializableFolderFS(@NotNull String name, String path, @NotNull SerializableFileSystem<T> fileSystem, boolean root) {
         Validate.isTrue(SerializableFileSystem.checkValidFilename(name), "File name is invalid, \"%s\"", name);
         this.fileSystem = fileSystem;
-        this.items = null;
+        this.objects = null;
         this.name = name;
         this.path = path == null ? name : path.replace('\\', '/') + "/" + name;
         if(root) this.path = null;
@@ -119,8 +119,8 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @param name The name of the object
      * @param obj The object to add
      */
-    public void addItem(String name, T obj) {
-        fileSystem.getModifier().addItem(this, getSafeName(name), obj);
+    public void addObject(String name, T obj) {
+        fileSystem.getModifier().addObject(this, getSafeName(name), obj);
     }
 
     /**
@@ -128,15 +128,15 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      *
      * @param name The name of the object to remove
      */
-    public void removeItem(String name) {
-        fileSystem.getModifier().removeItem(this, getSafeName(name));
+    public void removeObject(String name) {
+        fileSystem.getModifier().removeObject(this, getSafeName(name));
     }
 
     /**
      * Clear all objects from this folder
      */
-    public void clearItems() {
-        fileSystem.getModifier().clearItems(this);
+    public void clearObjects() {
+        fileSystem.getModifier().clearObjects(this);
     }
 
     /**
@@ -145,8 +145,8 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @param name    The name of the object to rename
      * @param newName The new name of the object
      */
-    public void renameItem(String name, String newName) {
-        fileSystem.getModifier().renameItem(
+    public void renameObject(String name, String newName) {
+        fileSystem.getModifier().renameObject(
             this, getSafeName(name), getSafeName(newName));
     }
 
@@ -157,8 +157,8 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @param name        The name of the object that will be moved
      * @param newName     The new name of the object
      */
-    public void moveItem(SerializableFolderFS<T> destination, String name, String newName) {
-        fileSystem.getModifier().moveItem(
+    public void moveObject(SerializableFolderFS<T> destination, String name, String newName) {
+        fileSystem.getModifier().moveObject(
             this, getSafeName(name),
             destination, getSafeName(newName));
     }
@@ -213,8 +213,8 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @param name The file name of the object
      * @return The retrieved object, null if not found
      */
-    public T getItem(String name) {
-        return getItemsRaw().get(getSafeName(name));
+    public T getObject(String name) {
+        return getObjectsRaw().get(getSafeName(name));
     }
 
     /**
@@ -233,8 +233,8 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @param name The file name of the object to find
      * @return Whether an object was found
      */
-    public boolean containsItem(String name) {
-        return getItemsRaw().containsKey(getSafeName(name));
+    public boolean containsObject(String name) {
+        return getObjectsRaw().containsKey(getSafeName(name));
     }
 
     /**
@@ -243,8 +243,8 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @param obj The object to find the name of
      * @return The retrieved file name, null if not found
      */
-    public String getItemName(T obj) {
-        for(Map.Entry<String, T> entry : getItemsRaw().entrySet()) {
+    public String getObjectName(T obj) {
+        for(Map.Entry<String, T> entry : getObjectsRaw().entrySet()) {
             if(obj.equals(entry.getValue())) return entry.getKey();
         }
         return null;
@@ -309,8 +309,8 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @return The list of objects
      */
     @Override
-    public List<T> getItems() {
-        return ImmutableList.copyOf(getItemsRaw().values());
+    public List<T> getObjects() {
+        return ImmutableList.copyOf(getObjectsRaw().values());
     }
 
     /**
@@ -318,20 +318,20 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      *
      * @return The map of file name to object
      */
-    public Map<String, T> getItemsMap() {
-        return ImmutableMap.copyOf(getItemsRaw());
+    public Map<String, T> getObjectsMap() {
+        return ImmutableMap.copyOf(getObjectsRaw());
     }
 
     /**
-     * Get the raw items map of this folder. This should <strong>only be used internally</strong>.
+     * Get the raw objects map of this folder. This should <strong>only be used internally</strong>.
      *
-     * @return The raw items map
+     * @return The raw objects map
      */
-    public Map<String, T> getItemsRaw() {
-        if(items == null) {
-            items = fileSystem.getSaveLoad().loadItems(path);
+    public Map<String, T> getObjectsRaw() {
+        if(objects == null) {
+            objects = fileSystem.getSaveLoad().loadObjects(path);
         }
-        return items;
+        return objects;
     }
 
     /**

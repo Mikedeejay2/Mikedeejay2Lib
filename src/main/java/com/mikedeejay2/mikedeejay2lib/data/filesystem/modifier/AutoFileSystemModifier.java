@@ -10,21 +10,21 @@ public class AutoFileSystemModifier<T extends ConfigurationSerializable> extends
     }
 
     @Override
-    public void addItem(SerializableFolderFS<T> owner, String name, T item) {
-        super.addItem(owner, name, item);
-        system.getSaveLoad().saveItem(owner.getPath(), name, item);
+    public void addObject(SerializableFolderFS<T> owner, String name, T item) {
+        super.addObject(owner, name, item);
+        system.getSaveLoad().saveObject(owner.getPath(), name, item);
     }
 
     @Override
-    public void removeItem(SerializableFolderFS<T> owner, String name) {
-        super.removeItem(owner, name);
-        system.getSaveLoad().deleteItem(owner.getPath(), name);
+    public void removeObject(SerializableFolderFS<T> owner, String name) {
+        super.removeObject(owner, name);
+        system.getSaveLoad().deleteObject(owner.getPath(), name);
     }
 
     @Override
-    public void clearItems(SerializableFolderFS<T> owner) {
+    public void clearObjects(SerializableFolderFS<T> owner) {
         system.getSaveLoad().startCommit();
-        super.clearItems(owner);
+        super.clearObjects(owner);
         system.getSaveLoad().commit();
     }
 

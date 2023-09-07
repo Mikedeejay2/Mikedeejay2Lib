@@ -40,7 +40,7 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
     }
 
     @Override
-    public void saveItem(String path, String name, T item) {
+    public void saveObject(String path, String name, T item) {
         JsonFile file = getItemFile(path, name);
         file.getAccessor().setSerialized(KEY_ITEM, item);
         changedItems.addedItems.add(file);
@@ -54,7 +54,7 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
     }
 
     @Override
-    public void deleteItem(String path, String name) {
+    public void deleteObject(String path, String name) {
         changedItems.removedItems.add(system.getFullPath(path, name));
         save();
     }
@@ -126,7 +126,7 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
     }
 
     @Override
-    public Map<String, T> loadItems(String path) {
+    public Map<String, T> loadObjects(String path) {
         Map<String, T> items = new LinkedHashMap<>();
         File folderFile = new File(plugin.getDataFolder(), system.getFullPath(path));
         if(!folderFile.exists()) return items;

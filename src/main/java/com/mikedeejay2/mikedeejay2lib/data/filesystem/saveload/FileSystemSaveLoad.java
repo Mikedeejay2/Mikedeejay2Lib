@@ -7,13 +7,13 @@ import java.util.Map;
 
 public interface FileSystemSaveLoad<T extends ConfigurationSerializable> {
     void saveFolder(String path);
-    void saveItem(String path, String name, T item);
+    void saveObject(String path, String name, T item);
     void deleteFolder(String path);
-    void deleteItem(String path, String name);
+    void deleteObject(String path, String name);
     void startCommit();
     void commit();
 
     Map<String, SerializableFolderFS<T>> loadFolders(String path);
     SerializableFolderFS<T> loadFolder(String path);
-    Map<String, T> loadItems(String path);
+    Map<String, T> loadObjects(String path);
 }

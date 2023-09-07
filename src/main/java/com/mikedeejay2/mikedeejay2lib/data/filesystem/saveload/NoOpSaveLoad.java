@@ -13,9 +13,9 @@ public class NoOpSaveLoad<T extends ConfigurationSerializable> implements FileSy
     public NoOpSaveLoad() {}
 
     @Override public void saveFolder(String path) {}
-    @Override public void saveItem(String path, String name, T item) {}
+    @Override public void saveObject(String path, String name, T item) {}
     @Override public void deleteFolder(String path) {}
-    @Override public void deleteItem(String path, String name) {}
+    @Override public void deleteObject(String path, String name) {}
     @Override public void startCommit() {}
     @Override public void commit() {}
 
@@ -30,7 +30,7 @@ public class NoOpSaveLoad<T extends ConfigurationSerializable> implements FileSy
     }
 
     @Override
-    public Map<String, T> loadItems(String path) {
+    public Map<String, T> loadObjects(String path) {
         return new LinkedHashMap<>();
     }
 }

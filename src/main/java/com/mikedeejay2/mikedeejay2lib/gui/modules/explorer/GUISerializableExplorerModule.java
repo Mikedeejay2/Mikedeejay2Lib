@@ -134,7 +134,7 @@ public class GUISerializableExplorerModule<F extends SerializableFolder<T>, T ex
      */
     @Override
     protected List<GUIItem> getFolderItems(F folder) {
-        return folder.getItems().stream()
+        return folder.getObjects().stream()
             .map(converter)
             .collect(Collectors.toList());
     }
