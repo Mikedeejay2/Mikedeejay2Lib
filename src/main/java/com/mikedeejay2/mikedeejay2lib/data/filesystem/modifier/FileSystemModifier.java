@@ -11,7 +11,7 @@ public interface FileSystemModifier<T extends ConfigurationSerializable> {
     void moveItem(SerializableFolderFS<T> owner, String name, SerializableFolderFS<T> newOwner, String newName);
 
     SerializableFolderFS<T> addFolder(SerializableFolderFS<T> owner, String name);
-    void removeFolder(SerializableFolderFS<T> owner, String name);
+    void removeFolder(SerializableFolderFS<T> folder);
     void clearFolders(SerializableFolderFS<T> folder);
     void renameFolder(SerializableFolderFS<T> folder, String newName);
     void moveFolder(SerializableFolderFS<T> folder, SerializableFolderFS<T> newOwner, String newName);

@@ -189,8 +189,6 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param obj The object to add
      */
     public void addItem(String path, String name, T obj) {
-        path = getSafePath(path);
-        name = getSafeName(name);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to add item to null folder at path \"%s\"", path);
         folder.addItem(name, obj);
@@ -203,7 +201,6 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param name The file name of the object
      */
     public void removeItem(String path, String name) {
-        path = getSafePath(path);
         name = getSafeName(name);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to remove item from null folder at path \"%s\"", path);
@@ -216,10 +213,43 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param path The path to clear all objects from
      */
     public void clearItems(String path) {
-        path = getSafePath(path);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to clear items from null folder at path \"%s\"", path);
         folder.clearItems();
+    }
+
+    /**
+     * Rename an object in the file system
+     *
+     * @param path    The path of the object to rename
+     * @param name    The current name of the object
+     * @param newName The new name of the object
+     */
+    public void renameItem(String path, String name, String newName) {
+        SerializableFolderFS<T> folder = getFolder(path);
+        Validate.notNull(folder, "Tried to rename item from null folder at path \"%s\"", path);
+        name = getSafeName(name);
+        newName = getSafeName(newName);
+        folder.renameItem(name, newName);
+    }
+
+    /**
+     * Rename an object in the file system
+     *
+     * @param path    The path of the object to rename
+     * @param name    The current name of the object
+     * @param newPath The new path of the object
+     * @param newName The new name of the object
+     */
+    public void moveItem(String path, String name, String newPath, String newName) {
+        newPath = getSafePath(newPath);
+        SerializableFolderFS<T> folder = getFolder(path);
+        Validate.notNull(folder, "Tried to move item from null folder at path \"%s\"", path);
+        SerializableFolderFS<T> destination = getFolder(newPath);
+        Validate.notNull(destination, "Tried to move item to null folder at path \"%s\"", newPath);
+        name = getSafeName(name);
+        newName = getSafeName(newName);
+        folder.moveItem(destination, name, newName);
     }
 
     /**
@@ -229,7 +259,6 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param name The name of the folder
      */
     public void createFolder(String path, String name) {
-        path = getSafePath(path);
         name = getSafeName(name);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to create folder into null folder at path \"%s\"", path);
@@ -243,7 +272,6 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param name The name of the folder to remove
      */
     public void removeFolder(String path, String name) {
-        path = getSafePath(path);
         name = getSafeName(name);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to remove folder from null folder at path \"%s\"", path);
@@ -256,10 +284,39 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param path The path to clear all folders from
      */
     public void clearFolders(String path) {
-        path = getSafePath(path);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to clear folders from null folder at path \"%s\"", path);
         folder.clearFolders();
+    }
+
+    /**
+     * Rename a folder in the file system
+     *
+     * @param path    The path of the folder
+     * @param newName The new name of the folder
+     */
+    public void renameFolder(String path, String newName) {
+        SerializableFolderFS<T> folder = getFolder(path);
+        Validate.notNull(folder, "Tried to rename folder from null folder at path \"%s\"", path);
+        newName = getSafeName(newName);
+        modifier.renameFolder(folder, newName);
+    }
+
+    /**
+     * Move a folder in the file system
+     *
+     * @param path    The current path of the folder
+     * @param newPath The new path of the folder
+     */
+    public void moveFolder(String path, String newPath) {
+        newPath = getSafePath(newPath);
+        SerializableFolderFS<T> folder = getFolder(path);
+        Validate.notNull(folder, "Tried to move folder from null folder at path \"%s\"", path);
+        String folderPath = newPath.contains("/") ? newPath.substring(0, newPath.lastIndexOf('/')) : null;
+        String folderName = newPath.contains("/") ? newPath.substring(newPath.lastIndexOf('/') + 1) : newPath;
+        SerializableFolderFS<T> newOwner = getFolder(folderPath);
+        Validate.notNull(folder, "Tried to move folder to null folder at path \"%s\"", folderPath);
+        modifier.moveFolder(folder, newOwner, folderName);
     }
 
     /**
@@ -268,7 +325,6 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param path The path to save to disk
      */
     public void save(String path) {
-        path = getSafePath(path);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to save null folder at path \"%s\"", path);
         folder.save();
@@ -289,7 +345,6 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @return The retrieved object, null if not found
      */
     public T getItem(String path, String name) {
-        path = getSafePath(path);
         name = getSafeName(name);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get item from null folder at path \"%s\"", path);
@@ -304,7 +359,6 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @return The retrieved file name, null if not found
      */
     public String getItemName(String path, T obj) {
-        path = getSafePath(path);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get item name from null folder at path \"%s\"", path);
         return folder.getItemName(obj);
@@ -317,7 +371,6 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @return The retrieved folder, null if not found
      */
     public SerializableFolderFS<T> getFolder(String path) {
-        path = getSafePath(path);
         if(path == null) return root;
         FolderInfo<T> folderInfo = folderPool.get(path);
         return folderInfo == null ? saveLoad.loadFolder(path) : folderInfo.getOwner();
@@ -330,7 +383,6 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @return The list of folders in the path
      */
     public List<SerializableFolderFS<T>> getFolders(String path) {
-        path = getSafePath(path);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get folders from null folder at path \"%s\"", path);
         return folder.getFolders();
@@ -343,7 +395,6 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @return The map of path to folder
      */
     public Map<String, SerializableFolderFS<T>> getFoldersMap(String path) {
-        path = getSafePath(path);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get folders from null folder at path \"%s\"", path);
         return folder.getFoldersMap();
@@ -356,7 +407,6 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @return The list of objects in the path
      */
     public List<T> getItems(String path) {
-        path = getSafePath(path);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get items from null folder at path \"%s\"", path);
         return folder.getItems();
@@ -369,7 +419,6 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @return The map of file name to object
      */
     public Map<String, T> getItemsMap(String path) {
-        path = getSafePath(path);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to get items from null folder at path \"%s\"", path);
         return folder.getItemsMap();

@@ -47,8 +47,8 @@ public class ManualFileSystemModifier<T extends ConfigurationSerializable> exten
     }
 
     @Override
-    public void removeFolder(SerializableFolderFS<T> owner, String name) {
-        super.removeFolder(owner, name);
+    public void removeFolder(SerializableFolderFS<T> folder) {
+        super.removeFolder(folder);
     }
 
     @Override
@@ -57,10 +57,11 @@ public class ManualFileSystemModifier<T extends ConfigurationSerializable> exten
     }
 
     @Override
-    protected void removeSingleFolder(SerializableFolderFS<T> owner, String name) {
-        super.removeSingleFolder(owner, name);
-        getChangedItems(owner.getPath()).removedFolders.add(name);
-        getChangedItems(owner.getPath()).addedFolders.remove(name);
+    protected void removeSingleFolder(SerializableFolderFS<T> folder) {
+        super.removeSingleFolder(folder);
+        final String parentPath = folder.getParentFolder().getPath();
+        getChangedItems(parentPath).removedFolders.add(folder.getName());
+        getChangedItems(parentPath).addedFolders.remove(folder.getName());
     }
 
     @Override

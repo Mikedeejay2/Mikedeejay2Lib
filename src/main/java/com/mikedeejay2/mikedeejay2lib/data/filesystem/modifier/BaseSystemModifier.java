@@ -48,28 +48,27 @@ public class BaseSystemModifier<T extends ConfigurationSerializable> implements 
     }
 
     @Override
-    public void removeFolder(SerializableFolderFS<T> owner, String name) {
-        recursiveRemoveFolder(owner, name);
-        system.getFolderPool().get(owner.getPath()).setFolders(null);
+    public void removeFolder(SerializableFolderFS<T> folder) {
+        recursiveRemoveFolder(folder);
+        system.getFolderPool().get(folder.getParentFolder().getPath()).setFolders(null);
     }
 
-    protected void recursiveRemoveFolder(SerializableFolderFS<T> owner, String name) {
-        SerializableFolderFS<T> folder = owner.getFolder(name);
+    protected void recursiveRemoveFolder(SerializableFolderFS<T> folder) {
         for(String curName : ImmutableSet.copyOf(folder.getFoldersRaw().keySet())) {
-            recursiveRemoveFolder(folder, curName);
+            recursiveRemoveFolder(folder.getFolder(curName));
         }
-        removeSingleFolder(owner, name);
+        removeSingleFolder(folder);
     }
 
-    protected void removeSingleFolder(SerializableFolderFS<T> owner, String name) {
-        owner.getFoldersRaw().remove(name);
-        system.getFolderPool().remove(SerializableFileSystem.getPath(owner.getPath(), name));
+    protected void removeSingleFolder(SerializableFolderFS<T> folder) {
+        folder.getParentFolder().getFoldersRaw().remove(folder.getName());
+        system.getFolderPool().remove(folder.getPath());
     }
 
     @Override
     public void clearFolders(SerializableFolderFS<T> owner) {
         for(String name : ImmutableSet.copyOf(owner.getFoldersRaw().keySet())) {
-            recursiveRemoveFolder(owner, name);
+            recursiveRemoveFolder(owner.getFolder(name));
         }
     }
 
@@ -81,7 +80,7 @@ public class BaseSystemModifier<T extends ConfigurationSerializable> implements 
     @Override
     public void moveFolder(SerializableFolderFS<T> folder, SerializableFolderFS<T> newOwner, String newName) {
         recursiveMoveFolder(folder, newOwner, newName);
-        removeFolder(folder.getParentFolder(), folder.getName());
+        removeFolder(folder);
     }
 
     protected void recursiveMoveFolder(SerializableFolderFS<T> folder, SerializableFolderFS<T> newOwner, String newName) {

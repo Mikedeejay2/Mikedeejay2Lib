@@ -11,6 +11,8 @@ import org.jetbrains.annotations.Nullable;
 import java.util.List;
 import java.util.Map;
 
+import static com.mikedeejay2.mikedeejay2lib.data.filesystem.SerializableFileSystem.getSafeName;
+
 /**
  * A {@link SerializableFolder} implementation used in {@link SerializableFileSystem}
  *
@@ -70,7 +72,7 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @param fileSystem The parent {@link SerializableFileSystem}
      */
     public SerializableFolderFS(@NotNull String name, String path, @NotNull SerializableFileSystem<T> fileSystem) {
-        this(name, path, fileSystem, false);
+        this(getSafeName(name), path, fileSystem, false);
     }
 
     /**
@@ -118,7 +120,7 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @param obj The object to add
      */
     public void addItem(String name, T obj) {
-        fileSystem.getModifier().addItem(this, name, obj);
+        fileSystem.getModifier().addItem(this, getSafeName(name), obj);
     }
 
     /**
@@ -127,7 +129,7 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @param name The name of the object to remove
      */
     public void removeItem(String name) {
-        fileSystem.getModifier().removeItem(this, name);
+        fileSystem.getModifier().removeItem(this, getSafeName(name));
     }
 
     /**
@@ -138,13 +140,37 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
     }
 
     /**
+     * Rename an object in this folder
+     *
+     * @param name    The name of the object to rename
+     * @param newName The new name of the object
+     */
+    public void renameItem(String name, String newName) {
+        fileSystem.getModifier().renameItem(
+            this, getSafeName(name), getSafeName(newName));
+    }
+
+    /**
+     * Move an object in this folder
+     *
+     * @param destination The folder that the object will be moved to
+     * @param name        The name of the object that will be moved
+     * @param newName     The new name of the object
+     */
+    public void moveItem(SerializableFolderFS<T> destination, String name, String newName) {
+        fileSystem.getModifier().moveItem(
+            this, getSafeName(name),
+            destination, getSafeName(newName));
+    }
+
+    /**
      * Add a new folder to this folder
      *
      * @param name The name of the folder to add
      * @return The created folder
      */
     public SerializableFolderFS<T> addFolder(String name) {
-        return fileSystem.getModifier().addFolder(this, name);
+        return fileSystem.getModifier().addFolder(this, getSafeName(name));
     }
 
     /**
@@ -153,7 +179,7 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @param name The name of the folder to remove
      */
     public void removeFolder(String name) {
-        fileSystem.getModifier().removeFolder(this, name);
+        fileSystem.getModifier().removeFolder(getFolder(name));
     }
 
     /**
@@ -188,7 +214,7 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @return The retrieved object, null if not found
      */
     public T getItem(String name) {
-        return getItemsRaw().get(name);
+        return getItemsRaw().get(getSafeName(name));
     }
 
     /**
@@ -198,7 +224,7 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @return Whether a folder was found
      */
     public boolean containsFolder(String name) {
-        return getFoldersRaw().containsKey(name);
+        return getFoldersRaw().containsKey(getSafeName(name));
     }
 
     /**
@@ -208,7 +234,7 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @return Whether an object was found
      */
     public boolean containsItem(String name) {
-        return getItemsRaw().containsKey(name);
+        return getItemsRaw().containsKey(getSafeName(name));
     }
 
     /**
@@ -231,7 +257,7 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @return The retrieved folder, null if not found
      */
     public SerializableFolderFS<T> getFolder(String name) {
-        return getFoldersRaw().get(name);
+        return getFoldersRaw().get(getSafeName(name));
     }
 
     /**

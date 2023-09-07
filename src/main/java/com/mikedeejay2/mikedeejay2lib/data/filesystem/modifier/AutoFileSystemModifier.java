@@ -23,7 +23,9 @@ public class AutoFileSystemModifier<T extends ConfigurationSerializable> extends
 
     @Override
     public void clearItems(SerializableFolderFS<T> owner) {
+        system.getSaveLoad().startCommit();
         super.clearItems(owner);
+        system.getSaveLoad().commit();
     }
 
     @Override
@@ -34,17 +36,17 @@ public class AutoFileSystemModifier<T extends ConfigurationSerializable> extends
     }
 
     @Override
-    public void removeFolder(SerializableFolderFS<T> owner, String name) {
+    public void removeFolder(SerializableFolderFS<T> folder) {
         system.getSaveLoad().startCommit();
-        super.removeFolder(owner, name);
+        super.removeFolder(folder);
         system.getSaveLoad().commit();
     }
 
     @Override
-    protected void removeSingleFolder(SerializableFolderFS<T> owner, String name) {
-        super.removeSingleFolder(owner, name);
-        system.getFolderPool().remove(SerializableFileSystem.getPath(owner.getPath(), name));
-        system.getSaveLoad().deleteFolder(SerializableFileSystem.getPath(owner.getPath(), name));
+    protected void removeSingleFolder(SerializableFolderFS<T> folder) {
+        super.removeSingleFolder(folder);
+        system.getFolderPool().remove(folder.getPath());
+        system.getSaveLoad().deleteFolder(folder.getPath());
     }
 
     @Override
