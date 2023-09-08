@@ -9,6 +9,7 @@ import com.mikedeejay2.mikedeejay2lib.data.filesystem.saveload.FileSystemSaveLoa
 import com.mikedeejay2.mikedeejay2lib.data.filesystem.saveload.MultiFileSaveLoad;
 import com.mikedeejay2.mikedeejay2lib.data.filesystem.saveload.NoOpSaveLoad;
 import com.mikedeejay2.mikedeejay2lib.data.filesystem.saveload.SingleFileSaveLoad;
+import com.mikedeejay2.mikedeejay2lib.util.array.ArrayUtil;
 import org.apache.commons.lang3.Validate;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.jetbrains.annotations.Nullable;
@@ -538,15 +539,24 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
         path = path.trim();
         if(path.isEmpty()) return null;
         path = path.replace('\\', '/');
-        if(path.indexOf('/') == -1) return path;
 
-        while(!path.isEmpty() && path.charAt(0) == '/') {
+        while(!path.isEmpty() && (path.charAt(0) == '/' || path.charAt(0) == ' ')) {
             path = path.substring(1);
         }
-        while(!path.isEmpty() && path.charAt(path.length() - 1) == '/') {
+        while(!path.isEmpty() && (path.charAt(path.length() - 1) == '/' || path.charAt(path.length() - 1) == ' ')) {
             path = path.substring(0, path.length() - 1);
         }
-        return path.isEmpty() ? null : path;
+        if(path.isEmpty()) return null;
+
+        final List<String> strs = new ArrayList<>(Arrays.asList(path.split("/")));
+        strs.removeIf(cur -> cur.equals("..") || cur.equals(".") || cur.isEmpty());
+        StringBuilder builder = new StringBuilder();
+        for(String cur : strs) {
+            if(builder.length() == 0) builder.append(cur);
+            else builder.append('/').append(cur);
+        }
+        String result = builder.toString();
+        return result.isEmpty() ? null : result.trim();
     }
 
     /**

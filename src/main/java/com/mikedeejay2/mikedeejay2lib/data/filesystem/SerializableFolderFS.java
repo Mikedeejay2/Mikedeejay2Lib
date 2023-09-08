@@ -227,7 +227,7 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @return Whether a folder was found
      */
     public boolean containsFolder(String name) {
-        return getFoldersRaw().containsKey(getSafeName(name));
+        return getFoldersRaw().containsKey(getSafeName(name).toLowerCase());
     }
 
     /**
@@ -260,7 +260,7 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @return The retrieved folder, null if not found
      */
     public SerializableFolderFS<T> getFolder(String name) {
-        return getFoldersRaw().get(getSafeName(name));
+        return getFoldersRaw().get(getSafeName(name).toLowerCase());
     }
 
     /**

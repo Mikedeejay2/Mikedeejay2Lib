@@ -54,6 +54,7 @@ public final class FolderPool<T extends ConfigurationSerializable> {
      * @return The retrieved {@link FolderInfo}, null if not found
      */
     public FolderInfo<T> get(String path) {
+        path = path == null ? null : path.toLowerCase();
         if(!folderPool.containsKey(path)) return null;
         access(path);
         return folderPool.get(path);
@@ -67,6 +68,7 @@ public final class FolderPool<T extends ConfigurationSerializable> {
      * @throws IllegalArgumentException If the folder pool already has information for that path
      */
     public void put(String path, FolderInfo<T> info) {
+        path = path == null ? null : path.toLowerCase();
         Validate.isTrue(get(path) == null,
                         "A folder with the path \"%s\" already exists", path);
         access(path);
@@ -79,6 +81,7 @@ public final class FolderPool<T extends ConfigurationSerializable> {
      * @param path The path to remove
      */
     public void remove(String path) {
+        path = path == null ? null : path.toLowerCase();
         lastRetrieved.remove(path);
         folderPool.remove(path);
         String parentPath = SerializableFileSystem.getParentPath(path);
@@ -94,6 +97,7 @@ public final class FolderPool<T extends ConfigurationSerializable> {
      * @return Whether information about the path exists
      */
     public boolean contains(String path) {
+        path = path == null ? null : path.toLowerCase();
         return folderPool.containsKey(path);
     }
 
