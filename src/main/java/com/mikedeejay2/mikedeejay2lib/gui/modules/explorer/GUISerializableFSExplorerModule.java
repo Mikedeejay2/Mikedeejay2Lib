@@ -123,7 +123,8 @@ public class GUISerializableFSExplorerModule<T extends ConfigurationSerializable
     protected Text getFolderName(SerializableFolderFS<T> folder) {
         if(folder.containsObject(ICON_KEY)) {
             final GUIItem item = converter.apply(folder.getObject(ICON_KEY));
-            if(item.hasDisplayName()) return Text.of(item.getName()).color(Colors.FormatStyle.COLOR_CODES, Colors.FormatStyle.HEX);
+            if(item.hasDisplayName()) return Text.of("&r").concat(item.getName())
+                .color(Colors.FormatStyle.COLOR_CODES, Colors.FormatStyle.HEX);
         }
         return super.getFolderName(folder);
     }

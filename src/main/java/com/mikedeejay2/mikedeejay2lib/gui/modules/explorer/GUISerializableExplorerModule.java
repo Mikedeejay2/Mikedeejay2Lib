@@ -112,7 +112,8 @@ public class GUISerializableExplorerModule<F extends SerializableFolder<T>, T ex
      */
     @Override
     protected Text getFolderName(F folder) {
-        return Text.of(folder.getName()).color(Colors.FormatStyle.COLOR_CODES, Colors.FormatStyle.HEX);
+        return Text.of("&r").concat(folder.getName())
+            .color(Colors.FormatStyle.COLOR_CODES, Colors.FormatStyle.HEX);
     }
 
     /**
