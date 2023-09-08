@@ -302,6 +302,10 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      */
     private Map<String, SerializableFolderFS<T>> loadFolders() {
         Map<String, SerializableFolderFS<T>> folders = fileSystem.getSaveLoad().loadFolders(path);
+        if(!fileSystem.getFolderPool().contains(path)) {
+            fileSystem.getFolderPool().put(path, new FolderInfo<>(folders, this));
+            return folders;
+        }
         fileSystem.getFolderPool().get(path).setFolders(folders);
         return folders;
     }
