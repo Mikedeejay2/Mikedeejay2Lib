@@ -158,7 +158,7 @@ public class GUISerializableFSExplorerModule<T extends ConfigurationSerializable
             new GUIItem(ItemBuilder.of(Base64Head.FOLDER.get()).get());
         guiItem.setName(getFolderName(folder))
             .addItemFlags(PREVIEW_ITEM_FLAGS)
-            .addLore("&7Folder")
+            .addLore("&9Folder")
             .addEvent(new GUISwitchFolderEvent<>(this, folder));
         return guiItem;
     }

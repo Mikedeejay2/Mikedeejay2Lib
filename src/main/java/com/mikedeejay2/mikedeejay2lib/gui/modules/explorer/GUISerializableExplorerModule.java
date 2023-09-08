@@ -150,7 +150,7 @@ public class GUISerializableExplorerModule<F extends SerializableFolder<T>, T ex
     protected @NotNull GUIItem getFolderItem(F folder) {
         ItemStack item = ItemBuilder.of(Base64Head.FOLDER.get())
             .setName(folder.getName())
-            .setLore("&7Folder")
+            .setLore("&9Folder")
             .get();
         Validate.notNull(item, "Folder item can not be null");
         GUIItem guiItem = new GUIItem(item);
