@@ -268,12 +268,13 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      *
      * @param path The path to create the folder at
      * @param name The name of the folder
+     * @return The created folder
      */
-    public void createFolder(String path, String name) {
+    public SerializableFolderFS<T> createFolder(String path, String name) {
         name = getSafeName(name);
         SerializableFolderFS<T> folder = getFolder(path);
         Validate.notNull(folder, "Tried to create folder into null folder at path \"%s\"", path);
-        folder.addFolder(name);
+        return folder.addFolder(name);
     }
 
     /**
