@@ -195,7 +195,12 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
     public void onOpenHead(Player player, GUIContainer gui) {
         super.onOpenHead(player, gui);
         setFolder(this.folder);
-        gui.setInventoryName(getFolderName(folder));
+        Text name = getFolderName(folder);
+        if(!gui.getName().get(player).equals(name.get(player))) {
+            gui.setInventoryName(name);
+            gui.open(player);
+            return;
+        }
         resetList();
         localize(player);
 
