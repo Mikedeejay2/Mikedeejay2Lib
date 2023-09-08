@@ -91,7 +91,7 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
                 }
             }
             for(String path : finalChanged.removedItems) {
-                File file = new File(plugin.getDataFolder(), path);
+                File file = new File(plugin.getDataFolder(), path + ".json");
                 file.delete();
             }
         });
