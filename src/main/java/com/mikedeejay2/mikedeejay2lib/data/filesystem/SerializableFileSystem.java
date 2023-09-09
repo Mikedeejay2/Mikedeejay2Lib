@@ -570,6 +570,13 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
         name = name.trim();
         name = name.replace('\\', '/');
         name = name.replace("/", "");
+        name = name.replace(":", "");
+        name = name.replace("*", "");
+        name = name.replace("?", "");
+        name = name.replace("\"", "");
+        name = name.replace("<", "");
+        name = name.replace(">", "");
+        name = name.replace("|", "");
         return name;
     }
 
