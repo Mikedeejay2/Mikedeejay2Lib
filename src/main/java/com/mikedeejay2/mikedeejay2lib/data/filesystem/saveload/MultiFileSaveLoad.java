@@ -128,7 +128,6 @@ public class MultiFileSaveLoad<T extends ConfigurationSerializable> implements F
 
     @Override
     public Map<String, T> loadObjects(String path) {
-        System.out.println("Loading objects: " + path);
         Map<String, T> items = new LinkedHashMap<>();
         File folderFile = new File(plugin.getDataFolder(), system.getFullPath(path));
         if(!folderFile.exists()) return items;
