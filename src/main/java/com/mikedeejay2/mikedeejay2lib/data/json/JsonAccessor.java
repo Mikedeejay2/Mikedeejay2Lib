@@ -1299,7 +1299,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
             Object object = gson.fromJson(entry.getValue(), type);
             map.put(member, object);
         }
-        return deserializeMap(map);
+        final Object deserialized = deserializeMap(map);
+        return deserialized instanceof ConfigurationSerializable ? (ConfigurationSerializable) deserialized : null;
     }
 
     /**
@@ -1308,13 +1309,13 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      * @param map The map to deserialize
      * @return The deserialized object
      */
-    private ConfigurationSerializable deserializeMap(Map<String, Object> map) {
+    private Object deserializeMap(Map<String, Object> map) {
         final Map<String, Object> newMap = new LinkedHashMap<>(map.size());
         for(String key : map.keySet()) {
             Object value = map.get(key);
             newMap.put(key, deserializeSingle(value));
         }
-        return deserialize(newMap);
+        return map.containsKey(ConfigurationSerialization.SERIALIZED_TYPE_KEY) ?  deserialize(newMap) : newMap;
     }
 
     /**
@@ -1339,14 +1340,10 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     private Object deserializeSingle(Object object) {
         if(object instanceof Map) {
-            Map<String, Object> mapValue = (Map<String, Object>) object;
-            if(mapValue.containsKey(ConfigurationSerialization.SERIALIZED_TYPE_KEY)) {
-                return deserializeMap(mapValue);
-            }
+            return deserializeMap((Map<String, Object>) object);
         }
         if(object instanceof Iterable) {
-            Iterable<Object> iterableValue = (Iterable<Object>) object;
-            return deserializeIterable(iterableValue);
+            return deserializeIterable((Iterable<Object>) object);
         }
         if(object instanceof Double && ((Double) object) % 1 == 0) {
             return ((Double) object).intValue();
