@@ -217,6 +217,9 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @return The retrieved object, null if not found
      */
     public T getObject(String name) {
+        if(!isObjectsLoaded()) {
+            return fileSystem.getSaveLoad().loadObject(path, getSafeName(name));
+        }
         return getObjectsRaw().get(getSafeName(name));
     }
 
@@ -237,11 +240,11 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @return Whether an object was found
      */
     public boolean containsObject(String name) {
-        return getObjectsRaw().containsKey(getSafeName(name));
+        return getObject(name) != null;
     }
 
     /**
-     *Get the file name of an object based off of an equal object
+     * Get the file name of an object based off of an equal object
      *
      * @param obj The object to find the name of
      * @return The retrieved file name, null if not found
@@ -335,7 +338,7 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      * @return The raw objects map
      */
     public Map<String, T> getObjectsRaw() {
-        if(objects == null) {
+        if(!isObjectsLoaded()) {
             objects = fileSystem.getSaveLoad().loadObjects(path);
         }
         return objects;
@@ -348,5 +351,24 @@ public class SerializableFolderFS<T extends ConfigurationSerializable> implement
      */
     public boolean isSaved() {
         return saved;
+    }
+
+    /**
+     * Get whether objects have been loaded in this folder
+     *
+     * @return Whether objects have been loaded
+     */
+    public boolean isObjectsLoaded() {
+        return objects != null;
+    }
+
+    /**
+     * Get whether child folders have been loaded in this folder
+     *
+     * @return Whether child folders have been loaded
+     */
+    public boolean isFoldersLoaded() {
+        FolderInfo<T> folders = fileSystem.getFolderPool().get(this.getPath());
+        return folders != null && folders.getFolders() != null;
     }
 }

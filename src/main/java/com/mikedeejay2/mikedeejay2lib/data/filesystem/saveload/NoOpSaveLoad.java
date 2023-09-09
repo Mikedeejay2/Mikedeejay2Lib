@@ -33,4 +33,9 @@ public class NoOpSaveLoad<T extends ConfigurationSerializable> implements FileSy
     public Map<String, T> loadObjects(String path) {
         return new LinkedHashMap<>();
     }
+
+    @Override
+    public T loadObject(String path, String name) {
+        return null;
+    }
 }

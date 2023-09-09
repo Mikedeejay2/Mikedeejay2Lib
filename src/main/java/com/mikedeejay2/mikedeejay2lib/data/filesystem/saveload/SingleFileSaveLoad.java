@@ -130,6 +130,12 @@ public class SingleFileSaveLoad<T extends ConfigurationSerializable> implements 
         return items;
     }
 
+    @Override
+    public T loadObject(String path, String name) {
+        JsonAccessor section = getFolderSection(path, KEY_ITEMS);
+        return section.getSerialized(name, system.getSerializableClass());
+    }
+
     protected JsonAccessor getFolderSection(String path) {
         if(path == null) return this.accessor.getSection(KEY_ROOT);
         return this.accessor.getSection(path);

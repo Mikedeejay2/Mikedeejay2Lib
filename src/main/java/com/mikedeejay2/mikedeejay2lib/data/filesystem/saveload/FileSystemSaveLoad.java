@@ -1,6 +1,7 @@
 package com.mikedeejay2.mikedeejay2lib.data.filesystem.saveload;
 
 import com.mikedeejay2.mikedeejay2lib.data.filesystem.SerializableFolderFS;
+import com.mikedeejay2.mikedeejay2lib.util.structure.tuple.Pair;
 import org.bukkit.configuration.serialization.ConfigurationSerializable;
 
 import java.util.Map;
@@ -16,4 +17,5 @@ public interface FileSystemSaveLoad<T extends ConfigurationSerializable> {
     Map<String, SerializableFolderFS<T>> loadFolders(String path);
     SerializableFolderFS<T> loadFolder(String path);
     Map<String, T> loadObjects(String path);
+    T loadObject(String path, String name);
 }
