@@ -294,7 +294,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public ItemStack getItemStack(String name) {
-        return getSerializedInternal(getObject(name), ItemStack.class);
+        return getDeserializedInternal(getObject(name), ItemStack.class);
     }
 
     /**
@@ -305,7 +305,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public Location getLocation(String name) {
-        return getSerializedInternal(getObject(name), Location.class);
+        return getDeserializedInternal(getObject(name), Location.class);
     }
 
     /**
@@ -316,7 +316,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public Vector getVector(String name) {
-        return getSerializedInternal(getObject(name), Vector.class);
+        return getDeserializedInternal(getObject(name), Vector.class);
     }
 
     /**
@@ -327,7 +327,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public ItemMeta getItemMeta(String name) {
-        return getSerializedInternal(getObject(name), ItemMeta.class);
+        return getDeserializedInternal(getObject(name), ItemMeta.class);
     }
 
     /**
@@ -338,7 +338,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public OfflinePlayer getPlayer(String name) {
-        return getSerializedInternal(getObject(name), OfflinePlayer.class);
+        return getDeserializedInternal(getObject(name), OfflinePlayer.class);
     }
 
     /**
@@ -349,7 +349,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public AttributeModifier getAttributeModifier(String name) {
-        return getSerializedInternal(getObject(name), AttributeModifier.class);
+        return getDeserializedInternal(getObject(name), AttributeModifier.class);
     }
 
     /**
@@ -360,7 +360,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public BlockVector getBlockVector(String name) {
-        return getSerializedInternal(getObject(name), BlockVector.class);
+        return getDeserializedInternal(getObject(name), BlockVector.class);
     }
 
     /**
@@ -371,7 +371,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public BoundingBox getBoundingBox(String name) {
-        return getSerializedInternal(getObject(name), BoundingBox.class);
+        return getDeserializedInternal(getObject(name), BoundingBox.class);
     }
 
     /**
@@ -382,7 +382,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public Color getColor(String name) {
-        return getSerializedInternal(getObject(name), Color.class);
+        return getDeserializedInternal(getObject(name), Color.class);
     }
 
     /**
@@ -393,7 +393,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public FireworkEffect getFireworkEffect(String name) {
-        return getSerializedInternal(getObject(name), FireworkEffect.class);
+        return getDeserializedInternal(getObject(name), FireworkEffect.class);
     }
 
     /**
@@ -404,7 +404,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public Pattern getPattern(String name) {
-        return getSerializedInternal(getObject(name), Pattern.class);
+        return getDeserializedInternal(getObject(name), Pattern.class);
     }
 
     /**
@@ -415,7 +415,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public PotionEffect getPotionEffect(String name) {
-        return getSerializedInternal(getObject(name), PotionEffect.class);
+        return getDeserializedInternal(getObject(name), PotionEffect.class);
     }
 
     /**
@@ -437,7 +437,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public ConfigurationSerializable getSerialized(String name) {
-        return getSerializedInternal(getObject(name));
+        return getDeserializedInternal(getObject(name));
     }
 
     /**
@@ -450,7 +450,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public <C extends ConfigurationSerializable> C getSerialized(String name, Class<C> clazz) {
-        return getSerializedInternal(getObject(name), clazz);
+        return getDeserializedInternal(getObject(name), clazz);
     }
 
     /**
@@ -1219,12 +1219,46 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
             Object object = entry.getValue();
             if(object instanceof ConfigurationSerializable) {
                 ConfigurationSerializable meta = (ConfigurationSerializable)object;
-                jsonObject.add(memberName, new JsonObject());
-                setSerializedInternal(jsonObject.getAsJsonObject(memberName), meta);
+                JsonObject newJsonObject = new JsonObject();
+                jsonObject.add(memberName, newJsonObject);
+                setSerializedInternal(newJsonObject, meta);
+                continue;
+            }
+            if(object instanceof Iterable) {
+                Iterable<Object> objects = (Iterable<Object>) object;
+                JsonArray jsonArray = new JsonArray();
+                jsonObject.add(memberName, jsonArray);
+                setSerializedInternal(jsonArray, objects);
                 continue;
             }
             JsonElement element = gson.toJsonTree(object);
             jsonObject.add(memberName, element);
+        }
+    }
+
+    /**
+     * Add an <code>Iterable</code> object to a <code>JsonObject</code>
+     *
+     * @param jsonArray The <code>JsonArray</code> to add the data to
+     * @param iterable  The data to add to the JsonArray
+     */
+    private void setSerializedInternal(JsonArray jsonArray, Iterable<Object> iterable) {
+        Gson gson = new GsonBuilder().create();
+        for(Object object : iterable) {
+            if(object instanceof ConfigurationSerializable) {
+                JsonObject jsonObject = new JsonObject();
+                setSerializedInternal(jsonObject, (ConfigurationSerializable) object);
+                jsonArray.add(jsonObject);
+                continue;
+            }
+            if(object instanceof Iterable) {
+                JsonArray newJsonArray = new JsonArray();
+                setSerializedInternal(newJsonArray, (Iterable<Object>) object);
+                jsonArray.add(newJsonArray);
+                continue;
+            }
+            JsonElement element = gson.toJsonTree(object);
+            jsonArray.add(element);
         }
     }
 
@@ -1236,9 +1270,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      * @param <T>        The type of <code>ConfigurationSerializable</code>, same as class type
      * @return The requested <code>ConfigurationSerializable</code>
      */
-    private <T extends ConfigurationSerializable> T getSerializedInternal(JsonObject jsonObject, Class<T> clazz) {
-        Map<String, Object> map = getSerializedMap(jsonObject.entrySet());
-        return clazz.cast(ConfigurationSerialization.deserializeObject(map, clazz));
+    private <T extends ConfigurationSerializable> T getDeserializedInternal(JsonObject jsonObject, Class<T> clazz) {
+        return clazz.cast(getDeserialized(jsonObject.entrySet()));
     }
 
     /**
@@ -1247,9 +1280,8 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      * @param jsonObject Object to get the <code>ConfigurationSerializable</code> from
      * @return The requested <code>ConfigurationSerializable</code>
      */
-    private ConfigurationSerializable getSerializedInternal(JsonObject jsonObject) {
-        Map<String, Object> map = getSerializedMap(jsonObject.entrySet());
-        return ConfigurationSerialization.deserializeObject(map);
+    private ConfigurationSerializable getDeserializedInternal(JsonObject jsonObject) {
+        return getDeserialized(jsonObject.entrySet());
     }
 
     /**
@@ -1258,21 +1290,68 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      * @param set The json entrySet
      * @return The new <code>Map</code>
      */
-    private Map<String, Object> getSerializedMap(Set<Map.Entry<String, JsonElement>> set) {
+    private ConfigurationSerializable getDeserialized(Set<Map.Entry<String, JsonElement>> set) {
         Map<String, Object> map = new HashMap<>();
         Gson gson = new GsonBuilder().create();
         for(Map.Entry<String, JsonElement> entry : set) {
             String member = entry.getKey();
             Type type = new TypeToken<Object>(){}.getType();
             Object object = gson.fromJson(entry.getValue(), type);
-            if(object instanceof Map) {
-                Map<String, Object> newMap = (Map<String, Object>) object;
-                map.put(member, getSerialized(newMap));
-                continue;
-            }
             map.put(member, object);
         }
-        return map;
+        return deserializeMap(map);
+    }
+
+    /**
+     * Deeply deserializes a <code>Map</code> of <code>String</code>-<code>Object</code>
+     *
+     * @param map The map to deserialize
+     * @return The deserialized object
+     */
+    private ConfigurationSerializable deserializeMap(Map<String, Object> map) {
+        final Map<String, Object> newMap = new LinkedHashMap<>(map.size());
+        for(String key : map.keySet()) {
+            Object value = map.get(key);
+            newMap.put(key, deserializeSingle(value));
+        }
+        return deserialize(newMap);
+    }
+
+    /**
+     * Deeply deserializes an <code>Iterable</code>
+     *
+     * @param iterable The iterable to deserialize
+     * @return The list of deserialized objects
+     */
+    private List<Object> deserializeIterable(Iterable<Object> iterable) {
+        List<Object> list = new ArrayList<>();
+        for(Object object : iterable) {
+            list.add(deserializeSingle(object));
+        }
+        return list;
+    }
+
+    /**
+     * Deserialize a single object. This will check for maps, iterables, and doubles that should instead be integers.
+     *
+     * @param object The object to be deserialized
+     * @return The deserialized object, the same object if no changes were needed
+     */
+    private Object deserializeSingle(Object object) {
+        if(object instanceof Map) {
+            Map<String, Object> mapValue = (Map<String, Object>) object;
+            if(mapValue.containsKey(ConfigurationSerialization.SERIALIZED_TYPE_KEY)) {
+                return deserializeMap(mapValue);
+            }
+        }
+        if(object instanceof Iterable) {
+            Iterable<Object> iterableValue = (Iterable<Object>) object;
+            return deserializeIterable(iterableValue);
+        }
+        if(object instanceof Double && ((Double) object) % 1 == 0) {
+            return ((Double) object).intValue();
+        }
+        return object;
     }
 
     /**
@@ -1281,7 +1360,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      * @param map The map to interpret from
      * @return The new <code>ConfigurationSerializable</code>
      */
-    private ConfigurationSerializable getSerialized(Map<String, Object> map) {
+    private ConfigurationSerializable deserialize(Map<String, Object> map) {
         return ConfigurationSerialization.deserializeObject(map);
     }
 
