@@ -127,7 +127,7 @@ public class GUISerializableFSExplorerModule<T extends ConfigurationSerializable
     }
 
     private Text getFolderName(SerializableFolderFS<T> folder, GUIItem item) {
-        if(item.getMeta() != null && item.hasDisplayName()) {
+        if(item != null && item.getMeta() != null && item.hasDisplayName()) {
             return Text.of("&r").concat(item.getName())
                 .color(Colors.FormatStyle.COLOR_CODES, Colors.FormatStyle.HEX);
         }
