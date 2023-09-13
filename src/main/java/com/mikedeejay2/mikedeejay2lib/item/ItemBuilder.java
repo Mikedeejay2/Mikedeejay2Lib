@@ -246,7 +246,7 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
 
     @Override
     public boolean hasLore() {
-        return meta.hasLore();
+        return meta != null && meta.hasLore();
     }
 
     @Override
