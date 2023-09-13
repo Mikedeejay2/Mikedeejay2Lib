@@ -644,7 +644,7 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
 
     @Override
     public boolean hasDisplayName() {
-        return this.meta.hasDisplayName();
+        return this.meta != null && this.meta.hasDisplayName();
     }
 
     @Override
