@@ -52,6 +52,16 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
     protected GUIItem forwardItemValid;
 
     /**
+     * The invalid back navigation item
+     */
+    protected GUIItem backItemInvalid;
+
+    /**
+     * The invalid forward navigation item
+     */
+    protected GUIItem forwardItemInvalid;
+
+    /**
      * If search mode is enabled, allow deep search through all folders. This effects performance on large folders
      */
     protected boolean deepSearch;
@@ -105,6 +115,16 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
                 .setName("&f" + Text.translatable("gui.modules.navigator.forward").get())
                 .get())
             .addEvent(new GUINavFolderForwardEvent<>(this));
+
+        this.backItemInvalid = new GUIItem(
+            ItemBuilder.of(Base64Head.ARROW_LEFT_LIGHT_GRAY.get())
+                .setName("&f" + Text.translatable("gui.modules.navigator.backward").get())
+                .get());
+        this.forwardItemInvalid = new GUIItem(
+            ItemBuilder.of(Base64Head.ARROW_RIGHT_LIGHT_GRAY.get())
+                .setName("&f" + Text.translatable("gui.modules.navigator.forward").get())
+                .get());
+
         this.deepSearch = false;
         this.searchDepth = 10;
         this.creativeActions = false;
@@ -202,11 +222,7 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
             return;
         }
         resetList();
-        localize(player);
-
         fillList(player, gui);
-        GUILayer baseLayer = gui.getLayer(0);
-        fillDecor(baseLayer);
     }
 
     /**
@@ -224,45 +240,13 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
     }
 
     /**
-     * Localize the GUI history buttons
-     *
-     * @param player The reference player viewing the GUI
-     */
-    private void localize(Player player) {
-        this.backItemValid.setName("&f" + Text.translatable("gui.modules.navigator.backward").get(player))
-            .setAmount(Math.min(Math.max(1, history.backSize()), 64));
-        this.forwardItemValid.setName("&f" + Text.translatable("gui.modules.navigator.forward").get(player))
-            .setAmount(Math.min(Math.max(1, history.forwardSize()), 64));
-    }
-
-    /**
      * Set the folder history buttons
      *
      * @param layer The <code>GUILayer</code> to set the items on
      */
     private void setHistoryButtons(GUILayer layer) {
-        layer.setItem(1, 1, history.hasBack() ? backItemValid : null);
-        layer.setItem(1, 2, history.hasForward() ? forwardItemValid : null);
-    }
-
-    /**
-     * Fill the decoration items for the GUI
-     *
-     * @param baseLayer The base layer of the GUI, the layer that the background decor will be set on
-     */
-    private void fillDecor(GUILayer baseLayer) {
-        GUIItem background1 = backItemValid.clone();
-        GUIItem background2 = forwardItemValid.clone();
-        GUIItem background3 = backItem.clone();
-        GUIItem background4 = forwardItem.clone();
-        background1.setHeadBase64(Base64Head.ARROW_LEFT_LIGHT_GRAY.get()).resetEvents();
-        background2.setHeadBase64(Base64Head.ARROW_RIGHT_LIGHT_GRAY.get()).resetEvents();
-        background3.setHeadBase64(Base64Head.ARROW_UP_LIGHT_GRAY.get()).resetEvents();
-        background4.setHeadBase64(Base64Head.ARROW_DOWN_LIGHT_GRAY.get()).resetEvents();
-        baseLayer.setItem(1, 1, background1);
-        baseLayer.setItem(1, 2, background2);
-        baseLayer.setItem(1, 8, background3);
-        baseLayer.setItem(1, 9, background4);
+        layer.setItem(1, 1, history.hasBack() ? backItemValid : backItemInvalid);
+        layer.setItem(1, 2, history.hasForward() ? forwardItemValid : forwardItemInvalid);
     }
 
     /**
@@ -438,6 +422,78 @@ public abstract class GUIExplorerBaseModule<F> extends GUIListModule {
      */
     public void setCreativeActions(boolean creativeActions) {
         this.creativeActions = creativeActions;
+    }
+
+    /**
+     * Get the valid back navigation item
+     *
+     * @return The valid back navigation item
+     */
+    public GUIItem getBackItemValid() {
+        return backItemValid;
+    }
+
+    /**
+     * Set the valid back navigation item
+     *
+     * @param backItemValid The new valid back navigation item
+     */
+    public void setBackItemValid(GUIItem backItemValid) {
+        this.backItemValid = backItemValid;
+    }
+
+    /**
+     * Get the valid forward navigation item
+     *
+     * @return The valid forward navigation item
+     */
+    public GUIItem getForwardItemValid() {
+        return forwardItemValid;
+    }
+
+    /**
+     * Set the valid forward navigation item
+     *
+     * @param forwardItemValid The new valid forward navigation item
+     */
+    public void setForwardItemValid(GUIItem forwardItemValid) {
+        this.forwardItemValid = forwardItemValid;
+    }
+
+    /**
+     * Get the invalid back navigation item
+     *
+     * @return The invalid back navigation item
+     */
+    public GUIItem getBackItemInvalid() {
+        return backItemInvalid;
+    }
+
+    /**
+     * Set the invalid back navigation item
+     *
+     * @param backItemInvalid The new invalid navigation item
+     */
+    public void setBackItemInvalid(GUIItem backItemInvalid) {
+        this.backItemInvalid = backItemInvalid;
+    }
+
+    /**
+     * Get the invalid forward navigation item
+     *
+     * @return The invalid forward navigation item
+     */
+    public GUIItem getForwardItemInvalid() {
+        return forwardItemInvalid;
+    }
+
+    /**
+     * Set the invalid forward navigation item
+     *
+     * @param forwardItemInvalid The new invalid forward navigation item
+     */
+    public void setForwardItemInvalid(GUIItem forwardItemInvalid) {
+        this.forwardItemInvalid = forwardItemInvalid;
     }
 
     /**
