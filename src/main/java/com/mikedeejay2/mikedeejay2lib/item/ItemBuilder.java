@@ -7,6 +7,7 @@ import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import com.mikedeejay2.mikedeejay2lib.util.enchant.GlowEnchantment;
+import com.mikedeejay2.mikedeejay2lib.util.head.SkullMetaModifier;
 import com.mojang.authlib.GameProfile;
 import com.mojang.authlib.properties.Property;
 import org.bukkit.*;
@@ -465,38 +466,13 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
     @Override
     public String getHeadBase64() {
         SkullMeta skullMeta = (SkullMeta) meta;
-        GameProfile profile;
-        try {
-            Field profileField = skullMeta.getClass().getDeclaredField("profile");
-            profileField.setAccessible(true);
-            profile = (GameProfile) profileField.get(skullMeta);
-        } catch(IllegalArgumentException | IllegalAccessException | NoSuchFieldException exception) {
-            exception.printStackTrace();
-            return null;
-        }
-        Collection<Property> properties = profile.getProperties().get("textures");
-        for(Property property : properties) {
-            String value = property.getValue();
-            if(value.equals("textures")) {
-                return property.getName();
-            }
-        }
-        return null;
+        return SkullMetaModifier.getHeadBase64(skullMeta);
     }
 
     @Override
     public ItemBuilder setHeadBase64(String base64) {
         SkullMeta skullMeta = (SkullMeta) meta;
-        GameProfile profile = new GameProfile(UUID.randomUUID(), "");
-        profile.getProperties().put("textures", new Property("textures", base64));
-        try {
-            Field profileField = skullMeta.getClass().getDeclaredField("profile");
-            profileField.setAccessible(true);
-            profileField.set(skullMeta, profile);
-        } catch(IllegalArgumentException | IllegalAccessException | NoSuchFieldException exception) {
-            exception.printStackTrace();
-            return this;
-        }
+        SkullMetaModifier.setHeadBase64(skullMeta, base64);
         this.changed = true;
         return this;
     }
