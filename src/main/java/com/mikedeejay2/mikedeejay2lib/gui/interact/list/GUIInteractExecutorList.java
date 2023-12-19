@@ -294,7 +294,7 @@ public class GUIInteractExecutorList implements GUIInteractExecutor {
             if(consume) cursorItem.setAmount(extraAmount);
             int index = list.getItemIndex(row, col, gui);
             int size = list.getSize();
-            if(index >= size) {
+            if(index >= size || index < 0) {
                 list.addItem(newItem);
             } else {
                 list.addItem(row, col, gui, newItem);

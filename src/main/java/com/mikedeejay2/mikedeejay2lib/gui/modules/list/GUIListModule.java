@@ -16,6 +16,7 @@ import com.mikedeejay2.mikedeejay2lib.util.item.ItemComparison;
 import com.mikedeejay2.mikedeejay2lib.util.search.SearchUtil;
 import com.mikedeejay2.mikedeejay2lib.util.structure.tuple.MutablePair;
 import com.mikedeejay2.mikedeejay2lib.util.structure.tuple.Pair;
+import org.apache.commons.lang3.Validate;
 import org.bukkit.Material;
 import org.bukkit.Sound;
 import org.bukkit.entity.Player;
@@ -190,15 +191,15 @@ public class GUIListModule implements GUIModule {
             case SCROLL: {
                 this.backItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_UP_WHITE.get()).setEmptyName());
                 this.forwardItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_DOWN_WHITE.get()).setEmptyName());
-                backItem.addEvent(new GUISwitchListLocEvent());
-                forwardItem.addEvent(new GUISwitchListLocEvent());
+                backItem.addEvent(new GUISwitchListLocEvent(this));
+                forwardItem.addEvent(new GUISwitchListLocEvent(this));
             } break;
             case PAGED:
             default: {
                 this.backItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_BACKWARD_WHITE.get()).setEmptyName());
                 this.forwardItem = new GUIItem(ItemBuilder.of(Base64Head.ARROW_FORWARD_WHITE.get()).setEmptyName());
-                backItem.addEvent(new GUISwitchListLocEvent());
-                forwardItem.addEvent(new GUISwitchListLocEvent());
+                backItem.addEvent(new GUISwitchListLocEvent(this));
+                forwardItem.addEvent(new GUISwitchListLocEvent(this));
             } break;
         }
 
@@ -221,7 +222,7 @@ public class GUIListModule implements GUIModule {
         this.searchItem = new GUIItem(
             ItemBuilder.of(Material.COMPASS)
                 .setName(Text.of(searchPreName).concat("gui.modules.list.search")));
-        searchItem.addEvent(new GUIListSearchEvent(plugin));
+        searchItem.addEvent(new GUIListSearchEvent(plugin, this));
         this.searchOffItem = new GUIItem(
             ItemBuilder.of(Material.BOOK)
                 .setName(Text.of(searchOffPreName).concat("gui.modules.list.search_off")));
@@ -327,14 +328,14 @@ public class GUIListModule implements GUIModule {
         int topRow = topLeft.getKey();
         int leftCol = topLeft.getValue();
         int colDif = getSlotsPerCol();
+        int colTotal = layer.getCols();
 
         int viewSize = getViewSize();
         int listSize = getCurSize();
         int viewOffset = getViewOffset();
         for(int i = 0; i < viewSize; i++) {
             // This algorithm calculates the normalized slot index based off of the bounding box of the list
-            int slotIndex = ((topRow-1) * (layer.getCols() * ((int)(i / colDif)+1))) + (leftCol) + (i % colDif);
-            --slotIndex;
+            int slotIndex = (colTotal * (i / colDif)) + ((topRow - 1) * colTotal) + (leftCol) + (i % colDif) - 1;
             int row = layer.getRow(slotIndex);
             int col = layer.getColumn(slotIndex);
             layer.removeItem(row, col);
@@ -547,8 +548,10 @@ public class GUIListModule implements GUIModule {
      * @return The index based off of the row and column
      */
     public int getItemIndex(int row, int col, GUIContainer gui) {
+        Validate.isTrue(row >= topLeft.getKey() && row <= bottomRight.getKey(), "Passed out of bounds row to getItemIndex");
+        Validate.isTrue(col >= topLeft.getValue() && col <= bottomRight.getValue(), "Passed out of bounds row to getItemIndex");
         int viewOffset = getViewOffset();
-        int index = gui.getSlot(row-2, col-1) + viewOffset;
+        int index = (row - topLeft.getKey()) * getSlotsPerCol() + (col - topLeft.getValue()) + viewOffset;
         if(searchMode) {
             index = searchList.get(index).getValue();
         }
@@ -1211,12 +1214,18 @@ public class GUIListModule implements GUIModule {
         protected final BukkitPlugin plugin;
 
         /**
+         * The {@link GUIListModule} of this event
+         */
+        private final GUIListModule listModule;
+
+        /**
          * Construct a new <code>GUIListSearchEvent</code>
          *
          * @param plugin The {@link BukkitPlugin} instance
          */
-        public GUIListSearchEvent(BukkitPlugin plugin) {
+        public GUIListSearchEvent(BukkitPlugin plugin, GUIListModule listModule) {
             this.plugin = plugin;
+            this.listModule = listModule;
         }
 
         /**
@@ -1233,8 +1242,7 @@ public class GUIListModule implements GUIModule {
             gui.close(player);
             player.closeInventory();
             // TODO: Use chat event in GUIListener to capture search result
-            GUIListModule list = gui.getModule(GUIListModule.class);
-            list.enableSearchMode("search term");
+            listModule.enableSearchMode("search term");
         }
     }
 
@@ -1263,8 +1271,17 @@ public class GUIListModule implements GUIModule {
      * @author Mikedeejay2
      */
     public static class GUISwitchListLocEvent extends GUIPlaySoundEvent {
-        public GUISwitchListLocEvent() {
+        /**
+         * The {@link GUIListModule} of this event
+         */
+        private final GUIListModule listModule;
+
+        /**
+         * Construct a new <code>GUISwitchListLocEvent</code>
+         */
+        public GUISwitchListLocEvent(GUIListModule listModule) {
             super(Sound.UI_BUTTON_CLICK, 0.3f, 1f, ClickType.LEFT);
+            this.listModule = listModule;
         }
 
         /**
@@ -1274,18 +1291,16 @@ public class GUIListModule implements GUIModule {
          */
         @Override
         public void executeClick(GUIClickEvent info) {
+            super.executeClick(info);
             int slot = info.getSlot();
             GUIContainer gui = info.getGUI();
-            GUIListModule module = gui.getModule(GUIListModule.class);
-            String listLayerName = module.getLayerName();
+            String listLayerName = listModule.getLayerName();
             GUILayer listLayer = gui.getLayer(listLayerName);
             int row = listLayer.getRow(slot);
             int col = listLayer.getColumn(slot);
-            if(!gui.getTopLayer(row, col).getName().equals(listLayerName)) return;
-            super.executeClick(info);
 
-            List<Pair<Integer, Integer>> forwards = module.getForwards();
-            List<Pair<Integer, Integer>> backs = module.getBacks();
+            List<Pair<Integer, Integer>> forwards = listModule.getForwards();
+            List<Pair<Integer, Integer>> backs = listModule.getBacks();
 
             int relative = 0;
 
@@ -1297,7 +1312,7 @@ public class GUIListModule implements GUIModule {
             }
 
             if(relative != 0) {
-                module.setListLoc(module.getCurLoc() + relative);
+                listModule.setListLoc(listModule.getCurLoc() + relative);
                 return;
             }
 
@@ -1309,7 +1324,7 @@ public class GUIListModule implements GUIModule {
             }
 
             if(relative != 0) {
-                module.setListLoc(module.getCurLoc() + relative);
+                listModule.setListLoc(listModule.getCurLoc() + relative);
             }
         }
     }
