@@ -49,12 +49,6 @@ public class GUIContainer {
     public static final int MAX_INVENTORY_COLS = 9;
 
     /**
-     * An empty name so that items that shouldn't have a title have the smallest title possible for Minecraft
-     * (Because you can't specify nothing)
-     */
-    public static final String EMPTY_NAME = "§7";
-
-    /**
      * An empty stack, usually a light gray stained glass pane so it's nearly invisible
      */
     protected ItemStack backgroundItem;

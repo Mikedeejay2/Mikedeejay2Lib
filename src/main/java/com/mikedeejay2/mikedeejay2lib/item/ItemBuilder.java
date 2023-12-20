@@ -35,6 +35,12 @@ import java.util.*;
  */
 public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Cloneable {
     /**
+     * An empty name so that items that shouldn't have a title have the smallest title possible for Minecraft
+     * (Because you can't specify nothing)
+     */
+    public static final String EMPTY_NAME = "§7";
+
+    /**
      * The {@link Material} of the built item
      */
     protected Material type;
@@ -432,7 +438,7 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
 
     @Override
     public ItemBuilder setEmptyName() {
-        this.meta.setDisplayName(GUIContainer.EMPTY_NAME);
+        this.meta.setDisplayName(EMPTY_NAME);
         this.changed = true;
         return this;
     }
