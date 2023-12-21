@@ -491,7 +491,7 @@ public class TextItemBuilder extends ItemBuilder {
     }
 
     private boolean isCacheValid(String locale) {
-        return (item != null) && ((locale == null && previousLocale == null) ||
-            (locale != null && locale.equals(previousLocale)));
+        return ((item != null) && ((locale == null && previousLocale == null) ||
+            (locale != null && locale.equals(previousLocale)))) && !changed;
     }
 }
