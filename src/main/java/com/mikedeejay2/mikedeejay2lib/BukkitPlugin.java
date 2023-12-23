@@ -3,7 +3,6 @@ package com.mikedeejay2.mikedeejay2lib;
 import com.mikedeejay2.mikedeejay2lib.gui.listeners.GUIListener;
 import com.mikedeejay2.mikedeejay2lib.gui.manager.GUIManager;
 import com.mikedeejay2.mikedeejay2lib.text.language.TranslationManager;
-import com.mikedeejay2.mikedeejay2lib.util.enchant.GlowEnchantment;
 
 /**
  * Main class for Mikedeejay2Lib.
@@ -33,8 +32,6 @@ public abstract class BukkitPlugin extends EnhancedJavaPlugin {
         this.guiManager = new GUIManager(this);
 
         this.getServer().getPluginManager().registerEvents(new GUIListener(this), this);
-
-        GlowEnchantment.registerGlow(this);
 
         this.sendMessage(String.format("&a%s is powered by Mikedeejay2Lib, a collection of open source resources for developers to use.", this.getDescription().getName()));
     }

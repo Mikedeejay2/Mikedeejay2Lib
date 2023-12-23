@@ -4,7 +4,6 @@ import com.google.common.collect.Multimap;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
-import com.mikedeejay2.mikedeejay2lib.util.enchant.GlowEnchantment;
 import com.mikedeejay2.mikedeejay2lib.util.head.SkullMetaModifier;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
@@ -418,15 +417,16 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
 
     @Override
     public ItemBuilder addGlow() {
-
-        this.addEnchant(GlowEnchantment.get(), 1);
+        this.addEnchant(Enchantment.LUCK, 1);
+        this.addItemFlag(ItemFlag.HIDE_ENCHANTS);
         this.changed = true;
         return this;
     }
 
     @Override
     public ItemBuilder removeGlow() {
-        this.removeEnchant(GlowEnchantment.get());
+        this.removeEnchant(Enchantment.LUCK);
+        this.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
         this.changed = true;
         return this;
     }
