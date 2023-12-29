@@ -1221,7 +1221,8 @@ public class GUIListModule implements GUIModule {
         /**
          * Construct a new <code>GUIListSearchEvent</code>
          *
-         * @param plugin The {@link BukkitPlugin} instance
+         * @param plugin     The {@link BukkitPlugin} instance
+         * @param listModule The {@link GUIListModule} that owns this event
          */
         public GUIListSearchEvent(BukkitPlugin plugin, GUIListModule listModule) {
             this.plugin = plugin;
@@ -1278,6 +1279,8 @@ public class GUIListModule implements GUIModule {
 
         /**
          * Construct a new <code>GUISwitchListLocEvent</code>
+         *
+         * @param listModule The {@link GUIListModule} that owns this event
          */
         public GUISwitchListLocEvent(GUIListModule listModule) {
             super(Sound.UI_BUTTON_CLICK, 0.3f, 1f, ClickType.LEFT);

@@ -15,6 +15,7 @@ public interface TabSubCommand extends SubCommand {
      *
      * @param sender The CommandSender that sent the command
      * @param args   The arguments sent with the command
+     * @return List of tab complete Strings
      */
     List<String> onTabComplete(CommandSender sender, String[] args);
 }

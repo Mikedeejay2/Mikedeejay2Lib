@@ -130,8 +130,8 @@ public final class MinecraftVersion {
      *         <p>
      *         Examples:
      *         <ul>
-     *             <li><code>>=1.20.x</code></li>
-     *             <li><code><1.19.4</code></li>
+     *             <li><code>&gt;=1.20.x</code></li>
+     *             <li><code>&lt;1.19.4</code></li>
      *             <li><code>!=1.18.2</code></li>
      *         </ul>
      *     </li>

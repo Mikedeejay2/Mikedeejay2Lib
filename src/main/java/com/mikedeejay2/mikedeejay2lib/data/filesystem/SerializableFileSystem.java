@@ -165,9 +165,10 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param serializableClass The class type of the {@link ConfigurationSerializable} being handled
      * @param name              The display name of the root folder
      * @param fileMode          The {@link FileMode} of this file system
+     * @param savePath          The path to save this file system to. Will be appended to the plugin's data folder path
      */
-    public SerializableFileSystem(BukkitPlugin plugin, Class<T> serializableClass, String name, String initialPath, FileMode fileMode) {
-        this(plugin, serializableClass, name, initialPath, fileMode, false);
+    public SerializableFileSystem(BukkitPlugin plugin, Class<T> serializableClass, String name, String savePath, FileMode fileMode) {
+        this(plugin, serializableClass, name, savePath, fileMode, false);
     }
 
     /**
@@ -176,9 +177,10 @@ public class SerializableFileSystem<T extends ConfigurationSerializable> {
      * @param plugin            The {@link BukkitPlugin} instance
      * @param serializableClass The class type of the {@link ConfigurationSerializable} being handled
      * @param name              The display name of the root folder
+     * @param savePath          The path to save this file system to. Will be appended to the plugin's data folder path
      */
-    public SerializableFileSystem(BukkitPlugin plugin, Class<T> serializableClass, String name, String initialPath) {
-        this(plugin, serializableClass, name, initialPath, FileMode.SINGLE_FILE);
+    public SerializableFileSystem(BukkitPlugin plugin, Class<T> serializableClass, String name, String savePath) {
+        this(plugin, serializableClass, name, savePath, FileMode.SINGLE_FILE);
     }
 
     /**
