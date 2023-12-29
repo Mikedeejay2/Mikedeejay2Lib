@@ -101,7 +101,7 @@ public final class Colors {
      * @return The formatted message
      */
     public static String formatHexCodes(String message) {
-        boolean hexSupported = MinecraftVersion.getVersionShort() >= 16;
+        boolean hexSupported = MinecraftVersion.VERSION_MINOR >= 16;
         Matcher match1 = pattern1.matcher(message);
         while(match1.find()) {
             String curColor = message.substring(match1.start(), match1.end());

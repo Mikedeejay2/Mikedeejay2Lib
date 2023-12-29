@@ -21,7 +21,6 @@ import org.bukkit.util.Vector;
 import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -114,7 +113,7 @@ public class CrashReport {
      */
     private CrashReportSection getSystemDetails() {
         CrashReportSection section = new CrashReportSection("System Details");
-        section.addDetail("Minecraft Version", MinecraftVersion.getVersionString());
+        section.addDetail("Minecraft Version", MinecraftVersion.VERSION);
         section.addDetail("Plugin Name", plugin.getName());
         section.addDetail("Plugin Version", plugin.getDescription().getVersion());
         section.addDetail("Plugin API Version", plugin.getDescription().getAPIVersion());

@@ -150,7 +150,7 @@ public final class RecipeUtil {
         new BukkitRunnable() {
             @Override
             public void run() {
-                int version = MinecraftVersion.getVersionShort();
+                int version = MinecraftVersion.VERSION_MINOR;
                 blastingInputs.clear();
                 campfireInputs.clear();
                 furnaceInputs.clear();
