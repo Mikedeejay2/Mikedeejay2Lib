@@ -147,10 +147,15 @@ public final class MinecraftVersion {
      *     </li>
      * </ul>
      *
+     * A comma separated list can also be provided in the version String. For example:
+     * <p>
+     * <code>1.20.x,1.18-1.19,&lt;=1.15.2</code>
+     *
      * @param version The input version String
      * @return Whether the Minecraft version matches the provided version
      */
     public static boolean check(String version) {
+        if(version.indexOf(',') != -1) return checkMulti(version);
         if(version.indexOf('-') != -1) return checkRange(version);
         final char firstChar = version.charAt(0);
         switch(firstChar) {
@@ -159,6 +164,20 @@ public final class MinecraftVersion {
             default:
                 return checkSingle(version);
         }
+    }
+
+    /**
+     * Check a list of versions, separated by a comma, in the String
+     *
+     * @param version The String list of versions
+     * @return Whether the Minecraft version matches any of the versions in the list
+     */
+    private static boolean checkMulti(String version) {
+        for(String str : version.split(",")) {
+            if(str.isEmpty()) continue;
+            if(check(str)) return true;
+        }
+        return false;
     }
 
     /**
