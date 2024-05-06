@@ -417,7 +417,7 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
 
     @Override
     public ItemBuilder addGlow() {
-        this.addEnchant(Enchantment.LUCK, 1);
+        this.addEnchant(Enchantment.LURE, 1);
         this.addItemFlag(ItemFlag.HIDE_ENCHANTS);
         this.changed = true;
         return this;
@@ -425,7 +425,7 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
 
     @Override
     public ItemBuilder removeGlow() {
-        this.removeEnchant(Enchantment.LUCK);
+        this.removeEnchant(Enchantment.LURE);
         this.removeItemFlags(ItemFlag.HIDE_ENCHANTS);
         this.changed = true;
         return this;
@@ -589,23 +589,6 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
     @Override
     public boolean hasCustomModelData() {
         return this.meta.hasCustomModelData();
-    }
-
-    @Override
-    public ItemBuilder setLocalizedName(String name) {
-        this.meta.setLocalizedName(Colors.addReset(Colors.format(name)));
-        this.changed = true;
-        return this;
-    }
-
-    @Override
-    public String getLocalizedName() {
-        return this.meta.getLocalizedName();
-    }
-
-    @Override
-    public boolean hasLocalizedName() {
-        return this.meta.hasLocalizedName();
     }
 
     @Override

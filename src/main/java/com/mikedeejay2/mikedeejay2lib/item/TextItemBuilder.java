@@ -381,12 +381,6 @@ public class TextItemBuilder extends ItemBuilder {
     }
 
     @Override
-    public TextItemBuilder setLocalizedName(String name) {
-        super.setLocalizedName(name);
-        return this;
-    }
-
-    @Override
     public TextItemBuilder setDisplayName(String name) {
         super.setDisplayName(name);
         return this;

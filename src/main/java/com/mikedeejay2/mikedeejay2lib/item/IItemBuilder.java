@@ -605,30 +605,6 @@ public interface IItemBuilder<I, T> {
     boolean hasCustomModelData();
 
     /**
-     * Set the localized name of the item
-     *
-     * @param name The new localized name for the item
-     * @return A reference to this object
-     */
-    T setLocalizedName(String name);
-
-    /**
-     * Get the localized name of the item
-     * <p>
-     * {@link IItemBuilder#hasLocalizedName()} should first be checked before executing this method
-     *
-     * @return The localized name of the item
-     */
-    String getLocalizedName();
-
-    /**
-     * Whether the item has a localized name or not
-     *
-     * @return Whether the item has a localized name
-     */
-    boolean hasLocalizedName();
-
-    /**
      * Get the display name of the item
      * <p>
      * {@link IItemBuilder#hasDisplayName()} should first be checked before executing this method

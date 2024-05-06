@@ -794,23 +794,6 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
     }
 
     @Override
-    public GUIItem setLocalizedName(String name) {
-        this.item = this.item.setLocalizedName(name);
-        this.setChanged(true);
-        return this;
-    }
-
-    @Override
-    public String getLocalizedName() {
-        return this.item.getLocalizedName();
-    }
-
-    @Override
-    public boolean hasLocalizedName() {
-        return this.item.hasLocalizedName();
-    }
-
-    @Override
     public String getDisplayName() {
         return this.item.getDisplayName();
     }

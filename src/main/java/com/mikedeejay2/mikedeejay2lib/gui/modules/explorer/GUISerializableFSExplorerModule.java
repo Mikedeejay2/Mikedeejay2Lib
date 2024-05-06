@@ -12,6 +12,7 @@ import org.bukkit.configuration.serialization.ConfigurationSerializable;
 import org.bukkit.inventory.ItemFlag;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 import java.util.function.Function;
@@ -32,14 +33,7 @@ public class GUISerializableFSExplorerModule<T extends ConfigurationSerializable
     /**
      * The item flags to apply to folder icons
      */
-    private static final ItemFlag[] PREVIEW_ITEM_FLAGS = new ItemFlag[] {
-        ItemFlag.HIDE_POTION_EFFECTS,
-        ItemFlag.HIDE_ATTRIBUTES,
-        ItemFlag.HIDE_UNBREAKABLE,
-        ItemFlag.HIDE_ENCHANTS,
-        ItemFlag.HIDE_DESTROYS,
-        ItemFlag.HIDE_PLACED_ON
-    };
+    private static final ItemFlag[] PREVIEW_ITEM_FLAGS = Arrays.copyOf(ItemFlag.values(), 6);
 
     /**
      * Construct a new <code>GUISerializableFSExplorerModule</code>
