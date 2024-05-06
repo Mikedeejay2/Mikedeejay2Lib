@@ -136,7 +136,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public Set<String> getKeys(boolean deep) {
-        Set<String> set = new HashSet<>();
+        Set<String> set = new LinkedHashSet<>();
         Set<Map.Entry<String, JsonElement>> entrySet = json.entrySet();
         getKeysRecursive(set, entrySet, deep);
         return set;
@@ -167,7 +167,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      */
     @Override
     public Set<JsonElement> getValues(boolean deep) {
-        Set<JsonElement> set = new HashSet<>();
+        Set<JsonElement> set = new LinkedHashSet<>();
         Set<Map.Entry<String, JsonElement>> entrySet = json.entrySet();
         getValuesRecursive(set, entrySet, deep);
         return set;
@@ -1291,7 +1291,7 @@ public class JsonAccessor extends SectionAccessor<JsonFile, JsonElement> {
      * @return The new <code>Map</code>
      */
     private ConfigurationSerializable getDeserialized(Set<Map.Entry<String, JsonElement>> set) {
-        Map<String, Object> map = new HashMap<>();
+        Map<String, Object> map = new LinkedHashMap<>();
         Gson gson = new GsonBuilder().create();
         for(Map.Entry<String, JsonElement> entry : set) {
             String member = entry.getKey();

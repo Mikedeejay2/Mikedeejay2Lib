@@ -13,10 +13,7 @@ import org.bukkit.util.BlockVector;
 import org.bukkit.util.BoundingBox;
 import org.bukkit.util.Vector;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * A Yaml accessor that overrides {@link SectionAccessor} for accessing YAML files easily
@@ -116,7 +113,7 @@ public class YamlAccessor extends SectionAccessor<YamlFile, Object> {
      */
     @Override
     public Set<Object> getValues(boolean deep) {
-        return new HashSet<>(yaml.getValues(deep).values());
+        return new LinkedHashSet<>(yaml.getValues(deep).values());
     }
 
     /**
