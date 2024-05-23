@@ -232,8 +232,22 @@ public class CrashReport {
      * @return The new {@link CrashReportSection}
      */
     public CrashReportSection addSection(String title) {
-        CrashReportSection section = new CrashReportSection(title);
-        sections.put(title, section);
+        return addSection(new CrashReportSection(title));
+    }
+
+    /**
+     * Add a section. This is display in the middle of the crash report, and used for debugging in relation to the
+     * crash that occurred. The returned {@link CrashReportSection} should have details added to it using
+     * {@link CrashReportSection#addDetail(String, String)}.
+     * <p>
+     * This is a utility method. It should only be used when {@link CrashReport#addSection(String)} can't
+     * be used.
+     *
+     * @param section The {@link CrashReportSection}
+     * @return The new {@link CrashReportSection}
+     */
+    public CrashReportSection addSection(CrashReportSection section) {
+        sections.put(section.getTitle(), section);
         return section;
     }
 
