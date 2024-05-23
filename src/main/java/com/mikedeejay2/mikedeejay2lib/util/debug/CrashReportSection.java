@@ -57,4 +57,22 @@ public class CrashReportSection {
         }
         return builder.toString().trim();
     }
+
+    /**
+     * Get the title of this section
+     *
+     * @return The title of this section
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Get the details of this section
+     *
+     * @return The details of this section
+     */
+    public Map<String, String> getDetails() {
+        return details;
+    }
 }
