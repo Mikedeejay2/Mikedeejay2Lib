@@ -737,11 +737,6 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
         }
         this.meta = Bukkit.getItemFactory().asMetaFor(meta, type);
 
-        Material newType = Bukkit.getItemFactory().updateMaterial(this.meta, type);
-        if (this.type != newType) {
-            this.type = newType;
-        }
-
         if (this.meta == meta) {
             this.meta = meta.clone();
         }
