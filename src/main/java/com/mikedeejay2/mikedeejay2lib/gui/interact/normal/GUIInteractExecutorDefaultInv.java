@@ -369,7 +369,9 @@ public class GUIInteractExecutorDefaultInv implements GUIInteractExecutor {
         final Player player = event.getPlayer();
         if(event.getClickedInventory() != player.getInventory()) return;
         final Inventory playerInv = player.getInventory();
-        final ItemStack item = playerInv.getItem(event.getSlot()).clone();
+        ItemStack item = playerInv.getItem(event.getSlot());
+        if(item == null) return;
+        item = item.clone();
         final int maxAmount = limit == -1 ? item.getMaxStackSize() : limit;
 
         item.setAmount(maxAmount);
