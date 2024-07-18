@@ -5,6 +5,7 @@ import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mikedeejay2.mikedeejay2lib.util.head.SkullMetaModifier;
+import com.mikedeejay2.mikedeejay2lib.util.item.ItemUtil;
 import org.bukkit.*;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeModifier;
@@ -188,7 +189,7 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
 
     @Override
     public String getName() {
-        return meta.getDisplayName();
+        return ItemUtil.getName(meta);
     }
 
     @Override
@@ -208,7 +209,7 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
 
     @Override
     public ItemBuilder setName(String name) {
-        this.meta.setDisplayName(Colors.addReset(Colors.format(name)));
+        ItemUtil.setName(this.meta, Colors.addReset(Colors.format(name)));
         this.changed = true;
         return this;
     }
@@ -433,7 +434,7 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
 
     @Override
     public ItemBuilder setEmptyName() {
-        this.meta.setDisplayName(EMPTY_NAME);
+        ItemUtil.setName(meta, EMPTY_NAME);
         this.changed = true;
         return this;
     }
@@ -593,7 +594,7 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
 
     @Override
     public String getDisplayName() {
-        return this.meta.getDisplayName();
+        return ItemUtil.getName(this.meta);
     }
 
     @Override

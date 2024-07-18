@@ -2,6 +2,7 @@ package com.mikedeejay2.mikedeejay2lib.util.attribute;
 
 import com.google.common.base.Preconditions;
 import org.bukkit.Bukkit;
+import org.bukkit.NamespacedKey;
 import org.bukkit.attribute.Attributable;
 import org.bukkit.attribute.Attribute;
 import org.bukkit.attribute.AttributeInstance;
@@ -20,78 +21,78 @@ import java.util.*;
  */
 public final class AttributeUtil {
     /**
-     * Get whether an {@link ItemMeta} has a specified {@link AttributeModifier} based off of UUID
+     * Get whether an {@link ItemMeta} has a specified {@link AttributeModifier} based off of NamespacedKey
      *
-     * @param uuid     The UUID of the {@link AttributeModifier}
+     * @param key     The NamespacedKey of the {@link AttributeModifier}
      * @param itemStack The <code>ItemStack</code> to reference
      * @return Whether the {@link AttributeModifier} was found or not
      */
-    public static boolean hasAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack) {
-        Preconditions.checkNotNull(uuid, "UUID can not be null");
+    public static boolean hasAttributeModifier(@NotNull final NamespacedKey key, ItemStack itemStack) {
+        Preconditions.checkNotNull(key, "NamespacedKey can not be null");
         Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
         ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers().values()) {
-            if(uuid.equals(modifier.getUniqueId())) return true;
+            if(key.equals(modifier.getKey())) return true;
         }
         return false;
     }
 
     /**
-     * Get whether an {@link ItemMeta} has a specified {@link AttributeModifier} based off of UUID
+     * Get whether an {@link ItemMeta} has a specified {@link AttributeModifier} based off of NamespacedKey
      *
-     * @param uuid     The UUID of the {@link AttributeModifier}
+     * @param key     The NamespacedKey of the {@link AttributeModifier}
      * @param itemStack The <code>ItemStack</code> to reference
      * @param slot     The {@link EquipmentSlot} of the modifier
      * @return Whether the {@link AttributeModifier} was found or not
      */
-    public static boolean hasAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack, @NotNull final EquipmentSlot slot) {
-        Preconditions.checkNotNull(uuid, "UUID can not be null");
+    public static boolean hasAttributeModifier(@NotNull final NamespacedKey key, ItemStack itemStack, @NotNull final EquipmentSlot slot) {
+        Preconditions.checkNotNull(key, "NamespacedKey can not be null");
         Preconditions.checkNotNull(slot, "EquipmentSlot can not be null");
         Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
         ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers(slot).values()) {
-            if(uuid.equals(modifier.getUniqueId())) return true;
+            if(key.equals(modifier.getKey())) return true;
         }
         return false;
     }
 
     /**
-     * Get whether an {@link ItemMeta} has a specified {@link AttributeModifier} based off of UUID
+     * Get whether an {@link ItemMeta} has a specified {@link AttributeModifier} based off of NamespacedKey
      *
-     * @param uuid     The UUID of the {@link AttributeModifier}
+     * @param key     The NamespacedKey of the {@link AttributeModifier}
      * @param itemStack The <code>ItemStack</code> to reference
      * @param attribute     The {@link AttributeInstance} of the modifier
      * @return Whether the {@link AttributeModifier} was found or not
      */
-    public static boolean hasAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack, @NotNull final Attribute attribute) {
-        Preconditions.checkNotNull(uuid, "UUID can not be null");
+    public static boolean hasAttributeModifier(@NotNull final NamespacedKey key, ItemStack itemStack, @NotNull final Attribute attribute) {
+        Preconditions.checkNotNull(key, "NamespacedKey can not be null");
         Preconditions.checkNotNull(attribute, "Attribute can not be null");
         Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
         ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers(attribute)) {
-            if(uuid.equals(modifier.getUniqueId())) return true;
+            if(key.equals(modifier.getKey())) return true;
         }
         return false;
     }
 
     /**
-     * Get whether an {@link AttributeInstance} has a specified {@link AttributeModifier} based off of UUID
+     * Get whether an {@link AttributeInstance} has a specified {@link AttributeModifier} based off of NamespacedKey
      *
-     * @param uuid     The UUID of the {@link AttributeModifier}
+     * @param key     The NamespacedKey of the {@link AttributeModifier}
      * @param attribute     The {@link AttributeInstance} of the modifier
      * @return Whether the {@link AttributeModifier} was found or not
      */
-    public static boolean hasAttributeModifier(@NotNull final UUID uuid, @NotNull final AttributeInstance attribute) {
-        Preconditions.checkNotNull(uuid, "UUID can not be null");
+    public static boolean hasAttributeModifier(@NotNull final NamespacedKey key, @NotNull final AttributeInstance attribute) {
+        Preconditions.checkNotNull(key, "NamespacedKey can not be null");
         Preconditions.checkNotNull(attribute, "Attribute can not be null");
         for(AttributeModifier modifier : attribute.getModifiers()) {
-            if(uuid.equals(modifier.getUniqueId())) return true;
+            if(key.equals(modifier.getKey())) return true;
         }
         return false;
     }
@@ -251,66 +252,66 @@ public final class AttributeUtil {
     }
 
     /**
-     * Get an {@link AttributeModifier} based off of UUID
+     * Get an {@link AttributeModifier} based off of NamespacedKey
      *
-     * @param uuid     The UUID of the {@link AttributeModifier}
+     * @param key     The NamespacedKey of the {@link AttributeModifier}
      * @param itemStack The <code>ItemStack</code> to reference
      * @return The found {@link AttributeModifier}, null if it was not found
      */
-    public static AttributeModifier getAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack) {
-        if(!hasAttributeModifier(uuid, itemStack)) return null;
+    public static AttributeModifier getAttributeModifier(@NotNull final NamespacedKey key, ItemStack itemStack) {
+        if(!hasAttributeModifier(key, itemStack)) return null;
         ItemMeta itemMeta = itemStack.getItemMeta();
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers().values()) {
-            if(uuid.equals(modifier.getUniqueId())) return modifier;
+            if(key.equals(modifier.getKey())) return modifier;
         }
         return null;
     }
 
     /**
-     * Get an {@link AttributeModifier} based off of UUID
+     * Get an {@link AttributeModifier} based off of NamespacedKey
      *
-     * @param uuid     The UUID of the {@link AttributeModifier}
+     * @param key     The NamespacedKey of the {@link AttributeModifier}
      * @param itemStack The <code>ItemStack</code> to reference
      * @param slot     The {@link EquipmentSlot} of the modifier
      * @return The found {@link AttributeModifier}, null if it was not found
      */
-    public static AttributeModifier getAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack, @NotNull final EquipmentSlot slot) {
-        if(!hasAttributeModifier(uuid, itemStack, slot)) return null;
+    public static AttributeModifier getAttributeModifier(@NotNull final NamespacedKey key, ItemStack itemStack, @NotNull final EquipmentSlot slot) {
+        if(!hasAttributeModifier(key, itemStack, slot)) return null;
         ItemMeta itemMeta = itemStack.getItemMeta();
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers(slot).values()) {
-            if(uuid.equals(modifier.getUniqueId())) return modifier;
+            if(key.equals(modifier.getKey())) return modifier;
         }
         return null;
     }
 
     /**
-     * Get an {@link AttributeModifier} based off of UUID
+     * Get an {@link AttributeModifier} based off of NamespacedKey
      *
-     * @param uuid     The UUID of the {@link AttributeModifier}
+     * @param key     The NamespacedKey of the {@link AttributeModifier}
      * @param itemStack The <code>ItemStack</code> to reference
      * @param attribute     The {@link AttributeInstance} of the modifier
      * @return The found {@link AttributeModifier}, null if it was not found
      */
-    public static AttributeModifier getAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack, @NotNull final Attribute attribute) {
-        if(!hasAttributeModifier(uuid, itemStack, attribute)) return null;
+    public static AttributeModifier getAttributeModifier(@NotNull final NamespacedKey key, ItemStack itemStack, @NotNull final Attribute attribute) {
+        if(!hasAttributeModifier(key, itemStack, attribute)) return null;
         ItemMeta itemMeta = itemStack.getItemMeta();
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers(attribute)) {
-            if(uuid.equals(modifier.getUniqueId())) return modifier;
+            if(key.equals(modifier.getKey())) return modifier;
         }
         return null;
     }
 
     /**
-     * Get an {@link AttributeModifier} based off of UUID
+     * Get an {@link AttributeModifier} based off of NamespacedKey
      *
-     * @param uuid     The UUID of the {@link AttributeModifier}
+     * @param key     The NamespacedKey of the {@link AttributeModifier}
      * @param attribute     The {@link AttributeInstance} of the modifier
      * @return The found {@link AttributeModifier}, null if it was not found
      */
-    public static AttributeModifier getAttributeModifier(@NotNull final UUID uuid, @NotNull final AttributeInstance attribute) {
-        if(!hasAttributeModifier(uuid, attribute)) return null;
+    public static AttributeModifier getAttributeModifier(@NotNull final NamespacedKey key, @NotNull final AttributeInstance attribute) {
+        if(!hasAttributeModifier(key, attribute)) return null;
         for(AttributeModifier modifier : attribute.getModifiers()) {
-            if(uuid.equals(modifier.getUniqueId())) return modifier;
+            if(key.equals(modifier.getKey())) return modifier;
         }
         return null;
     }
@@ -459,8 +460,8 @@ public final class AttributeUtil {
         Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
         ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) itemMeta = Bukkit.getItemFactory().getItemMeta(itemStack.getType());
-        if(hasAttributeModifier(attribModifier.getUniqueId(), itemStack)) {
-            removeAttributeModifier(attribModifier.getUniqueId(), itemStack);
+        if(hasAttributeModifier(attribModifier.getKey(), itemStack)) {
+            removeAttributeModifier(attribModifier.getKey(), itemStack);
             itemMeta = itemStack.getItemMeta();
         }
         itemMeta.addAttributeModifier(attribute, attribModifier);
@@ -478,21 +479,21 @@ public final class AttributeUtil {
     public static void addAttributeModifier(@NotNull final AttributeModifier attribModifier, @NotNull final AttributeInstance attribute) {
         Preconditions.checkNotNull(attribModifier, "Modifier can not be null");
         Preconditions.checkNotNull(attribute, "Attribute can not be null");
-        if(hasAttributeModifier(attribModifier.getUniqueId(), attribute)) {
-            removeAttributeModifier(attribModifier.getUniqueId(), attribute);
+        if(hasAttributeModifier(attribModifier.getKey(), attribute)) {
+            removeAttributeModifier(attribModifier.getKey(), attribute);
         }
         attribute.addModifier(attribModifier);
     }
 
     /**
-     * Remove an {@link AttributeModifier} from an {@link ItemMeta} UUID
+     * Remove an {@link AttributeModifier} from an {@link ItemMeta} NamespacedKey
      *
-     * @param uuid     The UUID of the {@link AttributeModifier}
+     * @param key     The NamespacedKey of the {@link AttributeModifier}
      * @param itemStack The <code>ItemStack</code> to reference
      * @return Whether the {@link AttributeModifier} was removed
      */
-    public static boolean removeAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack) {
-        Preconditions.checkNotNull(uuid, "UUID can not be null");
+    public static boolean removeAttributeModifier(@NotNull final NamespacedKey key, ItemStack itemStack) {
+        Preconditions.checkNotNull(key, "NamespacedKey can not be null");
         Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
         ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return false;
@@ -500,7 +501,7 @@ public final class AttributeUtil {
         for(Map.Entry<Attribute, AttributeModifier> entry : itemMeta.getAttributeModifiers().entries()) {
             AttributeModifier modifier = entry.getValue();
             Attribute attribute = entry.getKey();
-            if(uuid.equals(modifier.getUniqueId())) {
+            if(key.equals(modifier.getKey())) {
                 itemMeta.removeAttributeModifier(attribute, modifier);
                 itemStack.setItemMeta(itemMeta);
                 return true;
@@ -510,15 +511,15 @@ public final class AttributeUtil {
     }
 
     /**
-     * Remove an {@link AttributeModifier} from an {@link ItemMeta} UUID
+     * Remove an {@link AttributeModifier} from an {@link ItemMeta} NamespacedKey
      *
-     * @param uuid     The UUID of the {@link AttributeModifier}
+     * @param key     The NamespacedKey of the {@link AttributeModifier}
      * @param itemStack The <code>ItemStack</code> to reference
      * @param slot     The {@link EquipmentSlot} of the modifier
      * @return Whether the {@link AttributeModifier} was removed
      */
-    public static boolean removeAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack, @NotNull final EquipmentSlot slot) {
-        Preconditions.checkNotNull(uuid, "UUID can not be null");
+    public static boolean removeAttributeModifier(@NotNull final NamespacedKey key, ItemStack itemStack, @NotNull final EquipmentSlot slot) {
+        Preconditions.checkNotNull(key, "NamespacedKey can not be null");
         Preconditions.checkNotNull(slot, "EquipmentSlot can not be null");
         Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
         ItemMeta itemMeta = itemStack.getItemMeta();
@@ -527,7 +528,7 @@ public final class AttributeUtil {
         for(Map.Entry<Attribute, AttributeModifier> entry : itemMeta.getAttributeModifiers(slot).entries()) {
             AttributeModifier modifier = entry.getValue();
             Attribute attribute = entry.getKey();
-            if(uuid.equals(modifier.getUniqueId())) {
+            if(key.equals(modifier.getKey())) {
                 itemMeta.removeAttributeModifier(attribute, modifier);
                 itemStack.setItemMeta(itemMeta);
                 return true;
@@ -537,22 +538,22 @@ public final class AttributeUtil {
     }
 
     /**
-     * Remove an {@link AttributeModifier} from an {@link ItemMeta} UUID
+     * Remove an {@link AttributeModifier} from an {@link ItemMeta} NamespacedKey
      *
-     * @param uuid      The UUID of the {@link AttributeModifier}
+     * @param key      The NamespacedKey of the {@link AttributeModifier}
      * @param itemStack  The <code>ItemStack</code> to reference
      * @param attribute The {@link AttributeInstance} of the modifier
      * @return Whether the {@link AttributeModifier} was removed
      */
-    public static boolean removeAttributeModifier(@NotNull final UUID uuid, ItemStack itemStack, @NotNull final Attribute attribute) {
-        Preconditions.checkNotNull(uuid, "UUID can not be null");
+    public static boolean removeAttributeModifier(@NotNull final NamespacedKey key, ItemStack itemStack, @NotNull final Attribute attribute) {
+        Preconditions.checkNotNull(key, "NamespacedKey can not be null");
         Preconditions.checkNotNull(attribute, "Attribute can not be null");
         Preconditions.checkNotNull(itemStack, "ItemStack can not be null");
         ItemMeta itemMeta = itemStack.getItemMeta();
         if(itemMeta == null) return false;
         if(!itemMeta.hasAttributeModifiers()) return false;
         for(AttributeModifier modifier : itemMeta.getAttributeModifiers(attribute)) {
-            if(uuid.equals(modifier.getUniqueId())) {
+            if(key.equals(modifier.getKey())) {
                 itemMeta.removeAttributeModifier(attribute, modifier);
                 itemStack.setItemMeta(itemMeta);
                 return true;
@@ -562,17 +563,17 @@ public final class AttributeUtil {
     }
 
     /**
-     * Remove an {@link AttributeModifier} from an {@link AttributeInstance} UUID
+     * Remove an {@link AttributeModifier} from an {@link AttributeInstance} NamespacedKey
      *
-     * @param uuid      The UUID of the {@link AttributeModifier}
+     * @param key      The NamespacedKey of the {@link AttributeModifier}
      * @param attribute The {@link AttributeInstance} of the modifier
      * @return Whether the {@link AttributeModifier} was removed
      */
-    public static boolean removeAttributeModifier(@NotNull final UUID uuid, @NotNull final AttributeInstance attribute) {
-        Preconditions.checkNotNull(uuid, "UUID can not be null");
+    public static boolean removeAttributeModifier(@NotNull final NamespacedKey key, @NotNull final AttributeInstance attribute) {
+        Preconditions.checkNotNull(key, "NamespacedKey can not be null");
         Preconditions.checkNotNull(attribute, "Attribute can not be null");
         for(AttributeModifier modifier : attribute.getModifiers()) {
-            if(uuid.equals(modifier.getUniqueId())) {
+            if(key.equals(modifier.getKey())) {
                 attribute.removeModifier(modifier);
                 return true;
             }

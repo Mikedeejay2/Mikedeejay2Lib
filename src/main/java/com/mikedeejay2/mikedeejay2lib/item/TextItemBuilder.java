@@ -7,6 +7,7 @@ import com.mikedeejay2.mikedeejay2lib.text.PlaceholderFormatter;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
 import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
+import com.mikedeejay2.mikedeejay2lib.util.item.ItemUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -424,7 +425,7 @@ public class TextItemBuilder extends ItemBuilder {
     }
 
     private void updateTextFromMeta() {
-        this.setName(this.meta.hasDisplayName() ? this.meta.getDisplayName() : null);
+        this.setName(ItemUtil.hasName(this.meta) ? ItemUtil.getName(this.meta) : null);
         this.setLore(this.meta.getLore() == null ? Collections.emptyList() : this.meta.getLore());
     }
 
@@ -455,7 +456,7 @@ public class TextItemBuilder extends ItemBuilder {
     }
 
     private void checkAndUpdateMeta(String name, List<String> lore) {
-        this.meta.setDisplayName(name);
+        ItemUtil.setName(this.meta, name);
         this.meta.setLore(lore);
         this.changed = true;
     }
