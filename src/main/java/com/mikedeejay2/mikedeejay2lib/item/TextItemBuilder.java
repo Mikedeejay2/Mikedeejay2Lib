@@ -3,10 +3,8 @@ package com.mikedeejay2.mikedeejay2lib.item;
 import com.google.common.collect.ImmutableList;
 import com.google.common.collect.Multimap;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
-import com.mikedeejay2.mikedeejay2lib.text.PlaceholderFormatter;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
-import com.mikedeejay2.mikedeejay2lib.util.debug.DebugTimer;
 import com.mikedeejay2.mikedeejay2lib.util.item.ItemUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
@@ -21,7 +19,9 @@ import org.bukkit.inventory.EquipmentSlot;
 import org.bukkit.inventory.ItemFlag;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
 
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -322,6 +322,18 @@ public class TextItemBuilder extends ItemBuilder {
     }
 
     @Override
+    public TextItemBuilder setHeadUrl(URL url) {
+        super.setHeadUrl(url);
+        return this;
+    }
+
+    @Override
+    public TextItemBuilder setHeadUrl(String url) {
+        super.setHeadUrl(url);
+        return this;
+    }
+
+    @Override
     public TextItemBuilder addAttributeModifier(Attribute attribute, AttributeModifier modifier) {
         super.addAttributeModifier(attribute, modifier);
         return this;
@@ -390,6 +402,18 @@ public class TextItemBuilder extends ItemBuilder {
     @Override
     public TextItemBuilder setDurability(int durability) {
         super.setDurability(durability);
+        return this;
+    }
+
+    @Override
+    public <Y, Z> TextItemBuilder setData(NamespacedKey key, PersistentDataType<Y, Z> type, Z value) {
+        super.setData(key, type, value);
+        return this;
+    }
+
+    @Override
+    public <Y, Z> TextItemBuilder setData(BukkitPlugin plugin, String key, PersistentDataType<Y, Z> type, Z value) {
+        super.setData(plugin, key, type, value);
         return this;
     }
 

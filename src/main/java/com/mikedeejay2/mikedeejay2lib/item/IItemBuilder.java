@@ -17,6 +17,7 @@ import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.net.URL;
 import java.util.Collection;
 import java.util.List;
 import java.util.Map;
@@ -446,24 +447,67 @@ public interface IItemBuilder<I, T> {
     T setHeadOwner(OfflinePlayer player);
 
     /**
-     * Get the base 64 string of the item
+     * Get the base 64 string of the skull item
      * <p>
-     * Note: The item must be of type {@link Material#PLAYER_HEAD} and must have a base 64 string
-     * set from {@link IItemBuilder#setHeadBase64(String)}
+     * Note: The item must be of type {@link Material#PLAYER_HEAD}
+     * <p>
+     * <strong>If you are using 1.18.1+, the following methods are preferred for better performance (avoids conversion
+     * to/from base64: {@link IItemBuilder#getHeadUrl()}, {@link IItemBuilder#getHeadUrlAsString()}</strong>
      *
      * @return The current base 64 String of the head item
      */
     String getHeadBase64();
 
     /**
+     * Get the URL of the skull item
+     * <p>
+     * Note: The item must be of type {@link Material#PLAYER_HEAD}
+     *
+     * @return The current URL of the head item
+     */
+    URL getHeadUrl();
+
+    /**
+     * Get the URL String of the skull item
+     * <p>
+     * Note: The item must be of type {@link Material#PLAYER_HEAD}
+     *
+     * @return The current URL String of the head item
+     */
+    String getHeadUrlAsString();
+
+    /**
      * Set the new base 64 String of the head item.
      * <p>
      * Note: The item must be of type {@link Material#PLAYER_HEAD}
+     * <p>
+     * <strong>If you are using 1.18.1+, the following methods are preferred for better performance (avoids conversion
+     * to/from base64: {@link IItemBuilder#getHeadUrl()}, {@link IItemBuilder#getHeadUrlAsString()}</strong>
      *
      * @param base64 The new base 64 String of the head item
      * @return A reference to this object
      */
     T setHeadBase64(String base64);
+
+    /**
+     * Set the new URL of the head item.
+     * <p>
+     * Note: The item must be of type {@link Material#PLAYER_HEAD}
+     *
+     * @param url The new URL of the head item
+     * @return A reference to this object
+     */
+    T setHeadUrl(URL url);
+
+    /**
+     * Set the new URL String of the head item.
+     * <p>
+     * Note: The item must be of type {@link Material#PLAYER_HEAD}
+     *
+     * @param url The new URL String of the head item
+     * @return A reference to this object
+     */
+    T setHeadUrl(String url);
 
     /**
      * Get whether the item has attribute modifiers or not

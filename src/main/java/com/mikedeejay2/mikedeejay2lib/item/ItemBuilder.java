@@ -21,6 +21,7 @@ import org.bukkit.inventory.meta.SkullMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -472,9 +473,37 @@ public class ItemBuilder implements IItemBuilder<ItemStack, ItemBuilder>, Clonea
     }
 
     @Override
+    public URL getHeadUrl() {
+        SkullMeta skullMeta = (SkullMeta) meta;
+        return SkullMetaModifier.getHeadUrl(skullMeta);
+    }
+
+    @Override
+    public String getHeadUrlAsString() {
+        SkullMeta skullMeta = (SkullMeta) meta;
+        return SkullMetaModifier.getHeadUrlAsString(skullMeta);
+    }
+
+    @Override
     public ItemBuilder setHeadBase64(String base64) {
         SkullMeta skullMeta = (SkullMeta) meta;
         SkullMetaModifier.setHeadBase64(skullMeta, base64);
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public ItemBuilder setHeadUrl(URL url) {
+        SkullMeta skullMeta = (SkullMeta) meta;
+        SkullMetaModifier.setHeadUrl(skullMeta, url);
+        this.changed = true;
+        return this;
+    }
+
+    @Override
+    public ItemBuilder setHeadUrl(String url) {
+        SkullMeta skullMeta = (SkullMeta) meta;
+        SkullMetaModifier.setHeadUrl(skullMeta, url);
         this.changed = true;
         return this;
     }

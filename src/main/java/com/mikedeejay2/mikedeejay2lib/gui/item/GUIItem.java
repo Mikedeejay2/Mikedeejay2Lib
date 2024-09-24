@@ -25,6 +25,7 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.jetbrains.annotations.Nullable;
 
+import java.net.URL;
 import java.util.*;
 
 /**
@@ -682,8 +683,32 @@ public class GUIItem implements Cloneable, IItemBuilder<ItemStack, GUIItem> {
     }
 
     @Override
+    public URL getHeadUrl() {
+        return this.item.getHeadUrl();
+    }
+
+    @Override
+    public String getHeadUrlAsString() {
+        return this.item.getHeadUrlAsString();
+    }
+
+    @Override
     public GUIItem setHeadBase64(String base64) {
         this.item = this.item.setHeadBase64(base64);
+        this.setChanged(true);
+        return this;
+    }
+
+    @Override
+    public GUIItem setHeadUrl(URL url) {
+        this.item = this.item.setHeadUrl(url);
+        this.setChanged(true);
+        return this;
+    }
+
+    @Override
+    public GUIItem setHeadUrl(String url) {
+        this.item = this.item.setHeadUrl(url);
         this.setChanged(true);
         return this;
     }
