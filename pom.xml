@@ -15,7 +15,7 @@
         <java.version>1.8</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <github.global.server>github</github.global.server>
-        <minecraft.version>1.21.1</minecraft.version>
+        <minecraft.version>1.21.3</minecraft.version>
 
         <bstats.version>3.0.2</bstats.version>
         <jetbrains-annotations.version>24.0.1</jetbrains-annotations.version>
