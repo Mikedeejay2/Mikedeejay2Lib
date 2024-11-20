@@ -58,14 +58,13 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      * be set to an empty String in order to remove the class prefix.
      */
     private void forceColorfulLogger() {
-        Logger logger = new EnhancedPluginLogger(this);
         try {
+            Logger logger = new EnhancedPluginLogger(this);
             Field logField = JavaPlugin.class.getDeclaredField("logger");
             logField.setAccessible(true);
             logField.set(this, logger);
-        } catch(IllegalAccessException | NoSuchFieldException e) {
+        } catch(IllegalAccessException | NoSuchFieldException | NoClassDefFoundError e) {
             getLogger().warning("Could not create a new plugin logger for " + this.getDescription().getName());
-            e.printStackTrace();
         }
     }
 
@@ -111,6 +110,7 @@ public abstract class EnhancedJavaPlugin extends JavaPlugin implements EnhancedP
      */
     @Override
     public void setPrefix(String prefix) {
+        if(!(this.getLogger() instanceof EnhancedPluginLogger)) return;
         this.prefix = Colors.format(prefix);
         EnhancedPluginLogger logger = (EnhancedPluginLogger) this.getLogger();
         logger.setPrefix(this.prefix);
