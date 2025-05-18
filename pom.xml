@@ -17,8 +17,8 @@
         <github.global.server>github</github.global.server>
         <minecraft.version>1.21.5</minecraft.version>
 
-        <bstats.version>3.0.2</bstats.version>
-        <jetbrains-annotations.version>24.0.1</jetbrains-annotations.version>
+        <bstats.version>3.1.0</bstats.version>
+        <jetbrains-annotations.version>26.0.2</jetbrains-annotations.version>
         <jline-jansi.version>3.21.0</jline-jansi.version>
         <authlib.version>1.5.25</authlib.version>
 
