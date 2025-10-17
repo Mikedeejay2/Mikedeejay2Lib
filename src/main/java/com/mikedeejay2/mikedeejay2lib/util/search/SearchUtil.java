@@ -1,6 +1,5 @@
 package com.mikedeejay2.mikedeejay2lib.util.search;
 
-import com.mikedeejay2.mikedeejay2lib.util.item.ItemUtil;
 import org.bukkit.inventory.meta.ItemMeta;
 
 /**
@@ -24,7 +23,7 @@ public final class SearchUtil {
      */
     public static boolean searchMetaFuzzy(ItemMeta meta, String searchTerm) {
         String newName = searchTerm.toLowerCase().replaceAll(" ", "");
-        String newDisplayName = ItemUtil.getName(meta).toLowerCase().replaceAll(" ", "");
+        String newDisplayName = meta.getDisplayName().toLowerCase().replaceAll(" ", "");
         if(newDisplayName.contains(newName)) return true;
 
         boolean flag = false;
@@ -53,7 +52,7 @@ public final class SearchUtil {
      * @return If search term was found in the ItemMeta or not
      */
     public static boolean searchMeta(ItemMeta meta, String searchTerm) {
-        if(ItemUtil.getName(meta).contains(searchTerm)) return true;
+        if(meta.getDisplayName().contains(searchTerm)) return true;
 
         boolean flag = false;
         if(meta.hasLore()) {
@@ -80,7 +79,7 @@ public final class SearchUtil {
      * @return If search term was found in the ItemMeta or not
      */
     public static boolean searchMetaExact(ItemMeta meta, String searchTerm) {
-        if(ItemUtil.getName(meta).equals(searchTerm)) return true;
+        if(meta.getDisplayName().equals(searchTerm)) return true;
 
         boolean flag = false;
         if(meta.hasLore()) {

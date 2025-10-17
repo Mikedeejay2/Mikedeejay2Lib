@@ -5,7 +5,6 @@ import com.google.common.collect.Multimap;
 import com.mikedeejay2.mikedeejay2lib.BukkitPlugin;
 import com.mikedeejay2.mikedeejay2lib.text.Text;
 import com.mikedeejay2.mikedeejay2lib.util.chat.Colors;
-import com.mikedeejay2.mikedeejay2lib.util.item.ItemUtil;
 import org.bukkit.ChatColor;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -449,7 +448,7 @@ public class TextItemBuilder extends ItemBuilder {
     }
 
     private void updateTextFromMeta() {
-        this.setName(ItemUtil.hasName(this.meta) ? ItemUtil.getName(this.meta) : null);
+        this.setName(this.meta.hasDisplayName() ? this.meta.getDisplayName() : null);
         this.setLore(this.meta.getLore() == null ? Collections.emptyList() : this.meta.getLore());
     }
 
@@ -480,7 +479,7 @@ public class TextItemBuilder extends ItemBuilder {
     }
 
     private void checkAndUpdateMeta(String name, List<String> lore) {
-        ItemUtil.setName(this.meta, name);
+        this.meta.setDisplayName(name);
         this.meta.setLore(lore);
         this.changed = true;
     }
