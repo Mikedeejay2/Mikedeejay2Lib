@@ -295,7 +295,7 @@ public final class SkullMetaModifier {
 
         @Override
         public void setHeadUrl(SkullMeta meta, URL url) {
-            final PlayerProfile profile = Bukkit.createPlayerProfile(randomUuid);
+            final PlayerProfile profile = Bukkit.createPlayerProfile(randomUuid, "");
             final PlayerTextures textures = profile.getTextures();
             textures.setSkin(url);
             profile.setTextures(textures);
